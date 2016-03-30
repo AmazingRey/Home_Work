@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XKRWiSlimAssSuccessStoriesVC">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webView" destination="sLp-HK-Soa" id="dDK-sz-3ad"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLp-HK-Soa">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Rrb-DP-3HV"/>
+                    </connections>
+                </webView>
+            </subviews>
+            <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="sLp-HK-Soa" secondAttribute="centerY" id="7hA-EI-a7T"/>
+                <constraint firstItem="sLp-HK-Soa" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="GaU-b9-YvL"/>
+                <constraint firstAttribute="centerX" secondItem="sLp-HK-Soa" secondAttribute="centerX" id="VnG-3c-muU"/>
+                <constraint firstItem="sLp-HK-Soa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bKQ-Zh-bPX"/>
+            </constraints>
+            <point key="canvasLocation" x="296" y="279"/>
+        </view>
+    </objects>
+</document>

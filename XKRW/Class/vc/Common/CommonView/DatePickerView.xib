@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view autoresizesSubviews="NO" contentMode="scaleToFill" id="iN0-l3-epB" customClass="DatePickerView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="265"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title.png" translatesAutoresizingMaskIntoConstraints="NO" id="93u-ee-Peh">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BCm-Cm-gyd">
+                    <rect key="frame" x="266" y="7" width="46" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="I2C-bC-Itn"/>
+                        <constraint firstAttribute="width" constant="46" id="i7m-CO-6Hq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="确定">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="clickConfirmButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="OgM-kb-qxk"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FqP-cb-InY">
+                    <rect key="frame" x="0.0" y="44" width="320" height="221"/>
+                    <subviews>
+                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Flm-ys-V4P">
+                            <rect key="frame" x="0.0" y="30" width="320" height="162"/>
+                            <connections>
+                                <outlet property="dataSource" destination="iN0-l3-epB" id="Eig-lc-F8W"/>
+                                <outlet property="delegate" destination="iN0-l3-epB" id="iOZ-Tr-ivW"/>
+                            </connections>
+                        </pickerView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="centerX" secondItem="Flm-ys-V4P" secondAttribute="centerX" id="NxT-vh-Lfq"/>
+                        <constraint firstAttribute="centerY" secondItem="Flm-ys-V4P" secondAttribute="centerY" id="R4S-To-Yu2"/>
+                        <constraint firstAttribute="trailing" secondItem="Flm-ys-V4P" secondAttribute="trailing" id="pc9-bH-YWr"/>
+                        <constraint firstItem="Flm-ys-V4P" firstAttribute="leading" secondItem="FqP-cb-InY" secondAttribute="leading" id="t6C-fe-Ni4"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKO-FB-59P">
+                    <rect key="frame" x="116" y="11" width="88" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e5Z-P7-fXD">
+                    <rect key="frame" x="8" y="7" width="46" height="32"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="取消">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="clickClearButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="a4B-dD-i0Z"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="tKO-FB-59P" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="11" id="2Fe-57-6yF"/>
+                <constraint firstItem="FqP-cb-InY" firstAttribute="top" secondItem="tKO-FB-59P" secondAttribute="bottom" constant="12" id="4e0-E4-Ijm"/>
+                <constraint firstAttribute="centerX" secondItem="FqP-cb-InY" secondAttribute="centerX" id="8LV-yn-AI6"/>
+                <constraint firstItem="FqP-cb-InY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="BGG-51-z8Y"/>
+                <constraint firstAttribute="trailing" secondItem="BCm-Cm-gyd" secondAttribute="trailing" constant="8" id="NWv-Tv-rIT"/>
+                <constraint firstItem="93u-ee-Peh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OQY-r4-5iR"/>
+                <constraint firstItem="93u-ee-Peh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TXM-cW-l87"/>
+                <constraint firstItem="FqP-cb-InY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YmH-XF-nGs"/>
+                <constraint firstAttribute="trailing" secondItem="tKO-FB-59P" secondAttribute="trailing" constant="116" id="aa2-ZB-k8a"/>
+                <constraint firstAttribute="bottom" secondItem="FqP-cb-InY" secondAttribute="bottom" id="bUI-Q3-Wzd"/>
+                <constraint firstItem="tKO-FB-59P" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="116" id="d34-Gy-gwJ"/>
+                <constraint firstItem="BCm-Cm-gyd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="lge-8y-qHK"/>
+                <constraint firstAttribute="centerX" secondItem="93u-ee-Peh" secondAttribute="centerX" id="rje-o1-jBY"/>
+                <constraint firstAttribute="centerX" secondItem="tKO-FB-59P" secondAttribute="centerX" id="wAO-k4-onO"/>
+                <constraint firstAttribute="trailing" secondItem="93u-ee-Peh" secondAttribute="trailing" id="xA9-JH-zSx"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="confirmButton" destination="BCm-Cm-gyd" id="d4O-1n-Yyc"/>
+                <outlet property="contentView" destination="FqP-cb-InY" id="QVw-9a-HZc"/>
+                <outlet property="timePicker" destination="Flm-ys-V4P" id="VGW-IT-Q8b"/>
+                <outlet property="titleLabel" destination="tKO-FB-59P" id="Ke1-tG-VkE"/>
+            </connections>
+            <point key="canvasLocation" x="-20" y="181.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="title.png" width="320" height="44"/>
+    </resources>
+</document>

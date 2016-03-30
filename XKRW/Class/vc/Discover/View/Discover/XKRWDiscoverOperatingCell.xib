@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="XKRWDiscoverOperatingCell" customModule="XKRW" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="752" height="183"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="752" height="182"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzl-e5-Stq">
+                        <rect key="frame" x="188" y="0.0" width="188" height="182"/>
+                        <state key="normal" backgroundImage="discover_exercise_"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v82-ce-HuE">
+                        <rect key="frame" x="376" y="0.0" width="188" height="182"/>
+                        <state key="normal" backgroundImage="discover_date_"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-kh-qfT">
+                        <rect key="frame" x="0.0" y="0.0" width="188" height="182"/>
+                        <state key="normal" backgroundImage="discover_lose-weight_"/>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="swf-Lh-5Ux">
+                        <rect key="frame" x="564" y="0.0" width="188" height="182"/>
+                        <state key="normal" backgroundImage="discover_pk_"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="v82-ce-HuE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="6d5-dK-XTs"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Ayy-kh-qfT" secondAttribute="bottom" constant="-8" id="766-HF-qhK"/>
+                    <constraint firstItem="xzl-e5-Stq" firstAttribute="leading" secondItem="Ayy-kh-qfT" secondAttribute="trailing" id="A32-ei-PAF"/>
+                    <constraint firstItem="xzl-e5-Stq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="DXh-6B-Irf"/>
+                    <constraint firstItem="v82-ce-HuE" firstAttribute="width" secondItem="swf-Lh-5Ux" secondAttribute="width" id="Dip-CH-dI2"/>
+                    <constraint firstItem="Ayy-kh-qfT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="HWB-Zz-360"/>
+                    <constraint firstItem="v82-ce-HuE" firstAttribute="leading" secondItem="xzl-e5-Stq" secondAttribute="trailing" id="S4z-WO-PeS"/>
+                    <constraint firstItem="swf-Lh-5Ux" firstAttribute="leading" secondItem="v82-ce-HuE" secondAttribute="trailing" id="fyy-K9-K1Z"/>
+                    <constraint firstItem="xzl-e5-Stq" firstAttribute="width" secondItem="v82-ce-HuE" secondAttribute="width" id="jys-e4-KJv"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="xzl-e5-Stq" secondAttribute="bottom" constant="-8" id="lNK-jj-B62"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="swf-Lh-5Ux" secondAttribute="bottom" constant="-8" id="n2Z-08-lSL"/>
+                    <constraint firstItem="Ayy-kh-qfT" firstAttribute="width" secondItem="xzl-e5-Stq" secondAttribute="width" id="rl1-UZ-RBF"/>
+                    <constraint firstItem="Ayy-kh-qfT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="sa5-GG-ofC"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="swf-Lh-5Ux" secondAttribute="trailing" constant="-8" id="tgq-pM-0ih"/>
+                    <constraint firstItem="swf-Lh-5Ux" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="y4K-z0-RZE"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="v82-ce-HuE" secondAttribute="bottom" constant="-8" id="zeJ-QY-0fB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lossWeightOfKnowledgeButton" destination="Ayy-kh-qfT" id="oLj-7C-bcp"/>
+                <outlet property="motivationalButton" destination="v82-ce-HuE" id="POe-1b-w8a"/>
+                <outlet property="pkButton" destination="swf-Lh-5Ux" id="yrR-3B-VN2"/>
+                <outlet property="sportRecommendButton" destination="xzl-e5-Stq" id="b1e-ru-lsS"/>
+            </connections>
+            <point key="canvasLocation" x="199" y="228.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="discover_date_" width="94" height="91"/>
+        <image name="discover_exercise_" width="94" height="91"/>
+        <image name="discover_lose-weight_" width="94" height="91"/>
+        <image name="discover_pk_" width="94" height="91"/>
+    </resources>
+</document>

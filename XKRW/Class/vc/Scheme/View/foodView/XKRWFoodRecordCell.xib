@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="82" id="KGk-i7-Jjw" customClass="XKRWFoodRecordCell" customModule="XKRW" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIi-ly-FVS">
+                        <rect key="frame" x="85" y="13" width="40" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0VC-tH-KqO">
+                        <rect key="frame" x="86" y="42" width="81" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="126" id="7dz-bI-ys9"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="81" id="KJy-Dg-wia"/>
+                            <constraint firstAttribute="height" constant="34" id="qb2-eA-lQg"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7dz-bI-ys9"/>
+                            </mask>
+                        </variation>
+                        <connections>
+                            <action selector="clickDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5bn-rb-AxT"/>
+                        </connections>
+                    </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ONK-E4-84F">
+                        <rect key="frame" x="15" y="11" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="8wJ-uc-2hl"/>
+                            <constraint firstAttribute="height" constant="60" id="r7f-2n-ONO"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_btn_fooddetails.png" translatesAutoresizingMaskIntoConstraints="NO" id="rz8-aT-7g8">
+                        <rect key="frame" x="85" y="50" width="64" height="11"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZI-RW-msF">
+                        <rect key="frame" x="230" y="11" width="100" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="Rkb-YY-7pT"/>
+                            <constraint firstAttribute="height" constant="60" id="fiV-cq-AQk"/>
+                        </constraints>
+                        <state key="normal" image="search_btn_eatother.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="clickRecord:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Nnk-Nh-ghy"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_line.png" translatesAutoresizingMaskIntoConstraints="NO" id="gEH-Nd-HDN">
+                        <rect key="frame" x="239" y="41" width="1" height="1"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="AZI-RW-msF" firstAttribute="leading" secondItem="gEH-Nd-HDN" secondAttribute="trailing" constant="-10" id="7fp-fx-gHr"/>
+                    <constraint firstItem="ONK-E4-84F" firstAttribute="bottom" secondItem="rz8-aT-7g8" secondAttribute="bottom" constant="10" id="9nM-hj-JlG"/>
+                    <constraint firstItem="ONK-E4-84F" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="DPA-V3-yyw"/>
+                    <constraint firstAttribute="trailing" secondItem="AZI-RW-msF" secondAttribute="trailing" constant="-10" id="Dje-82-ruW"/>
+                    <constraint firstItem="gEH-Nd-HDN" firstAttribute="centerY" secondItem="AZI-RW-msF" secondAttribute="centerY" id="Iww-oO-InX"/>
+                    <constraint firstItem="0VC-tH-KqO" firstAttribute="bottom" secondItem="ONK-E4-84F" secondAttribute="bottom" constant="5" id="VDB-xt-ana"/>
+                    <constraint firstItem="rz8-aT-7g8" firstAttribute="leading" secondItem="ONK-E4-84F" secondAttribute="trailing" constant="10" id="Yil-Fo-idu"/>
+                    <constraint firstItem="HIi-ly-FVS" firstAttribute="leading" secondItem="ONK-E4-84F" secondAttribute="trailing" constant="10" id="ej0-Yq-E9b"/>
+                    <constraint firstAttribute="centerY" secondItem="ONK-E4-84F" secondAttribute="centerY" id="hjx-5i-CJ7"/>
+                    <constraint firstItem="0VC-tH-KqO" firstAttribute="leading" secondItem="ONK-E4-84F" secondAttribute="trailing" constant="11" id="hsD-nP-rZM"/>
+                    <constraint firstItem="gEH-Nd-HDN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HIi-ly-FVS" secondAttribute="trailing" id="ifE-3B-eew"/>
+                    <constraint firstAttribute="centerY" secondItem="AZI-RW-msF" secondAttribute="centerY" id="oea-f8-Onn"/>
+                    <constraint firstItem="HIi-ly-FVS" firstAttribute="top" secondItem="ONK-E4-84F" secondAttribute="top" constant="2" id="rdN-Q2-9Ip"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="logo" destination="ONK-E4-84F" id="Fox-GA-cyq"/>
+                <outlet property="title" destination="HIi-ly-FVS" id="P0d-Uo-NNZ"/>
+            </connections>
+            <point key="canvasLocation" x="119" y="423"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="search_btn_eatother.png" width="48" height="22"/>
+        <image name="search_btn_fooddetails.png" width="64" height="11"/>
+        <image name="search_line.png" width="1" height="1"/>
+    </resources>
+</document>

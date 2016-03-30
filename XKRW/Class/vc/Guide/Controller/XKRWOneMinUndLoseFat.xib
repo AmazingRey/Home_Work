@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XKRWOneMinUndLoseFat" customModule="XKRW" customModuleProvider="target">
+            <connections>
+                <outlet property="pageControl" destination="LvA-61-YbT" id="TSd-KY-7RM"/>
+                <outlet property="scrollView" destination="lT4-Yv-ygj" id="fAE-aw-MCF"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lT4-Yv-ygj">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </scrollView>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="LvA-61-YbT">
+                    <rect key="frame" x="0.0" y="510" width="320" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="37" id="Vrn-m3-EPc"/>
+                    </constraints>
+                </pageControl>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="LvA-61-YbT" secondAttribute="bottom" constant="21" id="2S8-9r-edD"/>
+                <constraint firstItem="lT4-Yv-ygj" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="M3f-nv-wi0"/>
+                <constraint firstItem="lT4-Yv-ygj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Myv-oU-OtH"/>
+                <constraint firstAttribute="trailing" secondItem="LvA-61-YbT" secondAttribute="trailing" id="kn9-C1-WIw"/>
+                <constraint firstAttribute="bottom" secondItem="lT4-Yv-ygj" secondAttribute="bottom" id="o12-FZ-VXW"/>
+                <constraint firstAttribute="trailing" secondItem="lT4-Yv-ygj" secondAttribute="trailing" id="voj-e6-Uvq"/>
+                <constraint firstItem="LvA-61-YbT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zcg-qr-yEM"/>
+            </constraints>
+            <point key="canvasLocation" x="288" y="249"/>
+        </view>
+    </objects>
+</document>

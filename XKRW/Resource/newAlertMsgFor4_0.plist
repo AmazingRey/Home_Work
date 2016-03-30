@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>alarmDrinkWaterMsg</key>
+	<string>你该喝水了！</string>
+	<key>alarmHabitMsg</key>
+	<array>
+		<string>记住：油=脂肪</string>
+		<string>饿了，用水果代替零食</string>
+		<string>2瓶饮料=1两肥肉</string>
+		<string>1斤白酒=3两肥肉</string>
+		<string>1瓶红酒=1两肥肉</string>
+		<string>3瓶啤酒=1两肥肉</string>
+		<string>吃肥肉=长肥肉</string>
+		<string>坚果虽好，不要吃多哦！</string>
+		<string>宵夜是用来增肥的。</string>
+		<string>瘦瘦喊你按时吃饭</string>
+		<string>细嚼+慢咽=饱得快</string>
+		<string>饥一顿，瘦一斤；饱一顿，胖三斤。</string>
+		<string>今天做运动了嘛~？</string>
+		<string>别忘记今天的运动计划哦！</string>
+	</array>
+	<key>alarmWalkMsg</key>
+	<string>你计划现在去散步的哦！</string>
+	<key>alarmExerciseMsg</key>
+	<string>你设定的运动时间到了！</string>
+	<key>alarmSnackMsg</key>
+	<string>你设定的加餐时间到了！准备吃点什么？</string>
+	<key>alarmSupperMsg</key>
+	<string>你设定的晚餐时间到了~! 准备吃点什么？</string>
+	<key>alarmLunchMsg</key>
+	<string>你设定的午餐时间到了~! 准备吃什么？</string>
+	<key>alarmBreakfastMsg</key>
+	<string>你设定的早餐时间到了~！准备吃点什么？</string>
+	<key>alarmRecordMsg</key>
+	<string>查看每日分析，时刻关心自己，马上去记录吧~</string>
+</dict>
+</plist>

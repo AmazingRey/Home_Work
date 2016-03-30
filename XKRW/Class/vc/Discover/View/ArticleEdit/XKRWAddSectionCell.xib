@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="addSectionCell" rowHeight="151" id="KGk-i7-Jjw" customClass="XKRWAddSectionCell" customModule="XKRW" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="151"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="150.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第二段" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ezo-w5-8A5">
+                        <rect key="frame" x="139" y="15" width="42" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_.png" translatesAutoresizingMaskIntoConstraints="NO" id="gzO-Sj-WED">
+                        <rect key="frame" x="128" y="40" width="64" height="64"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="64" id="OTf-Fi-Og1"/>
+                            <constraint firstAttribute="width" constant="64" id="e88-CE-6aB"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第二段" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEa-av-uey">
+                        <rect key="frame" x="139" y="124" width="42" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Tu-5h-fF9" userLabel="line">
+                        <rect key="frame" x="0.0" y="150.5" width="320" height="0.5"/>
+                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gzO-Sj-WED" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Gcd-gl-dL7"/>
+                    <constraint firstItem="hEa-av-uey" firstAttribute="top" secondItem="gzO-Sj-WED" secondAttribute="bottom" constant="20" id="IB8-ff-CDg"/>
+                    <constraint firstItem="6Tu-5h-fF9" firstAttribute="centerX" secondItem="hEa-av-uey" secondAttribute="centerX" id="OZH-Yb-jhc"/>
+                    <constraint firstItem="gzO-Sj-WED" firstAttribute="top" secondItem="Ezo-w5-8A5" secondAttribute="bottom" constant="8" id="Ok9-nI-QDf"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="6Tu-5h-fF9" secondAttribute="bottom" constant="-8.5" id="Sg7-tA-6L8"/>
+                    <constraint firstItem="6Tu-5h-fF9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Vbf-t8-57q"/>
+                    <constraint firstItem="Ezo-w5-8A5" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="f8u-0z-f3s"/>
+                    <constraint firstItem="Ezo-w5-8A5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="jo2-XC-Hjz"/>
+                    <constraint firstItem="hEa-av-uey" firstAttribute="centerX" secondItem="Ezo-w5-8A5" secondAttribute="centerX" id="mtX-JI-mok"/>
+                    <constraint firstItem="6Tu-5h-fF9" firstAttribute="top" secondItem="hEa-av-uey" secondAttribute="bottom" constant="9" id="rnK-Ph-QAr"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descLabel" destination="Ezo-w5-8A5" id="r5L-7Y-Rmu"/>
+                <outlet property="nextLabel" destination="hEa-av-uey" id="mbo-tL-mdh"/>
+            </connections>
+            <point key="canvasLocation" x="-28" y="287.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="photo_.png" width="64" height="64"/>
+    </resources>
+</document>

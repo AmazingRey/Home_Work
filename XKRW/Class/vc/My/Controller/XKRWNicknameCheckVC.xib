@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XKRWNicknameCheckVC" customModule="XKRW" customModuleProvider="target">
+            <connections>
+                <outlet property="nickNameTextField" destination="72X-Dj-SFr" id="WRJ-H1-Fis"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rBD-Q9-CM6">
+                    <rect key="frame" x="0.0" y="10" width="600" height="44"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="设置昵称" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="72X-Dj-SFr">
+                            <rect key="frame" x="15" y="7" width="570" height="30"/>
+                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="1dl-yO-Yc3"/>
+                        <constraint firstItem="72X-Dj-SFr" firstAttribute="leading" secondItem="rBD-Q9-CM6" secondAttribute="leading" constant="15" id="NZq-1H-TUA"/>
+                        <constraint firstItem="72X-Dj-SFr" firstAttribute="top" secondItem="rBD-Q9-CM6" secondAttribute="top" constant="7" id="Tjs-uF-74O"/>
+                        <constraint firstAttribute="bottom" secondItem="72X-Dj-SFr" secondAttribute="bottom" constant="7" id="TlG-JI-LFU"/>
+                        <constraint firstAttribute="trailing" secondItem="72X-Dj-SFr" secondAttribute="trailing" constant="15" id="coo-SQ-GyZ"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kdt-2W-0t4">
+                    <rect key="frame" x="175" y="217" width="250" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="250" id="5wA-ro-0gQ"/>
+                        <constraint firstAttribute="height" constant="40" id="qCZ-Ca-ch9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="保存" backgroundImage="buttonGreen.png"/>
+                    <state key="selected" backgroundImage="buttonGreen_p.png"/>
+                    <state key="highlighted" backgroundImage="buttonGreen_p.png"/>
+                    <connections>
+                        <action selector="saveNickNameAction:" destination="-1" eventType="touchUpInside" id="At4-89-Y8g"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="kdt-2W-0t4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="IE4-vU-bL8"/>
+                <constraint firstItem="rBD-Q9-CM6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="Jtm-9K-b1N"/>
+                <constraint firstAttribute="trailing" secondItem="rBD-Q9-CM6" secondAttribute="trailing" id="P5c-RH-oPE"/>
+                <constraint firstItem="kdt-2W-0t4" firstAttribute="top" secondItem="rBD-Q9-CM6" secondAttribute="bottom" constant="163" id="mX8-Tp-YqB"/>
+                <constraint firstItem="rBD-Q9-CM6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rWY-th-F7S"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="buttonGreen.png" width="250" height="40"/>
+        <image name="buttonGreen_p.png" width="250" height="40"/>
+    </resources>
+</document>

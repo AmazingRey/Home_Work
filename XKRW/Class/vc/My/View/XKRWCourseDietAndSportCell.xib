@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="288" id="KGk-i7-Jjw" customClass="XKRWCourseDietAndSportCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="235"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="饮食摄入" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VyM-jh-hcR">
+                        <rect key="frame" x="15" y="0.0" width="121" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="2RN-d8-ZZV"/>
+                            <constraint firstAttribute="width" constant="121" id="FF4-ve-1Na"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_sport_emblem_640.png" translatesAutoresizingMaskIntoConstraints="NO" id="D0C-t4-FDy">
+                        <rect key="frame" x="45" y="146" width="230" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="230" id="Zwy-SM-Wsv"/>
+                            <constraint firstAttribute="height" constant="45" id="gCR-B1-NIu"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_statistics_7day_640.png" translatesAutoresizingMaskIntoConstraints="NO" id="NRS-mJ-hcc">
+                        <rect key="frame" x="23" y="64" width="275" height="52"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="275" id="YWH-aN-vDS"/>
+                            <constraint firstAttribute="height" constant="52" id="YXQ-ln-v61"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9x-bE-r04">
+                        <rect key="frame" x="54" y="165" width="42" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="hfj-Zb-avW"/>
+                            <constraint firstAttribute="width" constant="42" id="tTK-bp-gsM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bg5-gy-9Dh">
+                        <rect key="frame" x="222" y="165" width="42" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="42" id="CpH-y0-G1o"/>
+                            <constraint firstAttribute="height" constant="21" id="Eru-6t-SYa"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" red="1" green="0.77254901960784317" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="psm-Cp-oVo">
+                        <rect key="frame" x="139" y="165" width="42" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="fUn-uk-lr6"/>
+                            <constraint firstAttribute="width" constant="42" id="mQU-mE-YVR"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <color key="textColor" red="1" green="0.41960784309999999" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerX" secondItem="NRS-mJ-hcc" secondAttribute="centerX" constant="-0.5" id="3hv-7r-p7L"/>
+                    <constraint firstItem="psm-Cp-oVo" firstAttribute="top" secondItem="D0C-t4-FDy" secondAttribute="bottom" constant="-26" id="9Ua-tK-hAW"/>
+                    <constraint firstItem="D0C-t4-FDy" firstAttribute="top" secondItem="NRS-mJ-hcc" secondAttribute="bottom" constant="30" id="AOE-Vw-SwO"/>
+                    <constraint firstItem="psm-Cp-oVo" firstAttribute="leading" secondItem="M9x-bE-r04" secondAttribute="trailing" constant="43" id="JsE-P2-Cfi"/>
+                    <constraint firstItem="VyM-jh-hcR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="NCi-ew-gF4"/>
+                    <constraint firstItem="Bg5-gy-9Dh" firstAttribute="top" secondItem="psm-Cp-oVo" secondAttribute="bottom" constant="-21" id="PYa-Jp-zcb"/>
+                    <constraint firstItem="Bg5-gy-9Dh" firstAttribute="leading" secondItem="psm-Cp-oVo" secondAttribute="trailing" constant="41" id="aJ9-qE-DHS"/>
+                    <constraint firstItem="VyM-jh-hcR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="fua-vH-tJF"/>
+                    <constraint firstAttribute="centerX" secondItem="D0C-t4-FDy" secondAttribute="centerX" id="lCD-C4-U50"/>
+                    <constraint firstItem="psm-Cp-oVo" firstAttribute="top" secondItem="M9x-bE-r04" secondAttribute="bottom" constant="-21" id="xBZ-bY-bT9"/>
+                    <constraint firstAttribute="centerX" secondItem="psm-Cp-oVo" secondAttribute="centerX" id="xjY-8i-F78"/>
+                    <constraint firstItem="NRS-mJ-hcc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="64" id="zgo-qJ-7Xr"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dietAndSportDetailImageView" destination="NRS-mJ-hcc" id="VLn-gJ-8ts"/>
+                <outlet property="dietAndSportDetailImageViewConstraint" destination="YXQ-ln-v61" id="z0w-o3-3jv"/>
+                <outlet property="dietAndSportImageView" destination="D0C-t4-FDy" id="s8t-TU-gMS"/>
+                <outlet property="doOtherLabel" destination="Bg5-gy-9Dh" id="vJh-p3-7hp"/>
+                <outlet property="lazyLabel" destination="psm-Cp-oVo" id="mcN-5P-fYv"/>
+                <outlet property="perfectExecutionLabel" destination="M9x-bE-r04" id="Qgl-Kf-lLk"/>
+                <outlet property="titleLabel" destination="VyM-jh-hcR" id="3Zo-cJ-eGY"/>
+            </connections>
+            <point key="canvasLocation" x="248" y="181.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="progress_sport_emblem_640.png" width="230" height="45"/>
+        <image name="progress_statistics_7day_640.png" width="275" height="53"/>
+    </resources>
+</document>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="142" id="KGk-i7-Jjw" customClass="XKRWIslimDietCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="140"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="饮食模式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IOn-Q0-3iN">
+                        <rect key="frame" x="15" y="9" width="70" height="20"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="LTd-4r-RFg"/>
+                            <constraint firstAttribute="height" constant="20" id="noR-qi-uje"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TYw-xN-cm1">
+                        <rect key="frame" x="15" y="41" width="290" height="88"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ca0-OO-rVE">
+                        <rect key="frame" x="93" y="9" width="76" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="76" id="A0T-ev-jvS"/>
+                            <constraint firstAttribute="height" constant="20" id="k1w-pi-7Eq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ca0-OO-rVE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="7Zi-yC-Qaq"/>
+                    <constraint firstItem="IOn-Q0-3iN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="FGE-WO-IKj"/>
+                    <constraint firstItem="TYw-xN-cm1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="GXr-OP-0yO"/>
+                    <constraint firstItem="ca0-OO-rVE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="93" id="bWJ-56-IfZ"/>
+                    <constraint firstAttribute="trailing" secondItem="TYw-xN-cm1" secondAttribute="trailing" constant="15" id="iyh-ar-Q1s"/>
+                    <constraint firstItem="TYw-xN-cm1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="41" id="nWc-DA-KlT"/>
+                    <constraint firstItem="IOn-Q0-3iN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="9" id="ndT-tT-cTM"/>
+                    <constraint firstAttribute="bottom" secondItem="TYw-xN-cm1" secondAttribute="bottom" constant="10" id="rLv-IW-bkr"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="detailLabel" destination="TYw-xN-cm1" id="SaA-Ks-1ZM"/>
+                <outlet property="tagLabel" destination="ca0-OO-rVE" id="M7c-hv-5Gk"/>
+                <outlet property="tagLabelWidth" destination="A0T-ev-jvS" id="0iT-5O-HlY"/>
+                <outlet property="titleLabel" destination="IOn-Q0-3iN" id="43A-L0-pG2"/>
+            </connections>
+            <point key="canvasLocation" x="172" y="203"/>
+        </tableViewCell>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

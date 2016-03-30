@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="254" id="KGk-i7-Jjw" customClass="XKRWCourseWeightCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="254"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="254"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="体重变化" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0pm-zm-qCH">
+                        <rect key="frame" x="15" y="0.0" width="121" height="35"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 减重 4 kg,完成任务的50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8y-qB-HVr">
+                        <rect key="frame" x="35" y="224" width="250" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="DEG-6i-Cae"/>
+                            <constraint firstAttribute="width" constant="250" id="mjH-bH-5Ql"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eD1-Qq-tC3">
+                        <rect key="frame" x="23" y="69" width="275" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="100" id="c7C-3g-W1g"/>
+                            <constraint firstAttribute="width" constant="275" id="nNU-Gt-xpc"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_weight_7day_640.png" translatesAutoresizingMaskIntoConstraints="NO" id="Eqh-bP-h2T">
+                        <rect key="frame" x="23" y="192" width="275" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="mbJ-xJ-3Jf"/>
+                            <constraint firstAttribute="width" constant="275" id="pnB-gV-kAN"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vCM-nC-Mwf" userLabel="BottomLine">
+                        <rect key="frame" x="0.0" y="253" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="vCM-nC-Mwf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1wW-B1-QsC"/>
+                    <constraint firstAttribute="centerX" secondItem="eD1-Qq-tC3" secondAttribute="centerX" id="PKr-ri-TrY"/>
+                    <constraint firstAttribute="centerX" secondItem="Eqh-bP-h2T" secondAttribute="centerX" id="Vv3-eW-3N9"/>
+                    <constraint firstItem="Eqh-bP-h2T" firstAttribute="top" secondItem="eD1-Qq-tC3" secondAttribute="bottom" constant="23" id="WgO-ZW-AfJ"/>
+                    <constraint firstItem="vCM-nC-Mwf" firstAttribute="centerX" secondItem="i8y-qB-HVr" secondAttribute="centerX" id="eD3-Ma-gfl"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="vCM-nC-Mwf" secondAttribute="bottom" constant="-8.5" id="iya-nL-8Fc"/>
+                    <constraint firstItem="eD1-Qq-tC3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="69" id="jE4-5B-QnS"/>
+                    <constraint firstItem="vCM-nC-Mwf" firstAttribute="top" secondItem="i8y-qB-HVr" secondAttribute="bottom" id="nbP-Bs-uIT"/>
+                    <constraint firstAttribute="centerX" secondItem="i8y-qB-HVr" secondAttribute="centerX" id="yEe-0X-yIy"/>
+                    <constraint firstItem="i8y-qB-HVr" firstAttribute="top" secondItem="Eqh-bP-h2T" secondAttribute="bottom" constant="8" id="z5I-fu-M7o"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dataTypeImageView" destination="Eqh-bP-h2T" id="67o-Kt-tiQ"/>
+                <outlet property="pointView" destination="eD1-Qq-tC3" id="ry4-cG-tID"/>
+                <outlet property="weightDescriptionLabel" destination="i8y-qB-HVr" id="FkL-jT-PFS"/>
+            </connections>
+            <point key="canvasLocation" x="249" y="167"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="progress_weight_7day_640.png" width="275" height="24"/>
+    </resources>
+</document>

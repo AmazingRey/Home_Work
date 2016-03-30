@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="XKRWCalendarTitleCell" customModule="XKRW" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.26" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyu-iM-HmD">
+                        <rect key="frame" x="143" y="12" width="34" height="20"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                        <color key="textColor" red="0.1843137255" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PqE-la-jGf" userLabel="line">
+                        <rect key="frame" x="0.0" y="42" width="320" height="1"/>
+                        <animations/>
+                        <color key="backgroundColor" red="0.1843137255" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="1Pb-FE-smi"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_arrow_right.png" translatesAutoresizingMaskIntoConstraints="NO" id="fcE-sG-8ty">
+                        <rect key="frame" x="207" y="17" width="5" height="9"/>
+                        <animations/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="progress_arrow_left.png" translatesAutoresizingMaskIntoConstraints="NO" id="8HS-o4-24Z">
+                        <rect key="frame" x="108" y="18" width="5" height="9"/>
+                        <animations/>
+                    </imageView>
+                    <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ka-UG-h17">
+                        <rect key="frame" x="53" y="-1" width="70" height="45"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="bQ3-vN-dAF"/>
+                            <constraint firstAttribute="height" constant="44" id="nOh-8C-j3j"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="clickBefore:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NBC-YR-5fF"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0v-Ns-xFm">
+                        <rect key="frame" x="197" y="-1" width="70" height="45"/>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="PEp-5J-Awo"/>
+                            <constraint firstAttribute="height" constant="44" id="Wd1-LD-Jgl"/>
+                        </constraints>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="clickAfter:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ZTm-zm-Ogc"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="oyu-iM-HmD" secondAttribute="centerY" id="4gx-eA-Hai"/>
+                    <constraint firstAttribute="trailing" secondItem="PqE-la-jGf" secondAttribute="trailing" id="5vP-tE-WAC"/>
+                    <constraint firstAttribute="centerY" secondItem="fcE-sG-8ty" secondAttribute="centerY" id="6eE-fn-XEs"/>
+                    <constraint firstAttribute="bottom" secondItem="PqE-la-jGf" secondAttribute="bottom" id="BsH-yG-lhG"/>
+                    <constraint firstItem="c0v-Ns-xFm" firstAttribute="leading" secondItem="oyu-iM-HmD" secondAttribute="trailing" constant="20" id="LxT-Dc-NZG"/>
+                    <constraint firstItem="fcE-sG-8ty" firstAttribute="leading" secondItem="oyu-iM-HmD" secondAttribute="trailing" constant="30" id="Mxo-nS-f6l"/>
+                    <constraint firstItem="oyu-iM-HmD" firstAttribute="leading" secondItem="8HS-o4-24Z" secondAttribute="trailing" constant="30" id="eMy-RY-7CJ"/>
+                    <constraint firstAttribute="centerY" secondItem="8HS-o4-24Z" secondAttribute="centerY" id="max-yL-3rA"/>
+                    <constraint firstItem="oyu-iM-HmD" firstAttribute="leading" secondItem="6Ka-UG-h17" secondAttribute="trailing" constant="20" id="o2h-dE-gwj"/>
+                    <constraint firstAttribute="centerY" secondItem="c0v-Ns-xFm" secondAttribute="centerY" id="obw-uR-Glu"/>
+                    <constraint firstAttribute="centerY" secondItem="6Ka-UG-h17" secondAttribute="centerY" id="sgQ-mV-vBY"/>
+                    <constraint firstItem="PqE-la-jGf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="uYy-iY-5S8"/>
+                    <constraint firstAttribute="centerX" secondItem="oyu-iM-HmD" secondAttribute="centerX" id="xLs-Kk-7LD"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="dateLabel" destination="oyu-iM-HmD" id="Ci7-qY-xz9"/>
+            </connections>
+            <point key="canvasLocation" x="238" y="232"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="progress_arrow_left.png" width="5" height="9"/>
+        <image name="progress_arrow_right.png" width="5" height="9"/>
+    </resources>
+</document>

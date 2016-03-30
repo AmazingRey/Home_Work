@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Btb-Mj-epu" customClass="XKRWLikeView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="有9人喜欢这篇分享" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3K-EC-KYz">
+                    <rect key="frame" x="108" y="10" width="104" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="喜欢" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1h-Ju-SsC">
+                    <rect key="frame" x="148" y="85" width="24" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UFk-00-ZDQ" userLabel="line">
+                    <rect key="frame" x="0.0" y="119" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="wUl-9b-anh"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SzV-Pa-6Ka">
+                    <rect key="frame" x="140" y="40" width="40" height="40"/>
+                    <state key="normal" image="like_"/>
+                    <connections>
+                        <action selector="likeBtnClick:" destination="Btb-Mj-epu" eventType="touchUpInside" id="znN-GB-NtQ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Q3K-EC-KYz" firstAttribute="top" secondItem="Btb-Mj-epu" secondAttribute="topMargin" constant="2" id="34J-9m-EHi"/>
+                <constraint firstItem="b1h-Ju-SsC" firstAttribute="top" secondItem="SzV-Pa-6Ka" secondAttribute="bottom" constant="5" id="6ky-Md-vaY"/>
+                <constraint firstAttribute="trailing" secondItem="UFk-00-ZDQ" secondAttribute="trailing" id="Bev-ou-vk6"/>
+                <constraint firstAttribute="bottom" secondItem="UFk-00-ZDQ" secondAttribute="bottom" id="EnZ-nH-zdw"/>
+                <constraint firstItem="SzV-Pa-6Ka" firstAttribute="centerX" secondItem="Btb-Mj-epu" secondAttribute="centerX" id="Fwz-1J-GHO"/>
+                <constraint firstItem="b1h-Ju-SsC" firstAttribute="centerX" secondItem="Btb-Mj-epu" secondAttribute="centerX" id="H8J-7C-adH"/>
+                <constraint firstItem="SzV-Pa-6Ka" firstAttribute="centerY" secondItem="Btb-Mj-epu" secondAttribute="centerY" id="YOE-2y-gG1"/>
+                <constraint firstItem="UFk-00-ZDQ" firstAttribute="leading" secondItem="Btb-Mj-epu" secondAttribute="leading" id="opY-y2-Z1E"/>
+                <constraint firstItem="Q3K-EC-KYz" firstAttribute="centerX" secondItem="Btb-Mj-epu" secondAttribute="centerX" id="r8g-xZ-jd7"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="likeBtn" destination="SzV-Pa-6Ka" id="6lY-4s-r7X"/>
+                <outlet property="likeLabel" destination="b1h-Ju-SsC" id="YfY-QS-uAT"/>
+                <outlet property="titleLabel" destination="Q3K-EC-KYz" id="0HM-VZ-Lq6"/>
+            </connections>
+            <point key="canvasLocation" x="735" y="214"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="like_" width="40" height="40"/>
+    </resources>
+</document>

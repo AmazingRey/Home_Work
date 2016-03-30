@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SDChangeSizeCell" customModule="XKRW" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="44" id="Uif-Mt-lxM" customClass="SDChangeSizeCell" customModule="XKRW" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uif-Mt-lxM" id="2TA-b5-cBW">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大份" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a0E-Ai-APW">
+                        <rect key="frame" x="193" y="13" width="28" height="17"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                        <color key="textColor" red="0.1843137255" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7B1-tR-67K" userLabel="line">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="Hd1-zj-gxF"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前食谱分量为" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ngA-Gs-E5q">
+                        <rect key="frame" x="94" y="13" width="98" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="list_arrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="HZY-fE-eUW">
+                        <rect key="frame" x="291" y="17" width="14" height="9"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ngA-Gs-E5q" firstAttribute="centerY" secondItem="HZY-fE-eUW" secondAttribute="centerY" id="094-5W-7Y9"/>
+                    <constraint firstItem="ngA-Gs-E5q" firstAttribute="centerY" secondItem="a0E-Ai-APW" secondAttribute="centerY" id="5w2-yz-2Q9"/>
+                    <constraint firstItem="ngA-Gs-E5q" firstAttribute="leading" secondItem="2TA-b5-cBW" secondAttribute="leading" constant="15" id="9yj-fh-kFv"/>
+                    <constraint firstItem="a0E-Ai-APW" firstAttribute="leading" secondItem="ngA-Gs-E5q" secondAttribute="trailing" constant="1" id="HOE-z3-KPa"/>
+                    <constraint firstItem="7B1-tR-67K" firstAttribute="top" secondItem="2TA-b5-cBW" secondAttribute="top" id="Rlo-gP-jDn"/>
+                    <constraint firstAttribute="trailing" secondItem="HZY-fE-eUW" secondAttribute="trailing" constant="15" id="Uog-4q-tz0"/>
+                    <constraint firstAttribute="centerX" secondItem="ngA-Gs-E5q" secondAttribute="centerX" constant="17" id="m2H-Ta-wO6"/>
+                    <constraint firstItem="7B1-tR-67K" firstAttribute="leading" secondItem="2TA-b5-cBW" secondAttribute="leading" id="o1f-h8-RsE"/>
+                    <constraint firstAttribute="centerY" secondItem="ngA-Gs-E5q" secondAttribute="centerY" id="oAl-eL-4hx"/>
+                    <constraint firstAttribute="trailing" secondItem="7B1-tR-67K" secondAttribute="trailing" id="uvY-OD-Gh9"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="9yj-fh-kFv"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="schemeDescription" destination="ngA-Gs-E5q" id="ab7-MB-obn"/>
+                <outlet property="sizeLabel" destination="a0E-Ai-APW" id="3s8-jZ-3Az"/>
+            </connections>
+            <point key="canvasLocation" x="112" y="176"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="list_arrow.png" width="14" height="9"/>
+    </resources>
+</document>

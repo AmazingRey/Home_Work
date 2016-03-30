@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="XKRWAlarmCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="115"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="早餐" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j8X-02-D2u">
+                        <rect key="frame" x="15" y="10" width="50" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NzB-PL-dHS">
+                        <rect key="frame" x="15" y="84" width="35" height="16"/>
+                        <state key="normal" title="1" image="alarm_btn_Mon_640.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mJL-UI-O9Q">
+                        <rect key="frame" x="245" y="8" width="51" height="31"/>
+                    </switch>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g6f-uz-DwB">
+                        <rect key="frame" x="57" y="84" width="35" height="16"/>
+                        <state key="normal" title="1" image="alarm_btn_Tues_640.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cXQ-SM-Zfe">
+                        <rect key="frame" x="99" y="84" width="35" height="16"/>
+                        <state key="normal" title="1" image="alarm_btn_Wed_640.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="08:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5L-BC-oT0">
+                        <rect key="frame" x="15" y="44" width="80" height="28"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrk-uK-x2Y">
+                        <rect key="frame" x="141" y="84" width="35" height="16"/>
+                        <state key="normal" title="1" image="alarm_btn_Thur_640.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RJ8-XQ-z56">
+                        <rect key="frame" x="183" y="84" width="35" height="16"/>
+                        <state key="normal" title="1" image="alarm_btn_fri_640.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P8g-zR-t5f">
+                        <rect key="frame" x="225" y="84" width="35" height="16"/>
+                        <state key="normal" title="1" image="alarm_btn_sat_640.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wO-qB-fHm">
+                        <rect key="frame" x="267" y="84" width="35" height="16"/>
+                        <state key="normal" title="1" image="alarm_btn_Sun_640.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpP-je-pjf">
+                        <rect key="frame" x="100" y="50" width="16" height="16"/>
+                        <state key="normal" image="alarm_btn_edit_640.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="alarmSwitch" destination="mJL-UI-O9Q" id="Kp2-2t-DE7"/>
+                <outlet property="editTimeBtn" destination="hpP-je-pjf" id="d0S-5T-TRR"/>
+                <outlet property="friBtn" destination="RJ8-XQ-z56" id="9xz-vk-Yi2"/>
+                <outlet property="mealLabel" destination="j8X-02-D2u" id="c0O-iE-tOu"/>
+                <outlet property="monBtn" destination="NzB-PL-dHS" id="veQ-kz-UBZ"/>
+                <outlet property="satBtn" destination="P8g-zR-t5f" id="cAO-bB-1PC"/>
+                <outlet property="sunBtn" destination="0wO-qB-fHm" id="RfC-MG-N6A"/>
+                <outlet property="thursBtn" destination="lrk-uK-x2Y" id="4nX-WJ-tiY"/>
+                <outlet property="timeLabel" destination="n5L-BC-oT0" id="X9I-X9-JCf"/>
+                <outlet property="tuesBtn" destination="g6f-uz-DwB" id="bta-S1-cLq"/>
+                <outlet property="wedBtn" destination="cXQ-SM-Zfe" id="Dqy-Gt-D1B"/>
+            </connections>
+            <point key="canvasLocation" x="282" y="297.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="alarm_btn_Mon_640.png" width="71" height="33"/>
+        <image name="alarm_btn_Sun_640.png" width="71" height="33"/>
+        <image name="alarm_btn_Thur_640.png" width="71" height="33"/>
+        <image name="alarm_btn_Tues_640.png" width="71" height="33"/>
+        <image name="alarm_btn_Wed_640.png" width="71" height="33"/>
+        <image name="alarm_btn_edit_640.png" width="32" height="32"/>
+        <image name="alarm_btn_fri_640.png" width="71" height="33"/>
+        <image name="alarm_btn_sat_640.png" width="71" height="33"/>
+    </resources>
+</document>

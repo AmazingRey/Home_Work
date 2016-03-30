@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XKRWHowToUserSchemeVC" customModule="XKRW" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVr-uS-GRE">
+                    <rect key="frame" x="0.0" y="10" width="320" height="100"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一、我该吃什么" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omV-Xk-62e">
+                            <rect key="frame" x="15" y="8" width="122" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="hdd-i5-qy9"/>
+                                <constraint firstAttribute="width" constant="122" id="xbq-3q-C5e"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4NA-xS-m9v">
+                            <rect key="frame" x="15" y="30" width="290" height="58"/>
+                            <attributedString key="attributedText">
+                                <fragment content="瘦瘦新版食谱仅按食物类别进行推荐，不再具体到某一食物，你可以根据食物类别的“指导说明”和“禁忌”自行选择食物。">
+                                    <attributes>
+                                        <color key="NSColor" red="0.40002367424242424" green="0.39856770833333333" blue="0.40107717803030302" alpha="1" colorSpace="deviceRGB"/>
+                                        <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                        <real key="NSKern" value="0.0"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="3" defaultTabInterval="36">
+                                            <tabStops/>
+                                        </paragraphStyle>
+                                        <color key="NSStrokeColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
+                                        <real key="NSStrokeWidth" value="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="4NA-xS-m9v" secondAttribute="trailing" constant="15" id="4Qc-cs-JJy"/>
+                        <constraint firstItem="4NA-xS-m9v" firstAttribute="top" secondItem="vVr-uS-GRE" secondAttribute="top" constant="30" id="57q-fO-uOu"/>
+                        <constraint firstAttribute="height" constant="100" id="7mM-fM-Vjs"/>
+                        <constraint firstItem="omV-Xk-62e" firstAttribute="top" secondItem="vVr-uS-GRE" secondAttribute="top" constant="8" id="FR9-V8-ujV"/>
+                        <constraint firstAttribute="bottom" secondItem="4NA-xS-m9v" secondAttribute="bottom" constant="12" id="QvW-iy-Aly"/>
+                        <constraint firstItem="omV-Xk-62e" firstAttribute="leading" secondItem="vVr-uS-GRE" secondAttribute="leading" constant="15" id="Ydi-9S-nSY"/>
+                        <constraint firstItem="4NA-xS-m9v" firstAttribute="leading" secondItem="vVr-uS-GRE" secondAttribute="leading" constant="15" id="upf-ad-9VL"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WoH-Fi-WNi">
+                    <rect key="frame" x="0.0" y="268" width="320" height="133"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="三、分量参考图如何使用？" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znH-XI-SnJ">
+                            <rect key="frame" x="15" y="8" width="202" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="Zcv-cd-ybh"/>
+                                <constraint firstAttribute="width" constant="202" id="lya-qV-jXi"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="63s-gV-2Pb">
+                            <rect key="frame" x="15" y="29" width="290" height="96"/>
+                            <attributedString key="attributedText">
+                                <fragment content="初次使用瘦瘦新版分量参考图时，找一张卡片（身份证、学生证、公交卡、门卡、银行卡均可），根据图示比例，大约估算出来食物的大小。再根据图示比例，估算出来食物的高度即可。">
+                                    <attributes>
+                                        <color key="NSColor" red="0.39824810606060607" green="0.39963304924242427" blue="0.40094696969696969" alpha="1" colorSpace="deviceRGB"/>
+                                        <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                        <real key="NSKern" value="0.0"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="3" defaultTabInterval="36">
+                                            <tabStops/>
+                                        </paragraphStyle>
+                                        <color key="NSStrokeColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
+                                        <real key="NSStrokeWidth" value="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="znH-XI-SnJ" firstAttribute="leading" secondItem="WoH-Fi-WNi" secondAttribute="leading" constant="15" id="6FZ-4U-qbE"/>
+                        <constraint firstItem="63s-gV-2Pb" firstAttribute="top" secondItem="WoH-Fi-WNi" secondAttribute="top" constant="29" id="7Wy-OQ-cuF"/>
+                        <constraint firstAttribute="trailing" secondItem="63s-gV-2Pb" secondAttribute="trailing" constant="15" id="Iav-hf-Aeo"/>
+                        <constraint firstAttribute="height" constant="133" id="OWD-v7-Ie0"/>
+                        <constraint firstItem="63s-gV-2Pb" firstAttribute="leading" secondItem="WoH-Fi-WNi" secondAttribute="leading" constant="15" id="URj-lL-vEE"/>
+                        <constraint firstAttribute="bottom" secondItem="63s-gV-2Pb" secondAttribute="bottom" constant="8" id="b2W-9c-Izb"/>
+                        <constraint firstItem="znH-XI-SnJ" firstAttribute="top" secondItem="WoH-Fi-WNi" secondAttribute="top" constant="8" id="mFJ-kf-gut"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nle-SJ-ByW">
+                    <rect key="frame" x="0.0" y="120" width="320" height="138"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="二、我该吃多少？" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8OZ-Ja-jXR">
+                            <rect key="frame" x="15" y="8" width="160" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="7Nl-7x-3mw"/>
+                                <constraint firstAttribute="width" constant="160" id="yvv-7K-8aX"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MUE-nP-N1A">
+                            <rect key="frame" x="15" y="30" width="290" height="95"/>
+                            <attributedString key="attributedText">
+                                <fragment content="根据食谱中，每类食物给出的分量参考图，来确定分量，同类型（相同烹饪方法、相似食材）的食物，热量差异不会很大。估算食用量时，只需跟图片中的分量相近即可，无需十分精准。">
+                                    <attributes>
+                                        <color key="NSColor" red="0.40094696969696969" green="0.39892282196969697" blue="0.39963304924242427" alpha="1" colorSpace="deviceRGB"/>
+                                        <font key="NSFont" size="14" name="STHeitiSC-Light"/>
+                                        <real key="NSKern" value="0.0"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineSpacing="3" defaultTabInterval="36">
+                                            <tabStops/>
+                                        </paragraphStyle>
+                                        <color key="NSStrokeColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="deviceRGB"/>
+                                        <real key="NSStrokeWidth" value="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="8OZ-Ja-jXR" firstAttribute="leading" secondItem="Nle-SJ-ByW" secondAttribute="leading" constant="15" id="9iA-6g-gsz"/>
+                        <constraint firstItem="8OZ-Ja-jXR" firstAttribute="top" secondItem="Nle-SJ-ByW" secondAttribute="top" constant="8" id="Asy-oy-r0Z"/>
+                        <constraint firstItem="MUE-nP-N1A" firstAttribute="leading" secondItem="Nle-SJ-ByW" secondAttribute="leading" constant="15" id="Y3u-2N-6gI"/>
+                        <constraint firstAttribute="height" constant="138" id="YyT-j3-72k"/>
+                        <constraint firstAttribute="trailing" secondItem="MUE-nP-N1A" secondAttribute="trailing" constant="15" id="n7o-Fa-CYL"/>
+                        <constraint firstItem="MUE-nP-N1A" firstAttribute="top" secondItem="Nle-SJ-ByW" secondAttribute="top" constant="30" id="uwY-sY-u9s"/>
+                        <constraint firstAttribute="bottom" secondItem="MUE-nP-N1A" secondAttribute="bottom" constant="13" id="zuq-ek-iW3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="vVr-uS-GRE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AfV-6C-v6G"/>
+                <constraint firstAttribute="trailing" secondItem="Nle-SJ-ByW" secondAttribute="trailing" id="Tfv-nb-6FS"/>
+                <constraint firstItem="Nle-SJ-ByW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WR9-ya-ZfE"/>
+                <constraint firstItem="Nle-SJ-ByW" firstAttribute="top" secondItem="vVr-uS-GRE" secondAttribute="bottom" constant="10" id="Y1Q-jJ-ucJ"/>
+                <constraint firstAttribute="trailing" secondItem="WoH-Fi-WNi" secondAttribute="trailing" id="Zfi-yx-EKR"/>
+                <constraint firstItem="WoH-Fi-WNi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ber-Te-3s1"/>
+                <constraint firstItem="WoH-Fi-WNi" firstAttribute="top" secondItem="Nle-SJ-ByW" secondAttribute="bottom" constant="10" id="gUF-b7-CHR"/>
+                <constraint firstItem="vVr-uS-GRE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="ng5-DB-seg"/>
+                <constraint firstAttribute="trailing" secondItem="vVr-uS-GRE" secondAttribute="trailing" id="u1o-AA-I7X"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <point key="canvasLocation" x="140" y="247"/>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="4fF-Uq-Uer" customClass="XKRWExplainView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="榜单说明" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="28P-iO-kU1">
+                    <rect key="frame" x="15" y="10" width="64" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="· 每周日晚24点，统计本周发布过内容，且获得喜欢数最多的前十名用户；" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DVM-6s-n3X">
+                    <rect key="frame" x="15" y="40" width="290" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="290" id="M3H-Cw-1t7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="M3H-Cw-1t7"/>
+                        </mask>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="· 只统计本周发布的瘦身分享内容获得的喜欢数；" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDp-0u-KWw">
+                    <rect key="frame" x="15" y="84" width="290" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="· 榜单数据每周日晚24点更新；" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZo-No-sCY">
+                    <rect key="frame" x="15" y="128" width="290" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aPk-TE-cIH" userLabel="line">
+                    <rect key="frame" x="0.0" y="179" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="DmO-0k-yUj"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="aPk-TE-cIH" firstAttribute="leading" secondItem="4fF-Uq-Uer" secondAttribute="leading" id="46s-8a-SWt"/>
+                <constraint firstItem="DVM-6s-n3X" firstAttribute="leading" secondItem="4fF-Uq-Uer" secondAttribute="leading" constant="15" id="E21-jN-bBC"/>
+                <constraint firstAttribute="trailing" secondItem="aPk-TE-cIH" secondAttribute="trailing" id="OLd-ow-1Ua"/>
+                <constraint firstAttribute="trailing" secondItem="DVM-6s-n3X" secondAttribute="trailing" constant="15" id="PE8-Cw-S8h"/>
+                <constraint firstAttribute="trailing" secondItem="hDp-0u-KWw" secondAttribute="trailing" constant="15" id="U2Y-Gh-kMU"/>
+                <constraint firstItem="28P-iO-kU1" firstAttribute="top" secondItem="4fF-Uq-Uer" secondAttribute="top" constant="10" id="Xgm-9F-d4b"/>
+                <constraint firstItem="28P-iO-kU1" firstAttribute="leading" secondItem="4fF-Uq-Uer" secondAttribute="leading" constant="15" id="dGH-aA-8B9"/>
+                <constraint firstItem="XZo-No-sCY" firstAttribute="top" secondItem="hDp-0u-KWw" secondAttribute="bottom" constant="10" id="i4J-hE-8Cv"/>
+                <constraint firstItem="hDp-0u-KWw" firstAttribute="top" secondItem="DVM-6s-n3X" secondAttribute="bottom" constant="10" id="isr-wl-thG"/>
+                <constraint firstAttribute="bottom" secondItem="aPk-TE-cIH" secondAttribute="bottom" id="jD2-zy-AGQ"/>
+                <constraint firstItem="XZo-No-sCY" firstAttribute="leading" secondItem="4fF-Uq-Uer" secondAttribute="leading" constant="15" id="k4H-DZ-AQy"/>
+                <constraint firstAttribute="trailing" secondItem="XZo-No-sCY" secondAttribute="trailing" constant="15" id="nME-EW-Y0C"/>
+                <constraint firstItem="DVM-6s-n3X" firstAttribute="top" secondItem="28P-iO-kU1" secondAttribute="bottom" constant="10" id="quK-gF-frg"/>
+                <constraint firstItem="hDp-0u-KWw" firstAttribute="leading" secondItem="4fF-Uq-Uer" secondAttribute="leading" constant="15" id="yyz-zJ-K3h"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="270" y="302.5"/>
+        </view>
+    </objects>
+</document>

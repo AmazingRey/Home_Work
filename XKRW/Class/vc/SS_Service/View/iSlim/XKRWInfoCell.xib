@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="infoCell" rowHeight="194" id="KGk-i7-Jjw" customClass="XKRWInfoCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="194"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="193"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="erv-5O-P8d" userLabel="line">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="nCf-eV-25I"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0nw-Ez-TAh">
+                        <rect key="frame" x="15" y="0.0" width="290" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="CdI-CQ-ebi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="16"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hG7-PK-k69" userLabel="line">
+                        <rect key="frame" x="0.0" y="44" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="Al3-em-qd3"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IfU-oN-43t" userLabel="line">
+                        <rect key="frame" x="0.0" y="192" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="vAb-P1-bxf"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="290" translatesAutoresizingMaskIntoConstraints="NO" id="tjl-LE-5z6">
+                        <rect key="frame" x="15" y="52" width="290" height="129"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="centerX" secondItem="hG7-PK-k69" secondAttribute="centerX" id="21E-Ba-aaB"/>
+                    <constraint firstAttribute="centerX" secondItem="erv-5O-P8d" secondAttribute="centerX" id="2Gq-N3-zcy"/>
+                    <constraint firstItem="tjl-LE-5z6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="44" id="2aN-ZY-FyK"/>
+                    <constraint firstAttribute="centerX" secondItem="IfU-oN-43t" secondAttribute="centerX" id="3mk-oQ-pfI"/>
+                    <constraint firstAttribute="centerX" secondItem="tjl-LE-5z6" secondAttribute="centerX" id="96D-CH-aAC"/>
+                    <constraint firstItem="erv-5O-P8d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="BvC-ur-zpc"/>
+                    <constraint firstItem="hG7-PK-k69" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="FyJ-jI-d8Q"/>
+                    <constraint firstItem="IfU-oN-43t" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="GZ8-Uh-W52"/>
+                    <constraint firstItem="hG7-PK-k69" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="36" id="HO2-Qa-tmd"/>
+                    <constraint firstItem="0nw-Ez-TAh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="Sdi-aS-7Eo"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="IfU-oN-43t" secondAttribute="bottom" constant="-8" id="Whe-e4-Ajs"/>
+                    <constraint firstItem="tjl-LE-5z6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="dRw-wY-DQ7"/>
+                    <constraint firstItem="erv-5O-P8d" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="e1O-dm-nPf"/>
+                    <constraint firstItem="0nw-Ez-TAh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="m6X-GX-yRN"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="0nw-Ez-TAh" secondAttribute="trailing" constant="7" id="r8P-Ze-SDD"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="tjl-LE-5z6" secondAttribute="bottom" constant="4" id="rtc-13-oCH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="contentLabel" destination="tjl-LE-5z6" id="g7D-X9-amF"/>
+                <outlet property="titleLabel" destination="0nw-Ez-TAh" id="97q-n5-jaa"/>
+            </connections>
+            <point key="canvasLocation" x="310" y="254"/>
+        </tableViewCell>
+    </objects>
+</document>

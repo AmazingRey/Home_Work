@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XKRWCollectVC">
+            <connections>
+                <outlet property="collectTableView" destination="p4T-ru-11d" id="34O-hh-Ewa"/>
+                <outlet property="segmentedControl" destination="dY4-fR-a81" id="B6i-11-BrO"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dY4-fR-a81">
+                    <rect key="frame" x="15" y="10" width="570" height="29"/>
+                    <segments>
+                        <segment title="我的文章"/>
+                        <segment title="我的食物"/>
+                        <segment title="我的运动"/>
+                    </segments>
+                    <color key="tintColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="segmentedControlAction:" destination="-1" eventType="valueChanged" id="ND4-Zn-M3w"/>
+                    </connections>
+                </segmentedControl>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="p4T-ru-11d">
+                    <rect key="frame" x="0.0" y="49" width="600" height="541"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="p4T-ru-11d" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="49" id="3hQ-s5-2I8"/>
+                <constraint firstAttribute="bottom" secondItem="p4T-ru-11d" secondAttribute="bottom" constant="10" id="6lM-oI-oxB"/>
+                <constraint firstItem="p4T-ru-11d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Egy-Qi-uc7"/>
+                <constraint firstItem="dY4-fR-a81" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="NJg-JW-hjm"/>
+                <constraint firstAttribute="trailing" secondItem="p4T-ru-11d" secondAttribute="trailing" id="UKk-kU-dts"/>
+                <constraint firstAttribute="trailing" secondItem="dY4-fR-a81" secondAttribute="trailing" constant="15" id="iqr-u2-qcx"/>
+                <constraint firstItem="p4T-ru-11d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="njb-0R-sXq"/>
+                <constraint firstItem="dY4-fR-a81" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="w58-W6-KCg"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+        </view>
+    </objects>
+</document>

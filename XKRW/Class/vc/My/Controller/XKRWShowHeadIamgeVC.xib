@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XKRWShowHeadIamgeVC" customModule="XKRW" customModuleProvider="target">
+            <connections>
+                <outlet property="headImageView" destination="qkV-b8-iKW" id="Lf4-1v-jRF"/>
+                <outlet property="scrollView" destination="kKT-85-uSr" id="zzF-Wk-MIK"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kKT-85-uSr">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qkV-b8-iKW">
+                            <rect key="frame" x="0.0" y="124" width="320" height="320"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="qkV-b8-iKW" secondAttribute="height" multiplier="1:1" id="R0O-ti-rJi"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="qkV-b8-iKW" secondAttribute="trailing" id="1bg-Ht-Rx0"/>
+                        <constraint firstAttribute="bottom" secondItem="qkV-b8-iKW" secondAttribute="bottom" constant="124" id="BQ1-D5-38n"/>
+                        <constraint firstItem="qkV-b8-iKW" firstAttribute="centerX" secondItem="kKT-85-uSr" secondAttribute="centerX" id="Hlk-ag-bLb"/>
+                        <constraint firstItem="qkV-b8-iKW" firstAttribute="centerY" secondItem="kKT-85-uSr" secondAttribute="centerY" id="UTh-rH-qPy"/>
+                        <constraint firstItem="qkV-b8-iKW" firstAttribute="leading" secondItem="kKT-85-uSr" secondAttribute="leading" id="Y3L-GA-ZQ4"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="kKT-85-uSr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="FiK-GV-RLg"/>
+                <constraint firstAttribute="trailing" secondItem="kKT-85-uSr" secondAttribute="trailing" id="MPq-cj-OTY"/>
+                <constraint firstAttribute="bottom" secondItem="kKT-85-uSr" secondAttribute="bottom" id="RQR-rb-S8V"/>
+                <constraint firstItem="kKT-85-uSr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="d11-6n-Bzr"/>
+            </constraints>
+            <point key="canvasLocation" x="300" y="260"/>
+        </view>
+    </objects>
+</document>

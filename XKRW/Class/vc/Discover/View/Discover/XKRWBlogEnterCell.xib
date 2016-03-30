@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="XKRWBlogEnterCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="224"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="223"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2AB-WW-vFn" userLabel="line">
+                        <rect key="frame" x="0.0" y="222" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="Q6V-fz-PZ4"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n7B-O9-CNM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="瘦身分享" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T72-Mu-Pa2">
+                                <rect key="frame" x="15" y="10" width="64" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="T72-Mu-Pa2" firstAttribute="top" secondItem="n7B-O9-CNM" secondAttribute="top" constant="10" id="7WN-7L-Xru"/>
+                            <constraint firstItem="T72-Mu-Pa2" firstAttribute="leading" secondItem="n7B-O9-CNM" secondAttribute="leading" constant="15" id="QLM-sg-TKR"/>
+                            <constraint firstAttribute="width" secondItem="n7B-O9-CNM" secondAttribute="height" multiplier="80:11" id="zD0-7B-vCg"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfr-nc-DUA">
+                        <rect key="frame" x="0.0" y="43" width="320" height="180"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="vfr-nc-DUA" secondAttribute="height" multiplier="16:9" id="M7W-I9-PEa"/>
+                        </constraints>
+                        <connections>
+                            <action selector="coverButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kcG-ly-JdG"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me_bgshadow" translatesAutoresizingMaskIntoConstraints="NO" id="eq6-XT-WL9">
+                        <rect key="frame" x="0.0" y="43" width="320" height="180"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="跟着我一起做，腹肌就是这么来的加油加油，腹肌就是这么来的" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJD-Ta-de8">
+                        <rect key="frame" x="15" y="174" width="290" height="39"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="vfr-nc-DUA" secondAttribute="trailing" constant="-8" id="1ya-Ie-1Y6"/>
+                    <constraint firstAttribute="trailing" secondItem="MJD-Ta-de8" secondAttribute="trailing" constant="15" id="5uY-yb-EKf"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="vfr-nc-DUA" secondAttribute="bottom" constant="-8" id="8ko-pg-ptt"/>
+                    <constraint firstItem="eq6-XT-WL9" firstAttribute="leading" secondItem="vfr-nc-DUA" secondAttribute="leading" id="FCl-lX-FYi"/>
+                    <constraint firstItem="MJD-Ta-de8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="G9t-g7-Sny"/>
+                    <constraint firstItem="n7B-O9-CNM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="GWZ-pC-XA6"/>
+                    <constraint firstAttribute="bottom" secondItem="2AB-WW-vFn" secondAttribute="bottom" id="WYX-Zi-Fsx"/>
+                    <constraint firstAttribute="trailing" secondItem="n7B-O9-CNM" secondAttribute="trailing" id="bOf-aM-cvW"/>
+                    <constraint firstItem="n7B-O9-CNM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="bos-1d-u6A"/>
+                    <constraint firstAttribute="bottom" secondItem="MJD-Ta-de8" secondAttribute="bottom" constant="10" id="mU8-Ai-NMf"/>
+                    <constraint firstItem="eq6-XT-WL9" firstAttribute="trailing" secondItem="vfr-nc-DUA" secondAttribute="trailing" id="miK-XL-Ri8"/>
+                    <constraint firstItem="eq6-XT-WL9" firstAttribute="bottom" secondItem="vfr-nc-DUA" secondAttribute="bottom" id="nyl-kq-ooj"/>
+                    <constraint firstItem="eq6-XT-WL9" firstAttribute="top" secondItem="vfr-nc-DUA" secondAttribute="top" id="o4V-C6-VK2"/>
+                    <constraint firstAttribute="trailing" secondItem="2AB-WW-vFn" secondAttribute="trailing" id="r8o-Ua-Mfk"/>
+                    <constraint firstItem="2AB-WW-vFn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="tIq-OA-FwP"/>
+                    <constraint firstItem="vfr-nc-DUA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="35" id="wo0-Cs-JG0"/>
+                    <constraint firstItem="vfr-nc-DUA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="xcu-Qh-u0e"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="_coverButton" destination="vfr-nc-DUA" id="flZ-2x-IDy"/>
+                <outlet property="_tipLabel" destination="T72-Mu-Pa2" id="HYP-3S-ynb"/>
+                <outlet property="_titleLabel" destination="MJD-Ta-de8" id="nWi-ac-o3s"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="me_bgshadow" width="375" height="211"/>
+    </resources>
+</document>

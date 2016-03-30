@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="XKRWProfessionalShareView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="head.png" translatesAutoresizingMaskIntoConstraints="NO" id="BZZ-lO-lCx">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="r1R-fQ-RQn"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLW-II-7KP">
+                    <rect key="frame" x="90" y="8" width="140" height="19"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKJ-Ug-WfG">
+                    <rect key="frame" x="268" y="8" width="44" height="44"/>
+                    <state key="normal" image="closeBig_p.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cx9-As-fJy">
+                    <rect key="frame" x="15" y="35" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="JS2-BM-EHD"/>
+                        <constraint firstAttribute="width" constant="50" id="i3H-1y-6h6"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6vT-hE-xic">
+                    <rect key="frame" x="82" y="35" width="122" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UgP-bz-nJj">
+                    <rect key="frame" x="82" y="63" width="122" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jaC-gl-7q2">
+                    <rect key="frame" x="15" y="108" width="93" height="94"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="94" id="u7h-eY-ciz"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JfN-IV-ae8">
+                    <rect key="frame" x="122" y="121" width="20" height="50"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYl-3q-jcq">
+                    <rect key="frame" x="286" y="121" width="20" height="50"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="BZZ-lO-lCx" secondAttribute="trailing" id="0Wt-R4-jZT"/>
+                <constraint firstItem="cx9-As-fJy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="35" id="D8G-9O-dzb"/>
+                <constraint firstItem="BZZ-lO-lCx" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LEo-Pe-h7L"/>
+                <constraint firstItem="jaC-gl-7q2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Nqj-DH-3js"/>
+                <constraint firstItem="cx9-As-fJy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="j4h-7W-ONi"/>
+                <constraint firstAttribute="trailing" secondItem="cx9-As-fJy" secondAttribute="trailing" constant="255" id="k54-G0-Ymk"/>
+                <constraint firstItem="BZZ-lO-lCx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lji-7t-mJo"/>
+                <constraint firstItem="BZZ-lO-lCx" firstAttribute="top" secondItem="jaC-gl-7q2" secondAttribute="top" constant="-108" id="mce-P3-sIU"/>
+                <constraint firstAttribute="trailing" secondItem="jaC-gl-7q2" secondAttribute="trailing" constant="212" id="xmn-Y2-OAp"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="226" y="107"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="closeBig_p.png" width="40" height="40"/>
+        <image name="head.png" width="320" height="90"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
