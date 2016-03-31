@@ -6611,7 +6611,7 @@
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
 					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = 2H2WTQZ7Y8;
+						DevelopmentTeam = KFHY8Z75E6;
 					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = WT58P44WAK;
@@ -7826,8 +7826,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -7878,7 +7878,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -7896,8 +7896,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -7948,7 +7948,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
