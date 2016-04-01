@@ -213,6 +213,8 @@
 		2F12046D1BAF9B9900CB3968 /* XKRWAlarmService5_1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F12046C1BAF9B9900CB3968 /* XKRWAlarmService5_1.m */; };
 		2F189C901C2185F7007AC2B4 /* XKRWFitCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F189C8F1C2185F7007AC2B4 /* XKRWFitCommentCell.m */; };
 		2F20D4511B56655A00E6E325 /* XKRWSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F20D4501B56655A00E6E325 /* XKRWSearchService.swift */; };
+		2F2FEFA01C9FFE940064E6C8 /* XKRWFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2FEF9F1C9FFE940064E6C8 /* XKRWFocusView.m */; };
+		2F2FEFA21C9FFEA90064E6C8 /* XKRWFocusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F2FEFA11C9FFEA90064E6C8 /* XKRWFocusView.xib */; };
 		2F3C632A1C3CAA6F007D9E20 /* XKRWActionSheetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3C63281C3CAA6F007D9E20 /* XKRWActionSheetCell.m */; };
 		2F3C632B1C3CAA6F007D9E20 /* XKRWActionSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F3C63291C3CAA6F007D9E20 /* XKRWActionSheetCell.xib */; };
 		2F3F4BBD1C48CC4B002F685A /* XKRWLikeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3F4BBC1C48CC4B002F685A /* XKRWLikeView.m */; };
@@ -241,6 +243,8 @@
 		2F796DCF1C465DFB00E3571A /* XKRWExplainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F796DCE1C465DFB00E3571A /* XKRWExplainView.m */; };
 		2F796DD11C465E0B00E3571A /* XKRWExplainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F796DD01C465E0B00E3571A /* XKRWExplainView.xib */; };
 		2F7EADAA1C2002F10081DCC9 /* XKRWReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EADA91C2002F00081DCC9 /* XKRWReplyCell.m */; };
+		2F8CAD0C1CACCC5B003F706A /* XKRWEnergyCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8CAD0B1CACCC5B003F706A /* XKRWEnergyCircleView.m */; };
+		2F8CAD121CAD0B33003F706A /* XKRWAnimationCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8CAD111CAD0B33003F706A /* XKRWAnimationCircle.m */; };
 		2F8E450418D19E5300B3B066 /* XKRWSettingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8E450318D19E5300B3B066 /* XKRWSettingService.m */; };
 		2F8FB47118FBB24A00AB8400 /* weightHint.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F8FB46F18FBB24A00AB8400 /* weightHint.plist */; };
 		2F9CC2E81B0205D3009A210A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9CC2E61B0205D3009A210A /* Crashlytics.framework */; };
@@ -410,6 +414,7 @@
 		A7E9173D1B5CC09D0017F5FD /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A7E917391B5CC09C0017F5FD /* README.md */; };
 		A7E9173E1B5CC09D0017F5FD /* UICountingLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E9173B1B5CC09C0017F5FD /* UICountingLabel.m */; };
 		A7F70C7F1B7B132C00CB8251 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F70C7E1B7B132C00CB8251 /* Reachability.m */; };
+		AC83D6AD00B7F4EC27A4A409 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A18F1CE4C8D01A5843AD718B /* libPods.a */; };
 		BC0BAF2C1C575F5A00BAD05C /* XKRWOperateArticleListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BAF2A1C575F5A00BAD05C /* XKRWOperateArticleListVC.swift */; };
 		BC0BAF2D1C575F5A00BAD05C /* XKRWOperateArticleListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC0BAF2B1C575F5A00BAD05C /* XKRWOperateArticleListVC.xib */; };
 		BC0BAF311C5766B800BAD05C /* XKRWBigImageAndTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0BAF2F1C5766B800BAD05C /* XKRWBigImageAndTitleCell.swift */; };
@@ -757,6 +762,7 @@
 		BCC7E96B1C5A08B3008B560F /* TeamPostNumEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC7E9691C5A08B3008B560F /* TeamPostNumEntity.swift */; };
 		BCCAB1AC1B85C92D005DF85A /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCCAB1A81B85C92D005DF85A /* iflyMSC.framework */; };
 		BCCCE64E1C8E7BC9007AA2FF /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCCE64D1C8E7BC9007AA2FF /* RTLabel.m */; };
+		BCD0CD0E1CA2418B00A6E284 /* XKRWAppCommentUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD0CD0D1CA2418B00A6E284 /* XKRWAppCommentUtil.m */; };
 		BCD416EB1A51051E00DD9665 /* YLGIFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD416E81A51051E00DD9665 /* YLGIFImage.m */; };
 		BCD416EC1A51051E00DD9665 /* YLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD416EA1A51051E00DD9665 /* YLImageView.m */; };
 		BCD4E6141B142B2D00C20104 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD4E6131B142B2D00C20104 /* libicucore.dylib */; };
@@ -999,6 +1005,10 @@
 		BCF123AD1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF123AB1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.swift */; };
 		BCF123AE1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF123AC1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.xib */; };
 		BCF4F80B19A7372400E7644E /* ProvincesAndCities.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCF4F80A19A7372400E7644E /* ProvincesAndCities.plist */; };
+		BCF664641CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF664631CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m */; };
+		BCF6646C1CAE1D4B006EBC61 /* XKRWPlanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF6646B1CAE1D4B006EBC61 /* XKRWPlanVC.m */; };
+		BCF664701CAE28BA006EBC61 /* XKRWRecordAndTargetView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF6646F1CAE28BA006EBC61 /* XKRWRecordAndTargetView.m */; };
+		BCF664721CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF664711CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib */; };
 		BCF862191C5088D300A64986 /* XKRWPostDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF862171C5088D300A64986 /* XKRWPostDetailVC.m */; };
 		BCF8621A1C5088D300A64986 /* XKRWPostDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF862181C5088D300A64986 /* XKRWPostDetailVC.xib */; };
 		BCF8621E1C508B3800A64986 /* XKRWBelongTeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8621C1C508B3800A64986 /* XKRWBelongTeamCell.m */; };
@@ -1006,6 +1016,12 @@
 		BCF862231C508D2600A64986 /* XKRWPostDeatilCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF862211C508D2600A64986 /* XKRWPostDeatilCell.m */; };
 		BCF862241C508D2600A64986 /* XKRWPostDeatilCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF862221C508D2600A64986 /* XKRWPostDeatilCell.xib */; };
 		BCFE22261B74CC9F00535863 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFE22251B74CC9F00535863 /* MediaPlayer.framework */; };
+		CC260F991CAE0D7E00D58C91 /* XKRWPlan_5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC260F961CAE0D7E00D58C91 /* XKRWPlan_5_3View.xib */; };
+		CC260F9A1CAE0D7E00D58C91 /* XKRWPlan_5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CC260F981CAE0D7E00D58C91 /* XKRWPlan_5_3View.m */; };
+		CC260F9D1CAE0E0300D58C91 /* XKRWPlan_5_3CollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC260F9C1CAE0E0300D58C91 /* XKRWPlan_5_3CollectionView.m */; };
+		CC260F9F1CAE0E1C00D58C91 /* XKRWPlan_5_3CollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC260F9E1CAE0E1C00D58C91 /* XKRWPlan_5_3CollectionView.xib */; };
+		CCACB98E1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCACB98C1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.swift */; };
+		CCACB98F1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCACB98D1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.xib */; };
 		E33DCA831B17FDA2006FE125 /* XKRWSchemeService_5_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCA821B17FDA2006FE125 /* XKRWSchemeService_5_0.swift */; };
 		E39E8F9A1AAD4F3100B1E5DD /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39E8F931AAD4F3100B1E5DD /* payRequsestHandler.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E39E8F9B1AAD4F3100B1E5DD /* TenpayUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39E8F951AAD4F3100B1E5DD /* TenpayUtil.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1419,6 +1435,9 @@
 		2F189C8E1C2185F7007AC2B4 /* XKRWFitCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWFitCommentCell.h; sourceTree = "<group>"; };
 		2F189C8F1C2185F7007AC2B4 /* XKRWFitCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWFitCommentCell.m; sourceTree = "<group>"; };
 		2F20D4501B56655A00E6E325 /* XKRWSearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWSearchService.swift; sourceTree = "<group>"; };
+		2F2FEF9E1C9FFE940064E6C8 /* XKRWFocusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWFocusView.h; sourceTree = "<group>"; };
+		2F2FEF9F1C9FFE940064E6C8 /* XKRWFocusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWFocusView.m; sourceTree = "<group>"; };
+		2F2FEFA11C9FFEA90064E6C8 /* XKRWFocusView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWFocusView.xib; sourceTree = "<group>"; };
 		2F3B2144185FFA4600FD042F /* define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = define.h; path = header/define.h; sourceTree = "<group>"; };
 		2F3C63271C3CAA6F007D9E20 /* XKRWActionSheetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWActionSheetCell.h; sourceTree = "<group>"; };
 		2F3C63281C3CAA6F007D9E20 /* XKRWActionSheetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWActionSheetCell.m; sourceTree = "<group>"; };
@@ -1468,6 +1487,10 @@
 		2F7EADA81C2002F00081DCC9 /* XKRWReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWReplyCell.h; sourceTree = "<group>"; };
 		2F7EADA91C2002F00081DCC9 /* XKRWReplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWReplyCell.m; sourceTree = "<group>"; };
 		2F8C22FE1872B5A5001D5A57 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		2F8CAD0A1CACCC5B003F706A /* XKRWEnergyCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWEnergyCircleView.h; sourceTree = "<group>"; };
+		2F8CAD0B1CACCC5B003F706A /* XKRWEnergyCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWEnergyCircleView.m; sourceTree = "<group>"; };
+		2F8CAD101CAD0B33003F706A /* XKRWAnimationCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWAnimationCircle.h; sourceTree = "<group>"; };
+		2F8CAD111CAD0B33003F706A /* XKRWAnimationCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWAnimationCircle.m; sourceTree = "<group>"; };
 		2F8E450218D19E5300B3B066 /* XKRWSettingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWSettingService.h; sourceTree = "<group>"; };
 		2F8E450318D19E5300B3B066 /* XKRWSettingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWSettingService.m; sourceTree = "<group>"; };
 		2F8FB47018FBB24A00AB8400 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/weightHint.plist; sourceTree = "<group>"; };
@@ -1531,6 +1554,7 @@
 		2FF817DD1C3E63930032CED5 /* XKRWActionSheetTitleHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWActionSheetTitleHeader.xib; sourceTree = "<group>"; };
 		2FFE1DEB18910B0F00E4FD8A /* XKRWFoodService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWFoodService.h; sourceTree = "<group>"; };
 		2FFE1DEC18910B0F00E4FD8A /* XKRWFoodService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWFoodService.m; sourceTree = "<group>"; };
+		47C6B168267F36CA4A178818 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5D0FA0FA1C4DCA0900902D89 /* XKRWReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWReportViewController.h; sourceTree = "<group>"; };
 		5D0FA0FB1C4DCA0900902D89 /* XKRWReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWReportViewController.m; sourceTree = "<group>"; };
 		5D236E0E1C72CA0F00D049C4 /* XKRWArticleWebViewTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWArticleWebViewTip.h; sourceTree = "<group>"; };
@@ -1619,6 +1643,7 @@
 		5DDAE9DA1C55CE5D00047A45 /* XKRWSCPopSelectorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWSCPopSelectorCell.h; sourceTree = "<group>"; };
 		5DDAE9DB1C55CE5D00047A45 /* XKRWSCPopSelectorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWSCPopSelectorCell.m; sourceTree = "<group>"; };
 		5DDAE9DC1C55CE5D00047A45 /* XKRWSCPopSelectorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWSCPopSelectorCell.xib; sourceTree = "<group>"; };
+		A18F1CE4C8D01A5843AD718B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A73597461B3185D100DAA678 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
 		A73597471B3185D100DAA678 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
 		A73597481B3185D100DAA678 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
@@ -2304,6 +2329,8 @@
 		BCCAB1A81B85C92D005DF85A /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
 		BCCCE64C1C8E7BC9007AA2FF /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
 		BCCCE64D1C8E7BC9007AA2FF /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
+		BCD0CD0C1CA2418B00A6E284 /* XKRWAppCommentUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWAppCommentUtil.h; sourceTree = "<group>"; };
+		BCD0CD0D1CA2418B00A6E284 /* XKRWAppCommentUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWAppCommentUtil.m; sourceTree = "<group>"; };
 		BCD416E71A51051E00DD9665 /* YLGIFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLGIFImage.h; sourceTree = "<group>"; };
 		BCD416E81A51051E00DD9665 /* YLGIFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLGIFImage.m; sourceTree = "<group>"; };
 		BCD416E91A51051E00DD9665 /* YLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLImageView.h; sourceTree = "<group>"; };
@@ -2679,6 +2706,13 @@
 		BCF123AB1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWDiscoverOperatingCell.swift; sourceTree = "<group>"; };
 		BCF123AC1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWDiscoverOperatingCell.xib; sourceTree = "<group>"; };
 		BCF4F80A19A7372400E7644E /* ProvincesAndCities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ProvincesAndCities.plist; sourceTree = "<group>"; };
+		BCF664621CAE0B7C006EBC61 /* XKRWThinBodyDayManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWThinBodyDayManage.h; sourceTree = "<group>"; };
+		BCF664631CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWThinBodyDayManage.m; sourceTree = "<group>"; };
+		BCF6646A1CAE1D4B006EBC61 /* XKRWPlanVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanVC.h; sourceTree = "<group>"; };
+		BCF6646B1CAE1D4B006EBC61 /* XKRWPlanVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanVC.m; sourceTree = "<group>"; };
+		BCF6646E1CAE28BA006EBC61 /* XKRWRecordAndTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordAndTargetView.h; sourceTree = "<group>"; };
+		BCF6646F1CAE28BA006EBC61 /* XKRWRecordAndTargetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordAndTargetView.m; sourceTree = "<group>"; };
+		BCF664711CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWRecordAndTargetView.xib; sourceTree = "<group>"; };
 		BCF862161C5088D300A64986 /* XKRWPostDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPostDetailVC.h; sourceTree = "<group>"; };
 		BCF862171C5088D300A64986 /* XKRWPostDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPostDetailVC.m; sourceTree = "<group>"; };
 		BCF862181C5088D300A64986 /* XKRWPostDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPostDetailVC.xib; sourceTree = "<group>"; };
@@ -2689,6 +2723,15 @@
 		BCF862211C508D2600A64986 /* XKRWPostDeatilCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPostDeatilCell.m; sourceTree = "<group>"; };
 		BCF862221C508D2600A64986 /* XKRWPostDeatilCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPostDeatilCell.xib; sourceTree = "<group>"; };
 		BCFE22251B74CC9F00535863 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		CC260F961CAE0D7E00D58C91 /* XKRWPlan_5_3View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlan_5_3View.xib; sourceTree = "<group>"; };
+		CC260F971CAE0D7E00D58C91 /* XKRWPlan_5_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlan_5_3View.h; sourceTree = "<group>"; };
+		CC260F981CAE0D7E00D58C91 /* XKRWPlan_5_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlan_5_3View.m; sourceTree = "<group>"; };
+		CC260F9B1CAE0E0300D58C91 /* XKRWPlan_5_3CollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlan_5_3CollectionView.h; sourceTree = "<group>"; };
+		CC260F9C1CAE0E0300D58C91 /* XKRWPlan_5_3CollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlan_5_3CollectionView.m; sourceTree = "<group>"; };
+		CC260F9E1CAE0E1C00D58C91 /* XKRWPlan_5_3CollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlan_5_3CollectionView.xib; sourceTree = "<group>"; };
+		CCACB98C1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWThinBodyAssess_5_3VC.swift; sourceTree = "<group>"; };
+		CCACB98D1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWThinBodyAssess_5_3VC.xib; sourceTree = "<group>"; };
+		DAB99B331D6C4CE3697BE5BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E30DE8DD1AF9BAA90092E8DC /* XKRW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "XKRW-Bridging-Header.h"; path = "Class/XKRW-Bridging-Header.h"; sourceTree = "<group>"; };
 		E33DCA821B17FDA2006FE125 /* XKRWSchemeService_5_0.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWSchemeService_5_0.swift; sourceTree = "<group>"; };
 		E36AAFB019F77FE600CF80A5 /* libsp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsp.dylib; path = usr/lib/libsp.dylib; sourceTree = SDKROOT; };
@@ -2752,6 +2795,7 @@
 				044DA1C918558DC100CA30F7 /* UIKit.framework in Frameworks */,
 				044DA1C518558DC100CA30F7 /* Foundation.framework in Frameworks */,
 				BC4F8D451C9108D300CABD2F /* libUMessage_Sdk_1.2.6.a in Frameworks */,
+				AC83D6AD00B7F4EC27A4A409 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2877,6 +2921,7 @@
 				044DA1E918558DC100CA30F7 /* XKRWTests */,
 				044DA1C318558DC100CA30F7 /* Frameworks */,
 				044DA1C218558DC100CA30F7 /* Products */,
+				110AA2DE19B429CE67912E79 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2923,6 +2968,7 @@
 				044DA1C618558DC100CA30F7 /* CoreGraphics.framework */,
 				044DA1C818558DC100CA30F7 /* UIKit.framework */,
 				044DA1E318558DC100CA30F7 /* XCTest.framework */,
+				A18F1CE4C8D01A5843AD718B /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -3018,6 +3064,15 @@
 			path = FontResource;
 			sourceTree = "<group>";
 		};
+		110AA2DE19B429CE67912E79 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				47C6B168267F36CA4A178818 /* Pods.debug.xcconfig */,
+				DAB99B331D6C4CE3697BE5BA /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		2A47F53918E1859800C277DA /* fatService */ = {
 			isa = PBXGroup;
 			children = (
@@ -3063,6 +3118,7 @@
 		2E9685BE1A04AEE500CB5D77 /* cui */ = {
 			isa = PBXGroup;
 			children = (
+				2F8CAD0F1CAD0AE7003F706A /* AnimationCircle */,
 				2E9685BF1A04AEE500CB5D77 /* BarChartView */,
 				2E9685C21A04AEE500CB5D77 /* DiscreteProgressView */,
 				2E9685C51A04AEE500CB5D77 /* PageControl */,
@@ -3861,6 +3917,15 @@
 			path = discoveryService;
 			sourceTree = "<group>";
 		};
+		2F8CAD0F1CAD0AE7003F706A /* AnimationCircle */ = {
+			isa = PBXGroup;
+			children = (
+				2F8CAD101CAD0B33003F706A /* XKRWAnimationCircle.h */,
+				2F8CAD111CAD0B33003F706A /* XKRWAnimationCircle.m */,
+			);
+			name = AnimationCircle;
+			sourceTree = "<group>";
+		};
 		2F957FAD1887858600D34296 /* schemeService */ = {
 			isa = PBXGroup;
 			children = (
@@ -4605,6 +4670,8 @@
 				BC31B8F41C1ACA520045817B /* XKRWTabooFoodVC.xib */,
 				BCEF36511C1E63EF00740ACC /* XKRWRecordOthersVC.swift */,
 				BCEF36521C1E63EF00740ACC /* XKRWRecordOthersVC.xib */,
+				BCF6646A1CAE1D4B006EBC61 /* XKRWPlanVC.h */,
+				BCF6646B1CAE1D4B006EBC61 /* XKRWPlanVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4628,6 +4695,7 @@
 		BC31B8F71C1ACA520045817B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BCF6646D1CAE280D006EBC61 /* PlanView */,
 				BCEF361E1C1E619700740ACC /* sportView */,
 				BCEF36031C1E619300740ACC /* foodView */,
 				BC31B8F81C1ACA520045817B /* HistoryAndProcess */,
@@ -4646,6 +4714,8 @@
 				BC31B91B1C1ACA520045817B /* XKRWSegmentedControl.swift */,
 				BC31B91C1C1ACA520045817B /* XKRWSurfaceView.h */,
 				BC31B91D1C1ACA520045817B /* XKRWSurfaceView.m */,
+				2F8CAD0A1CACCC5B003F706A /* XKRWEnergyCircleView.h */,
+				2F8CAD0B1CACCC5B003F706A /* XKRWEnergyCircleView.m */,
 				BC31B91E1C1ACA520045817B /* XKRWWeightGoalView.swift */,
 				BC31B9501C1ACDF70045817B /* XKRWAlarmCell.h */,
 				BC31B9511C1ACDF70045817B /* XKRWAlarmCell.m */,
@@ -4711,6 +4781,8 @@
 		BC31B9951C1AD3B40045817B /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BCF664611CAE0B3D006EBC61 /* CommonManage */,
+				BCD0CD0B1CA2412500A6E284 /* CommonUtil */,
 				BC31B9961C1AD3B40045817B /* CommonModel */,
 				BC31B9971C1AD3B40045817B /* CommonVC */,
 				BC31B99E1C1AD3B40045817B /* CommonView */,
@@ -4877,6 +4949,8 @@
 				BC6F2EE21C198686005B54E8 /* XKRWOneMinUndLoseFat.xib */,
 				BC6F2EE31C198686005B54E8 /* XKRWThinBodyAssessVC.swift */,
 				BC6F2EE41C198686005B54E8 /* XKRWThinBodyAssessVC.xib */,
+				CCACB98C1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.swift */,
+				CCACB98D1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4940,6 +5014,12 @@
 		BC6F2EE61C198686005B54E8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CC260F971CAE0D7E00D58C91 /* XKRWPlan_5_3View.h */,
+				CC260F981CAE0D7E00D58C91 /* XKRWPlan_5_3View.m */,
+				CC260F961CAE0D7E00D58C91 /* XKRWPlan_5_3View.xib */,
+				CC260F9B1CAE0E0300D58C91 /* XKRWPlan_5_3CollectionView.h */,
+				CC260F9C1CAE0E0300D58C91 /* XKRWPlan_5_3CollectionView.m */,
+				CC260F9E1CAE0E1C00D58C91 /* XKRWPlan_5_3CollectionView.xib */,
 				BC841D001C1ABFF000703A27 /* XKRWAnalyzeCell.swift */,
 				BC841D011C1ABFF000703A27 /* XKRWAnalyzeCell.xib */,
 			);
@@ -5154,9 +5234,12 @@
 				BC6F2F571C1A70D3005B54E8 /* XKRWDiscoverCell.m */,
 				BC6F2F581C1A70D3005B54E8 /* XKRWDiscoveryCoordinator.h */,
 				BC6F2F591C1A70D3005B54E8 /* XKRWDiscoveryCoordinator.m */,
-				BC6F2F5A1C1A70D3005B54E8 /* XKRWFocusCell.h */,
 				BC6F2F5B1C1A70D3005B54E8 /* XKRWFocusCell.m */,
+				BC6F2F5A1C1A70D3005B54E8 /* XKRWFocusCell.h */,
 				BC6F2F5C1C1A70D3005B54E8 /* XKRWFocusCell.xib */,
+				2F2FEF9E1C9FFE940064E6C8 /* XKRWFocusView.h */,
+				2F2FEF9F1C9FFE940064E6C8 /* XKRWFocusView.m */,
+				2F2FEFA11C9FFEA90064E6C8 /* XKRWFocusView.xib */,
 				BC6F2F5F1C1A70D3005B54E8 /* XKRWmoreArticleTitleCell.swift */,
 				BC6F2F601C1A70D3005B54E8 /* XKRWmoreArticleTitleCell.xib */,
 				BC6F2F611C1A70D3005B54E8 /* XKRWMoreCommetCell.h */,
@@ -5918,6 +6001,15 @@
 			path = RTLable;
 			sourceTree = "<group>";
 		};
+		BCD0CD0B1CA2412500A6E284 /* CommonUtil */ = {
+			isa = PBXGroup;
+			children = (
+				BCD0CD0C1CA2418B00A6E284 /* XKRWAppCommentUtil.h */,
+				BCD0CD0D1CA2418B00A6E284 /* XKRWAppCommentUtil.m */,
+			);
+			path = CommonUtil;
+			sourceTree = "<group>";
+		};
 		BCD416E61A51051E00DD9665 /* YLGIFImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -6522,6 +6614,25 @@
 			path = UserInfo;
 			sourceTree = "<group>";
 		};
+		BCF664611CAE0B3D006EBC61 /* CommonManage */ = {
+			isa = PBXGroup;
+			children = (
+				BCF664621CAE0B7C006EBC61 /* XKRWThinBodyDayManage.h */,
+				BCF664631CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m */,
+			);
+			path = CommonManage;
+			sourceTree = "<group>";
+		};
+		BCF6646D1CAE280D006EBC61 /* PlanView */ = {
+			isa = PBXGroup;
+			children = (
+				BCF6646E1CAE28BA006EBC61 /* XKRWRecordAndTargetView.h */,
+				BCF6646F1CAE28BA006EBC61 /* XKRWRecordAndTargetView.m */,
+				BCF664711CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib */,
+			);
+			path = PlanView;
+			sourceTree = "<group>";
+		};
 		E39E8F901AAD4F3100B1E5DD /* WXPayment */ = {
 			isa = PBXGroup;
 			children = (
@@ -6566,10 +6677,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 044DA1F318558DC100CA30F7 /* Build configuration list for PBXNativeTarget "XKRW" */;
 			buildPhases = (
+				D04FBC6C1AB976548BFCB12D /* Check Pods Manifest.lock */,
 				044DA1BD18558DC100CA30F7 /* Sources */,
 				044DA1BE18558DC100CA30F7 /* Frameworks */,
 				044DA1BF18558DC100CA30F7 /* Resources */,
 				BC45E0281A79E5F3000D2DA7 /* ShellScript */,
+				C103B12CB08C95A41CEE6388 /* Embed Pods Frameworks */,
+				74251A882CECBBE430A1B34E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -6611,7 +6725,7 @@
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
 					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = 2H2WTQZ7Y8;
+						DevelopmentTeam = KFHY8Z75E6;
 					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = WT58P44WAK;
@@ -6664,6 +6778,7 @@
 				5DCD561A1C4731B8008A5AC2 /* AnnouncementCell.xib in Resources */,
 				BCEF37521C1E75D900740ACC /* physicalAssessmentHeaderCell.xib in Resources */,
 				2F796DD11C465E0B00E3571A /* XKRWExplainView.xib in Resources */,
+				BCF664721CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib in Resources */,
 				BC6F2F001C198686005B54E8 /* XKRWTargetWeightVC.xib in Resources */,
 				BCEF38001C1E901B00740ACC /* XKRWShowHeadIamgeVC.xib in Resources */,
 				BC8534191C2D47880051E4F4 /* monkey_run.gif in Resources */,
@@ -6733,6 +6848,7 @@
 				BC81EAC11BF43A9900317D1A /* UMSShareListController.xib in Resources */,
 				BC31B9331C1ACA520045817B /* HPSportCell.xib in Resources */,
 				BC6F2F7D1C1A70D3005B54E8 /* XKRWAddSectionCell.xib in Resources */,
+				2F2FEFA21C9FFEA90064E6C8 /* XKRWFocusView.xib in Resources */,
 				BC8534151C2D464D0051E4F4 /* share_cover_verify@3x.png in Resources */,
 				BCEF37561C1E75D900740ACC /* XKRWphysicalAssessmentCell.xib in Resources */,
 				2E96882E1A04AEFE00CB5D77 /* readme in Resources */,
@@ -6753,6 +6869,7 @@
 				BCEF37261C1E75D900740ACC /* XKRWiSlimAssSuccessStoriesVC.xib in Resources */,
 				BCA4044D1C31063800F39044 /* share_photo_verify@3x.png in Resources */,
 				BCEF380A1C1E901B00740ACC /* FeedbackCell.xib in Resources */,
+				CC260F991CAE0D7E00D58C91 /* XKRWPlan_5_3View.xib in Resources */,
 				BC6F2F961C1A70D3005B54E8 /* XKRWArticleTitleImageCell.xib in Resources */,
 				2F63C3C71C506BE800A94117 /* XKRWBlogEnterCell.xib in Resources */,
 				BCD944951A516F0D00D1D274 /* newAlertMsgFor4_0.plist in Resources */,
@@ -6808,6 +6925,7 @@
 				BCEF37F51C1E901B00740ACC /* XKRWGradeRuleVC.xib in Resources */,
 				BCEF374C1C1E75D900740ACC /* PurchaseHeader.xib in Resources */,
 				BCEF371C1C1E75D900740ACC /* XKRWComprehensiveAssResultVC.xib in Resources */,
+				CCACB98F1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.xib in Resources */,
 				BCEF37EF1C1E901B00740ACC /* FeedbackViewController.xib in Resources */,
 				BC0BAF461C58572A00BAD05C /* XKRWTitleAndDescribeCell.xib in Resources */,
 				2E9687081A04AEE500CB5D77 /* readme in Resources */,
@@ -6862,6 +6980,7 @@
 				5DCD561E1C4731B8008A5AC2 /* GroupHeaderCell.xib in Resources */,
 				2F3C632B1C3CAA6F007D9E20 /* XKRWActionSheetCell.xib in Resources */,
 				2FA028C01C4DCFFD0098FC68 /* XKRWFitnessShareCell.xib in Resources */,
+				CC260F9F1CAE0E1C00D58C91 /* XKRWPlan_5_3CollectionView.xib in Resources */,
 				BC6F2FA41C1A70D3005B54E8 /* XKRWTitleSubTitleCell.xib in Resources */,
 				2FF817DE1C3E63930032CED5 /* XKRWActionSheetTitleHeader.xib in Resources */,
 				BCEF37781C1E75D900740ACC /* XKRWPersonalCircumstancesFemaleCell.xib in Resources */,
@@ -6897,6 +7016,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		74251A882CECBBE430A1B34E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BC45E0281A79E5F3000D2DA7 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -6909,6 +7043,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run dbed8941facfa9ba1f5cd23ae6c6c9644a8db19b ee9750376c6f72ddcba164037019a07d73c572254a6922fb2f6dd415f5cfeda8";
+		};
+		C103B12CB08C95A41CEE6388 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D04FBC6C1AB976548BFCB12D /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -7002,6 +7166,7 @@
 				BC769EAC1C34CA3A00E96B1A /* XKRWAlgolHelper.m in Sources */,
 				BCEF363C1C1E63B200740ACC /* NSDate+XKRWCalendar.m in Sources */,
 				BC6F2F901C1A70D3005B54E8 /* XKRWAdImageView.m in Sources */,
+				CC260F9A1CAE0D7E00D58C91 /* XKRWPlan_5_3View.m in Sources */,
 				BCEF37461C1E75D900740ACC /* XKRWThinbodystageModel.m in Sources */,
 				2E9686D81A04AEE500CB5D77 /* XKException.m in Sources */,
 				BC31B9441C1ACA520045817B /* XKRWMealSchemeCell.swift in Sources */,
@@ -7063,6 +7228,7 @@
 				BC769DFD1C33D26200E96B1A /* XKRWCustomBaseEntity.m in Sources */,
 				2F4E2F971C47385F00EBAE6E /* XKRWTopicListCell.m in Sources */,
 				5DCD566D1C4777B8008A5AC2 /* XKRWAddGroupViewCell.m in Sources */,
+				2F8CAD0C1CACCC5B003F706A /* XKRWEnergyCircleView.m in Sources */,
 				BCEF36531C1E63EF00740ACC /* XKRWRecordOthersVC.swift in Sources */,
 				BCEF363E1C1E63B200740ACC /* XKRWCalendarHeaderView.m in Sources */,
 				BC2915FF1C6445D000C71A67 /* XKRWSchemeNotificationService.m in Sources */,
@@ -7196,6 +7362,7 @@
 				BC31B9201C1ACA520045817B /* XKRWHistoryAndProcessVC.swift in Sources */,
 				BC6F2EFD1C198686005B54E8 /* XKRWSetHeightVC.swift in Sources */,
 				5D90497D1C980992003244DC /* XKRWServiceIslimADDCell.m in Sources */,
+				CC260F9D1CAE0E0300D58C91 /* XKRWPlan_5_3CollectionView.m in Sources */,
 				BCEF361C1C1E619300740ACC /* XKRWSearchResultCell.swift in Sources */,
 				BCEF37741C1E75D900740ACC /* XKRWZheDieCell.m in Sources */,
 				BC31B9491C1ACA520045817B /* XKRWSchemeScrollCell.swift in Sources */,
@@ -7402,7 +7569,9 @@
 				2FC1F6AA1C1EB2CF00E55B88 /* XKRWReplyEntity.m in Sources */,
 				2E9686D71A04AEE500CB5D77 /* XKError.m in Sources */,
 				BC769DED1C33D1B700E96B1A /* XKRWUniversalRecordEntity.m in Sources */,
+				2F2FEFA01C9FFE940064E6C8 /* XKRWFocusView.m in Sources */,
 				2F9D8F221C3B96730039A2F4 /* XKRWActionSheet.m in Sources */,
+				BCF664701CAE28BA006EBC61 /* XKRWRecordAndTargetView.m in Sources */,
 				2E9687F51A04AEFD00CB5D77 /* OpenUDID.m in Sources */,
 				BC769DF41C33D1E800E96B1A /* XKRWAdEntity.m in Sources */,
 				BCEF37291C1E75D900740ACC /* XKRWPaymentResultVC.m in Sources */,
@@ -7453,6 +7622,7 @@
 				BC769E831C33D3DD00E96B1A /* KMImageBroswerView.swift in Sources */,
 				BCEF37411C1E75D900740ACC /* XKRWsportAdviseModel.m in Sources */,
 				BCEF35C71C1E5AD500740ACC /* XKRWSlimPartView.m in Sources */,
+				CCACB98E1CAE205B00E19D71 /* XKRWThinBodyAssess_5_3VC.swift in Sources */,
 				2E9687F01A04AEFD00CB5D77 /* MWTapDetectingImageView.m in Sources */,
 				A786D48E1BB5187400B6535D /* XKRWUserArticleService.swift in Sources */,
 				2E9687DA1A04AEFD00CB5D77 /* ASIHTTPRequest.m in Sources */,
@@ -7541,10 +7711,12 @@
 				BC6F2F7B1C1A70D3005B54E8 /* XKRWTopicVC.m in Sources */,
 				BC72B6761ADBABE000DEE796 /* MASLayoutConstraint.m in Sources */,
 				A7C867DA1BC8F02A009A94B1 /* AFHTTPSessionManager.m in Sources */,
+				BCD0CD0E1CA2418B00A6E284 /* XKRWAppCommentUtil.m in Sources */,
 				2E9686B61A04AEE500CB5D77 /* XKVerticalAlignableLabel.m in Sources */,
 				BCEF37F81C1E901B00740ACC /* XKRWMyVC.m in Sources */,
 				BC72B6741ADBABE000DEE796 /* MASConstraint.m in Sources */,
 				BCEF37801C1E75D900740ACC /* XKRWServerModel.m in Sources */,
+				BCF6646C1CAE1D4B006EBC61 /* XKRWPlanVC.m in Sources */,
 				5D9F1B0D1C34C28B00049FA5 /* XKRWWarningView.m in Sources */,
 				BCEF373C1C1E75D900740ACC /* XKRWIslimCommentModel.m in Sources */,
 				A786D4D21BB5192200B6535D /* UIImage+MLTint.m in Sources */,
@@ -7576,6 +7748,7 @@
 				BC31B92E1C1ACA520045817B /* HPMealCell.swift in Sources */,
 				BC769D981C33CA3500E96B1A /* XKRWUserInfoShowEntity.swift in Sources */,
 				BC6F2F7A1C1A70D3005B54E8 /* XKRWStarGatherNumVC.m in Sources */,
+				BCF664641CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m in Sources */,
 				BC72B6751ADBABE000DEE796 /* MASConstraintMaker.m in Sources */,
 				BC31B9281C1ACA520045817B /* XKRWTabooFoodVC.swift in Sources */,
 				BCEF38251C1E901B00740ACC /* XKRWPraiseCell.swift in Sources */,
@@ -7634,6 +7807,7 @@
 				BC6F2F0E1C1986F7005B54E8 /* XKRWProvinceModel.m in Sources */,
 				2E9687D71A04AEFD00CB5D77 /* ASIDataDecompressor.m in Sources */,
 				BCEF37551C1E75D900740ACC /* XKRWphysicalAssessmentCell.m in Sources */,
+				2F8CAD121CAD0B33003F706A /* XKRWAnimationCircle.m in Sources */,
 				BC769E871C33D3DD00E96B1A /* KMPopSelectionView.m in Sources */,
 				BCEF37591C1E75D900740ACC /* XKRWBuyRecordVC.m in Sources */,
 				BCCCE64E1C8E7BC9007AA2FF /* RTLabel.m in Sources */,
@@ -7821,13 +7995,14 @@
 		};
 		044DA1F418558DC100CA30F7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47C6B168267F36CA4A178818 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -7878,7 +8053,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -7891,13 +8066,14 @@
 		};
 		044DA1F518558DC100CA30F7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DAB99B331D6C4CE3697BE5BA /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -7948,7 +8124,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -7962,8 +8138,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -7979,7 +8155,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -7989,8 +8165,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8002,7 +8178,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};

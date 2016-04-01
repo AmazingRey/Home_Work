@@ -60,7 +60,7 @@
         // 是否是新安装或者新升级
         if (isNewSetUp || isNewUpdate) {
             [[XKRWDBControlService sharedService] updateDBTable];
-             [[XKRWDBControlService sharedService] delete_V5_1_2DirtyData];
+            [[XKRWDBControlService sharedService] delete_V5_1_2DirtyData];
         }
         return YES;
     } needUpdateMark:NO];
@@ -75,7 +75,6 @@
     [self downloadWithTaskID:@"downloadAD" task:^{
         [[XKRWAdService sharedService] downloadAdvertisementWithPosition:XKRWAdPostionMainPage];
     }];
-    
 }
 
 - (BOOL)shouldRespondForDefaultNotificationForDetailName:(NSString *)detailName {
@@ -152,7 +151,7 @@
 
 
 
--(void) normalFlow{
+-(void) normalFlow {
     _adShowed = YES;
     self.defaultImgView.hidden = YES;
     self.VersionLab.hidden = YES;
@@ -173,7 +172,6 @@
      }
      *******/
     //如果已经打开过  并且slim.db数据库不存在  执行  进入一分钟减肥
-    //[XKRWCommHelper isFirstOpenThisApp]
     if ([XKRWCommHelper isFirstOpenThisApp]) {
         // 添加引导页
         guidanceScrollView  = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight)];
@@ -284,12 +282,16 @@
 
 - (void) entryOneMinVC:(UIButton *)button
 {
-    guidanceScrollView.hidden = YES;
-    [UIView animateWithDuration:1 animations:^(){
-        XKRWOneMinUndLoseFat *oneMin = [[XKRWOneMinUndLoseFat alloc]initWithNibName:@"XKRWOneMinUndLoseFat" bundle:nil];
-        [self.navigationController  pushViewController:oneMin animated:YES ];
-        
-    }];
+    if ([XKRWUserDefaultService isLogin]) {
+        [self normalFlow];
+    }else{
+        guidanceScrollView.hidden = YES;
+        [UIView animateWithDuration:1 animations:^(){
+            XKRWOneMinUndLoseFat *oneMin = [[XKRWOneMinUndLoseFat alloc]initWithNibName:@"XKRWOneMinUndLoseFat" bundle:nil];
+            [self.navigationController  pushViewController:oneMin animated:YES ];
+            
+        }];
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated{

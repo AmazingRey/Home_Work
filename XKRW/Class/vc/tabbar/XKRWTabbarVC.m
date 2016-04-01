@@ -26,7 +26,7 @@
 #import "XKRW-Swift.h"
 #import "XKRWDBControlService.h"
 #import "Reachability.h"
-
+#import "XKRWPlanVC.h"
 
 @interface XKRWTabbarVC () <XKRWShareVCDelegate, UIAlertViewDelegate,XKRWCheckMoreRedDotDelegate>
 //XKRWDiscover_5_2
@@ -213,13 +213,14 @@
 
 - (void)initTabbarViewControllers
 {
-    XKRWSchemeVC_5_0 *schemeVC = [[XKRWSchemeVC_5_0 alloc] initWithNibName:@"XKRWSchemeVC_5_0" bundle:nil];
+    XKRWPlanVC *planVC = [[XKRWPlanVC alloc] init];
+  //  XKRWSchemeVC_5_0 *schemeVC = [[XKRWSchemeVC_5_0 alloc] initWithNibName:@"XKRWSchemeVC_5_0" bundle:nil];
     self.discoverVC = [[XKRWDiscover_5_2 alloc] initWithNibName:@"XKRWDiscover_5_2" bundle:nil];
     XKRWShareVC *shareVC = [[XKRWShareVC alloc]init];
     XKRWMyVC *moreVC = [[XKRWMyVC alloc]init];
     moreVC.delegate = self;
     
-    NSArray *vcArray = @[schemeVC,self.discoverVC,shareVC,moreVC];
+    NSArray *vcArray = @[planVC,self.discoverVC,shareVC,moreVC];
 
     NSMutableArray  *navArray = [NSMutableArray arrayWithCapacity:[vcArray count]];
     XKRWNavigationController *nav;

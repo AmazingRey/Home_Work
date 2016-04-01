@@ -16,7 +16,7 @@
 #import "XKRWCollectionEntity.h"
 #import "XKRWUserService.h"
 #import "XKRWCollectionService.h"
-
+#import <YouMeng/umeng_ios_social_sdk_4.2.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/QQApiInterface.h>
 @interface XKRWNewWebView () <UIWebViewDelegate, KMPopoverViewDelegate, UMSocialUIDelegate, NJKWebViewProgressDelegate>
 {
     XKRWCollectionEntity *_collectionEntity;
@@ -37,8 +37,6 @@
 {
     [super viewDidDisappear:animated];
     _xkWebView.delegate = nil;
-    [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -48,7 +46,6 @@
 }
 
 - (void)dealloc {
-    //    _webView = nil;
     [_progressBackView removeFromSuperview];
 }
 
@@ -59,17 +56,35 @@
             
         }];
     }else{
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        if(self.xkWebView.canGoBack)
+        {
+            [self.xkWebView goBack];
+        }else{
+            [super popView];
+        }
     }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+  
 
-    _shareURL = _contentUrl;
+    if (_shareURL.length == 0) {
+        _shareURL = _contentUrl;
+    }
     
-    if (!_showType) {
+    if (![_contentUrl containsString:@"ssbuy.xikang.com"]) {
+        if ([_shareURL containsString:[[XKRWUserService sharedService] getToken]] || _isHidenRightNavItem || [_shareURL containsString:@"taobao.com"]) {
+            self.isHidenRightNavItem = YES;
+        } else {
+            self.isHidenRightNavItem = NO;
+        }
+    }
+    
+    if (!_showType && ![_contentUrl containsString:@"ssapi.xikang.com/static/go?"] && [_contentUrl rangeOfString:@"ssapi.xikang.com"].location != NSNotFound) {
+      
         if ([_contentUrl rangeOfString:@"?"].location == NSNotFound) {
             _contentUrl = [NSString stringWithFormat:@"%@?token=%@", _contentUrl,[[XKRWUserService sharedService] getToken]];
         } else {
@@ -84,8 +99,6 @@
         _progressProxy = [[NJKWebViewProgress alloc] init];
         self.xkWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight - 64 )];
         [self.view addSubview:_xkWebView];
-//        [self addNoNetWorkView];
-
         _progressProxy = [[NJKWebViewProgress alloc] init];
         _progressProxy.webViewProxyDelegate = (id)self;
         _progressProxy.progressDelegate = (id)self;
@@ -124,17 +137,13 @@
 
 - (void)initData {
     
-    [[XKHudHelper instance]showProgressHudAnimationInView:self.view];
-    
     if ([XKRWUtil isNetWorkAvailable]) {
         
-            [_xkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_contentUrl]]];
+        [_xkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString: [_contentUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]];
         
     } else {
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [[XKHudHelper instance] hideProgressHudAnimationInView:self.view];
-        });
+
         self.noNetWorkView.hidden = NO;
         
     }
@@ -227,8 +236,8 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-  
-    if ([request.URL.absoluteString rangeOfString:@"tel"].location != NSNotFound) {
+    
+    if ([request.URL.absoluteString rangeOfString:@"tel"].location != NSNotFound && request.URL.absoluteString != nil) {
 
         // NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",number]; //number为号码字符串 如果使用这个方法 结束电话之后会进入联系人列表
         NSMutableString * str = [[NSMutableString alloc] initWithFormat:@"telprompt://%@",[request.URL.absoluteString stringByReplacingOccurrencesOfString:@"tel:" withString:@""]];//而这个方法则打电话前先弹框  是否打电话 然后打完电话之后回到程序中
@@ -251,7 +260,7 @@
     
     self.noNetWorkView.hidden = YES;
     
-    [[XKHudHelper instance] hideProgressHudAnimationInView:self.view];
+//    [[XKHudHelper instance] hideProgressHudAnimationInView:self.view];
     
     NSString * key =[NSString stringWithFormat:@"yunying%@%@%ld",self.date,[self.content objectForKey:@"title"],(long)[XKRWUserDefaultService getCurrentUserId]];
     
@@ -270,7 +279,7 @@
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     XKLog(@"%@",error.description);
-    [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
+//    [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
     self.noNetWorkView.hidden = NO;
 }
 
@@ -363,20 +372,28 @@
                                                                 }];
             } else if (index == 2) {
                 //QZone
+
+                 if (![QQApiInterface isQQInstalled]) {
+                 [XKRWCui showInformationHudWithText:@"您的设备没有QQ哦~"];
+                 
+                 return;
+                 }
+                
                 [UMSocialData defaultData].extConfig.qzoneData.title = shareTitle;
                 [UMSocialData defaultData].extConfig.qzoneData.url = _shareURL;
                 
-                [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToQzone]
-                                                                   content:nil
-                                                                     image:nil
-                                                                  location:nil
-                                                               urlResource:nil
-                                                       presentedController:self
-                                                                completion:^(UMSocialResponseEntity *response){
-                                                                    if (response.responseCode == UMSResponseCodeSuccess) {
-                                                                        XKLog(@"分享成功！");
-                                                                    }
-                                                                }];
+                 [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToQzone]
+                 content:nil
+                 image:nil
+                 location:nil
+                 urlResource:nil
+                 presentedController:self
+                 completion:^(UMSocialResponseEntity *response){
+                 if (response.responseCode == UMSResponseCodeSuccess) {
+                 XKLog(@"分享成功！");
+                 }
+                 }];
+
                 
             } else if (index == 3) {
                 //weibo

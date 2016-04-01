@@ -63,12 +63,13 @@
             [_imageViewMutArray addObject:imageView];
             [_scrollView addSubview:imageView];
             return;
+            
         }
         
         _scrollView.contentSize = CGSizeMake(XKAppWidth * (_dataArrayCount + CIRCULATE_CONSTANT), 0);
         _scrollView.contentOffset = CGPointMake(XKAppWidth * 2, 0);
         _scrollView.delegate = self;
-        
+        _scrollView.scrollEnabled = YES;
         _pageCtl.numberOfPages = _dataArrayCount;
         _pageCtl.currentPage = 0;
         
@@ -119,9 +120,11 @@
                     _pageCtl.hidden = NO;
                     [weakSelf addTimer];
                 }];
+                
+            } else {
+                [imageView setImageWithURL:[NSURL URLWithString:imageUrlStr] placeholderImage:nil options:SDWebImageContinueInBackground];
             }
             
-            [imageView setImageWithURL:[NSURL URLWithString:imageUrlStr] placeholderImage:nil options:SDWebImageContinueInBackground];
 
             imageView.userInteractionEnabled = YES;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(adverBeClicked:)];

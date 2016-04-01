@@ -67,6 +67,7 @@ extern NSString *const kUpdateFromV2;
 extern NSString *const kSaveUserManifesto;
 
 extern NSString *const KManagementAdInfo; //广告
+extern NSString *const kAdInfo_5_2; // 5.2焦点图、公告
 extern NSString *const KManagementContact;
 
 extern NSString *const kImportantNotice;

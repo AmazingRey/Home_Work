@@ -20,7 +20,8 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
     
     var _discoverTable:XKRWUITableViewBase!
     
-    var focusCell:XKRWFocusCell?
+    var focusCell:UITableViewCell!
+    var focusView:XKRWFocusView!
     var OperatingCell:XKRWDiscoverOperatingCell?
     var teamCell:XKRWDiscoverTeamCell?
     var topicCell:XKRWBlogEnterCell?
@@ -28,6 +29,16 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
     var articleEntity:XKRWArticleListEntity =  XKRWArticleListEntity()
     var discoverADArray = []
     var articleEntityArray = []
+    
+    var postDetailVC:XKRWPostDetailVC! = XKRWPostDetailVC()
+    var articleWebView:XKRWArticleWebView!
+    /// 是否已参加减肥知识
+    var isCompeleteJfzs:Bool!
+    /// 是否已参加运动推荐
+    var isCompeleteYdtj:Bool!
+    /// 是否已参加励志
+    var isCompeleteLizhi:Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initData()
@@ -45,6 +56,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         
         
     }
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -75,7 +87,15 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         discoverTable.backgroundColor = XK_BACKGROUND_COLOR
         self.addHeaderView()
         self.setNavifationItemWithLeftItemTitle(nil, andRightItemTitle: nil, andItemColor: UIColor.whiteColor(), andShowLeftRedDot: true, andShowRightRedDot: false, andLeftRedDotShowNum: true, andRightRedDotShowNum: false, andLeftItemIcon: "icon_message", andRightItemIcon: nil)
-    
+        
+        focusView = NSBundle.mainBundle().loadNibNamed("XKRWFocusView", owner: nil, options: nil).first as! XKRWFocusView
+        focusView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_WIDTH / 5)
+        
+        focusCell = UITableViewCell.init(style: .Default, reuseIdentifier: "focusCell")
+
+        focusCell.contentView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_WIDTH / 5)
+        focusCell.contentView .addSubview(focusView)
+        
         discoverTable.registerNib(UINib(nibName: "XKRWFocusCell", bundle: nil), forCellReuseIdentifier: "focusCell")
         discoverTable.registerNib(UINib(nibName: "XKRWDiscoverOperatingCell", bundle: nil), forCellReuseIdentifier: "OperatingCell")
         discoverTable.registerNib(UINib(nibName: "XKRWDiscoverTeamCell", bundle: nil), forCellReuseIdentifier: "TeamCell")
@@ -83,7 +103,6 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         
         self.hideNavigationLeftItemRedDot(true, andRightItemRedDotNeedHide: true)
 
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reFlashTeamData", name: "REFLASHTEAMDATA", object: nil)
     }
     
     func addHeaderView(){
@@ -149,20 +168,91 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         tableViewCell.contentView.addSubview(footerView)
         return tableViewCell
     }
-    
-    
         
-    func focusCellFormDequeueReusableCell(tableView:UITableView) -> XKRWFocusCell{
-        focusCell = tableView.dequeueReusableCellWithIdentifier("focusCell") as? XKRWFocusCell
-        focusCell!.dataArray = NSMutableArray(array: discoverADArray)
-        
+    func focusCellFormDequeueReusableCell(tableView:UITableView) -> UITableViewCell{
+        focusView.dataSource = NSMutableArray(array: discoverADArray)
         weak var weakSelf = self
-        focusCell!.adverClickedBlock = { (adverUrlStr,title) -> Void in
-            weakSelf!.pushToAdverPageWithUrlStr(adverUrlStr as String, pageTitle: title as String)
+        focusView.adImageClickBlock = {(adEntity)->Void in
+            weakSelf!.noticeAndFocusPush(adEntity)
         }
         return focusCell!
     }
-    
+   
+    func noticeAndFocusPush(entity:XKRWShareAdverEntity) -> Void {
+        if entity.type == nil {
+            return
+        }
+        
+        if entity.type == "url" {
+            let vc = XKRWNewWebView()
+            vc.hidesBottomBarWhenPushed = true
+            vc.webTitle = entity.title
+            vc.contentUrl = entity.imgUrl
+            let isMall = entity.imgUrl.containsString("ssbuy.xikang.com")
+            if isMall {
+                let isShare = entity.imgUrl.containsString("share_url=")
+                if isShare {
+                    let range = entity.imgUrl.rangeOfString("share_url")
+                    let shareString = entity.imgUrl.substringFromIndex((range?.endIndex)!)
+                    vc.shareURL = shareString
+                    
+                } else {
+                    vc.isHidenRightNavItem = true
+                }
+                
+            } else {
+                vc.shareURL = ""
+                vc.isHidenRightNavItem = false
+            }
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        } else if entity.type == "share" { //瘦身分享
+            let vc = XKRWUserArticleVC()
+            vc.hidesBottomBarWhenPushed = true
+            vc.aid = entity.nid
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        } else if entity.type == "post" { //帖子
+            postDetailVC.hidesBottomBarWhenPushed = true
+            postDetailVC.postID = entity.nid
+            self.navigationController?.pushViewController(postDetailVC, animated: true)
+
+            return
+            
+        } else {
+            
+            articleWebView = XKRWArticleWebView()
+            articleWebView.hidesBottomBarWhenPushed = true
+            
+            if entity.type == "jfzs" {
+                articleWebView.category = eOperationKnowledge
+                articleWebView.isComplete = isCompeleteJfzs
+                
+            } else if entity.type == "pkinfo" {
+                let pkVC = XKRWPKVC()
+                pkVC.hidesBottomBarWhenPushed = true
+                pkVC.nid = entity.nid
+                self.navigationController?.pushViewController(pkVC, animated: true)
+                return
+                
+            } else if entity.type == "lizhi" {
+                articleWebView.category = eOperationEncourage
+                articleWebView.isComplete = isCompeleteLizhi
+                
+            } else if entity.type == "ydtj" {
+                articleWebView.category = eOperationSport
+                articleWebView.isComplete = isCompeleteYdtj
+            }
+            articleWebView.navTitle = entity.title
+            self.downloadWithTaskID("getFocusAndNoticeDetail", outputTask: { () -> AnyObject! in
+                return XKRWManagementService5_0.sharedService().getArticleDetailFromServerByNid(entity.nid, andType: entity.type)
+            })
+            return;
+        }
+        
+    }
+
     func OperatingCellFormDequeueReusableCell(tableView:UITableView) ->XKRWDiscoverOperatingCell{
         OperatingCell = tableView.dequeueReusableCellWithIdentifier("OperatingCell") as? XKRWDiscoverOperatingCell
         OperatingCell!.pkButton.addTarget(self, action: "entryPKList", forControlEvents: .TouchUpInside)
@@ -222,7 +312,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
     func getDiscoverADInfo(){
         if XKRWUtil.isNetWorkAvailable(){
             self.downloadWithTaskID("getADInfo") { () -> AnyObject! in
-             return XKRWAdService.sharedService().downloadFitnessAdverFromServerWithPosition("Share", more: NSNumber(integer: 1))
+             return XKRWAdService.sharedService().downLoadAdWithPosition("share", andCommerce_type: "focus")
             }
         }else{
             XKRWCui.showInformationHudWithText("请检查网络后尝试")
@@ -593,6 +683,11 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
                     self.addMoreTeam()
                 }else{
                     let groupVC:XKRWGroupViewController = XKRWGroupViewController()
+                    
+                    groupVC.isCompeleteYdtj = isCompeleteYdtj
+                    groupVC.isCompeleteLiZhi = isCompeleteLizhi
+                    groupVC.isCompeleteJfzs = isCompeleteJfzs
+                    
                     groupVC.hidesBottomBarWhenPushed = true
                     groupVC.groupAuthType = groupAuthNone
                     groupVC.groupId = (teamArray[indexPath.row - 1] ).groupId
@@ -712,6 +807,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         
         if taskID == "getADInfo"{
             if(result != nil){
+//                print(result)
                 discoverADArray = result as! NSArray
                 let temp = showAd
                 if(discoverADArray.count > 0){
@@ -736,7 +832,11 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
                 print(knowledgeDic?.objectForKey("star")?.integerValue)
                 if(knowledgeDic?.objectForKey("star")?.integerValue != 2){
                     OperatingCell?.lossWeightOfKnowledgeButton.setBackgroundImage(UIImage(named: "discover_lose-weight_"), forState: .Normal)
+                    isCompeleteJfzs = true
+                    
                 }else{
+                    
+                    isCompeleteJfzs = false
                     let entitynid = knowledgeDic?.objectForKey("nid")?.integerValue
                     let nid = NSUserDefaults.standardUserDefaults().objectForKey( NSString(format: "KnowlegdeNId_%ld_%ld", entitynid!,uid) as String)?.integerValue
                     print(NSString(format: "KnowlegdeNId_%ld", entitynid!) as String)
@@ -750,9 +850,12 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
                 
                 let encouragementDic = result.objectForKey("data")!.objectForKey("lizhi")
                 if(encouragementDic?.objectForKey("star")?.integerValue != 2){
-                   
+                    
+                   isCompeleteLizhi = true
                     OperatingCell?.motivationalButton.setBackgroundImage(UIImage(named: "discover_date_"), forState: .Normal)
+                    
                 }else{
+                    isCompeleteLizhi = false
                     let entitynid = encouragementDic?.objectForKey("nid")?.integerValue
                     
                     let nid = NSUserDefaults.standardUserDefaults().objectForKey(NSString(format: "encouragementNid_%ld_%ld", entitynid!,uid) as String)?.integerValue
@@ -766,9 +869,12 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
                 
                 let sportRecommandDic = result.objectForKey("data")!.objectForKey("ydtj")
                 if(sportRecommandDic?.objectForKey("star")?.integerValue != 2){
+                    
+                    isCompeleteYdtj = true
                     OperatingCell?.sportRecommendButton.setBackgroundImage(UIImage(named: "discover_exercise_"), forState: .Normal)
                 }else{
                     
+                    isCompeleteYdtj = false
                     let entitynid = sportRecommandDic?.objectForKey("nid")?.integerValue
                     let nid = NSUserDefaults.standardUserDefaults().objectForKey(NSString(format: "sportRecommendNid_%ld_%ld", entitynid!,uid) as String)?.integerValue
                     if(entitynid == nid){
@@ -823,16 +929,33 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
                 }
                 
                 XKRWUserService.sharedService().addActivitiesGroupDefualt = false
-//                if XKRWUtil.isNetWorkAvailable()&&groupWithtServerTimeItem.groupItems != 0{
-//                    self.downloadWithTaskID("addMutilGroup", outputTask: { () -> AnyObject! in
-//
-//                        return XKRWGroupService.shareInstance().addMutilGroupbyGroupIds(groupids)
-//                    })
-//                }else{
-//                    XKRWCui.showInformationHudWithText("请检查网络后尝试")
-//                }
             }
         }
+        if taskID == "getFocusAndNoticeDetail" {
+            let entity = result as! XKRWOperationArticleListEntity
+            articleWebView.entity = entity
+            if entity.date == nil {
+                entity.date = "2000-01-01"
+            }
+            
+            print(entity.date as String)
+            
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let date:NSDate = dateFormatter.dateFromString(entity.date as String)!
+            
+            let isToday = date.isDayEqualToDate(NSDate())
+            articleWebView.requestUrl = (result as! XKRWOperationArticleListEntity).url
+            if !isToday {
+                articleWebView.entity.field_question_value = ""
+            } else {
+                articleWebView.entity.starState = 1
+            }
+            articleWebView.source = eFromToday
+            self.navigationController?.pushViewController(articleWebView, animated: true)
+            
+        }
+        
     }
     
     override func handleDownloadProblem(problem: AnyObject!, withTaskID taskID: String!) {

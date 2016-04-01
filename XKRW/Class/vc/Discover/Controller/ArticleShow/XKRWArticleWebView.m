@@ -163,7 +163,7 @@ NSString * const completeKey = @"THeAcountIsComplete";
     }
     
     
-    if ([self.requestUrl rangeOfString:@"token="].location == NSNotFound) {
+    if ([self.requestUrl rangeOfString:@"token="].location == NSNotFound && [self.requestUrl rangeOfString:@"ssapi.xikang.com"].location != NSNotFound) {
         if ([self.requestUrl rangeOfString:@"?"].location == NSNotFound) {
             self.requestUrl = [[NSString stringWithFormat:@"%@?token=%@", self.requestUrl,[[XKRWUserService sharedService] getToken]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         } else {
@@ -527,11 +527,7 @@ NSString * const completeKey = @"THeAcountIsComplete";
     }
     else if( self.category == eOperationFamous)
     {   //pk  关注微博
-//        XKRWArticleVC *vc = [[XKRWArticleVC alloc]init];
-//        vc.contentURL = @"http://m.weibo.cn/d/xikangshoushou/";
-//        vc.naviTitle = @"关注微博";
-//        [self.navigationController  pushViewController:vc animated:YES];
-        
+
     }
 }
 
@@ -566,13 +562,14 @@ NSString * const completeKey = @"THeAcountIsComplete";
         
         int32_t rightAnswer = self.entity.field_zhengda_value.intValue;
         
-        _answerCheckBoxArray[rightAnswer-1].selected = YES;
-        [_answerCheckBoxArray[rightAnswer-1] setBackgroundImage:[UIImage imageNamed:@"answer_check"] forState:UIControlStateSelected];
-        
-        for (UIButton * but in _answerCheckBoxArray) {
-            but.userInteractionEnabled = NO;
+        if(rightAnswer >= 1 && rightAnswer <= _answerCheckBoxArray.count){
+            _answerCheckBoxArray[rightAnswer-1].selected = YES;
+            [_answerCheckBoxArray[rightAnswer-1] setBackgroundImage:[UIImage imageNamed:@"answer_check"] forState:
+             UIControlStateSelected];
+            for (UIButton * but in _answerCheckBoxArray) {
+                but.userInteractionEnabled = NO;
+            }
         }
-        
     }else{
         [XKRWCui showInformationHudWithText:@"恭喜 +1⭐️"];
         
@@ -813,14 +810,6 @@ NSString * const completeKey = @"THeAcountIsComplete";
         }
         
         XKRWShareActionSheet *sheet = [[XKRWShareActionSheet alloc] initWithButtonImages:images clickButtonAtIndex:^(NSInteger index) {
-            
-//            NSString *shareTitle = nil;
-//            if (_shareTitle && shareTitle.length) {
-//                shareTitle = [NSString stringWithFormat:@"%@ - %@", self.title, _shareTitle];
-//            } else {
-//                
-//                shareTitle = _naviTitle;
-//            }
             
             NSString *name = imageNames[index];
             

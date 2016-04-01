@@ -10,6 +10,7 @@
 #import "XKRWManagementEntity5_0.h"
 #import "XKRWArticleDetailEntity.h"
 #import "XKRWCommentEtity.h"
+@class XKRWOperationArticleListEntity;
 @interface XKRWManagementService5_0 : XKRWBaseService
 /**
  *  单例
@@ -133,8 +134,27 @@
  */
 
 -(XKRWArticleDetailEntity *)getPKDetailFromServerByNid:(NSString *)nid;
+/**
+ *  获取PK、减肥知识、励志、运动推荐、名人瘦瘦、减肥达人秀
+ *
+ *  @param nid  文章id
+ *  @param type
 
-
+ pkinfo = PK
+ 
+ jfzs = 减肥知识
+ 
+ lizhi = 励志
+ 
+ mrss = 名人瘦瘦
+ 
+ jfdrx = 减肥达人秀
+ 
+ lhyy=灵活运营
+ *
+ *  @return XKRWOperationArticleListEntity
+ */
+- (XKRWOperationArticleListEntity *)getArticleDetailFromServerByNid:(NSString *)nid andType:(NSString *)type;
 - (NSDictionary *)getPKNum:(NSString *)nid;
 
 

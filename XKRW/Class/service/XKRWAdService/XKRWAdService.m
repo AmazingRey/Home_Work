@@ -64,7 +64,7 @@ static XKRWAdService *shareInstance = nil;
     NSDictionary *getAdverDic = [self syncBatchDataWith:adverUrl andPostForm:param];
     
     NSMutableArray *dataMutArray = [NSMutableArray array];
-    XKLog(@"广告 %@",getAdverDic[@"data"]);
+//    XKLog(@"广告 %@",getAdverDic[@"data"]);
     
     for (NSDictionary *temp in getAdverDic[@"data"]) {
         XKRWShareAdverEntity *entity = [[XKRWShareAdverEntity alloc] init];
@@ -78,6 +78,50 @@ static XKRWAdService *shareInstance = nil;
     }
     return dataMutArray;
 }
+
+- (NSMutableArray *)downLoadAdWithPosition:(NSString *)position andCommerce_type:(NSString *)commerce_type{
+    NSURL *adUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewServer,kAdInfo_5_2]];
+    NSDictionary *param;
+    if ([position isEqualToString:@"share"]) {
+       param = @{@"var":STR_VERSION_URL,@"commerce_type":commerce_type,@"pos_page":position};
+    } else {
+        param = @{@"var":STR_VERSION_URL,@"commerce_type":commerce_type,@"pos_group":position};
+    }
+  
+    NSDictionary *result = [self syncBatchDataWith:adUrl andPostForm:param];
+    NSMutableArray *adMutArray = [NSMutableArray array];
+    NSArray *typeArray = @[@"pkinfo",@"url",@"share",@"post",@"jfzs",@"lizhi",@"ydtj"];
+    for (NSDictionary *temp in result[@"data"]) {
+        BOOL isInArray;
+        for (NSString *type in typeArray) {
+            isInArray = [temp[@"type"] isEqualToString:type];
+            if (isInArray) {
+                break;
+            } else {
+                continue;
+            }
+        }
+        if (isInArray) {
+            XKRWShareAdverEntity *entity = [XKRWShareAdverEntity new];
+            entity.adId = temp[@"id"];
+            entity.title = temp[@"name"];
+            entity.commerce_type = temp[@"commerce_type"];
+            entity.imgSrc = temp[@"image"];
+            entity.startTime = temp[@"day_on"];
+            entity.endTime = temp[@"day_off"];
+            entity.type = temp[@"type"];
+            entity.imgUrl = temp[@"addr"];
+            entity.nid = temp[@"nid"];
+            
+            [adMutArray addObject:entity];
+        } else {
+            continue;
+        }
+    }
+    return adMutArray;
+
+}
+
 
 - (void)downloadAdvertisementWithPosition:(XKRWAdPostion)position {
     

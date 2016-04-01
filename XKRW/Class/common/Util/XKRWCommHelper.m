@@ -76,10 +76,9 @@ static XKRWBaseService *service;
         return  NO;
     }
     else{
+        
         [defaults setObject:[NSString stringWithFormat:@"IOS Ver %@", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"]] forKey:kFirstOpenApp];
         [defaults synchronize];
-        
-        [XKRWUserDefaultService setLogin:NO];
         
         return YES;
     }

@@ -33,4 +33,14 @@ typedef NS_ENUM(int, XKRWAdPostion) {
 
 // 获取瘦身广告
 - (NSMutableArray *)downloadFitnessAdverFromServerWithPosition:(NSString *)position More:(NSNumber *)more;
+/**
+ *  5.2获取焦点图、公告
+ *
+ *  @param position      share：发现、group_id:小组
+ *  @param commerce_type focus:焦点图、notice：公告
+ *
+ *  @return NSMutableArray
+ */
+- (NSMutableArray *)downLoadAdWithPosition:(NSString *)position andCommerce_type:(NSString *)commerce_type;
+
 @end

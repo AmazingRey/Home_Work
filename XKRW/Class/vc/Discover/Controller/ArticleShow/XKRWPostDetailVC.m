@@ -19,7 +19,7 @@
 #import "XKRWNewWebView.h"
 
 #import "XKRW-Swift.h"
-@interface XKRWPostDetailVC ()<UITableViewDataSource,UITableViewDelegate,KMImageBroswerViewDelegate,XKRWFitCommentCellDelegate, XKRWInputBoxViewDelegate,MJRefreshBaseViewDelegate,XKRWActionSheetDelegate,XKRWTipViewDelegate,UIAlertViewDelegate,RTLabelDelegate>
+@interface XKRWPostDetailVC ()<UITableViewDataSource,UITableViewDelegate,KMImageBroswerViewDelegate,XKRWFitCommentCellDelegate, XKRWInputBoxViewDelegate,MJRefreshBaseViewDelegate,XKRWActionSheetDelegate,XKRWTipViewDelegate,UIAlertViewDelegate,RTLabelDelegate,UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet XKRWUITableViewBase *postTableView;
 @property (strong,nonatomic) MJRefreshFooterView *refreshFooter;
 @property (strong,nonatomic) MJRefreshHeaderView *refreshHeader;
@@ -50,6 +50,9 @@
     __weak UIView *clickedCommentView;
     
     NSInteger __commentsNumber;
+    
+    NSInteger webviewHeight;
+    
 }
 
 - (void)viewDidLoad {
@@ -65,7 +68,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self getLimitInfo];
+    //    [self getLimitInfo];
 }
 
 - (void)dealloc {
@@ -81,7 +84,7 @@
     [self addNaviBarBackButton];
     [self addNaviBarRightButtonWithNormalImageName:@"more_option_icon" highlightedImageName:@"more_option_icon" selector:@selector(moreOperationClick)];
     
-
+    
     if(_postDeleted){
         [self deletedView];
     }else{
@@ -97,20 +100,22 @@
         _allPostCell = [[XKRWCommentEditCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"allPostCell"];
         _allPostCell.selectionStyle = UITableViewCellSelectionStyleNone;
         _nonCommentCell = [[XKRWMoreCommetCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"nonCommentCell"];
-
+        
         _refreshFooter = [MJRefreshFooterView footer];
         _refreshFooter.scrollView = _postTableView;
         _refreshFooter.delegate = self;
         _refreshHeader = [MJRefreshHeaderView header];
         _refreshHeader.scrollView = _postTableView;
         _refreshHeader.delegate = self;
-
+        
         _inputBoxView = [[XKRWInputBoxView alloc] initWithPlaceholder:@"写跟帖" style:footer];
         _inputBoxView.delegate = self;
         [_inputBoxView showIn:self.view];
-
+        
         _tipView = [[XKRWTipView alloc] init];
         _tipView.delegate = self;
+        
+        [[XKHudHelper instance]showProgressHudAnimationInView:self.view];
     }
 }
 
@@ -154,8 +159,8 @@
         text.textColor = XK_TEXT_COLOR;
         text.textAlignment = NSTextAlignmentCenter;
         text.text = @"该帖子已被删除";
-   
-            
+        
+        
         text.frame = CGRectMake(0, _deletedView.height / 2 - 60, XKAppWidth, 30);
         UIImage *image = [UIImage imageNamed:@"del_like"];
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake((XKAppWidth-image.size.width)/2, text.top - 109  , image.size.width, image.size.height)];
@@ -263,14 +268,15 @@
         [self getPostDetailInfo];
     }
     
-   }
+}
 
 - (void) getPostDetailInfo{
     if ([XKRWUtil isNetWorkAvailable]){
+        //        [XKRWCui showProgressHud:@"加载帖子详情中"];
         [self downloadWithTaskID:@"getPostDetail" outputTask:^id{
             return [[XKRWUserArticleService shareService] getUserPostDetailById:_postID];
         }];
-       
+        
     }else{
         [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
     }
@@ -289,7 +295,7 @@
 
 - (void) getCommentAndReport{
     if ([XKRWUtil isNetWorkAvailable]){
-
+        
         [self downloadWithTaskID:@"downloadComment" outputTask:^id{
             return [[XKRWManagementService5_0 sharedService] getCommentFromServerWithBlogId:_postID Index:@(0) andRows:@(10) type:@(2)];
         }];
@@ -299,7 +305,7 @@
     }else{
         [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
     }
-
+    
 }
 
 
@@ -311,7 +317,7 @@
     }else{
         [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
     }
-
+    
 }
 
 - (void)likeAction:(UIButton *)button {
@@ -402,14 +408,14 @@
         } else {
             
         }
-    [self downloadWithTaskID:@"sendComment" outputTask:^id{
-        if (_isReplyComment) {
-            return  [[XKRWManagementService5_0 sharedService] writeCommentWithMessage:message Blogid:_postID sid:_replyEntity.sid fid:_replyEntity.fid type:2];
-        } else {
-            return [[XKRWManagementService5_0 sharedService] writeCommentWithMessage:message Blogid:_postID sid:0 fid:0 type:2];
-        }
-        
-    }];
+        [self downloadWithTaskID:@"sendComment" outputTask:^id{
+            if (_isReplyComment) {
+                return  [[XKRWManagementService5_0 sharedService] writeCommentWithMessage:message Blogid:_postID sid:_replyEntity.sid fid:_replyEntity.fid type:2];
+            } else {
+                return [[XKRWManagementService5_0 sharedService] writeCommentWithMessage:message Blogid:_postID sid:0 fid:0 type:2];
+            }
+            
+        }];
     }
     [self.inputBoxView setPlaceholder:@"写跟帖"];
 }
@@ -540,7 +546,7 @@
             } else {
                 [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
             }
-           
+            
         }
     } else if (actionSheet.tag == 1) {
         [self isReportIt:XKRWUserReportPost reportId:@""];
@@ -604,7 +610,7 @@
             [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
             return;
         }
-  
+        
     } else {
         [self initData];
     }
@@ -647,8 +653,7 @@
             postDetailCell.personLikeNumLabel.text = [NSString stringWithFormat:@"已有%ld人喜欢",(long)_entity.postBePraise];
             _postDetailCell.postTitleLabel.attributedText = [XKRWUtil createAttributeStringWithString:_entity.postTitle font:XKDefaultFontWithSize(16) color:XK_TITLE_COLOR lineSpacing:3.5 alignment:NSTextAlignmentLeft];
             
-            _postDetailCell.postContentLabel.text = _entity.textContent ;
-            
+            _postDetailCell.htmlStr = _entity.textContent;
             
             _postDetailCell.likeStateLabel.text = _entity.isThumpUp ? @"已喜欢":@"喜欢" ;
             _postDetailCell.likeStateButton.hidden = NO;
@@ -719,7 +724,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *headSectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, 10)];
     headSectionView.backgroundColor = [UIColor clearColor];
-//    [XKRWUtil addViewUpLineAndDownLine:headSectionView andUpLineHidden:NO DownLineHidden:NO];
+    //    [XKRWUtil addViewUpLineAndDownLine:headSectionView andUpLineHidden:NO DownLineHidden:NO];
     return headSectionView;
 }
 
@@ -739,27 +744,23 @@
             _postDetailCell.postTitleLabel.preferredMaxLayoutWidth = XKAppWidth-30;
             _postDetailCell.postTitleLabel.attributedText = [XKRWUtil createAttributeStringWithString:_entity.postTitle font:XKDefaultFontWithSize(16) color:XK_TITLE_COLOR lineSpacing:3.5 alignment:NSTextAlignmentLeft];
             
-            _postDetailCell.postContentLabel.delegate = self;
-            _postDetailCell.postContentLabel.lineSpacing = 3.5 ;
-            _postDetailCell.postContentLabel.text = _entity.textContent ;
-            _postDetailCell.postContentLabel.textAlignment = NSTextAlignmentJustified;
-            _postDetailCell.postContentLabel.textColor = XK_TEXT_COLOR;
-            _postDetailCell.postContentLabel.font = XKDefaultFontWithSize(16);
-            _postDetailCell.postContentHeight.constant = [_postDetailCell.postContentLabel optimumSize].height;
-            _postDetailCell.postContentLabel.linkAttributes = [NSDictionary dictionaryWithObject:@"#29ccb1" forKey:@"color"];            
+            _postDetailCell.contentwebView.delegate = self;
+            _postDetailCell.contentwebView.scrollView.scrollEnabled = NO;
+            _postDetailCell.contentWebViewConstraintHeight.constant  = webviewHeight;
+            
             if(_entity.imagePath.count > 0){
                 _broswerView =  [[KMImageBroswerView alloc]initWithFrame:CGRectMake(0, 0, _postDetailCell.postImageView.width, _postDetailCell.postImageView.height)];
                 [_broswerView calculateSizeWithImagesCount:_entity.imagePath.count gapWidth:5];
-
+                
                 _broswerView.delegate = self;
-//                [_postDetailCell.postImageView addSubview:_broswerView];
                 _postDetailCell.postImageViewConstraint.constant = _broswerView.bottom;
             }else{
                 _postDetailCell.postImageViewConstraint.constant = 0;
             }
         }
         
-     
+        NSLog(@"+++ Cell 的高度 = %f , webView 的高度 = %ld ",[XKRWUtil getViewSize:_postDetailCell.contentView].height + 1,(long)webviewHeight);
+        
         return [XKRWUtil getViewSize:_postDetailCell.contentView].height + 1;
         
         
@@ -813,7 +814,7 @@
     _seletCommentIndexs = @[fitCommentCell.selectIndexPath];
     if ([self isMineNickName:comment.nameStr]) {
         [self deleteComment:comment.comment_id];
-
+        
     } else if (_entity.groupUserJoin || [self isMineNickName:_entity.userName]) {
         clickedCommentView = fitCommentCell.commentLabel;
         _replyEntity.fid = [comment.comment_id integerValue];
@@ -822,7 +823,7 @@
         _joinGroupView.hidden = YES;
         [self.inputBoxView isForbidActions:NO];
         [_inputBoxView beginEditWithPlaceholder:[NSString stringWithFormat:@"回复%@:",comment.nameStr]];
-
+        
     } else {
         [self isJoinThisGroup];
     }
@@ -838,18 +839,17 @@
     
     if ([self isMineNickName:comment.nameStr]) {
         [self.tipView showUpView:view titles:@[@"删除",@"复制"]];
-
+        
     } else if (_entity.groupUserJoin) {
         [self.tipView showUpView:view titles:@[@"举报",@"复制"]];
-
+        
     } else {
         [self isJoinThisGroup];
     }
- 
+    
 }
 
 - (void)fitCommentCell:(XKRWFitCommentCell *)fitCommentCell didReplyComment:(XKRWCommentEtity *)comment {
-    
     if (_entity.groupUserJoin || [self isMineNickName:_entity.userName]) {
         clickedCommentView = fitCommentCell.commentLabel;
         _seletCommentIndexs = @[fitCommentCell.selectIndexPath];
@@ -863,7 +863,6 @@
     } else {
         [self isJoinThisGroup];
     }
-    
 }
 
 
@@ -894,7 +893,7 @@
 }
 
 - (void)fitSubComment:(XKRWReplyView *)replyView longPressedAtIndexPath:(NSIndexPath *)selfIndexPath subIndexPath:(NSIndexPath *)subCellIndexPath {
-     NSString *nickname = [_commentArray[selfIndexPath.row - 1].sub_Array[subCellIndexPath.row] nickName];
+    NSString *nickname = [_commentArray[selfIndexPath.row - 1].sub_Array[subCellIndexPath.row] nickName];
     __weak UIView *view = [replyView.tableView cellForRowAtIndexPath:subCellIndexPath];
     _seletCommentIndexs = @[selfIndexPath,subCellIndexPath];
     self.tipView.commentId = [_commentArray[selfIndexPath.row - 1].sub_Array[subCellIndexPath.row] mainId];
@@ -903,11 +902,9 @@
         [self.tipView showUpView:view titles:@[@"删除",@"复制"]];
     } else if (_entity.groupUserJoin) {
         [self.tipView showUpView:view titles:@[@"举报",@"复制"]];
-        
     } else {
         [self isJoinThisGroup];
     }
-    
 }
 
 - (void)deleteComment:(NSNumber *)comment_id {
@@ -938,10 +935,43 @@
     }
 }
 
+#pragma  --mark UIWebViewdelegate
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [_postDetailCell updateConstraintsIfNeeded];
+    
+    webviewHeight = webView.scrollView.contentSize.height;
+    [_postTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
+    });
+    
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    NSLog(@"%@",request.URL.absoluteString);
+    
+    if([request.URL.absoluteString rangeOfString:@"about:blank"].location == NSNotFound){
+        XKRWNewWebView *webView = [[XKRWNewWebView alloc]init];
+        webView.contentUrl = request.URL.absoluteString;
+        webView.isFromPostDetail = YES;
+        [self.navigationController pushViewController:webView animated:YES];
+        return NO;
+    }
+    return YES;
+}
+
 #pragma  --mark  NetWork
 
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID
 {
+    [XKRWCui hideProgressHud];
     if([taskID isEqualToString:@"getPostDetail"]){
         _entity = (XKRWUserPostEntity *)result;
         if(_entity.status == XKRWPostStatusDeleteByAdmin || _entity.status
@@ -1094,10 +1124,15 @@
 
 - (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID
 {
+    [XKRWCui hideProgressHud];
     if (_refreshHeader.refreshing) {
         [_refreshHeader endRefreshing];
     } else if (_refreshFooter.refreshing) {
         [_refreshFooter endRefreshing];
+    }
+    
+    if([taskID isEqualToString:@"getPostDetail"]){
+        [XKRWCui showInformationHudWithText:@"加载帖子失败"];
     }
     
     [super handleDownloadProblem:problem withTaskID:taskID];

@@ -169,8 +169,8 @@
                   symbolName = "XKRW.XKRWArticleEditVC.(saveAction (XKRW.XKRWArticleEditVC) -&gt; () -&gt; ()).(closure #1).(closure #1).(closure #1)"
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/leng/Desktop/5_2_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
-                  timestampString = "479965961.984293"
+                  urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
+                  timestampString = "481194917.745861"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
@@ -184,8 +184,8 @@
                   symbolName = "XKRW.XKRWArticleEditVC.(saveAction (XKRW.XKRWArticleEditVC) -&gt; () -&gt; ()).(closure #1).(closure #1).(closure #1).(closure #1)"
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/leng/Desktop/5_2_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
-                  timestampString = "479965961.984656"
+                  urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
+                  timestampString = "481194917.74619"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
@@ -224,22 +224,6 @@
             startingLineNumber = "90"
             endingLineNumber = "90"
             landmarkName = "checkComplete()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Discover/Controller/Group/ViewControllers/XKRWEditPostVC.swift"
-            timestampString = "479620015.272275"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
-            landmarkName = "upLoadPostToNetwork()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -314,44 +298,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XKRW/Class/vc/Scheme/Controller/XKRWSchemeVC_5_0.swift"
-            timestampString = "479811787.470702"
+            timestampString = "480414716.319071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
+            startingLineNumber = "343"
+            endingLineNumber = "343"
             landmarkName = "viewWillAppear(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/common/Util/XKRWAlgolHelper.m"
-            timestampString = "479811936.547039"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
-            landmarkName = "+dayOfAchieveTarget"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWSchemeVC_5_0.swift"
-            timestampString = "479886791.515321"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "624"
-            endingLineNumber = "624"
-            landmarkName = "showFlowerInWindow()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -377,13 +329,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Guide/Controller/userInfoImport/XKRWTargetWeightVC.swift"
-            timestampString = "479873672.449037"
+            filePath = "XKRW/Class/vc/Common/CommonVC/XKRWWebViewVC.m"
+            timestampString = "480564494.609164"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "-popView"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -393,13 +345,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Discover/Controller/XKRWOperateArticleListVC.swift"
-            timestampString = "479877711.844493"
+            filePath = "XKRW/Class/vc/Common/CommonVC/surroundAndWeight/XKRWSurroundDegreeVC.m"
+            timestampString = "480997360.205187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
-            landmarkName = "entryArticle(_:)"
+            startingLineNumber = "829"
+            endingLineNumber = "829"
+            landmarkName = "-handleDataWithTempMutArray:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -409,13 +361,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Common/CommonView/XKRWNewWebView.m"
-            timestampString = "479960737.675039"
+            filePath = "XKRW/Class/vc/Discover/Controller/ArticleShow/XKRWPKVC.m"
+            timestampString = "480996605.08901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "-didDownloadWithResult:taskID:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -12,27 +12,26 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请不要在小组内发饮食照片！！！" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uru-OO-i7e">
-                        <rect key="frame" x="56" y="0.0" width="264" height="44"/>
+                        <rect key="frame" x="56" y="0.0" width="264" height="42"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oWF-O9-5a1" userLabel="bottomLine">
-                        <rect key="frame" x="0.0" y="43" width="320" height="0.5"/>
+                        <rect key="frame" x="0.0" y="42" width="320" height="1"/>
                         <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.5" id="Wht-YS-EFH"/>
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公告" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7p-qv-2Si">
-                        <rect key="frame" x="15" y="13" width="33" height="18"/>
+                        <rect key="frame" x="15" y="13" width="26" height="16"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="18" id="1v4-5t-8fs"/>
-                            <constraint firstAttribute="width" constant="33" id="nk9-ac-vgy"/>
+                            <constraint firstAttribute="width" constant="26" id="LLS-QK-NnN"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="deviceRGB"/>
@@ -52,17 +51,17 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="P7p-qv-2Si" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="BCe-HG-l2P"/>
-                    <constraint firstItem="Uru-OO-i7e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="GVA-em-Jxc"/>
-                    <constraint firstItem="P7p-qv-2Si" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="Grg-CP-YeY"/>
+                    <constraint firstItem="P7p-qv-2Si" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="13" id="3AP-0v-8EH"/>
+                    <constraint firstItem="Uru-OO-i7e" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="6Xb-56-Ad5"/>
+                    <constraint firstItem="Uru-OO-i7e" firstAttribute="leading" secondItem="P7p-qv-2Si" secondAttribute="trailing" constant="15" id="JcK-GO-0dW"/>
+                    <constraint firstItem="P7p-qv-2Si" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="NPM-0u-q0n"/>
                     <constraint firstItem="P7p-qv-2Si" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="NZo-0A-XOT"/>
-                    <constraint firstItem="Uru-OO-i7e" firstAttribute="leading" secondItem="P7p-qv-2Si" secondAttribute="trailing" constant="8" id="RoT-Vq-1if"/>
                     <constraint firstAttribute="bottomMargin" secondItem="oWF-O9-5a1" secondAttribute="bottom" constant="-8" id="SvA-cG-Kjj"/>
                     <constraint firstItem="Uru-OO-i7e" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Yyn-OH-jpo"/>
                     <constraint firstItem="oWF-O9-5a1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="cQA-79-jKv"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Uru-OO-i7e" secondAttribute="trailing" constant="-8" id="fIT-F8-MrE"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Uru-OO-i7e" secondAttribute="bottom" constant="-8.5" id="oTr-vb-jaf"/>
+                    <constraint firstAttribute="bottom" secondItem="Uru-OO-i7e" secondAttribute="bottom" constant="1" id="q22-qz-iAG"/>
                     <constraint firstAttribute="trailingMargin" secondItem="oWF-O9-5a1" secondAttribute="trailing" constant="-8" id="uNh-vM-MoJ"/>
+                    <constraint firstAttribute="trailing" secondItem="Uru-OO-i7e" secondAttribute="trailing" id="vaM-Y2-tJs"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -74,6 +73,7 @@
             <connections>
                 <outlet property="announceLabel" destination="P7p-qv-2Si" id="nrp-AG-lrp"/>
                 <outlet property="separatorLine" destination="oWF-O9-5a1" id="c7F-an-3Kq"/>
+                <outlet property="titleLabel" destination="Uru-OO-i7e" id="lR0-Lk-UoJ"/>
             </connections>
             <point key="canvasLocation" x="395" y="364"/>
         </tableViewCell>

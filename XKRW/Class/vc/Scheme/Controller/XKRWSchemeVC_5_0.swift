@@ -80,6 +80,10 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        XKRWAppCommentUtil.shareAppComment().setEntryPageTimeWithPage(SCHEMEPAGE)
+        
+       
+        
         XKRWSchemeNotificationService .shareService().registerLocalNotification();
         
         //新用户登录的时候 
@@ -309,6 +313,8 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         MobClick.event("in_main")
+        
+        XKRWAppCommentUtil.shareAppComment().showAlertViewInVC()
         
         weak var weakView = self.weightView
         self.weightView?.reload {

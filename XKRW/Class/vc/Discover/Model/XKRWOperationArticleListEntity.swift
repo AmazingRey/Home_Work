@@ -19,7 +19,7 @@ class XKRWOperationArticleListEntity: NSObject {
     /** 文章更新时间 */
     var updateTime:String?
     /** 文章日期 */
-    var date:String?
+    var date:String!
     /** 文章阅读量 */
     var pv:Int = 0
     /** 文章展示的模板 */

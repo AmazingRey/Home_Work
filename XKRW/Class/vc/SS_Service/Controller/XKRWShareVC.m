@@ -56,7 +56,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     if ([[XKRWServerPageService sharedService] needRequestStateOfSwitch]) {
         _isShowiSlim = NO;
         [self downloadWithTaskID:@"requestState" outputTask:^{

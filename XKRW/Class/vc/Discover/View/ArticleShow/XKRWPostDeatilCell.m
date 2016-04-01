@@ -22,6 +22,14 @@
     // Configure the view for the selected state
 }
 
+- (void)setHtmlStr:(NSString *)htmlStr{
+    if(_htmlStr != htmlStr){
+        _htmlStr = htmlStr;
+        NSData *textContentData = [_htmlStr dataUsingEncoding:NSUTF8StringEncoding];
+        [_contentwebView loadHTMLString:[[NSString alloc] initWithData:textContentData  encoding:NSUTF8StringEncoding] baseURL:nil];
+    }
+}
+
 - (void)setShowLikeButton:(BOOL)showLikeButton
 {
     if(showLikeButton){

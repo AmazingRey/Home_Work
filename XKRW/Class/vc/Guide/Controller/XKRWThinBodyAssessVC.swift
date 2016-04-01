@@ -70,7 +70,7 @@ class XKRWThinBodyAssessVC: XKRWBaseVC {
             rightNaviBarButton.setTitleColor(XKGrayDefaultColor, forState: .Highlighted)
             rightNaviBarButton.titleLabel!.font = UIFont.systemFontOfSize(14)
             rightNaviBarButton.frame = CGRectMake(0, 0, 60, 20)
-            rightNaviBarButton.addTarget(self, action: "doClickNaviBarRightButton", forControlEvents:UIControlEvents.TouchUpInside)
+            rightNaviBarButton.addTarget(self, action: #selector(XKRWThinBodyAssessVC.doClickNaviBarRightButton as (XKRWThinBodyAssessVC) -> () -> ()), forControlEvents:UIControlEvents.TouchUpInside)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviBarButton)
         }
          scrollView.contentSize =  CGSizeMake(UI_SCREEN_WIDTH, 830)
@@ -170,7 +170,6 @@ class XKRWThinBodyAssessVC: XKRWBaseVC {
     @IBAction func nextAction(sender: UIButton) {
         MobClick.event("clk_Start")
         if (self.navigationController?.tabBarController != nil){
-//            let day = XKRWAlgolHelper.dayOfAchieveTarget()
             XKRWSchemeNotificationService.shareService().registerLocalNotification()
             self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
         }else{

@@ -15,9 +15,7 @@
 #import "XKRWShareAdverEntity.h"
 #import "XKRWIntelligentListEntity.h"
 #import "XKRWUserService.h"
-#import <XKRW-Swift.h>
-
-
+#import "XKRW-Swift.h"
 static XKRWManagementService5_0 *shareInstance;
 @implementation XKRWManagementService5_0
 {
@@ -645,6 +643,33 @@ static XKRWManagementService5_0 *shareInstance;
     return entity;
 }
 
+- (XKRWOperationArticleListEntity *)getArticleDetailFromServerByNid:(NSString *)nid andType:(NSString *)type {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewServer,kGetTogetherPKDetailURL]];
+    NSDictionary *param = @{@"id":nid,@"type":type};
+    NSDictionary *dic = [self syncBatchDataWith:url andPostForm:param];
+    XKRWOperationArticleListEntity *entity = [XKRWOperationArticleListEntity new];
+    
+    if (dic[@"success"]) {
+        entity.nid = dic[@"data"][@"nid"];
+        entity.title = dic[@"data"][@"title"];
+        entity.updateTime = dic[@"data"][@"update_time"];
+        entity.date = dic[@"data"][@"date"];
+        entity.field_answers_value = dic[@"data"][@"field_answers_value"];
+        entity.field_question_value = dic[@"data"][@"field_question_value"];
+        entity.field_zhengda_value = dic[@"data"][@"field_zhengda_value"];
+        entity.pv = [dic[@"data"][@"pv"] integerValue];
+        entity.showType = dic[@"data"][@"show_type"];
+        entity.smallImageUrl = dic[@"data"][@"s_image"];
+        entity.bigImageUrl = dic[@"data"][@"b_image"];
+        entity.url = dic[@"data"][@"url"];
+        entity.star = dic[@"data"][@"star"];
+        
+        return entity;
+    } else {
+        return nil;
+    }
+    
+}
 
 - (NSDictionary *)getPKNum:(NSString *)nid
 {

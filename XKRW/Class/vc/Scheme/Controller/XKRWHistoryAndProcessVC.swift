@@ -45,13 +45,13 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
     
     var recordDates: NSMutableArray!
     
-    var count: Int = 0
+//    var count: Int = 0
     
-    var startCountVc: Int = 0
-    var endCountVc: Int = 0
-    
-    var intoSwitch: Int = 0
-    let keySwitch = "\(XKRWUserDefaultService.getCurrentUserId())_into_switch"
+//    var startCountVc: Int = 0
+//    var endCountVc: Int = 0
+//    
+//    var intoSwitch: Int = 0
+//    let keySwitch = "\(XKRWUserDefaultService.getCurrentUserId())_into_switch"
     
     // MARK: - Initialization and system's functions
     override func viewDidLoad() {
@@ -113,15 +113,9 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
         
         self.view.addSubview(self.loadingView)
         
-        let key = "\(XKRWUserDefaultService.getCurrentUserId())_into_history"
-        self.count = NSUserDefaults.standardUserDefaults().objectForKey(key) as? Int ?? 0
-
-        NSUserDefaults.standardUserDefaults().setObject(++self.count, forKey: key)
-        NSUserDefaults.standardUserDefaults().synchronize()
         
-        self.intoSwitch = NSUserDefaults.standardUserDefaults().objectForKey(keySwitch) as? Int ?? 0
+        XKRWAppCommentUtil.shareAppComment().setEntryPageTimeWithPage(ANALYZEPAGE)
         
-//        self.navigationController?.interactivePopGestureRecognizer?.addTarget(self, action: "popView")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -140,22 +134,20 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             self.needReload = true
         }
         
-        startCountVc = self.navigationController!.viewControllers.count
-//        print(startCountVc)
+//        startCountVc = self.navigationController!.viewControllers.count
+
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        endCountVc = self.navigationController!.viewControllers.count
-//            print(endCountVc)
-        
+//        endCountVc = self.navigationController!.viewControllers.count
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        if endCountVc < startCountVc{
-            self.dealAppCommentCount()
-        }
+//        if endCountVc < startCountVc{
+//            self.dealAppCommentCount()
+//        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -685,24 +677,24 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
         self.popView()
     }
     
-    // MARK: - UIAlertView's delegate 
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        
-        if buttonIndex != alertView.cancelButtonIndex {
-            
-            let string = "itms-apps://itunes.apple.com/app/id622478622"
-            UIApplication.sharedApplication().openURL(NSURL(string: string)!)
-            
-            self.intoSwitch = 1 // 1.永远不开启了
-            
-        }else{
-            self.intoSwitch = 2 // 2.五次出入开启
-        }
-        
-        NSUserDefaults.standardUserDefaults().setObject(self.intoSwitch, forKey: keySwitch)
-        NSUserDefaults.standardUserDefaults().synchronize()
-    }
+//    // MARK: - UIAlertView's delegate 
+//    
+//    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+//        
+//        if buttonIndex != alertView.cancelButtonIndex {
+//            
+//            let string = "itms-apps://itunes.apple.com/app/id622478622"
+//            UIApplication.sharedApplication().openURL(NSURL(string: string)!)
+//            
+//            self.intoSwitch = 1 // 1.永远不开启了
+//            
+//        }else{
+//            self.intoSwitch = 2 // 2.五次出入开启
+//        }
+//        
+//        NSUserDefaults.standardUserDefaults().setObject(self.intoSwitch, forKey: keySwitch)
+//        NSUserDefaults.standardUserDefaults().synchronize()
+//    }
     
     // MARK: - Other functions
     
@@ -792,25 +784,25 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             super.popView()
     }
     
-    func dealAppCommentCount() {
-        
-        if self.intoSwitch == 0 {
-            
-            let alert = UIAlertView(title: nil, message: "妈妈说喜欢我们就会瘦,\n不信你试试啊！", delegate: self, cancelButtonTitle: "就不试，狗带吧！")
-            alert.addButtonWithTitle("我要瘦，我要瘦！")
-            alert.addButtonWithTitle("呵呵，可以吐槽吗？")
-            alert.show()
-            
-        } else if self.intoSwitch == 2 {
-            
-            if self.count%5 == 0 {
-                let alert = UIAlertView(title: nil, message: "妈妈说喜欢我们就会瘦,\n不信你试试啊！", delegate: self, cancelButtonTitle: "就不试，狗带吧！")
-                alert.addButtonWithTitle("我要瘦，我要瘦！")
-                alert.addButtonWithTitle("呵呵，可以吐槽吗？")
-                alert.show()
-            }
-        }
-    }
+//    func dealAppCommentCount() {
+//        
+//        if self.intoSwitch == 0 {
+//            
+//            let alert = UIAlertView(title: nil, message: "妈妈说喜欢我们就会瘦,\n不信你试试啊！", delegate: self, cancelButtonTitle: "就不试，狗带吧！")
+//            alert.addButtonWithTitle("我要瘦，我要瘦！")
+//            alert.addButtonWithTitle("呵呵，可以吐槽吗？")
+//            alert.show()
+//            
+//        } else if self.intoSwitch == 2 {
+//            
+//            if self.count%5 == 0 {
+//                let alert = UIAlertView(title: nil, message: "妈妈说喜欢我们就会瘦,\n不信你试试啊！", delegate: self, cancelButtonTitle: "就不试，狗带吧！")
+//                alert.addButtonWithTitle("我要瘦，我要瘦！")
+//                alert.addButtonWithTitle("呵呵，可以吐槽吗？")
+//                alert.show()
+//            }
+//        }
+//    }
     
     /*
     // MARK: - Navigation

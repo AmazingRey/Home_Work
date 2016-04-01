@@ -124,7 +124,6 @@
 #import "SDImageCache.h"
 #import "XKRWAboutVC.h"
 #import "XKRWInputBoxView.h"
-//#import "XKRWImportCommentView.h"
 #import "XKRWTableViewHeader.h"
 #import "XKRWHeaderView.h"
 #import "XKRWNavigationController.h"
@@ -144,7 +143,8 @@
 #import "XKRWShareAdverEntity.h"
 #import "XKRWMoreView.h"
 #import "XKRWDataCenterVC.h"
-#import "XKRWFocusCell.h"
+#import "XKRWFocusView.h"
+//#import "XKRWFocusCell.h"
 #import "SCBackToUpView.h"
 //自定义控件
 #import "XKRWActionSheet.h"
@@ -166,3 +166,8 @@
 #import "XKRWSchemeNotificationService.h"
 #import "XKRWArticleWebView.h"
 #import "XKRWLikeVC.h"
+#import "XKRWAppCommentUtil.h"
+
+//plan (5_3)
+#import "XKRWPlan_5_3View.h"
+#import "XKRWPlan_5_3CollectionView.h"

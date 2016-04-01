@@ -40,7 +40,9 @@ class XKRWGetUserCityVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDelegate 
         provience = XKRWCityControlService.shareService().getPorvience()
         
         city = XKRWCityControlService.shareService().getCityWithPrivence(pid)
-        cid = city.objectAtIndex(0).objectForKey("id") as! NSInteger
+        if(city.count != 0){
+            cid = city.objectAtIndex(0).objectForKey("id") as! NSInteger
+        }
     }
 
     override func didReceiveMemoryWarning() {

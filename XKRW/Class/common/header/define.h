@@ -338,4 +338,9 @@
 #define THUMPUPNUM      @"thumpUpNum"
 #define BEPRAISEDNUM    @"BePraisedNum"
 #define BUYSERVERNUM    @"buyServerNum"
+
+#define SCHEMEPAGE  @"schemePage"
+
+#define ANALYZEPAGE  @"analyzePage"
+
 #endif

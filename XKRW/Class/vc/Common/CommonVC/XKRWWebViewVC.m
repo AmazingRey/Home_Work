@@ -61,7 +61,7 @@
 {
     [super viewWillAppear:animated];
     if (self.url && !self.isLoad) {
-        NSURL *requestURL = [NSURL URLWithString:self.url];
+        NSURL *requestURL = [NSURL URLWithString:[self.url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         [self.webView loadRequest:[NSURLRequest requestWithURL:requestURL]];
     }
     self.webView.frame = self.view.bounds;
@@ -114,12 +114,22 @@
     [self.webView stopLoading];
 }
 
+- (void)popView {
+    if(self.webView.canGoBack)
+    {
+        [self.webView goBack];
+    }else{
+        [super popView];
+    }
+
+}
+
 #pragma mark - UIWebView's delegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     
-    if ([request.URL.absoluteString rangeOfString:@"tel"].location != NSNotFound) {
+    if ([request.URL.absoluteString rangeOfString:@"tel"].location != NSNotFound && request.URL.absoluteString != nil) {
         
         // NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",number]; //number为号码字符串 如果使用这个方法 结束电话之后会进入联系人列表
         NSMutableString * str = [[NSMutableString alloc] initWithFormat:@"telprompt://%@",[request.URL.absoluteString stringByReplacingOccurrencesOfString:@"tel:" withString:@""]];//而这个方法则打电话前先弹框  是否打电话 然后打完电话之后回到程序中

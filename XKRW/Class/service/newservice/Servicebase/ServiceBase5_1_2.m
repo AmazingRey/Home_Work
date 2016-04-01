@@ -333,12 +333,21 @@ _Pragma("clang diagnostic pop") \
         return data;
     }
     NSError * error;
-    NSDictionary * callDict= [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
     
-    if (error) {
-        return nil;
+    NSDictionary * callDict;
+    @try {
+        callDict= [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        if (error) {
+            return nil;
+        }
+        
     }
-    return callDict;
+    @catch (NSException *exception) {
+        XKLog(@"%@",exception.description);
+    }
+    @finally {
+        return callDict;
+    }
 }
 
 @end

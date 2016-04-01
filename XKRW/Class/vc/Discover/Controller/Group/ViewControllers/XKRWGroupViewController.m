@@ -21,6 +21,7 @@
 #import "XKRWGroupManageViewController.h"
 #import "XKRWAddGroupViewController.h"
 #import "UIImageView+WebCache.h"
+#import "XKRWArticleVC.h"
 
 #import "XKRWGroupService.h"
 #import "XKRWGroupApi.h"
@@ -42,6 +43,7 @@
     PLSCScrollButtonView        * __scrollButton;       ///< Scroll Button
     SCBackToUpView              * __backToUpView;
     GroupHeaderDetailView       * __groupHeaderDetailView;
+    XKRWFocusView               * __focusView;
     
     UIScrollView                * _theBgGroupScrollView;
     
@@ -62,9 +64,15 @@
     NSInteger                   _getHelpPostlistPage;
     
     GroupContentCell            * __cacultaHeightCell;
-    
+    AnnouncementCell            * __announceCaculateCell;
     UIButton                    * __customButton;
     
+    BOOL                        _isShowFocus;
+    BOOL                        _isShowNotice;
+    NSMutableArray              *__focusDataSource;
+    NSMutableArray              *__noticeDataSource;
+    
+    XKRWArticleWebView          *__articleWebView;
 }
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray * history;                 ///< 记录已经发送过的请求
@@ -99,6 +107,8 @@
     __essencePostDataSource = [NSMutableArray array];
     __ctimePostDataSource = [NSMutableArray array];
     __helpPostDataSource = [NSMutableArray array];
+    __focusDataSource = [NSMutableArray array];
+    __noticeDataSource = [NSMutableArray array];
     _history = [NSMutableArray array];
     _joinOrSignGroupApi = [XKRWGroupApi new];
     
@@ -184,6 +194,10 @@
     [self registerCells];
     [self addRightBarItem];
     [self.view addSubview:self.tableView];
+    
+    __focusView = [[NSBundle mainBundle] loadNibNamed:@"XKRWFocusView" owner:nil options:nil].firstObject;
+    __focusView.frame = CGRectMake(0, 0, XKAppWidth,XKAppWidth/5.0);
+    __announceCaculateCell = [[NSBundle mainBundle] loadNibNamed:@"AnnouncementCell" owner:nil options:nil].firstObject;
     
     __scrollButton = ({
         PLSCScrollButtonView * scb = [[PLSCScrollButtonView alloc]initWithFrame:CGRectMake(0,0, XKAppWidth, 45)norColor:[UIColor darkGrayColor] selectColor:XKMainSchemeColor withGap:0 isShowBottomline:YES handler:^(NSInteger index, UIButton * currentButton, UILabel *currentNotice, PLSCScrollButtonView * selfButton, SEL sel)
@@ -451,6 +465,14 @@
     [self downloadWithTaskID:@"getGroupDetailData" outputTask:^id{
         return [[XKRWGroupService shareInstance] getGroupDetailWithGroupId:self.groupItem.groupId?self.groupItem.groupId:self.groupId];
     }];
+    
+    [self downloadWithTaskID:@"getFocusData" outputTask:^id{
+        return [[XKRWAdService sharedService] downLoadAdWithPosition:self.groupId andCommerce_type:@"focus"];
+    }];
+    
+    [self downloadWithTaskID:@"getNoticeData" outputTask:^id{
+        return [[XKRWAdService sharedService] downLoadAdWithPosition:self.groupId andCommerce_type:@"notice"];
+    }];
 }
 
 - (void)joinGroup ///< 加入
@@ -659,6 +681,13 @@
     if ([taskID isEqualToString:@"getGroupDetailData"]) {
         [self showRequestArticleNetworkFailedWarningShow];
     }
+    if ([taskID isEqualToString:@"getFocusData"]) {
+        _isShowFocus = NO;
+    }
+    
+    if ([taskID isEqualToString:@"getNoticeData"]) {
+        _isShowFocus = NO;
+    }
     
     if ([taskID isEqualToString:@"getAllPostlist"]) {
         self.allPostlistPostShowType = postShowNetError; [self refreshTableAfterDelay:.1];
@@ -710,6 +739,24 @@
                 return ;
             }else{
                 [self showRequestArticleNetworkFailedWarningShow];
+            }
+        }
+        
+        if ([taskID isEqualToString:@"getFocusData"]) {
+            if ([(NSMutableArray *)result count]) {
+                _isShowFocus = YES;
+                __focusDataSource = result;
+            } else {
+                _isShowFocus = NO;
+            }
+        }
+        
+        if ([taskID isEqualToString:@"getNoticeData"]) {
+            if ([(NSMutableArray *)result count]) {
+                _isShowNotice = YES;
+                __noticeDataSource = result;
+            } else {
+                _isShowNotice = NO;
             }
         }
         
@@ -795,19 +842,41 @@
         }
         [self refreshTableAfterDelay:.1];
     }];
+    
+    if ([taskID isEqualToString:@"getFocusAndNoticeDetail"]) {
+        __articleWebView.entity = (XKRWOperationArticleListEntity *)result;
+        NSDate *date = [NSDate dateFromString:__articleWebView.entity.date];
+        BOOL isToday = [date isDayEqualToDate:[NSDate date]];
+        __articleWebView.requestUrl = [(XKRWOperationArticleListEntity *)result url];
+        if (!isToday) {
+            __articleWebView.entity.field_question_value = @"";
+        } else {
+            __articleWebView.entity.starState = 1;
+        }
+        __articleWebView.source = eFromToday;
+        [self.navigationController pushViewController:__articleWebView animated:YES];
+        
+    }
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 2; //return 4;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
         return 1;
+        
+    } else if (section == 1) {
+        return _isShowFocus?1:0;
+        
+    } else if (section == 2) {
+        return _isShowNotice?__noticeDataSource.count:0;
+        
     }else{
         if (__currentIndex == 0) {
             if (self.allPostlistPostShowType != postShowNor) {
@@ -832,19 +901,26 @@
 {
     if (section == 0) {
         return 10;
-    }return 0;
+        
+    } else if (section == 1) {
+        return _isShowFocus ? 10 : 0;
+        
+    } else if (section == 2) {
+        return _isShowNotice ? 10 : 0;
+        
+    } else return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 1) {
+    if (section == 3) {
         return __scrollButton.frame.size.height;
     }return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 0) { //section == 1 ||section == 2||
+    if (section == 0 || (section == 1 && _isShowFocus) || (section == 2 && _isShowNotice)) { 
         UIView * v = [UIView new];
         v.frame = (CGRect){0, 0, XKAppWidth, 10};
         v.backgroundColor = [UIColor clearColor];
@@ -854,7 +930,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (section == 1) {
+    if (section == 3) {
         return __scrollButton;
     }return nil;
 }
@@ -867,32 +943,27 @@
         [cell.headerImageView setImageWithURL:[NSURL URLWithString:self.groupItem.groupIcon] placeholderImage:nil];
         cell.groupName.text = self.groupItem.groupDescription;
         return cell;
-#if 0
+        
     }else if (indexPath.section == 1){
         
-        XKRWGroupADViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([XKRWGroupADViewCell class])];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"focusCell"];
         if (!cell) {
-            cell = [[XKRWGroupADViewCell alloc]initWithStyle:0 reuseIdentifier:NSStringFromClass([XKRWGroupADViewCell class]) handle:^(ADModel * model){
-                
-            }];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"focusCell"];
+            cell.contentView.size = CGSizeMake(XKAppWidth, XKAppWidth/5.0);
+            [cell.contentView addSubview:__focusView];
         }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        NSMutableArray* list = [[NSMutableArray alloc] init];
-        for (int i = 0; i < 3; i++) {
-            ADModel* model = [[ADModel alloc] init];
-            model.banner_picture = @"";
-            [list addObject:model];
-        }
-        
-        cell.adView.adlist = list;
-        [cell.adView reloadData];
+        __focusView.dataSource = __focusDataSource;
+        __weak typeof(self) weakSelf = self;
+        __focusView.adImageClickBlock = ^(XKRWShareAdverEntity *entity) {
+            [weakSelf noticeAndFocusPush:entity];
+        };
         return cell;
         
     }else if (indexPath.section == 2){
         
         AnnouncementCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnnouncementCell class]) forIndexPath:indexPath];
+        cell.titleLabel.text = [__noticeDataSource[indexPath.row] title];
         return cell;
-#endif
     }
     else{
         
@@ -931,7 +1002,6 @@
                     cell.hotInddictor.hidden = NO;
                     
                 }else{
-                    
                     cell.titleLabel.text = item.title;
                     cell.hotInddictor.hidden = YES;
                 }
@@ -1103,8 +1173,16 @@
         __currentHeaderDetail_y = [XKRWUtil  getViewSize:cell.contentView].height + 1.5;
         return __currentHeaderDetail_y;
         
-    }else
-    {
+    }else if (indexPath.section == 1) {
+        CGFloat height = _isShowFocus ? (XKAppWidth / 5.0) : 0;
+        return height;
+        
+    } else if (indexPath.section == 2) {
+        if (_isShowNotice) {
+            __announceCaculateCell.titleLabel.text = [__noticeDataSource[indexPath.row] title];
+            return __announceCaculateCell.height;
+        } else return 0;
+    } else {
         XKRWPostEntity * item;
         if (__currentIndex == 0) {
             
@@ -1164,7 +1242,13 @@
         [MobClick event:@"clk_GroupIntroduce"];
         [self changeGroupHeaderDetailStatus];
         
-    }else{
+    } else if (indexPath.section == 1) {
+        return;
+        
+    }else if (indexPath.section == 2) {
+        [self noticeAndFocusPush:__noticeDataSource[indexPath.row]];
+        
+    } else if (indexPath.section == 3){
         
         XKRWPostEntity * item;
         
@@ -1197,9 +1281,86 @@
         vc.postID = item.postid;
         vc.groupItem = self.groupItem;
         
-        
         [self.navigationController pushViewController:vc animated:YES];
     }
+}
+
+- (void)noticeAndFocusPush:(XKRWShareAdverEntity *)entity {
+    
+    if (!entity.type.length) {
+        return;
+    }
+    
+    UIViewController *vc;
+    if ([entity.type isEqualToString:@"url"]) {
+        //web
+        vc = [[XKRWNewWebView alloc] init];
+        [(XKRWNewWebView *)vc setWebTitle:entity.title];
+        [(XKRWNewWebView *)vc setContentUrl:entity.imgUrl];
+        BOOL isMall = [entity.imgUrl containsString:@"ssbuy.xikang.com"];
+        BOOL isShare = [entity.imgUrl containsString:@"share_url="];
+        if (isMall) {
+            if (isShare) {
+                NSRange range = [entity.imgUrl rangeOfString:@"share_url="];
+                [(XKRWNewWebView *)vc setShareURL:[entity.imgUrl substringFromIndex:(range.location + range.length)]];
+                
+            } else {
+                [(XKRWNewWebView *)vc setIsHidenRightNavItem:YES];
+                
+            }
+
+        } else {
+            [(XKRWNewWebView *)vc setShareURL:@""];
+            [(XKRWNewWebView *)vc setIsHidenRightNavItem:NO];
+
+        }
+        
+    } else if ([entity.type isEqualToString:@"share"]) { //瘦身分享
+        vc = [[XKRWUserArticleVC alloc] init];
+        [(XKRWUserArticleVC *)vc setAid:entity.nid];
+        
+    } else if ([entity.type isEqualToString:@"post"]) { //帖子
+        vc = [XKRWPostDetailVC new];
+        [(XKRWPostDetailVC *)vc setPostID:entity.nid];
+        [(XKRWPostDetailVC *)vc setGroupItem:self.groupItem];
+    } else {
+        __articleWebView = [[XKRWArticleWebView alloc] init];
+        __articleWebView.hidesBottomBarWhenPushed = YES;
+        
+        if ([entity.type isEqualToString:@"jfzs"]) {
+            __articleWebView.isComplete = self.isCompeleteJfzs;
+            [__articleWebView setCategory:eOperationKnowledge];
+            
+        } else if ([entity.type isEqualToString:@"pkinfo"]) {
+            XKRWPKVC *pkVC = [[XKRWPKVC alloc] init];
+            pkVC.hidesBottomBarWhenPushed = YES;
+            pkVC.nid = entity.nid;
+            [self.navigationController pushViewController:pkVC animated:YES];
+            return;
+            
+        } else if ([entity.type isEqualToString:@"lizhi"]) {
+            __articleWebView.isComplete = self.isCompeleteLiZhi;
+            [__articleWebView setCategory:eOperationEncourage];
+            
+        } else if ([entity.type isEqualToString:@"ydtj"]) {
+            __articleWebView.isComplete = self.isCompeleteYdtj;
+            [__articleWebView setCategory:eOperationSport];
+            
+        }
+        [__articleWebView setNavTitle:entity.title];
+        [self requestFocusAndNoticeArticleDetail:entity.nid andType:entity.type];
+        return;
+    }
+    
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)requestFocusAndNoticeArticleDetail:(NSString *)nid andType:(NSString *)type {
+
+    [self downloadWithTaskID:@"getFocusAndNoticeDetail" outputTask:^id{
+        return [[XKRWManagementService5_0 sharedService] getArticleDetailFromServerByNid:nid andType:type];
+    }];
 }
 
 #if 1

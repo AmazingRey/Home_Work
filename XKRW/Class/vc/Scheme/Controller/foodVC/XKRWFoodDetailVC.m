@@ -351,11 +351,10 @@ const int FixedDisplayCount = 4;   //固定显示的个数
             XKRWFoodEntity *foodEntity = (XKRWFoodEntity*)result;
             NSMutableArray *array = [NSMutableArray array];
             // 剔除热量元素
-            NSRange range;
             for (NSDictionary * key in foodEntity.foodNutri) {
-//                containsString   NS_AVAILABLE(10_10, 8_0)
-                range = [key[@"nutr"] rangeOfString:@"热量"];
-                if (range.location == NSNotFound) {
+                NSString *str = [NSString stringWithFormat:@"%@",key[@"nutr"]];
+                BOOL abool = [str containsString:@"热量"];
+                if (!abool) {
                     [array addObject:key];
                 }
             }

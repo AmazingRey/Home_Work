@@ -14,12 +14,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *userImageButton;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *postTimeLabel;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *webViewHeight;
-//
-////@property (weak, nonatomic) IBOutlet TYAttributedLabel *postContentLabel;
-//@property (weak, nonatomic) IBOutlet UIWebView *postContentWebView;
-@property (weak, nonatomic) IBOutlet RTLabel *postContentLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *postContentHeight;
+
+@property (weak, nonatomic) IBOutlet UIWebView *contentwebView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentWebViewConstraintHeight;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *postImageViewConstraint;
 
@@ -34,5 +31,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *likeButtonAndLikeLabelIntervalHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *likeLabelHeight;
 @property (assign,nonatomic) BOOL showLikeButton;
+
+@property (strong ,nonatomic) NSString *htmlStr;
 
 @end

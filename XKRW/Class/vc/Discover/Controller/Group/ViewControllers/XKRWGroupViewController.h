@@ -34,4 +34,16 @@ typedef enum postShowType
 @property (nonatomic, strong) XKRWGroupItem *groupItem;
 
 @property (nonatomic, copy) NSString *groupId;
+/**
+ *  减肥知识是否答题完成
+ */
+@property (nonatomic, assign) BOOL isCompeleteJfzs;
+/**
+ *  运动推荐是否答题完成
+ */
+@property (nonatomic, assign) BOOL isCompeleteYdtj;
+/**
+ *  每日励志是否答题完成
+ */
+@property (nonatomic, assign) BOOL isCompeleteLiZhi;
 @end

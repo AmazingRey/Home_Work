@@ -90,10 +90,8 @@
 }
 
 + (NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)format {
-	static NSDateFormatter *inputFormatter;
-    if (inputFormatter == nil) {
-        inputFormatter = [[NSDateFormatter alloc] init];
-    }
+	 NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+
     inputFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
 	[inputFormatter setDateFormat:format];
 	NSDate *date = [inputFormatter dateFromString:string];

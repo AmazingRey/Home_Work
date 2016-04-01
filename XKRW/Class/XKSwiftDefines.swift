@@ -28,6 +28,10 @@ let ENCOURAGEMENT_NID = "encouragementNid"
 
 let PK_NID = "pkNid"
 
+let SCHEMEPAGE = "schemePage"
+
+let ANALYZEPAGE = "analyzePage"
+
 //主色调
 let XKMainSchemeColor = UIColor(fromHexString: "#29CCB1")
 //灰色调

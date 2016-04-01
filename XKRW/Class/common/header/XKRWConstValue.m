@@ -119,6 +119,8 @@ NSString *const kGetPKVoteURL = @"pk/node/";//获取用户正反方投票
 
 NSString *const KManagementAdInfo =@"/index/adver/";
 
+NSString *const kAdInfo_5_2 = @"/index/commerce/"; //5.2 焦点图、公告
+
 NSString *const KManagementContact = @"/index/about/";
 
 NSString *const KResetUserData  = @"v2/otherapi/reset/";
@@ -163,8 +165,8 @@ NSString *const kSearchURL = @"/content/mixSearch/";
 
 //NSString *const kNewServer = @"http://115.29.175.210:8009/"; //测试服务器地址
 
-//NSString *const kNewServer = @"http://112.124.53.222/";
-NSString *const kNewServer = @"http://115.29.205.235/";
+NSString *const kNewServer = @"http://112.124.53.222/";
+//NSString *const kNewServer = @"http://115.29.205.235/";
 
 #else
 

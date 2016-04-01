@@ -328,9 +328,9 @@
             case 0:
             {
                 [MobClick event:@"in_RptMyPlan"];
-                XKRWThinBodyAssessVC *bodyAssesssVC = [[XKRWThinBodyAssessVC alloc]initWithNibName:@"XKRWThinBodyAssessVC" bundle:nil];
+                XKRWThinBodyAssess_5_3VC *bodyAssesssVC = [[XKRWThinBodyAssess_5_3VC alloc]initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
                 bodyAssesssVC.hidesBottomBarWhenPushed = YES;
-                [bodyAssesssVC setFromWhichVC:MyVC];
+//                [bodyAssesssVC setFromWhichVC:MyVC];
                 [self.navigationController pushViewController:bodyAssesssVC animated:YES];
             }
                 break;

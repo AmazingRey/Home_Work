@@ -48,7 +48,7 @@ class XKRWSetAgeVC: XKRWBaseVC {
         datePicker.date = self.getCustomDate(1990, month: 1, day: 1, hour: 0, min: 0, sec: 0)
         
         let dateFormat:NSDateFormatter = NSDateFormatter()
-        
+        dateFormat.calendar = NSCalendar.init(calendarIdentifier: NSGregorianCalendar)
         dateFormat.dateFormat = "yyyy-MM-dd"
         let theDate:String = dateFormat.stringFromDate( datePicker.date)
         userAge = theDate

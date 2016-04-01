@@ -820,8 +820,7 @@
         //注册那天  到今天
         NSString *everyDate = [NSDate stringFromDate:showDate withFormat:@"yyyy-MM-dd"];
         NSMutableDictionary *tempDic= [[NSMutableDictionary alloc] init];
-        
-
+    
         if(![[XKRWRecordService4_0 sharedService] recordTableHavaDataWithDate:everyDate AndType:_dataType]){
             NSString *dayString = [self getDateStringFromDate:showDate];
             [tempDic setObject:dayString forKey:@"date"];

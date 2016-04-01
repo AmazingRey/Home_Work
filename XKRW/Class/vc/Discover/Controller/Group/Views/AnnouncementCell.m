@@ -11,7 +11,6 @@
 @interface AnnouncementCell ()
 @property (weak, nonatomic) IBOutlet UIView *separatorLine;
 @property (weak, nonatomic) IBOutlet UILabel *announceLabel;
-
 @end
 
 @implementation AnnouncementCell

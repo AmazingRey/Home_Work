@@ -28,6 +28,7 @@
                 <constraint firstAttribute="bottom" secondItem="NNL-Jv-qQB" secondAttribute="bottom" constant="40" id="U6z-eN-8XB"/>
                 <constraint firstItem="NNL-Jv-qQB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="d9s-go-iJ5"/>
             </constraints>
+            <point key="canvasLocation" x="278" y="222"/>
         </view>
     </objects>
 </document>
