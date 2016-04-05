@@ -402,11 +402,11 @@
                                                         <constraint firstAttribute="height" constant="42" id="Mas-Lo-P0x"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <state key="normal" title="开始瘦身" backgroundImage="7A0C63C3-EB1B-4A5A-BEC7-1B7F02CE5BB3">
+                                                    <state key="normal" title="开始瘦身" backgroundImage="7D9FF531-A22C-4FBC-873A-1EF5E7A76AF9">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <state key="selected" title="开始瘦身" backgroundImage="875704B7-E9FA-48BC-9C69-941589D6693B"/>
-                                                    <state key="highlighted" title="开始瘦身" backgroundImage="875704B7-E9FA-48BC-9C69-941589D6693B"/>
+                                                    <state key="selected" title="开始瘦身" backgroundImage="FC95B024-CD82-4687-AEB8-9E94FD072C9C"/>
+                                                    <state key="highlighted" title="开始瘦身" backgroundImage="FC95B024-CD82-4687-AEB8-9E94FD072C9C"/>
                                                     <connections>
                                                         <action selector="nextAction:" destination="-1" eventType="touchUpInside" id="aD1-cT-blF"/>
                                                     </connections>
@@ -507,7 +507,7 @@
         </view>
     </objects>
     <resources>
-        <image name="7A0C63C3-EB1B-4A5A-BEC7-1B7F02CE5BB3" width="250" height="40">
+        <image name="7D9FF531-A22C-4FBC-873A-1EF5E7A76AF9" width="250" height="40">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -1224,7 +1224,7 @@ MgA3AEYATABXAF4AZQByAHkAgQCDAIUAigCMAI4AmACdAKgAqgCsAK4AswC2ALgAugC8AL4AwwDaANwA
 AAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAACmXQ
 </mutableData>
         </image>
-        <image name="875704B7-E9FA-48BC-9C69-941589D6693B" width="250" height="40">
+        <image name="FC95B024-CD82-4687-AEB8-9E94FD072C9C" width="250" height="40">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

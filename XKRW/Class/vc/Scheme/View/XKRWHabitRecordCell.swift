@@ -96,7 +96,7 @@ class XKRWHabitRecordCell: UITableViewCell {
                         numOfAmend++
                     }
                     
-                    button.addTarget(self, action: "clickHabitButton:", forControlEvents: .TouchUpInside)
+                    button.addTarget(self, action: #selector(XKRWHabitRecordCell.clickHabitButton(_:)), forControlEvents: .TouchUpInside)
                     
                     self.habitsView.addSubview(button)
                 }

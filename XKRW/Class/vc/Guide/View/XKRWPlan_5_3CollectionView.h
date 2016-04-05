@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XKRWPlan_5_3CollectionViewCell.h"
+#import "XKRWPlan_5_3CollectionReusableView.h"
 
-@interface XKRWPlan_5_3CollectionView : UICollectionView
+@interface XKRWPlan_5_3CollectionView : UICollectionView <UICollectionViewDataSource,UICollectionViewDelegate>
 
 @end
