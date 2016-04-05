@@ -16,4 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *planTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentWeightLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *weightButton;
+@property (weak, nonatomic) IBOutlet UIButton *calendarButton;
 @end

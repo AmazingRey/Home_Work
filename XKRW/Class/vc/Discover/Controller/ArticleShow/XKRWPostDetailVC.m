@@ -957,7 +957,12 @@
     
     NSLog(@"%@",request.URL.absoluteString);
     
-    if([request.URL.absoluteString rangeOfString:@"about:blank"].location == NSNotFound){
+    NSLog(@"++++%@",request.URL.absoluteString);
+    if (webView.isLoading) {
+        return NO;
+    }
+    
+    if([request.URL.absoluteString rangeOfString:@"http"].location == NSNotFound){
         XKRWNewWebView *webView = [[XKRWNewWebView alloc]init];
         webView.contentUrl = request.URL.absoluteString;
         webView.isFromPostDetail = YES;

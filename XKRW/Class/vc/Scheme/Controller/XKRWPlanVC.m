@@ -52,9 +52,10 @@
     searchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
     
     searchBar.delegate = self;
-    searchBar.barTintColor = XKGrayDefaultColor;
-    searchBar.layer.borderWidth = 0.5;
-    searchBar.layer.borderColor = XK_ASSIST_LINE_COLOR.CGColor ;
+    searchBar.barTintColor = [UIColor whiteColor];
+//    searchBar.tintColor = XKGrayDefaultColor;
+//    searchBar.layer.borderWidth = 0.5;
+//    searchBar.layer.borderColor = XK_ASSIST_LINE_COLOR.CGColor ;
     
     searchBar.showsBookmarkButton = true;
     searchBar.showsScopeBar = true;
@@ -64,7 +65,6 @@
     
     [cell.contentView addSubview:searchBar];
     
-    //KMSearchDisplayController(searchBar: self.searchBar, contentsController: self)
     searchDisplayCtrl = [[KMSearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     searchDisplayCtrl.delegate = self ;
     
@@ -85,8 +85,7 @@
     searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
     
     XKRWRecordAndTargetView *recordAndTargetView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordAndTargetView");
-    recordAndTargetView.frame = CGRectMake(0, 64, XKAppWidth, 30);
-//    recordAndTargetView.backgroundColor = [UIColor redColor];
+    recordAndTargetView.frame = CGRectMake(0, 64, cell.contentView.width, 30);
     recordAndTargetView.dayLabel.layer.masksToBounds = YES;
     recordAndTargetView.dayLabel.layer.cornerRadius = 16;
     recordAndTargetView.dayLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
@@ -96,8 +95,10 @@
     recordAndTargetView.currentWeightLabel.layer.cornerRadius = 16;
     recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
     recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
-    [cell.contentView addSubview:recordAndTargetView];
     
+    [recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
+    [recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.contentView addSubview:recordAndTargetView];
     
     return cell;
 }
@@ -107,7 +108,13 @@
 
 
 #pragma --mark Action
+- (void)setUserDataAction:(UIButton *)button {
 
+}
+
+- (void)entryCalendarAction:(UIButton *)button{
+
+}
 
 #pragma --mark Delegate
 

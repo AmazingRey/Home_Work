@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view autoresizesSubviews="NO" contentMode="scaleToFill" id="iN0-l3-epB" customClass="XKRWRecordAndTargetView">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="52"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第3天 剩20天" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NST-yd-u8z">
@@ -55,7 +55,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="55" height="44"/>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="lxU-HD-DFm" secondAttribute="trailing" id="1dN-0b-hmp"/>
                         <constraint firstItem="VUv-i9-wZc" firstAttribute="top" secondItem="Lhr-Op-FVk" secondAttribute="top" constant="4" id="5cg-t4-Bgk"/>
@@ -158,30 +158,24 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="4PW-2M-oai" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="38D-eb-7BC"/>
-                <constraint firstAttribute="trailing" secondItem="Lhr-Op-FVk" secondAttribute="trailing" constant="15" id="8YI-8h-Qvc"/>
                 <constraint firstItem="ycR-KM-fjU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="98Q-bx-Mz2"/>
                 <constraint firstItem="Lhr-Op-FVk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="B8y-FM-num"/>
                 <constraint firstItem="NST-yd-u8z" firstAttribute="top" secondItem="4PW-2M-oai" secondAttribute="bottom" constant="2" id="Hrk-CM-mW7"/>
-                <constraint firstAttribute="bottom" secondItem="Lhr-Op-FVk" secondAttribute="bottom" constant="6" id="VgB-a6-ili"/>
                 <constraint firstItem="ycR-KM-fjU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Vn7-Sq-A1b"/>
                 <constraint firstItem="4PW-2M-oai" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="crz-YS-tnx"/>
-                <constraint firstAttribute="bottom" secondItem="ycR-KM-fjU" secondAttribute="bottom" constant="6" id="pTS-4h-8fc"/>
                 <constraint firstItem="NST-yd-u8z" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uTZ-EO-XKz"/>
+                <constraint firstAttribute="trailing" secondItem="Lhr-Op-FVk" secondAttribute="trailing" constant="15" id="vaI-Lo-lm4"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="pTS-4h-8fc"/>
-                    <exclude reference="VgB-a6-ili"/>
-                </mask>
-            </variation>
             <connections>
+                <outlet property="calendarButton" destination="5O4-Bo-KIS" id="dXf-RS-gAV"/>
                 <outlet property="currentWeightLabel" destination="cPe-v9-Qni" id="Fqx-Li-kZN"/>
                 <outlet property="dayLabel" destination="TyV-f3-T67" id="vss-qm-PWC"/>
                 <outlet property="monthLabel" destination="2GB-G1-zbv" id="aZk-87-SGU"/>
                 <outlet property="planTimeLabel" destination="NST-yd-u8z" id="zYa-qE-qEk"/>
                 <outlet property="targetWeightLabel" destination="4PW-2M-oai" id="8ru-zZ-xRd"/>
+                <outlet property="weightButton" destination="Q7H-0h-QdX" id="4Sf-d8-k7h"/>
             </connections>
             <point key="canvasLocation" x="474.5" y="278"/>
         </view>
