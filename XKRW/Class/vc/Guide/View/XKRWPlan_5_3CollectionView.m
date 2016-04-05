@@ -9,7 +9,11 @@
 #import "XKRWPlan_5_3CollectionView.h"
 
 @implementation XKRWPlan_5_3CollectionView
-
+{
+    NSArray *arrImg;
+    NSArray *arrText;
+}
+@synthesize arrData = _arrData;
 
 -(id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
     self = [super initWithFrame:frame collectionViewLayout:layout];
@@ -28,6 +32,16 @@
                        withReuseIdentifier:@"Separator"];
     }
     return self;
+}
+
+
+-(void)setArrData:(NSArray *)arrData{
+    if (_arrData != arrData) {
+        _arrData = arrData;
+        arrImg = _arrData[0];
+        arrText = _arrData[1];
+        [self reloadData];
+    }
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView

@@ -19,7 +19,6 @@ typedef NS_ENUM(int, PlanType) {
 @interface XKRWPlan_5_3View : UIView
 @property (strong, nonatomic) IBOutlet UIImageView *numImg;
 @property (strong, nonatomic) IBOutlet UILabel *titleLab;
-@property (strong, nonatomic) IBOutlet UILabel *calRangeLab;
 @property (strong, nonatomic) IBOutlet NZLabel *detailLab;
 @property (strong, nonatomic) IBOutlet UIImageView *tipsImg;
 @property (weak, nonatomic) IBOutlet UILabel *tipsLab;

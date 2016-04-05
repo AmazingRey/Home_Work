@@ -12,4 +12,5 @@
 
 @interface XKRWPlan_5_3CollectionView : UICollectionView <UICollectionViewDataSource,UICollectionViewDelegate>
 
+@property (strong, nonatomic) NSArray *arrData;
 @end

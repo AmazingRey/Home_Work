@@ -30,12 +30,6 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1400kcal ~ 4231kcal" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVJ-wi-tW2">
-                    <rect key="frame" x="124" y="31" width="188" height="16"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z2R-vK-Tq0">
                     <rect key="frame" x="8" y="60" width="304" height="123"/>
                     <subviews>
@@ -133,9 +127,6 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="CFM-wb-L8P" secondAttribute="trailing" constant="8" id="0jL-lW-9Wb"/>
                 <constraint firstItem="p9G-Wr-AvC" firstAttribute="trailing" secondItem="kOO-8W-dqA" secondAttribute="trailing" id="4Pw-qU-YPj"/>
-                <constraint firstAttribute="trailing" secondItem="GVJ-wi-tW2" secondAttribute="trailing" constant="8" id="CCa-Mb-xPx"/>
-                <constraint firstItem="GVJ-wi-tW2" firstAttribute="top" secondItem="G7C-ox-6zG" secondAttribute="top" id="DDw-XU-lJW"/>
-                <constraint firstItem="GVJ-wi-tW2" firstAttribute="leading" secondItem="G7C-ox-6zG" secondAttribute="trailing" constant="-188" id="Gqi-Gm-tbi"/>
                 <constraint firstItem="vBw-5K-Lpq" firstAttribute="trailing" secondItem="z2R-vK-Tq0" secondAttribute="trailing" id="JLy-Jv-iMq"/>
                 <constraint firstItem="9vR-xU-EEc" firstAttribute="leading" secondItem="IAD-ug-pZ8" secondAttribute="leading" constant="8" id="Kwb-Tp-Qo6"/>
                 <constraint firstItem="CFM-wb-L8P" firstAttribute="leading" secondItem="9vR-xU-EEc" secondAttribute="trailing" constant="9" id="LaI-RY-UeX"/>
@@ -156,7 +147,6 @@
                 <constraint firstItem="kOO-8W-dqA" firstAttribute="top" secondItem="vBw-5K-Lpq" secondAttribute="bottom" constant="15" id="zGm-yq-d0C"/>
             </constraints>
             <connections>
-                <outlet property="calRangeLab" destination="GVJ-wi-tW2" id="2D7-zF-buU"/>
                 <outlet property="calTypeLab" destination="G7C-ox-6zG" id="b0S-eD-6uo"/>
                 <outlet property="detailLab" destination="vBw-5K-Lpq" id="mL4-ny-pSm"/>
                 <outlet property="fuseView" destination="z2R-vK-Tq0" id="U9e-bP-ubS"/>
