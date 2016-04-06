@@ -17,8 +17,9 @@ class XKRWFatReasonReviewVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSourc
     var cell:XKRWAnalyzeCell!
     var fromWhichVC:FromWhichVC?
     
-    var titleArray:NSMutableArray = NSMutableArray()
-    var imageArray:NSMutableArray = NSMutableArray()
+    var titleArray:NSArray = NSArray()
+    var imageArray:NSArray = NSArray()
+    var dicData = NSMutableDictionary()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +60,10 @@ class XKRWFatReasonReviewVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSourc
         nextButton!.frame = CGRectMake(15, (120-42)/2,UI_SCREEN_WIDTH-30 , 42)
         nextButton!.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         nextButton!.titleLabel?.font = XKDEFAULFONT
-        self.initData()
+        
+        self.initHabitData()
+        titleArray =  dicData.allKeys
+        imageArray = dicData.allValues
         
         if(fromWhichVC == FromWhichVC.FatAnalyseVC || fromWhichVC == FromWhichVC.AssessmentReport){
             nextButton!.setTitle("我知道了", forState: UIControlState.Normal)
@@ -72,77 +76,66 @@ class XKRWFatReasonReviewVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSourc
                 nextButton!.setTitle("记住了,为我制定方案吧", forState: UIControlState.Normal)
             }
         }
-        nextButton!.addTarget(self, action: "nextAction:", forControlEvents: UIControlEvents.TouchUpInside);
+        nextButton!.addTarget(self, action: #selector(XKRWFatReasonReviewVC.nextAction(_:)), forControlEvents: UIControlEvents.TouchUpInside);
         footerView?.addSubview(nextButton!)
     }
     
-    
-    func initData(){
-        let questionArray:NSArray =  XKRWFatReasonService.sharedService().getQuestionAnswer();
-        for var i = 0 ;i < questionArray.count ; i++ {
+    func initHabitData(){
+        let questionArray:NSArray = XKRWFatReasonService.sharedService().getQuestionAnswer();
+        dicData.removeAllObjects()
+        for i in 0  ..< questionArray.count  {
             let entity:XKRWFatReasonEntity = questionArray.objectAtIndex(i) as! XKRWFatReasonEntity
             let reason = XKRWFatReasonService.sharedService().getReasonDescriptionWithID(entity.question, andAID: entity.answer)
             
+            let arrKeys : NSArray = dicData.allKeys
             switch reason{
                 case 1:
-                    if(!titleArray.containsObject("饮食油腻")){
-                        titleArray .addObject("饮食油腻")
-                        imageArray.addObject("fatReason_food_oily")
+                    if(!arrKeys.containsObject("饮食油腻")){
+                        dicData.setObject("fatReason_food_oily", forKey: "饮食油腻")
                     }
                 case 2:
-                    if(!titleArray.containsObject("吃零食")){
-                        titleArray .addObject("吃零食")
-                        imageArray.addObject("fatReason_eat_snackseat")
+                    if(!arrKeys.containsObject("吃零食")){
+                        dicData.setObject("fatReason_eat_snackseat", forKey: "吃零食")
                     }
                 case 3:
-                    if(!titleArray.containsObject("喝饮料")){
-                        titleArray .addObject("喝饮料")
-                        imageArray.addObject("fatReason_drink")
+                    if(!arrKeys.containsObject("喝饮料")){
+                        dicData.setObject("fatReason_drink", forKey: "喝饮料")
                     }
                 case 4...6:
-                    if(!titleArray.containsObject("饮酒")){
-                        titleArray .addObject("饮酒")
-                        imageArray.addObject("fatReason_wine")
+                    if(!arrKeys.containsObject("饮酒")){
+                        dicData.setObject("fatReason_wine", forKey: "饮酒")
                     }
                 case 7:
-                    if(!titleArray.containsObject("吃肥肉")){
-                        titleArray .addObject("吃肥肉")
-                        imageArray.addObject("fatReason_eat_speck")
+                    if(!arrKeys.containsObject("吃肥肉")){
+                        dicData.setObject("fatReason_eat_speck", forKey: "吃肥肉")
                     }
                 case 8:
-                    if(!titleArray.containsObject("吃坚果")){
-                        titleArray .addObject("吃坚果")
-                        imageArray.addObject("fatReason_eat_nut")
+                    if(!arrKeys.containsObject("吃坚果")){
+                        dicData.setObject("fatReason_eat_nut", forKey: "吃坚果")
                     }
                 case 9:
-                    if(!titleArray.containsObject("吃宵夜")){
-                        titleArray .addObject("吃宵夜")
-                        imageArray.addObject("fatReason_eatnight_snack")
+                    if(!arrKeys.containsObject("吃宵夜")){
+                        dicData.setObject("fatReason_eatnight_snack", forKey: "吃宵夜")
                     }
                 case 10:
-                    if(!titleArray.containsObject("吃饭晚")){
-                        titleArray .addObject("吃饭晚")
-                        imageArray.addObject("fatReason_eatLate")
+                    if(!arrKeys.containsObject("吃饭晚")){
+                        dicData.setObject("fatReason_eatLate", forKey: "吃饭晚")
                     }
                 case 11:
-                    if(!titleArray.containsObject("吃饭快")){
-                        titleArray .addObject("吃饭快")
-                        imageArray.addObject("fatReason_eatFast")
+                    if(!arrKeys.containsObject("吃饭快")){
+                        dicData.setObject("fatReason_eatFast", forKey: "吃饭快")
                     }
                 case 12:
-                    if(!titleArray.containsObject("饭量时多时少")){
-                        titleArray .addObject("饭量时多时少")
-                        imageArray.addObject("fatReason_eat_indiscipline")
+                    if(!arrKeys.containsObject("饭量时多时少")){
+                        dicData.setObject("fatReason_eat_indiscipline", forKey: "饭量时多时少")
                     }
                 case 13:
-                    if(!titleArray.containsObject("活动量少")){
-                        titleArray .addObject("活动量少")
-                        imageArray.addObject("fatReason_sit")
+                    if(!arrKeys.containsObject("活动量少")){
+                        dicData.setObject("fatReason_sit", forKey: "活动量少")
                     }
                 case 14:
-                    if(!titleArray.containsObject("缺乏锻炼")){
-                        titleArray .addObject("缺乏锻炼")
-                        imageArray.addObject("fatReason_lossSport")
+                    if(!arrKeys.containsObject("缺乏锻炼")){
+                        dicData.setObject("fatReason_lossSport", forKey: "缺乏锻炼")
                     }
                 default:
                 break

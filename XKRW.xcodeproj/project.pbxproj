@@ -247,6 +247,7 @@
 		2F8CAD121CAD0B33003F706A /* XKRWAnimationCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8CAD111CAD0B33003F706A /* XKRWAnimationCircle.m */; };
 		2F8E450418D19E5300B3B066 /* XKRWSettingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8E450318D19E5300B3B066 /* XKRWSettingService.m */; };
 		2F8FB47118FBB24A00AB8400 /* weightHint.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F8FB46F18FBB24A00AB8400 /* weightHint.plist */; };
+		2F9B8ADA1CB3C33A00F89425 /* XKRWPlanEnergyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9B8AD91CB3C33A00F89425 /* XKRWPlanEnergyView.m */; };
 		2F9CC2E81B0205D3009A210A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9CC2E61B0205D3009A210A /* Crashlytics.framework */; };
 		2F9CC2E91B0205D3009A210A /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9CC2E71B0205D3009A210A /* Fabric.framework */; };
 		2F9D8F221C3B96730039A2F4 /* XKRWActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F9D8F211C3B96730039A2F4 /* XKRWActionSheet.m */; };
@@ -1498,6 +1499,8 @@
 		2F8E450218D19E5300B3B066 /* XKRWSettingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWSettingService.h; sourceTree = "<group>"; };
 		2F8E450318D19E5300B3B066 /* XKRWSettingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWSettingService.m; sourceTree = "<group>"; };
 		2F8FB47018FBB24A00AB8400 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/weightHint.plist; sourceTree = "<group>"; };
+		2F9B8AD81CB3C33A00F89425 /* XKRWPlanEnergyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanEnergyView.h; sourceTree = "<group>"; };
+		2F9B8AD91CB3C33A00F89425 /* XKRWPlanEnergyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanEnergyView.m; sourceTree = "<group>"; };
 		2F9CC2E61B0205D3009A210A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		2F9CC2E71B0205D3009A210A /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		2F9D8F201C3B96730039A2F4 /* XKRWActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWActionSheet.h; sourceTree = "<group>"; };
@@ -6645,6 +6648,8 @@
 				BCF6646E1CAE28BA006EBC61 /* XKRWRecordAndTargetView.h */,
 				BCF6646F1CAE28BA006EBC61 /* XKRWRecordAndTargetView.m */,
 				BCF664711CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib */,
+				2F9B8AD81CB3C33A00F89425 /* XKRWPlanEnergyView.h */,
+				2F9B8AD91CB3C33A00F89425 /* XKRWPlanEnergyView.m */,
 			);
 			path = PlanView;
 			sourceTree = "<group>";
@@ -7248,6 +7253,7 @@
 				5DCD566D1C4777B8008A5AC2 /* XKRWAddGroupViewCell.m in Sources */,
 				2F8CAD0C1CACCC5B003F706A /* XKRWEnergyCircleView.m in Sources */,
 				BCEF36531C1E63EF00740ACC /* XKRWRecordOthersVC.swift in Sources */,
+				2F9B8ADA1CB3C33A00F89425 /* XKRWPlanEnergyView.m in Sources */,
 				BCEF363E1C1E63B200740ACC /* XKRWCalendarHeaderView.m in Sources */,
 				BC2915FF1C6445D000C71A67 /* XKRWSchemeNotificationService.m in Sources */,
 				A7C867E61BC8F02A009A94B1 /* UIProgressView+AFNetworking.m in Sources */,
@@ -8066,8 +8072,8 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-fembed-bitcode";
-				OTHER_LDFLAGS = "-ObjC";
-				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
+				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
@@ -8137,8 +8143,8 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-fembed-bitcode";
-				OTHER_LDFLAGS = "-ObjC";
-				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
+				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;

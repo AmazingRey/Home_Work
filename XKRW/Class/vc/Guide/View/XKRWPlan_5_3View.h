@@ -27,5 +27,5 @@ typedef NS_ENUM(int, PlanType) {
 
 
 @property (assign, nonatomic) enum PlanType type;
-
+@property (strong, nonatomic) NSMutableDictionary *dicCollection;
 @end

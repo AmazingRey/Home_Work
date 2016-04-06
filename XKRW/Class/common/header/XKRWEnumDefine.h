@@ -245,6 +245,23 @@ typedef enum _RequestStatus{
 } RequestStatus;
 
 /**
+ *  能量环状态
+ */
+typedef NS_ENUM(NSInteger,XKRWEnergyCircleStyle){
+    /**
+     *  未开启
+     */
+    XKRWEnergyCircleStyleNotOpen = 1,
+    /**
+     *  开启并选中
+     */
+    XKRWEnergyCircleStyleSelected,
+    /**
+     *  已开启未选中
+     */
+    XKRWEnergyCircleStyleOpened
+};
+/**
  *  记录类型
  */
 typedef NS_ENUM(NSInteger, RecordType) {

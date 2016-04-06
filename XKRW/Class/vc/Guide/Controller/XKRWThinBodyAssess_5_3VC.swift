@@ -12,15 +12,29 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
  
 
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var headView: UIView!
+    @IBOutlet weak var headLabel: UILabel!
+    
     var fromWhichVC: FromWhichVC?
+    var dicData = NSMutableDictionary()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "我的瘦身计划"
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.loadDataAndReload()
+        scrollView.contentOffset = CGPointZero
+    }
+    
+    func loadDataAndReload(){
+        self.initHabitData()
         let viewHeight : Int = 400
-        scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, CGFloat(viewHeight)*2+600)
+        let numLines = ceilf(Float(dicData.count)/4)
         
+        scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, headView.frame.size.height+CGFloat(viewHeight)*2+CGFloat(numLines*180)+60)
         var frame = CGRectZero
         
         for index in 0...2 {
@@ -28,19 +42,23 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
             switch index {
             case 0:
                 view.type = .Food
+                frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(viewHeight))
                 break
             case 1:
                 view.type = .Sport
+                frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(viewHeight))
                 break
             case 2:
+                view.dicCollection = dicData
                 view.type = .Habit
+                frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*180))
                 break
             default:
                 break
             }
-            frame = CGRectMake(0, CGFloat(index*viewHeight) , UI_SCREEN_WIDTH, CGFloat(viewHeight))
+            
             view.frame = frame
-//            view.layoutIfNeeded()
+            //            view.layoutIfNeeded()
             scrollView.addSubview(view)
         }
         if(fromWhichVC == FromWhichVC.MyVC)
@@ -85,6 +103,70 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
         alertView.title = "title";
         alertView.message = "message";
         alertView.show();
+    }
+    
+    func initHabitData(){
+        let questionArray:NSArray = XKRWFatReasonService.sharedService().getQuestionAnswer();
+        dicData.removeAllObjects()
+        for i in 0  ..< questionArray.count  {
+            let entity:XKRWFatReasonEntity = questionArray.objectAtIndex(i) as! XKRWFatReasonEntity
+            let reason = XKRWFatReasonService.sharedService().getReasonDescriptionWithID(entity.question, andAID: entity.answer)
+            
+            let arrKeys : NSArray = dicData.allKeys
+            switch reason{
+            case 1:
+                if(!arrKeys.containsObject("饮食油腻")){
+                    dicData.setObject("lead_reason_oil_640×1136_", forKey: "饮食油腻")
+                }
+            case 2:
+                if(!arrKeys.containsObject("吃零食")){
+                    dicData.setObject("lead_reason_ice cream_640×1136_", forKey: "吃零食")
+                }
+            case 3:
+                if(!arrKeys.containsObject("喝饮料")){
+                    dicData.setObject("lead_reason_juice_640×1136_", forKey: "喝饮料")
+                }
+            case 4...6:
+                if(!arrKeys.containsObject("饮酒")){
+                    dicData.setObject("lead_reason_winel_640×1136_", forKey: "饮酒")
+                }
+            case 7:
+                if(!arrKeys.containsObject("吃肥肉")){
+                    dicData.setObject("lead_reason_fat_640×1136_", forKey: "吃肥肉")
+                }
+            case 8:
+                if(!arrKeys.containsObject("吃坚果")){
+                    dicData.setObject("lead_reason_nuts_640×1136_", forKey: "吃坚果")
+                }
+            case 9:
+                if(!arrKeys.containsObject("吃宵夜")){
+                    dicData.setObject("lead_reason_bbq_640×1136_", forKey: "吃宵夜")
+                }
+            case 10:
+                if(!arrKeys.containsObject("吃饭晚")){
+                    dicData.setObject("lead_reason_late_640×1136_", forKey: "吃饭晚")
+                }
+            case 11:
+                if(!arrKeys.containsObject("吃饭快")){
+                    dicData.setObject("lead_reason_fast _640×1136_", forKey: "吃饭快")
+                }
+            case 12:
+                if(!arrKeys.containsObject("饭量时多时少")){
+                    dicData.setObject("lead_reason_not normal_640×1136_", forKey: "饭量时多时少")
+                }
+            case 13:
+                if(!arrKeys.containsObject("活动量少")){
+                    dicData.setObject("lead_reason_sit_640×1136_", forKey: "活动量少")
+                }
+            case 14:
+                if(!arrKeys.containsObject("缺乏锻炼")){
+                    dicData.setObject("lead_reason_running_640×1136_", forKey: "缺乏锻炼")
+                }
+            default:
+                break
+                //                    println("习惯很好，不需要改善")
+            }
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

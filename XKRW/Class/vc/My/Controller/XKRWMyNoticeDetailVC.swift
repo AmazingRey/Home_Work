@@ -216,7 +216,7 @@ class XKRWMyNoticeDetailVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource
                 let commentCell = XKRWFitCommentCell.init(style: .Default, reuseIdentifier: "commentCell")
                 commentCell.selectIndexPath = indexPath
                 commentCell.delegate = self
-                commentCell.iconBtn.addTarget(self, action:#selector(XKRWMyNoticeDetailVC.showUserInfo(_:)), forControlEvents: .TouchUpInside)
+                commentCell.iconBtn.addTarget(self, action:"showUserInfo:", forControlEvents: .TouchUpInside)
                 commentCell.entity = commentEntity
                 commentCell.openBlock =  { selectIndexPath , state  -> Void in
                     self.commentEntity?.isOpen = !state

@@ -7,13 +7,10 @@
 //
 
 #import "XKRWPlan_5_3CollectionView.h"
+#import "XKRWFatReasonService.h"
 
 @implementation XKRWPlan_5_3CollectionView
-{
-    NSArray *arrImg;
-    NSArray *arrText;
-}
-@synthesize arrData = _arrData;
+@synthesize dicData = _dicData;
 
 -(id)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
     self = [super initWithFrame:frame collectionViewLayout:layout];
@@ -21,7 +18,7 @@
     {
         self.dataSource = self;
         self.delegate = self;
-        self.backgroundColor = [UIColor lightGrayColor];
+        self.backgroundColor = [UIColor whiteColor];
         
 //        [self registerClass:[XKRWPlan_5_3CollectionViewCell class] forCellWithReuseIdentifier:@"myCollectionCell"];
         UINib *cellNib = [UINib nibWithNibName:@"XKRWPlan_5_3CollectionViewCell" bundle:nil];
@@ -30,16 +27,23 @@
         [self registerClass:[XKRWPlan_5_3CollectionReusableView class]
                 forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                        withReuseIdentifier:@"Separator"];
+//        _dicData = [self getUserHabit];
     }
     return self;
 }
 
+- (NSArray *)getUserHabit
+{
+    NSArray *array = [[XKRWFatReasonService sharedService] getQuestionAnswer];
+    
+    return [[XKRWFatReasonService sharedService] getHabitEntitiesWithFatReasonEntities:array];
+}
 
--(void)setArrData:(NSArray *)arrData{
-    if (_arrData != arrData) {
-        _arrData = arrData;
-        arrImg = _arrData[0];
-        arrText = _arrData[1];
+-(void)setDicData:(NSDictionary *)dicData{
+    if (_dicData != dicData) {
+        _dicData = dicData;
+        _arrText = [dicData allKeys];
+        _arrImg = [dicData allValues];
         [self reloadData];
     }
 }
@@ -51,25 +55,27 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 12;
+    return _arrText.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"myCollectionCell";
     XKRWPlan_5_3CollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    cell.lab.text = [NSString stringWithFormat:@"第%ld幅图呵呵呵呵",indexPath.row+1];
+    cell.lab.text = [NSString stringWithFormat:@"%@",_arrText[indexPath.row]];
     cell.lab.preferredMaxLayoutWidth = cell.frame.size.width;
+    cell.lab.hidden = YES;
     
-    [cell.imgView setImage:[UIImage imageNamed:@"-12-9"]];
+    [cell.imgView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",_arrImg[indexPath.row]]]];
+    [cell.imgView layoutIfNeeded];
     
-    cell.backgroundColor = [UIColor yellowColor];
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
 //设置每个item的尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(70, 110);
+    return CGSizeMake(80, 95);
 }
 
 //footer的size
@@ -87,22 +93,21 @@
 //设置每个item的UIEdgeInsets
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-//    return UIEdgeInsetsMake(10, 10, 10, 10);
-    return UIEdgeInsetsZero;
+    return UIEdgeInsetsMake(20, 0, -50, 0);
 }
 
-////设置每个item水平间距
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-//{
-//    return 10;
-//}
-//
-//
-////设置每个item垂直间距
-//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-//{
-//    return 20;
-//}
+//设置每个item水平间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 0;
+}
+
+
+//设置每个item垂直间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 30;
+}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
 //    return CGSizeMake(XKAppWidth, 80);

@@ -709,7 +709,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             
             let button = UIButton(type: UIButtonType.Custom)
             button.frame = self.view.bounds
-            button.addTarget(self, action: #selector(XKRWHistoryAndProcessVC.hideCalendar(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: "hideCalendar:", forControlEvents: UIControlEvents.TouchUpInside)
             button.tag = 103267
             
             self.view.addSubview(button)

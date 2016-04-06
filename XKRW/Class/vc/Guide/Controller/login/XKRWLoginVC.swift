@@ -79,7 +79,7 @@ class XKRWLoginVC: XKRWBaseVC {
             let width = ("注册" as NSString).boundingRectWithSize(CGSizeMake(100, 100), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(14)], context: nil).size.width
             
             rightNaviBarButton.frame = CGRectMake(0, 0, width, 44)
-            rightNaviBarButton.addTarget(self, action: #selector(XKRWLoginVC.doClickNaviBarRightButton as (XKRWLoginVC) -> () -> ()), forControlEvents:UIControlEvents.TouchUpInside)
+            rightNaviBarButton.addTarget(self, action: "doClickNaviBarRightButton", forControlEvents:UIControlEvents.TouchUpInside)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviBarButton)
         }
         
