@@ -135,18 +135,19 @@
 }
 
 - (void)setUserDataAction:(UIButton *)button {
-    _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, 80, 90)];
-    CGPoint center = button.center;
-    center.x = XKAppWidth - _pullView.frame.size.width/2 - 15;
-    center.y = button.center.y + button.frame.size.height/2 + _pullView.frame.size.height/2;
-    _pullView.center = center;
-    [self.view addSubview:_pullView];
-    _pullView.alpha = 0;
-    _pullView.delegate = self;
-    
-    [UIView animateWithDuration:.5 animations:^{
-        _pullView.alpha = 1;
-    }];
+    if (_pullView == nil) {
+        _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, 80, 90)];
+        CGPoint center = button.center;
+        center.x = XKAppWidth - _pullView.frame.size.width/2 - 15;
+        center.y = button.center.y + button.frame.size.height + _pullView.frame.size.height/2+searchBar.frame.size.height;
+        _pullView.center = center;
+        [self.view addSubview:_pullView];
+        _pullView.alpha = 0;
+        _pullView.delegate = self;
+    }
+        [UIView animateWithDuration:.3 animations:^{
+            _pullView.alpha = 1 - _pullView.alpha;
+        }];
 }
 
 - (void)entryCalendarAction:(UIButton *)button{
@@ -155,24 +156,49 @@
 
 #pragma XKRWWeightRecordPullViewDelegate method
 -(void)pressWeight{
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:.3 animations:^{
         _pullView.alpha = 0;
+        [_pullView removeFromSuperview];
+        _pullView = nil;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:.5 animations:^{
+//            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+//            window.alpha = .5;
+//            window.userInteractionEnabled = NO;
+            self.view.alpha = .5;
+            self.view.userInteractionEnabled = NO;
+            self.tabBarController.tabBar.hidden = YES;
+            UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];
+            singleTap.numberOfTapsRequired = 1;
+            [[UIApplication sharedApplication].keyWindow addGestureRecognizer:singleTap];
+        }];
     }];
-    [_pullView removeFromSuperview];
 }
 
 -(void)pressContain{
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:.3 animations:^{
         _pullView.alpha = 0;
     }];
     [_pullView removeFromSuperview];
+    _pullView = nil;
 }
 
 -(void)pressGraph{
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:.3 animations:^{
         _pullView.alpha = 0;
     }];
     [_pullView removeFromSuperview];
+    _pullView = nil;
+}
+
+
+-(void)cancelPopView{
+    [UIView animateWithDuration:.5 animations:^{
+        self.view.alpha = 1;
+    } completion:^(BOOL finished) {
+        self.view.userInteractionEnabled = YES;
+        self.tabBarController.tabBar.hidden = NO;
+    }];
 }
 
 #pragma --mark Delegate
