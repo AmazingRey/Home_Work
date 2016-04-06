@@ -218,7 +218,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
 
                 self.ADView = XKRWADView(type: .Banner, adEntities: XKRWAdService.sharedService().getAdsWithPosition(.MainPage))
                 
-                self.ADView?.setClickAction({ (Int32 index, XKRWAdEntity entity) -> Void in
+                self.ADView?.setClickAction({ (index, entity) -> Void in
                     
                     let vc = XKRWWebViewVC()
                     vc.initialTitle = entity.title
@@ -1228,7 +1228,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                     }
                     
                     cell!.switchUnit.setOn(XKRWRecordService4_0.sharedService().getMenstruationSituation(), animated: false)
-                    cell!.setTitle("大姨妈", clickSwitchAction: { (Bool on) -> Void in
+                    cell!.setTitle("大姨妈", clickSwitchAction: { (on) -> Void in
                         
                         if on {
                             self.is_M = 1
