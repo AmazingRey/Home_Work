@@ -23,6 +23,8 @@
     NJKWebViewProgressView *_progressView;
     UIView *_progressBackView;
     NJKWebViewProgress *_progressProxy;
+    UIImage *_shareImage;
+    NSString *_shareContent;
 }
 
 @property (nonatomic, strong) UIView *noNetWorkView;
@@ -253,8 +255,9 @@
     
     if(_isFromPostDetail){
         self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+        _shareImage = [UIImage imageNamed:@"icon"];
     }else{
-    
+        _shareImage = nil;
         self.shareTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
     }
     
@@ -327,11 +330,20 @@
             if (_shareTitle && _shareTitle.length) {
                 
                 shareTitle = [NSString stringWithFormat:@"%@ - %@", _webTitle, _shareTitle];
-            } else {
+            } else if (_webTitle && _webTitle.length) {
                 
                 shareTitle = _webTitle;
+            } else if (self.title && self.title.length) {
+                shareTitle = self.title;
+            } else {
+                shareTitle = @"分享自瘦瘦";
             }
             
+            if (_isFromPostDetail) {
+                _shareContent = shareTitle;
+            } else {
+                _shareContent = nil;
+            }
             if (index == 0) {
                 //微信分享
                 [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeNone;
@@ -339,8 +351,8 @@
                 [UMSocialData defaultData].extConfig.wechatSessionData.title = shareTitle;
                 
                 [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatSession]
-                                                                   content:nil
-                                                                     image:nil
+                                                                   content:_shareContent
+                                                                     image:_shareImage
                                                                   location:nil
                                                                urlResource:nil
                                                        presentedController:self
@@ -359,7 +371,7 @@
                 
                 [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatTimeline]
                                                                    content:nil
-                                                                     image:nil
+                                                                     image:_shareImage
                                                                   location:nil
                                                                urlResource:nil
                                                        presentedController:self
@@ -384,7 +396,7 @@
                 
                  [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToQzone]
                  content:nil
-                 image:nil
+                 image:_shareImage
                  location:nil
                  urlResource:nil
                  presentedController:self
@@ -400,7 +412,7 @@
                 NSString *shareText = [NSString stringWithFormat:@"%@ - %@\n - 分享自瘦瘦", shareTitle, _shareURL];
                 
                 [[UMSocialControllerService defaultControllerService] setShareText:shareText
-                                                                        shareImage:nil
+                                                                        shareImage:_shareImage
                                                                   socialUIDelegate:self];
                 //设置分享内容和回调对象
                 [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);

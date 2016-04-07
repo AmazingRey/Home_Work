@@ -458,6 +458,7 @@
     NSString *shareTitle = nil;
     
     shareTitle = [NSString stringWithFormat:@"%@ - %@\n - 分享自瘦瘦", _entity.postGroupName,_entity.postTitle];
+    UIImage *shareImage = [UIImage imageNamed:@"icon"];
     
     if (buttonIndex == 1) {
         [MobClick event:@"clk_ShareWechat"];
@@ -469,7 +470,7 @@
         
         [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatSession]
                                                            content:nil
-                                                             image:nil
+                                                             image:shareImage
                                                           location:nil
                                                        urlResource:nil
                                                presentedController:self
@@ -490,7 +491,7 @@
         
         [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatTimeline]
                                                            content:nil
-                                                             image:nil
+                                                             image:shareImage
                                                           location:nil
                                                        urlResource:nil
                                                presentedController:self
@@ -511,7 +512,7 @@
         
         [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToQzone]
                                                            content:nil
-                                                             image:nil
+                                                             image:shareImage
                                                           location:nil
                                                        urlResource:nil
                                                presentedController:self
@@ -527,7 +528,7 @@
         NSString *shareText = [NSString stringWithFormat:@"%@ - %@ - %@\n - 分享自瘦瘦", _entity.postGroupName, _entity.postTitle, _entity.sharePostUrl];
         
         [[UMSocialControllerService defaultControllerService] setShareText:shareText
-                                                                shareImage:nil
+                                                                shareImage:shareImage
                                                           socialUIDelegate:(id)self];
         //设置分享内容和回调对象
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);

@@ -48,7 +48,7 @@
             label.font = XKDefaultFontWithSize(14);
             label.text = titles[i];
             [label sizeToFit];
-            label.center = CGPointMake(22 *(i + 1) + circleWidth*(i*2 + 1)/2.0, self.height - 34);
+            label.center = CGPointMake(22 *(i + 1) + circleWidth*(i*2 + 1)/2.0, _eatEnergyCircle.bottom + 34);
             [self addSubview:label];
         }
     }

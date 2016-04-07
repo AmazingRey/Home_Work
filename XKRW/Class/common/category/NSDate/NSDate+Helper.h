@@ -63,4 +63,5 @@
 - (NSDate *)startOfADay;
 - (NSDate *)endofADay;
 
++ (BOOL)dateIsLatterThanToday:(NSDate *)date;
 @end

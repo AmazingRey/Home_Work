@@ -14,8 +14,9 @@
 #import "KMSearchDisplayController.h"
 #import "XKRWPlanEnergyView.h"
 #import "XKRWWeightRecordPullView.h"
+#import "XKRWWeightPopView.h"
 
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate>
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
     KMSearchBar* searchBar;
@@ -24,6 +25,7 @@
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
 @property (nonatomic, strong) XKRWWeightRecordPullView *pullView;
+@property (nonatomic, strong) XKRWWeightPopView *popView;
 @end
 
 @implementation XKRWPlanVC
@@ -38,6 +40,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initView];
+    [self addTouchWindowEvent];
+}
+
+-(void)addTouchWindowEvent{
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];
+    singleTap.numberOfTapsRequired = 1;
+    [[UIApplication sharedApplication].keyWindow addGestureRecognizer:singleTap];
 }
 
 #pragma --mark UI
@@ -127,7 +136,7 @@
 - (void)handleLongPressRecognizer:(UIButton *)sender{
     if (sender.state == UIGestureRecognizerStateBegan){
         NSLog(@"UIGestureRecognizerStateBegan.");
-        
+        [self pressWeight];
     }
     else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"UIGestureRecognizerStateEnded");
@@ -135,6 +144,7 @@
 }
 
 - (void)setUserDataAction:(UIButton *)button {
+
     if (_pullView == nil) {
         _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, 80, 90)];
         CGPoint center = button.center;
@@ -145,60 +155,105 @@
         _pullView.alpha = 0;
         _pullView.delegate = self;
     }
+    [self removePullView];
+}
+
+-(void)removePullView{
+    if (_pullView.alpha == 0) {
         [UIView animateWithDuration:.3 animations:^{
-            _pullView.alpha = 1 - _pullView.alpha;
+            _pullView.alpha = 1;
         }];
+    }else{
+        [UIView animateWithDuration:.3 animations:^{
+            _pullView.alpha = 0;
+        }completion:^(BOOL finished) {
+            [_pullView removeFromSuperview];
+            _pullView = nil;
+        }];
+    }
 }
 
 - (void)entryCalendarAction:(UIButton *)button{
 
 }
 
+
 #pragma XKRWWeightRecordPullViewDelegate method
+
+/**
+ *  记录体重
+ */
 -(void)pressWeight{
-    [UIView animateWithDuration:.3 animations:^{
-        _pullView.alpha = 0;
-        [_pullView removeFromSuperview];
-        _pullView = nil;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:.5 animations:^{
-//            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-//            window.alpha = .5;
-//            window.userInteractionEnabled = NO;
-            self.view.alpha = .5;
-            self.view.userInteractionEnabled = NO;
-            self.tabBarController.tabBar.hidden = YES;
-            UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];
-            singleTap.numberOfTapsRequired = 1;
-            [[UIApplication sharedApplication].keyWindow addGestureRecognizer:singleTap];
-        }];
-    }];
+    [self popViewAppear:0];
 }
 
+/**
+ *  记录围度
+ */
 -(void)pressContain{
-    [UIView animateWithDuration:.3 animations:^{
-        _pullView.alpha = 0;
-    }];
-    [_pullView removeFromSuperview];
-    _pullView = nil;
+    [self popViewAppear:1];
 }
 
+/**
+ *  查看曲线
+ */
 -(void)pressGraph{
-    [UIView animateWithDuration:.3 animations:^{
-        _pullView.alpha = 0;
-    }];
-    [_pullView removeFromSuperview];
-    _pullView = nil;
+    [self popViewAppear:2];
 }
 
+/**
+ *  点击不同的按钮类型不同
+ *
+ *  @param type 0:记录体重 
+ *              1:记录围度
+ *              2:查看曲线
+ */
+-(void)popViewAppear:(NSInteger)type{
+    _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    _popView.delegate = self;
+    CGPoint center = self.view.center;
+    center.y -= 100;
+    _popView.center = center;
+    _popView.alpha = 0;
+    [UIView animateWithDuration:.3 delay:.1 options:0 animations:^{
+        [_popView.textField becomeFirstResponder];
+        [[UIApplication sharedApplication].keyWindow addSubview:_popView];
+        _popView.center = self.view.center;
+        _pullView.alpha = 0;
+        self.view.alpha = .5;
+        _popView.alpha = 1;
+        self.view.userInteractionEnabled = NO;
+        self.tabBarController.tabBar.hidden = YES;
+    } completion:nil];
+}
 
 -(void)cancelPopView{
-    [UIView animateWithDuration:.5 animations:^{
-        self.view.alpha = 1;
-    } completion:^(BOOL finished) {
-        self.view.userInteractionEnabled = YES;
-        self.tabBarController.tabBar.hidden = NO;
-    }];
+    if (_popView) {
+        CGPoint center = _popView.center;
+        center.y -= 100;
+        [_popView.textField resignFirstResponder];
+        [UIView animateWithDuration:.5 delay:0 options:0 animations:^{
+            _popView.center = center;
+            _popView.alpha = 0;
+            self.view.alpha = 1;
+        } completion:^(BOOL finished) {
+            [_popView removeFromSuperview];
+            _popView = nil;
+            self.view.userInteractionEnabled = YES;
+            self.tabBarController.tabBar.hidden = NO;
+        }];
+    }else{
+        [self setUserDataAction:nil];
+    }
+}
+
+#pragma XKRWWeightPopViewDelegate 
+-(void)pressPopViewSure:(NSNumber *)inputNum{
+    [self cancelPopView];
+}
+
+-(void)pressPopViewCancle{
+    [self cancelPopView];
 }
 
 #pragma --mark Delegate

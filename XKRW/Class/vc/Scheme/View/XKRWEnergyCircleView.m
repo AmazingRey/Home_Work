@@ -8,6 +8,7 @@
 
 #import "XKRWEnergyCircleView.h"
 #import "XKRWAnimationCircle.h"
+#import "YLImageView.h"
 #import "POP.h"
 
 @implementation XKRWEnergyCircleView
@@ -22,6 +23,8 @@
     XKRWAnimationCircle *_backgroundCircle;
     XKRWAnimationCircle *_progressCircle;
     POPBasicAnimation *_labelAnimation;
+    
+    YLImageView *_stateImage;
 }
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -90,6 +93,12 @@
         _labelAnimation = [POPBasicAnimation animation];
         _labelAnimation.property = [self animationProperty];
         _labelAnimation.fromValue = @(0);
+        
+        _stateImage = [[YLImageView alloc] init];
+        _stateImage.image = [UIImage imageNamed:@"green.gif"];
+        [_stateImage sizeToFit];
+        _stateImage.center = CGPointMake(CGRectGetMidX(self.bounds), 0);
+        [self addSubview:_stateImage];
         [self setStyle:style];
         
     }

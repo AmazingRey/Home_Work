@@ -93,6 +93,7 @@ static XKRWAdService *shareInstance = nil;
     NSArray *typeArray = @[@"pkinfo",@"url",@"share",@"post",@"jfzs",@"lizhi",@"ydtj"];
     for (NSDictionary *temp in result[@"data"]) {
         BOOL isInArray;
+        BOOL isOnDay;
         for (NSString *type in typeArray) {
             isInArray = [temp[@"type"] isEqualToString:type];
             if (isInArray) {
@@ -101,7 +102,14 @@ static XKRWAdService *shareInstance = nil;
                 continue;
             }
         }
-        if (isInArray) {
+        NSDate *stateDay = [NSDate dateFromString:temp[@"day_on"]];;
+        NSDate *endDay = [NSDate dateFromString:temp[@"day_off"]];
+        if ([NSDate dateIsLatterThanToday:stateDay] || !([NSDate dateIsLatterThanToday:endDay] || [endDay isDayEqualToDate:[NSDate date]])) {
+            isOnDay = NO;
+        } else {
+            isOnDay = YES;
+        }
+        if (isInArray && isOnDay) {
             XKRWShareAdverEntity *entity = [XKRWShareAdverEntity new];
             entity.adId = temp[@"id"];
             entity.title = temp[@"name"];

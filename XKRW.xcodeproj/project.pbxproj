@@ -1017,6 +1017,8 @@
 		BCF862231C508D2600A64986 /* XKRWPostDeatilCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF862211C508D2600A64986 /* XKRWPostDeatilCell.m */; };
 		BCF862241C508D2600A64986 /* XKRWPostDeatilCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF862221C508D2600A64986 /* XKRWPostDeatilCell.xib */; };
 		BCFE22261B74CC9F00535863 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFE22251B74CC9F00535863 /* MediaPlayer.framework */; };
+		CC25086A1CB5EE1D00FFF00C /* XKRWWeightPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */; };
+		CC25086C1CB5EE3700FFF00C /* XKRWWeightPopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */; };
 		CC8EA3B51CB369980084E059 /* XKRWPlan_5_3CollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8EA3AD1CB369980084E059 /* XKRWPlan_5_3CollectionView.m */; };
 		CC8EA3B61CB369980084E059 /* XKRWPlan_5_3CollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC8EA3AE1CB369980084E059 /* XKRWPlan_5_3CollectionView.xib */; };
 		CC8EA3B71CB369980084E059 /* XKRWPlan_5_3CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8EA3B01CB369980084E059 /* XKRWPlan_5_3CollectionViewCell.m */; };
@@ -2732,6 +2734,9 @@
 		BCF862211C508D2600A64986 /* XKRWPostDeatilCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPostDeatilCell.m; sourceTree = "<group>"; };
 		BCF862221C508D2600A64986 /* XKRWPostDeatilCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPostDeatilCell.xib; sourceTree = "<group>"; };
 		BCFE22251B74CC9F00535863 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		CC2508681CB5EE1D00FFF00C /* XKRWWeightPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeightPopView.h; sourceTree = "<group>"; };
+		CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeightPopView.m; sourceTree = "<group>"; };
+		CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWWeightPopView.xib; sourceTree = "<group>"; };
 		CC8EA3AC1CB369980084E059 /* XKRWPlan_5_3CollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlan_5_3CollectionView.h; sourceTree = "<group>"; };
 		CC8EA3AD1CB369980084E059 /* XKRWPlan_5_3CollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlan_5_3CollectionView.m; sourceTree = "<group>"; };
 		CC8EA3AE1CB369980084E059 /* XKRWPlan_5_3CollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlan_5_3CollectionView.xib; sourceTree = "<group>"; };
@@ -6666,6 +6671,9 @@
 				CCFA188A1CB518770025EC12 /* XKRWWeightRecordPullView.h */,
 				CCFA188B1CB518770025EC12 /* XKRWWeightRecordPullView.m */,
 				CCFA188C1CB518770025EC12 /* XKRWWeightRecordPullView.xib */,
+				CC2508681CB5EE1D00FFF00C /* XKRWWeightPopView.h */,
+				CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */,
+				CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */,
 			);
 			name = WeightRecoderView;
 			sourceTree = "<group>";
@@ -6879,6 +6887,7 @@
 				BC81EABA1BF43A9900317D1A /* UMSCommentDetailController.xib in Resources */,
 				BCEF37331C1E75D900740ACC /* XKRWProfessionalShareVC.xib in Resources */,
 				BC6F2F841C1A70D3005B54E8 /* XKRWEntryCell.xib in Resources */,
+				CC25086C1CB5EE3700FFF00C /* XKRWWeightPopView.xib in Resources */,
 				E3FC6DC71AB840EE0002C283 /* AlipaySDK.bundle in Resources */,
 				BC769E8D1C33D3DD00E96B1A /* discover_share@2x.png in Resources */,
 				BCEF362B1C1E619700740ACC /* XKRWSportDetailImageCell.xib in Resources */,
@@ -7225,6 +7234,7 @@
 				5DCD561D1C4731B8008A5AC2 /* GroupHeaderCell.m in Sources */,
 				A786D4E41BB5192200B6535D /* MLSelectPhotoPickerGroupTableViewCell.m in Sources */,
 				BC31B9A71C1AD3B40045817B /* XKRWSepLine.m in Sources */,
+				CC25086A1CB5EE1D00FFF00C /* XKRWWeightPopView.m in Sources */,
 				2E96880F1A04AEFE00CB5D77 /* SDWebImageDownloaderOperation.m in Sources */,
 				BC769ED81C34CACB00E96B1A /* UIColor+HexString.m in Sources */,
 				2E9688041A04AEFD00CB5D77 /* PSTGridLayoutSection.m in Sources */,
