@@ -8,9 +8,8 @@
 
 #import "XKRWEnergyCircleView.h"
 #import "XKRWAnimationCircle.h"
-#import "YLImageView.h"
 #import "POP.h"
-
+#import <YYImage/YYImage.h>
 @implementation XKRWEnergyCircleView
 {
     UIView *_shadowView;
@@ -24,7 +23,8 @@
     XKRWAnimationCircle *_progressCircle;
     POPBasicAnimation *_labelAnimation;
     
-    YLImageView *_stateImage;
+    YYAnimatedImageView *_stateImageView;
+    YYImage *_stateImage;
 }
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -39,7 +39,7 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        _shadowView = [[UIView alloc] initWithFrame:CGRectMake(2, 2, self.width - 4, self.height - 4)];
+        _shadowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
         _shadowView.layer.borderWidth = 0.1;
         _shadowView.layer.cornerRadius = self.width/2.0;
         _shadowView.layer.shadowOffset = CGSizeMake(0, 0);
@@ -48,7 +48,7 @@
         self.shadowColor = XKMainSchemeColor;
         [self addSubview:_shadowView];
         
-        _backgroundCircle = [[XKRWAnimationCircle alloc] initWithFrame:CGRectMake(6, 6, _shadowView.width - 8, _shadowView.height - 8)];
+        _backgroundCircle = [[XKRWAnimationCircle alloc] initWithFrame:CGRectMake(_shadowView.left + 3, _shadowView.top + 3, _shadowView.width - 6, _shadowView.height - 6)];
         _backgroundCircle.circleWidth = 4.f;
         _backgroundCircle.circleProgressColor = colorSecondary_c7c7cc;
         [_backgroundCircle setPathStartAngle:(- 3 * M_PI_2 + M_PI_2 / 2) endAngle:M_PI_2/2];
@@ -56,7 +56,7 @@
         _backgroundCircle.center = CGPointMake(self.width/2.0, self.height/2.0);
         [self addSubview:_backgroundCircle];
         
-        _progressCircle = [[XKRWAnimationCircle alloc] initWithFrame:CGRectMake(6, 6, _shadowView.width - 8, _shadowView.height - 8)];
+        _progressCircle = [[XKRWAnimationCircle alloc] initWithFrame:_backgroundCircle.frame];
         _progressCircle.circleWidth = _backgroundCircle.circleWidth;
         [_progressCircle setPathStartAngle:(- 3 * M_PI_2 + M_PI_2 / 2) endAngle:M_PI_2/2];
         _progressCircle.percentage = 0;
@@ -84,7 +84,7 @@
         [self addSubview:_titleLabel];
         
         _goalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.width, 12)];
-        _goalLabel.top = _currentNumLabel.bottom + 2.5;
+        _goalLabel.top = _currentNumLabel.bottom;
         _goalLabel.textAlignment = NSTextAlignmentCenter;
         _goalLabel.font = XKDefaultFontWithSize(12);
         _goalLabel.textColor = XK_ASSIST_TEXT_COLOR;
@@ -94,19 +94,33 @@
         _labelAnimation.property = [self animationProperty];
         _labelAnimation.fromValue = @(0);
         
-        _stateImage = [[YLImageView alloc] init];
-        _stateImage.image = [UIImage imageNamed:@"green.gif"];
-        [_stateImage sizeToFit];
-        _stateImage.center = CGPointMake(CGRectGetMidX(self.bounds), 0);
-        [self addSubview:_stateImage];
+        _stateImageView = [[YYAnimatedImageView alloc] init];
+        _stateImageView.size = CGSizeMake(20, 20);
+        _stateImageView.center = CGPointMake(CGRectGetMidX(self.bounds), _shadowView.bottom - 10);
+        [_stateImageView addObserver:self forKeyPath:@"currentAnimatedImageIndex" options:NSKeyValueObservingOptionNew context:nil];
+    
+        _stateImageView.autoPlayAnimatedImage = NO;
+        [self addSubview:_stateImageView];
         [self setStyle:style];
         
     }
     return self;
 }
-
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"currentAnimatedImageIndex"]) {
+        if ([[change objectForKey:NSKeyValueChangeNewKey] integerValue] == 17) {
+            [_stateImageView stopAnimating];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+- (void)dealloc {
+    [_stateImageView removeObserver:self forKeyPath:@"currentAnimatedImageIndex"];
+}
 - (void)setStyle:(XKRWEnergyCircleStyle)style {
     if (style == XKRWEnergyCircleStyleNotOpen) {
+        _stateImageView.hidden = YES;
         _startButton.hidden = NO;
         _backgroundCircle.hidden = YES;
         _progressCircle.hidden = YES;
@@ -115,6 +129,7 @@
         _goalLabel.hidden = YES;
         
     } else if (style == XKRWEnergyCircleStyleOpened) {
+        _stateImageView.hidden = YES;
         _startButton.hidden = NO;
         _backgroundCircle.hidden = YES;
         _progressCircle.hidden = YES;
@@ -123,7 +138,7 @@
         _goalLabel.hidden = NO;
         
     } else if (style == XKRWEnergyCircleStyleSelected) {
-//        _startButton.hidden = YES;
+        _stateImageView.hidden = NO;
         _backgroundCircle.hidden = NO;
         _progressCircle.hidden = NO;
         _titleLabel.hidden = NO;
@@ -135,10 +150,11 @@
 - (void)pressedEvent:(UIButton *)sender {
     [UIView animateWithDuration:0.2 animations:^{
         sender.transform = CGAffineTransformMakeScale(1.1, 1.1);
-//        sender.alpha = 0.8;
     }];
 }
 - (void)startButtonClicked:(UIButton *)sender {
+    [_stateImageView startAnimating];
+
     [UIView animateWithDuration:0.5 animations:^{
         sender.transform = CGAffineTransformMakeScale(0.5, 0.5);
         self.style = XKRWEnergyCircleStyleSelected;
@@ -148,7 +164,6 @@
         if (self.energyCircleViewClickBlock) {
             self.energyCircleViewClickBlock();
         }
-
     }];
 }
 
@@ -159,11 +174,13 @@
     if (isBehaveCurrect) {
         self.shadowColor = XKMainSchemeColor;
         _currentNumLabel.textColor = XKMainSchemeColor;
-
+        _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"green" ofType:@"gif"]]];
     } else {
         self.shadowColor = XKWarningColor;
         _currentNumLabel.textColor = XKWarningColor;
+        _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"red" ofType:@"gif"]]];
     }
+    _stateImageView.image = _stateImage;
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {

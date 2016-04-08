@@ -448,9 +448,6 @@
     [XKRWCui showInformationHudWithText:@"帖子加载失败..."];
 }
 
-
-
-
 #pragma --mark XKRWInputBoxViewDelegate
 
 - (void)inputBoxView:(XKRWInputBoxView *)inputBoxView sendMessage:(NSString *)message {

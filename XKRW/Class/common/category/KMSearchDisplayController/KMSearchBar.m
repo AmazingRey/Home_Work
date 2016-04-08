@@ -29,6 +29,14 @@
     }
 }
 
+- (void)setSearchBarTextFieldColor:(UIColor *) color {
+    for (UIView *view in ((UIView *)self.subviews.lastObject).subviews) {
+        if ([view isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
+            view.backgroundColor = color;
+        }
+    }
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

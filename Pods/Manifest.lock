@@ -1,20 +1,15 @@
 PODS:
-  - pop (1.0.7)
+  - pop (1.0.9)
+  - YYImage (1.0.1):
+    - YYImage/Core (= 1.0.1)
+  - YYImage/Core (1.0.1)
 
 DEPENDENCIES:
-  - pop (from `https://github.com/facebook/pop.git`, commit `203464a89dcf2e15b1ebdd53eb1f82e7d077460c`)
-
-EXTERNAL SOURCES:
-  pop:
-    :commit: 203464a89dcf2e15b1ebdd53eb1f82e7d077460c
-    :git: https://github.com/facebook/pop.git
-
-CHECKOUT OPTIONS:
-  pop:
-    :commit: 203464a89dcf2e15b1ebdd53eb1f82e7d077460c
-    :git: https://github.com/facebook/pop.git
+  - pop (~> 1.0.9)
+  - YYImage (~> 1.0.1)
 
 SPEC CHECKSUMS:
-  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  YYImage: b41b45bc5f32bfcdf67bdfb9c09da9e9832357c0
 
 COCOAPODS: 0.39.0

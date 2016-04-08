@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>YYImage.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>pop.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>7EC2A95DCD367DFEEFF114831B437160</key>
+		<key>0E15C1E2E80603516D427DF2663D44AD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8391CE7DE5D120327DA6245F4AAB5EFF</key>
+		<key>D66F98BA3E1AFD41B5CFA15B1CC7C53E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EAA66F90257E6B124921B7F494D134F0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

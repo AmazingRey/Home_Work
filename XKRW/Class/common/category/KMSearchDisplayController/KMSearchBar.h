@@ -22,4 +22,6 @@
 
 - (void)setCancelButtonEnable:(BOOL)enable;
 
+- (void)setSearchBarTextFieldColor:(UIColor *) color;
+
 @end

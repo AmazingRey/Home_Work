@@ -168,8 +168,8 @@
     }
 }
 
-void displayDetailPage(NSString * link,NSString * title)
-{
+//void displayDetailPage(NSString * link,NSString * title)
+//{
 
 //    ADWebViewController * vc = [[ADWebViewController alloc] init];
 //    vc.linkerUrl = link;
@@ -177,7 +177,7 @@ void displayDetailPage(NSString * link,NSString * title)
 //    [[DataCenter getCurrentVC] presentViewController:vc animated:YES completion:^{
 //        
 //    }];
-}
+//}
 
 @end
 

@@ -23,21 +23,22 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
-    CGFloat circleWidth = (frame.size.width - 88)/3.0;
+    CGFloat separateWidth = 22 * (XKAppWidth / 375.0);
+    CGFloat circleWidth = (frame.size.width - 4*separateWidth)/3.0;
     if (self) {
         
-        _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(22, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
-        _eatEnergyCircle.left = 22;
+        _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
+        _eatEnergyCircle.backgroundColor = [UIColor orangeColor];
         _eatEnergyCircle.tag = 1;
         [self addSubview:_eatEnergyCircle];
         
         
-        _sportEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_eatEnergyCircle.right + 22, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
+        _sportEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_eatEnergyCircle.right + separateWidth, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
         _sportEnergyCircle.tag = 2;
         [self addSubview:_sportEnergyCircle];
         
         
-        _habitEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_sportEnergyCircle.right + 22, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
+        _habitEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_sportEnergyCircle.right + separateWidth, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
         _habitEnergyCircle.tag = 3;
         [self addSubview:_habitEnergyCircle];
         
@@ -52,7 +53,6 @@
             [self addSubview:label];
         }
     }
-    
     return self;
 }
 - (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber isBehaveCurrect:(BOOL)isBehaveCurrect {

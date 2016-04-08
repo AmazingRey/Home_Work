@@ -15,12 +15,20 @@
 #import "XKRWPlanEnergyView.h"
 #import "XKRWWeightRecordPullView.h"
 #import "XKRWWeightPopView.h"
+#import <iflyMSC/IFlyRecognizerView.h>
+#import <iflyMSC/IFlyRecognizerViewDelegate.h>
+#import <iflyMSC/iflyMSC.h>
+#import "XKRWCui.h"
+#import "XKRW-Swift.h"
 
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate>
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
-    KMSearchBar* searchBar;
+    KMSearchBar* foodAndSportSearchBar;
     KMSearchDisplayController * searchDisplayCtrl;
+    IFlyRecognizerView *iFlyControl;
+    NSString *searchKey;
+   
 }
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
@@ -63,69 +71,86 @@
     [_planEnergyView setEatEnergyCircleGoalNumber:4000 currentNumber:3000 isBehaveCurrect:YES];
     [_planEnergyView setSportEnergyCircleGoalNumber:400 currentNumber:200 isBehaveCurrect:NO];
     [_planEnergyView setHabitEnergyCircleGoalNumber:12 currentNumber:3 isBehaveCurrect:NO];
+    
+    iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
+    [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
+    [iFlyControl setParameter:@"srview.pcm" forKey:[IFlySpeechConstant ASR_AUDIO_PATH] ];
+    [iFlyControl setParameter:@"20000" forKey:[IFlySpeechConstant NET_TIMEOUT] ];
+    [iFlyControl setParameter:@"16000" forKey:[IFlySpeechConstant SAMPLE_RATE] ];
+    [iFlyControl setParameter:@"plain" forKey:[IFlySpeechConstant RESULT_TYPE] ];
+    [iFlyControl setParameter:@"1" forKey:[IFlySpeechConstant ASR_PTT] ];
+    [iFlyControl setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source" ];
+    
+    iFlyControl.delegate = self;
+    iFlyControl.hidden = YES;
+    [self.view addSubview:iFlyControl];
+
 }
 
-- (XKRWUITableViewCellbase *)setSearchAndRecordCell {
-    XKRWUITableViewCellbase *cell = [[XKRWUITableViewCellbase alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"searchAndRecord"];
-    cell.frame = CGRectMake(0, 0, XKAppWidth, 120);
-    searchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
+- (XKRWUITableViewCellbase *)setSearchAndRecordCell:(UITableView *)tableView {
+    XKRWUITableViewCellbase *cell = [tableView dequeueReusableCellWithIdentifier:@"searchAndRecord"];
+    if(cell == nil){
+        cell = [[XKRWUITableViewCellbase alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"searchAndRecord"];
+        cell.frame = CGRectMake(0, 0, XKAppWidth, 120);
+    }
+    if (foodAndSportSearchBar == nil) {
+        foodAndSportSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
+        
+        foodAndSportSearchBar.delegate = self;
+        foodAndSportSearchBar.barTintColor = [UIColor whiteColor];
+        [foodAndSportSearchBar setSearchBarTextFieldColor:XKBGDefaultColor];
+        
+        foodAndSportSearchBar.showsBookmarkButton = true;
+        foodAndSportSearchBar.showsScopeBar = true;
+        
+        [foodAndSportSearchBar setImage:[UIImage imageNamed:@"voice"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
+        foodAndSportSearchBar.placeholder = @"查询食物和运动" ;
+        searchDisplayCtrl = [[KMSearchDisplayController alloc] initWithSearchBar:foodAndSportSearchBar contentsController:self];
+        searchDisplayCtrl.delegate = self ;
+        
+        searchDisplayCtrl.searchResultDelegate = self ;
+        searchDisplayCtrl.searchResultDataSource = self ;
+        
+        searchDisplayCtrl.searchResultTableView.tag = 201 ;
+        [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCell" bundle:nil] forCellReuseIdentifier:@"searchResultCell"];
+        
+        
+        
+        [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCategoryCell" bundle:nil] forCellReuseIdentifier:@"searchResultCategoryCell"];
+        
+        
+        [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWMoreSearchResultCell" bundle:nil] forCellReuseIdentifier:@"moreSearchResultCell"];
+        
+        
+        searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
+        [cell.contentView addSubview:foodAndSportSearchBar];
+    }
     
-    searchBar.delegate = self;
-    searchBar.barTintColor = [UIColor whiteColor];
-//    searchBar.tintColor = XKGrayDefaultColor;
-//    searchBar.layer.borderWidth = 0.5;
-//    searchBar.layer.borderColor = XK_ASSIST_LINE_COLOR.CGColor ;
-    
-    searchBar.showsBookmarkButton = true;
-    searchBar.showsScopeBar = true;
-    
-    [searchBar setImage:[UIImage imageNamed:@"voice"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
-    searchBar.placeholder = @"查询食物和运动" ;
-    
-    [cell.contentView addSubview:searchBar];
-    
-    searchDisplayCtrl = [[KMSearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-    searchDisplayCtrl.delegate = self ;
-    
-    searchDisplayCtrl.searchResultDelegate = self ;
-    searchDisplayCtrl.searchResultDataSource = self ;
-    
-    searchDisplayCtrl.searchResultTableView.tag = 201 ;
-    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCell" bundle:nil] forCellReuseIdentifier:@"searchResultCell"];
-    
-    
-  
-    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCategoryCell" bundle:nil] forCellReuseIdentifier:@"searchResultCategoryCell"];
-    
+    if(_recordAndTargetView == nil){
+        _recordAndTargetView
+        = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordAndTargetView");
+        _recordAndTargetView.frame = CGRectMake(0, 64, cell.contentView.width, 30);
+        _recordAndTargetView.dayLabel.layer.masksToBounds = YES;
+        _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
+        _recordAndTargetView.dayLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+        _recordAndTargetView.dayLabel.layer.borderWidth = 1;
+        
+        _recordAndTargetView.currentWeightLabel.layer.masksToBounds = YES;
+        _recordAndTargetView.currentWeightLabel.layer.cornerRadius = 16;
+        _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+        _recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
+        
+        [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UILongPressGestureRecognizer *gesLongPressed = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressRecognizer:)];
+        gesLongPressed.minimumPressDuration = 1.0f;
+        gesLongPressed.numberOfTouchesRequired=1;
+        [_recordAndTargetView.weightButton addGestureRecognizer:gesLongPressed];
+        
+        [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:_recordAndTargetView];
 
-    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWMoreSearchResultCell" bundle:nil] forCellReuseIdentifier:@"moreSearchResultCell"];
-    
-    
-    searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
-    
-    _recordAndTargetView
-    = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordAndTargetView");
-    _recordAndTargetView.frame = CGRectMake(0, 64, cell.contentView.width, 30);
-    _recordAndTargetView.dayLabel.layer.masksToBounds = YES;
-    _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
-    _recordAndTargetView.dayLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-    _recordAndTargetView.dayLabel.layer.borderWidth = 1;
-    
-    _recordAndTargetView.currentWeightLabel.layer.masksToBounds = YES;
-    _recordAndTargetView.currentWeightLabel.layer.cornerRadius = 16;
-    _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-    _recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
-    
-    [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILongPressGestureRecognizer *gesLongPressed = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressRecognizer:)];
-    gesLongPressed.minimumPressDuration = 1.0f;
-    gesLongPressed.numberOfTouchesRequired=1;
-    [_recordAndTargetView.weightButton addGestureRecognizer:gesLongPressed];
-    
-    [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.contentView addSubview:_recordAndTargetView];
-    
+    }
     return cell;
 }
 
@@ -134,7 +159,7 @@
  *  长按按钮1秒钟直接进入记录体重
  *
  */
-- (void)handleLongPressRecognizer:(UIButton *)sender{
+- (void)handleLongPressRecognizer:(UIButton *)sender {
     if (sender.state == UIGestureRecognizerStateBegan){
         NSLog(@"UIGestureRecognizerStateBegan.");
         [self pressWeight];
@@ -150,7 +175,7 @@
         _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, 80, 90)];
         CGPoint center = button.center;
         center.x = XKAppWidth - _pullView.frame.size.width/2 - 15;
-        center.y = button.center.y + button.frame.size.height + _pullView.frame.size.height/2+searchBar.frame.size.height;
+        center.y = button.center.y + button.frame.size.height + _pullView.frame.size.height/2+foodAndSportSearchBar.frame.size.height;
         _pullView.center = center;
         [self.view addSubview:_pullView];
         _pullView.alpha = 0;
@@ -258,13 +283,13 @@
 }
 
 #pragma --mark Delegate
-
+#pragma --mark TableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
         XKRWUITableViewCellbase *cell  = [tableView dequeueReusableCellWithIdentifier:@"searchAndRecord"];
         if(cell == nil){
-            cell = [self setSearchAndRecordCell];
+            cell = [self setSearchAndRecordCell:tableView];
         }
         
         return cell;
@@ -296,6 +321,93 @@
     }
     return 120;
 }
+
+
+#pragma --mark UISearchBar Delegate
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [searchDisplayCtrl showSearchResultView];
+//    self.isNeedHideNaviBarWhenPoped = YES;
+    return YES;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [searchBar setShowsCancelButton:YES animated:YES];
+//    self.isNeedHideNaviBarWhenPoped = YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:NO];
+    [searchDisplayCtrl hideSearchResultView];
+//    self.isNeedHideNaviBarWhenPoped = NO;
+}
+
+
+
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+//    self.isNeedHideNaviBarWhenPoped = NO;
+    return YES;
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+//    self.isNeedHideNaviBarWhenPoped = YES;
+    
+    if (searchBar.text.length > 0){
+        searchKey = searchBar.text;
+        [self downloadWithTaskID:@"search" outputTask:^id{
+            
+            return [[XKRWSearchService sharedService] searchWithKey:searchKey type:XKRWSearchTypeAll page:1 pageSize:30];
+        }];
+        
+        if([searchBar resignFirstResponder])
+        {
+            [foodAndSportSearchBar setCancelButtonEnable:YES];
+        }
+    }
+}
+
+
+
+- (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar {
+    [MobClick event:@"clk_VoiceSerch"];
+    [searchDisplayCtrl showSearchResultView];
+    [searchBar setShowsCancelButton:YES animated:YES];
+    
+    if (iFlyControl.hidden){
+        iFlyControl.hidden = NO;
+        [iFlyControl start];
+    }else{
+        iFlyControl.hidden = YES;
+        [iFlyControl cancel];
+
+    }
+}
+
+#pragma --mark IFlyDelegate
+// MARK: - iFly's delegate
+
+- (void)onError:(IFlySpeechError *)error {
+    if ([error errorCode] != 0){
+        [XKRWCui  showInformationHudWithText:@"搜索失败"];
+    }
+}
+
+- (void)onResult:(NSArray *)resultArray isLast:(BOOL)isLast {
+    
+}
+
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
