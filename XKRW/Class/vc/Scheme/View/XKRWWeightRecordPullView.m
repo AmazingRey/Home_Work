@@ -15,6 +15,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         self = LOAD_VIEW_FROM_BUNDLE(@"XKRWWeightRecordPullView");
+        [btnWeight setImage:[UIImage imageNamed:@"weight5_3"] forState:UIControlStateNormal];
+        [btnContain setImage:[UIImage imageNamed:@"girth5_3"] forState:UIControlStateNormal];
+        [btnGraph setImage:[UIImage imageNamed:@"curve5_3"] forState:UIControlStateNormal];
     }
     return self;
 }

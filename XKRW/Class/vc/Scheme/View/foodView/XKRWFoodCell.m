@@ -54,7 +54,7 @@
     NSString *detailText = [NSString stringWithFormat:@"%ikcal/100克",energy];
     self.detailTextLabel.text = detailText;
     NSString *logoImgUrl = [value objectForKey:@"foodLogo"];
-    [self.imageView setImageWithURL: [NSURL URLWithString:logoImgUrl] placeholderImage:[UIImage imageNamed:@"food_default.png"]];
+    [self.imageView setImageWithURL: [NSURL URLWithString:logoImgUrl] placeholderImage:[UIImage imageNamed:@"food_default.png"]options:SDWebImageRetryFailed];
     CALayer *layer  = self.imageView.layer;
     [layer setMasksToBounds:YES];
     [layer setCornerRadius:5.f];
@@ -68,7 +68,7 @@
     NSString *detailText = [NSString stringWithFormat:@"%ikcal/100克",energy];
     self.detailTextLabel.text = detailText;
     NSString *logoImgUrl = [value objectForKey:@"image_url"];
-    [self.imageView setImageWithURL: [NSURL URLWithString:logoImgUrl] placeholderImage:[UIImage imageNamed:@"food_default.png"]];
+    [self.imageView setImageWithURL: [NSURL URLWithString:logoImgUrl] placeholderImage:[UIImage imageNamed:@"food_default.png"]options:SDWebImageRetryFailed];
     CALayer *layer  = self.imageView.layer;
     [layer setMasksToBounds:YES];
     [layer setCornerRadius:5.f];

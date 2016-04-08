@@ -217,7 +217,7 @@
     XKRWGroupItem * item = self.dataSource[indexPath.row];
    
     cell.groupId = item.groupId;
-    [cell.groupHeaderIcon setImageWithURL:[NSURL URLWithString:item.groupIcon] placeholderImage:nil];
+    [cell.groupHeaderIcon setImageWithURL:[NSURL URLWithString:item.groupIcon] placeholderImage:nil options:SDWebImageRetryFailed];
     cell.groupTitle.text = item.groupName;
     
     

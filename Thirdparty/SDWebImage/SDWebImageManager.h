@@ -11,7 +11,7 @@
 #import "SDWebImageDownloader.h"
 #import "SDImageCache.h"
 
-typedef enum
+typedef NS_OPTIONS(NSInteger, SDWebImageOptions)
 {
     /**
      * By default, when a URL fail to be downloaded, the URL is blacklisted so the library won't keep trying.
@@ -52,7 +52,7 @@ typedef enum
      * NSMutableURLRequest.HTTPShouldHandleCookies = YES;
      */
     SDWebImageHandleCookies = 1 << 6
-} SDWebImageOptions;
+};
 
 typedef void(^SDWebImageCompletedBlock)(UIImage *image, NSError *error, SDImageCacheType cacheType);
 typedef void(^SDWebImageCompletedWithFinishedBlock)(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished);

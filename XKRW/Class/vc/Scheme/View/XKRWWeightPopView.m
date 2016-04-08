@@ -18,9 +18,11 @@
         self = LOAD_VIEW_FROM_BUNDLE(@"XKRWWeightPopView");
         _textField.keyboardType = UIKeyboardTypeDecimalPad;
         
-        _iCarouselView.type = iCarouselTypeLinear;
+        _iCarouselView.type = 11;
+        _iCarouselView.contentOffset = CGSizeMake(50, 0);
         _iCarouselView.delegate = self;
         _iCarouselView.dataSource = self;
+        _iCarouselView.clipsToBounds = YES;
         _iCarouselView.decelerationRate = 0.7;
         _iCarouselView.scrollSpeed = 1;
     }
@@ -47,12 +49,12 @@
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return 5;
+    return 10;
 }
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
-    return 20;
+    return 50;
 }
 
 //焦点改变时
@@ -66,8 +68,14 @@
          reusingView:(UIImageView *)view
 {
     if (view == nil) {
-        view = [[UIImageView alloc] initWithFrame:self.frame];
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(50 * (index-1), 10, 30, 20)];
+        view.backgroundColor = [UIColor greenColor];
+        
         view.contentMode = UIViewContentModeScaleToFill; //图片拉伸模式
+        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 20, 20)];
+        lab.backgroundColor = [UIColor redColor];
+        lab.text = [NSString stringWithFormat:@"%lu",(unsigned long)index];
+        [view addSubview:lab];
     }
     return view;
 }
@@ -100,17 +108,6 @@
             return value;
         }
     }
-}
-
-void displayDetailPage(NSString * link,NSString * title)
-{
-    
-    //    ADWebViewController * vc = [[ADWebViewController alloc] init];
-    //    vc.linkerUrl = link;
-    //    vc.title = title;
-    //    [[DataCenter getCurrentVC] presentViewController:vc animated:YES completion:^{
-    //        
-    //    }];
 }
 
 

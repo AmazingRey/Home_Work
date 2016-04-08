@@ -136,8 +136,8 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
         
             noticeCell.praiseContentLabel.attributedText = XKRWUtil.createAttributeStringWithString(entity.content, font:XKDefaultFontWithSize(14) , color: XK_ASSIST_TEXT_COLOR, lineSpacing:3.5 , alignment: NSTextAlignment.Left)
             print(entity.userDegreeUrl)
-            noticeCell.degreeImageView.setImageWithURL(NSURL(string: entity.userDegreeUrl), placeholderImage: nil)
-            noticeCell.headButton.setImageWithURL(NSURL(string: entity.avater), forState: .Normal, placeholderImage: nil)
+            noticeCell.degreeImageView.setImageWithURL(NSURL(string: entity.userDegreeUrl), placeholderImage: nil ,options:.RetryFailed)
+            noticeCell.headButton.setImageWithURL(NSURL(string: entity.avater), forState: .Normal, placeholderImage: nil ,options:.RetryFailed)
          
             noticeCell.headButton.layer.masksToBounds = true
             noticeCell.headButton.layer.cornerRadius = 20

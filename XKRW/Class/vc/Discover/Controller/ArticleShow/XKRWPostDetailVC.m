@@ -43,6 +43,10 @@
 @property (strong,nonatomic) NSString *reportId;
 @property (assign,nonatomic) BOOL isSelfsArticle;
 
+@property (assign,nonatomic) BOOL isreload;
+
+@property (assign,nonatomic) BOOL  userWebViewShowContent;  //使用UIWebView 代替 RTLabel
+
 @end
 
 @implementation XKRWPostDetailVC
@@ -50,9 +54,7 @@
     __weak UIView *clickedCommentView;
     
     NSInteger __commentsNumber;
-    
     NSInteger webviewHeight;
-    
 }
 
 - (void)viewDidLoad {
@@ -114,8 +116,6 @@
         
         _tipView = [[XKRWTipView alloc] init];
         _tipView.delegate = self;
-        
-        [[XKHudHelper instance]showProgressHudAnimationInView:self.view];
     }
 }
 
@@ -265,6 +265,7 @@
 - (void)initData {
     
     if(!_postDeleted){
+        _isreload = NO;
         [self getPostDetailInfo];
     }
     
@@ -272,7 +273,7 @@
 
 - (void) getPostDetailInfo{
     if ([XKRWUtil isNetWorkAvailable]){
-        //        [XKRWCui showProgressHud:@"加载帖子详情中"];
+        [XKRWCui showProgressHud:@"帖子加载中..."];
         [self downloadWithTaskID:@"getPostDetail" outputTask:^id{
             return [[XKRWUserArticleService shareService] getUserPostDetailById:_postID];
         }];
@@ -393,6 +394,62 @@
     [self.navigationController pushViewController:webView animated:YES];
 }
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGRect frame = webView.frame;
+    frame.size.height = 1;
+    webView.frame = frame;
+    frame = webView.frame;
+    frame.size = [webView sizeThatFits:CGSizeZero];
+    webviewHeight = frame.size.height;
+    
+  
+    if (webviewHeight != 20 && _isreload == NO){
+    
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [_postTableView reloadData];
+            [XKRWCui hideProgressHud];
+        });
+        _isreload = YES;
+    }
+    
+}
+
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if(webView.isLoading){
+        if([request.URL.absoluteString rangeOfString:@"v.qq.com"].location == NSNotFound){
+            XKRWNewWebView *webView = [[XKRWNewWebView alloc]init];
+            webView.contentUrl = request.URL.absoluteString;
+            webView.isFromPostDetail = YES;
+            [self.navigationController pushViewController:webView animated:YES];
+            return NO;
+        }
+        return YES;
+    }else{
+        
+        if([request.URL.absoluteString rangeOfString:@"v.qq.com"].location == NSNotFound && [request.URL.absoluteString rangeOfString:@"about:blank"].location == NSNotFound){
+            XKRWNewWebView *webView = [[XKRWNewWebView alloc]init];
+            webView.contentUrl = request.URL.absoluteString;
+            webView.isFromPostDetail = YES;
+            [self.navigationController pushViewController:webView animated:YES];
+            return NO;
+        }
+        
+        return YES;
+    }
+    
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [XKRWCui hideProgressHud];
+    [XKRWCui showInformationHudWithText:@"帖子加载失败..."];
+}
+
+
+
 
 #pragma --mark XKRWInputBoxViewDelegate
 
@@ -458,7 +515,6 @@
     NSString *shareTitle = nil;
     
     shareTitle = [NSString stringWithFormat:@"%@ - %@\n - 分享自瘦瘦", _entity.postGroupName,_entity.postTitle];
-    UIImage *shareImage = [UIImage imageNamed:@"icon"];
     
     if (buttonIndex == 1) {
         [MobClick event:@"clk_ShareWechat"];
@@ -470,7 +526,7 @@
         
         [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatSession]
                                                            content:nil
-                                                             image:shareImage
+                                                             image:nil
                                                           location:nil
                                                        urlResource:nil
                                                presentedController:self
@@ -491,7 +547,7 @@
         
         [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatTimeline]
                                                            content:nil
-                                                             image:shareImage
+                                                             image:nil
                                                           location:nil
                                                        urlResource:nil
                                                presentedController:self
@@ -512,7 +568,7 @@
         
         [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToQzone]
                                                            content:nil
-                                                             image:shareImage
+                                                             image:nil
                                                           location:nil
                                                        urlResource:nil
                                                presentedController:self
@@ -528,7 +584,7 @@
         NSString *shareText = [NSString stringWithFormat:@"%@ - %@ - %@\n - 分享自瘦瘦", _entity.postGroupName, _entity.postTitle, _entity.sharePostUrl];
         
         [[UMSocialControllerService defaultControllerService] setShareText:shareText
-                                                                shareImage:shareImage
+                                                                shareImage:nil
                                                           socialUIDelegate:(id)self];
         //设置分享内容和回调对象
         [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
@@ -654,7 +710,12 @@
             postDetailCell.personLikeNumLabel.text = [NSString stringWithFormat:@"已有%ld人喜欢",(long)_entity.postBePraise];
             _postDetailCell.postTitleLabel.attributedText = [XKRWUtil createAttributeStringWithString:_entity.postTitle font:XKDefaultFontWithSize(16) color:XK_TITLE_COLOR lineSpacing:3.5 alignment:NSTextAlignmentLeft];
             
-            _postDetailCell.htmlStr = _entity.textContent;
+            if(_userWebViewShowContent){
+                _postDetailCell.htmlStr = _entity.textContent;
+            }else{
+                _postDetailCell.postContentLabel.text = _entity.textContent ;
+            }
+            
             
             _postDetailCell.likeStateLabel.text = _entity.isThumpUp ? @"已喜欢":@"喜欢" ;
             _postDetailCell.likeStateButton.hidden = NO;
@@ -745,22 +806,39 @@
             _postDetailCell.postTitleLabel.preferredMaxLayoutWidth = XKAppWidth-30;
             _postDetailCell.postTitleLabel.attributedText = [XKRWUtil createAttributeStringWithString:_entity.postTitle font:XKDefaultFontWithSize(16) color:XK_TITLE_COLOR lineSpacing:3.5 alignment:NSTextAlignmentLeft];
             
-            _postDetailCell.contentwebView.delegate = self;
-            _postDetailCell.contentwebView.scrollView.scrollEnabled = NO;
-            _postDetailCell.contentWebViewConstraintHeight.constant  = webviewHeight;
-            
+            if(_userWebViewShowContent){
+                _postDetailCell.postContentWebView.delegate = self;
+                _postDetailCell.postContentWebView.scrollView.scrollEnabled = NO;
+                _postDetailCell.postContentWebViewConstraint.constant = webviewHeight;
+                _postDetailCell.postContentHeight.constant = webviewHeight;
+                _postDetailCell.postContentWebView.hidden = NO;
+                _postDetailCell.postContentLabel.hidden = YES;
+            }else{
+                
+                _postDetailCell.postContentLabel.delegate = self;
+                _postDetailCell.postContentLabel.lineSpacing = 3.5 ;
+                _postDetailCell.postContentLabel.text = _entity.textContent ;
+                _postDetailCell.postContentLabel.textAlignment = NSTextAlignmentJustified;
+                _postDetailCell.postContentLabel.textColor = XK_TEXT_COLOR;
+                _postDetailCell.postContentLabel.font = XKDefaultFontWithSize(16);
+                _postDetailCell.postContentHeight.constant = [_postDetailCell.postContentLabel optimumSize].height;
+                _postDetailCell.postContentWebViewConstraint.constant = [_postDetailCell.postContentLabel optimumSize].height;
+                _postDetailCell.postContentLabel.linkAttributes = [NSDictionary dictionaryWithObject:@"#29ccb1" forKey:@"color"];
+                _postDetailCell.postContentWebView.hidden = YES;
+                _postDetailCell.postContentLabel.hidden = NO;
+            }
             if(_entity.imagePath.count > 0){
                 _broswerView =  [[KMImageBroswerView alloc]initWithFrame:CGRectMake(0, 0, _postDetailCell.postImageView.width, _postDetailCell.postImageView.height)];
                 [_broswerView calculateSizeWithImagesCount:_entity.imagePath.count gapWidth:5];
                 
                 _broswerView.delegate = self;
+                //                [_postDetailCell.postImageView addSubview:_broswerView];
                 _postDetailCell.postImageViewConstraint.constant = _broswerView.bottom;
             }else{
                 _postDetailCell.postImageViewConstraint.constant = 0;
             }
         }
         
-        NSLog(@"+++ Cell 的高度 = %f , webView 的高度 = %ld ",[XKRWUtil getViewSize:_postDetailCell.contentView].height + 1,(long)webviewHeight);
         
         return [XKRWUtil getViewSize:_postDetailCell.contentView].height + 1;
         
@@ -851,6 +929,7 @@
 }
 
 - (void)fitCommentCell:(XKRWFitCommentCell *)fitCommentCell didReplyComment:(XKRWCommentEtity *)comment {
+    
     if (_entity.groupUserJoin || [self isMineNickName:_entity.userName]) {
         clickedCommentView = fitCommentCell.commentLabel;
         _seletCommentIndexs = @[fitCommentCell.selectIndexPath];
@@ -864,6 +943,7 @@
     } else {
         [self isJoinThisGroup];
     }
+    
 }
 
 
@@ -903,9 +983,11 @@
         [self.tipView showUpView:view titles:@[@"删除",@"复制"]];
     } else if (_entity.groupUserJoin) {
         [self.tipView showUpView:view titles:@[@"举报",@"复制"]];
+        
     } else {
         [self isJoinThisGroup];
     }
+    
 }
 
 - (void)deleteComment:(NSNumber *)comment_id {
@@ -936,50 +1018,19 @@
     }
 }
 
-#pragma  --mark UIWebViewdelegate
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [_postDetailCell updateConstraintsIfNeeded];
-    
-    webviewHeight = webView.scrollView.contentSize.height;
-    [_postTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
-    });
-    
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
-}
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
-    NSLog(@"%@",request.URL.absoluteString);
-    
-    NSLog(@"++++%@",request.URL.absoluteString);
-    if (webView.isLoading) {
-        return NO;
-    }
-    
-    if([request.URL.absoluteString rangeOfString:@"http"].location == NSNotFound){
-        XKRWNewWebView *webView = [[XKRWNewWebView alloc]init];
-        webView.contentUrl = request.URL.absoluteString;
-        webView.isFromPostDetail = YES;
-        [self.navigationController pushViewController:webView animated:YES];
-        return NO;
-    }
-    return YES;
-}
-
 #pragma  --mark  NetWork
 
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID
 {
-    [XKRWCui hideProgressHud];
     if([taskID isEqualToString:@"getPostDetail"]){
         _entity = (XKRWUserPostEntity *)result;
+        
+        if([_entity.textContent rangeOfString:@"href="].location != NSNotFound || [_entity.textContent rangeOfString:@"</p>"].location != NSNotFound){
+            _userWebViewShowContent = YES;
+        }else{
+            [XKRWCui hideProgressHud];
+        }
+        
         if(_entity.status == XKRWPostStatusDeleteByAdmin || _entity.status
            == XKRWPostStatusDeleteByUser){
             [self deletedView];
@@ -1130,17 +1181,15 @@
 
 - (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID
 {
-    [XKRWCui hideProgressHud];
     if (_refreshHeader.refreshing) {
         [_refreshHeader endRefreshing];
     } else if (_refreshFooter.refreshing) {
         [_refreshFooter endRefreshing];
     }
-    
     if([taskID isEqualToString:@"getPostDetail"]){
-        [XKRWCui showInformationHudWithText:@"加载帖子失败"];
+        [XKRWCui hideProgressHud];
+        [XKRWCui showInformationHudWithText:@"帖子加载失败..."];
     }
-    
     [super handleDownloadProblem:problem withTaskID:taskID];
 }
 

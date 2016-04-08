@@ -247,7 +247,7 @@ class XKRWBePraisedVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,MJRe
                 praiseCell!.praiseContentLabel.attributedText = XKRWUtil.createAttributeStringWithString("喜欢了你的帖子 " +  "《" + entity.content + "》", font: XKDefaultFontWithSize(14), color: XK_TEXT_COLOR, lineSpacing: 3.5, alignment: .Left)
             }
         }
-        praiseCell!.degreeImageView.setImageWithURL(NSURL(string: entity.userDegreeUrl), placeholderImage: nil)
+        praiseCell!.degreeImageView.setImageWithURL(NSURL(string: entity.userDegreeUrl), placeholderImage: nil,options:.RetryFailed)
         praiseCell!.userName.text =  entity.userNickName
         praiseCell!.headButton.layer.masksToBounds = true
         praiseCell!.headButton.layer.cornerRadius = 20

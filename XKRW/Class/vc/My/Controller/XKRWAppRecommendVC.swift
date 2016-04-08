@@ -51,7 +51,7 @@ class XKRWAppRecommendVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource {
         
         cell.appName.text = (appInfoArray.objectAtIndex(indexPath.row) as! XKRWAppRecommendModel).name
         cell.appDescribe.text  = (appInfoArray.objectAtIndex(indexPath.row) as! XKRWAppRecommendModel).appDescription
-        cell.headImageView.setImageWithURL(NSURL(string: (appInfoArray.objectAtIndex(indexPath.row) as! XKRWAppRecommendModel).img_path), placeholderImage: UIImage(named: "food_default"))
+        cell.headImageView.setImageWithURL(NSURL(string: (appInfoArray.objectAtIndex(indexPath.row) as! XKRWAppRecommendModel).img_path), placeholderImage: UIImage(named: "food_default"),options:.RetryFailed)
         
         return cell
     }

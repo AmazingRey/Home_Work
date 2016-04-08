@@ -263,7 +263,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         if entity.showType == "1"{
             bigImageAndTitleCell = tableView.dequeueReusableCellWithIdentifier("bigImageAndTitleCell") as? XKRWBigImageAndTitleCell
 
-            bigImageAndTitleCell?.imageButton!.setImageWithURL(NSURL(string: entity.bigImageUrl!),  forState: .Normal, placeholderImage:UIImage(named: "sport_detail_defalut"))
+            bigImageAndTitleCell?.imageButton!.setImageWithURL(NSURL(string: entity.bigImageUrl!),  forState: .Normal, placeholderImage:UIImage(named: "sport_detail_defalut"),options:.RetryFailed)
             bigImageAndTitleCell?.imageButton.tag = indexPath.section
             bigImageAndTitleCell?.imageButton.addTarget(self, action: "entryArticleButtonAction:", forControlEvents: .TouchUpInside)
             
@@ -292,7 +292,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             smallImageAndTitleCell?.timeLabel.text = entity.date!
             smallImageAndTitleCell?.titleLabel.text = entity.title!
             smallImageAndTitleCell?.readNumLabel.text = self.readNumToString(entity.pv)
-            smallImageAndTitleCell?.smallImageView?.setImageWithURL(NSURL(string:entity.smallImageUrl! ), placeholderImage: nil)
+            smallImageAndTitleCell?.smallImageView?.setImageWithURL(NSURL(string:entity.smallImageUrl! ), placeholderImage: nil ,options:.RetryFailed)
             smallImageAndTitleCell?.starImageView.hidden = false
             if(entity.starState == 0){
                 smallImageAndTitleCell?.starImageView.hidden = true
@@ -318,7 +318,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             smallImageAndTitleCell?.timeLabel.text = entity.date!
             smallImageAndTitleCell?.titleLabel.text = entity.title!
             smallImageAndTitleCell?.readNumLabel.text = self.readNumToString(entity.pv)
-            smallImageAndTitleCell?.smallImageView?.setImageWithURL(NSURL(string:entity.smallImageUrl! ), placeholderImage: nil)
+            smallImageAndTitleCell?.smallImageView?.setImageWithURL(NSURL(string:entity.smallImageUrl! ), placeholderImage: nil ,options:.RetryFailed)
             smallImageAndTitleCell?.starImageView.hidden = false
             if(entity.starState == 0){
                 smallImageAndTitleCell?.starImageView.hidden = true

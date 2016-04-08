@@ -148,7 +148,7 @@
     _entity = entity;
     
     [self.levelImageView setImageWithURL:[NSURL URLWithString:_entity.levelUrl]];
-    [self.iconBtn setImageWithURL:[NSURL URLWithString:_entity.iconUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"lead_nor"]];
+    [self.iconBtn setImageWithURL:[NSURL URLWithString:_entity.iconUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"lead_nor"] options:SDWebImageRetryFailed];
     self.timeLabel.text = _entity.timeShowStr;
     self.nameLabel.text = _entity.nameStr;
     self.declarationLabel.text = _entity.declaration;

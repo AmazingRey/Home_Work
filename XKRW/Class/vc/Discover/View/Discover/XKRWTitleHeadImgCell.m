@@ -84,7 +84,7 @@
         
     }
     [self.moreArticleBtn setBackgroundImage:[XKRWUtil createImageWithColor:XK_ASSIST_LINE_COLOR] forState:UIControlStateHighlighted];
-    [self.headImg setImageWithURL:[NSURL URLWithString:entity.smallImage] placeholderImage:nil];
+    [self.headImg setImageWithURL:[NSURL URLWithString:entity.smallImage] placeholderImage:nil options:SDWebImageRetryFailed];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

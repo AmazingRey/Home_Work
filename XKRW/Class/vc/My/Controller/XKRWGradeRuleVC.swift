@@ -146,7 +146,7 @@ class XKRWGradeRuleVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource {
                 ruleDetailCell.superRuleImageView.hidden = false
                 ruleDetailCell.ruleOneLabel.font = XKDefaultFontWithSize(14)
                 ruleDetailCell.ruleThreeLabel.font = XKDefaultFontWithSize(14)
-                ruleDetailCell.ruleImageView.setImageWithURL(NSURL(string:gradeImageArray.objectAtIndex(indexPath.row) as! String), placeholderImage: UIImage(named: "level_image"))
+                ruleDetailCell.ruleImageView.setImageWithURL(NSURL(string:gradeImageArray.objectAtIndex(indexPath.row) as! String), placeholderImage: UIImage(named: "level_image"),options:.RetryFailed)
             }
             
             ruleDetailCell.ruleOneLabel.text = gradeArray.objectAtIndex(indexPath.row) as? String

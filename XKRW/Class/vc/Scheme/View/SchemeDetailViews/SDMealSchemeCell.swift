@@ -54,7 +54,7 @@ class SDMealSchemeCell: UITableViewCell, UIScrollViewDelegate {
             let imageView = UIImageView(frame: CGRectMake(xPoint, 0, UI_SCREEN_WIDTH, self.scrollView.height))
             imageView.contentMode = .ScaleAspectFit
             
-            imageView.setImageWithURL(NSURL(string: url), placeholderImage:UIImage(named: "sportsdetails_normal"))
+            imageView.setImageWithURL(NSURL(string: url), placeholderImage:UIImage(named: "sportsdetails_normal"),options:.RetryFailed)
             
             self.scrollView.addSubview(imageView)
             xPoint += UI_SCREEN_WIDTH

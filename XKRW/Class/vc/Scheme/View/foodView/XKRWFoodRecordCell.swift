@@ -31,7 +31,7 @@ class XKRWFoodRecordCell: UITableViewCell {
     
     func setTitle(title: String, logoURL: String, clickDetail: (indexPath: NSIndexPath?)->(), clickRecord:(indexPath: NSIndexPath?)->()) -> Void {
         self.title.text = title
-        self.logo.setImageWithURL(NSURL(string: logoURL), placeholderImage: UIImage(named:"food_default"))
+        self.logo.setImageWithURL(NSURL(string: logoURL), placeholderImage: UIImage(named:"food_default"),options:.RetryFailed)
         self.clickDetail = clickDetail
         self.clickRecord = clickRecord
     }

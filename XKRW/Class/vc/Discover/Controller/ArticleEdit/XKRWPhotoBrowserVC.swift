@@ -188,7 +188,7 @@ class XKRWPhotoBrowserVC: XKRWBaseVC {
                 let view = UIImageView()
                 
                 weak var weakView = view
-                view.setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "share_photo_placeholder"), completed: { (img: UIImage!, error: NSError!, cacheType: SDImageCacheType) -> Void in
+                view.setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: "share_photo_placeholder"),options:.RetryFailed, completed: { (img: UIImage!, error: NSError!, cacheType: SDImageCacheType) -> Void in
                     
                     if img != nil {
                         weakView?.frame = CGRectMake(0, 0, self.scrollView.width, self.scrollView.height)

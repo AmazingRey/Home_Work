@@ -35,7 +35,7 @@ class SDSportSchemeCell: UITableViewCell {
                 
                 self.sportImageView.image = UIImage(named: "sport_detail_defalut")
             } else {
-                self.sportImageView.setImageWithURL(NSURL(string: entity.sportActionPic), placeholderImage: UIImage(named: "sport_detail_defalut"))
+                self.sportImageView.setImageWithURL(NSURL(string: entity.sportActionPic), placeholderImage: UIImage(named: "sport_detail_defalut"),options:.RetryFailed)
             }
         }
         

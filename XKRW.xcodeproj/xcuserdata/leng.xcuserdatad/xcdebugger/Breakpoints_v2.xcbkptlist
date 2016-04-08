@@ -166,31 +166,31 @@
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "XKRW.XKRWArticleEditVC.(saveAction (XKRW.XKRWArticleEditVC) -&gt; () -&gt; ()).(closure #1).(closure #1).(closure #1)"
+                  symbolName = "XKRW.XKRWArticleEditVC.(saveAction () -&gt; ()).(closure #1).(closure #1).(closure #1)"
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
-                  timestampString = "481544596.052742"
+                  timestampString = "481789642.439452"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
                   endingLineNumber = "145"
-                  offsetFromSymbolStart = "229">
+                  offsetFromSymbolStart = "224">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "XKRW.XKRWArticleEditVC.(saveAction (XKRW.XKRWArticleEditVC) -&gt; () -&gt; ()).(closure #1).(closure #1).(closure #1).(closure #1)"
+                  symbolName = "XKRW.XKRWArticleEditVC.(saveAction () -&gt; ()).(closure #1).(closure #1).(closure #1).(closure #1)"
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
-                  timestampString = "481544596.053306"
+                  timestampString = "481789642.439626"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
                   endingLineNumber = "145"
-                  offsetFromSymbolStart = "161">
+                  offsetFromSymbolStart = "158">
                </Location>
             </Locations>
          </BreakpointContent>

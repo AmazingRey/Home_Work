@@ -23,7 +23,7 @@
     NSArray *iconArray = @[_icon1,_icon2,_icon3];
     int count = iconArray.count >= array.count ? (int)array.count : 3;
     for (int i = 0; i < count; i++) {
-        [iconArray[i] setImageWithURL:[NSURL URLWithString:[array[i] iconUrl]] placeholderImage:[UIImage imageNamed:@"lead_nor"]];
+        [iconArray[i] setImageWithURL:[NSURL URLWithString:[array[i] iconUrl]] placeholderImage:[UIImage imageNamed:@"lead_nor"] options:SDWebImageRetryFailed];
     }
     
     _icon1.layer.borderColor = [UIColor whiteColor].CGColor;

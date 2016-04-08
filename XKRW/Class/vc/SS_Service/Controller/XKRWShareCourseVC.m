@@ -78,7 +78,7 @@
     
     _imageScrollView.delegate = self;
     
-    [_headImg setImageWithURL:[NSURL URLWithString:[[XKRWUserService sharedService]getUserAvatar ]] placeholderImage:[UIImage imageNamed:@"lead_nor"]];
+    [_headImg setImageWithURL:[NSURL URLWithString:[[XKRWUserService sharedService]getUserAvatar ]] placeholderImage:[UIImage imageNamed:@"lead_nor"] options:SDWebImageRetryFailed];
     
     _nickLabel.text = [[XKRWUserService sharedService]getUserNickName].length==0?@"昵称":[[XKRWUserService sharedService]getUserNickName];
     
@@ -189,7 +189,7 @@
         for (int i=0; i<_imageMutArray.count; i++) {
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(XKAppWidth*i, 0, XKAppWidth, _imageScrollView.height)];
             
-            [imageView setImageWithURL:[NSURL URLWithString:[_imageMutArray objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"sportsdetails_normal"]];
+            [imageView setImageWithURL:[NSURL URLWithString:[_imageMutArray objectAtIndex:i]] placeholderImage:[UIImage imageNamed:@"sportsdetails_normal"] options:SDWebImageRetryFailed];
             [_imageScrollView addSubview:imageView];
         }
         

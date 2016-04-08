@@ -1428,7 +1428,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                             cell.title.text = entity.foodName
                             cell.subtitle.text = "\(entity.foodEnergy)kcal/100g"
          
-                            cell.logoImageView.setImageWithURL(NSURL(string: entity.foodLogo), placeholderImage: UIImage(named:"food_default"))
+                            cell.logoImageView.setImageWithURL(NSURL(string: entity.foodLogo), placeholderImage: UIImage(named:"food_default"),options:.RetryFailed)
                             return cell
                         }
                     } else {
@@ -1455,7 +1455,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                             cell.title.text = entity.sportName
                             cell.subtitle.text = "\(XKRWAlgolHelper.sportConsumeWithTime(60, mets: entity.sportMets))kcal/60分钟"
 
-                            cell.logoImageView.setImageWithURL(NSURL(string: entity.sportActionPic), placeholderImage: UIImage(named:"food_default"))
+                            cell.logoImageView.setImageWithURL(NSURL(string: entity.sportActionPic), placeholderImage: UIImage(named:"food_default"),options:.RetryFailed)
                             
                             return cell
                         }
@@ -1483,7 +1483,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                         let entity = sportsArray[indexPath.row - 1]
                         cell.title.text = entity.sportName
                         cell.subtitle.text = "\(XKRWAlgolHelper.sportConsumeWithTime(60, mets: entity.sportMets))kcal/60分钟)"
-                        cell.logoImageView.setImageWithURL(NSURL(string: entity.sportActionPic), placeholderImage: UIImage(named:"food_default"))
+                        cell.logoImageView.setImageWithURL(NSURL(string: entity.sportActionPic), placeholderImage: UIImage(named:"food_default"),options:.RetryFailed)
                         
                         return cell
                     }

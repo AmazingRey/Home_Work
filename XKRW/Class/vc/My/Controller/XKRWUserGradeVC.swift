@@ -94,8 +94,8 @@ class XKRWUserGradeVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
             let gradeViewCell :XKRWGradeViewCell = tableView.dequeueReusableCellWithIdentifier("GradeView") as! XKRWGradeViewCell
             gradeViewCell.selectionStyle = .None
             
-            gradeViewCell.nowDegreeImageView.setImageWithURL(NSURL(string: (entity?.nowDegree)!), placeholderImage: UIImage(named: "level_image"))
-            gradeViewCell.nextDegreeImageView.setImageWithURL(NSURL(string: (entity?.nextDegree)!), placeholderImage: UIImage(named: "level_image"))
+            gradeViewCell.nowDegreeImageView.setImageWithURL(NSURL(string: (entity?.nowDegree)!), placeholderImage: UIImage(named: "level_image") ,options:.RetryFailed)
+            gradeViewCell.nextDegreeImageView.setImageWithURL(NSURL(string: (entity?.nextDegree)!), placeholderImage: UIImage(named: "level_image") ,options:.RetryFailed)
 
             gradeViewCell.degreeDescribeLabel.text = NSString(format: "已有%d%%的用户拥有此称号", (entity?.nowDegreeProgress)!) as String
             gradeViewCell.degreeDescribeLabel.setFontColor(XKMainSchemeColor, string: NSString(format: "%d%%", (entity?.nowDegreeProgress)!) as String)

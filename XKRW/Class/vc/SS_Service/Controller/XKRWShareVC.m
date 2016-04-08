@@ -296,7 +296,7 @@
             XKRWServiceIslimADDCell * cell = [tableView dequeueReusableCellWithIdentifier:@"islimADDCell" forIndexPath:indexPath];
             [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
             
-            [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil];
+            [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil options:SDWebImageRetryFailed];
             
             XKRWIslimAddModel __block * blockModel = model;
             __weak __typeof(self)weakSelf = self;
@@ -335,7 +335,7 @@
             XKRWServiceIslimADDCell * cell = [tableView dequeueReusableCellWithIdentifier:@"islimADDCell" forIndexPath:indexPath];
             [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
             
-            [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil];
+            [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil options:SDWebImageRetryFailed];
             
             XKRWIslimAddModel __block * blockModel = model;
             __weak __typeof(self)weakSelf = self;

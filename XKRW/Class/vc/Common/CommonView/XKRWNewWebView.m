@@ -77,16 +77,17 @@
         _shareURL = _contentUrl;
     }
     
-    if (![_contentUrl containsString:@"ssbuy.xikang.com"]) {
-        if ([_shareURL containsString:[[XKRWUserService sharedService] getToken]] || _isHidenRightNavItem || [_shareURL containsString:@"taobao.com"]) {
+    if ([_contentUrl rangeOfString:@"ssbuy.xikang.com"].location == NSNotFound) {
+        if ([_shareURL rangeOfString:[[XKRWUserService sharedService] getToken]].location != NSNotFound || _isHidenRightNavItem || [_shareURL rangeOfString:@"taobao.com"].location != NSNotFound) {
             self.isHidenRightNavItem = YES;
         } else {
             self.isHidenRightNavItem = NO;
         }
     }
+
     
-    if (!_showType && ![_contentUrl containsString:@"ssapi.xikang.com/static/go?"] && [_contentUrl rangeOfString:@"ssapi.xikang.com"].location != NSNotFound) {
-      
+    if (!_showType && [_contentUrl rangeOfString:@"ssapi.xikang.com/static/go?"].location == NSNotFound && [_contentUrl rangeOfString:@"ssapi.xikang.com"].location != NSNotFound) {
+        
         if ([_contentUrl rangeOfString:@"?"].location == NSNotFound) {
             _contentUrl = [NSString stringWithFormat:@"%@?token=%@", _contentUrl,[[XKRWUserService sharedService] getToken]];
         } else {

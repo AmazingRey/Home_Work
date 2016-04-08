@@ -205,7 +205,7 @@ class XKRWMyNoticeDetailVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource
                     titleCell.numLabel.text = "\(readNum)"
                     
                 }
-                titleCell.headImageView.setImageWithURL(NSURL(string: coverImageUrl), placeholderImage: UIImage(named: "share_photo_placeholder"))
+                titleCell.headImageView.setImageWithURL(NSURL(string: coverImageUrl), placeholderImage: UIImage(named: "share_photo_placeholder"),options:.RetryFailed)
                 return titleCell
             }
             

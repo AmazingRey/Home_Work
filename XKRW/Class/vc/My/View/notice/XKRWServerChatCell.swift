@@ -62,7 +62,7 @@ class XKRWServerChatCell: UITableViewCell {
                 rightArrowImageView.hidden = false
                 rightHeadImageView.hidden = false
                 rightContentLabel.text = msgModel.message
-                rightHeadImageView .setImageWithURL(NSURL(string: msgModel.imageUrl!), placeholderImage: nil)
+                rightHeadImageView .setImageWithURL(NSURL(string: msgModel.imageUrl!), placeholderImage: nil ,options:.RetryFailed)
                 rightContentLabel.preferredMaxLayoutWidth = UI_SCREEN_WIDTH - 140
             }else{
                 rightContentView.hidden = true
@@ -72,7 +72,7 @@ class XKRWServerChatCell: UITableViewCell {
                 leftArrowImageView.hidden = false
                 leftheadImageView.hidden = false
                 leftContentLabel.text = msgModel.message
-                leftheadImageView .setImageWithURL(NSURL(string: msgModel.imageUrl!), placeholderImage: nil)
+                leftheadImageView .setImageWithURL(NSURL(string: msgModel.imageUrl!), placeholderImage: nil ,options:.RetryFailed)
                 leftContentLabel.preferredMaxLayoutWidth = UI_SCREEN_WIDTH - 140
             }
             

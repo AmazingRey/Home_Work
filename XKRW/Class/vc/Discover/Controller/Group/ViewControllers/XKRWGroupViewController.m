@@ -940,7 +940,7 @@
     if (indexPath.section == 0) {
         
         GroupHeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([GroupHeaderCell class]) forIndexPath:indexPath];
-        [cell.headerImageView setImageWithURL:[NSURL URLWithString:self.groupItem.groupIcon] placeholderImage:nil];
+        [cell.headerImageView setImageWithURL:[NSURL URLWithString:self.groupItem.groupIcon] placeholderImage:nil options:SDWebImageRetryFailed];
         cell.groupName.text = self.groupItem.groupDescription;
         return cell;
         
@@ -1297,10 +1297,10 @@
         vc = [[XKRWNewWebView alloc] init];
         [(XKRWNewWebView *)vc setWebTitle:entity.title];
         [(XKRWNewWebView *)vc setContentUrl:entity.imgUrl];
-        BOOL isMall = [entity.imgUrl containsString:@"ssbuy.xikang.com"];
-        BOOL isShare = [entity.imgUrl containsString:@"share_url="];
-        if (isMall) {
-            if (isShare) {
+//        BOOL isMall = [entity.imgUrl containsString:@"ssbuy.xikang.com"];
+//        BOOL isShare = [entity.imgUrl containsString:@"share_url="];
+        if ([entity.imgUrl rangeOfString:@"ssbuy.xikang.com"].location != NSNotFound) {
+            if ([entity.imgUrl rangeOfString:@"share_url="].location != NSNotFound) {
                 NSRange range = [entity.imgUrl rangeOfString:@"share_url="];
                 [(XKRWNewWebView *)vc setShareURL:[entity.imgUrl substringFromIndex:(range.location + range.length)]];
                 

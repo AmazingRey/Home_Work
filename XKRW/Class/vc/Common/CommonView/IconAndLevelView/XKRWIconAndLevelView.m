@@ -38,7 +38,7 @@
     
     if (icon && ![icon isKindOfClass:[NSNull class]] && icon.length != 0) {
         [self.iconImageView setImageWithURL:[NSURL URLWithString:icon]
-                           placeholderImage:placeholder];
+                           placeholderImage:placeholder options:SDWebImageRetryFailed];
         
     } else {
         [self.iconImageView setImage:placeholder];

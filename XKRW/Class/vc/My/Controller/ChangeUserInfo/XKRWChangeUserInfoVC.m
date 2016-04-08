@@ -286,7 +286,7 @@
             
             
         }else{
-            [cell.degreeImageView setImageWithURL:[NSURL URLWithString:_entity.nowDegree] placeholderImage:nil];
+            [cell.degreeImageView setImageWithURL:[NSURL URLWithString:_entity.nowDegree] placeholderImage:nil options:SDWebImageRetryFailed];
         }
 
     }else{
@@ -296,7 +296,7 @@
                 cell.detailTextLabel.textColor = XKMainSchemeColor;
             }
         }else{
-            [cell.degreeImageView setImageWithURL:[NSURL URLWithString:_entity.nowDegree] placeholderImage:nil];
+            [cell.degreeImageView setImageWithURL:[NSURL URLWithString:_entity.nowDegree] placeholderImage:nil options:SDWebImageRetryFailed];
         }
     }
     return cell;

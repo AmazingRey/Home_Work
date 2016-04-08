@@ -121,12 +121,6 @@
     [nav navigationBarChangeFromTransparencyNavigationBarToDefaultNavigationBar];
 }
 
-//- (void)viewDidDisappear:(BOOL)animated
-//{
-//    [super viewDidDisappear:animated];
-//    XKRWNavigationController *nav = (XKRWNavigationController *)self.navigationController;
-//    [nav navigationBarChangeFromTransparencyNavigationBarToDefaultNavigationBar];
-//}
 
 - (void)initView{
     self.tableView = [[XKRWUITableViewBase alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight) style:UITableViewStylePlain];
@@ -142,7 +136,9 @@
     if (urlString && ![urlString isKindOfClass:[NSNull class]]) {
         [headerView.headerButton setImageWithURL:[NSURL URLWithString:urlString]
                                         forState:UIControlStateNormal
-                                placeholderImage:[UIImage imageNamed:@"lead_nor"]];
+         
+                                placeholderImage:[UIImage imageNamed:@"lead_nor"]
+                                         options:SDWebImageRetryFailed];
     } else {
         [headerView.headerButton setImage:[UIImage imageNamed:@"lead_nor"] forState:UIControlStateNormal];
     }
@@ -575,7 +571,8 @@
         if (urlString && ![urlString isKindOfClass:[NSNull class]]) {
             [headerView.headerButton setImageWithURL:[NSURL URLWithString:urlString]
                                             forState:UIControlStateNormal
-                                    placeholderImage:[UIImage imageNamed:@"lead_nor"]];
+                                    placeholderImage:[UIImage imageNamed:@"lead_nor"]
+                                             options:SDWebImageRetryFailed];
         } else {
             [headerView.headerButton setImage:[UIImage imageNamed:@"lead_nor"] forState:UIControlStateNormal];
         }
@@ -587,7 +584,7 @@
         NSString *urlString = [[XKRWUserService sharedService] getUserBackgroundImage];
         
         if (urlString && ![urlString isKindOfClass:[NSNull class]]) {
-            [headerView.backgroundImageView setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:nil];
+            [headerView.backgroundImageView setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:nil options:SDWebImageRetryFailed];
         }
     }
 }
@@ -628,7 +625,7 @@
         honorEntity.nowExperience = [[data objectForKey:@"score"] integerValue];
         honorEntity.nextDegreeExperience = [[data objectForKey:@"up"] integerValue];
         
-        [headerView.degreeImageView setImageWithURL:[NSURL URLWithString:honorEntity.nowDegree] placeholderImage:[UIImage imageNamed:@"level_image"]];
+        [headerView.degreeImageView setImageWithURL:[NSURL URLWithString:honorEntity.nowDegree] placeholderImage:[UIImage imageNamed:@"level_image"] options:SDWebImageRetryFailed];
     }
 }
 

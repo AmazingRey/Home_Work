@@ -134,7 +134,7 @@
     }
     
     ADModel* model = [_adlist objectAtIndex:index];
-    [view setImageWithURL:[NSURL URLWithString:model.banner_picture] placeholderImage:[UIImage imageNamed:@"me_bg"]];
+    [view setImageWithURL:[NSURL URLWithString:model.banner_picture] placeholderImage:[UIImage imageNamed:@"me_bg"] options:SDWebImageRetryFailed];
     return view;
 }
 

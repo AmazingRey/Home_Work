@@ -81,7 +81,7 @@ class KMImageBroswerView: UIView {
                     button.tag = tag++
                     button.imageView?.contentMode = .ScaleAspectFill
                     
-                    button.addTarget(self, action: "clickImageButton:", forControlEvents: .TouchUpInside)
+                    button.addTarget(self, action: #selector(KMImageBroswerView.clickImageButton(_:)), forControlEvents: .TouchUpInside)
                     
                     self.addSubview(button)
                     
@@ -91,7 +91,7 @@ class KMImageBroswerView: UIView {
                     } else {
                         url = NSURL(string: urlString + kNineThumb)!
                     }
-                    button.setImageWithURL(url, forState: .Normal, placeholderImage: UIImage(named: "share_photo_placeholder"))
+                    button.setImageWithURL(url, forState: .Normal, placeholderImage: UIImage(named: "share_photo_placeholder"),options:.RetryFailed)
                 }
                 self.height = yPoint + imageWidth
             }
@@ -101,7 +101,7 @@ class KMImageBroswerView: UIView {
                 
                 let button = UIButton(frame: CGRectMake(0, 0, self.width, imageHeight))
                 button.imageView?.contentMode = .ScaleAspectFill
-                button.addTarget(self, action: "clickImageButton:", forControlEvents: .TouchUpInside)
+                button.addTarget(self, action: #selector(KMImageBroswerView.clickImageButton(_:)), forControlEvents: .TouchUpInside)
                 
                 self.addSubview(button)
                 
@@ -111,7 +111,7 @@ class KMImageBroswerView: UIView {
                 } else {
                     url = NSURL(string: imageURLs.first! + kOneThumb)!
                 }
-                button.setImageWithURL(url, forState: .Normal, placeholderImage: UIImage(named: "share_cover_placeholder"), completed: { (image, error, cacheType) -> Void in
+                button.setImageWithURL(url, forState: .Normal, placeholderImage: UIImage(named: "share_cover_placeholder"), options:.RetryFailed ,completed: { (image, error, cacheType) -> Void in
                     if image != nil {
                         let ratio = imageHeight / image.size.height
                         let imageWidth = image.size.width * ratio < self.width ? image.size.width * ratio : self.width

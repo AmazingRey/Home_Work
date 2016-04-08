@@ -63,7 +63,7 @@
     self.userHeadView .layer.borderColor = [[UIColor whiteColor]CGColor];
     self.userHeadView .layer.borderWidth = 2 ;
     
-    [self.userHeadView  setImageWithURL:[NSURL URLWithString:[[XKRWUserService sharedService]getUserAvatar]] placeholderImage:[UIImage imageNamed:@"lead_nor"]];
+    [self.userHeadView  setImageWithURL:[NSURL URLWithString:[[XKRWUserService sharedService]getUserAvatar]] placeholderImage:[UIImage imageNamed:@"lead_nor"] options:SDWebImageRetryFailed];
     
     self.userNameLabel.text = [[XKRWUserService  sharedService]getUserNickName];
     self.houziImgView.image = [UIImage imageNamed:@"icon_301_2"];

@@ -99,13 +99,13 @@ static NSString *identifier1= @"searchCell";
     }
     if(!_searchType){
         XKRWSportEntity *entity = _dataMutArray[indexPath.row];
-        [searchCell.logoImageView setImageWithURL:[NSURL URLWithString:entity.sportActionPic] placeholderImage:[UIImage imageNamed:@"food_default"]];
+        [searchCell.logoImageView setImageWithURL:[NSURL URLWithString:entity.sportActionPic] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
         searchCell.title.text = entity.sportName;
         searchCell.subtitle.text = [NSString stringWithFormat:@"METS = %ld",(long)entity.sportMets];
 
     }else{
         XKRWFoodEntity *entity = _dataMutArray[indexPath.row];
-        [searchCell.logoImageView setImageWithURL:[NSURL URLWithString:entity.foodLogo] placeholderImage:[UIImage imageNamed:@"food_default"]];
+        [searchCell.logoImageView setImageWithURL:[NSURL URLWithString:entity.foodLogo] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
         searchCell.title.text = entity.foodName;
         searchCell.subtitle.text = [NSString stringWithFormat:@"%ldkcal/100g",(long)entity.foodEnergy];
         

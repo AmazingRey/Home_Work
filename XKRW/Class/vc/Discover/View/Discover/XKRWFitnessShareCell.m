@@ -71,7 +71,7 @@
         
         lookLabel.text = [self numberChangeToString:entity.articleViewNums];
         likeLabel.text = [self numberChangeToString:entity.bePraisedNum];
-        [_iconBtn setImageWithURL:[NSURL URLWithString:entity.headImageUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"lead_nor"]];
+        [_iconBtn setImageWithURL:[NSURL URLWithString:entity.headImageUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"lead_nor"]options:SDWebImageRetryFailed];
         [_levelImageView setImageWithURL:[NSURL URLWithString:entity.userDegreeImageUrl]];
         _nickName.text = entity.userNickname;
         _goalLabel.text = entity.manifesto;

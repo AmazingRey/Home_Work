@@ -223,7 +223,7 @@ NSString const * RefreshGroupLishNotice = @"refreshGroupLishNotice";
 
         XKRWGroupItem * item = __allGroupDataSource[indexPath.row - 1];
         cell.groupTitle.text = item.groupDescription;
-        [cell.groupheadImage setImageWithURL:[NSURL URLWithString:item.groupIcon] placeholderImage:nil];
+        [cell.groupheadImage setImageWithURL:[NSURL URLWithString:item.groupIcon] placeholderImage:nil options:SDWebImageRetryFailed];
         cell.groupNameLabel.text = item.groupName;
         cell.groupMemberCount.text = [NSString stringWithFormat:@"人数:%@人",item.groupNum];
 

@@ -37,7 +37,7 @@
     }
     
     ranking.text = [NSString stringWithFormat:@"%d",(int)rankNum + 1];
-    [iconImageView setImageWithURL:[NSURL URLWithString:entity.iconUrl] placeholderImage:[UIImage imageNamed:@"lead_nor"]];
+    [iconImageView setImageWithURL:[NSURL URLWithString:entity.iconUrl] placeholderImage:[UIImage imageNamed:@"lead_nor"]options:SDWebImageRetryFailed];
     [levelImageView setImageWithURL:[NSURL URLWithString:entity.levelUrl]];
     nickName.text = entity.nickName;
     likeNum.text = [NSString stringWithFormat:@"%ld",(long)entity.beLikedNum];

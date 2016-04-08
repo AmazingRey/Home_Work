@@ -101,15 +101,15 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
     
     func setHeaderViewData(entity:XKRWUserInfoShowEntity){
         if(entity.avatar.characters.count > 0){
-            headView.headerButton?.setImageWithURL(NSURL(string: entity.avatar), forState: .Normal, placeholderImage: nil)
+            headView.headerButton?.setImageWithURL(NSURL(string: entity.avatar), forState: .Normal, placeholderImage: nil ,options:.RetryFailed)
             headView.headerButton?.layer.masksToBounds = true
             headView.headerButton?.layer.cornerRadius = 39
         }
         if(entity.level.characters.count > 0){
-            headView.degreeImageView?.setImageWithURL(NSURL(string: entity.level), placeholderImage: UIImage(named: "level_image"))
+            headView.degreeImageView?.setImageWithURL(NSURL(string: entity.level), placeholderImage: UIImage(named: "level_image") ,options:.RetryFailed)
         }
         if(entity.backgroundUrl.characters.count > 0){
-            headView.backgroundImageView?.setImageWithURL(NSURL(string: entity.backgroundUrl), placeholderImage: nil)
+            headView.backgroundImageView?.setImageWithURL(NSURL(string: entity.backgroundUrl), placeholderImage: nil ,options:.RetryFailed)
         }
     
         if(entity.sex == eSexFemale){

@@ -46,7 +46,8 @@
 -(void)addTouchWindowEvent{
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];
     singleTap.numberOfTapsRequired = 1;
-    [[UIApplication sharedApplication].keyWindow addGestureRecognizer:singleTap];
+    [self.view addGestureRecognizer:singleTap];
+//    [[UIApplication sharedApplication].keyWindow addGestureRecognizer:singleTap];
 }
 
 #pragma --mark UI

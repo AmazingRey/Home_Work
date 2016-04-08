@@ -534,7 +534,7 @@
                     } else {
                         url = [NSURL URLWithString:self.articleEntity.mainPicturePath];
                     }
-                    [cell.coverImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"share_cover_placeholder"]];
+                    [cell.coverImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"share_cover_placeholder"] options:SDWebImageRetryFailed];
                 }
                 return cell;
                 

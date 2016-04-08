@@ -64,7 +64,7 @@
     layer.shouldRasterize = YES;
     
     //设置食物Logo
-    [logoIV setImageWithURL:[NSURL URLWithString:_foodEntity.foodLogo] placeholderImage:[UIImage imageNamed:@"food_default"]];
+    [logoIV setImageWithURL:[NSURL URLWithString:_foodEntity.foodLogo] placeholderImage:[UIImage imageNamed:@"food_default"]options:SDWebImageRetryFailed];
 
     [self addSubview:logoIV];
     

@@ -523,7 +523,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
                 }else{
                 
                     let teamCell = self.teamCellFormDequeueReusableCell(tableView)
-                    teamCell.teamImageView.setImageWithURL(NSURL(string: teamArray[indexPath.row - 1].groupIcon), placeholderImage: nil)
+                    teamCell.teamImageView.setImageWithURL(NSURL(string: teamArray[indexPath.row - 1].groupIcon), placeholderImage: nil ,options:.RetryFailed)
                     teamCell.teamNameLabel.text = teamArray[indexPath.row - 1].groupName
                     teamCell.teamDescribleLabel.text = teamArray[indexPath.row - 1].groupDescription
                     
@@ -573,7 +573,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
                 }else{
                     
                     let teamCell = self.teamCellFormDequeueReusableCell(tableView)
-                    teamCell.teamImageView.setImageWithURL(NSURL(string: teamArray[indexPath.row - 1].groupIcon), placeholderImage: nil)
+                    teamCell.teamImageView.setImageWithURL(NSURL(string: teamArray[indexPath.row - 1].groupIcon), placeholderImage: nil ,options:.RetryFailed)
                     teamCell.teamNameLabel.text = teamArray[indexPath.row - 1].groupName
                     teamCell.teamDescribleLabel.text = teamArray[indexPath.row - 1].groupDescription
                     
