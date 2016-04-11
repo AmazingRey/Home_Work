@@ -54,7 +54,7 @@ static XKRWAppCommentUtil *shareInstance;
         NSString *string = @"itms-apps://itunes.apple.com/app/id622478622" ;
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
         NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-        NSString *key = [NSString stringWithFormat:@"Ver_%@_%ld",version,[[XKRWUserService sharedService] getUserId]];
+        NSString *key = [NSString stringWithFormat:@"Ver_%@_%ld",version,(long)[[XKRWUserService sharedService] getUserId]];
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -64,10 +64,10 @@ static XKRWAppCommentUtil *shareInstance;
 - (void)setEntryPageTimeWithPage:(NSString *)pageName{
     
     NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    NSString *key = [NSString stringWithFormat:@"Ver_%@_%ld",version,[[XKRWUserService sharedService] getUserId]];
+    NSString *key = [NSString stringWithFormat:@"Ver_%@_%ld",version,(long)[[XKRWUserService sharedService] getUserId]];
     
     if (![[NSUserDefaults standardUserDefaults] boolForKey:key]) {
-        NSString *key = [NSString stringWithFormat:@"%@_%ld",pageName,[[XKRWUserService sharedService] getUserId]];
+        NSString *key = [NSString stringWithFormat:@"%@_%ld",pageName,(long)[[XKRWUserService sharedService] getUserId]];
         id value = [[NSUserDefaults standardUserDefaults] objectForKey:key];
         
         NSInteger count = 0;

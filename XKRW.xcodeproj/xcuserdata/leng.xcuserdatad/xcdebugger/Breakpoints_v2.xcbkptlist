@@ -170,7 +170,7 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
-                  timestampString = "481802947.668392"
+                  timestampString = "481803841.403264"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
@@ -185,7 +185,7 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
-                  timestampString = "481802947.668608"
+                  timestampString = "481803841.403404"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
@@ -336,22 +336,6 @@
             startingLineNumber = "120"
             endingLineNumber = "120"
             landmarkName = "-popView"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Common/CommonVC/surroundAndWeight/XKRWSurroundDegreeVC.m"
-            timestampString = "480997360.205187"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "829"
-            endingLineNumber = "829"
-            landmarkName = "-handleDataWithTempMutArray:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

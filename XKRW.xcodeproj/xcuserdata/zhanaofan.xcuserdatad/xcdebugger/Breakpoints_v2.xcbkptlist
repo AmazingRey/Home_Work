@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XKRW/Class/service/XKRWUserService.m"
-            timestampString = "481776648.75059"
+            timestampString = "482059275.920475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1017"
-            endingLineNumber = "1017"
+            startingLineNumber = "1016"
+            endingLineNumber = "1016"
             landmarkName = "-getUserAllInfoFromRemoteServerByToken:"
             landmarkType = "5">
          </BreakpointContent>

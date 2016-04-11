@@ -28,7 +28,6 @@
     if (self) {
         
         _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
-        _eatEnergyCircle.backgroundColor = [UIColor orangeColor];
         _eatEnergyCircle.tag = 1;
         [self addSubview:_eatEnergyCircle];
         

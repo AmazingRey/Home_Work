@@ -11,7 +11,6 @@
 #import "XKRWFatReasonService.h"
 #import "XKRWAlgolHelper.h"
 #import "XKRWWeightService.h"
-#import "XKRWAlarmService5_1.h"
 #import "XKRWCityControlService.h"
 #import "XKRWCommHelper.h"
 #import "XKCuiUtil.h"
@@ -1236,7 +1235,7 @@ static BOOL canUpdatePlan = YES;
     [XKRWUserDefaultService setLogin:NO];
     [XKRWUserDefaultService setStepForNewUser:nil];
     [[XKRWUserService sharedService] setUserId:0];
-    [[XKRWAlarmService5_1 shareService] cancelAllAlarm];
+    [[XKRWLocalNotificationService shareInstance] cancelAllAlarm];
 }
 
 /*

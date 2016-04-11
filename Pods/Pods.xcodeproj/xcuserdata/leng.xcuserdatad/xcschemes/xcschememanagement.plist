@@ -4,49 +4,45 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AFNetworking.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 		<key>YYImage.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>pop.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0E15C1E2E80603516D427DF2663D44AD</key>
+		<key>2E8561D49C9CD929C004422BB408C7D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7EC2A95DCD367DFEEFF114831B437160</key>
+		<key>410B25DF16EA5C5B3E2698F74F9625FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8391CE7DE5D120327DA6245F4AAB5EFF</key>
+		<key>85B6799C0C62D8BE47BDA8CB9FD89C51</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D66F98BA3E1AFD41B5CFA15B1CC7C53E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EAA66F90257E6B124921B7F494D134F0</key>
+		<key>EDCA175D607519844FA5FC68E7517947</key>
 		<dict>
 			<key>primary</key>
 			<true/>

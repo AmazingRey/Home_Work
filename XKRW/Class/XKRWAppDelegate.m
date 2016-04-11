@@ -13,8 +13,7 @@
 #import "XKConfigUtil.h"
 #import "XKRWCommHelper.h"
 #import "NSDate+Helper.h"
-#import "XKRWAlarmService5_1.h"
-#import "XKRWSchemeNotificationService.h"
+#import "XKRWLocalNotificationService.h"
 #import "XKRWBaseVC.h"
 #import "LRatingRemaindTool.h"
 #import "WXApi.h"
@@ -66,7 +65,7 @@
     
     //判断系统是否禁音，闹钟铃声是否与当前时间相等
     BOOL isSilence = [[AVAudioSession sharedInstance] setActive:YES error:nil];
-    BOOL check = [[XKRWAlarmService5_1 shareService] checkAlarmWithHour:dicTemp[@"hour"]
+    BOOL check = [[XKRWLocalNotificationService shareInstance] checkAlarmWithHour:dicTemp[@"hour"]
                                                                  andMin:dicTemp[@"minutes"]];
     SystemSoundID soundID = 1002;
 
@@ -87,7 +86,7 @@
         }];
         
     } else {
-        [XKRWSchemeNotificationService cancelLocalNotification:@"alertBody" value:[notification.userInfo valueForKey:@"alertBody"]];
+        [XKRWLocalNotificationService cancelLocalNotification:@"alertBody" value:[notification.userInfo valueForKey:@"alertBody"]];
     }
 }
 

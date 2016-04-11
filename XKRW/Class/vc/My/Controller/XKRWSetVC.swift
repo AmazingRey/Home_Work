@@ -78,7 +78,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
             switchCell?.selectionStyle = .None
             switchCell!.label.text = dataArray[indexPath.section][0] as? String
             switchCell!.passwordSwithBtn.addTarget(self, action: "closeAllAlertValueChanged:", forControlEvents: .TouchUpInside)
-            if(XKRWAlarmService5_1.shareService().haveEnabledNotice()){
+            if(XKRWLocalNotificationService.shareInstance().haveEnabledNotice()){
                 switchCell!.passwordSwithBtn.setOn(true, animated: true)
             }else{
                 switchCell!.passwordSwithBtn.setOn(false, animated: true)
@@ -195,7 +195,6 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
         }
     }
     
-
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 3{
@@ -225,7 +224,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
     }
     
     func closeAllAlertValueChanged(_switch:UISwitch)->(){
-        let alartArray:NSMutableArray =  XKRWAlarmService5_1.shareService().getAllNotice()
+        let alartArray:NSMutableArray =  XKRWLocalNotificationService.shareInstance().getAllNotice()
         
         if(alartArray.count == 0){
             XKRWCui.showInformationHudWithText("未设置提醒")
@@ -246,7 +245,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
                 entity.enabled = 1
             }
         }
-        let isSuccess:Bool = XKRWAlarmService5_1.shareService().updateNotice(alartArray as [AnyObject])
+        let isSuccess:Bool = XKRWLocalNotificationService.shareInstance().updateNotice(alartArray as [AnyObject])
         if (isSuccess) {
             XKRWCui.showInformationHudWithText("保存成功")
             NSNotificationCenter.defaultCenter().postNotificationName("SCHEME_RELOAD_NOTICE", object: nil)

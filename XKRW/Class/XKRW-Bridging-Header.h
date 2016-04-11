@@ -75,7 +75,8 @@
 #import "UMSocialSnsPlatformManager.h"
 #import "UMSocialQQHandler.h"
 
-#import "XKRWAlarmService5_1.h"
+//#import "XKRWAlarmService5_1.h"
+#import "XKRWLocalNotificationService.h"
 #import "XKRWAlarmVC.h"
 #import "XKRWShareCourseVC.h"
 #import "XKRWMoreSearchResultVC.h"
@@ -163,7 +164,6 @@
 #import "XKRWPKVC.h"
 #import "XKRWAppDelegate.h"
 #import "XKRWInputBoxView.h"
-#import "XKRWSchemeNotificationService.h"
 #import "XKRWArticleWebView.h"
 #import "XKRWLikeVC.h"
 #import "XKRWAppCommentUtil.h"

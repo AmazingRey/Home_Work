@@ -171,20 +171,26 @@
 
 - (void)setUserDataAction:(UIButton *)button {
 
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = self.view.bounds;
+    [btn addTarget:self action:@selector(removePullView:) forControlEvents:UIControlEventTouchDown];
     if (_pullView == nil) {
+        
         _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, 80, 90)];
         CGPoint center = button.center;
         center.x = XKAppWidth - _pullView.frame.size.width/2 - 15;
         center.y = button.center.y + button.frame.size.height + _pullView.frame.size.height/2+foodAndSportSearchBar.frame.size.height;
         _pullView.center = center;
-        [self.view addSubview:_pullView];
+        [btn addSubview:_pullView];
         _pullView.alpha = 0;
         _pullView.delegate = self;
+        
+        [self.view addSubview:btn];
     }
-    [self removePullView];
+    [self removePullView:btn];
 }
 
--(void)removePullView{
+-(void)removePullView:(UIButton *)button{
     if (_pullView.alpha == 0) {
         [UIView animateWithDuration:.3 animations:^{
             _pullView.alpha = 1;
@@ -193,6 +199,7 @@
         [UIView animateWithDuration:.3 animations:^{
             _pullView.alpha = 0;
         }completion:^(BOOL finished) {
+            [button removeFromSuperview];
             [_pullView removeFromSuperview];
             _pullView = nil;
         }];

@@ -9,7 +9,7 @@
 #import "XKRWAlarmVC.h"
 #import "XKRWAlarmCell.h"
 #import "DatePickerView.h"
-#import "XKRWAlarmService5_1.h"
+#import "XKRWLocalNotificationService.h"
 #import "XKRWCui.h"
 
 @interface XKRWAlarmVC ()<UITableViewDataSource,UITableViewDelegate,DatePickerViewDelegate>
@@ -67,7 +67,7 @@
     
     if (self.isUpdate) {
 
-        BOOL isSuccess = [[XKRWAlarmService5_1 shareService] updateNotice:_alarmEntityArray];
+        BOOL isSuccess = [[XKRWLocalNotificationService shareInstance] updateNotice:_alarmEntityArray];
         if (isSuccess) {
             [XKRWCui showInformationHudWithText:@"保存成功"];
         }else{
@@ -97,21 +97,21 @@
         case eAlarmExercise:
             [_itemsLabelArray addObject:@"运动"];
             [_pickerTitleArray addObject:@"运动时间"];
-            entity0 = [[XKRWAlarmService5_1 shareService] getAlarmWithType:eAlarmExercise];
+            entity0 = [[XKRWLocalNotificationService shareInstance] getAlarmWithType:eAlarmExercise];
             break;
         case eAlarmBreakfast:
             [_itemsLabelArray addObjectsFromArray:@[@"早餐",@"午餐",@"晚餐"]];
             [_pickerTitleArray addObjectsFromArray:@[@"早餐时间",@"午餐时间",@"晚餐时间"]];
-            entity1 = [[XKRWAlarmService5_1 shareService] getAlarmWithType:eAlarmBreakfast];
+            entity1 = [[XKRWLocalNotificationService shareInstance] getAlarmWithType:eAlarmBreakfast];
             [_alarmEntityArray addObject:entity1];
-            entity2 = [[XKRWAlarmService5_1 shareService] getAlarmWithType:eAlarmLunch];
+            entity2 = [[XKRWLocalNotificationService shareInstance] getAlarmWithType:eAlarmLunch];
             [_alarmEntityArray addObject:entity2];
-            entity0 = [[XKRWAlarmService5_1 shareService] getAlarmWithType:eAlarmDinner];
+            entity0 = [[XKRWLocalNotificationService shareInstance] getAlarmWithType:eAlarmDinner];
             break;
         case eAlarmHabit:
             [_itemsLabelArray addObject:@"习惯"];
             [_pickerTitleArray addObject:@"习惯时间"];
-            entity0 = [[XKRWAlarmService5_1 shareService] getAlarmWithType:eAlarmHabit];
+            entity0 = [[XKRWLocalNotificationService shareInstance] getAlarmWithType:eAlarmHabit];
             break;
         default:
             break;

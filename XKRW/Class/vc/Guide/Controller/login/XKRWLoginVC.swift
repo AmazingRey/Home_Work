@@ -151,7 +151,7 @@ class XKRWLoginVC: XKRWBaseVC {
         // 返回
         if !self.isPresent {
             if XKRWAlgolHelper.expectDayOfAchieveTarget() != nil {
-                XKRWSchemeNotificationService.shareService().registerLocalNotification()
+                XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
             }
 
             if (self.navigationController?.tabBarController != nil) {
@@ -239,7 +239,7 @@ class XKRWLoginVC: XKRWBaseVC {
             if !self.isPresent {
                 
                 if XKRWAlgolHelper.expectDayOfAchieveTarget() != nil {
-                    XKRWSchemeNotificationService.shareService().registerLocalNotification()
+                    XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
                 }
 
                 if (self.navigationController?.tabBarController != nil){

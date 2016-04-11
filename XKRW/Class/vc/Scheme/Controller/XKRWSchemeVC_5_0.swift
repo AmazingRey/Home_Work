@@ -84,12 +84,12 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
         
        
         
-        XKRWSchemeNotificationService .shareService().registerLocalNotification();
+        XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
         
         //新用户登录的时候 
         if(NSUserDefaults.standardUserDefaults().boolForKey("NewUserLogin")){
             let uid = "\(XKRWUserDefaultService.getCurrentUserId())"
-            XKRWSchemeNotificationService.cancelAllLocalNotificationExcept("uid", value: uid)
+            XKRWLocalNotificationService.cancelAllLocalNotificationExcept("uid", value: uid)
             NSUserDefaults.standardUserDefaults().setBool(false, forKey: "NewUserLogin")
         }
 
@@ -257,7 +257,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                         
                         //设置默认闹钟
                         dispatch_async(dispatch_get_global_queue(0, 0), { () -> Void in
-                            XKRWAlarmService5_1().defaultAlarmSetting()
+                            XKRWLocalNotificationService.shareInstance().defaultAlarmSetting()
                         })
                         
                         if (versionString as NSString).floatValue >= 5.0 {
@@ -1257,7 +1257,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                     let cell: XKRWNoticeEntryCell = tableView.dequeueReusableCellWithIdentifier("noticeCell") as! XKRWNoticeEntryCell
                     var desc: String = "关"
                     
-                    if XKRWAlarmService5_1.shareService().haveEnabledNotice(AlarmType(6)) {
+                    if XKRWLocalNotificationService.shareInstance().haveEnabledNotice(AlarmType(6)) {
                         desc = "开"
                     }
                     cell.setTitle("运动提醒", descripton: desc)
@@ -1366,9 +1366,9 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                     // Meal Notice Cell
                     let cell: XKRWNoticeEntryCell = tableView.dequeueReusableCellWithIdentifier("noticeCell") as! XKRWNoticeEntryCell
                     var desc: String = "开"
-                    if (XKRWAlarmService5_1.shareService().haveEnabledNotice(AlarmType(2)) ||
-                        XKRWAlarmService5_1.shareService().haveEnabledNotice(AlarmType(3)) ||
-                        XKRWAlarmService5_1.shareService().haveEnabledNotice(AlarmType(4))) {
+                    if (XKRWLocalNotificationService.shareInstance().haveEnabledNotice(AlarmType(2)) ||
+                        XKRWLocalNotificationService.shareInstance().haveEnabledNotice(AlarmType(3)) ||
+                        XKRWLocalNotificationService.shareInstance().haveEnabledNotice(AlarmType(4))) {
                         desc = "开"
                     } else {
                         desc = "关"
@@ -1391,7 +1391,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                     // Habit Notice
                     let cell: XKRWNoticeEntryCell = tableView.dequeueReusableCellWithIdentifier("noticeCell") as! XKRWNoticeEntryCell
                     var desc: String = "开"
-                    if XKRWAlarmService5_1.shareService().haveEnabledNotice(AlarmType(8)) {
+                    if XKRWLocalNotificationService.shareInstance().haveEnabledNotice(AlarmType(8)) {
                         desc = "开"
                     } else {
                         desc = "关"

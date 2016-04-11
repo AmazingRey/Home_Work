@@ -9,8 +9,22 @@
 #import "XKRWShowEnergy_5_3View.h"
 
 @implementation XKRWShowEnergy_5_3View
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+//        self = LOAD_VIEW_FROM_BUNDLE(@"XKRWPlan_5_3View");
+        
+    }
+    return self;
+}
+
 -(instancetype)initWithCoder:(NSCoder *)aDecoder{
     if (self = [super initWithCoder:aDecoder]) {
+        _firstCircleView.backgroundColor = [UIColor greenColor];
+        _secondCircleView.backgroundColor = [UIColor redColor];
+        _thridCircleView.backgroundColor = [UIColor redColor];
         
     }
     return self;

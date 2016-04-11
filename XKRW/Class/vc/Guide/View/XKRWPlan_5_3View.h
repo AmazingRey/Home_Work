@@ -23,7 +23,7 @@ typedef NS_ENUM(int, PlanType) {
 @property (strong, nonatomic) IBOutlet UIImageView *tipsImg;
 @property (weak, nonatomic) IBOutlet UILabel *tipsLab;
 @property (strong, nonatomic) IBOutlet UILabel *calTypeLab;
-@property (weak, nonatomic) IBOutlet UIView *fuseView;
+@property (strong, nonatomic) IBOutlet UIView *fuseView;
 
 
 @property (assign, nonatomic) enum PlanType type;
