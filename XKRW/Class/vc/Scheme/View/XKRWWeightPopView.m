@@ -10,7 +10,16 @@
 @implementation XKRWWeightPopView{
     BOOL isInit;
 }
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+    }
+    return self;
+}
 
+-(void)awakeFromNib{
+    
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -36,37 +45,162 @@
         _iCarouselView.scrollSpeed = .5;
         _iCarouselView.currentItemIndex = 0;
         
+        _recordDates = [[XKRWRecordService4_0 sharedService] getUserRecordDateFromDB];
+        
+        _calendar = [[XKRWCalendar alloc] initWithOrigin:CGPointMake(-50, 44) recordDateArray:_recordDates headerType:XKRWCalendarHeaderTypeSimple andResizeBlock:^{
+            
+        }];
+        CGRect frame = _calendar.frame;
+//        frame.size.width -= 100;
+        _calendar.frame = frame;
+        [_calendar addBackToTodayButtonInFooterView];
+        _calendar.delegate = self;
+        [_calendar reloadCalendar];
+        
+        UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapdateLabel)];
+        _dateLabel.userInteractionEnabled = YES;
+        [_dateLabel addGestureRecognizer:tapgesture];
+        
+        _selectedDate = [NSDate date];
+        _dateLabel.text = [_selectedDate stringWithFormat:@"MM月dd日"];
+        
+        NSMutableDictionary *tmpDic = [NSMutableDictionary dictionary];
+        _dicAll = tmpDic;
+        
+        _textField.delegate = self;
     }
     return self;
 }
 
--(id)initWithCoder:(NSCoder *)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder]) {
+-(void)setSelectedDate:(NSDate *)selectedDate{
+    if (_selectedDate != selectedDate) {
+        _selectedDate = selectedDate;
+        _dateLabel.text = [selectedDate stringWithFormat:@"MM月dd日"];
     }
-    return self;
 }
 
--(void)awakeFromNib{
+#pragma -mark calender module & Delegate method
+-(void)tapdateLabel{
+    [self showCalendar:!_isCalendarShown];
+}
+
+-(void)hideCalendar:(UIButton *)sender{
+    [self showCalendar:false];
+    [sender removeFromSuperview];
+}
+
+- (void)calendarSelectedDate:(NSDate *)date{
+    if ([self checkSelectedDate:date]) {
+        [self reloadReocrdOfDay:date];
+    }
+    [self showCalendar:NO];
+}
+
+-(void)showCalendar:(BOOL)isShowCalendar{
+    _isCalendarShown = isShowCalendar;
+   
+    if (isShowCalendar) {
+        [MobClick event:@"clk_calendar"];
+         [_textField resignFirstResponder];
+        _calendarDisplayDate = _selectedDate;
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = [UIApplication sharedApplication].keyWindow.bounds;
+        [btn addTarget:self action:@selector(hideCalendar:) forControlEvents:UIControlEventTouchUpInside];
+        btn.tag = 103268;
+        [self addSubview:btn];
+//        self.userInteractionEnabled = NO;
+        
+        _calendar.alpha = 0;
+        [self addSubview:_calendar];
+        [UIView animateWithDuration:.3 animations:^{
+            self.calendar.alpha = 1;
+        }];
+    }else{
+//        self.userInteractionEnabled = YES;
+         [_textField becomeFirstResponder];
+        UIButton *button = [self viewWithTag:103268];
+        if (button) {
+            [button removeFromSuperview];
+        }
+        [UIView animateWithDuration:.3 animations:^{
+            self.calendar.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self.calendar removeFromSuperview];
+        }];
+    }
+}
+
+-(BOOL)checkSelectedDate:(NSDate *)date{
+    if ([date originTimeOfADay] > [[NSDate date] originTimeOfADay]) {
+        [XKRWCui showInformationHudWithText:@"不能查看今天以后的日期哦~"];
+        return false;
+    }
     
+    NSTimeInterval regDateInterval = [[NSDate dateFromString:[[XKRWUserService sharedService] getREGDate] withFormat:@"yyyy-MM-dd"] timeIntervalSince1970];
+    
+    if ([date originTimeOfADay] < regDateInterval) {
+        
+        [self.calendar outerSetSelectedDate:self.selectedDate andNeedReload:false];
+        
+        [XKRWCui showInformationHudWithText:@"不能查看注册以前的日期哦~"];
+        return false;
+    }
+    return true;
 }
 
-#pragma btnsure  &  btncancle
+-(void)reloadReocrdOfDay:(NSDate *)date{
+    self.selectedDate = date;
+    [XKTaskDispatcher downloadWithTaskID:@"getAllRecord" task:^{
+        self.schemeReocrds = (XKRWRecordSchemeEntity *)[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:self.selectedDate];
+        self.oldRecord = (XKRWRecordEntity4_0 *)[[XKRWRecordService4_0 sharedService] getAllRecordOfDay:self.selectedDate];
+    }];
+}
+- (IBAction)actBefore:(id)sender {
+    if (_selectedDate) {
+        NSDate *dateBefore = [_selectedDate offsetDay:-1];
+        if ([self checkSelectedDate:dateBefore]) {
+            [self reloadReocrdOfDay:dateBefore];
+            [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
+        }
+    }
+}
+
+- (IBAction)actLater:(id)sender {
+    if (_selectedDate) {
+        NSDate *dateAfter = [_selectedDate offsetDay:1];
+        if ([self checkSelectedDate:dateAfter]) {
+            [self reloadReocrdOfDay:dateAfter];
+            [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
+        }
+    }
+}
+
+#pragma -mark carousel module & Delegate method
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
 {
+    
     carousel.currentItemIndex = index;
 //    [carousel scrollToItemAtIndex:index duration:10.0f];
     [carousel scrollToItemAtIndex:index animated:YES];
+    [_textField resignFirstResponder];
+    NSMutableDictionary *tmpDic = [NSMutableDictionary dictionary];
+    tmpDic = [_dicAll objectForKey:_selectedDate];
+    NSString *str = [tmpDic objectForKey:_arrLabels[index]];
+    if (str && ![str isEqualToString:@""]) {
+        _textField.text = str;
+    }
     NSLog(@"🐅%ld",(long)index);
 }
 
 - (void)carouselDidScroll:(iCarousel *)carousel{
     
 }
+
 - (BOOL)carousel:(iCarousel *)carousel shouldSelectItemAtIndex:(NSInteger)index{
     return YES;
 }
+
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
     for (UIView *item in carousel.visibleItemViews) {
         for (UILabel *lab in item.subviews) {
@@ -162,7 +296,16 @@
     }
 }
 
+#pragma -mark textfiled delegate
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField;{
+    
+}
+
+#pragma -mark sure btn & cancle btn
 - (IBAction)pressCancle:(id)sender {
     if ([self.delegate respondsToSelector:@selector(pressPopViewCancle)]) {
         [self.delegate pressPopViewCancle];
@@ -177,10 +320,4 @@
     }
 }
 
-- (IBAction)actBefore:(id)sender {
-    
-}
-
-- (IBAction)actLater:(id)sender {
-}
 @end

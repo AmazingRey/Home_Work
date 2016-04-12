@@ -77,17 +77,15 @@
 - (void)showSearchResultView {
     
 //    [[UIApplication sharedApplication].keyWindow addSubview:self.backgroundView];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+ //   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     
     [self.contentsController.view addSubview:self.backgroundView];
     
     [self.searchBar setShowsCancelButton:YES animated:YES];
     
     if (self.navigationController ) {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        
+ 
         if (!self.navigationController.tabBarController.tabBar.isHidden) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"hideTabbar" object:nil];
             self.needHideTabbar = YES;
             self.navigationController.tabBarController.tabBar.hidden = YES;
         }
@@ -106,7 +104,7 @@
 - (void)hideSearchResultView {
     
     // TODO: check this
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+ //   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     
     [self hideSearchResultTableView];
     
@@ -119,14 +117,9 @@
         self.backgroundView.alpha = 1;
     }];
     
-//    self.searchBar.origin = CGPointMake(0, 0);
-//    [self.searchBarSuperview addSubview:self.searchBar];
-    
-        [self.searchBar setShowsCancelButton:NO animated:YES];
+    [self.searchBar setShowsCancelButton:NO animated:YES];
     
     if (self.navigationController) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-
         if (self.needHideTabbar) {
             self.navigationController.tabBarController.tabBar.hidden = NO;
             self.needHideTabbar = NO;

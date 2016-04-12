@@ -19,7 +19,7 @@
 @property (nonatomic) BOOL forbidAutoAddCloseButton;
 @property (nonatomic) BOOL forbidAutoAddPopButton;
 
-@property (nonatomic) BOOL isNeedHideNaviBarWhenPoped;
+//@property (nonatomic) BOOL isNeedHideNaviBarWhenPoped;
 
 - (void)viewDidLoad;
 - (void)viewWillAppear:(BOOL)animated;
@@ -64,8 +64,8 @@
 - (void)closeView;
 - (void)closeViewAnimated:(BOOL)animate;
 - (void)popView;
-- (void)popViewWithCheckNeedHideNaviBarWhenPoped;
-- (void)checkNeedHideNaviBarWhenPoped;
+//- (void)popViewWithCheckNeedHideNaviBarWhenPoped;
+//- (void)checkNeedHideNaviBarWhenPoped;
 /**
  *  左Item事件处理
  *

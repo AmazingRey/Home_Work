@@ -626,9 +626,9 @@
     } else {
         
         [super popView];
-        if (self.isNeedHideNaviBarWhenPoped) {
-            [self.navigationController setNavigationBarHidden:YES animated:NO];
-        }
+//        if (self.isNeedHideNaviBarWhenPoped) {
+//            [self.navigationController setNavigationBarHidden:YES animated:NO];
+//        }
     }
 }
 

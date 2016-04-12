@@ -184,7 +184,7 @@
     if (self.isPresent) {
         [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     }else{
-        [super popViewWithCheckNeedHideNaviBarWhenPoped];
+        [super popView];
     }
 }
 

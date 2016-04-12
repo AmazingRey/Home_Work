@@ -185,7 +185,7 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
         self.iFlyControl.setParameter("20000", forKey: IFlySpeechConstant.NET_TIMEOUT())
         self.iFlyControl.setParameter("16000", forKey: IFlySpeechConstant.SAMPLE_RATE())
         self.iFlyControl.setParameter("plain", forKey: IFlySpeechConstant.RESULT_TYPE())
-        self.iFlyControl.setParameter("", forKey:IFlySpeechConstant.ASR_PTT())
+        self.iFlyControl.setParameter("0", forKey:IFlySpeechConstant.ASR_PTT())
         self.iFlyControl.delegate = self
         self.iFlyControl.hidden = true
         
@@ -512,8 +512,8 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             let vc = XKRWSportDetailVC()
                             vc.sportEntity = entity
                             vc.sportID = entity.sportId
-                            vc.isNeedHideNaviBarWhenPoped = false
-                            self.isNeedHideNaviBarWhenPoped = true;
+//                            vc.isNeedHideNaviBarWhenPoped = false
+//                            self.isNeedHideNaviBarWhenPoped = true;
                             
                             vc.isPresent = true
                             let nav = XKRWNavigationController(rootViewController: vc)
@@ -527,8 +527,8 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             let vc = XKRWSportAddVC()
                             vc.sportEntity = entity
                             vc.recordEneity = self.recordEntity
-                            vc.isNeedHideNaviBarWhenPoped = false
-                            self.isNeedHideNaviBarWhenPoped = true;
+//                            vc.isNeedHideNaviBarWhenPoped = false
+//                            self.isNeedHideNaviBarWhenPoped = true;
                             
                             vc.passMealTypeTemp = eSport;
                             vc.needHiddenDate = true;
@@ -550,8 +550,8 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             vc.isPresent = true
                             let nav = XKRWNavigationController(rootViewController: vc)
                             
-                            vc.isNeedHideNaviBarWhenPoped = false
-                            self.isNeedHideNaviBarWhenPoped = true;
+//                            vc.isNeedHideNaviBarWhenPoped = false
+//                            self.isNeedHideNaviBarWhenPoped = true;
                             
                             weakSelf?.navigationController?.presentViewController(nav, animated: true, completion: nil)
 
@@ -570,11 +570,11 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             properties.setPropertiesToObject(recordEntity)
                             
                             let vc = XKRWAddFoodVC4_0()
-                            vc.isNeedHideNaviBarWhenPoped = false
+//                            vc.isNeedHideNaviBarWhenPoped = false
                             vc.foodRecordEntity = recordEntity
                             vc.recordEntity = self.recordEntity
-                            vc.isNeedHideNaviBarWhenPoped = false
-                            self.isNeedHideNaviBarWhenPoped = true;
+//                            vc.isNeedHideNaviBarWhenPoped = false
+//                            self.isNeedHideNaviBarWhenPoped = true;
                             XKRWAddFoodVC4_0.presentAddFoodVC(vc, onViewController: self)
                         })
                     }
@@ -605,8 +605,8 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                     vc.isModify = true
 //                    self.navigationController?.pushViewController(vc, animated: true)
                     vc.isPresent = true
-                    vc.isNeedHideNaviBarWhenPoped = false;
-                    self.isNeedHideNaviBarWhenPoped = true;
+//                    vc.isNeedHideNaviBarWhenPoped = false;
+//                    self.isNeedHideNaviBarWhenPoped = true;
                     let nav = XKRWNavigationController(rootViewController: vc)
                     self.navigationController?.presentViewController(nav, animated: true, completion: nil)
                     
@@ -618,7 +618,7 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
 
 //                    self.navigationController?.pushViewController(vc, animated: true)
                     vc.isPresent = true
-                    vc.isNeedHideNaviBarWhenPoped = false;
+//                    vc.isNeedHideNaviBarWhenPoped = false;
 //                    self.isNeedHideNaviBarWhenPoped = true;
                     let nav = XKRWNavigationController(rootViewController: vc)
                     self.navigationController?.presentViewController(nav, animated: true, completion: nil)
@@ -652,8 +652,8 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                     vc.sportEntity = entity
                     vc.sportID = entity.sportId
 //                    vc.isNeedHideNaviBarWhenPoped = true
-                    vc.isNeedHideNaviBarWhenPoped = false;
-                    self.isNeedHideNaviBarWhenPoped = true;
+//                    vc.isNeedHideNaviBarWhenPoped = false;
+//                    self.isNeedHideNaviBarWhenPoped = true;
                     vc.isPresent = true
                     let nav = XKRWNavigationController(rootViewController: vc)
                     weakSelf?.navigationController?.presentViewController(nav, animated: true, completion: nil)
@@ -664,8 +664,8 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                     let vc = XKRWFoodDetailVC()
                     vc.foodEntity = entity
 //                    vc.isNeedHideNaviBarWhenPoped = true
-                    vc.isNeedHideNaviBarWhenPoped = false;
-                    self.isNeedHideNaviBarWhenPoped = true;
+//                    vc.isNeedHideNaviBarWhenPoped = false;
+//                    self.isNeedHideNaviBarWhenPoped = true;
                     vc.isPresent = true
                     let nav = XKRWNavigationController(rootViewController: vc)
                     weakSelf?.navigationController?.presentViewController(nav, animated: true, completion: nil)
@@ -720,12 +720,12 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
         
 //        self.searchDisplayCtrl?.showSearchResultView()
-        self.isNeedHideNaviBarWhenPoped = true
+//        self.isNeedHideNaviBarWhenPoped = true
         return true
     }
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         self.searchDisplayCtrl?.showSearchResultView()
-        self.isNeedHideNaviBarWhenPoped = true
+//        self.isNeedHideNaviBarWhenPoped = true
         if !self.searchDisplayCtrl!.isShowSearchResultTableView {
             self.searchDisplayCtrl!.showSearchResultTableView()
         }
@@ -733,7 +733,7 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
     }
     
     func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
-        self.isNeedHideNaviBarWhenPoped = false
+//        self.isNeedHideNaviBarWhenPoped = false
         return true
     }
     
@@ -747,7 +747,7 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
     }
     
     func searchBarBookmarkButtonClicked(searchBar: UISearchBar) {
-        self.isNeedHideNaviBarWhenPoped = false
+//        self.isNeedHideNaviBarWhenPoped = false
         
         self.searchDisplayCtrl?.showSearchResultView()
         self.search_bar.setCancelButtonEnable(true)
@@ -762,13 +762,13 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        self.isNeedHideNaviBarWhenPoped = false
+//        self.isNeedHideNaviBarWhenPoped = false
         self.searchDisplayCtrl?.hideSearchResultView()
         self.needShowSearchHistories = true
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        self.isNeedHideNaviBarWhenPoped = false
+//        self.isNeedHideNaviBarWhenPoped = false
         guard searchBar.text != nil else {
             return
         }

@@ -122,7 +122,7 @@ static NSString *identifier1= @"searchCell";
         svc.sportName = sportEntity.sportName;
         svc.date = [NSDate date];
         svc.needHiddenDate = YES;
-        svc.isNeedHideNaviBarWhenPoped = NO;
+//        svc.isNeedHideNaviBarWhenPoped = NO;
 //        self.isNeedHideNaviBarWhenPoped = NO;
         [self.navigationController pushViewController:svc animated:YES];
         
@@ -132,7 +132,7 @@ static NSString *identifier1= @"searchCell";
         XKRWFoodEntity *foodEntity = _dataMutArray[indexPath.row];
         fvc.foodId = foodEntity.foodId;
         fvc.foodName = foodEntity.foodName;
-        fvc.isNeedHideNaviBarWhenPoped = NO;
+//        fvc.isNeedHideNaviBarWhenPoped = NO;
         fvc.date = [NSDate date];
         [self.navigationController pushViewController:fvc animated:YES];
 
@@ -231,6 +231,6 @@ static NSString *identifier1= @"searchCell";
 
 - (void)popView
 {
-    [super popViewWithCheckNeedHideNaviBarWhenPoped];
+    [super popView];
 }
 @end

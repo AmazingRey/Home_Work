@@ -193,7 +193,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
             self.iFlyControl.setParameter("20000", forKey: IFlySpeechConstant.NET_TIMEOUT())
             self.iFlyControl.setParameter("16000", forKey: IFlySpeechConstant.SAMPLE_RATE())
             self.iFlyControl.setParameter("plain", forKey: IFlySpeechConstant.RESULT_TYPE())
-            self.iFlyControl.setParameter("1", forKey: IFlySpeechConstant.ASR_PTT())
+            self.iFlyControl.setParameter("0", forKey: IFlySpeechConstant.ASR_PTT())
             self.iFlyControl.setParameter(IFLY_AUDIO_SOURCE_MIC, forKey: "audio_source")
             self.iFlyControl.delegate = self
             self.iFlyControl.hidden = true
@@ -385,9 +385,9 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
         }
     }
     
-    override func checkNeedHideNaviBarWhenPoped() {
-        super.checkNeedHideNaviBarWhenPoped()
-    }
+//    override func checkNeedHideNaviBarWhenPoped() {
+//        super.checkNeedHideNaviBarWhenPoped()
+//    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -1760,8 +1760,8 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                         msvc.searchKey = self.searchKey
                         msvc.searchType = 1
 
-                        msvc.isNeedHideNaviBarWhenPoped = false
-                        self.isNeedHideNaviBarWhenPoped = true
+//                        msvc.isNeedHideNaviBarWhenPoped = false
+//                        self.isNeedHideNaviBarWhenPoped = true
 
                         self.navigationController?.pushViewController(msvc, animated: true);
                         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -1769,8 +1769,8 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                         //跳转到食物详情
                         let vc = XKRWFoodDetailVC()
                         vc.foodId = foodsArray[indexPath.row - 1].foodId
-                        vc.isNeedHideNaviBarWhenPoped =  false
-                        self.isNeedHideNaviBarWhenPoped = true
+//                        vc.isNeedHideNaviBarWhenPoped =  false
+//                        self.isNeedHideNaviBarWhenPoped = true
                         self.navigationController?.pushViewController(vc, animated: true)
                         self.navigationController?.setNavigationBarHidden(false, animated: true)
                     }
@@ -1784,8 +1784,8 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                         msvc.dataArray = sportsArray
                         msvc.searchKey = self.searchKey
                         msvc.searchType = 0
-                        msvc.isNeedHideNaviBarWhenPoped =  false
-                        self.isNeedHideNaviBarWhenPoped = true
+//                        msvc.isNeedHideNaviBarWhenPoped =  false
+//                        self.isNeedHideNaviBarWhenPoped = true
                         self.navigationController?.pushViewController(msvc, animated: true);
                         self.navigationController?.setNavigationBarHidden(false, animated: true)
                         
@@ -1795,8 +1795,8 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                         let vc = XKRWSportDetailVC()
                         vc.sportID = self.sportsArray[indexPath.row - 1].sportId
                         vc.sportName = self.sportsArray[indexPath.row - 1].sportName
-                        vc.isNeedHideNaviBarWhenPoped =  false
-                        self.isNeedHideNaviBarWhenPoped = true
+//                        vc.isNeedHideNaviBarWhenPoped =  false
+//                        self.isNeedHideNaviBarWhenPoped = true
                         self.navigationController?.pushViewController(vc, animated: true)
                         self.navigationController?.setNavigationBarHidden(false, animated: true)
                     }
@@ -1812,8 +1812,8 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                     msvc.dataArray = sportsArray
                     msvc.searchKey = self.searchKey
                     msvc.searchType = 0
-                    msvc.isNeedHideNaviBarWhenPoped =  false
-                    self.isNeedHideNaviBarWhenPoped = true
+//                    msvc.isNeedHideNaviBarWhenPoped =  false
+//                    self.isNeedHideNaviBarWhenPoped = true
                     self.navigationController?.pushViewController(msvc, animated: true);
                     self.navigationController?.setNavigationBarHidden(false, animated: true)
                     
@@ -1821,8 +1821,8 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                     //跳转到运动详情
                     let vc = XKRWSportDetailVC()
                     vc.sportID = self.sportsArray[indexPath.row - 1].sportId
-                    vc.isNeedHideNaviBarWhenPoped =  false
-                    self.isNeedHideNaviBarWhenPoped = true
+//                    vc.isNeedHideNaviBarWhenPoped =  false
+//                    self.isNeedHideNaviBarWhenPoped = true
                     self.navigationController?.pushViewController(vc, animated: true)
                     self.navigationController?.setNavigationBarHidden(false, animated: true)
                 }
@@ -1835,14 +1835,14 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
         
         self.searchDisplayCtrl?.showSearchResultView()
-        self.isNeedHideNaviBarWhenPoped = true
+//        self.isNeedHideNaviBarWhenPoped = true
         return true
     }
 
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         
         searchBar.setShowsCancelButton(true, animated: true)
-        self.isNeedHideNaviBarWhenPoped = true
+//        self.isNeedHideNaviBarWhenPoped = true
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -1851,7 +1851,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
         searchBar.setShowsCancelButton(false, animated: false)
         
         self.searchDisplayCtrl?.hideSearchResultView()
-        self.isNeedHideNaviBarWhenPoped = false
+//        self.isNeedHideNaviBarWhenPoped = false
     }
     
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -1863,14 +1863,14 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
-        self.isNeedHideNaviBarWhenPoped = false
+//        self.isNeedHideNaviBarWhenPoped = false
         return true
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         
         XKRWCui.showProgressHud("")
-        self.isNeedHideNaviBarWhenPoped = false
+//        self.isNeedHideNaviBarWhenPoped = false
         
         if !searchBar.text!.isEmpty {
             

@@ -560,7 +560,7 @@ extension XKRWArticleEditVC: UIImagePickerControllerDelegate, UINavigationContro
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         
-        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
         
         let vc = RSKImageCropViewController(image: image, cropMode: RSKImageCropMode.Custom)
         vc.delegate = self

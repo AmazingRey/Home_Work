@@ -294,7 +294,7 @@
     [self.window makeKeyAndVisible];
     
     [application setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    [application setStatusBarStyle:UIStatusBarStyleLightContent];
+    [application setStatusBarStyle:UIStatusBarStyleDefault];
     
     return isOK;
 }

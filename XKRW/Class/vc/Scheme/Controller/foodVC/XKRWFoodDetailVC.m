@@ -94,7 +94,7 @@ const int FixedDisplayCount = 4;   //固定显示的个数
 
 - (void)initUI {
     self.navigationItem.title = @"食物详情";
-    NSLog(@"%d",self.isNeedHideNaviBarWhenPoped);
+//    NSLog(@"%d",self.isNeedHideNaviBarWhenPoped);
 //    [self.navigationController.interactivePopGestureRecognizer addTarget:self action:@selector(checkNeedHideNaviBarWhenPoped)];
     self.forbidAutoAddCloseButton = YES;
     [self addNaviBarBackButton];

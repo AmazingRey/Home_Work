@@ -20,6 +20,12 @@
 #import <iflyMSC/iflyMSC.h>
 #import "XKRWCui.h"
 #import "XKRW-Swift.h"
+#import "XKRWSearchResultCategoryCell.h"
+#import "XKRWSportEntity.h"
+#import "XKRWFoodEntity.h"
+#import "XKRWMoreSearchResultVC.h"
+#import "XKRWFoodDetailVC.h"
+#import "XKRWSportDetailVC.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate>
 {
@@ -29,6 +35,12 @@
     IFlyRecognizerView *iFlyControl;
     NSString *searchKey;
    
+    
+    NSArray *foodsArray;
+    NSArray *sportsArray;
+    
+    NSInteger foodsCount;
+    NSInteger sportsCount;
 }
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
@@ -41,30 +53,27 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initView];
-    [self addTouchWindowEvent];
+    //[self addTouchWindowEvent];
 }
 
 -(void)addTouchWindowEvent{
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];
     singleTap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:singleTap];
-//    [[UIApplication sharedApplication].keyWindow addGestureRecognizer:singleTap];
 }
 
 #pragma --mark UI
 - (void)initView {
-     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    
+
     planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight) style:UITableViewStylePlain];
     planTableView.delegate = self;
     planTableView.dataSource = self;
+    planTableView.tag = 1000;
     [self.view addSubview:planTableView];
     
     _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 68 + (XKAppWidth - 66)/3.0)];
@@ -78,7 +87,7 @@
     [iFlyControl setParameter:@"20000" forKey:[IFlySpeechConstant NET_TIMEOUT] ];
     [iFlyControl setParameter:@"16000" forKey:[IFlySpeechConstant SAMPLE_RATE] ];
     [iFlyControl setParameter:@"plain" forKey:[IFlySpeechConstant RESULT_TYPE] ];
-    [iFlyControl setParameter:@"1" forKey:[IFlySpeechConstant ASR_PTT] ];
+    [iFlyControl setParameter:@"0" forKey:[IFlySpeechConstant ASR_PTT] ];
     [iFlyControl setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source" ];
     
     iFlyControl.delegate = self;
@@ -99,7 +108,7 @@
         foodAndSportSearchBar.delegate = self;
         foodAndSportSearchBar.barTintColor = [UIColor whiteColor];
         [foodAndSportSearchBar setSearchBarTextFieldColor:XKBGDefaultColor];
-        
+        foodAndSportSearchBar.searchBarStyle = UISearchBarStyleMinimal;
         foodAndSportSearchBar.showsBookmarkButton = true;
         foodAndSportSearchBar.showsScopeBar = true;
         
@@ -289,44 +298,265 @@
     [self cancelPopView];
 }
 
+#pragma --mark Network
+- (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
+    if ([taskID isEqualToString:@"search"]){
+        [XKRWCui hideProgressHud];
+        foodsArray = [result objectForKey:@"food"];
+        sportsArray = [result objectForKey:@"sport"];
+        foodsCount = foodsArray.count > 3 ? 3 : foodsArray.count;
+        sportsCount = sportsArray.count > 3 ? 3 : sportsArray.count;
+        
+        if (!searchDisplayCtrl.isShowSearchResultTableView ){
+            [searchDisplayCtrl showSearchResultTableView];
+        }
+        [searchDisplayCtrl reloadSearchResultTableView];
+        
+        return ;
+    }
+
+}
+
+- (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID {
+    [super handleDownloadProblem:problem withTaskID:taskID];
+}
+
+- (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication {
+    return YES;
+}
+
 #pragma --mark Delegate
 #pragma --mark TableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        XKRWUITableViewCellbase *cell  = [tableView dequeueReusableCellWithIdentifier:@"searchAndRecord"];
-        if(cell == nil){
-            cell = [self setSearchAndRecordCell:tableView];
+    if(tableView.tag == 1000){
+        if (indexPath.section == 0) {
+            XKRWUITableViewCellbase *cell  = [tableView dequeueReusableCellWithIdentifier:@"searchAndRecord"];
+            if(cell == nil){
+                cell = [self setSearchAndRecordCell:tableView];
+            }
+            
+            return cell;
+        } else if (indexPath.section == 2) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"energyCircle"];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"energyCircle"];
+                cell.contentView.size = CGSizeMake(XKAppWidth, 68 + (XKAppWidth - 88)/3.0);
+                [cell addSubview:_planEnergyView];
+            }
+            return cell;
         }
+    }else if (tableView.tag == 201){
         
-        return cell;
-    } else if (indexPath.section == 2) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"energyCircle"];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"energyCircle"];
-            cell.contentView.size = CGSizeMake(XKAppWidth, 68 + (XKAppWidth - 88)/3.0);
-            [cell addSubview:_planEnergyView];
+        if(indexPath.section == 0){
+            
+            if(foodsArray.count > 0){
+                
+                if (indexPath.row == 0){
+                    XKRWSearchResultCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCategoryCell"];
+                    cell.title.text = @"食物";
+                    return cell;
+                }else if (indexPath.row == foodsCount +1){
+                    XKRWMoreSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"moreSearchResultCell"];
+                    cell.title.text = @"查看更多食物";
+                    return cell;
+                }else{
+                    XKRWSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCell"];
+                    XKRWFoodEntity *foodEntity =[foodsArray objectAtIndex:indexPath.row - 1];
+                    cell.title.text = foodEntity.foodName;
+                    cell.subtitle.text = [NSString stringWithFormat:@"%ldkcal/100g",foodEntity.foodEnergy];
+                    [cell.logoImageView setImageWithURL:[NSURL URLWithString:foodEntity.foodLogo] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
+                     return cell;
+                }
+            }else {
+                if (indexPath.row == 0) {
+                    XKRWSearchResultCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCategoryCell"];
+                    cell.title.text = @"运动";
+                    return cell;
+                }else if (indexPath.row == foodsCount +1){
+                    XKRWMoreSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"moreSearchResultCell"];
+                    cell.title.text = @"查看更多运动";
+                    return cell;
+                }else{
+                    XKRWSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCell"];
+                    
+                    XKRWSportEntity *sportEntity =[sportsArray objectAtIndex:indexPath.row - 1];
+                    cell.title.text = sportEntity.sportName;
+                    cell.subtitle.text = [NSString stringWithFormat:@"%fkcal/60分钟",sportEntity.sportMets];
+                    [cell.logoImageView setImageWithURL:[NSURL URLWithString:sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
+                     return cell;
+                }
+            }
+            
+        } else {
+            if (indexPath.row == 0) {
+                XKRWSearchResultCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCategoryCell"];
+                cell.title.text = @"运动";
+                return cell;
+            }else if (indexPath.row == foodsCount +1){
+                XKRWMoreSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"moreSearchResultCell"];
+                cell.title.text = @"查看更多运动";
+                return cell;
+            }else{
+                XKRWSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCell"];
+                
+                XKRWSportEntity *sportEntity =[sportsArray objectAtIndex:indexPath.row - 1];
+                cell.title.text = sportEntity.sportName;
+                cell.subtitle.text = [NSString stringWithFormat:@"%fkcal/60分钟",sportEntity.sportMets];
+                [cell.logoImageView setImageWithURL:[NSURL URLWithString:sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
+                 return cell;
+            }
         }
-        return cell;
     }
-
-    
     return [UITableViewCell new];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    if(tableView.tag == 1000){
+        return 3;
+    }else if (tableView.tag == 201){
+        NSInteger section = 0;
+        if(foodsArray.count > 0){
+            section++;
+        }
+        
+        if(sportsArray.count > 0){
+            section++;
+        }
+        
+        return section;
+    }
+    return 1;
 }
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if(tableView.tag == 1000){
+        return 1;
+    }else if (tableView.tag == 201){
+        if(section == 0){
+            if(foodsArray.count > 0){
+                if(foodsArray.count > 3){
+                    return 5;
+                }else {
+                    return foodsArray.count + 1;
+                }
+            }else {
+                if(sportsArray.count > 3){
+                    return 5;
+                }else {
+                    return sportsArray.count + 1;
+                }
+            }
+        }
+        if (section == 1){
+            if(sportsArray.count > 3){
+                return 5;
+            }else {
+                return sportsArray.count + 1;
+            }
+        }
+    }
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2) {
-        return 68 + (XKAppWidth - 88)/3.0;
+    if(tableView.tag == 1000){
+        if (indexPath.section == 2) {
+            return 68 + (XKAppWidth - 88)/3.0;
+        }
+        return 120;
+    }else if (tableView.tag == 201){
+        if(indexPath.section == 0 ){
+            if ([foodsArray count] > 0){
+                if (indexPath.row == 0){
+                    return 38 ;
+                }else if (indexPath.row == foodsCount + 1){
+                    return 44;
+                }else {
+                    return 88;
+                }
+            }else {
+                if (indexPath.row == 0){
+                    return 38 ;
+                }else if (indexPath.row == sportsCount + 1){
+                    return 44;
+                }else {
+                    return 88;
+                }
+            }
+        }else{
+            if (indexPath.row == 0){
+                return 38 ;
+            }else if (indexPath.row == sportsCount + 1){
+                return 44;
+            }else {
+                return 88;
+            }
+        }
     }
-    return 120;
+    return 0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (tableView.tag == 201) {
+        if (indexPath.section == 0){
+            if (foodsArray.count > 0) {
+                if (indexPath.row == 0){
+                
+                }else if (indexPath.row == foodsCount + 1) {
+                    XKRWMoreSearchResultVC *moreSearchVC = [[XKRWMoreSearchResultVC alloc] init];
+                    moreSearchVC.dataArray = foodsArray;
+                    moreSearchVC.searchKey = searchKey;
+                    moreSearchVC.searchType = 1;
+                    [self.navigationController pushViewController:moreSearchVC animated:YES];
+                    [moreSearchVC.navigationController setNavigationBarHidden:NO];
+                }else {
+                    XKRWFoodDetailVC *foodDetailVC = [[XKRWFoodDetailVC alloc] init];
+                    foodDetailVC.foodId = ((XKRWFoodEntity *)[foodsArray objectAtIndex:indexPath.row - 1]).foodId;
+                    [self.navigationController pushViewController:foodDetailVC animated:YES];
+                    [foodDetailVC.navigationController setNavigationBarHidden:NO];
+                }
+            }else {
+                if (indexPath.row == 0){
+                    
+                }else if (indexPath.row == sportsCount + 1){
+                    XKRWMoreSearchResultVC *moreSearchVC = [[XKRWMoreSearchResultVC alloc] init];
+                    moreSearchVC.dataArray = sportsArray;
+                    moreSearchVC.searchKey = searchKey;
+                    moreSearchVC.searchType = 0;
+                    [self.navigationController pushViewController:moreSearchVC animated:YES];
+                    [moreSearchVC.navigationController setNavigationBarHidden:NO];
+                }else {
+                    XKRWSportDetailVC *sportDetailVC = [[XKRWSportDetailVC alloc] init];
+                    sportDetailVC.sportID = ((XKRWSportEntity *)[sportsArray objectAtIndex:indexPath.row - 1]).sportId;
+                    sportDetailVC.sportName = ((XKRWSportEntity *)[sportsArray objectAtIndex:indexPath.row - 1]).sportName;
+                    [self.navigationController pushViewController:sportDetailVC animated:YES];
+                    [sportDetailVC.navigationController setNavigationBarHidden:NO];
+                }
+            }
+        } else if (indexPath.section == 1) {
+            if (indexPath.row == 0){
+                
+            }else if (indexPath.row == sportsCount + 1){
+                XKRWMoreSearchResultVC *moreSearchVC = [[XKRWMoreSearchResultVC alloc] init];
+                moreSearchVC.dataArray = sportsArray;
+                moreSearchVC.searchKey = searchKey;
+                moreSearchVC.searchType = 0;
+                [self.navigationController pushViewController:moreSearchVC animated:YES];
+                [moreSearchVC.navigationController setNavigationBarHidden:NO];
+            }else {
+                XKRWSportDetailVC *sportDetailVC = [[XKRWSportDetailVC alloc] init];
+                sportDetailVC.sportID = ((XKRWSportEntity *)[sportsArray objectAtIndex:indexPath.row - 1]).sportId;
+                sportDetailVC.sportName = ((XKRWSportEntity *)[sportsArray objectAtIndex:indexPath.row - 1]).sportName;
+                [self.navigationController pushViewController:sportDetailVC animated:YES];
+                [sportDetailVC.navigationController setNavigationBarHidden:NO];
+            }
+
+        }
+    }
 }
 
 
@@ -334,21 +564,20 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     [searchDisplayCtrl showSearchResultView];
-//    self.isNeedHideNaviBarWhenPoped = YES;
+
     return YES;
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:YES animated:YES];
-//    self.isNeedHideNaviBarWhenPoped = YES;
+ 
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:NO];
     [searchDisplayCtrl hideSearchResultView];
-//    self.isNeedHideNaviBarWhenPoped = NO;
 }
 
 
@@ -360,13 +589,11 @@
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-//    self.isNeedHideNaviBarWhenPoped = NO;
     return YES;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-//    self.isNeedHideNaviBarWhenPoped = YES;
     
     if (searchBar.text.length > 0){
         searchKey = searchBar.text;
@@ -409,6 +636,15 @@
 }
 
 - (void)onResult:(NSArray *)resultArray isLast:(BOOL)isLast {
+    if (resultArray != nil && resultArray.count > 0 ){
+        
+        NSLog(@"%@\n%@",resultArray,[[resultArray lastObject] allKeys].lastObject);
+  
+        foodAndSportSearchBar.text = [[[resultArray lastObject] allKeys] lastObject];
+        [self searchBarSearchButtonClicked:foodAndSportSearchBar];
+        
+    }
+
     
 }
 

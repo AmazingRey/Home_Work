@@ -686,11 +686,12 @@
         //
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
-        [super popView];}
-    
-    if (self.isNeedHideNaviBarWhenPoped) {
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
+        [super popView];
     }
+    
+//    if (self.isNeedHideNaviBarWhenPoped) {
+//        [self.navigationController setNavigationBarHidden:YES animated:NO];
+//    }
 }
 - (void)didReceiveMemoryWarning
 {

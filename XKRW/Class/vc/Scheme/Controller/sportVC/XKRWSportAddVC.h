@@ -45,7 +45,7 @@
 
 @property (nonatomic,assign) BOOL isPresent;
 
-@property (nonatomic) BOOL isNeedHideNaviBarWhenPoped;
+//@property (nonatomic) BOOL isNeedHideNaviBarWhenPoped;
 
 @property (nonatomic, weak) XKRWRecordEntity4_0 *recordEneity;
 //YES 为 修改    NO 为记录

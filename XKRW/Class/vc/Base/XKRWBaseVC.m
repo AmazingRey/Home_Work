@@ -73,7 +73,7 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
     [super viewWillAppear:animated];
     _vcWillAppear = YES;
     _vcDidAppear = NO;
-    [self checkNeedHideNaviBarWhenPoped];
+//    [self checkNeedHideNaviBarWhenPoped];
 
 }
 
@@ -431,18 +431,18 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)popViewWithCheckNeedHideNaviBarWhenPoped {
-    [self checkNeedHideNaviBarWhenPoped];
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//- (void)popViewWithCheckNeedHideNaviBarWhenPoped {
+//    [self checkNeedHideNaviBarWhenPoped];
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
-- (void)checkNeedHideNaviBarWhenPoped {
-    XKLog(@"%@",[self class]);
-    if (self.isNeedHideNaviBarWhenPoped) {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-    }else
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-}
+//- (void)checkNeedHideNaviBarWhenPoped {
+//    XKLog(@"%@",[self class]);
+//    if (self.isNeedHideNaviBarWhenPoped) {
+//        [self.navigationController setNavigationBarHidden:YES animated:YES];
+//    }else
+//        [self.navigationController setNavigationBarHidden:NO animated:YES];
+//}
 
 - (void)pop2Views {
     NSArray *vcs = self.navigationController.viewControllers;

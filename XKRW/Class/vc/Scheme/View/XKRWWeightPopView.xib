@@ -143,6 +143,7 @@
                 <outlet property="btnCancle" destination="F6d-Lx-G7H" id="6Cr-ZW-WF3"/>
                 <outlet property="btnLater" destination="Egc-aG-tAl" id="rgb-9l-LZ6"/>
                 <outlet property="btnSure" destination="sLM-6c-7Ln" id="VYe-XQ-qEe"/>
+                <outlet property="dateLabel" destination="qQP-Va-jLx" id="teW-be-hyz"/>
                 <outlet property="iCarouselView" destination="ar0-0X-Sa3" id="faG-bi-eVD"/>
                 <outlet property="labDate" destination="gtq-Vc-3Ti" id="7Ga-Ze-Dbq"/>
                 <outlet property="labInput" destination="bM4-7w-Hp6" id="anu-l0-3jJ"/>
