@@ -32,7 +32,7 @@
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z2R-vK-Tq0" customClass="XKRWShowEnergy_5_3View">
                     <rect key="frame" x="10" y="60" width="300" height="120"/>
-                    <color key="backgroundColor" red="0.88530585110000004" green="0.88530585110000004" blue="0.88530585110000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="z2R-vK-Tq0" secondAttribute="height" multiplier="300:120" id="wqV-lt-4tG"/>
                     </constraints>
@@ -85,7 +85,7 @@
             <connections>
                 <outlet property="calTypeLab" destination="G7C-ox-6zG" id="b0S-eD-6uo"/>
                 <outlet property="detailLab" destination="vBw-5K-Lpq" id="mL4-ny-pSm"/>
-                <outlet property="fuseView" destination="z2R-vK-Tq0" id="U9e-bP-ubS"/>
+                <outlet property="fuseView" destination="z2R-vK-Tq0" id="dRj-uR-Ofd"/>
                 <outlet property="numImg" destination="9vR-xU-EEc" id="qY5-fo-rbp"/>
                 <outlet property="tipsImg" destination="kOO-8W-dqA" id="klp-ig-bRp"/>
                 <outlet property="tipsLab" destination="p9G-Wr-AvC" id="UbZ-ty-gO6"/>

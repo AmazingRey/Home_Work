@@ -1004,6 +1004,8 @@
 		BCFE22261B74CC9F00535863 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFE22251B74CC9F00535863 /* MediaPlayer.framework */; };
 		CC25086A1CB5EE1D00FFF00C /* XKRWWeightPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */; };
 		CC25086C1CB5EE3700FFF00C /* XKRWWeightPopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */; };
+		CC520B7D1CBE440A007FEDBA /* XKRWRecordFood5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CC520B7C1CBE440A007FEDBA /* XKRWRecordFood5_3View.m */; };
+		CC520B7F1CBE4426007FEDBA /* XKRWRecordFood5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC520B7E1CBE4426007FEDBA /* XKRWRecordFood5_3View.xib */; };
 		CC8EA3B51CB369980084E059 /* XKRWPlan_5_3CollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8EA3AD1CB369980084E059 /* XKRWPlan_5_3CollectionView.m */; };
 		CC8EA3B61CB369980084E059 /* XKRWPlan_5_3CollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC8EA3AE1CB369980084E059 /* XKRWPlan_5_3CollectionView.xib */; };
 		CC8EA3B71CB369980084E059 /* XKRWPlan_5_3CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8EA3B01CB369980084E059 /* XKRWPlan_5_3CollectionViewCell.m */; };
@@ -2689,6 +2691,9 @@
 		CC2508681CB5EE1D00FFF00C /* XKRWWeightPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeightPopView.h; sourceTree = "<group>"; };
 		CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeightPopView.m; sourceTree = "<group>"; };
 		CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWWeightPopView.xib; sourceTree = "<group>"; };
+		CC520B7B1CBE440A007FEDBA /* XKRWRecordFood5_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordFood5_3View.h; sourceTree = "<group>"; };
+		CC520B7C1CBE440A007FEDBA /* XKRWRecordFood5_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordFood5_3View.m; sourceTree = "<group>"; };
+		CC520B7E1CBE4426007FEDBA /* XKRWRecordFood5_3View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWRecordFood5_3View.xib; sourceTree = "<group>"; };
 		CC8EA3AC1CB369980084E059 /* XKRWPlan_5_3CollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlan_5_3CollectionView.h; sourceTree = "<group>"; };
 		CC8EA3AD1CB369980084E059 /* XKRWPlan_5_3CollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlan_5_3CollectionView.m; sourceTree = "<group>"; };
 		CC8EA3AE1CB369980084E059 /* XKRWPlan_5_3CollectionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlan_5_3CollectionView.xib; sourceTree = "<group>"; };
@@ -4622,6 +4627,7 @@
 		BC31B8F71C1ACA520045817B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CC520B7A1CBE4353007FEDBA /* RecordFoodAndmenu */,
 				CCFA188F1CB5188D0025EC12 /* WeightRecoderView */,
 				BCF6646D1CAE280D006EBC61 /* PlanView */,
 				BCEF361E1C1E619700740ACC /* sportView */,
@@ -6572,6 +6578,16 @@
 			path = PlanView;
 			sourceTree = "<group>";
 		};
+		CC520B7A1CBE4353007FEDBA /* RecordFoodAndmenu */ = {
+			isa = PBXGroup;
+			children = (
+				CC520B7B1CBE440A007FEDBA /* XKRWRecordFood5_3View.h */,
+				CC520B7C1CBE440A007FEDBA /* XKRWRecordFood5_3View.m */,
+				CC520B7E1CBE4426007FEDBA /* XKRWRecordFood5_3View.xib */,
+			);
+			name = RecordFoodAndmenu;
+			sourceTree = "<group>";
+		};
 		CCFA188F1CB5188D0025EC12 /* WeightRecoderView */ = {
 			isa = PBXGroup;
 			children = (
@@ -6937,6 +6953,7 @@
 				BC6F2F751C1A70D3005B54E8 /* XKRWPKVC.xib in Resources */,
 				BCEF381C1C1E901B00740ACC /* XKRWCourseWeightCell.xib in Resources */,
 				BCEF372F1C1E75D900740ACC /* XKRWHabitStatusVC.xib in Resources */,
+				CC520B7F1CBE4426007FEDBA /* XKRWRecordFood5_3View.xib in Resources */,
 				5DCD561E1C4731B8008A5AC2 /* GroupHeaderCell.xib in Resources */,
 				2F3C632B1C3CAA6F007D9E20 /* XKRWActionSheetCell.xib in Resources */,
 				2FA028C01C4DCFFD0098FC68 /* XKRWFitnessShareCell.xib in Resources */,
@@ -7181,6 +7198,7 @@
 				BC769E861C33D3DD00E96B1A /* KMPopSelectionCell.m in Sources */,
 				BC769E7C1C33D3DD00E96B1A /* DrawerView.m in Sources */,
 				BC6F2FA31C1A70D3005B54E8 /* XKRWTitleSubTitleCell.m in Sources */,
+				CC520B7D1CBE440A007FEDBA /* XKRWRecordFood5_3View.m in Sources */,
 				BC769DFD1C33D26200E96B1A /* XKRWCustomBaseEntity.m in Sources */,
 				2F4E2F971C47385F00EBAE6E /* XKRWTopicListCell.m in Sources */,
 				5DCD566D1C4777B8008A5AC2 /* XKRWAddGroupViewCell.m in Sources */,
@@ -7887,7 +7905,7 @@
 					"\"$(SRCROOT)/Thirdparty/**\"",
 					"\"$(SRCROOT)/../XKCommon/Thirdparty/YouMeng\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
@@ -7949,8 +7967,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -7970,7 +7988,7 @@
 				GCC_PREFIX_HEADER = "XKRW/XKRW-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/XKRW/Thirdparty/**",
-					"$(inherited)",
+					"$(inherited)/**",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/Thirdparty/**",
 				);
@@ -7992,8 +8010,8 @@
 					"$(PROJECT_DIR)/Thirdparty/UMengFeedback_SDK/UMOpus",
 					"$(PROJECT_DIR)/Thirdparty/UMessage_Sdk_1.2.6",
 				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-fembed-bitcode";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
@@ -8001,13 +8019,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7s arm64 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -8020,8 +8038,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8041,7 +8059,7 @@
 				GCC_PREFIX_HEADER = "XKRW/XKRW-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/XKRW/Thirdparty/**",
-					"$(inherited)",
+					"$(inherited)/**",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/Thirdparty/**",
 				);
@@ -8063,8 +8081,8 @@
 					"$(PROJECT_DIR)/Thirdparty/UMengFeedback_SDK/UMOpus",
 					"$(PROJECT_DIR)/Thirdparty/UMessage_Sdk_1.2.6",
 				);
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = "-fembed-bitcode";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
@@ -8072,12 +8090,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = "armv7 armv7s arm64";
+				VALID_ARCHS = "armv7s arm64 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

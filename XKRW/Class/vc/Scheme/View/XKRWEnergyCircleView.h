@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "XKRWRecordFood5_3View.h"
 
 typedef void(^startButtonClickBlock)(void);
 @interface XKRWEnergyCircleView : UIView

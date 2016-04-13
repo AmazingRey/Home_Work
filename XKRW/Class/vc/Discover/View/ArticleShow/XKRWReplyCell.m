@@ -34,8 +34,7 @@
 - (void)setEntity:(XKRWReplyEntity *)entity {
     _entity = entity;
     _label.entity = entity;
-    self.frame = CGRectMake(0, 0, _label.size.width, _label.size.height + 1);
-
+    self.size = _label.size;
 }
 
 - (void)longPressed {

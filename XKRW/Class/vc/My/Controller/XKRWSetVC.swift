@@ -77,7 +77,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
 
             switchCell?.selectionStyle = .None
             switchCell!.label.text = dataArray[indexPath.section][0] as? String
-            switchCell!.passwordSwithBtn.addTarget(self, action: "closeAllAlertValueChanged:", forControlEvents: .TouchUpInside)
+            switchCell!.passwordSwithBtn.addTarget(self, action: #selector(XKRWSetVC.closeAllAlertValueChanged(_:)), forControlEvents: .TouchUpInside)
             if(XKRWLocalNotificationService.shareInstance().haveEnabledNotice()){
                 switchCell!.passwordSwithBtn.setOn(true, animated: true)
             }else{
@@ -92,7 +92,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
                 if(cacheCell == nil){
                     cacheCell = XKRWCacheCell.init(style: .Default, reuseIdentifier: "catchCell")
                     cacheCell!.selectionStyle = .None
-                    cacheCell!.clearCacheBtn.addTarget(self, action:"clickClearCacheBtn:", forControlEvents:.TouchUpInside);
+                    cacheCell!.clearCacheBtn.addTarget(self, action:#selector(XKRWSetVC.clickClearCacheBtn(_:)), forControlEvents:.TouchUpInside);
                 }
 
                 var cacheStr:String?

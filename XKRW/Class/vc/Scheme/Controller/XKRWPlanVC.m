@@ -290,7 +290,7 @@
 }
 
 #pragma XKRWWeightPopViewDelegate 
--(void)pressPopViewSure:(NSNumber *)inputNum{
+-(void)pressPopViewSure:(NSDictionary *)dic{
     [self cancelPopView];
 }
 

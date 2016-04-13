@@ -100,7 +100,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
         self.recordEntity = XKRWRecordService4_0.sharedService().getAllRecordOfDay(NSDate())
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow", name: UIKeyboardFrameEndUserInfoKey, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(XKRWSchemeVC_5_0.keyboardWillShow), name: UIKeyboardFrameEndUserInfoKey, object: nil)
         
         self.edgesForExtendedLayout = UIRectEdge.All
         
@@ -177,7 +177,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
             
             self.searchDisplayCtrl?.backgroundContentView.addSubview(sport)
         
-            self.addNaviBarRightButtonWithText("分析", action: "rightNaviBarButtonClicked")
+            self.addNaviBarRightButtonWithText("分析", action: #selector(XKRWHistoryAndProcessVC.rightNaviBarButtonClicked))
           
             weightView = XKRWWeightGoalView(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 116.5))
             
@@ -238,12 +238,12 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
         }
         initSubviews()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadHabit", name: "SCHEME_RELOAD_HABIT", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadSportSchemeAndRecord", name: "SCHEME_RELOAD_SPORT", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "initData", name: "SCHEME_RELOAD", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(XKRWSchemeVC_5_0.reloadHabit), name: "SCHEME_RELOAD_HABIT", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(XKRWSchemeVC_5_0.reloadSportSchemeAndRecord), name: "SCHEME_RELOAD_SPORT", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(XKRWSchemeVC_5_0.initData), name: "SCHEME_RELOAD", object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadNoticeCell", name: "SCHEME_RELOAD_NOTICE", object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "initData", name: "RELOAD_DATA_WHEN_DAY_CHANGED", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(XKRWSchemeVC_5_0.reloadNoticeCell), name: "SCHEME_RELOAD_NOTICE", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(XKRWSchemeVC_5_0.initData), name: "RELOAD_DATA_WHEN_DAY_CHANGED", object: nil)
         
         XKRWNoticeService.sharedService().addNotificationInViewController(self, andKeyWindow: UIApplication.sharedApplication().keyWindow)
 
@@ -571,7 +571,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
             let imageView = UIImageView(frame: CGRectMake(insistLabel.right + 5 + 15 * CGFloat(i), (44-21)/2, 13, 21))
             cell.contentView.addSubview(imageView)
             imageView.image = UIImage(named: "\(character)_")
-            i++
+            i += 1
         }
         
         let nextTitle = NSAttributedString(string: nextString, attributes:[NSFontAttributeName:XKDefaultFontWithSize(16),NSForegroundColorAttributeName:XK_TITLE_COLOR] )
@@ -666,7 +666,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
         resetSchemeButton.layer.cornerRadius = 5
         resetSchemeButton.setTitle("去定制新的方案", forState: .Normal)
         resetSchemeButton.titleLabel?.font = XKDefaultFontWithSize(16)
-        resetSchemeButton.addTarget(self, action: "toResetScheme:", forControlEvents: .TouchUpInside)
+        resetSchemeButton.addTarget(self, action: #selector(XKRWSchemeVC_5_0.toResetScheme(_:)), forControlEvents: .TouchUpInside)
         backgroundView.addSubview(resetSchemeButton)
         
        
@@ -675,7 +675,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
         lateResetSchemeButton.backgroundColor = UIColor.clearColor()
         lateResetSchemeButton.setTitle("稍后定制", forState: .Normal)
         lateResetSchemeButton.titleLabel?.font = XKDefaultFontWithSize(14)
-        lateResetSchemeButton.addTarget(self, action: "lateToResetScheme:", forControlEvents: .TouchUpInside)
+        lateResetSchemeButton.addTarget(self, action: #selector(XKRWSchemeVC_5_0.lateToResetScheme(_:)), forControlEvents: .TouchUpInside)
         backgroundView.addSubview(lateResetSchemeButton)
         
     }
@@ -947,10 +947,10 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
             
             var section: Int = 0
             if self.foodsArray.count > 0 {
-                section++
+                section += 1
             }
             if self.sportsArray.count > 0 {
-                section++
+                section += 1
             }
             return section
         }

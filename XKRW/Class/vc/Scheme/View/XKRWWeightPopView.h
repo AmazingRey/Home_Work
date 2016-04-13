@@ -8,7 +8,7 @@
 
 @protocol XKRWWeightPopViewDelegate <NSObject>
 @optional
--(void)pressPopViewSure:(NSNumber *)inputNum;
+-(void)pressPopViewSure:(NSDictionary *)dic;
 -(void)pressPopViewCancle;
 @end
 #import <UIKit/UIKit.h>
@@ -42,6 +42,9 @@
 @property (assign ,nonatomic) BOOL isCalendarShown;
 @property (strong,nonatomic) NSMutableArray *recordDates;
 @property (strong, nonatomic) NSMutableDictionary *dicAll;
+
+@property (copy, nonatomic) NSString *selectDateStr;
+@property (strong, nonatomic) NSNumber *currentIndex;
 
 - (IBAction)pressCancle:(id)sender;
 - (IBAction)pressSure:(id)sender;

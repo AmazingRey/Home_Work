@@ -23,8 +23,8 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
-    CGFloat separateWidth = 22 * (XKAppWidth / 375.0);
-    CGFloat circleWidth = (frame.size.width - 4*separateWidth)/3.0;
+    CGFloat circleWidth = 95*(XKAppWidth/320.0);
+    CGFloat separateWidth = (XKAppWidth - circleWidth * 3) / 4.0;
     if (self) {
         
         _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
@@ -48,7 +48,7 @@
             label.font = XKDefaultFontWithSize(14);
             label.text = titles[i];
             [label sizeToFit];
-            label.center = CGPointMake(22 *(i + 1) + circleWidth*(i*2 + 1)/2.0, _eatEnergyCircle.bottom + 34);
+            label.center = CGPointMake(separateWidth *(i + 1) + circleWidth*(i*2 + 1)/2.0, _eatEnergyCircle.bottom + 34);
             [self addSubview:label];
         }
     }

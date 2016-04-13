@@ -44,6 +44,7 @@
         _iCarouselView.decelerationRate = 0.7;
         _iCarouselView.scrollSpeed = .5;
         _iCarouselView.currentItemIndex = 0;
+        _currentIndex = [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
         
         _recordDates = [[XKRWRecordService4_0 sharedService] getUserRecordDateFromDB];
         
@@ -62,6 +63,7 @@
         [_dateLabel addGestureRecognizer:tapgesture];
         
         _selectedDate = [NSDate date];
+        _selectDateStr =[_selectedDate stringWithFormat:@"YYYY-MM-dd"];
         _dateLabel.text = [_selectedDate stringWithFormat:@"MM月dd日"];
         
         NSMutableDictionary *tmpDic = [NSMutableDictionary dictionary];
@@ -75,6 +77,7 @@
 -(void)setSelectedDate:(NSDate *)selectedDate{
     if (_selectedDate != selectedDate) {
         _selectedDate = selectedDate;
+        _selectDateStr =[selectedDate stringWithFormat:@"YYYY-MM-dd"];
         _dateLabel.text = [selectedDate stringWithFormat:@"MM月dd日"];
     }
 }
@@ -159,8 +162,11 @@
     if (_selectedDate) {
         NSDate *dateBefore = [_selectedDate offsetDay:-1];
         if ([self checkSelectedDate:dateBefore]) {
+            [_textField resignFirstResponder];
             [self reloadReocrdOfDay:dateBefore];
             [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
+            NSString *str = _dicAll[_selectDateStr][_currentIndex];
+            _textField.text = str;
         }
     }
 }
@@ -169,36 +175,46 @@
     if (_selectedDate) {
         NSDate *dateAfter = [_selectedDate offsetDay:1];
         if ([self checkSelectedDate:dateAfter]) {
+            [_textField resignFirstResponder];
             [self reloadReocrdOfDay:dateAfter];
             [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
+            NSString *str = _dicAll[_selectDateStr][_currentIndex];
+            _textField.text = str;
         }
     }
 }
 
 #pragma -mark carousel module & Delegate method
-
-- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
-{
-    
-    carousel.currentItemIndex = index;
-//    [carousel scrollToItemAtIndex:index duration:10.0f];
-    [carousel scrollToItemAtIndex:index animated:YES];
-    [_textField resignFirstResponder];
-    NSMutableDictionary *tmpDic = [NSMutableDictionary dictionary];
-    tmpDic = [_dicAll objectForKey:_selectedDate];
-    NSString *str = [tmpDic objectForKey:_arrLabels[index]];
-    if (str && ![str isEqualToString:@""]) {
-        _textField.text = str;
+-(void)saveTheData{
+    NSMutableDictionary *dic = [_dicAll objectForKey:_selectDateStr];
+    NSMutableDictionary *dayDiction = [NSMutableDictionary dictionary];
+    if (dic) {
+        dayDiction = dic;
+    }else{
+        [dayDiction addEntriesFromDictionary:dic];
     }
-    NSLog(@"🐅%ld",(long)index);
+    [dayDiction setObject:_textField.text forKey:_currentIndex];
+    [_dicAll setObject:dayDiction forKey:_selectDateStr];
 }
 
 - (void)carouselDidScroll:(iCarousel *)carousel{
-    
+    [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
+    if (carousel.currentItemIndex != [_currentIndex integerValue]) {
+        [self saveTheData];
+        _currentIndex = [NSNumber numberWithInteger:carousel.currentItemIndex];
+        NSString *str = [[_dicAll objectForKey:_selectDateStr] objectForKey:_currentIndex];
+        if (str && ![str isEqualToString:@""]) {
+            _textField.text = str;
+        }else{
+            _textField.text = @"";
+        }
+    }
 }
 
-- (BOOL)carousel:(iCarousel *)carousel shouldSelectItemAtIndex:(NSInteger)index{
-    return YES;
+- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
+{
+    carousel.currentItemIndex = index;
+    [carousel scrollToItemAtIndex:index animated:YES];
 }
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
@@ -298,12 +314,9 @@
 
 #pragma -mark textfiled delegate
 -(void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    [self saveTheData];
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField;{
-    
-}
 
 #pragma -mark sure btn & cancle btn
 - (IBAction)pressCancle:(id)sender {
@@ -313,10 +326,11 @@
 }
 
 - (IBAction)pressSure:(id)sender {
+    [_textField resignFirstResponder];
     if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]) {
         NSNumberFormatter *numFormatter = [[NSNumberFormatter alloc] init];
         numFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-        [self.delegate pressPopViewSure:[numFormatter numberFromString:[NSString stringWithFormat:@"%@",_textField.text]]];
+        [self.delegate pressPopViewSure:_dicAll];
     }
 }
 

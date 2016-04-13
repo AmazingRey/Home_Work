@@ -19,9 +19,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self = LOAD_VIEW_FROM_BUNDLE(@"XKRWPlan_5_3View");
-        _fuseView = [[XKRWShowEnergy_5_3View alloc ]initWithFrame:_fuseView.frame];
-      
     }
     return self;
 }

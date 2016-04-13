@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NZLabel.h"
 #import "XKRWPlan_5_3CollectionView.h"
+#import "XKRWShowEnergy_5_3View.h"
 
 typedef NS_ENUM(int, PlanType) {
     Food,
@@ -23,7 +24,7 @@ typedef NS_ENUM(int, PlanType) {
 @property (strong, nonatomic) IBOutlet UIImageView *tipsImg;
 @property (weak, nonatomic) IBOutlet UILabel *tipsLab;
 @property (strong, nonatomic) IBOutlet UILabel *calTypeLab;
-@property (strong, nonatomic) IBOutlet UIView *fuseView;
+@property (strong, nonatomic) IBOutlet XKRWShowEnergy_5_3View *fuseView;
 
 
 @property (assign, nonatomic) enum PlanType type;
