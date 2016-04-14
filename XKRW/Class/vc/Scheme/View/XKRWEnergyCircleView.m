@@ -199,8 +199,9 @@
     _progressCircle.circleProgressColor = progressColor;
     _progressCircle.percentage = 0;
     [_progressCircle drawCirclePercentage:percentage animation:YES duration:duration];
-    XKRWRecordFood5_3View *view = [[XKRWRecordFood5_3View alloc] init];
     
+    XKRWRecordFood5_3View *view = [[XKRWRecordFood5_3View alloc] init];
+    [[UIApplication sharedApplication].keyWindow addSubview:view];
     CGRect frame = view.frame;
     frame.origin.y = 200;
     view.frame = frame;

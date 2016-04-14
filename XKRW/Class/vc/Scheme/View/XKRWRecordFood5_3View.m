@@ -139,12 +139,13 @@
     }else if (tableView.tag == 5032){
         XKRWPushMenu5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"pushMenuCell"];
         cell.labMain.text = @"hehe";
+        cell.accessibilityNavigationStyle = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
     return [UITableViewCell new];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 @end
