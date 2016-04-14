@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XKRWBaseVC.h"
+@interface XKRWThinBodyDayManage : NSObject <UIAlertViewDelegate>
 
-@interface XKRWThinBodyDayManage : NSObject
++(instancetype)shareInstance;
 
-/** 达成目标需要的天数*/
-- (NSInteger)dayOfAchieveTarget;
+
+- (void)viewWillApperShowFlower:(XKRWBaseVC *) vc;
+
+- (NSString *)PlanDayText ;
 
 @end

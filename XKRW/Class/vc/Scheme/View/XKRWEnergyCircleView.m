@@ -39,6 +39,7 @@
     self = [super initWithFrame:frame];
     CGFloat scale = self.width / 95.0;
     if (self) {
+        _style = style;
         _shadowView = [[UIImageView alloc] initWithFrame:self.bounds];
         _shadowView.image = [UIImage imageNamed:@"circle_shadow"];
         [self addSubview:_shadowView];
@@ -60,9 +61,7 @@
         _startButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _startButton.frame = CGRectMake(_shadowView.left + 6 * scale, _shadowView.top + 6 * scale, _shadowView.width - 12 * scale, _shadowView.height - 12 * scale);
         _startButton.center = _shadowView.center;
-//        _startButton.layer.cornerRadius = _startButton.width / 2.0;
         [_startButton setBackgroundImage:[UIImage imageNamed:@"open_"] forState:UIControlStateNormal];
-        [_startButton addTarget:self action:@selector(pressedEvent:) forControlEvents:UIControlEventTouchDown];
         [_startButton addTarget:self action:@selector(startButtonClicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
         [self insertSubview:_startButton aboveSubview:_progressCircle];
         
@@ -104,7 +103,7 @@
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:@"currentAnimatedImageIndex"]) {
-        if ([[change objectForKey:NSKeyValueChangeNewKey] integerValue] == 17) {
+        if ([[change objectForKey:NSKeyValueChangeNewKey] integerValue] == 6) {
             [_stateImageView stopAnimating];
         }
     } else {
@@ -115,8 +114,10 @@
     [_stateImageView removeObserver:self forKeyPath:@"currentAnimatedImageIndex"];
 }
 - (void)setStyle:(XKRWEnergyCircleStyle)style {
+    
+    _style = style;
     if (style == XKRWEnergyCircleStyleNotOpen) {
-        _stateImageView.image = nil;
+        _stateImageView.hidden = YES;
         _startButton.hidden = NO;
         _backgroundCircle.hidden = YES;
         _progressCircle.hidden = YES;
@@ -125,7 +126,7 @@
         _goalLabel.hidden = YES;
         
     } else if (style == XKRWEnergyCircleStyleOpened) {
-        _stateImageView.image = nil;
+        _stateImageView.hidden = YES;
         _startButton.hidden = NO;
         _backgroundCircle.hidden = YES;
         _progressCircle.hidden = YES;
@@ -134,7 +135,8 @@
         _goalLabel.hidden = NO;
         
     } else if (style == XKRWEnergyCircleStyleSelected) {
-        _stateImageView.image = _stateImage;
+        _stateImageView.hidden = NO;
+        _startButton.hidden = YES;
         _backgroundCircle.hidden = NO;
         _progressCircle.hidden = NO;
         _titleLabel.hidden = NO;
@@ -143,29 +145,35 @@
     }
 }
 
-- (void)pressedEvent:(UIButton *)sender {
+
+- (void)startButtonClicked:(UIButton *)sender {
+    
     [UIView animateWithDuration:0.2 animations:^{
         sender.transform = CGAffineTransformMakeScale(1.1, 1.1);
-    }];
-}
-- (void)startButtonClicked:(UIButton *)sender {
-
-    [UIView animateWithDuration:0.5 animations:^{
-        sender.transform = CGAffineTransformMakeScale(0.5, 0.5);
-        self.style = XKRWEnergyCircleStyleSelected;
+        
     } completion:^(BOOL finished) {
-        [_startButton setBackgroundImage:[UIImage createImageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
-        sender.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        if (self.energyCircleViewClickBlock) {
-            self.energyCircleViewClickBlock();
-        }
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            sender.transform = CGAffineTransformMakeScale(0.5, 0.5);
+            self.style = XKRWEnergyCircleStyleSelected;
+            
+        } completion:^(BOOL finished) {
+            [_startButton setBackgroundImage:[UIImage createImageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
+            sender.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            if (self.energyCircleViewClickBlock) {
+                self.energyCircleViewClickBlock();
+            }
+        }];
+        
     }];
 }
 
-- (void)setOpenedViewTiltle:(NSString *)ViewTitle currentNumber:(NSString *)currentNumber goalNumber:(NSString *)goalNumber isBehaveCurrect:(BOOL)isBehaveCurrect {
+- (void)setOpenedViewTiltle:(NSString *)ViewTitle currentNumber:(NSString *)currentNumber goalNumber:(NSInteger)goalNumber unit:(NSString *)unit isBehaveCurrect:(BOOL)isBehaveCurrect {
     _titleLabel.text = ViewTitle;
     _currentNumLabel.text = currentNumber;
-    _goalLabel.text = goalNumber;
+    _goalLabel.text = [NSString stringWithFormat:@"%ld%@",(long)goalNumber,unit];
+    _goalNumber = goalNumber;
+    
     if (isBehaveCurrect) {
         _shadowView.image = [UIImage imageNamed:@"circle_shadow"];
         _shadowColor = XKMainSchemeColor;
@@ -183,8 +191,7 @@
 
 - (void)setShadowColor:(UIColor *)shadowColor {
     _shadowColor = shadowColor;
-//    _shadowView.layer.shadowColor = shadowColor.CGColor;
-//    _shadowView.layer.borderColor = [shadowColor colorWithAlphaComponent:0.6].CGColor;
+
 }
 
 - (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration {
@@ -192,19 +199,25 @@
     _progressCircle.circleProgressColor = progressColor;
     _progressCircle.percentage = 0;
     [_progressCircle drawCirclePercentage:percentage animation:YES duration:duration];
-    XKRWRecordFood5_3View *view = [[XKRWRecordFood5_3View alloc] initWithFrame:CGRectMake(0, 300, XKAppWidth, 300)];
+    XKRWRecordFood5_3View *view = [[XKRWRecordFood5_3View alloc] init];
+    
+    CGRect frame = view.frame;
+    frame.origin.y = 200;
+    view.frame = frame;
+    
     [[UIApplication sharedApplication].keyWindow addSubview:view];
-    
-    
 }
 
 - (void)runToCurrentNum:(NSInteger)currentNum duration:(CGFloat)duration {
     _labelAnimation.toValue = @(currentNum);
     _labelAnimation.duration = duration;
     [_currentNumLabel pop_addAnimation:_labelAnimation forKey:@"run_Number"];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [_stateImageView startAnimating];
-    });
+    
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_stateImageView startAnimating];
+            
+        });
+        
 }
 
 - (POPMutableAnimatableProperty *)animationProperty {

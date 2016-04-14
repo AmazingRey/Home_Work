@@ -16,6 +16,10 @@ typedef void(^startButtonClickBlock)(void);
  */
 @property (nonatomic, strong) UIColor *shadowColor;
 /**
+ *  circle goal number
+ */
+@property (nonatomic, assign, readonly) NSInteger goalNumber;
+/**
  *  no animation circle color
  */
 @property (nonatomic, strong) UIColor *progressCircleBackgroundColor;
@@ -42,7 +46,7 @@ typedef void(^startButtonClickBlock)(void);
  *  @param goalNumber      expectate they consume number and unit
  *  @param isBehaveCurrect is the goalNumber range of our expectation
  */
-- (void)setOpenedViewTiltle:(NSString *)ViewTitle currentNumber:(NSString *)currentNumber goalNumber:(NSString *)goalNumber isBehaveCurrect:(BOOL)isBehaveCurrect;
+- (void)setOpenedViewTiltle:(NSString *)ViewTitle currentNumber:(NSString *)currentNumber goalNumber:(NSInteger)goalNumber unit:(NSString *)unit isBehaveCurrect:(BOOL)isBehaveCurrect;
 
 - (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration;
 - (void)runToCurrentNum:(NSInteger)currentNum duration:(CGFloat)duration;

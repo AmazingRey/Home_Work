@@ -105,6 +105,17 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
 //  [self.navigationController.interactivePopGestureRecognizer removeTarget:self action:@selector(checkNeedHideNaviBarWhenPoped)];
 }
 
+- (void)setTitle:(NSString *)title {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = XKDefaultFontWithSize(17);
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    self.navigationItem.titleView = label;
+    label.text = title;
+    [label sizeToFit];
+}
+
 - (void)addNaviBarLeftButtonWithNormalImageName:(NSString *)normalImageName
                            highlightedImageName:(NSString *)highlightedImageName
                                        selector:(SEL)action {

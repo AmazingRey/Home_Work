@@ -54,58 +54,95 @@
     }
     return self;
 }
-- (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber isBehaveCurrect:(BOOL)isBehaveCurrect {
+
+#pragma mark -- reset meals、sports and habits' current number
+- (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
+    CGFloat percentage = (currentNumber / (CGFloat)_eatEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_eatEnergyCircle.goalNumber);
+    [_eatEnergyCircle runProgressCircleWithColor:_eatEnergyCircle.shadowColor percentage:percentage duration:1.5 * percentage];
+    [_eatEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
+}
+
+- (void)runSportEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
+    CGFloat percentage = (currentNumber / (CGFloat)_sportEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_sportEnergyCircle.goalNumber);
+    [_sportEnergyCircle runProgressCircleWithColor:_sportEnergyCircle.shadowColor percentage:percentage duration:1.5 * percentage];
+    [_sportEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
+}
+
+- (void)runHabitEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
+    CGFloat percentage = (currentNumber / (CGFloat)_habitEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_habitEnergyCircle.goalNumber);
+    [_habitEnergyCircle runProgressCircleWithColor:_habitEnergyCircle.shadowColor percentage:percentage duration:1.5 * percentage];
+    [_habitEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
+}
+
+#pragma mark -- set meals、sports and habits' original state data
+- (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
     __weak typeof(self) weakSelf = self;
-    [_eatEnergyCircle setOpenedViewTiltle:@"已摄入" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:[NSString stringWithFormat:@"%dkcal",(int)goalNumber] isBehaveCurrect:isBehaveCurrect];
+    
+    BOOL isBehaveCurrect = NO;
+    if (currentNumber <= goalNumber) {
+        isBehaveCurrect = YES;
+    } else {
+        isBehaveCurrect = NO;
+    }
+    [_eatEnergyCircle setOpenedViewTiltle:@"已摄入" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
     _eatEnergyCircle.energyCircleViewClickBlock = ^(){
         [weakSelf resetCirclesStyle];
         
-        CGFloat percentage = (currentNumber / (CGFloat)goalNumber) > 1 ? 1:(currentNumber / (CGFloat)goalNumber);
-        [weakSelf.eatEnergyCircle runProgressCircleWithColor:weakSelf.eatEnergyCircle.shadowColor percentage:percentage duration:1.5];
-        [weakSelf.eatEnergyCircle runToCurrentNum:currentNumber duration:1.5];
+        [weakSelf runEatEnergyCircleWithNewCurrentNumber:currentNumber];
         
         if ([weakSelf respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
         }
+        _selectedIndex = 1;
         _exClickedCircle = _eatEnergyCircle;
     };
  
 }
 
-- (void)setSportEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber isBehaveCurrect:(BOOL)isBehaveCurrect {
+- (void)setSportEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
     __weak typeof(self) weakSelf = self;
     
-    [_sportEnergyCircle setOpenedViewTiltle:@"已消耗" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:[NSString stringWithFormat:@"%dkcal",(int)goalNumber] isBehaveCurrect:isBehaveCurrect];
+    BOOL isBehaveCurrect = NO;
+    if (currentNumber >= goalNumber) {
+        isBehaveCurrect = YES;
+    } else {
+        isBehaveCurrect = NO;
+    }
+    [_sportEnergyCircle setOpenedViewTiltle:@"已消耗" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
     
-    CGFloat percentage = (currentNumber / (CGFloat)goalNumber) > 1 ? 1:(currentNumber / (CGFloat)goalNumber);
     _sportEnergyCircle.energyCircleViewClickBlock = ^(){
         [weakSelf resetCirclesStyle];
         
-        [weakSelf.sportEnergyCircle runProgressCircleWithColor:weakSelf.sportEnergyCircle.shadowColor percentage:percentage duration:1.5];
-        [weakSelf.sportEnergyCircle runToCurrentNum:currentNumber duration:1.5];
+        [weakSelf runSportEnergyCircleWithNewCurrentNumber:currentNumber];
         
         if ([weakSelf respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
         }
+        _selectedIndex = 2;
         _exClickedCircle = _sportEnergyCircle;
     };
 }
 
-- (void)setHabitEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber isBehaveCurrect:(BOOL)isBehaveCurrect {
+- (void)setHabitEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
     __weak typeof(self) weakSelf = self;
     
-    [_habitEnergyCircle setOpenedViewTiltle:@"已改正" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:[NSString stringWithFormat:@"%d个",(int)goalNumber] isBehaveCurrect:isBehaveCurrect];
-    
-    CGFloat percentage = (currentNumber / (CGFloat)goalNumber) > 1 ? 1:(currentNumber / (CGFloat)goalNumber);
+    BOOL isBehaveCurrect = NO;
+    if (currentNumber == goalNumber) {
+        isBehaveCurrect = YES;
+    } else {
+        isBehaveCurrect = NO;
+    }
+    [_habitEnergyCircle setOpenedViewTiltle:@"已改正" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"个" isBehaveCurrect:isBehaveCurrect];
+
     _habitEnergyCircle.energyCircleViewClickBlock = ^(){
         [weakSelf resetCirclesStyle];
         
-        [weakSelf.habitEnergyCircle runProgressCircleWithColor:weakSelf.habitEnergyCircle.shadowColor percentage:percentage duration:1.5];
-        [weakSelf.habitEnergyCircle runToCurrentNum:currentNumber duration:1.5];
+        [weakSelf runHabitEnergyCircleWithNewCurrentNumber:currentNumber];
         
         if ([weakSelf respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
         }
+        _selectedIndex = 3;
         _exClickedCircle = _habitEnergyCircle;
     };
 }

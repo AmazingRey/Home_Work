@@ -23,9 +23,10 @@
 #import "XKRWServerPageService.h"
 #import "XKRWRecordService4_0.h"
 #import "XKRWServerPageService.h"
-
-#import "XKRW-Swift.h"
-
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
+//#import "XKRW-Swift.h"
+#import "XKRWNavigationController.h"
 #import "XKRWServiceIslimADDCell.h"
 #import "XKRWUtil.h"
 #import "XKRWIslimModel.h"
@@ -297,6 +298,8 @@
             [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
             
             [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil options:SDWebImageRetryFailed];
+            
+  
             
             XKRWIslimAddModel __block * blockModel = model;
             __weak __typeof(self)weakSelf = self;

@@ -157,7 +157,7 @@
 - (void)entrySurroundVCDelegate:(NSInteger)tag
 {
     XKRWSurroundDegreeVC *surroundVC = [[XKRWSurroundDegreeVC alloc]init];
-    
+//    surroundVC.navigationController
     switch (tag) {
         case 1000:
             surroundVC.dataType = eBustType;
@@ -181,6 +181,8 @@
             break;
     }
     [self.navigationController pushViewController:surroundVC animated:YES];
+    
+    
 }
 
 
@@ -855,7 +857,7 @@
     }
 }
 
--(NSUInteger)supportedInterfaceOrientations{
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations{
     return UIInterfaceOrientationMaskPortrait;
 }
 

@@ -14,7 +14,10 @@
     UIImageView *imageView;
 }
 
+
+
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController withNavigationBarType:(NavigationBarType) type;
+
 
 // default style
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController;

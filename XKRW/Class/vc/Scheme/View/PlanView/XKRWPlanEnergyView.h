@@ -15,8 +15,26 @@
 @end
 @interface XKRWPlanEnergyView : UIView
 @property (nonatomic, weak) id<XKRWPlanEnergyViewDelegate> delegate;
-
-- (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber isBehaveCurrect:(BOOL)isBehaveCurrect;
-- (void)setSportEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber isBehaveCurrect:(BOOL)isBehaveCurrect;
-- (void)setHabitEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber isBehaveCurrect:(BOOL)isBehaveCurrect;
+@property (nonatomic, assign, readonly) NSInteger selectedIndex;
+- (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber;
+- (void)setSportEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber;
+- (void)setHabitEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber;
+/**
+ *  change current eat kcal with animation
+ *
+ *  @param currentNumber current kcal number
+ */
+- (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber;
+/**
+ *  change current sport expended kcal with animation
+ *
+ *  @param currentNumber current expended kcal number
+ */
+- (void)runSportEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber;
+/**
+ *  change current correct bad habits with animation
+ *
+ *  @param currentNumber current corrective habits number
+ */
+- (void)runHabitEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber;
 @end

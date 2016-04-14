@@ -23,6 +23,12 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
     
     var fatReason:NSMutableArray = NSMutableArray()
     
+    
+//    override func viewWillAppear(animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//    }
+    
     override func viewDidLoad() {
         MobClick.event("in_WhyFat")
         

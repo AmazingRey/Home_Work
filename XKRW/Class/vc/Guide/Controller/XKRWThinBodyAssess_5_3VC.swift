@@ -25,6 +25,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.loadDataAndReload()
         scrollView.contentOffset = CGPointZero
     }
@@ -36,6 +37,12 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
         
         scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, headView.frame.size.height+CGFloat(viewHeight)*2+CGFloat(numLines*180)+60)
         var frame = CGRectZero
+        
+        for view in scrollView.subviews {
+            if view.isKindOfClass(XKRWPlan_5_3View) {
+                view.removeFromSuperview()
+            }
+        }
         
         for index in 0...2 {
             let view = loadViewFromBundle("XKRWPlan_5_3View", owner: self) as! XKRWPlan_5_3View

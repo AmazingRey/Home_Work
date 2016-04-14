@@ -25,6 +25,8 @@
 
 + (NSString *) dateFormatWithString:(NSString *)dateStr format:(NSString *)fromatStr;
 
++ (NSString *) dateFormateWithDate:(NSDate *)date format:(NSString *)formatStr;
+
 /*生成随机数*/
 + (int)getRandomNumber:(int)from to:(int)to;
 /*将数组或者字典转换成JSON对象*/

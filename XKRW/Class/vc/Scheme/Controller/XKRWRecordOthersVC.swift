@@ -113,7 +113,7 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                 
                 eatMillionsButton?.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, UI_SCREEN_WIDTH / 2 - 70)
                 
-                eatMillionsButton!.addTarget(self, action: "eatALot:", forControlEvents: UIControlEvents.TouchUpInside)
+                eatMillionsButton!.addTarget(self, action: #selector(XKRWRecordOthersVC.eatALot(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 
                 self.view.addSubview(eatMillionsButton!)
                 

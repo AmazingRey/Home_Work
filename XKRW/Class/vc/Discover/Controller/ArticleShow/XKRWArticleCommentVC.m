@@ -108,6 +108,9 @@
     
     if ([taskID isEqualToString:@"downLoadComment"]) {
         [self showRequestArticleNetworkFailedWarningShow];
+        
+    } else if ([taskID isEqualToString:@"commitComment"]) {
+        [XKRWCui showInformationHudWithText:@"评论失败"];
     }
 }
 
@@ -193,7 +196,7 @@
                 [XKRWCui showAlertWithMessage:result[@"message"]];
             }
             
-        } else if ([result[@"success"] boolValue]) {
+        } else if ([result[@"success"] boolValue] && _dataSource.count > selectArray.firstObject.row) {
             XKRWCommentEtity *entity = _dataSource[selectArray.firstObject.row];
             if (entity.sub_Array == nil) {
                 entity.sub_Array = [NSMutableArray arrayWithObject:result[@"comment"]];
@@ -201,7 +204,7 @@
                 [entity.sub_Array addObject:result[@"comment"]];
             }
             [self.tableView reloadRowsAtIndexPaths:@[selectArray.firstObject] withRowAnimation:UITableViewRowAnimationNone];
-        }
+        } else return;
     }
 }
 

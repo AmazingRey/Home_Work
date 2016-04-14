@@ -319,7 +319,7 @@
     [super viewDidAppear:animated];
     if (_fromWhich == Appdelegate) {
         [XKRWCui showAdImageOnWindow];
-        [self performSelector:@selector(normalFlow) withObject:nil afterDelay:4];
+        [self performSelector:@selector(normalFlow) withObject:nil afterDelay:5];
         _fromWhich = 0;
     }else{
         [self normalFlow];

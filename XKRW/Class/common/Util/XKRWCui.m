@@ -175,7 +175,7 @@
         }
         [window addSubview:ADImageView];
         
-        [NSTimer scheduledTimerWithTimeInterval:10.f
+        [NSTimer scheduledTimerWithTimeInterval:5.f
                                          target:self
                                        selector:@selector(hideAdImage)
                                        userInfo:nil

@@ -30,6 +30,14 @@
 }
 
 
++ (NSString *) dateFormateWithDate:(NSDate *)date format:(NSString *)formatStr
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    formatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    [formatter setDateFormat:formatStr];
+    return [formatter stringFromDate:date];
+}
+
 
 + (uint32_t) ageWithTimestamp:(NSTimeInterval)timestamp
 {

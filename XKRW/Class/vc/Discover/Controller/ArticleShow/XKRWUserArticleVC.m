@@ -635,7 +635,6 @@
         case 2:
         {
             _editCell = [tableView dequeueReusableCellWithIdentifier:@"editCommentCell"];
-//            _editCell.selectionStyle = UITableViewCellSelectionStyleGray;
             [_editCell.writeCommentBtn addTarget:self action:@selector(writeComment) forControlEvents:UIControlEventTouchUpInside];
             if (_commentCount == 0) { // 无评论
                 if (indexPath.row == 0) {
@@ -645,7 +644,7 @@
                 } else {
                     XKRWMoreCommetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"moreCommetCell"];
                     
-                    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.haveComment = NO;
                     
                     return cell;

@@ -26,6 +26,11 @@
 #import "XKRWMoreSearchResultVC.h"
 #import "XKRWFoodDetailVC.h"
 #import "XKRWSportDetailVC.h"
+#import "XKRWThinBodyDayManage.h"
+#import "XKRWUserService.h"
+#import "XKRWRecordVC.h"
+#import "XKRWSurroundDegreeVC_5_3.h"
+#import "XKRWNavigationController.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate>
 {
@@ -41,6 +46,11 @@
     
     NSInteger foodsCount;
     NSInteger sportsCount;
+    
+    NSArray <XKRWSchemeEntity_5_0 *> *mealEntitys;
+    NSInteger mealGoalCarol;
+    
+    UILabel  *dayLabel;
 }
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
@@ -53,20 +63,40 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
+   // dayLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initView];
+    [self initData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView) name:@"energyCircleDataChanged" object:nil];
     //[self addTouchWindowEvent];
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 -(void)addTouchWindowEvent{
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];
     singleTap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:singleTap];
 }
+#pragma mark - data
+- (void)initData {
+    
+    mealEntitys = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
+    [_planEnergyView setHabitEnergyCircleGoalNumber:12 currentNumber:3];
+    [self refreshEnergyCircleView];
+}
 
+- (void)refreshEnergyCircleView {
+    [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:0];
+    [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:0];
+}
 #pragma --mark UI
 - (void)initView {
 
@@ -77,9 +107,6 @@
     [self.view addSubview:planTableView];
     
     _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 68 + (XKAppWidth - 66)/3.0)];
-    [_planEnergyView setEatEnergyCircleGoalNumber:4000 currentNumber:3000 isBehaveCurrect:YES];
-    [_planEnergyView setSportEnergyCircleGoalNumber:400 currentNumber:200 isBehaveCurrect:NO];
-    [_planEnergyView setHabitEnergyCircleGoalNumber:12 currentNumber:3 isBehaveCurrect:NO];
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
     [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
@@ -123,8 +150,40 @@
         searchDisplayCtrl.searchResultTableView.tag = 201 ;
         [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCell" bundle:nil] forCellReuseIdentifier:@"searchResultCell"];
         
+        UILabel * searchText = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, XKAppWidth, 30)];
+        searchText.text = @"查询";
+        searchText.textColor = XK_ASSIST_TEXT_COLOR;
+        searchText.font = [UIFont systemFontOfSize:24];
+        searchText.textAlignment = NSTextAlignmentCenter;
+        
+        UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_ic_"]];
+        iconImageView.center =  CGPointMake(XKAppWidth / 2, searchText.bottom + 10 + iconImageView.height / 2);
+        
+        [searchDisplayCtrl.backgroundContentView addSubview:searchText];
+        [searchDisplayCtrl.backgroundContentView addSubview:iconImageView];
         
         
+        UILabel *food = [[UILabel alloc] initWithFrame:CGRectMake(iconImageView.left, iconImageView.bottom + 5, 50, 30)];
+        food.textAlignment = NSTextAlignmentLeft;
+        food.text = @"食物";
+        food.font = [UIFont systemFontOfSize:14];
+        food.textColor = XK_ASSIST_TEXT_COLOR;
+        
+        UILabel *meal = [[UILabel alloc] initWithFrame:CGRectMake(XKAppWidth / 2 - 25, iconImageView.bottom + 5, 50, 30)];
+        meal.textAlignment = NSTextAlignmentCenter;
+        meal.text = @"菜肴";
+        meal.font = [UIFont systemFontOfSize:14];
+        meal.textColor = XK_ASSIST_TEXT_COLOR;
+        
+        UILabel *sport = [[UILabel alloc] initWithFrame:CGRectMake(iconImageView.right - 54, iconImageView.bottom + 5, 50, 30)];
+        sport.textAlignment = NSTextAlignmentRight;
+        sport.text = @"运动";
+        sport.font = [UIFont systemFontOfSize:14];
+        sport.textColor = XK_ASSIST_TEXT_COLOR;
+       
+        [searchDisplayCtrl.backgroundContentView addSubview:food];
+        [searchDisplayCtrl.backgroundContentView addSubview:meal];
+        [searchDisplayCtrl.backgroundContentView addSubview:sport];
         [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCategoryCell" bundle:nil] forCellReuseIdentifier:@"searchResultCategoryCell"];
         
         
@@ -143,12 +202,16 @@
         _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
         _recordAndTargetView.dayLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
         _recordAndTargetView.dayLabel.layer.borderWidth = 1;
-        
+        XKLog(@"%@",[[XKRWThinBodyDayManage shareInstance] PlanDayText]);
+        _recordAndTargetView.planTimeLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
         _recordAndTargetView.currentWeightLabel.layer.masksToBounds = YES;
         _recordAndTargetView.currentWeightLabel.layer.cornerRadius = 16;
         _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
         _recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
-        
+        _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWUserService sharedService] getCurrentWeight]/1000.f];
+        _recordAndTargetView.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)[NSDate date].day];
+        _recordAndTargetView.monthLabel.text = [NSString stringWithFormat:@"%ld月",(long)[NSDate date].month];
+        _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
         [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
         
         UILongPressGestureRecognizer *gesLongPressed = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressRecognizer:)];
@@ -216,7 +279,17 @@
 }
 
 - (void)entryCalendarAction:(UIButton *)button{
-
+    XKRWRecordVC *recordVC = [[XKRWRecordVC alloc] init];
+    recordVC.hidesBottomBarWhenPushed = YES;
+   
+    [self.navigationController pushViewController:recordVC animated:YES];
+     [recordVC.navigationController setNavigationBarHidden:NO];
+    
+//    XKRWSurroundDegreeVC_5_3 *vc = [[XKRWSurroundDegreeVC_5_3 alloc] init];
+//    vc.dataType = eWeightType;
+//    [self presentViewController:vc animated:YES completion:^{
+//        
+//    }];
 }
 
 
@@ -240,7 +313,10 @@
  *  查看曲线
  */
 -(void)pressGraph{
-    [self popViewAppear:2];
+//    [self popViewAppear:2];
+    XKRWSurroundDegreeVC_5_3 *vc = [[XKRWSurroundDegreeVC_5_3 alloc]init];
+    vc.dataType = 1;
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 /**
@@ -306,7 +382,6 @@
         sportsArray = [result objectForKey:@"sport"];
         foodsCount = foodsArray.count > 3 ? 3 : foodsArray.count;
         sportsCount = sportsArray.count > 3 ? 3 : sportsArray.count;
-        
         if (!searchDisplayCtrl.isShowSearchResultTableView ){
             [searchDisplayCtrl showSearchResultTableView];
         }
@@ -314,11 +389,32 @@
         
         return ;
     }
-
+    
+    if ([taskID isEqualToString:@"restSchene"]) {
+        [XKRWCui hideProgressHud];
+        if (result != nil) {
+            if ([[result objectForKey:@"success"] integerValue] == 1){
+                [[XKRWSchemeService_5_0 sharedService] dealResetUserScheme:self];
+                 XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc] initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
+                fatReasonVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:fatReasonVC animated:YES];
+                [fatReasonVC.navigationController setNavigationBarHidden:NO];
+            }
+        }else {
+            [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
+        }
+        return;
+    }
 }
 
 - (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID {
     [super handleDownloadProblem:problem withTaskID:taskID];
+    
+    if ([taskID isEqualToString:@"restSchene"]) {
+        [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
+        return;
+    }
+    
 }
 
 - (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication {
@@ -364,7 +460,7 @@
                     XKRWSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCell"];
                     XKRWFoodEntity *foodEntity =[foodsArray objectAtIndex:indexPath.row - 1];
                     cell.title.text = foodEntity.foodName;
-                    cell.subtitle.text = [NSString stringWithFormat:@"%ldkcal/100g",foodEntity.foodEnergy];
+                    cell.subtitle.text = [NSString stringWithFormat:@"%ldkcal/100g",(long)foodEntity.foodEnergy];
                     [cell.logoImageView setImageWithURL:[NSURL URLWithString:foodEntity.foodLogo] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
                      return cell;
                 }
