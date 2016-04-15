@@ -93,10 +93,10 @@ class XKRWHabitRecordCell: UITableViewCell {
                     button.setImage(UIImage(named: hEntity.getButtonImages()[1] as! String), forState: UIControlState.Selected)
                     if hEntity.situation == 1 {
                         button.selected = true
-                        numOfAmend++
+                        numOfAmend += 1
                     }
                     
-                    button.addTarget(self, action: "clickHabitButton:", forControlEvents: .TouchUpInside)
+                    button.addTarget(self, action: #selector(XKRWHabitRecordCell.clickHabitButton(_:)), forControlEvents: .TouchUpInside)
                     
                     self.habitsView.addSubview(button)
                 }
@@ -144,7 +144,7 @@ class XKRWHabitRecordCell: UITableViewCell {
             
             if sender.selected {
                 entity.situation = 1
-                self.numOfAmend++
+                self.numOfAmend += 1
 
                 let path = NSBundle.mainBundle().pathForResource("habbit_button_ringtone", ofType: "m4a")
                 if path != nil {
@@ -153,7 +153,7 @@ class XKRWHabitRecordCell: UITableViewCell {
                 
             } else {
                 entity.situation = 0
-                self.numOfAmend--
+                self.numOfAmend -= 1
             }
         }
         
@@ -161,7 +161,7 @@ class XKRWHabitRecordCell: UITableViewCell {
             self.timer?.invalidate()
             self.timer = nil
         }
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: "save", userInfo: nil, repeats: false)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: #selector(XKRWHabitRecordCell.save), userInfo: nil, repeats: false)
 //        self.timer = NSTimer(fireDate: NSDate(), interval: 3, target: self, selector: "save", userInfo: nil, repeats: false)
         
         var y = self.frame.origin.y

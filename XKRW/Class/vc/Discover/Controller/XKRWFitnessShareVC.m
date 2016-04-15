@@ -31,7 +31,7 @@
     // Do any additional setup after loading the view.
     [self addNaviBarBackButton];
     [self addNaviBarSegmentBtn];
-    [self addNaviBarRightButtonWithNormalImageName:@"icon_write" highlightedImageName:@"icon_write_p" selector:@selector(editArticleItemClicked)];
+    [self addNaviBarRightButtonWithNormalImageName:@"write" highlightedImageName:@"write_p" selector:@selector(editArticleItemClicked)];
     
     [self initUI];
 
@@ -49,10 +49,10 @@
     
     _segmentCtl.center = CGPointMake(XKAppWidth/2, 22);
     _segmentCtl.size = CGSizeMake(120, 30);
-    _segmentCtl.tintColor = [UIColor colorFromHexString:@"#d5f5f3"];
+    _segmentCtl.tintColor = XKMainSchemeColor;// [UIColor colorFromHexString:@"#d5f5f3"];
     _segmentCtl.layer.masksToBounds = YES;
     _segmentCtl.layer.borderWidth = 1.5;
-    _segmentCtl.layer.borderColor = [UIColor colorFromHexString:@"#d5f5f3"].CGColor;
+    _segmentCtl.layer.borderColor = XKMainSchemeColor.CGColor ;// [UIColor colorFromHexString:@"#d5f5f3"].CGColor;
     _segmentCtl.layer.cornerRadius = 15;
     _segmentCtl.selectedSegmentIndex = 0;
     self.navigationItem.titleView = _segmentCtl;

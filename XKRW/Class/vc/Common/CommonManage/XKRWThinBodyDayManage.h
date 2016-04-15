@@ -17,4 +17,6 @@
 
 - (NSString *)PlanDayText ;
 
+- (NSString *)TipsTextWithDayAndWhetherOpen ;
+
 @end

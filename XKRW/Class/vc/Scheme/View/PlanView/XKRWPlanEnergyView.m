@@ -19,6 +19,7 @@
 @implementation XKRWPlanEnergyView
 {
     XKRWEnergyCircleView *_exClickedCircle;
+    UILabel *_remindLabel;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -27,17 +28,32 @@
     CGFloat separateWidth = (XKAppWidth - circleWidth * 3) / 4.0;
     if (self) {
         
-        _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
+        _remindLabel = [[UILabel alloc] init];
+        _remindLabel.font = XKDefaultFontWithSize(12);
+        _remindLabel.text = @"点击“开启”，来监督今天的行为";
+        [_remindLabel sizeToFit];
+        _remindLabel.center = CGPointMake(XKAppWidth / 2.0, 34);
+        [self addSubview:_remindLabel];
+        
+        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+        gradientLayer.frame = _remindLabel.frame;
+        gradientLayer.colors = @[[UIColor colorFromHexString:@"ffffff"],[UIColor colorFromHexString:@"000000"],[UIColor colorFromHexString:@"c7c7c7"],];
+        [self.layer addSublayer:gradientLayer];
+        
+        gradientLayer.mask = _remindLabel.layer;
+        _remindLabel.frame = gradientLayer.bounds;
+        
+        _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 68, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
         _eatEnergyCircle.tag = 1;
         [self addSubview:_eatEnergyCircle];
         
         
-        _sportEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_eatEnergyCircle.right + separateWidth, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
+        _sportEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_eatEnergyCircle.right + separateWidth, _eatEnergyCircle.top, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
         _sportEnergyCircle.tag = 2;
         [self addSubview:_sportEnergyCircle];
         
         
-        _habitEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_sportEnergyCircle.right + separateWidth, 0, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
+        _habitEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_sportEnergyCircle.right + separateWidth, _sportEnergyCircle.top, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
         _habitEnergyCircle.tag = 3;
         [self addSubview:_habitEnergyCircle];
         

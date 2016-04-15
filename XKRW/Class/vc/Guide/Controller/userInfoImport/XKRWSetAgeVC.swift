@@ -46,7 +46,11 @@ class XKRWSetAgeVC: XKRWBaseVC {
         
         self.setMinAndMaxFatAge()
         datePicker.date = self.getCustomDate(1990, month: 1, day: 1, hour: 0, min: 0, sec: 0)
-        
+        for view in datePicker.subviews{
+            if view.isKindOfClass(UIPickerView) {
+                view.transform = CGAffineTransformMakeScale(1.35, 1.2);
+            }
+        }
         let dateFormat:NSDateFormatter = NSDateFormatter()
         dateFormat.calendar = NSCalendar.init(calendarIdentifier: NSGregorianCalendar)
         dateFormat.dateFormat = "yyyy-MM-dd"

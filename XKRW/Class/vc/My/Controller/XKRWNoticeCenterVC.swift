@@ -45,7 +45,7 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
         segment.frame = CGRectMake(15, 10, UI_SCREEN_WIDTH-30, 30)
         segment.tintColor = XKMainSchemeColor
         segment.selectedSegmentIndex = 0
-        segment.addTarget(self, action: "changeSegmentIndexAction:", forControlEvents: .ValueChanged)
+        segment.addTarget(self, action: #selector(XKRWNoticeCenterVC.changeSegmentIndexAction(_:)), forControlEvents: .ValueChanged)
         self.view.addSubview(segment)
         
         noticeTableView.separatorStyle = .None

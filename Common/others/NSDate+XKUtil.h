@@ -35,6 +35,9 @@
 
 - (NSDate*)addDay:(NSInteger)offset;
 
+
++ (BOOL) compareDateIsToday:(NSDate *)date ;
+
 //+(NSDate *)dateFromString:(NSString *)string withFormat:(NSString *)formate;
 
 @end

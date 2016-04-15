@@ -16,6 +16,8 @@
 @end
 
 @implementation XKRWRecordFood5_3View
+@synthesize arrRecord = _arrRecord,arrMenu = _arrMenu;
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -49,19 +51,30 @@
     _tableMenu.dataSource = self;
 }
 
--(void)setDicRecord:(NSArray *)dicRecord{
-    if (_dicRecord != dicRecord) {
-        _dicRecord = dicRecord;
+-(void)setArrRecord:(NSArray *)arrRecord{
+    if (_arrRecord != arrRecord) {
+        _arrRecord = arrRecord;
         [_tableRecord reloadData];
     }
 }
 
--(void)setDicMenu:(NSArray *)dicMenu{
-    if (_dicMenu != dicMenu) {
-        _dicMenu = dicMenu;
+-(NSArray *)arrRecord{
+    NSLog(@"Returning name: %@", _arrRecord);
+    return _arrRecord;
+}
+
+-(void)setArrMenu:(NSArray *)arrMenu{
+    if (_arrMenu != arrMenu) {
+        _arrMenu = arrMenu;
         [_tableMenu reloadData];
     }
 }
+
+-(NSArray *)arrMenu{
+    NSLog(@"Returning name: %@", _arrMenu);
+    return _arrMenu;
+}
+
 
 -(void)scrollToPage:(NSInteger)page{
     if (_pageIndex == page) {

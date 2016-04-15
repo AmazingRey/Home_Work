@@ -39,6 +39,12 @@
  */
 #define kPaymentResultNotification @"paymentResultNotification"
 
+/*
+ *  Tips
+ */
+
+#define OpenPlanToday  @"OpenPlanToday"
+
 //远程通知相关
 #define RemoteImportantNotification     @"remoteImportantNotification"       //重要消息
 #define RemoteNormalNotification        @"RemoteNormalNotification"          //普通消息

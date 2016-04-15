@@ -64,16 +64,13 @@
     }];
     
     if (type == NavigationBarTypeTransparency) {
-
-        [[UINavigationBar appearance]  setShadowImage:[[UIImage alloc] init]];
-        self.navigationBar.layer.masksToBounds = YES;
-        
         CGRect frame = self.navigationBar.frame;
         imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height+20)];
         imageView.image = [UIImage imageNamed:@"navigationBar"];
         imageView.alpha = 0;
         [self.view insertSubview:imageView belowSubview:self.navigationBar];
         [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"bigShadow"] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationBar setShadowImage:[UIImage new]];
         
        
     }else
@@ -108,6 +105,7 @@
         }];
         [self.view insertSubview:imageView belowSubview:self.navigationBar];
         [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"bigShadow"] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationBar setShadowImage:[UIImage new]];
         self.navigationBar.layer.masksToBounds = YES;
     }
 }
@@ -124,6 +122,7 @@
         [self.view insertSubview:imageView belowSubview:self.navigationBar];
         [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"bigShadow"] forBarMetrics:UIBarMetricsDefault];
         self.navigationBar.layer.masksToBounds = YES;
+        [self.navigationBar setShadowImage:[UIImage new]];
     }
 
 }
@@ -162,6 +161,8 @@
         viewController.title = @"";
     }
 }
+
+
 
 
 

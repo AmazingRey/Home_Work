@@ -197,6 +197,7 @@
     
 	// Super
     [super viewDidLoad];
+    
 //    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top88.png"] forBarMetrics:UIBarMetricsDefault];
     UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftItemButton setImage:[UIImage imageNamed:@"return1.png"] forState:UIControlStateNormal];

@@ -38,7 +38,7 @@ class XKRWSchemeChooseHeader: UIView {
         sportButton.frame = CGRectMake(0, 0, frame.size.width / 3, frame.size.height)
         sportButton.tag = 1
         
-        sportButton.addTarget(self, action: Selector("cilckButton:"), forControlEvents: .TouchUpInside)
+        sportButton.addTarget(self, action: #selector(XKRWSchemeChooseHeader.cilckButton(_:)), forControlEvents: .TouchUpInside)
         
         let mealButton: UIButton = UIButton(type: .Custom)
         mealButton.setTitle("饮食方案", forState: .Normal)
@@ -49,7 +49,7 @@ class XKRWSchemeChooseHeader: UIView {
         mealButton.setTitleColor(XKMainSchemeColor, forState: .Selected)
         mealButton.tag = 2
 
-        mealButton.addTarget(self, action: Selector("cilckButton:"), forControlEvents: .TouchUpInside)
+        mealButton.addTarget(self, action: #selector(XKRWSchemeChooseHeader.cilckButton(_:)), forControlEvents: .TouchUpInside)
         
         let habitButton: UIButton = UIButton(type: .Custom)
         habitButton.setTitle("习惯改善", forState: .Normal)

@@ -20,6 +20,7 @@
 #import "XKMustBeOverridedMethodException.h"
 #import "XKRW-Swift.h"
 #import "XKRWNetWorkException.h"
+#import "Masonry.h"
 static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
 
 @interface XKRWBaseVC ()
@@ -145,10 +146,10 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
 -(void)addNaviBarBackButton {
     UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    UIImage *back = [UIImage imageNamed:@"back_image"];
+    UIImage *back = [UIImage imageNamed:@"navigationBarback"];
     
     [leftItemButton setImage:back forState:UIControlStateNormal];
-    [leftItemButton setImage:[UIImage imageNamed:@"back_p"] forState:UIControlStateHighlighted];
+    [leftItemButton setImage:[UIImage imageNamed:@"navigationBarback_p"] forState:UIControlStateHighlighted];
     leftItemButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
     leftItemButton.frame = CGRectMake(0, 0, back.size.width, back.size.height);
 
@@ -287,7 +288,7 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
                                        attributes:@{NSFontAttributeName: XKDefaultFontWithSize(15)}
                                           context:nil].size.width;
             [leftItemButton setTitle:leftItemTitle forState:UIControlStateNormal];
-            [leftItemButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [leftItemButton setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
             leftItemButton.titleLabel.font = XKDefaultFontWithSize(15.f);
         }
 
@@ -339,7 +340,7 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
                                                      attributes:@{NSFontAttributeName: XKDefaultFontWithSize(15)}
                                                         context:nil].size.width;
             [rightItemButton setTitle:rightItemTitle forState:UIControlStateNormal];
-            [rightItemButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [rightItemButton setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
             rightItemButton.titleLabel.font = XKDefaultFontWithSize(15.f);
 
         }

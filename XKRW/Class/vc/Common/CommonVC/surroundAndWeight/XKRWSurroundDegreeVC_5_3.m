@@ -60,7 +60,7 @@
     [popButton setBackgroundImage:[UIImage imageNamed:@"back_p"] forState:UIControlStateHighlighted];
     [customView addSubview:popButton];
     
-    NSArray *array = @[@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
+    NSArray *array = @[@"体重",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
     
     for (NSInteger i = 0; i <[array count] ; i++) {
         UIButton *typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -72,10 +72,11 @@
         [typeButton setTitleColor:XKMainSchemeColor forState:UIControlStateSelected];
         [typeButton addTarget:self action:@selector(changeType:) forControlEvents:UIControlEventTouchUpInside];
         
-        typeButton.frame = CGRectMake(0, 50 + i*(XKAppWidth - 40*2)/6, 64, (XKAppWidth - 40*2)/6 );
+        typeButton.frame = CGRectMake(0, 50 + i*(XKAppWidth - 50*2)/6, 64, (XKAppWidth - 50*2)/6 );
         [customView addSubview:typeButton];
         if(i == 0) {
             typeButton.selected = YES;
+            currentSelectBuuton = typeButton;
         }
     }
     

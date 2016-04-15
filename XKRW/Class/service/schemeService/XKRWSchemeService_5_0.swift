@@ -849,7 +849,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
                     
                     let count = schemes.count / 100
                     
-                    for var i = 0; i <= count; i++ {
+                    for var i = 0; i <= count; i += 1 {
                         
                         var len: Int = 100
                         if i == count {

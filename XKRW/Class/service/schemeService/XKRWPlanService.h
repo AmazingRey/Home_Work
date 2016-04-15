@@ -28,5 +28,14 @@
  *  @return 返回YES：保存成功 NO：保存失败
  */
 - (BOOL)saveRecord:(id)recordEntity ofType:(XKRWRecordType)type;
+/**
+ *  <#Description#>
+ *
+ *  @param date <#date description#>
+ *
+ *  @return <#return value description#>
+ */
+- (NSArray *)queryLatestItemNumber:(NSInteger)itemNumber FoodRecord:(NSDate *)date;
+
 
 @end

@@ -299,6 +299,7 @@
     __customButton.frame = CGRectMake(0, 0, titleWidth, 20);
     [__customButton.titleLabel setFont:XKDefaultFontWithSize(15)];
     [__customButton setTitle:text forState:UIControlStateNormal];
+    [__customButton setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:__customButton];
 }
 

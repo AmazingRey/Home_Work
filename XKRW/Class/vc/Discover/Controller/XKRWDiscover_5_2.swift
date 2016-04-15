@@ -86,7 +86,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         discoverTable.separatorStyle = .None
         discoverTable.backgroundColor = XK_BACKGROUND_COLOR
         self.addHeaderView()
-        self.setNavifationItemWithLeftItemTitle(nil, andRightItemTitle: nil, andItemColor: UIColor.whiteColor(), andShowLeftRedDot: true, andShowRightRedDot: false, andLeftRedDotShowNum: true, andRightRedDotShowNum: false, andLeftItemIcon: "icon_message", andRightItemIcon: nil)
+        self.setNavifationItemWithLeftItemTitle(nil, andRightItemTitle: nil, andItemColor: UIColor.whiteColor(), andShowLeftRedDot: true, andShowRightRedDot: false, andLeftRedDotShowNum: true, andRightRedDotShowNum: false, andLeftItemIcon: "message", andRightItemIcon: nil)
         
         focusView = NSBundle.mainBundle().loadNibNamed("XKRWFocusView", owner: nil, options: nil).first as! XKRWFocusView
         focusView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_WIDTH / 5)

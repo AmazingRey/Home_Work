@@ -7,7 +7,7 @@
 //
 
 #import "XKRWTopicListCell.h"
-
+#import "Masonry.h"
 typedef enum {
  styleNone,
  twoTitleStyle,

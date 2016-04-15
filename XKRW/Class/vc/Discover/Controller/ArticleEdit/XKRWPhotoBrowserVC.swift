@@ -84,10 +84,10 @@ class XKRWPhotoBrowserVC: XKRWBaseVC {
             let backButton = UIButton(frame: CGRectMake(0, 20, 60, 44))
             backButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 20)
             
-            backButton.setImage(UIImage(named: "back_image"), forState: UIControlState.Normal)
-            backButton.setImage(UIImage(named: "back_p"), forState: UIControlState.Highlighted)
+            backButton.setImage(UIImage(named: "navigationBarback"), forState: UIControlState.Normal)
+            backButton.setImage(UIImage(named: "navigationBarback_p"), forState: UIControlState.Highlighted)
             
-            backButton.addTarget(self, action: "popView", forControlEvents: UIControlEvents.TouchUpInside)
+            backButton.addTarget(self, action: #selector(XKRWBaseVC.popView), forControlEvents: UIControlEvents.TouchUpInside)
             
             bar.addSubview(backButton)
             
@@ -111,7 +111,7 @@ class XKRWPhotoBrowserVC: XKRWBaseVC {
                     deleteButton.imageEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0)
                 }
             }
-            deleteButton.addTarget(self, action: "deletePicture", forControlEvents: UIControlEvents.TouchUpInside)
+            deleteButton.addTarget(self, action: #selector(XKRWPhotoBrowserVC.deletePicture), forControlEvents: UIControlEvents.TouchUpInside)
             
             bar.addSubview(deleteButton)
             

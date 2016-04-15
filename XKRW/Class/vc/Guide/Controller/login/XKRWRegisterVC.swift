@@ -40,12 +40,12 @@ class XKRWRegisterVC: XKRWBaseVC {
         }else{
             let rightNaviBarButton:UIButton = UIButton(type: UIButtonType.Custom)
             rightNaviBarButton.setTitle("登录", forState: UIControlState.Normal)
-            rightNaviBarButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            rightNaviBarButton.setTitleColor(XKMainSchemeColor, forState: .Normal)
             rightNaviBarButton.setTitleColor(XKGrayDefaultColor, forState: .Highlighted)
             rightNaviBarButton.titleLabel!.font = UIFont.systemFontOfSize(14)
             let width = ("登录" as NSString).boundingRectWithSize(CGSizeMake(100, 100), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(14)], context: nil).size.width
             rightNaviBarButton.frame = CGRectMake(0, 0, width, 44)
-            rightNaviBarButton.addTarget(self, action: "doClickNaviBarRightButton", forControlEvents:UIControlEvents.TouchUpInside)
+            rightNaviBarButton.addTarget(self, action: #selector(XKRWRegisterVC.doClickNaviBarRightButton as (XKRWRegisterVC) -> () -> ()), forControlEvents:UIControlEvents.TouchUpInside)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviBarButton)
         }
         
@@ -55,7 +55,7 @@ class XKRWRegisterVC: XKRWBaseVC {
         checkButton.setBackgroundImage(UIImage(named: "read_s"), forState: UIControlState.Selected)
         checkButton.setBackgroundImage(UIImage(named: "read"), forState: UIControlState.Normal)
         
-        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyBoard")
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(XKRWRegisterVC.hideKeyBoard))
         self.view.addGestureRecognizer(tapGesture)
         
         
@@ -104,7 +104,7 @@ class XKRWRegisterVC: XKRWBaseVC {
 //            println(self.checkStringIsPhoneNum(phonoTextField.text))
             XKRWCui.showInformationHudWithText("电话号码错误")
         } else {
-            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "timerStart", userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(XKRWRegisterVC.timerStart), userInfo: nil, repeats: true)
 //            NSRunLoop.currentRunLoop().addTimer(timer!, forMode: NSRunLoopCommonModes)
             
             authCodeButton.enabled = false

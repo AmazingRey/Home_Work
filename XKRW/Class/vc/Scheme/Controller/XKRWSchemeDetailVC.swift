@@ -54,7 +54,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         let rightNaviButton = UIButton(frame: CGRectMake(0, 0, width, 50))
         rightNaviButton.setTitle("换一组", forState: UIControlState.Normal)
         rightNaviButton.titleLabel?.font = UIFont.systemFontOfSize(15)
-        rightNaviButton.addTarget(self, action: "doClickNaviBarRightButton:", forControlEvents: .TouchUpInside)
+        rightNaviButton.addTarget(self, action: #selector(XKRWBaseVC.doClickNaviBarRightButton(_:)), forControlEvents: .TouchUpInside)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviButton)
         

@@ -72,7 +72,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             self.loadingView = UIView(frame: self.view.bounds)
             self.loadingView.backgroundColor = XK_BACKGROUND_COLOR
             
-            self.addNaviBarRightButtonWithNormalImageName("icon_share", highlightedImageName: "icon_share_p", selector: "rightNaviBarButtonClicked")
+            self.addNaviBarRightButtonWithNormalImageName("share", highlightedImageName: "share_p", selector: #selector(XKRWHistoryAndProcessVC.rightNaviBarButtonClicked))
             self.rightNaviButton = self.navigationItem.rightBarButtonItem
             
             self.tableView = XKRWUITableViewBase(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - self.navigationController!.navigationBar.frame.size.height - UIApplication.sharedApplication().statusBarFrame.size.height), style: UITableViewStyle.Plain)
@@ -709,7 +709,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             
             let button = UIButton(type: UIButtonType.Custom)
             button.frame = self.view.bounds
-            button.addTarget(self, action: "hideCalendar:", forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: #selector(XKRWHistoryAndProcessVC.hideCalendar(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             button.tag = 103267
             
             self.view.addSubview(button)

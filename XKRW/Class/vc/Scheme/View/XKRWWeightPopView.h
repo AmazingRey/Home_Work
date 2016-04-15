@@ -17,7 +17,7 @@
 #import "XKRW-Swift.h"
 #import "XKTaskDispatcher.h"
 
-@interface XKRWWeightPopView : UIView <UITextFieldDelegate,iCarouselDataSource,iCarouselDelegate,XKRWCalendarDelegate>
+@interface XKRWWeightPopView : UIView <UITextFieldDelegate,iCarouselDataSource,iCarouselDelegate,XKRWCalendarDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (assign, nonatomic) id<XKRWWeightPopViewDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
@@ -35,8 +35,9 @@
 
 @property (strong,nonatomic) NSArray *arrLabels;
 @property (strong, nonatomic) NSDate *selectedDate;
-@property (strong, nonatomic) NSDate *calendarDisplayDate;
-@property (strong ,nonatomic) XKRWCalendar *calendar;
+//@property (strong, nonatomic) NSDate *calendarDisplayDate;
+//@property (strong ,nonatomic) XKRWCalendar *calendar;
+@property (strong, nonatomic) UIDatePicker *datePicker;
 @property (strong ,nonatomic) XKRWRecordSchemeEntity *schemeReocrds;
 @property (strong ,nonatomic) XKRWRecordEntity4_0 *oldRecord;
 @property (assign ,nonatomic) BOOL isCalendarShown;

@@ -9,7 +9,7 @@
 #import "XKRWThinBodyDayManage.h"
 #import "XKRWAlgolHelper.h"
 #import "XKRWUserService.h"
-
+#import "XKRWUtil.h"
 #import "FLAnimatedImageView.h"
 #import "FLAnimatedImage.h"
 #import "XKRW-Swift.h"
@@ -231,6 +231,19 @@ static XKRWThinBodyDayManage * shareInstance;
     return nil;
 }
 
+
+- (NSString *)TipsTextWithDayAndWhetherOpen {
+    
+    if([XKRWAlgolHelper remainDayToAchieveTarget] == -1 || [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"needResetScheme_%ld",[[XKRWUserService sharedService] getUserId]]]){
+        return @"当前计划已结束，点击制定新计划";
+    }else{
+        if (![NSDate compareDateIsToday:[[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_%ld",OpenPlanToday,[[XKRWUserService sharedService] getUserId]]]]) {
+            return @"点击“开启”，来监督今天的行为";
+        }else {
+            return @"查看今日分析";
+        }
+    }
+}
 
 
 

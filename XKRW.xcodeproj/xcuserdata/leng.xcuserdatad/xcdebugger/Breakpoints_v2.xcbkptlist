@@ -57,22 +57,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Discover/View/ArticleEdit/XKRWArticleSectionView.swift"
-            timestampString = "475144502.395429"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "setContentWithText(_:imageURLs:ifHaveImages:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Common/vc/UIViewController+XKVc.m"
             timestampString = "475496484.203719"
             startingColumnNumber = "9223372036854775807"
@@ -170,7 +154,7 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
-                  timestampString = "482314303.200315"
+                  timestampString = "482407288.940257"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"
@@ -185,7 +169,7 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Discover/Controller/ArticleEdit/XKRWArticleEditVC.swift"
-                  timestampString = "482314303.200445"
+                  timestampString = "482407288.940389"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "145"

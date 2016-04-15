@@ -17,7 +17,6 @@
     #import <Foundation/Foundation.h>
     #import "UIViewExt.h"
 //    #define MAS_SHORTHAND
-    #import "Masonry.h"
     #import "UIImage+Helper.h"
     #import "XKHudHelper.h"
 #define XK_RELEASE

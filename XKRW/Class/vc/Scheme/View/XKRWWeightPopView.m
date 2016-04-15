@@ -27,10 +27,10 @@
         self.frame = frame;
         self = LOAD_VIEW_FROM_BUNDLE(@"XKRWWeightPopView");
         _textField.keyboardType = UIKeyboardTypeDecimalPad;
-        _arrLabels = @[@"体重",@"胸围",@"腰围",@"臀围"];
+        _arrLabels = @[@"体重",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
         isInit = YES;
         
-        _iCarouselView.type = 11;
+        _iCarouselView.type = 0;
 //        _iCarouselView.bounceDistance = 150;
 //        _iCarouselView.contentOffset = CGSizeMake(-110, 0);
         _iCarouselView.perspective = -0.008;
@@ -44,25 +44,44 @@
         _iCarouselView.decelerationRate = 0.7;
         _iCarouselView.scrollSpeed = .5;
         _iCarouselView.currentItemIndex = 0;
-        _currentIndex = [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
         
         _recordDates = [[XKRWRecordService4_0 sharedService] getUserRecordDateFromDB];
         
-        _calendar = [[XKRWCalendar alloc] initWithOrigin:CGPointMake(-50, 44) recordDateArray:_recordDates headerType:XKRWCalendarHeaderTypeSimple andResizeBlock:^{
-            
-        }];
-        CGRect frame = _calendar.frame;
-//        frame.size.width -= 100;
-        _calendar.frame = frame;
-        [_calendar addBackToTodayButtonInFooterView];
-        _calendar.delegate = self;
-        [_calendar reloadCalendar];
+//        _calendar = [[XKRWCalendar alloc] initWithOrigin:CGPointMake(-50, 44) recordDateArray:_recordDates headerType:XKRWCalendarHeaderTypeSimple andResizeBlock:^{
+//            
+//        }];
+//        CGRect frame = _calendar.frame;
+////        frame.size.width -= 100;
+//        _calendar.frame = frame;
+//        [_calendar addBackToTodayButtonInFooterView];
+//        _calendar.delegate = self;
+//        [_calendar reloadCalendar];
         
+        _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, XKAppHeight-200, XKAppWidth, 200)];
+        
+        _datePicker.backgroundColor = [UIColor whiteColor];
+        
+        _datePicker.calendar = [NSCalendar currentCalendar];
+        _datePicker.datePickerMode = UIDatePickerModeDate;
+        [_datePicker addTarget:self action:@selector(calendarSelectedDate:) forControlEvents:UIControlEventValueChanged];
+        _datePicker.minimumDate = [self getRegisterDate];
+        _datePicker.maximumDate = [NSDate today];
+        
+        for (UIView *view in _datePicker.subviews) {
+            if ([view isKindOfClass:[UIPickerView class]]) {
+                UIPickerView *pickView = (UIPickerView *)view;
+                pickView.transform =CGAffineTransformMakeScale(1.35, 1.2);
+            }
+        }
         UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapdateLabel)];
         _dateLabel.userInteractionEnabled = YES;
         [_dateLabel addGestureRecognizer:tapgesture];
         
         _selectedDate = [NSDate date];
+        _datePicker.date = _selectedDate;
+        [[UIApplication sharedApplication].keyWindow addSubview:_datePicker];
+        _datePicker.alpha = 0;
+        
         _selectDateStr =[_selectedDate stringWithFormat:@"YYYY-MM-dd"];
         _dateLabel.text = [_selectedDate stringWithFormat:@"MM月dd日"];
         
@@ -70,8 +89,26 @@
         _dicAll = tmpDic;
         
         _textField.delegate = self;
+        [self reloadReocrdOfDay:_selectedDate];
+        _currentIndex = [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
     }
     return self;
+}
+
+-(NSDate *)getRegisterDate{
+    NSString *registerDateStr = [[XKRWUserService sharedService] getREGDate];
+    NSDateFormatter *formatter1 = [[NSDateFormatter alloc ]init];
+    formatter1.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    formatter1.dateFormat = @"yyyy-MM-dd";
+    NSDate *registerDate  = [formatter1 dateFromString:registerDateStr];
+    return registerDate;
+}
+
+-(void)setCurrentIndex:(NSNumber *)currentIndex{
+    if (_currentIndex != currentIndex) {
+        _currentIndex = currentIndex;
+    }
+    _textField.text = [NSString stringWithFormat:@"%@",_dicAll[_selectDateStr][_currentIndex]];
 }
 
 -(void)setSelectedDate:(NSDate *)selectedDate{
@@ -80,6 +117,39 @@
         _selectDateStr =[selectedDate stringWithFormat:@"YYYY-MM-dd"];
         _dateLabel.text = [selectedDate stringWithFormat:@"MM月dd日"];
     }
+}
+
+-(void)setSchemeReocrds:(XKRWRecordSchemeEntity *)schemeReocrds{
+    if (!_schemeReocrds) {
+        _schemeReocrds = [[XKRWRecordSchemeEntity alloc] init];
+    }
+    if (_schemeReocrds != schemeReocrds) {
+        _schemeReocrds = schemeReocrds;
+    }
+}
+
+-(void)setOldRecord:(XKRWRecordEntity4_0 *)oldRecord{
+    if (!_oldRecord) {
+        _oldRecord = [[XKRWRecordEntity4_0 alloc] init];
+    }
+    if (_oldRecord != oldRecord) {
+        _oldRecord = oldRecord;
+    }
+    [self makeEntityConvertToDicall];
+}
+
+-(void)makeEntityConvertToDicall{
+    NSMutableDictionary *dayDiction = [NSMutableDictionary dictionary];
+    
+    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.weight ] forKey:_arrLabels[0]];
+    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.bust ] forKey:_arrLabels[1]];
+    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.arm ] forKey:_arrLabels[2]];
+    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.waistline ] forKey:_arrLabels[3]];
+    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.hipline ] forKey:_arrLabels[4]];
+    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.thigh ] forKey:_arrLabels[5]];
+    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.shank ] forKey:_arrLabels[6]];
+
+    [_dicAll setObject:dayDiction forKey:_selectDateStr];
 }
 
 #pragma -mark calender module & Delegate method
@@ -92,43 +162,25 @@
     [sender removeFromSuperview];
 }
 
-- (void)calendarSelectedDate:(NSDate *)date{
-    if ([self checkSelectedDate:date]) {
-        [self reloadReocrdOfDay:date];
+- (void)calendarSelectedDate:(UIDatePicker *)datePicker{
+    if ([self checkSelectedDate:datePicker.date]) {
+        [self reloadReocrdOfDay:datePicker.date];
     }
-    [self showCalendar:NO];
+//    [self showCalendar:NO];
 }
 
 -(void)showCalendar:(BOOL)isShowCalendar{
     _isCalendarShown = isShowCalendar;
-   
     if (isShowCalendar) {
         [MobClick event:@"clk_calendar"];
          [_textField resignFirstResponder];
-        _calendarDisplayDate = _selectedDate;
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = [UIApplication sharedApplication].keyWindow.bounds;
-        [btn addTarget:self action:@selector(hideCalendar:) forControlEvents:UIControlEventTouchUpInside];
-        btn.tag = 103268;
-        [self addSubview:btn];
-//        self.userInteractionEnabled = NO;
-        
-        _calendar.alpha = 0;
-        [self addSubview:_calendar];
         [UIView animateWithDuration:.3 animations:^{
-            self.calendar.alpha = 1;
+            _datePicker.alpha = 1;
         }];
     }else{
-//        self.userInteractionEnabled = YES;
          [_textField becomeFirstResponder];
-        UIButton *button = [self viewWithTag:103268];
-        if (button) {
-            [button removeFromSuperview];
-        }
         [UIView animateWithDuration:.3 animations:^{
-            self.calendar.alpha = 0;
-        } completion:^(BOOL finished) {
-            [self.calendar removeFromSuperview];
+            _datePicker.alpha = 0;
         }];
     }
 }
@@ -143,7 +195,8 @@
     
     if ([date originTimeOfADay] < regDateInterval) {
         
-        [self.calendar outerSetSelectedDate:self.selectedDate andNeedReload:false];
+//        [self.calendar outerSetSelectedDate:self.selectedDate andNeedReload:false];
+         [_datePicker setDate:_selectedDate animated:YES];
         
         [XKRWCui showInformationHudWithText:@"不能查看注册以前的日期哦~"];
         return false;
@@ -158,14 +211,16 @@
         self.oldRecord = (XKRWRecordEntity4_0 *)[[XKRWRecordService4_0 sharedService] getAllRecordOfDay:self.selectedDate];
     }];
 }
+
 - (IBAction)actBefore:(id)sender {
     if (_selectedDate) {
         NSDate *dateBefore = [_selectedDate offsetDay:-1];
         if ([self checkSelectedDate:dateBefore]) {
             [_textField resignFirstResponder];
             [self reloadReocrdOfDay:dateBefore];
-            [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
-            NSString *str = _dicAll[_selectDateStr][_currentIndex];
+//            [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
+             [_datePicker setDate:_selectedDate animated:YES];
+            NSString *str = _dicAll[_selectDateStr][[self getCurrentType:_currentIndex]];
             _textField.text = str;
         }
     }
@@ -177,11 +232,17 @@
         if ([self checkSelectedDate:dateAfter]) {
             [_textField resignFirstResponder];
             [self reloadReocrdOfDay:dateAfter];
-            [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
-            NSString *str = _dicAll[_selectDateStr][_currentIndex];
+//            [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
+            [_datePicker setDate:_selectedDate animated:YES];
+            
+            NSString *str = _dicAll[_selectDateStr][[self getCurrentType:_currentIndex]];
             _textField.text = str;
         }
     }
+}
+-(NSString *)getCurrentType:(NSNumber *)indexNum{
+    NSString *type = [NSString stringWithFormat:@"%@",[_arrLabels objectAtIndex:[indexNum integerValue]]];
+    return type;
 }
 
 #pragma -mark carousel module & Delegate method
@@ -193,16 +254,36 @@
     }else{
         [dayDiction addEntriesFromDictionary:dic];
     }
-    [dayDiction setObject:_textField.text forKey:_currentIndex];
+    
+    [dayDiction setObject:_textField.text forKey:[self getCurrentType:_currentIndex]];
     [_dicAll setObject:dayDiction forKey:_selectDateStr];
+}
+-(void)saveRemote{
+    _oldRecord.circumference.uid = (int)[XKRWUserDefaultService getCurrentUserId];
+    NSDictionary *dic = [_dicAll objectForKey:_selectDateStr];
+    
+    _oldRecord.weight =[dic[_arrLabels[0]] floatValue];
+    _oldRecord.circumference.bust = [dic[_arrLabels[1]] floatValue];
+    _oldRecord.circumference.arm = [dic[_arrLabels[2]] floatValue];
+    _oldRecord.circumference.waistline = [dic[_arrLabels[3]] floatValue];
+    _oldRecord.circumference.hipline = [dic[_arrLabels[4]] floatValue];
+    _oldRecord.circumference.thigh = [dic[_arrLabels[5]] floatValue];
+    _oldRecord.circumference.shank = [dic[_arrLabels[6]]floatValue];
+    
+    _oldRecord.circumference.date = _selectedDate;
+    _oldRecord.date = _selectedDate;
+    [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeCircumference];
+    [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeWeight];
 }
 
 - (void)carouselDidScroll:(iCarousel *)carousel{
-    [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
+    [self showCalendar:NO];
+    _currentIndex = [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
     if (carousel.currentItemIndex != [_currentIndex integerValue]) {
         [self saveTheData];
         _currentIndex = [NSNumber numberWithInteger:carousel.currentItemIndex];
-        NSString *str = [[_dicAll objectForKey:_selectDateStr] objectForKey:_currentIndex];
+
+        NSString *str = [[_dicAll objectForKey:_selectDateStr] objectForKey:[self getCurrentType:_currentIndex]];
         if (str && ![str isEqualToString:@""]) {
             _textField.text = str;
         }else{
@@ -313,6 +394,7 @@
 }
 
 #pragma -mark textfiled delegate
+
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     [self saveTheData];
 }
@@ -320,16 +402,20 @@
 
 #pragma -mark sure btn & cancle btn
 - (IBAction)pressCancle:(id)sender {
+    [_datePicker removeFromSuperview];
+    _datePicker = nil;
     if ([self.delegate respondsToSelector:@selector(pressPopViewCancle)]) {
         [self.delegate pressPopViewCancle];
     }
 }
 
 - (IBAction)pressSure:(id)sender {
+    [_datePicker removeFromSuperview];
+    _datePicker = nil;
     [_textField resignFirstResponder];
+    [self saveRemote];
+    
     if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]) {
-        NSNumberFormatter *numFormatter = [[NSNumberFormatter alloc] init];
-        numFormatter.numberStyle = NSNumberFormatterDecimalStyle;
         [self.delegate pressPopViewSure:_dicAll];
     }
 }

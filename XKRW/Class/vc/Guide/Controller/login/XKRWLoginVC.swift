@@ -72,19 +72,19 @@ class XKRWLoginVC: XKRWBaseVC {
             self.navigationItem.hidesBackButton = true
             let rightNaviBarButton:UIButton = UIButton(type: UIButtonType.Custom)
             rightNaviBarButton.setTitle("注册", forState: UIControlState.Normal)
-            rightNaviBarButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            rightNaviBarButton.setTitleColor(XKMainSchemeColor, forState: .Normal)
             rightNaviBarButton.setTitleColor(XKGrayDefaultColor, forState: .Highlighted)
             rightNaviBarButton.titleLabel!.font = UIFont.systemFontOfSize(14)
             
             let width = ("注册" as NSString).boundingRectWithSize(CGSizeMake(100, 100), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: [NSFontAttributeName : UIFont.systemFontOfSize(14)], context: nil).size.width
             
             rightNaviBarButton.frame = CGRectMake(0, 0, width, 44)
-            rightNaviBarButton.addTarget(self, action: "doClickNaviBarRightButton", forControlEvents:UIControlEvents.TouchUpInside)
+            rightNaviBarButton.addTarget(self, action: #selector(XKRWLoginVC.doClickNaviBarRightButton as (XKRWLoginVC) -> () -> ()), forControlEvents:UIControlEvents.TouchUpInside)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviBarButton)
         }
         
         // Do any additional setup after loading the view.
-        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "hideKeyBoard")
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(XKRWLoginVC.hideKeyBoard))
         self.view.addGestureRecognizer(tapGesture)
         
         wechatLabel.hidden = true

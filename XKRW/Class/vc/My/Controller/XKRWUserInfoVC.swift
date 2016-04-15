@@ -82,7 +82,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
         headView.headerArcImageView!.layer.cornerRadius = 41
 
         infoTableView.tableHeaderView = headView
-        headView.headerButton?.addTarget(self, action: "showBigHeadImageView", forControlEvents: .TouchUpInside)
+        headView.headerButton?.addTarget(self, action: #selector(XKRWUserInfoVC.showBigHeadImageView), forControlEvents: .TouchUpInside)
         infoTableView.tableHeaderView!.clipsToBounds = true
 
         infoTableView.registerNib(UINib(nibName: "HPPredictCell", bundle: nil), forCellReuseIdentifier: "predictCell")
@@ -159,7 +159,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                     if !contains {
                         srs.append(scheme)
                     } else {
-                        for var i = 0; i < srs.count; i++ {
+                        for var i = 0; i < srs.count; i += 1 {
                             let temp = srs[i]
                             
                             if temp.type == scheme.type {

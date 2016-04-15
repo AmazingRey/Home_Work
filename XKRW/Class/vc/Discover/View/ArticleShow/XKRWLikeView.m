@@ -7,7 +7,7 @@
 //
 
 #import "XKRWLikeView.h"
-
+#import "Masonry.h"
 
 @implementation XKRWLikeView
 {

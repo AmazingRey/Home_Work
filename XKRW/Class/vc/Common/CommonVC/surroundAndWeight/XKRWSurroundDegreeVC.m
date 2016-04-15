@@ -70,7 +70,6 @@
     }else{
         self.title = @"围度曲线";
     }
-    
     [XKRWCui showProgressHud];
 }
 
@@ -84,8 +83,6 @@
         [self setinitialLabelLocation];
     }
     [XKRWCui hideProgressHud];
-    
-   
 }
 
 - (void) initUI

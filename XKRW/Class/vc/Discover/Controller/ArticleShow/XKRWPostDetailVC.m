@@ -84,7 +84,7 @@
     self.title = @"帖子";
     
     [self addNaviBarBackButton];
-    [self addNaviBarRightButtonWithNormalImageName:@"more_option_icon" highlightedImageName:@"more_option_icon" selector:@selector(moreOperationClick)];
+    [self addNaviBarRightButtonWithNormalImageName:@"more" highlightedImageName:@"more_p" selector:@selector(moreOperationClick)];
     
     
     if(_postDeleted){

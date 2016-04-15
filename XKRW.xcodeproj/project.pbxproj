@@ -590,15 +590,6 @@
 		BC6F2FA21C1A70D3005B54E8 /* XKRWTitleHeadImgCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC6F2F641C1A70D3005B54E8 /* XKRWTitleHeadImgCell.xib */; };
 		BC6F2FA31C1A70D3005B54E8 /* XKRWTitleSubTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6F2F661C1A70D3005B54E8 /* XKRWTitleSubTitleCell.m */; };
 		BC6F2FA41C1A70D3005B54E8 /* XKRWTitleSubTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC6F2F671C1A70D3005B54E8 /* XKRWTitleSubTitleCell.xib */; };
-		BC72B6731ADBABE000DEE796 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B65C1ADBABE000DEE796 /* MASCompositeConstraint.m */; };
-		BC72B6741ADBABE000DEE796 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B65F1ADBABE000DEE796 /* MASConstraint.m */; };
-		BC72B6751ADBABE000DEE796 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B6611ADBABE000DEE796 /* MASConstraintMaker.m */; };
-		BC72B6761ADBABE000DEE796 /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B6631ADBABE000DEE796 /* MASLayoutConstraint.m */; };
-		BC72B6771ADBABE000DEE796 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B6671ADBABE000DEE796 /* MASViewAttribute.m */; };
-		BC72B6781ADBABE000DEE796 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B6691ADBABE000DEE796 /* MASViewConstraint.m */; };
-		BC72B6791ADBABE000DEE796 /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B66B1ADBABE000DEE796 /* NSArray+MASAdditions.m */; };
-		BC72B67A1ADBABE000DEE796 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B66E1ADBABE000DEE796 /* NSLayoutConstraint+MASDebugAdditions.m */; };
-		BC72B67B1ADBABE000DEE796 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BC72B6701ADBABE000DEE796 /* View+MASAdditions.m */; };
 		BC769D941C33CA3500E96B1A /* XKRWArticleListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC769D8F1C33CA3500E96B1A /* XKRWArticleListEntity.swift */; };
 		BC769D951C33CA3500E96B1A /* XKRWBePraisedEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC769D901C33CA3500E96B1A /* XKRWBePraisedEntity.swift */; };
 		BC769D961C33CA3500E96B1A /* XKRWPraiseAndCommitNoticeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC769D911C33CA3500E96B1A /* XKRWPraiseAndCommitNoticeEntity.swift */; };
@@ -760,6 +751,7 @@
 		BCD4E6141B142B2D00C20104 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD4E6131B142B2D00C20104 /* libicucore.dylib */; };
 		BCD4E6161B142B3D00C20104 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCD4E6151B142B3D00C20104 /* MessageUI.framework */; };
 		BCD944951A516F0D00D1D274 /* newAlertMsgFor4_0.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCD944941A516F0D00D1D274 /* newAlertMsgFor4_0.plist */; };
+		BCDEC9A91CC0E4C700B5BEB6 /* XKRWPlanTipsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCDEC9A81CC0E4C700B5BEB6 /* XKRWPlanTipsCell.m */; };
 		BCEF35A31C1E560A00740ACC /* XKRWSurroundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCEF35A01C1E560A00740ACC /* XKRWSurroundCell.xib */; };
 		BCEF35A41C1E560A00740ACC /* XKRWSurroundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF35A21C1E560A00740ACC /* XKRWSurroundCell.m */; };
 		BCEF35A81C1E563A00740ACC /* XKRWSurroundDegreeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF35A71C1E563A00740ACC /* XKRWSurroundDegreeVC.m */; };
@@ -2032,29 +2024,6 @@
 		BC6F2F661C1A70D3005B54E8 /* XKRWTitleSubTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWTitleSubTitleCell.m; sourceTree = "<group>"; };
 		BC6F2F671C1A70D3005B54E8 /* XKRWTitleSubTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWTitleSubTitleCell.xib; sourceTree = "<group>"; };
 		BC6F2FA71C1A711B005B54E8 /* XKRWTitleHeadImgCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKRWTitleHeadImgCell.h; sourceTree = "<group>"; };
-		BC72B65B1ADBABE000DEE796 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
-		BC72B65C1ADBABE000DEE796 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
-		BC72B65D1ADBABE000DEE796 /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
-		BC72B65E1ADBABE000DEE796 /* MASConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraint.h; sourceTree = "<group>"; };
-		BC72B65F1ADBABE000DEE796 /* MASConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraint.m; sourceTree = "<group>"; };
-		BC72B6601ADBABE000DEE796 /* MASConstraintMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraintMaker.h; sourceTree = "<group>"; };
-		BC72B6611ADBABE000DEE796 /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
-		BC72B6621ADBABE000DEE796 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASLayoutConstraint.h; sourceTree = "<group>"; };
-		BC72B6631ADBABE000DEE796 /* MASLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASLayoutConstraint.m; sourceTree = "<group>"; };
-		BC72B6641ADBABE000DEE796 /* Masonry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Masonry.h; sourceTree = "<group>"; };
-		BC72B6651ADBABE000DEE796 /* MASUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASUtilities.h; sourceTree = "<group>"; };
-		BC72B6661ADBABE000DEE796 /* MASViewAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewAttribute.h; sourceTree = "<group>"; };
-		BC72B6671ADBABE000DEE796 /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
-		BC72B6681ADBABE000DEE796 /* MASViewConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewConstraint.h; sourceTree = "<group>"; };
-		BC72B6691ADBABE000DEE796 /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
-		BC72B66A1ADBABE000DEE796 /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASAdditions.h"; sourceTree = "<group>"; };
-		BC72B66B1ADBABE000DEE796 /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MASAdditions.m"; sourceTree = "<group>"; };
-		BC72B66C1ADBABE000DEE796 /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
-		BC72B66D1ADBABE000DEE796 /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
-		BC72B66E1ADBABE000DEE796 /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
-		BC72B66F1ADBABE000DEE796 /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
-		BC72B6701ADBABE000DEE796 /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
-		BC72B6711ADBABE000DEE796 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		BC769D8F1C33CA3500E96B1A /* XKRWArticleListEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWArticleListEntity.swift; sourceTree = "<group>"; };
 		BC769D901C33CA3500E96B1A /* XKRWBePraisedEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWBePraisedEntity.swift; sourceTree = "<group>"; };
 		BC769D911C33CA3500E96B1A /* XKRWPraiseAndCommitNoticeEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWPraiseAndCommitNoticeEntity.swift; sourceTree = "<group>"; };
@@ -2319,6 +2288,8 @@
 		BCD4E6131B142B2D00C20104 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		BCD4E6151B142B3D00C20104 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		BCD944941A516F0D00D1D274 /* newAlertMsgFor4_0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = newAlertMsgFor4_0.plist; sourceTree = "<group>"; };
+		BCDEC9A71CC0E4C700B5BEB6 /* XKRWPlanTipsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanTipsCell.h; sourceTree = "<group>"; };
+		BCDEC9A81CC0E4C700B5BEB6 /* XKRWPlanTipsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanTipsCell.m; sourceTree = "<group>"; };
 		BCEF35A01C1E560A00740ACC /* XKRWSurroundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWSurroundCell.xib; sourceTree = "<group>"; };
 		BCEF35A11C1E560A00740ACC /* XKRWSurroundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWSurroundCell.h; sourceTree = "<group>"; };
 		BCEF35A21C1E560A00740ACC /* XKRWSurroundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWSurroundCell.m; sourceTree = "<group>"; };
@@ -3588,7 +3559,6 @@
 				A73597451B3185D100DAA678 /* FLAnimatedImage */,
 				2F9CC2E61B0205D3009A210A /* Crashlytics.framework */,
 				2F9CC2E71B0205D3009A210A /* Fabric.framework */,
-				BC72B6591ADBABE000DEE796 /* Masonry */,
 				E3FC6DC41AB840B80002C283 /* AliPay */,
 				E39E8F901AAD4F3100B1E5DD /* WXPayment */,
 				BC4FEE2C1A8C3CB300759CF4 /* JYRadarChart */,
@@ -5284,36 +5254,6 @@
 			name = settingService;
 			sourceTree = "<group>";
 		};
-		BC72B6591ADBABE000DEE796 /* Masonry */ = {
-			isa = PBXGroup;
-			children = (
-				BC72B65B1ADBABE000DEE796 /* MASCompositeConstraint.h */,
-				BC72B65C1ADBABE000DEE796 /* MASCompositeConstraint.m */,
-				BC72B65D1ADBABE000DEE796 /* MASConstraint+Private.h */,
-				BC72B65E1ADBABE000DEE796 /* MASConstraint.h */,
-				BC72B65F1ADBABE000DEE796 /* MASConstraint.m */,
-				BC72B6601ADBABE000DEE796 /* MASConstraintMaker.h */,
-				BC72B6611ADBABE000DEE796 /* MASConstraintMaker.m */,
-				BC72B6621ADBABE000DEE796 /* MASLayoutConstraint.h */,
-				BC72B6631ADBABE000DEE796 /* MASLayoutConstraint.m */,
-				BC72B6641ADBABE000DEE796 /* Masonry.h */,
-				BC72B6651ADBABE000DEE796 /* MASUtilities.h */,
-				BC72B6661ADBABE000DEE796 /* MASViewAttribute.h */,
-				BC72B6671ADBABE000DEE796 /* MASViewAttribute.m */,
-				BC72B6681ADBABE000DEE796 /* MASViewConstraint.h */,
-				BC72B6691ADBABE000DEE796 /* MASViewConstraint.m */,
-				BC72B66A1ADBABE000DEE796 /* NSArray+MASAdditions.h */,
-				BC72B66B1ADBABE000DEE796 /* NSArray+MASAdditions.m */,
-				BC72B66C1ADBABE000DEE796 /* NSArray+MASShorthandAdditions.h */,
-				BC72B66D1ADBABE000DEE796 /* NSLayoutConstraint+MASDebugAdditions.h */,
-				BC72B66E1ADBABE000DEE796 /* NSLayoutConstraint+MASDebugAdditions.m */,
-				BC72B66F1ADBABE000DEE796 /* View+MASAdditions.h */,
-				BC72B6701ADBABE000DEE796 /* View+MASAdditions.m */,
-				BC72B6711ADBABE000DEE796 /* View+MASShorthandAdditions.h */,
-			);
-			path = Masonry;
-			sourceTree = "<group>";
-		};
 		BC769D991C33CB3600E96B1A /* FoodModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -6594,6 +6534,8 @@
 				BCF664711CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib */,
 				2F9B8AD81CB3C33A00F89425 /* XKRWPlanEnergyView.h */,
 				2F9B8AD91CB3C33A00F89425 /* XKRWPlanEnergyView.m */,
+				BCDEC9A71CC0E4C700B5BEB6 /* XKRWPlanTipsCell.h */,
+				BCDEC9A81CC0E4C700B5BEB6 /* XKRWPlanTipsCell.m */,
 			);
 			path = PlanView;
 			sourceTree = "<group>";
@@ -7145,10 +7087,8 @@
 				BC6F2F8A1C1A70D3005B54E8 /* XKRWPraiseAndShareCell.m in Sources */,
 				BC769ED91C34CACB00E96B1A /* UIImage+Helper.m in Sources */,
 				5D348EB81C4F1CC300CA9B4A /* XKRWPostEntity.m in Sources */,
-				BC72B67B1ADBABE000DEE796 /* View+MASAdditions.m in Sources */,
 				2E9687051A04AEE500CB5D77 /* XKTabBarController.m in Sources */,
 				BCEF373A1C1E75D900740ACC /* XKRWDietModel.m in Sources */,
-				BC72B6771ADBABE000DEE796 /* MASViewAttribute.m in Sources */,
 				BC769DA01C33CC7200E96B1A /* XKRWFoodCategoryEntity.swift in Sources */,
 				BCEF37231C1E75D900740ACC /* XKRWiSlimAssessmentReferencesVC.m in Sources */,
 				5DDAE9DD1C55CE5D00047A45 /* XKRWSCPopSelectorCell.m in Sources */,
@@ -7290,7 +7230,6 @@
 				BC6F2F011C198686005B54E8 /* XKRWOneMinUndLoseFat.swift in Sources */,
 				BC841CFC1C1AB6DB00703A27 /* XKRWCommentEtity.m in Sources */,
 				BCEF37301C1E75D900740ACC /* XKRWHelpCenterVC.m in Sources */,
-				BC72B6781ADBABE000DEE796 /* MASViewConstraint.m in Sources */,
 				BC0BAF391C5768E900BAD05C /* XKRWSmallImageAndTitleCell.swift in Sources */,
 				BCC7E96B1C5A08B3008B560F /* TeamPostNumEntity.swift in Sources */,
 				A786D4EC1BB5192200B6535D /* UIApplication+RSKImageCropper.m in Sources */,
@@ -7415,7 +7354,6 @@
 				BCD416EB1A51051E00DD9665 /* YLGIFImage.m in Sources */,
 				BC6F2EE71C198686005B54E8 /* XKRWAgreementVC.m in Sources */,
 				BCEF372A1C1E75D900740ACC /* XKRWPayOrderVC.m in Sources */,
-				BC72B6731ADBABE000DEE796 /* MASCompositeConstraint.m in Sources */,
 				BCEF376B1C1E75D900740ACC /* XKRWProfessionalShareView.m in Sources */,
 				2E9687D91A04AEFD00CB5D77 /* ASIFormDataRequest.m in Sources */,
 				A7E9172A1B5CA48A0017F5FD /* PNBarChart.m in Sources */,
@@ -7592,7 +7530,6 @@
 				BC769DFA1C33D1FF00E96B1A /* XKRWUserInfoEntity.m in Sources */,
 				2E9687FE1A04AEFD00CB5D77 /* PSTCollectionViewItemKey.m in Sources */,
 				BCEF36291C1E619700740ACC /* XKRWSportCell.m in Sources */,
-				BC72B67A1ADBABE000DEE796 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				2E9686F91A04AEE500CB5D77 /* TSocketServer.m in Sources */,
 				2E9686CB1A04AEE500CB5D77 /* FMDatabase+XKPersistence.m in Sources */,
 				A786D4DA1BB5192200B6535D /* MLSelectPhotoPickerAssetsViewController.m in Sources */,
@@ -7637,6 +7574,7 @@
 				2F63C3C61C506BE800A94117 /* XKRWBlogEnterCell.m in Sources */,
 				2E9686B11A04AEE500CB5D77 /* UIImage+XKCui.m in Sources */,
 				BC6F2F871C1A70D3005B54E8 /* XKRWCommetCell.m in Sources */,
+				BCDEC9A91CC0E4C700B5BEB6 /* XKRWPlanTipsCell.m in Sources */,
 				BC1B4A601CBF2D7400496F16 /* XKRWSurroundDegreeVC_5_3.m in Sources */,
 				BC769DA71C33CC7C00E96B1A /* XKRWSportEntity.m in Sources */,
 				5D9F1B0C1C34C28B00049FA5 /* XKRWUtil.m in Sources */,
@@ -7667,7 +7605,6 @@
 				A7C867A61BC8E503009A94B1 /* QNHttpManager.m in Sources */,
 				2E9686AB1A04AEE500CB5D77 /* XKPagingScrollView.m in Sources */,
 				BC769E901C33D3DD00E96B1A /* KMPopoverView.m in Sources */,
-				BC72B6791ADBABE000DEE796 /* NSArray+MASAdditions.m in Sources */,
 				2E96880B1A04AEFE00CB5D77 /* SDImageCache.m in Sources */,
 				BC0BAF351C57673A00BAD05C /* XKRWSmallImageAndTitleAndDescribeCell.swift in Sources */,
 				BC769E9B1C33D3DD00E96B1A /* MagnifierView.m in Sources */,
@@ -7708,11 +7645,9 @@
 				2E9686E01A04AEE500CB5D77 /* XKRpcUtil.m in Sources */,
 				A786D4E21BB5192200B6535D /* MLSelectPhotoPickerCollectionViewCell.m in Sources */,
 				BC6F2F7B1C1A70D3005B54E8 /* XKRWTopicVC.m in Sources */,
-				BC72B6761ADBABE000DEE796 /* MASLayoutConstraint.m in Sources */,
 				BCD0CD0E1CA2418B00A6E284 /* XKRWAppCommentUtil.m in Sources */,
 				2E9686B61A04AEE500CB5D77 /* XKVerticalAlignableLabel.m in Sources */,
 				BCEF37F81C1E901B00740ACC /* XKRWMyVC.m in Sources */,
-				BC72B6741ADBABE000DEE796 /* MASConstraint.m in Sources */,
 				BCEF37801C1E75D900740ACC /* XKRWServerModel.m in Sources */,
 				BCF6646C1CAE1D4B006EBC61 /* XKRWPlanVC.m in Sources */,
 				5D9F1B0D1C34C28B00049FA5 /* XKRWWarningView.m in Sources */,
@@ -7747,7 +7682,6 @@
 				BC769D981C33CA3500E96B1A /* XKRWUserInfoShowEntity.swift in Sources */,
 				BC6F2F7A1C1A70D3005B54E8 /* XKRWStarGatherNumVC.m in Sources */,
 				BCF664641CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m in Sources */,
-				BC72B6751ADBABE000DEE796 /* MASConstraintMaker.m in Sources */,
 				BC31B9281C1ACA520045817B /* XKRWTabooFoodVC.swift in Sources */,
 				BCEF38251C1E901B00740ACC /* XKRWPraiseCell.swift in Sources */,
 				BCEF37721C1E75D900740ACC /* XKRWEvaluatingProblemCell.m in Sources */,

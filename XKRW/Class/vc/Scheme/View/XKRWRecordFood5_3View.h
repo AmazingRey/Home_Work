@@ -41,7 +41,7 @@
 @property (strong ,nonatomic) UITableView *tableMenu;
 @property (strong ,nonatomic) UIScrollView *scrollView;
 @property (assign ,nonatomic) NSInteger pageIndex;
-@property (strong ,nonatomic) NSArray *dicRecord;
-@property (strong ,nonatomic) NSArray *dicMenu;
+@property (nonatomic) NSArray *arrRecord;
+@property (strong ,nonatomic) NSArray *arrMenu;
 
 @end

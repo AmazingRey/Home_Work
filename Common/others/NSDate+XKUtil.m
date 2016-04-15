@@ -133,4 +133,12 @@
     return [calendar dateByAddingComponents:offsetComponents toDate:self options:0];
 }
 
++ (BOOL) compareDateIsToday:(NSDate *)date {
+    NSDate *todayDate = [NSDate date];
+    if(todayDate.day == date.day){
+        return YES;
+    }
+    return NO;
+}
+
 @end

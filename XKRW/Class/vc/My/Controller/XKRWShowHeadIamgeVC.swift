@@ -20,7 +20,7 @@ class XKRWShowHeadIamgeVC: XKRWBaseVC {
         self.view.backgroundColor = UIColor.blackColor()
         
         headImageView.setImageWithURL(NSURL(string: headImageUrl!), placeholderImage: UIImage(named: "lead_nor_1920") ,options:.RetryFailed)
-        let imageTap = UITapGestureRecognizer(target: self, action: "tapImageView")
+        let imageTap = UITapGestureRecognizer(target: self, action: #selector(XKRWShowHeadIamgeVC.tapImageView))
         imageTap.numberOfTouchesRequired = 1
         imageTap.numberOfTapsRequired = 2
         headImageView.addGestureRecognizer(imageTap)

@@ -32,7 +32,7 @@
 #import "XKRWSurroundDegreeVC_5_3.h"
 #import "XKRWNavigationController.h"
 
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate>
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
     KMSearchBar* foodAndSportSearchBar;
@@ -87,7 +87,6 @@
 }
 #pragma mark - data
 - (void)initData {
-    
     mealEntitys = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
     [_planEnergyView setHabitEnergyCircleGoalNumber:12 currentNumber:3];
     [self refreshEnergyCircleView];
@@ -99,14 +98,18 @@
 }
 #pragma --mark UI
 - (void)initView {
-
-    planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight) style:UITableViewStylePlain];
+    if(XKAppHeight > 480){
+        planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 350, XKAppWidth, XKAppHeight) style:UITableViewStylePlain];
+    }else{
+        planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 300, XKAppWidth, XKAppHeight) style:UITableViewStylePlain];
+    }
     planTableView.delegate = self;
     planTableView.dataSource = self;
     planTableView.tag = 1000;
-    [self.view addSubview:planTableView];
+    planTableView.backgroundColor = XK_BACKGROUND_COLOR;
+    planTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 68 + (XKAppWidth - 66)/3.0)];
+    [self.view addSubview:planTableView];
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
     [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
@@ -120,111 +123,109 @@
     iFlyControl.delegate = self;
     iFlyControl.hidden = YES;
     [self.view addSubview:iFlyControl];
-
-}
-
-- (XKRWUITableViewCellbase *)setSearchAndRecordCell:(UITableView *)tableView {
-    XKRWUITableViewCellbase *cell = [tableView dequeueReusableCellWithIdentifier:@"searchAndRecord"];
-    if(cell == nil){
-        cell = [[XKRWUITableViewCellbase alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"searchAndRecord"];
-        cell.frame = CGRectMake(0, 0, XKAppWidth, 120);
-    }
-    if (foodAndSportSearchBar == nil) {
-        foodAndSportSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
-        
-        foodAndSportSearchBar.delegate = self;
-        foodAndSportSearchBar.barTintColor = [UIColor whiteColor];
-        [foodAndSportSearchBar setSearchBarTextFieldColor:XKBGDefaultColor];
-        foodAndSportSearchBar.searchBarStyle = UISearchBarStyleMinimal;
-        foodAndSportSearchBar.showsBookmarkButton = true;
-        foodAndSportSearchBar.showsScopeBar = true;
-        
-        [foodAndSportSearchBar setImage:[UIImage imageNamed:@"voice"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
-        foodAndSportSearchBar.placeholder = @"查询食物和运动" ;
-        searchDisplayCtrl = [[KMSearchDisplayController alloc] initWithSearchBar:foodAndSportSearchBar contentsController:self];
-        searchDisplayCtrl.delegate = self ;
-        
-        searchDisplayCtrl.searchResultDelegate = self ;
-        searchDisplayCtrl.searchResultDataSource = self ;
-        
-        searchDisplayCtrl.searchResultTableView.tag = 201 ;
-        [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCell" bundle:nil] forCellReuseIdentifier:@"searchResultCell"];
-        
-        UILabel * searchText = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, XKAppWidth, 30)];
-        searchText.text = @"查询";
-        searchText.textColor = XK_ASSIST_TEXT_COLOR;
-        searchText.font = [UIFont systemFontOfSize:24];
-        searchText.textAlignment = NSTextAlignmentCenter;
-        
-        UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_ic_"]];
-        iconImageView.center =  CGPointMake(XKAppWidth / 2, searchText.bottom + 10 + iconImageView.height / 2);
-        
-        [searchDisplayCtrl.backgroundContentView addSubview:searchText];
-        [searchDisplayCtrl.backgroundContentView addSubview:iconImageView];
-        
-        
-        UILabel *food = [[UILabel alloc] initWithFrame:CGRectMake(iconImageView.left, iconImageView.bottom + 5, 50, 30)];
-        food.textAlignment = NSTextAlignmentLeft;
-        food.text = @"食物";
-        food.font = [UIFont systemFontOfSize:14];
-        food.textColor = XK_ASSIST_TEXT_COLOR;
-        
-        UILabel *meal = [[UILabel alloc] initWithFrame:CGRectMake(XKAppWidth / 2 - 25, iconImageView.bottom + 5, 50, 30)];
-        meal.textAlignment = NSTextAlignmentCenter;
-        meal.text = @"菜肴";
-        meal.font = [UIFont systemFontOfSize:14];
-        meal.textColor = XK_ASSIST_TEXT_COLOR;
-        
-        UILabel *sport = [[UILabel alloc] initWithFrame:CGRectMake(iconImageView.right - 54, iconImageView.bottom + 5, 50, 30)];
-        sport.textAlignment = NSTextAlignmentRight;
-        sport.text = @"运动";
-        sport.font = [UIFont systemFontOfSize:14];
-        sport.textColor = XK_ASSIST_TEXT_COLOR;
-       
-        [searchDisplayCtrl.backgroundContentView addSubview:food];
-        [searchDisplayCtrl.backgroundContentView addSubview:meal];
-        [searchDisplayCtrl.backgroundContentView addSubview:sport];
-        [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCategoryCell" bundle:nil] forCellReuseIdentifier:@"searchResultCategoryCell"];
-        
-        
-        [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWMoreSearchResultCell" bundle:nil] forCellReuseIdentifier:@"moreSearchResultCell"];
-        
-        
-        searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
-        [cell.contentView addSubview:foodAndSportSearchBar];
-    }
     
-    if(_recordAndTargetView == nil){
-        _recordAndTargetView
-        = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordAndTargetView");
-        _recordAndTargetView.frame = CGRectMake(0, 64, cell.contentView.width, 30);
-        _recordAndTargetView.dayLabel.layer.masksToBounds = YES;
-        _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
-        _recordAndTargetView.dayLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-        _recordAndTargetView.dayLabel.layer.borderWidth = 1;
-        XKLog(@"%@",[[XKRWThinBodyDayManage shareInstance] PlanDayText]);
-        _recordAndTargetView.planTimeLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
-        _recordAndTargetView.currentWeightLabel.layer.masksToBounds = YES;
-        _recordAndTargetView.currentWeightLabel.layer.cornerRadius = 16;
-        _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-        _recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
-        _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWUserService sharedService] getCurrentWeight]/1000.f];
-        _recordAndTargetView.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)[NSDate date].day];
-        _recordAndTargetView.monthLabel.text = [NSString stringWithFormat:@"%ld月",(long)[NSDate date].month];
-        _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
-        [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UILongPressGestureRecognizer *gesLongPressed = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressRecognizer:)];
-        gesLongPressed.minimumPressDuration = 1.0f;
-        gesLongPressed.numberOfTouchesRequired=1;
-        [_recordAndTargetView.weightButton addGestureRecognizer:gesLongPressed];
-        
-        [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:_recordAndTargetView];
-
-    }
-    return cell;
+    [self.view addSubview:[self createPlanHeaderView]];
 }
+
+- (UIView *)createPlanHeaderView
+{
+    UIView *planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 350)];
+    planHeaderView.backgroundColor = [UIColor whiteColor];
+    foodAndSportSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
+    
+    foodAndSportSearchBar.delegate = self;
+    foodAndSportSearchBar.barTintColor = [UIColor whiteColor];
+    [foodAndSportSearchBar setSearchBarTextFieldColor:XKBGDefaultColor];
+    foodAndSportSearchBar.searchBarStyle = UISearchBarStyleMinimal;
+    foodAndSportSearchBar.showsBookmarkButton = true;
+    foodAndSportSearchBar.showsScopeBar = true;
+   
+    [foodAndSportSearchBar setImage:[UIImage imageNamed:@"voice"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
+    foodAndSportSearchBar.placeholder = @"查询食物和运动" ;
+    searchDisplayCtrl = [[KMSearchDisplayController alloc] initWithSearchBar:foodAndSportSearchBar contentsController:self];
+    searchDisplayCtrl.delegate = self ;
+    
+    searchDisplayCtrl.searchResultDelegate = self ;
+    searchDisplayCtrl.searchResultDataSource = self ;
+    
+    searchDisplayCtrl.searchResultTableView.tag = 201 ;
+    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCell" bundle:nil] forCellReuseIdentifier:@"searchResultCell"];
+    
+    UILabel * searchText = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, XKAppWidth, 30)];
+    searchText.text = @"查询";
+    searchText.textColor = XK_ASSIST_TEXT_COLOR;
+    searchText.font = [UIFont systemFontOfSize:24];
+    searchText.textAlignment = NSTextAlignmentCenter;
+    
+    UIImageView *iconImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search_ic_"]];
+    iconImageView.center =  CGPointMake(XKAppWidth / 2, searchText.bottom + 10 + iconImageView.height / 2);
+    
+    [searchDisplayCtrl.backgroundContentView addSubview:searchText];
+    [searchDisplayCtrl.backgroundContentView addSubview:iconImageView];
+    
+    
+    UILabel *food = [[UILabel alloc] initWithFrame:CGRectMake(iconImageView.left, iconImageView.bottom + 5, 50, 30)];
+    food.textAlignment = NSTextAlignmentLeft;
+    food.text = @"食物";
+    food.font = [UIFont systemFontOfSize:14];
+    food.textColor = XK_ASSIST_TEXT_COLOR;
+    
+    UILabel *meal = [[UILabel alloc] initWithFrame:CGRectMake(XKAppWidth / 2 - 25, iconImageView.bottom + 5, 50, 30)];
+    meal.textAlignment = NSTextAlignmentCenter;
+    meal.text = @"菜肴";
+    meal.font = [UIFont systemFontOfSize:14];
+    meal.textColor = XK_ASSIST_TEXT_COLOR;
+    
+    UILabel *sport = [[UILabel alloc] initWithFrame:CGRectMake(iconImageView.right - 54, iconImageView.bottom + 5, 50, 30)];
+    sport.textAlignment = NSTextAlignmentRight;
+    sport.text = @"运动";
+    sport.font = [UIFont systemFontOfSize:14];
+    sport.textColor = XK_ASSIST_TEXT_COLOR;
+    
+    [searchDisplayCtrl.backgroundContentView addSubview:food];
+    [searchDisplayCtrl.backgroundContentView addSubview:meal];
+    [searchDisplayCtrl.backgroundContentView addSubview:sport];
+    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCategoryCell" bundle:nil] forCellReuseIdentifier:@"searchResultCategoryCell"];
+    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWMoreSearchResultCell" bundle:nil] forCellReuseIdentifier:@"moreSearchResultCell"];
+    
+
+    searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
+    [planHeaderView addSubview:foodAndSportSearchBar];
+
+    _recordAndTargetView
+    = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordAndTargetView");
+    _recordAndTargetView.frame = CGRectMake(0, 64, planHeaderView.width, 30);
+    _recordAndTargetView.backgroundColor = [UIColor whiteColor];
+    _recordAndTargetView.dayLabel.layer.masksToBounds = YES;
+    _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
+    _recordAndTargetView.dayLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    _recordAndTargetView.dayLabel.layer.borderWidth = 1;
+    _recordAndTargetView.planTimeLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
+    _recordAndTargetView.currentWeightLabel.layer.masksToBounds = YES;
+    _recordAndTargetView.currentWeightLabel.layer.cornerRadius = 16;
+    _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    _recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
+    _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWUserService sharedService] getCurrentWeight]/1000.f];
+    _recordAndTargetView.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)[NSDate date].day];
+    _recordAndTargetView.monthLabel.text = [NSString stringWithFormat:@"%ld月",(long)[NSDate date].month];
+    _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
+    [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILongPressGestureRecognizer *gesLongPressed = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressRecognizer:)];
+    gesLongPressed.minimumPressDuration = 1.0f;
+    gesLongPressed.numberOfTouchesRequired=1;
+    [_recordAndTargetView.weightButton addGestureRecognizer:gesLongPressed];
+    
+    [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
+    [planHeaderView addSubview:_recordAndTargetView];
+    
+    _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, 68 + (XKAppWidth - 66)/3.0)];
+    _planEnergyView.delegate = self;
+    [planHeaderView addSubview:_planEnergyView];
+
+    return planHeaderView;
+}
+
 
 #pragma --mark Action
 /**
@@ -247,7 +248,6 @@
     btn.frame = self.view.bounds;
     [btn addTarget:self action:@selector(removePullView:) forControlEvents:UIControlEventTouchDown];
     if (_pullView == nil) {
-        
         _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, 80, 90)];
         CGPoint center = button.center;
         center.x = XKAppWidth - _pullView.frame.size.width/2 - 15;
@@ -281,18 +281,18 @@
 - (void)entryCalendarAction:(UIButton *)button{
     XKRWRecordVC *recordVC = [[XKRWRecordVC alloc] init];
     recordVC.hidesBottomBarWhenPushed = YES;
-   
     [self.navigationController pushViewController:recordVC animated:YES];
      [recordVC.navigationController setNavigationBarHidden:NO];
-    
-//    XKRWSurroundDegreeVC_5_3 *vc = [[XKRWSurroundDegreeVC_5_3 alloc] init];
-//    vc.dataType = eWeightType;
-//    [self presentViewController:vc animated:YES completion:^{
-//        
-//    }];
 }
 
-
+#pragma mark - XKRWPlanEnergyViewDelegate
+- (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:[NSString stringWithFormat:@"%@_%ld",OpenPlanToday,(long)[[XKRWUserService sharedService] getUserId]]];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+}
 #pragma XKRWWeightRecordPullViewDelegate method
 
 /**
@@ -330,12 +330,13 @@
     _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
     _popView.delegate = self;
     CGPoint center = self.view.center;
-    center.y -= 100;
+    center.y -= 0;
     _popView.center = center;
     _popView.alpha = 0;
     [UIView animateWithDuration:.3 delay:.1 options:0 animations:^{
         [_popView.textField becomeFirstResponder];
         [[UIApplication sharedApplication].keyWindow addSubview:_popView];
+        
         _popView.center = self.view.center;
         _pullView.alpha = 0;
         self.view.alpha = .5;
@@ -348,7 +349,7 @@
 -(void)cancelPopView{
     if (_popView) {
         CGPoint center = _popView.center;
-        center.y -= 100;
+        center.y -= 0;
         [_popView.textField resignFirstResponder];
         [UIView animateWithDuration:.5 delay:0 options:0 animations:^{
             _popView.center = center;
@@ -426,22 +427,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(tableView.tag == 1000){
-        if (indexPath.section == 0) {
-            XKRWUITableViewCellbase *cell  = [tableView dequeueReusableCellWithIdentifier:@"searchAndRecord"];
-            if(cell == nil){
-                cell = [self setSearchAndRecordCell:tableView];
-            }
-            
-            return cell;
-        } else if (indexPath.section == 2) {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"energyCircle"];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"energyCircle"];
-                cell.contentView.size = CGSizeMake(XKAppWidth, 68 + (XKAppWidth - 88)/3.0);
-                [cell addSubview:_planEnergyView];
-            }
-            return cell;
-        }
+        return nil;
     }else if (tableView.tag == 201){
         
         if(indexPath.section == 0){
@@ -452,6 +438,7 @@
                     XKRWSearchResultCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCategoryCell"];
                     cell.title.text = @"食物";
                     return cell;
+                    
                 }else if (indexPath.row == foodsCount +1){
                     XKRWMoreSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"moreSearchResultCell"];
                     cell.title.text = @"查看更多食物";
@@ -508,7 +495,7 @@
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if(tableView.tag == 1000){
-        return 3;
+        return 1;
     }else if (tableView.tag == 201){
         NSInteger section = 0;
         if(foodsArray.count > 0){
@@ -528,7 +515,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(tableView.tag == 1000){
-        return 1;
+        return 0;
     }else if (tableView.tag == 201){
         if(section == 0){
             if(foodsArray.count > 0){
@@ -559,10 +546,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(tableView.tag == 1000){
-        if (indexPath.section == 2) {
-            return 68 + (XKAppWidth - 88)/3.0;
-        }
-        return 120;
+        return 44;
     }else if (tableView.tag == 201){
         if(indexPath.section == 0 ){
             if ([foodsArray count] > 0){

@@ -94,7 +94,7 @@
     
     [_tableView reloadData];
     
-    [self setNavifationItemWithLeftItemTitle:nil AndRightItemTitle:nil AndItemColor:[UIColor whiteColor] andShowLeftRedDot:NO AndShowRightRedDot:YES AndLeftRedDotShowNum:NO AndRightRedDotShowNum:NO AndLeftItemIcon:nil AndRightItemIcon:@"icon_setting"];
+    [self setNavifationItemWithLeftItemTitle:nil AndRightItemTitle:nil AndItemColor:[UIColor whiteColor] andShowLeftRedDot:NO AndShowRightRedDot:YES AndLeftRedDotShowNum:NO AndRightRedDotShowNum:NO AndLeftItemIcon:nil AndRightItemIcon:@"setting"];
     
    
     

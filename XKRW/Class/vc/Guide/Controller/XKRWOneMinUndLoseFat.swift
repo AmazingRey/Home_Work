@@ -69,7 +69,7 @@ class XKRWOneMinUndLoseFat: XKRWBaseVC,UIScrollViewDelegate {
         accessButton.titleLabel?.font = UIFont.systemFontOfSize(15)
         
         
-        accessButton.addTarget(self, action: Selector("jumpOneMinOrEntryRegisterVC:"), forControlEvents: UIControlEvents.TouchUpInside)
+        accessButton.addTarget(self, action: #selector(XKRWOneMinUndLoseFat.jumpOneMinOrEntryRegisterVC(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         accessButton.tag = 1000
         
         let jumpButton:UIButton = UIButton(type: UIButtonType.Custom)
@@ -81,7 +81,7 @@ class XKRWOneMinUndLoseFat: XKRWBaseVC,UIScrollViewDelegate {
         jumpButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         jumpButton.tag = 1001
         
-        jumpButton.addTarget(self, action: Selector("jumpOneMinOrEntryRegisterVC:"), forControlEvents: UIControlEvents.TouchUpInside)
+        jumpButton.addTarget(self, action: #selector(XKRWOneMinUndLoseFat.jumpOneMinOrEntryRegisterVC(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         jumpButton.frame = CGRectMake((UI_SCREEN_WIDTH - 60)/2 ,UI_SCREEN_HEIGHT-30-48, 60, 30)
         
