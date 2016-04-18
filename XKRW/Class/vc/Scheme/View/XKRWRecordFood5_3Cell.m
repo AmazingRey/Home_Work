@@ -21,8 +21,6 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)actRight:(id)sender {
-}
 - (IBAction)actDown:(id)sender {
 }
 @end

@@ -51,6 +51,7 @@
     NSInteger mealGoalCarol;
     
     UILabel  *dayLabel;
+    UIView *planHeaderView;
 }
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
@@ -133,7 +134,7 @@
 
 - (UIView *)createPlanHeaderView
 {
-    UIView *planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 350)];
+    planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 350)];
     planHeaderView.backgroundColor = [UIColor whiteColor];
     foodAndSportSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
     
@@ -310,13 +311,17 @@
     [self getRecordAndMenuScheme];
     
     CGRect recordFrame = popView.frame;
-    recordFrame.origin.y += _planEnergyView.frame.origin.y+_planEnergyView.frame.size.height - recordFrame.size.height;
+    recordFrame.origin.y -= recordFrame.size.height;
     popView.frame = recordFrame;
     
-    [self.view addSubview:popView];
-    [UIView animateWithDuration:.5 animations:^{
+    [UIView animateWithDuration:.6 delay:0 options:0 animations:^{
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height)];
+        view.backgroundColor = [UIColor clearColor];
+        view.clipsToBounds = YES;
+        [view addSubview:popView];
+        [self.view addSubview:view];
         CGRect frame = popView.frame;
-        frame.origin.y += popView.frame.size.height+50;
+        frame.origin.y = 0;
         popView.frame = frame;
         popView.type = index;
         popView.delegate = self;
@@ -329,9 +334,9 @@
     if (_recordPopView) {
         XKRWRecordFood5_3View *popView = _recordPopView;
         _recordPopView = nil;
-        [UIView animateWithDuration:.5 animations:^{
+        [UIView animateWithDuration:.6 delay:0 options:0 animations:^{
             CGRect frame = popView.frame;
-            frame.origin.y -= _planEnergyView.frame.size.height+50;
+            frame.origin.y -= frame.size.height;
             popView.frame = frame;
         }completion:^(BOOL finished) {
             [popView removeFromSuperview];
