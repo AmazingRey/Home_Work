@@ -23,13 +23,14 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Tg-tV-OQC">
                             <rect key="frame" x="15" y="10" width="35" height="35"/>
-                            <state key="normal" image="-6-3"/>
+                            <state key="normal" image="off_n5_3"/>
+                            <state key="selected" image="off_p5_3"/>
                             <connections>
                                 <action selector="actCancle:" destination="iN0-l3-epB" eventType="touchUpInside" id="ca0-Eq-TyR"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="luM-MC-hck">
-                            <rect key="frame" x="72" y="0.0" width="80" height="50"/>
+                            <rect key="frame" x="70" y="0.0" width="115" height="50"/>
                             <state key="normal">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
@@ -50,7 +51,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Vt-27-68u">
-                            <rect key="frame" x="223" y="0.0" width="80" height="50"/>
+                            <rect key="frame" x="189" y="0.0" width="115" height="50"/>
                             <state key="normal">
                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
@@ -72,7 +73,8 @@
                         </label>
                         <button opaque="NO" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOJ-3E-NT4">
                             <rect key="frame" x="325" y="10" width="35" height="35"/>
-                            <state key="normal" image="-6-3"/>
+                            <state key="normal" image="more_n5_3"/>
+                            <state key="selected" image="more_p5_3"/>
                             <connections>
                                 <action selector="actMore:" destination="iN0-l3-epB" eventType="touchUpInside" id="8hd-R5-Ac7"/>
                             </connections>
@@ -192,6 +194,7 @@
                 <outlet property="labPushMenuNum" destination="Qxo-Sy-8OI" id="DSn-PL-cAu"/>
                 <outlet property="labRecordWeight" destination="Qug-Cf-kNw" id="J1z-3m-cBy"/>
                 <outlet property="labRecordWeightNum" destination="Qxf-dl-lpB" id="dse-KR-rYR"/>
+                <outlet property="labSeperate" destination="YJU-qp-bL4" id="7R1-Wh-4EF"/>
                 <outlet property="tableView" destination="ThF-Ib-Q2b" id="aDC-FD-1rd"/>
                 <outlet property="topArrowImgConstraint" destination="9bX-EF-IB6" id="bJk-kL-ygG"/>
             </connections>
@@ -199,6 +202,9 @@
         </view>
     </objects>
     <resources>
-        <image name="-6-3" width="100" height="100"/>
+        <image name="more_n5_3" width="21" height="4"/>
+        <image name="more_p5_3" width="21" height="4"/>
+        <image name="off_n5_3" width="15" height="15"/>
+        <image name="off_p5_3" width="15" height="15"/>
     </resources>
 </document>

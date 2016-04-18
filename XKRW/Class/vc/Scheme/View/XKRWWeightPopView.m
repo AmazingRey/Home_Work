@@ -108,7 +108,7 @@
     if (_currentIndex != currentIndex) {
         _currentIndex = currentIndex;
     }
-    _textField.text = [NSString stringWithFormat:@"%@",_dicAll[_selectDateStr][_currentIndex]];
+    [self showCurrentText];
 }
 
 -(void)setSelectedDate:(NSDate *)selectedDate{
@@ -220,8 +220,7 @@
             [self reloadReocrdOfDay:dateBefore];
 //            [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
              [_datePicker setDate:_selectedDate animated:YES];
-            NSString *str = _dicAll[_selectDateStr][[self getCurrentType:_currentIndex]];
-            _textField.text = str;
+            [self showCurrentText];
         }
     }
 }
@@ -234,12 +233,17 @@
             [self reloadReocrdOfDay:dateAfter];
 //            [_calendar outerSetSelectedDate:_selectedDate andNeedReload:true];
             [_datePicker setDate:_selectedDate animated:YES];
-            
-            NSString *str = _dicAll[_selectDateStr][[self getCurrentType:_currentIndex]];
-            _textField.text = str;
+            [self showCurrentText];
         }
     }
 }
+
+-(void)showCurrentText{
+    CGFloat str = [_dicAll[_selectDateStr][[self getCurrentType:_currentIndex]] floatValue];
+    
+    _textField.text = str == 0 ? @"" : [NSString stringWithFormat:@"%.02f",str];
+}
+
 -(NSString *)getCurrentType:(NSNumber *)indexNum{
     NSString *type = [NSString stringWithFormat:@"%@",[_arrLabels objectAtIndex:[indexNum integerValue]]];
     return type;
@@ -251,8 +255,6 @@
     NSMutableDictionary *dayDiction = [NSMutableDictionary dictionary];
     if (dic) {
         dayDiction = dic;
-    }else{
-        [dayDiction addEntriesFromDictionary:dic];
     }
     
     [dayDiction setObject:_textField.text forKey:[self getCurrentType:_currentIndex]];
@@ -278,17 +280,10 @@
 
 - (void)carouselDidScroll:(iCarousel *)carousel{
     [self showCalendar:NO];
-    _currentIndex = [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
     if (carousel.currentItemIndex != [_currentIndex integerValue]) {
         [self saveTheData];
         _currentIndex = [NSNumber numberWithInteger:carousel.currentItemIndex];
-
-        NSString *str = [[_dicAll objectForKey:_selectDateStr] objectForKey:[self getCurrentType:_currentIndex]];
-        if (str && ![str isEqualToString:@""]) {
-            _textField.text = str;
-        }else{
-            _textField.text = @"";
-        }
+        [self showCurrentText];
     }
 }
 

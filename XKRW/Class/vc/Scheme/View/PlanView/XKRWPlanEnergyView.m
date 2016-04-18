@@ -8,18 +8,21 @@
 
 #import "XKRWPlanEnergyView.h"
 #import "XKRWEnergyCircleView.h"
+#import "XKRWFlashingTextView.h"
 
 @interface XKRWPlanEnergyView()
 @property (nonatomic, strong) XKRWEnergyCircleView *eatEnergyCircle;
 @property (nonatomic, strong) XKRWEnergyCircleView *sportEnergyCircle;
 @property (nonatomic, strong) XKRWEnergyCircleView *habitEnergyCircle;
+@property (nonatomic, strong) UIButton *titleClickButton;
 
 @end
 
 @implementation XKRWPlanEnergyView
 {
     XKRWEnergyCircleView *_exClickedCircle;
-    UILabel *_remindLabel;
+    XKRWFlashingTextView *_remindTextView;
+    UILabel *_checkTodayAnalyze;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -28,20 +31,20 @@
     CGFloat separateWidth = (XKAppWidth - circleWidth * 3) / 4.0;
     if (self) {
         
-        _remindLabel = [[UILabel alloc] init];
-        _remindLabel.font = XKDefaultFontWithSize(12);
-        _remindLabel.text = @"点击“开启”，来监督今天的行为";
-        [_remindLabel sizeToFit];
-        _remindLabel.center = CGPointMake(XKAppWidth / 2.0, 34);
-        [self addSubview:_remindLabel];
+        _remindTextView = [[XKRWFlashingTextView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 12)];
+        _remindTextView.text = @"点击“开启”，来监督今天的行为";
+        _remindTextView.foreColor = [UIColor colorFromHexString:@"000000"];
+        _remindTextView.backColor = [UIColor colorFromHexString:@"c7c7c7"];
+        _remindTextView.font = XKDefaultFontWithSize(12);
+        _remindTextView.alignment = NSTextAlignmentCenter;
+        _remindTextView.center = CGPointMake(XKAppWidth/2.0, 34);
+        [self addSubview:_remindTextView];
+        [_remindTextView textFlashingWithDuration:1.5];
         
-        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-        gradientLayer.frame = _remindLabel.frame;
-        gradientLayer.colors = @[[UIColor colorFromHexString:@"ffffff"],[UIColor colorFromHexString:@"000000"],[UIColor colorFromHexString:@"c7c7c7"],];
-        [self.layer addSublayer:gradientLayer];
-        
-        gradientLayer.mask = _remindLabel.layer;
-        _remindLabel.frame = gradientLayer.bounds;
+        _titleClickButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _titleClickButton.frame = _remindTextView.frame;
+        [_titleClickButton addTarget:self action:@selector(titleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        [self insertSubview:_titleClickButton aboveSubview:_remindTextView];
         
         _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 68, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
         _eatEnergyCircle.tag = 1;
@@ -71,6 +74,25 @@
     return self;
 }
 
+- (void)setTitle:(NSString *)title isflashing:(BOOL)isflashing {
+    _remindTextView.text = title;
+    if (isflashing) {
+        _remindTextView.backColor = [UIColor colorFromHexString:@"c7c7c7"];
+        [_remindTextView startFlash];
+        [_titleClickButton removeFromSuperview];
+        
+    } else {
+        _remindTextView.backColor = XKMainSchemeColor;
+        [_remindTextView endFlash];
+        [self insertSubview:_titleClickButton aboveSubview:_remindTextView];
+    }
+}
+
+- (void)titleButtonClicked {
+    if (self.delegate && [_delegate respondsToSelector:@selector(energyCircleViewTitleClicked:)]) {
+        [_delegate energyCircleViewTitleClicked:_remindTextView.text];
+    }
+}
 #pragma mark -- reset meals、sports and habits' current number
 - (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     CGFloat percentage = (currentNumber / (CGFloat)_eatEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_eatEnergyCircle.goalNumber);
@@ -105,8 +127,9 @@
         [weakSelf resetCirclesStyle];
         
         [weakSelf runEatEnergyCircleWithNewCurrentNumber:currentNumber];
-        
-        if ([weakSelf respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
         }
         _selectedIndex = 1;
@@ -131,8 +154,9 @@
         
         [weakSelf runSportEnergyCircleWithNewCurrentNumber:currentNumber];
         
-        if ([weakSelf respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
-            [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+
+            [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:2];
         }
         _selectedIndex = 2;
         _exClickedCircle = _sportEnergyCircle;
@@ -155,14 +179,18 @@
         
         [weakSelf runHabitEnergyCircleWithNewCurrentNumber:currentNumber];
         
-        if ([weakSelf respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
-            [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+
+            [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:3];
         }
         _selectedIndex = 3;
         _exClickedCircle = _habitEnergyCircle;
     };
 }
 - (void)resetCirclesStyle {
+    if (_remindTextView.hidden != YES) {
+        _remindTextView.hidden = YES;
+    }
     if (_exClickedCircle) {
         _exClickedCircle.style = XKRWEnergyCircleStyleOpened;
     }

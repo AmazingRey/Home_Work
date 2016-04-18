@@ -1,14 +1,14 @@
 //
-//  XKRWRecordSport5_3Cell.m
+//  XKRWRecordFood5_3Cell.m
 //  XKRW
 //
 //  Created by ss on 16/4/14.
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
-#import "XKRWRecordSport5_3Cell.h"
+#import "XKRWRecordFood5_3Cell.h"
 
-@implementation XKRWRecordSport5_3Cell
+@implementation XKRWRecordFood5_3Cell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -22,5 +22,7 @@
 }
 
 - (IBAction)actRight:(id)sender {
+}
+- (IBAction)actDown:(id)sender {
 }
 @end

@@ -9,14 +9,24 @@
 #define labStatus_PushMenu @"_labPushMenu"
 
 #import "XKRWRecordFood5_3View.h"
-#import "XKRWRecordSport5_3Cell.h"
+#import "XKRWRecordFood5_3Cell.h"
 #import "XKRWPushMenu5_3Cell.h"
+#import "XKRWAlgolHelper.h"
 
 @interface XKRWRecordFood5_3View () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate>
 @end
 
 @implementation XKRWRecordFood5_3View
 @synthesize arrRecord = _arrRecord,arrMenu = _arrMenu;
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -35,7 +45,7 @@
     
     _tableRecord = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.frame.size.height)];
     _tableRecord.tag = 5031;
-    [_tableRecord registerNib:[UINib nibWithNibName:@"XKRWRecordSport5_3Cell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recordSportCell"];
+    [_tableRecord registerNib:[UINib nibWithNibName:@"XKRWRecordFood5_3Cell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recordSportCell"];
     
     _tableMenu = [[UITableView alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width, 0, self.tableView.frame.size.width, self.tableView.frame.size.height)];
     _tableMenu.tag = 5032;
@@ -51,16 +61,52 @@
     _tableMenu.dataSource = self;
 }
 
+-(void)setTitle{
+    _labSeperate.hidden = NO;
+    
+    switch (_type) {
+        case 1:
+            _labRecordWeight.text = @"记录饮食";
+            _labPushMenu.text = @"推荐食谱";
+            _labRecordWeightNum.text = @"1111kcal";
+            
+            _labPushMenuNum.text = @"2222kcal";
+            break;
+        case 2:
+            _labRecordWeight.text = @"记录运动";
+            _labPushMenu.text = @"运动计划";
+            int cal = [XKRWAlgolHelper dailyConsumeSportEnergy];
+            _labRecordWeightNum.text = [NSString stringWithFormat:@"%dkcal",cal];
+            
+            _labPushMenuNum.text = @"4444kcal";
+            break;
+        case 3:
+            _labRecordWeight.text = @"";
+            _labRecordWeightNum.text = @"";
+            _labPushMenu.text = @"";
+            _labPushMenuNum.text = @"";
+            _labSeperate.hidden = YES;
+            
+            [_btnRecordWeight setTitle:@"今天，我改正了:" forState:UIControlStateNormal];
+            [_btnRecordWeight sizeToFit];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void)setType:(energyType)type{
+    if (_type != type) {
+        _type = type;
+    }
+    [self setTitle];
+}
+
 -(void)setArrRecord:(NSArray *)arrRecord{
     if (_arrRecord != arrRecord) {
         _arrRecord = arrRecord;
         [_tableRecord reloadData];
     }
-}
-
--(NSArray *)arrRecord{
-    NSLog(@"Returning name: %@", _arrRecord);
-    return _arrRecord;
 }
 
 -(void)setArrMenu:(NSArray *)arrMenu{
@@ -94,7 +140,9 @@
 }
 
 - (IBAction)actCancle:(id)sender {
-    [self removeFromSuperview];
+    if ([self.delegate respondsToSelector:@selector(RecordFoodViewpressCancle)]) {
+        [self.delegate RecordFoodViewpressCancle];
+    }
 }
 
 - (IBAction)actRecordWeight:(id)sender {
@@ -114,6 +162,7 @@
 }
 
 - (IBAction)actMore:(id)sender {
+    
 }
 
 - (IBAction)actAnalyze:(id)sender {
@@ -133,9 +182,9 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView.tag == 5031) {
-        return 10;
+        return _arrRecord.count;
     }else if (tableView.tag == 5032){
-        return 10;
+        return _arrMenu.count;
     }
     return 0;
 }
@@ -145,20 +194,78 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (tableView.tag == 5031) {
-        XKRWRecordSport5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"recordSportCell"];
-        cell.labMain.text = @"haha";
-        return cell;
-    }else if (tableView.tag == 5032){
-        XKRWPushMenu5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"pushMenuCell"];
-        cell.labMain.text = @"hehe";
-        cell.accessibilityNavigationStyle = UITableViewCellAccessoryDisclosureIndicator;
-        return cell;
+    
+    NSString *identify = @"";
+    XKRWRecordSchemeEntity *entity;
+     if (tableView.tag == 5031) {
+         identify = @"recordSportCell";
+         entity = [_arrRecord lastObject];
+     }else if (tableView.tag == 5032){
+          identify = @"pushMenuCell";
+          entity = [_arrMenu objectAtIndex:indexPath.row];;
+     }
+    XKRWRecordFood5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
+    
+    if (cell) {
+        cell.leftImage.image = [UIImage imageNamed:[self getImageNameWithType:entity.type]];
+        cell.labMain.text = [self getNameWithType:entity.type];
+        return  cell;
     }
+    
     return [UITableViewCell new];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(NSString *)getImageNameWithType:(RecordType)type{
+    NSString *imgName = @"";
+    switch (type) {
+        case 0:
+            imgName = @"sports5_3";
+            break;
+        case 1:
+            imgName = @"breakfast5_3";
+            break;
+        case 2:
+            imgName = @"lunch5_3";
+            break;
+        case 3:
+            imgName = @"dinner5_3";
+            break;
+        case 4:
+            imgName = @"addmeal5_3";
+            break;
+            
+        default:
+            break;
+    }
+    return imgName;
+}
+
+-(NSString *)getNameWithType:(RecordType)type{
+    NSString *name = @"";
+    switch (type) {
+        case 0:
+            name = @"运动";
+            break;
+        case 1:
+            name = @"早餐";
+            break;
+        case 2:
+            name = @"午餐";
+            break;
+        case 3:
+            name = @"晚餐";
+            break;
+        case 4:
+            name = @"加餐";
+            break;
+            
+        default:
+            break;
+    }
+    return name;
 }
 @end

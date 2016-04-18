@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -29,11 +29,15 @@
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kkJ-qe-ddA">
-                        <rect key="frame" x="280" y="15" width="29" height="29"/>
-                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVc-Gl-A4a">
+                        <rect key="frame" x="292" y="19" width="20" height="20"/>
+                        <state key="normal" image="details"/>
+                        <connections>
+                            <action selector="actArrow:" destination="YUR-hW-HSV" eventType="touchUpInside" id="UfS-1F-0S5"/>
+                        </connections>
+                    </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q60-rB-Bj7">
-                        <rect key="frame" x="210" y="20" width="60" height="20"/>
+                        <rect key="frame" x="224" y="20" width="60" height="20"/>
                         <state key="normal" title="查看食谱">
                             <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
@@ -44,7 +48,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="arrowImage" destination="kkJ-qe-ddA" id="EqQ-XY-mh6"/>
+                <outlet property="btnArrow" destination="jVc-Gl-A4a" id="TDn-G8-Mej"/>
                 <outlet property="btnRight" destination="q60-rB-Bj7" id="2RL-k6-Oxg"/>
                 <outlet property="labMain" destination="7IA-Z8-QXW" id="K3W-kB-Tw7"/>
                 <outlet property="labSub" destination="eEf-8h-OTF" id="Eji-iQ-osp"/>
@@ -53,4 +57,7 @@
             <point key="canvasLocation" x="230" y="242.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="details" width="6" height="8"/>
+    </resources>
 </document>

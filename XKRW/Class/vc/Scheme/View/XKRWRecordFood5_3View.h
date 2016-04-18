@@ -5,10 +5,23 @@
 //  Created by ss on 16/4/13.
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
+typedef NS_ENUM(NSInteger,energyType) {
+    energyTypeEat = 1,
+    energyTypeSport,
+    energyTypeHabit
+};
+
+@protocol XKRWRecordFood5_3ViewDelegate <NSObject>
+@optional
+-(void)RecordFoodViewpressCancle;
+
+@end
 
 #import <UIKit/UIKit.h>
+#import "XKRWRecordSchemeEntity.h"
 
 @interface XKRWRecordFood5_3View : UIView
+@property (assign,nonatomic) id<XKRWRecordFood5_3ViewDelegate> delegate;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topArrowImgConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *btnCancle;
 @property (weak, nonatomic) IBOutlet UIButton *btnRecordWeight;
@@ -24,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnAnalyze;
 @property (weak, nonatomic) IBOutlet UIButton *btnRecordSport;
 @property (weak, nonatomic) IBOutlet UIButton *btnRecordFood;
+@property (weak, nonatomic) IBOutlet UILabel *labSeperate;
 
 - (IBAction)actCancle:(id)sender;
 
@@ -43,5 +57,5 @@
 @property (assign ,nonatomic) NSInteger pageIndex;
 @property (nonatomic) NSArray *arrRecord;
 @property (strong ,nonatomic) NSArray *arrMenu;
-
+@property (assign ,nonatomic) energyType type;
 @end

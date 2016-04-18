@@ -66,18 +66,20 @@
 }
 
 - (void)drawCirclePercentage:(CGFloat)percentage animation:(BOOL)animation duration:(CGFloat)duration {
+    
     if (!animation || duration == 0) {
         _progressShapeLayer.strokeEnd = percentage;
         return;
     } else {
         _progressShapeLayer.strokeEnd = percentage;
         CABasicAnimation *baseAnimation = [CABasicAnimation animation];
-        baseAnimation.fromValue = @(0);
+        baseAnimation.fromValue = @(_percentage);
         baseAnimation.toValue = @(percentage);
         baseAnimation.duration = duration;
         baseAnimation.repeatCount = 1.f;
         [_progressShapeLayer addAnimation:baseAnimation forKey:@"strokeEnd"];
     }
+    _percentage = percentage;
 }
 - (void)drawCircleDuration:(CGFloat)duration {
     [self drawCirclePercentage:_percentage animation:YES duration:duration];

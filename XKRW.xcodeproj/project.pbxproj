@@ -230,6 +230,7 @@
 		2F4E2FA21C47920200EBAE6E /* XKRWFoldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E2FA01C47920200EBAE6E /* XKRWFoldCell.m */; };
 		2F4E2FA31C47920200EBAE6E /* XKRWFoldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F4E2FA11C47920200EBAE6E /* XKRWFoldCell.xib */; };
 		2F5F042A18DFE4E000161A99 /* XKRWBaseSettingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F5F042918DFE4E000161A99 /* XKRWBaseSettingService.m */; };
+		2F6268531CC0C6160021B3A4 /* XKRWFlashingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6268521CC0C6160021B3A4 /* XKRWFlashingTextView.m */; };
 		2F63C3C21C506AE600A94117 /* XKRWBlogMyListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F63C3C11C506AE600A94117 /* XKRWBlogMyListVC.m */; };
 		2F63C3C61C506BE800A94117 /* XKRWBlogEnterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F63C3C41C506BE800A94117 /* XKRWBlogEnterCell.m */; };
 		2F63C3C71C506BE800A94117 /* XKRWBlogEnterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F63C3C51C506BE800A94117 /* XKRWBlogEnterCell.xib */; };
@@ -996,8 +997,10 @@
 		BCF8621E1C508B3800A64986 /* XKRWBelongTeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8621C1C508B3800A64986 /* XKRWBelongTeamCell.m */; };
 		BCF8621F1C508B3800A64986 /* XKRWBelongTeamCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF8621D1C508B3800A64986 /* XKRWBelongTeamCell.xib */; };
 		BCFE22261B74CC9F00535863 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFE22251B74CC9F00535863 /* MediaPlayer.framework */; };
-		CC1B9A7E1CBF85100041103D /* XKRWRecordSport5_3Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1B9A7C1CBF85100041103D /* XKRWRecordSport5_3Cell.m */; };
-		CC1B9A7F1CBF85100041103D /* XKRWRecordSport5_3Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1B9A7D1CBF85100041103D /* XKRWRecordSport5_3Cell.xib */; };
+		CC05E7621CC4B852007D872D /* XKRWRecordMore5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CC05E7611CC4B852007D872D /* XKRWRecordMore5_3View.m */; };
+		CC05E7641CC4B8B1007D872D /* XKRWRecordMore5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC05E7631CC4B8B1007D872D /* XKRWRecordMore5_3View.xib */; };
+		CC1B9A7E1CBF85100041103D /* XKRWRecordFood5_3Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1B9A7C1CBF85100041103D /* XKRWRecordFood5_3Cell.m */; };
+		CC1B9A7F1CBF85100041103D /* XKRWRecordFood5_3Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1B9A7D1CBF85100041103D /* XKRWRecordFood5_3Cell.xib */; };
 		CC1B9A831CBF852E0041103D /* XKRWPushMenu5_3Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1B9A811CBF852E0041103D /* XKRWPushMenu5_3Cell.m */; };
 		CC1B9A841CBF852E0041103D /* XKRWPushMenu5_3Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1B9A821CBF852E0041103D /* XKRWPushMenu5_3Cell.xib */; };
 		CC25086A1CB5EE1D00FFF00C /* XKRWWeightPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */; };
@@ -1459,6 +1462,8 @@
 		2F4E2FA11C47920200EBAE6E /* XKRWFoldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWFoldCell.xib; sourceTree = "<group>"; };
 		2F5F042818DFE4E000161A99 /* XKRWBaseSettingService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWBaseSettingService.h; sourceTree = "<group>"; };
 		2F5F042918DFE4E000161A99 /* XKRWBaseSettingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWBaseSettingService.m; sourceTree = "<group>"; };
+		2F6268511CC0C6160021B3A4 /* XKRWFlashingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWFlashingTextView.h; sourceTree = "<group>"; };
+		2F6268521CC0C6160021B3A4 /* XKRWFlashingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWFlashingTextView.m; sourceTree = "<group>"; };
 		2F63C3C01C506AE600A94117 /* XKRWBlogMyListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWBlogMyListVC.h; sourceTree = "<group>"; };
 		2F63C3C11C506AE600A94117 /* XKRWBlogMyListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWBlogMyListVC.m; sourceTree = "<group>"; };
 		2F63C3C31C506BE800A94117 /* XKRWBlogEnterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWBlogEnterCell.h; sourceTree = "<group>"; };
@@ -2669,9 +2674,12 @@
 		BCF8621C1C508B3800A64986 /* XKRWBelongTeamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWBelongTeamCell.m; sourceTree = "<group>"; };
 		BCF8621D1C508B3800A64986 /* XKRWBelongTeamCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWBelongTeamCell.xib; sourceTree = "<group>"; };
 		BCFE22251B74CC9F00535863 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		CC1B9A7B1CBF85100041103D /* XKRWRecordSport5_3Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordSport5_3Cell.h; sourceTree = "<group>"; };
-		CC1B9A7C1CBF85100041103D /* XKRWRecordSport5_3Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordSport5_3Cell.m; sourceTree = "<group>"; };
-		CC1B9A7D1CBF85100041103D /* XKRWRecordSport5_3Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWRecordSport5_3Cell.xib; sourceTree = "<group>"; };
+		CC05E7601CC4B852007D872D /* XKRWRecordMore5_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordMore5_3View.h; sourceTree = "<group>"; };
+		CC05E7611CC4B852007D872D /* XKRWRecordMore5_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordMore5_3View.m; sourceTree = "<group>"; };
+		CC05E7631CC4B8B1007D872D /* XKRWRecordMore5_3View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWRecordMore5_3View.xib; sourceTree = "<group>"; };
+		CC1B9A7B1CBF85100041103D /* XKRWRecordFood5_3Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordFood5_3Cell.h; sourceTree = "<group>"; };
+		CC1B9A7C1CBF85100041103D /* XKRWRecordFood5_3Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordFood5_3Cell.m; sourceTree = "<group>"; };
+		CC1B9A7D1CBF85100041103D /* XKRWRecordFood5_3Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWRecordFood5_3Cell.xib; sourceTree = "<group>"; };
 		CC1B9A801CBF852E0041103D /* XKRWPushMenu5_3Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPushMenu5_3Cell.h; sourceTree = "<group>"; };
 		CC1B9A811CBF852E0041103D /* XKRWPushMenu5_3Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPushMenu5_3Cell.m; sourceTree = "<group>"; };
 		CC1B9A821CBF852E0041103D /* XKRWPushMenu5_3Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPushMenu5_3Cell.xib; sourceTree = "<group>"; };
@@ -6534,6 +6542,8 @@
 				BCF664711CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib */,
 				2F9B8AD81CB3C33A00F89425 /* XKRWPlanEnergyView.h */,
 				2F9B8AD91CB3C33A00F89425 /* XKRWPlanEnergyView.m */,
+				2F6268511CC0C6160021B3A4 /* XKRWFlashingTextView.h */,
+				2F6268521CC0C6160021B3A4 /* XKRWFlashingTextView.m */,
 				BCDEC9A71CC0E4C700B5BEB6 /* XKRWPlanTipsCell.h */,
 				BCDEC9A81CC0E4C700B5BEB6 /* XKRWPlanTipsCell.m */,
 			);
@@ -6546,12 +6556,15 @@
 				CC520B7B1CBE440A007FEDBA /* XKRWRecordFood5_3View.h */,
 				CC520B7C1CBE440A007FEDBA /* XKRWRecordFood5_3View.m */,
 				CC520B7E1CBE4426007FEDBA /* XKRWRecordFood5_3View.xib */,
-				CC1B9A7B1CBF85100041103D /* XKRWRecordSport5_3Cell.h */,
-				CC1B9A7C1CBF85100041103D /* XKRWRecordSport5_3Cell.m */,
-				CC1B9A7D1CBF85100041103D /* XKRWRecordSport5_3Cell.xib */,
+				CC1B9A7B1CBF85100041103D /* XKRWRecordFood5_3Cell.h */,
+				CC1B9A7C1CBF85100041103D /* XKRWRecordFood5_3Cell.m */,
+				CC1B9A7D1CBF85100041103D /* XKRWRecordFood5_3Cell.xib */,
 				CC1B9A801CBF852E0041103D /* XKRWPushMenu5_3Cell.h */,
 				CC1B9A811CBF852E0041103D /* XKRWPushMenu5_3Cell.m */,
 				CC1B9A821CBF852E0041103D /* XKRWPushMenu5_3Cell.xib */,
+				CC05E7601CC4B852007D872D /* XKRWRecordMore5_3View.h */,
+				CC05E7611CC4B852007D872D /* XKRWRecordMore5_3View.m */,
+				CC05E7631CC4B8B1007D872D /* XKRWRecordMore5_3View.xib */,
 			);
 			name = RecordFoodAndmenu;
 			sourceTree = "<group>";
@@ -6829,6 +6842,7 @@
 				BCBAF8B31C477F2B008FBFE6 /* XKRWDiscoverTeamCell.xib in Resources */,
 				BCEF38101C1E901B00740ACC /* XKRWGradeRuleDetailCell.xib in Resources */,
 				2FE6C3E318E13AE00060FD6F /* alarmMsg.plist in Resources */,
+				CC05E7641CC4B8B1007D872D /* XKRWRecordMore5_3View.xib in Resources */,
 				2E9686F01A04AEE500CB5D77 /* auth.thrift in Resources */,
 				2F3B565F1CBE3511007831E0 /* red.gif in Resources */,
 				BCEF38041C1E901B00740ACC /* XKRWUserFeedbackVC.xib in Resources */,
@@ -6845,7 +6859,7 @@
 				BCEF364B1C1E63C000740ACC /* DatePickerView.xib in Resources */,
 				BCADABAF19108B29009E7C49 /* infoCity.plist in Resources */,
 				5D83662D1C586B8E00C4687D /* XKRWNonePostTableViewCell.xib in Resources */,
-				CC1B9A7F1CBF85100041103D /* XKRWRecordSport5_3Cell.xib in Resources */,
+				CC1B9A7F1CBF85100041103D /* XKRWRecordFood5_3Cell.xib in Resources */,
 				BCEF37501C1E75D900740ACC /* XKRWUserCommentCell.xib in Resources */,
 				BCBAF8BC1C48E637008FBFE6 /* XKRWEditPostVC.xib in Resources */,
 				2E9687EE1A04AEFD00CB5D77 /* MWPhotoBrowser.bundle in Resources */,
@@ -7194,6 +7208,7 @@
 				2FC1F69D1C1EB16C00E55B88 /* TYTextStorage.m in Sources */,
 				BC6F2F9B1C1A70D3005B54E8 /* XKRWFocusCell.m in Sources */,
 				BCC7E96A1C5A08B3008B560F /* TeamPostNumEntity+CoreDataProperties.swift in Sources */,
+				2F6268531CC0C6160021B3A4 /* XKRWFlashingTextView.m in Sources */,
 				048E1BD518618A9A003BC33F /* XKRWBaseService.m in Sources */,
 				BC31B91F1C1ACA520045817B /* XKRWEstimateWeightVC.swift in Sources */,
 				BC769E821C33D3DD00E96B1A /* KMHeaderTips.m in Sources */,
@@ -7440,9 +7455,10 @@
 				BC3D36A61A160ED20096A937 /* XKRWAdService.m in Sources */,
 				2FACC1BB1B4F804A00350B2E /* XKRWManagementService5_0.m in Sources */,
 				BC31B94B1C1ACA520045817B /* XKRWSurfaceView.m in Sources */,
-				CC1B9A7E1CBF85100041103D /* XKRWRecordSport5_3Cell.m in Sources */,
+				CC1B9A7E1CBF85100041103D /* XKRWRecordFood5_3Cell.m in Sources */,
 				2E9686E81A04AEE500CB5D77 /* XKSinaWeiBoService.m in Sources */,
 				2E9686B81A04AEE500CB5D77 /* XKHudHelper.m in Sources */,
+				CC05E7621CC4B852007D872D /* XKRWRecordMore5_3View.m in Sources */,
 				2F1842331CBB7A1D0007A913 /* XKRWPlanService.m in Sources */,
 				E3DEAD891A64F552008A5F05 /* XKRWServerPageService.m in Sources */,
 				0463FD7618D005D30021CDB6 /* XKRWWeightService.m in Sources */,

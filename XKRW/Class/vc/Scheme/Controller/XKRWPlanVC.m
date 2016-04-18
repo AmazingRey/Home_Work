@@ -32,7 +32,7 @@
 #import "XKRWSurroundDegreeVC_5_3.h"
 #import "XKRWNavigationController.h"
 
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate>
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
     KMSearchBar* foodAndSportSearchBar;
@@ -56,6 +56,10 @@
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
 @property (nonatomic, strong) XKRWWeightRecordPullView *pullView;
 @property (nonatomic, strong) XKRWWeightPopView *popView;
+
+@property (strong , nonatomic) NSArray *mealSchemes;
+@property (strong , nonatomic) XKRWSchemeEntity_5_0 *sportSchemes;
+@property (strong , nonatomic) XKRWRecordFood5_3View *recordPopView;
 @end
 
 @implementation XKRWPlanVC
@@ -93,7 +97,7 @@
 }
 
 - (void)refreshEnergyCircleView {
-    [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:0];
+    [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:600];
     [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:0];
 }
 #pragma --mark UI
@@ -222,7 +226,7 @@
     _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, 68 + (XKAppWidth - 66)/3.0)];
     _planEnergyView.delegate = self;
     [planHeaderView addSubview:_planEnergyView];
-
+    planHeaderView.clipsToBounds = YES;
     return planHeaderView;
 }
 
@@ -286,13 +290,96 @@
 }
 
 #pragma mark - XKRWPlanEnergyViewDelegate
+
+- (void)energyCircleViewTitleClicked:(NSString *)title {
+    
+}
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:[NSString stringWithFormat:@"%@_%ld",OpenPlanToday,(long)[[XKRWUserService sharedService] getUserId]]];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+    [self removeMenuView];
+    [self addmenuView:index];
 }
+
+
+#pragma mark - XKRWRecordFood5_3View
+-(void)addmenuView:(NSInteger)index{
+    XKRWRecordFood5_3View *popView = [[XKRWRecordFood5_3View alloc] init];
+    [self getRecordAndMenuScheme];
+    
+    CGRect recordFrame = popView.frame;
+    recordFrame.origin.y += _planEnergyView.frame.origin.y+_planEnergyView.frame.size.height - recordFrame.size.height;
+    popView.frame = recordFrame;
+    
+    [self.view addSubview:popView];
+    [UIView animateWithDuration:.5 animations:^{
+        CGRect frame = popView.frame;
+        frame.origin.y += popView.frame.size.height+50;
+        popView.frame = frame;
+        popView.type = index;
+        popView.delegate = self;
+    }completion:^(BOOL finished) {
+        _recordPopView = popView;
+    }];
+}
+
+-(void)removeMenuView{
+    if (_recordPopView) {
+        XKRWRecordFood5_3View *popView = _recordPopView;
+        _recordPopView = nil;
+        [UIView animateWithDuration:.5 animations:^{
+            CGRect frame = popView.frame;
+            frame.origin.y -= _planEnergyView.frame.size.height+50;
+            popView.frame = frame;
+        }completion:^(BOOL finished) {
+            [popView removeFromSuperview];
+            popView.delegate = nil;
+        }];
+    }
+}
+
+-(void)getRecordAndMenuScheme{
+    [self getMenuScheme];
+    [self getSportScheme];
+}
+
+-(void)getMenuScheme{
+    __weak typeof(self) weakSelf = self;
+    [self downloadWithTaskID:@"getMealSchemeAndRecord" outputTask:^id{
+        if (weakSelf) {
+            weakSelf.mealSchemes = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
+           NSArray *arr = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithSchemes:weakSelf.mealSchemes date:[NSDate date]];
+            if (arr) {
+                weakSelf.mealSchemes = arr;
+            }
+        }
+        return weakSelf.mealSchemes;
+    }];
+}
+
+-(void)getSportScheme{
+    __weak typeof(self) weakSelf = self;
+    [self downloadWithTaskID:@"getSportSchemeAndRecord" outputTask:^id{
+        if (weakSelf) {
+            NSInteger i =[[XKRWRecordService4_0 sharedService]getMenstruationSituation]?1:0;
+            
+            weakSelf.sportSchemes = [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
+            
+            NSArray *arr = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithSchemes:@[weakSelf.sportSchemes] date:[NSDate date]];
+            if (arr) {
+                weakSelf.sportSchemes = [arr lastObject];
+            }
+        }
+        return weakSelf.sportSchemes;
+    }];
+}
+
+-(void)RecordFoodViewpressCancle{
+    [self removeMenuView];
+}
+
 #pragma XKRWWeightRecordPullViewDelegate method
 
 /**
@@ -406,6 +493,21 @@
         }
         return;
     }
+    
+    if ([taskID isEqualToString:@"getMealSchemeAndRecord"]) {
+        [XKRWCui hideProgressHud];
+        if (result != nil) {
+            _recordPopView.arrMenu = (NSArray *)result;
+        }else [XKRWCui showInformationHudWithText:@"获取推荐食谱失败"];
+        return;
+    }
+    if ([taskID isEqualToString:@"getSportSchemeAndRecord"]) {
+        [XKRWCui hideProgressHud];
+        if (result != nil) {
+            _recordPopView.arrRecord = @[result];
+        }else [XKRWCui showInformationHudWithText:@"获取记录体重失败，请稍后尝试"];
+        return;
+    }
 }
 
 - (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID {
@@ -415,7 +517,10 @@
         [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
         return;
     }
-    
+    if ([taskID isEqualToString:@"getSportSchemeAndRecord"]) {
+        [XKRWCui showInformationHudWithText:@"获取记录体重失败，请稍后尝试"];
+        return;
+    }
 }
 
 - (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication {

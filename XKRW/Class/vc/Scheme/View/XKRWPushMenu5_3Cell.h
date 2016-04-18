@@ -13,7 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *labMain;
 @property (weak, nonatomic) IBOutlet UILabel *labSub;
 @property (weak, nonatomic) IBOutlet UIButton *btnRight;
-@property (weak, nonatomic) IBOutlet UIImageView *arrowImage;
+@property (weak, nonatomic) IBOutlet UIButton *btnArrow;
 
 - (IBAction)actRight:(id)sender;
+- (IBAction)actArrow:(id)sender;
 @end

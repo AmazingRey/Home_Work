@@ -12,6 +12,7 @@
 
 @optional
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index;
+- (void)energyCircleViewTitleClicked:(NSString *)title;
 @end
 @interface XKRWPlanEnergyView : UIView
 @property (nonatomic, weak) id<XKRWPlanEnergyViewDelegate> delegate;
@@ -37,4 +38,6 @@
  *  @param currentNumber current corrective habits number
  */
 - (void)runHabitEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber;
+
+- (void)setTitle:(NSString *)title isflashing:(BOOL)isflashing;
 @end

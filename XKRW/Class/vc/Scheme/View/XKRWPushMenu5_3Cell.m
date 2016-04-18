@@ -23,4 +23,7 @@
 
 - (IBAction)actRight:(id)sender {
 }
+
+- (IBAction)actArrow:(id)sender {
+}
 @end

@@ -13,6 +13,7 @@
 @implementation XKRWEnergyCircleView
 {
     UIImageView *_shadowView;
+    UIImage *_shadowImage;
     UIButton *_startButton;
     
     UILabel *_titleLabel;
@@ -41,7 +42,7 @@
     if (self) {
         _style = style;
         _shadowView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _shadowView.image = [UIImage imageNamed:@"circle_shadow"];
+        _shadowView.image = [UIImage imageNamed:@"circle_notOpen_shadow"];
         [self addSubview:_shadowView];
         
         _backgroundCircle = [[XKRWAnimationCircle alloc] initWithFrame:CGRectMake(_shadowView.left + 6* scale, _shadowView.top + 6 * scale, _shadowView.width - 12 * scale, _shadowView.height - 12 * scale)];
@@ -88,6 +89,7 @@
         _labelAnimation = [POPBasicAnimation animation];
         _labelAnimation.property = [self animationProperty];
         _labelAnimation.fromValue = @(0);
+        _labelAnimation.toValue = @(0);
         
         _stateImageView = [[YYAnimatedImageView alloc] init];
         _stateImageView.size = CGSizeMake(20 * scale, 20 * scale);
@@ -117,6 +119,7 @@
     
     _style = style;
     if (style == XKRWEnergyCircleStyleNotOpen) {
+        
         _stateImageView.hidden = YES;
         _startButton.hidden = NO;
         _backgroundCircle.hidden = YES;
@@ -175,13 +178,13 @@
     _goalNumber = goalNumber;
     
     if (isBehaveCurrect) {
-        _shadowView.image = [UIImage imageNamed:@"circle_shadow"];
+        _shadowImage = [UIImage imageNamed:@"circle_shadow"];
         _shadowColor = XKMainSchemeColor;
         _currentNumLabel.textColor = XKMainSchemeColor;
         _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"green" ofType:@"gif"]]];
         
     } else {
-        _shadowView.image = [UIImage imageNamed:@"circle_warming_shadow"];
+        _shadowImage = [UIImage imageNamed:@"circle_warming_shadow"];
         _shadowColor = XKWarningColor;
         _currentNumLabel.textColor = XKWarningColor;
         _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"red" ofType:@"gif"]]];
@@ -191,22 +194,16 @@
 
 - (void)setShadowColor:(UIColor *)shadowColor {
     _shadowColor = shadowColor;
-
+    
 }
 
 - (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration {
+    _shadowView.image = _shadowImage;
     _currentNumLabel.textColor = progressColor;
     _progressCircle.circleProgressColor = progressColor;
-    _progressCircle.percentage = 0;
+//    _progressCircle.percentage = 0;
     [_progressCircle drawCirclePercentage:percentage animation:YES duration:duration];
-    
-    XKRWRecordFood5_3View *view = [[XKRWRecordFood5_3View alloc] init];
-    [[UIApplication sharedApplication].keyWindow addSubview:view];
-    CGRect frame = view.frame;
-    frame.origin.y = 200;
-    view.frame = frame;
-    
-    [[UIApplication sharedApplication].keyWindow addSubview:view];
+
 }
 
 - (void)runToCurrentNum:(NSInteger)currentNum duration:(CGFloat)duration {
@@ -219,6 +216,12 @@
             
         });
         
+}
+
+- (void)runToNextNumber:(NSInteger)nextNumber duration:(CGFloat)duration resetColor:(UIColor *)color {
+    id exNumber = _labelAnimation.toValue;
+    _labelAnimation.fromValue = exNumber;
+    [self runToCurrentNum:nextNumber duration:duration];
 }
 
 - (POPMutableAnimatableProperty *)animationProperty {
