@@ -762,6 +762,20 @@
     }
 }
 
++ (NSRange)getDailyIntakeRange{
+    
+    CGFloat intake = [self dailyIntakeRecomEnergy];
+    
+    if (intake <= 1400) {
+        
+        return NSMakeRange(1200, 200);
+    } else if (intake > 1400 && intake <= 1800) {
+        return NSMakeRange(1400, 400);
+    } else {
+        return NSMakeRange(1800, 400);
+    }
+}
+
 + (NSInteger)getDailyIntakeSizeNumber {
     
     CGFloat intake = [self dailyIntakeRecomEnergy];

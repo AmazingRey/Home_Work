@@ -31,7 +31,12 @@
 #import "XKRWRecordVC.h"
 #import "XKRWSurroundDegreeVC_5_3.h"
 #import "XKRWNavigationController.h"
-
+#import "XKRWPlanTipsCell.h"
+#import "XKRWPlanTipsEntity.h"
+#import <UITableView+FDTemplateLayoutCell.h>
+#import "XKRWPlanService.h"
+#import "XKRWTipsManage.h"
+#import "XKRWCalendarVC.h"
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
@@ -39,20 +44,19 @@
     KMSearchDisplayController * searchDisplayCtrl;
     IFlyRecognizerView *iFlyControl;
     NSString *searchKey;
-   
-    
     NSArray *foodsArray;
     NSArray *sportsArray;
-    
     NSInteger foodsCount;
     NSInteger sportsCount;
-    
     NSArray <XKRWSchemeEntity_5_0 *> *mealEntitys;
     NSInteger mealGoalCarol;
-    
     UILabel  *dayLabel;
     UIView *planHeaderView;
+    UIView *recordBackView;
+    NSMutableArray *tipsArray;
+    UIButton  *btnBackBounds;
 }
+
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
 @property (nonatomic, strong) XKRWWeightRecordPullView *pullView;
@@ -79,7 +83,7 @@
     [self initData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView) name:@"energyCircleDataChanged" object:nil];
-    //[self addTouchWindowEvent];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTipsData) name:ReLoadTipsData object:nil];
 }
 
 - (void)dealloc {
@@ -93,8 +97,28 @@
 #pragma mark - data
 - (void)initData {
     mealEntitys = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
-    [_planEnergyView setHabitEnergyCircleGoalNumber:12 currentNumber:3];
+        [_planEnergyView setHabitEnergyCircleGoalNumber:12 currentNumber:3];
+    [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView];
+    [self getTipsData];
+}
+
+- (void)getTipsData {
+    tipsArray = [[XKRWTipsManage shareInstance ] TipsInfoWithUseSituation];
+    
+    [planTableView reloadData];
+}
+
+- (void)setPlanEnergyViewTitle {
+    NSString *title = [[XKRWThinBodyDayManage shareInstance] TipsTextWithDayAndWhetherOpen];
+    BOOL isflash;
+    if ([title rangeOfString:@"点击“开启”，"].location != NSNotFound) {
+        isflash = YES;
+        [_planEnergyView setTitle:title isflashing:isflash];
+    } else {
+        isflash = NO;
+        [_planEnergyView setTitle:[title stringByAppendingString:@" >"] isflashing:isflash];
+    }
 }
 
 - (void)refreshEnergyCircleView {
@@ -104,16 +128,16 @@
 #pragma --mark UI
 - (void)initView {
     if(XKAppHeight > 480){
-        planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 350, XKAppWidth, XKAppHeight) style:UITableViewStylePlain];
+        planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 350, XKAppWidth, XKAppHeight- 350 -49) style:UITableViewStylePlain];
     }else{
-        planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 300, XKAppWidth, XKAppHeight) style:UITableViewStylePlain];
+        planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 300, XKAppWidth, XKAppHeight -300 -49) style:UITableViewStylePlain];
     }
     planTableView.delegate = self;
     planTableView.dataSource = self;
     planTableView.tag = 1000;
     planTableView.backgroundColor = XK_BACKGROUND_COLOR;
     planTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    [planTableView registerClass:[XKRWPlanTipsCell class] forCellReuseIdentifier:XKRWPlanTipsCellIdentifier];
     [self.view addSubview:planTableView];
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
@@ -225,6 +249,9 @@
     [planHeaderView addSubview:_recordAndTargetView];
     
     _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, 68 + (XKAppWidth - 66)/3.0)];
+    [_planEnergyView.eatEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
+    [_planEnergyView.sportEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
+    [_planEnergyView.habitEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     _planEnergyView.delegate = self;
     [planHeaderView addSubview:_planEnergyView];
     planHeaderView.clipsToBounds = YES;
@@ -248,23 +275,26 @@
 }
 
 - (void)setUserDataAction:(UIButton *)button {
-
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = self.view.bounds;
-    [btn addTarget:self action:@selector(removePullView:) forControlEvents:UIControlEventTouchDown];
+    [self removeMenuView];
+    [recordBackView removeFromSuperview];
+    
+    btnBackBounds = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnBackBounds.frame = self.view.bounds;
+    [btnBackBounds addTarget:self action:@selector(removePullView:) forControlEvents:UIControlEventTouchDown];
+    
     if (_pullView == nil) {
         _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, 80, 90)];
         CGPoint center = button.center;
         center.x = XKAppWidth - _pullView.frame.size.width/2 - 15;
         center.y = button.center.y + button.frame.size.height + _pullView.frame.size.height/2+foodAndSportSearchBar.frame.size.height;
         _pullView.center = center;
-        [btn addSubview:_pullView];
+        [btnBackBounds addSubview:_pullView];
         _pullView.alpha = 0;
         _pullView.delegate = self;
         
-        [self.view addSubview:btn];
+        [self.view addSubview:btnBackBounds];
     }
-    [self removePullView:btn];
+    [self removePullView:btnBackBounds];
 }
 
 -(void)removePullView:(UIButton *)button{
@@ -276,7 +306,7 @@
         [UIView animateWithDuration:.3 animations:^{
             _pullView.alpha = 0;
         }completion:^(BOOL finished) {
-            [button removeFromSuperview];
+            [btnBackBounds removeFromSuperview];
             [_pullView removeFromSuperview];
             _pullView = nil;
         }];
@@ -284,49 +314,68 @@
 }
 
 - (void)entryCalendarAction:(UIButton *)button{
-    XKRWRecordVC *recordVC = [[XKRWRecordVC alloc] init];
-    recordVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:recordVC animated:YES];
-     [recordVC.navigationController setNavigationBarHidden:NO];
+    XKRWCalendarVC *calendar = [[XKRWCalendarVC alloc] init];
+    calendar.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:calendar animated:YES];
 }
 
 #pragma mark - XKRWPlanEnergyViewDelegate
 
 - (void)energyCircleViewTitleClicked:(NSString *)title {
     
+    if ([title rangeOfString:@"查看今日分析"].location != NSNotFound) {
+        XKRWHistoryAndProcessVC *vc = [[XKRWHistoryAndProcessVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc.navigationController setNavigationBarHidden:NO];
+    } else if ([title rangeOfString:@"计划已结束"].location != NSNotFound) {
+        [XKRWCui showConfirmWithMessage:@"确定要重置方案吗？" okButtonTitle:@"确定" cancelButtonTitle:@"取消" onOKBlock:^{
+            [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
+            [[XKRWSchemeService_5_0 sharedService] resetUserScheme:self];
+        }];
+    }
 }
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
+    if (index == 1) {
+        [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];
+    } else if (index == 2) {
+        [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eSportType];
+    } else if (index == 3) {
+        [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eHabitType];
+    }
+    [self setPlanEnergyViewTitle];
+    [self removePullView:nil];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:[NSString stringWithFormat:@"%@_%ld",OpenPlanToday,(long)[[XKRWUserService sharedService] getUserId]]];
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
     [self removeMenuView];
     [self addmenuView:index];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
 }
 
 
 #pragma mark - XKRWRecordFood5_3View
 -(void)addmenuView:(NSInteger)index{
     XKRWRecordFood5_3View *popView = [[XKRWRecordFood5_3View alloc] init];
+    _recordPopView = popView;
     [self getRecordAndMenuScheme];
-    
-    CGRect recordFrame = popView.frame;
+    CGRect recordFrame = _recordPopView.frame;
     recordFrame.origin.y -= recordFrame.size.height;
-    popView.frame = recordFrame;
-    
-    [UIView animateWithDuration:.6 delay:0 options:0 animations:^{
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height)];
-        view.backgroundColor = [UIColor clearColor];
-        view.clipsToBounds = YES;
-        [view addSubview:popView];
-        [self.view addSubview:view];
-        CGRect frame = popView.frame;
+    _recordPopView.frame = recordFrame;
+    [UIView animateWithDuration:.6 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:.1 options:0 animations:^{
+        if (!recordBackView) {
+            recordBackView = [[UIView alloc] initWithFrame:CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height)];
+            recordBackView.backgroundColor = [UIColor clearColor];
+            recordBackView.clipsToBounds = YES;
+        }
+        [recordBackView addSubview:_recordPopView];
+        CGRect frame = _recordPopView.frame;
         frame.origin.y = 0;
-        popView.frame = frame;
-        popView.type = index;
-        popView.delegate = self;
-    }completion:^(BOOL finished) {
-        _recordPopView = popView;
+        _recordPopView.frame = frame;
+        _recordPopView.type = index;
+        _recordPopView.delegate = self;
+        [[UIApplication sharedApplication].keyWindow addSubview:recordBackView];
+    } completion:^(BOOL finished) {
+        
     }];
 }
 
@@ -334,7 +383,7 @@
     if (_recordPopView) {
         XKRWRecordFood5_3View *popView = _recordPopView;
         _recordPopView = nil;
-        [UIView animateWithDuration:.6 delay:0 options:0 animations:^{
+        [UIView animateWithDuration:.7 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:1 options:0 animations:^{
             CGRect frame = popView.frame;
             frame.origin.y -= frame.size.height;
             popView.frame = frame;
@@ -382,10 +431,14 @@
 }
 
 -(void)RecordFoodViewpressCancle{
+    [_planEnergyView noneSelectedCircleStyle];
+    
+
     [self removeMenuView];
+    [recordBackView removeFromSuperview];
 }
 
-#pragma XKRWWeightRecordPullViewDelegate method
+#pragma mark XKRWWeightRecordPullViewDelegate method
 
 /**
  *  记录体重
@@ -406,6 +459,7 @@
  */
 -(void)pressGraph{
 //    [self popViewAppear:2];
+    [self removePullView:btnBackBounds];
     XKRWSurroundDegreeVC_5_3 *vc = [[XKRWSurroundDegreeVC_5_3 alloc]init];
     vc.dataType = 1;
     [self presentViewController:vc animated:YES completion:nil];
@@ -419,6 +473,7 @@
  *              2:查看曲线
  */
 -(void)popViewAppear:(NSInteger)type{
+    [self removePullView:btnBackBounds];
     _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
     _popView.delegate = self;
     CGPoint center = self.view.center;
@@ -537,7 +592,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(tableView.tag == 1000){
-        return nil;
+        XKRWPlanTipsCell *tipCell = [tableView dequeueReusableCellWithIdentifier:XKRWPlanTipsCellIdentifier];
+        tipCell.selectionStyle = UITableViewCellSelectionStyleNone;
+       
+        
+        if (indexPath.row == 0) {
+            tipCell.TipLabelColor = colorSecondary_333333;
+            tipCell.imageName = @"point_n";
+        }else {
+            tipCell.TipLabelColor = colorSecondary_999999;
+            tipCell.imageName = @"point_p";
+        }
+        
+        XKRWPlanTipsEntity *entity = [tipsArray objectAtIndex:indexPath.row];
+        [tipCell  updateHeightCell:entity];
+        
+        return tipCell;
     }else if (tableView.tag == 201){
         
         if(indexPath.section == 0){
@@ -625,7 +695,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(tableView.tag == 1000){
-        return 0;
+        return tipsArray.count;
     }else if (tableView.tag == 201){
         if(section == 0){
             if(foodsArray.count > 0){
@@ -656,7 +726,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(tableView.tag == 1000){
-        return 44;
+        CGFloat height = [tableView fd_heightForCellWithIdentifier:XKRWPlanTipsCellIdentifier cacheByIndexPath:indexPath configuration:^(id cell) {
+            XKRWPlanTipsEntity *entity = [tipsArray objectAtIndex:indexPath.row];
+            [cell  updateHeightCell:entity];
+        }];
+        return height > 44 ? height :44  ;
+        
     }else if (tableView.tag == 201){
         if(indexPath.section == 0 ){
             if ([foodsArray count] > 0){
@@ -837,10 +912,6 @@
 
     
 }
-
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

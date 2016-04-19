@@ -7,6 +7,7 @@
 //  瘦身天数管理
 
 #import "XKRWThinBodyDayManage.h"
+#import "XKRWPlanService.h"
 #import "XKRWAlgolHelper.h"
 #import "XKRWUserService.h"
 #import "XKRWUtil.h"
@@ -234,13 +235,15 @@ static XKRWThinBodyDayManage * shareInstance;
 
 - (NSString *)TipsTextWithDayAndWhetherOpen {
     
-    if([XKRWAlgolHelper remainDayToAchieveTarget] == -1 || [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"needResetScheme_%ld",[[XKRWUserService sharedService] getUserId]]]){
+    if([XKRWAlgolHelper remainDayToAchieveTarget] == -1 || [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"needResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]]){
         return @"当前计划已结束，点击制定新计划";
     }else{
-        if (![NSDate compareDateIsToday:[[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_%ld",OpenPlanToday,[[XKRWUserService sharedService] getUserId]]]]) {
-            return @"点击“开启”，来监督今天的行为";
-        }else {
+
+        if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] || [[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] || [[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType]) {
             return @"查看今日分析";
+        }else {
+
+            return @"点击“开启”，来监督今天的行为";
         }
     }
 }

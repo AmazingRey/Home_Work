@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>UITableView+FDTemplateLayoutCell.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>YYImage.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -37,7 +42,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>1AC8B5AABA3E972347FBDB1ABD138990</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>257E1E06C78E665CC251639369113D2A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>2E8561D49C9CD929C004422BB408C7D3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3BCE6B1779F1FCE63018A0A77E8FE2F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -83,6 +103,11 @@
 			<true/>
 		</dict>
 		<key>EDCA175D607519844FA5FC68E7517947</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F3E6AE45D987C2FC45E849AAD15725E1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

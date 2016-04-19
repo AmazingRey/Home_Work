@@ -489,6 +489,8 @@
 		BC4507771CB7439200B8DF00 /* XKRWPostDeatilCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC4507751CB7439200B8DF00 /* XKRWPostDeatilCell.xib */; };
 		BC45077B1CB7887000B8DF00 /* XKRWPostDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4507791CB7887000B8DF00 /* XKRWPostDetailVC.m */; };
 		BC45077C1CB7887000B8DF00 /* XKRWPostDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC45077A1CB7887000B8DF00 /* XKRWPostDetailVC.xib */; };
+		BC4D7DFE1CC4D2580080C944 /* XKRWPlanTipsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4D7DFD1CC4D2580080C944 /* XKRWPlanTipsEntity.m */; };
+		BC4D7E041CC5CC230080C944 /* XKRWTipsManage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4D7E031CC5CC230080C944 /* XKRWTipsManage.m */; };
 		BC4F89EA1BEB62FC0038B50B /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC4F89E61BEB62FC0038B50B /* SMS_SDKLocalizable.strings */; };
 		BC4F89EB1BEB62FC0038B50B /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC4F89E81BEB62FC0038B50B /* SMS_SDK.framework */; };
 		BC4F8D451C9108D300CABD2F /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC4F8D431C9108D300CABD2F /* libUMessage_Sdk_1.2.6.a */; };
@@ -727,6 +729,10 @@
 		BC8534191C2D47880051E4F4 /* monkey_run.gif in Resources */ = {isa = PBXBuildFile; fileRef = BC8534181C2D47880051E4F4 /* monkey_run.gif */; };
 		BC93504B1B89B353008D204C /* deault.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BC93504A1B89B353008D204C /* deault.m4a */; };
 		BC97E33619FF6E9700B12033 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC97E33519FF6E9700B12033 /* DACircularProgressView.m */; };
+		BC9A96FA1CC61102007EE97E /* XKRWCalendarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9A96F91CC61102007EE97E /* XKRWCalendarVC.m */; };
+		BC9A96FD1CC619B6007EE97E /* XKRWPlanCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9A96FC1CC619B6007EE97E /* XKRWPlanCalendarView.m */; };
+		BC9A96FF1CC619D9007EE97E /* XKRWPlanCalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC9A96FE1CC619D9007EE97E /* XKRWPlanCalendarView.xib */; };
+		BC9A97031CC63A0C007EE97E /* XKRWNewCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9A97021CC63A0C007EE97E /* XKRWNewCalendar.m */; };
 		BC9C0C2C1B2682270088BBDC /* slim3.db in Resources */ = {isa = PBXBuildFile; fileRef = BC9C0C2B1B2682270088BBDC /* slim3.db */; };
 		BCA4044C1C31063800F39044 /* share_photo_verify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCA4044A1C31063800F39044 /* share_photo_verify@2x.png */; };
 		BCA4044D1C31063800F39044 /* share_photo_verify@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCA4044B1C31063800F39044 /* share_photo_verify@3x.png */; };
@@ -1892,6 +1898,10 @@
 		BC4507781CB7887000B8DF00 /* XKRWPostDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPostDetailVC.h; sourceTree = "<group>"; };
 		BC4507791CB7887000B8DF00 /* XKRWPostDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPostDetailVC.m; sourceTree = "<group>"; };
 		BC45077A1CB7887000B8DF00 /* XKRWPostDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPostDetailVC.xib; sourceTree = "<group>"; };
+		BC4D7DFC1CC4D2580080C944 /* XKRWPlanTipsEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanTipsEntity.h; sourceTree = "<group>"; };
+		BC4D7DFD1CC4D2580080C944 /* XKRWPlanTipsEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanTipsEntity.m; sourceTree = "<group>"; };
+		BC4D7E021CC5CC230080C944 /* XKRWTipsManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWTipsManage.h; sourceTree = "<group>"; };
+		BC4D7E031CC5CC230080C944 /* XKRWTipsManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWTipsManage.m; sourceTree = "<group>"; };
 		BC4F89E71BEB62FC0038B50B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SMS_SDKLocalizable.strings; sourceTree = "<group>"; };
 		BC4F89E81BEB62FC0038B50B /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
 		BC4F89E91BEB62FC0038B50B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SMS_SDKLocalizable.strings"; sourceTree = "<group>"; };
@@ -2262,6 +2272,13 @@
 		BC93504A1B89B353008D204C /* deault.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = deault.m4a; sourceTree = "<group>"; };
 		BC97E33419FF6E9700B12033 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
 		BC97E33519FF6E9700B12033 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		BC9A96F81CC61102007EE97E /* XKRWCalendarVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWCalendarVC.h; sourceTree = "<group>"; };
+		BC9A96F91CC61102007EE97E /* XKRWCalendarVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWCalendarVC.m; sourceTree = "<group>"; };
+		BC9A96FB1CC619B6007EE97E /* XKRWPlanCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanCalendarView.h; sourceTree = "<group>"; };
+		BC9A96FC1CC619B6007EE97E /* XKRWPlanCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanCalendarView.m; sourceTree = "<group>"; };
+		BC9A96FE1CC619D9007EE97E /* XKRWPlanCalendarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlanCalendarView.xib; sourceTree = "<group>"; };
+		BC9A97011CC63A0C007EE97E /* XKRWNewCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWNewCalendar.h; sourceTree = "<group>"; };
+		BC9A97021CC63A0C007EE97E /* XKRWNewCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWNewCalendar.m; sourceTree = "<group>"; };
 		BC9C0C2B1B2682270088BBDC /* slim3.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = slim3.db; sourceTree = "<group>"; };
 		BCA4044A1C31063800F39044 /* share_photo_verify@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_photo_verify@2x.png"; sourceTree = "<group>"; };
 		BCA4044B1C31063800F39044 /* share_photo_verify@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_photo_verify@3x.png"; sourceTree = "<group>"; };
@@ -4600,6 +4617,8 @@
 				BCF6646B1CAE1D4B006EBC61 /* XKRWPlanVC.m */,
 				BCCC441C1CBE31C000177A40 /* XKRWRecordVC.h */,
 				BCCC441D1CBE31C000177A40 /* XKRWRecordVC.m */,
+				BC9A96F81CC61102007EE97E /* XKRWCalendarVC.h */,
+				BC9A96F91CC61102007EE97E /* XKRWCalendarVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4616,6 +4635,8 @@
 				BC769DAC1C33D02800E96B1A /* XKRWAlarmEntity.m */,
 				BC769DBE1C33D14500E96B1A /* XKRWHabbitEntity.h */,
 				BC769DBF1C33D14500E96B1A /* XKRWHabbitEntity.m */,
+				BC4D7DFC1CC4D2580080C944 /* XKRWPlanTipsEntity.h */,
+				BC4D7DFD1CC4D2580080C944 /* XKRWPlanTipsEntity.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -5868,6 +5889,15 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
+		BC9A97001CC639E1007EE97E /* XKRWNewCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				BC9A97011CC63A0C007EE97E /* XKRWNewCalendar.h */,
+				BC9A97021CC63A0C007EE97E /* XKRWNewCalendar.m */,
+			);
+			name = XKRWNewCalendar;
+			sourceTree = "<group>";
+		};
 		BCADABB019108D30009E7C49 /* cityControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -6041,6 +6071,7 @@
 		BCEF362F1C1E63B200740ACC /* XKRWCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				BC9A97001CC639E1007EE97E /* XKRWNewCalendar */,
 				BCEF36301C1E63B200740ACC /* NSDate+XKRWCalendar.h */,
 				BCEF36311C1E63B200740ACC /* NSDate+XKRWCalendar.m */,
 				BCEF36321C1E63B200740ACC /* XKRWCalendar.h */,
@@ -6528,6 +6559,8 @@
 		BCF664611CAE0B3D006EBC61 /* CommonManage */ = {
 			isa = PBXGroup;
 			children = (
+				BC4D7E021CC5CC230080C944 /* XKRWTipsManage.h */,
+				BC4D7E031CC5CC230080C944 /* XKRWTipsManage.m */,
 				BCF664621CAE0B7C006EBC61 /* XKRWThinBodyDayManage.h */,
 				BCF664631CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m */,
 			);
@@ -6546,6 +6579,9 @@
 				2F6268521CC0C6160021B3A4 /* XKRWFlashingTextView.m */,
 				BCDEC9A71CC0E4C700B5BEB6 /* XKRWPlanTipsCell.h */,
 				BCDEC9A81CC0E4C700B5BEB6 /* XKRWPlanTipsCell.m */,
+				BC9A96FB1CC619B6007EE97E /* XKRWPlanCalendarView.h */,
+				BC9A96FC1CC619B6007EE97E /* XKRWPlanCalendarView.m */,
+				BC9A96FE1CC619D9007EE97E /* XKRWPlanCalendarView.xib */,
 			);
 			path = PlanView;
 			sourceTree = "<group>";
@@ -6728,6 +6764,7 @@
 				BCEF37521C1E75D900740ACC /* physicalAssessmentHeaderCell.xib in Resources */,
 				2F796DD11C465E0B00E3571A /* XKRWExplainView.xib in Resources */,
 				BCF664721CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib in Resources */,
+				BC9A96FF1CC619D9007EE97E /* XKRWPlanCalendarView.xib in Resources */,
 				BC6F2F001C198686005B54E8 /* XKRWTargetWeightVC.xib in Resources */,
 				BCEF38001C1E901B00740ACC /* XKRWShowHeadIamgeVC.xib in Resources */,
 				BC8534191C2D47880051E4F4 /* monkey_run.gif in Resources */,
@@ -7243,6 +7280,7 @@
 				BCEF37FF1C1E901B00740ACC /* XKRWShowHeadIamgeVC.swift in Sources */,
 				BC841D021C1ABFF000703A27 /* XKRWAnalyzeCell.swift in Sources */,
 				BC6F2F011C198686005B54E8 /* XKRWOneMinUndLoseFat.swift in Sources */,
+				BC9A96FA1CC61102007EE97E /* XKRWCalendarVC.m in Sources */,
 				BC841CFC1C1AB6DB00703A27 /* XKRWCommentEtity.m in Sources */,
 				BCEF37301C1E75D900740ACC /* XKRWHelpCenterVC.m in Sources */,
 				BC0BAF391C5768E900BAD05C /* XKRWSmallImageAndTitleCell.swift in Sources */,
@@ -7429,6 +7467,7 @@
 				BC769E701C33D3DD00E96B1A /* HMSegmentedControl.m in Sources */,
 				2E9686AD1A04AEE500CB5D77 /* XKPullRefreshView.m in Sources */,
 				BC769E7D1C33D3DD00E96B1A /* XKRWIconAndLevelView.m in Sources */,
+				BC4D7DFE1CC4D2580080C944 /* XKRWPlanTipsEntity.m in Sources */,
 				2E9686E21A04AEE500CB5D77 /* XKAppService.m in Sources */,
 				BCEF35F91C1E618300740ACC /* XKRWAddFoodVC4_0.m in Sources */,
 				BC769E8F1C33D3DD00E96B1A /* KMPopoverCell.m in Sources */,
@@ -7539,6 +7578,7 @@
 				2E9687061A04AEE500CB5D77 /* XKTableViewController.m in Sources */,
 				BCEF37F11C1E901B00740ACC /* XKRWBePraisedVC.swift in Sources */,
 				BCEF37F31C1E901B00740ACC /* XKRWChangeSchemeInfoVC.m in Sources */,
+				BC4D7E041CC5CC230080C944 /* XKRWTipsManage.m in Sources */,
 				BCEF37361C1E75D900740ACC /* XKRWShareVC.m in Sources */,
 				BCC3A8FA1C83E56D00986A56 /* OperationEntity+CoreDataProperties.swift in Sources */,
 				BC769DE81C33D1B700E96B1A /* XKRWRecordEntity.m in Sources */,
@@ -7555,6 +7595,7 @@
 				A7E917341B5CA48A0017F5FD /* PNScatterChart.m in Sources */,
 				BCEF37221C1E75D900740ACC /* XKRWiSlimAssessmentPurchaseVC.m in Sources */,
 				2E9686D01A04AEE500CB5D77 /* XKMustBeOverridedMethodException.m in Sources */,
+				BC9A96FD1CC619B6007EE97E /* XKRWPlanCalendarView.m in Sources */,
 				BCEF37811C1E75D900740ACC /* XKColorProgressView.m in Sources */,
 				044DA1D118558DC100CA30F7 /* main.m in Sources */,
 				A7E917361B5CA48A0017F5FD /* PNScatterChartDataItem.m in Sources */,
@@ -7761,6 +7802,7 @@
 				BCCCE64E1C8E7BC9007AA2FF /* RTLabel.m in Sources */,
 				A786D4D71BB5192200B6535D /* MLSelectPhotoPickerGroup.m in Sources */,
 				BC6F2FA01C1A70D3005B54E8 /* XKRWMoreCommetCell.m in Sources */,
+				BC9A97031CC63A0C007EE97E /* XKRWNewCalendar.m in Sources */,
 				BCEF37731C1E75D900740ACC /* XKRWiSlimBaseCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

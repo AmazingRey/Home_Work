@@ -32,26 +32,26 @@
 -(void)setType:(enum PlanType)type{
     switch (type) {
         case Food:
-            [_numImg setImage:[UIImage imageNamed:@"1_"]];
+            [_numImg setImage:[UIImage imageNamed:@"num1"]];
             _titleLab.text = @"饮食摄入";
             _calTypeLab.text = [NSString stringWithFormat:@"每日饮食摄入热量:%@",[XKRWAlgolHelper getDailyIntakeSize]];
             
-            _detailLab.attributedText = [XKRWUtil createAttributeStringWithString:@"今天开始，\n通过记录来控制自己每日摄入热量。\n或者，你可以通过【推荐食谱】\n来学习健康的饮食搭配。" font:XKDefaultFontWithSize(15) color:XK_ASSIST_TEXT_COLOR lineSpacing:4 alignment:NSTextAlignmentCenter];
-            [_detailLab setFontColor:XKMainToneColor_00b4b4 string:@"【推荐食谱】"];
-            _tipsLab.text = @"瘦瘦的推荐食谱由瘦瘦营养师按照你的饮食摄入量和营养比例，/n为你量身定制。稍后，可以在\"饮食-推荐食谱\"中查看。";
+            _detailLab.attributedText = [XKRWUtil createAttributeStringWithString:@"今天开始，\n通过记录来控制自己每日摄入热量。\n或者，你可以通过【推荐食谱】\n来学习健康的饮食搭配。" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:4 alignment:NSTextAlignmentCenter];
+            [_detailLab setFontColor:XKMainToneColor_29ccb1 string:@"【推荐食谱】"];
+            _tipsLab.text = @"瘦瘦的推荐食谱由瘦瘦营养师按照你的饮食摄入量和营养比例，为你量身定制。稍后，可以在\"饮食-推荐食谱\"中查看。";
             break;
         case Sport:
-            [_numImg setImage:[UIImage imageNamed:@"2_"]];
+            [_numImg setImage:[UIImage imageNamed:@"num2"]];
             _titleLab.text = @"运动消耗";
             int cal = [XKRWAlgolHelper dailyConsumeSportEnergy];
             _calTypeLab.text = [NSString stringWithFormat:@"每日运动消耗热量:%dkcal",cal];
          
-            _detailLab.attributedText = [XKRWUtil createAttributeStringWithString:@"今天开始，\n通过记录来控制自己每日消耗热量。\n或者，你可以通过【推荐方案】\n来学习合理的运动方法。" font:XKDefaultFontWithSize(15) color:XK_ASSIST_TEXT_COLOR lineSpacing:4 alignment:NSTextAlignmentCenter];
-            [_detailLab setFontColor:XKMainToneColor_00b4b4 string:@"【推荐方案】"];
-            _tipsLab.text = @"Tips:瘦瘦会按照你的体力活动水平，/n为你量身推荐运动计划。稍后，可以在\"运动-推荐方案\"中查看。";
+            _detailLab.attributedText = [XKRWUtil createAttributeStringWithString:@"今天开始，\n通过记录来控制自己每日消耗热量。\n或者，你可以通过【推荐方案】\n来学习合理的运动方法。" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:4 alignment:NSTextAlignmentCenter];
+            [_detailLab setFontColor:XKMainToneColor_29ccb1 string:@"【推荐方案】"];
+            _tipsLab.text = @"Tips:瘦瘦会按照你的体力活动水平，为你量身推荐运动计划。稍后，可以在\"运动-推荐方案\"中查看。";
             break;
         case Habit:
-            [_numImg setImage:[UIImage imageNamed:@"3_"]];
+            [_numImg setImage:[UIImage imageNamed:@"num3"]];
             _titleLab.text = @"不良习惯";
             _calTypeLab.text = @"为了达到减重目标，请改掉以下不良习惯:";
             _calTypeLab.preferredMaxLayoutWidth = XKAppWidth- 30;
@@ -75,9 +75,11 @@
 //        default:
 //            break;
     }
-    _tipsLab.preferredMaxLayoutWidth = XKAppWidth - 50;
-    _detailLab.preferredMaxLayoutWidth = XKAppWidth - 50;
+    _fuseView.type = type;
+    _tipsLab.preferredMaxLayoutWidth = XKAppWidth - 30;
+    _detailLab.preferredMaxLayoutWidth = XKAppWidth - 30;
     [self updateConstraints];
+    [self setNeedsDisplay];
     [self layoutIfNeeded];
 }
 

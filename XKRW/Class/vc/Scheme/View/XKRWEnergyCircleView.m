@@ -42,7 +42,6 @@
     if (self) {
         _style = style;
         _shadowView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _shadowView.image = [UIImage imageNamed:@"circle_notOpen_shadow"];
         [self addSubview:_shadowView];
         
         _backgroundCircle = [[XKRWAnimationCircle alloc] initWithFrame:CGRectMake(_shadowView.left + 6* scale, _shadowView.top + 6 * scale, _shadowView.width - 12 * scale, _shadowView.height - 12 * scale)];
@@ -119,7 +118,7 @@
     
     _style = style;
     if (style == XKRWEnergyCircleStyleNotOpen) {
-        
+        _shadowView.image = [UIImage imageNamed:@"circle_notOpen_shadow"];
         _stateImageView.hidden = YES;
         _startButton.hidden = NO;
         _backgroundCircle.hidden = YES;
@@ -130,12 +129,14 @@
         
     } else if (style == XKRWEnergyCircleStyleOpened) {
         _stateImageView.hidden = YES;
+        [_startButton setBackgroundImage:[UIImage createImageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
         _startButton.hidden = NO;
         _backgroundCircle.hidden = YES;
         _progressCircle.hidden = YES;
         _titleLabel.hidden = NO;
         _currentNumLabel.hidden = NO;
         _goalLabel.hidden = NO;
+        _shadowView.image = _shadowImage;
         
     } else if (style == XKRWEnergyCircleStyleSelected) {
         _stateImageView.hidden = NO;
@@ -145,7 +146,9 @@
         _titleLabel.hidden = NO;
         _currentNumLabel.hidden = NO;
         _goalLabel.hidden = NO;
+        _shadowView.image = _shadowImage;
     }
+    
 }
 
 
@@ -189,7 +192,7 @@
         _currentNumLabel.textColor = XKWarningColor;
         _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"red" ofType:@"gif"]]];
     }
-    _stateImageView.image = _stateImage;
+    [self setStyle:_style];
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {
@@ -198,12 +201,9 @@
 }
 
 - (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration {
-    _shadowView.image = _shadowImage;
     _currentNumLabel.textColor = progressColor;
     _progressCircle.circleProgressColor = progressColor;
-//    _progressCircle.percentage = 0;
     [_progressCircle drawCirclePercentage:percentage animation:YES duration:duration];
-
 }
 
 - (void)runToCurrentNum:(NSInteger)currentNum duration:(CGFloat)duration {
@@ -218,10 +218,24 @@
         
 }
 
-- (void)runToNextNumber:(NSInteger)nextNumber duration:(CGFloat)duration resetColor:(UIColor *)color {
+- (void)runToNextNumber:(NSInteger)nextNumber duration:(CGFloat)duration resetIsBehaveCurrect:(BOOL)isBehaveCurrect {
     id exNumber = _labelAnimation.toValue;
     _labelAnimation.fromValue = exNumber;
+    
+    UIColor *progressColor;
+    if (isBehaveCurrect) {
+        _shadowImage = [UIImage imageNamed:@"circle_shadow"];
+        _shadowView.image = _shadowImage;
+        _currentNumLabel.textColor = XKMainSchemeColor;
+        progressColor = XKMainSchemeColor;
+    } else {
+        _shadowImage = [UIImage imageNamed:@"circle_warming_shadow"];
+        _shadowView.image = _shadowImage;
+        _currentNumLabel.textColor = XKWarningColor;
+        progressColor = XKWarningColor;
+    }
     [self runToCurrentNum:nextNumber duration:duration];
+    [self runProgressCircleWithColor:progressColor percentage:((CGFloat)nextNumber/_goalNumber) duration:duration];
 }
 
 - (POPMutableAnimatableProperty *)animationProperty {

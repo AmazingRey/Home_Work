@@ -122,6 +122,14 @@ typedef NS_ENUM(NSInteger, XKRWRecordType) {
 #pragma mark - DB Operation 数据库操作
 #pragma mark -
 /**
+ *  根据tableName返回最近记录的20条不同运动或食物
+ *
+ *  @param tableName food_record/sport_record
+ *
+ *  @return array
+ */
+- (NSArray *)queryRecent_20_RecordTable:(NSString *)tableName;
+/**
  *  保存食物记录到数据库
  */
 - (BOOL)recordFoodToDB:(XKRWRecordFoodEntity *)entity;

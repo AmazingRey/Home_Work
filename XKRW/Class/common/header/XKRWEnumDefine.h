@@ -352,4 +352,24 @@ typedef NS_ENUM(NSInteger,XKRWNoticeType) {
 };
 
 
+/**
+ * XKRWPlanTipsCell 文本的两种展现形式
+ */
+typedef NS_ENUM(NSInteger,TipsShowType) {
+    /***  只展示文本*/
+    TipsShowText = 0,
+    /***  展示文本  并制定新计划*/
+    TipsShowAndEnactNewPlan,
+    /***  展示文本  并显示详情*/
+    TipsShowAndShowDetail,
+    /***  展示文本  进入设置页面*/
+    TipsShowAndEnterSet
+};
+
+typedef NS_ENUM(NSInteger, PlanType) {
+    Food = 0,
+    Sport,
+    Habit
+};
+
 #endif

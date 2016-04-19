@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "XKRWEnergyCircleView.h"
+#import "XKRWPlanEnergyView.h"
 
 @interface XKRWShowEnergy_5_3View : UIView
 @property (strong, nonatomic) IBOutlet XKRWEnergyCircleView *firstCircleView;
-@property (weak, nonatomic) IBOutlet UILabel *successLabel;
-@property (strong, nonatomic) IBOutlet XKRWEnergyCircleView *secondCircleView;
-@property (strong, nonatomic) IBOutlet XKRWEnergyCircleView *thridCircleView;
-@property (weak, nonatomic) IBOutlet UILabel *failLabel;
-
+@property (strong, nonatomic) IBOutlet UILabel *label;
+@property (nonatomic, weak) id<XKRWPlanEnergyViewDelegate> delegate;
+@property (assign, nonatomic) enum PlanType type;
+@property (strong ,nonatomic) NSMutableDictionary *dicAll;
 @end

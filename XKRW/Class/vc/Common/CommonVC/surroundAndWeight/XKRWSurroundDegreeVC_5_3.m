@@ -126,7 +126,7 @@
 
 #pragma  --mark Action
 - (void)popAction {
-    [self dismissViewControllerAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:NO completion:^{
         
     }];
 }

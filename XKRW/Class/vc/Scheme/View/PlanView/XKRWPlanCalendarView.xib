@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="XKRWPlanCalendarView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="从98kg瘦到90kg" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kj-Jr-0jt">
+                    <rect key="frame" x="80" y="31" width="214" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="214" id="OnT-PW-Kan"/>
+                        <constraint firstAttribute="height" constant="21" id="v0X-1T-qGH"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="预计将于2016年 05月12日 完成" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbY-K5-gf6">
+                    <rect key="frame" x="50" y="54" width="275" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="275" id="0C3-qo-HEe"/>
+                        <constraint firstAttribute="height" constant="21" id="c74-P1-m9x"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016年3月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O2F-LN-Ocy">
+                    <rect key="frame" x="15" y="105" width="90" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="4kr-4F-wD1"/>
+                        <constraint firstAttribute="width" constant="90" id="jH9-cs-6iS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已进行10天剩100天" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Noy-DZ-eNR">
+                    <rect key="frame" x="160" y="105" width="200" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="EMM-Ib-UX0"/>
+                        <constraint firstAttribute="height" constant="15" id="Lbl-Dd-Aya"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dla-Gj-5Ns">
+                    <rect key="frame" x="129" y="74" width="116" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="116" id="2EH-Sn-JPr"/>
+                        <constraint firstAttribute="height" constant="31" id="5zs-fZ-xSG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="查看计划&gt;">
+                        <color key="titleColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="lookPlanAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="lJd-DY-WdK"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Noy-DZ-eNR" secondAttribute="trailing" constant="15" id="0WJ-DA-oxe"/>
+                <constraint firstItem="Dla-Gj-5Ns" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="18R-Lz-jt1"/>
+                <constraint firstAttribute="bottom" secondItem="Noy-DZ-eNR" secondAttribute="bottom" constant="10" id="5gz-vU-NVw"/>
+                <constraint firstItem="Dla-Gj-5Ns" firstAttribute="top" secondItem="3kj-Jr-0jt" secondAttribute="bottom" constant="22" id="8bh-dv-l9D"/>
+                <constraint firstItem="MbY-K5-gf6" firstAttribute="top" secondItem="3kj-Jr-0jt" secondAttribute="bottom" constant="2" id="Oa4-WQ-bAT"/>
+                <constraint firstItem="O2F-LN-Ocy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="TrZ-tm-bVz"/>
+                <constraint firstItem="3kj-Jr-0jt" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ZEZ-v8-W5f"/>
+                <constraint firstItem="3kj-Jr-0jt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="31" id="gi5-jy-xm0"/>
+                <constraint firstAttribute="bottom" secondItem="O2F-LN-Ocy" secondAttribute="bottom" constant="10" id="jJL-Bz-aNS"/>
+                <constraint firstItem="MbY-K5-gf6" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="yCK-nf-Xkz"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="monthLabel" destination="O2F-LN-Ocy" id="G9k-9U-akL"/>
+                <outlet property="planFinishLabel" destination="MbY-K5-gf6" id="QVu-vz-2gs"/>
+                <outlet property="progressLabel" destination="Noy-DZ-eNR" id="koH-IS-1aq"/>
+                <outlet property="weightDescriptionLabel" destination="3kj-Jr-0jt" id="pFY-YQ-4ta"/>
+            </connections>
+            <point key="canvasLocation" x="443.5" y="248"/>
+        </view>
+    </objects>
+</document>

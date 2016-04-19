@@ -49,5 +49,8 @@ typedef void(^startButtonClickBlock)(void);
 - (void)setOpenedViewTiltle:(NSString *)ViewTitle currentNumber:(NSString *)currentNumber goalNumber:(NSInteger)goalNumber unit:(NSString *)unit isBehaveCurrect:(BOOL)isBehaveCurrect;
 
 - (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration;
+
 - (void)runToCurrentNum:(NSInteger)currentNum duration:(CGFloat)duration;
+
+- (void)runToNextNumber:(NSInteger)nextNumber duration:(CGFloat)duration resetIsBehaveCurrect:(BOOL)isBehaveCurrect;
 @end

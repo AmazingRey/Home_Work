@@ -11,12 +11,6 @@
 #import "XKRWPlan_5_3CollectionView.h"
 #import "XKRWShowEnergy_5_3View.h"
 
-typedef NS_ENUM(int, PlanType) {
-    Food,
-    Sport,
-    Habit
-};
-
 @interface XKRWPlan_5_3View : UIView
 @property (strong, nonatomic) IBOutlet UIImageView *numImg;
 @property (strong, nonatomic) IBOutlet UILabel *titleLab;

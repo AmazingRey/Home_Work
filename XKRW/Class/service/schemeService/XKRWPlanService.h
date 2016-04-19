@@ -10,6 +10,7 @@
 #import "XKRWRecordService4_0.h"
 
 @interface XKRWPlanService : XKRWBaseService
++ (instancetype)shareService;
 
 /**
  *  根据时间获取当时的食物、运动等记录
@@ -36,6 +37,19 @@
  *  @return <#return value description#>
  */
 - (NSArray *)queryLatestItemNumber:(NSInteger)itemNumber FoodRecord:(NSDate *)date;
-
+/**
+ *  存储当天能量环是否被点击过
+ *
+ *  @param type ResultType
+ */
+- (void)saveEnergyCircleClickEvent:(ResultType)type;
+/**
+ *  根据type获取能量环当天是否被点击过
+ *
+ *  @param type ResultType
+ *
+ *  @return a bool value
+ */
+- (BOOL)getEnergyCircleClickEvent:(ResultType)type;
 
 @end

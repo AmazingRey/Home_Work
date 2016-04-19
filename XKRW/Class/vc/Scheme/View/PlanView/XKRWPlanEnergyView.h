@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XKRWEnergyCircleView.h"
+
 @class XKRWPlanEnergyView;
 @protocol XKRWPlanEnergyViewDelegate <NSObject>
 
@@ -16,7 +18,12 @@
 @end
 @interface XKRWPlanEnergyView : UIView
 @property (nonatomic, weak) id<XKRWPlanEnergyViewDelegate> delegate;
+@property (nonatomic, strong) XKRWEnergyCircleView *eatEnergyCircle;
+@property (nonatomic, strong) XKRWEnergyCircleView *sportEnergyCircle;
+@property (nonatomic, strong) XKRWEnergyCircleView *habitEnergyCircle;
 @property (nonatomic, assign, readonly) NSInteger selectedIndex;
+
+- (void)noneSelectedCircleStyle;
 - (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber;
 - (void)setSportEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber;
 - (void)setHabitEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber;

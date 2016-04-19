@@ -349,4 +349,6 @@
 
 #define ANALYZEPAGE  @"analyzePage"
 
+#define ReLoadTipsData @"ReLoadTipsData"
+
 #endif

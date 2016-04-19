@@ -106,6 +106,7 @@
 
 /// 获取当前用户（当前体重）的方案建议值所对应推荐方案份量大小
 +(NSString *)getDailyIntakeSize;
++(NSRange)getDailyIntakeRange;//获取范围
 /// 获取当前用户（当前体重）的方案建议值所对应推荐方案份量大小， 1 大， 2 中， 3小
 + (NSInteger)getDailyIntakeSizeNumber;
 

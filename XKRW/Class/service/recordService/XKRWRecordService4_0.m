@@ -1292,7 +1292,11 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 }
 
 #pragma - mark QUERY
-
+- (NSArray *)queryRecent_20_RecordTable:(NSString *)tableName {
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld GROUP BY food_id ORDER BY date DESC LIMIT 20",tableName,(long)uid];
+    return [self query:sql];
+}
 - (NSArray *)queryRecordWithDate:(NSDate *)date table:(NSString *)tableName
 {
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];

@@ -39,13 +39,14 @@
 }
 
 -(void)initSubViews{
+    
     _scrollView = [[UIScrollView alloc] initWithFrame:self.tableView.frame];
     _scrollView.contentSize = CGSizeMake(self.tableView.frame.size.width, self.tableView.frame.size.height);
     _scrollView.pagingEnabled = YES;
     
     _tableRecord = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.frame.size.height)];
     _tableRecord.tag = 5031;
-    [_tableRecord registerNib:[UINib nibWithNibName:@"XKRWRecordFood5_3Cell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recordSportCell"];
+    [_tableRecord registerNib:[UINib nibWithNibName:@"XKRWRecordFood5_3Cell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recordFoodCell"];
     
     _tableMenu = [[UITableView alloc] initWithFrame:CGRectMake(self.tableView.frame.size.width, 0, self.tableView.frame.size.width, self.tableView.frame.size.height)];
     _tableMenu.tag = 5032;
@@ -54,11 +55,6 @@
     [_scrollView addSubview:_tableRecord];
     [_scrollView addSubview:_tableMenu];
     [self addSubview:_scrollView];
-    
-    _tableRecord.delegate = self;
-    _tableRecord.dataSource = self;
-    _tableMenu.delegate = self;
-    _tableMenu.dataSource = self;
 }
 
 -(void)setTitle{
@@ -105,6 +101,8 @@
 -(void)setArrRecord:(NSArray *)arrRecord{
     if (_arrRecord != arrRecord) {
         _arrRecord = arrRecord;
+        _tableRecord.delegate = self;
+        _tableRecord.dataSource = self;
         [_tableRecord reloadData];
     }
 }
@@ -112,6 +110,8 @@
 -(void)setArrMenu:(NSArray *)arrMenu{
     if (_arrMenu != arrMenu) {
         _arrMenu = arrMenu;
+        _tableMenu.delegate = self;
+        _tableMenu.dataSource = self;
         [_tableMenu reloadData];
     }
 }
@@ -198,7 +198,7 @@
     NSString *identify = @"";
     XKRWRecordSchemeEntity *entity;
      if (tableView.tag == 5031) {
-         identify = @"recordSportCell";
+         identify = @"recordFoodCell";
          entity = [_arrRecord lastObject];
      }else if (tableView.tag == 5032){
           identify = @"pushMenuCell";
