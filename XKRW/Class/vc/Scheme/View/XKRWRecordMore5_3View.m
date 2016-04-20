@@ -13,6 +13,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordMore5_3View");
+        self.frame = frame;
     }
     return self;
 }
@@ -24,5 +26,16 @@
         
     }
     return self;
+}
+- (IBAction)actChange:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(pressChangeEatPercent)]) {
+        [self.delegate pressChangeEatPercent];
+    }
+}
+
+- (IBAction)actSet:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(pressSetEatNotify)]) {
+        [self.delegate pressSetEatNotify];
+    }
 }
 @end

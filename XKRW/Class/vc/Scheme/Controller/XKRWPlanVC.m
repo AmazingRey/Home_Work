@@ -37,7 +37,9 @@
 #import "XKRWPlanService.h"
 #import "XKRWTipsManage.h"
 #import "XKRWCalendarVC.h"
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate>
+#import "XKRWRecordMore5_3View.h"
+
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
     KMSearchBar* foodAndSportSearchBar;
@@ -55,6 +57,7 @@
     UIView *recordBackView;
     NSMutableArray *tipsArray;
     UIButton  *btnBackBounds;
+    XKRWRecordMore5_3View *recordMoreView;
 }
 
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
@@ -75,6 +78,11 @@
     
     [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
    // dayLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self RecordFoodViewpressCancle];
 }
 
 - (void)viewDidLoad {
@@ -344,12 +352,15 @@
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eHabitType];
     }
     [self setPlanEnergyViewTitle];
-    [self removePullView:nil];
     
+    [self removePullView:nil];
     [self removeMenuView];
     [self addmenuView:index];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
+//    XKRWRecordVC *recordVC = [[XKRWRecordVC alloc] init];
+//    recordVC.schemeType = eSchemeFood;
+//    [self.navigationController pushViewController:recordVC animated:YES];
 }
 
 
@@ -357,6 +368,10 @@
 -(void)addmenuView:(NSInteger)index{
     XKRWRecordFood5_3View *popView = [[XKRWRecordFood5_3View alloc] init];
     _recordPopView = popView;
+    
+    UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchRecordView:)];
+    [_recordPopView addGestureRecognizer:ges];
+    
     [self getRecordAndMenuScheme];
     CGRect recordFrame = _recordPopView.frame;
     recordFrame.origin.y -= recordFrame.size.height;
@@ -364,7 +379,7 @@
     [UIView animateWithDuration:.6 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:.1 options:0 animations:^{
         if (!recordBackView) {
             recordBackView = [[UIView alloc] initWithFrame:CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height)];
-            recordBackView.backgroundColor = [UIColor clearColor];
+            recordBackView.backgroundColor = [UIColor whiteColor];
             recordBackView.clipsToBounds = YES;
         }
         [recordBackView addSubview:_recordPopView];
@@ -377,6 +392,10 @@
     } completion:^(BOOL finished) {
         
     }];
+}
+
+-(void)touchRecordView:(UITapGestureRecognizer *)recognizer{
+    [self removeMoreView];
 }
 
 -(void)removeMenuView{
@@ -432,12 +451,34 @@
 
 -(void)RecordFoodViewpressCancle{
     [_planEnergyView noneSelectedCircleStyle];
-    
-
     [self removeMenuView];
     [recordBackView removeFromSuperview];
 }
 
+#pragma mark XKRWRecordMore5_3View & XKRWRecordMore5_3ViewDelegate
+-(void)addMoreView{
+    if (!recordMoreView) {
+        CGRect frame = CGRectMake(recordBackView.frame.size.width - 140, _recordPopView.btnMore.frame.origin.y + _recordPopView.btnMore.frame.size.height+15, 138, 105);
+        recordMoreView = [[XKRWRecordMore5_3View alloc] initWithFrame:frame];
+        [_recordPopView addSubview:recordMoreView];
+        recordMoreView.delegate = self;
+    }else{
+        [self removeMoreView];
+    }
+}
+
+-(void)removeMoreView{
+    [recordMoreView removeFromSuperview];
+    recordMoreView = nil;
+}
+
+-(void)pressChangeEatPercent{
+    [self removeMoreView];
+}
+
+-(void)pressSetEatNotify{
+    [self removeMoreView];
+}
 #pragma mark XKRWWeightRecordPullViewDelegate method
 
 /**

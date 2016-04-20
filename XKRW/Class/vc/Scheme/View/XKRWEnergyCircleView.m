@@ -222,6 +222,7 @@
     id exNumber = _labelAnimation.toValue;
     _labelAnimation.fromValue = exNumber;
     
+    _progressCircle.percentage = [exNumber integerValue]/(CGFloat)_goalNumber;
     UIColor *progressColor;
     if (isBehaveCurrect) {
         _shadowImage = [UIImage imageNamed:@"circle_shadow"];
@@ -234,8 +235,9 @@
         _currentNumLabel.textColor = XKWarningColor;
         progressColor = XKWarningColor;
     }
+    CGFloat currentPercentage = (CGFloat)nextNumber/_goalNumber;
+    [self runProgressCircleWithColor:progressColor percentage:currentPercentage duration:duration];
     [self runToCurrentNum:nextNumber duration:duration];
-    [self runProgressCircleWithColor:progressColor percentage:((CGFloat)nextNumber/_goalNumber) duration:duration];
 }
 
 - (POPMutableAnimatableProperty *)animationProperty {

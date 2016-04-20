@@ -44,7 +44,8 @@
             [_numImg setImage:[UIImage imageNamed:@"num2"]];
             _titleLab.text = @"运动消耗";
             int cal = [XKRWAlgolHelper dailyConsumeSportEnergy];
-            _calTypeLab.text = [NSString stringWithFormat:@"每日运动消耗热量:%dkcal",cal];
+            
+            _calTypeLab.text = cal != 0?[NSString stringWithFormat:@"每日运动消耗热量:%dkcal",cal]:@"无需额外运动";
          
             _detailLab.attributedText = [XKRWUtil createAttributeStringWithString:@"今天开始，\n通过记录来控制自己每日消耗热量。\n或者，你可以通过【推荐方案】\n来学习合理的运动方法。" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:4 alignment:NSTextAlignmentCenter];
             [_detailLab setFontColor:XKMainToneColor_29ccb1 string:@"【推荐方案】"];
@@ -53,7 +54,7 @@
         case Habit:
             [_numImg setImage:[UIImage imageNamed:@"num3"]];
             _titleLab.text = @"不良习惯";
-            _calTypeLab.text = @"为了达到减重目标，请改掉以下不良习惯:";
+            _calTypeLab.text = _dicCollection.count == 0?@"你的习惯很好，请保持。": @"为了达到减重目标，请改掉以下不良习惯:";
             _calTypeLab.preferredMaxLayoutWidth = XKAppWidth- 30;
             
             _detailLab.hidden = YES;

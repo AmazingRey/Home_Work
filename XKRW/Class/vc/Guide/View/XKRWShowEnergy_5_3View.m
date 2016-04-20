@@ -16,7 +16,7 @@
     NSNumber *eatNum3;
     NSNumber *sportNum1;
     NSNumber *sportNum2;
-    
+//    NSTimer *_timer;
     dispatch_source_t _timer;
     double secondsToFire;
 }
@@ -35,7 +35,7 @@
         CGRect frame = self.frame;
         _dicAll = [NSMutableDictionary dictionary];
         
-        _firstCircleView = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(frame.origin.x + frame.size.width/2 - 50, frame.origin.y - 100, 100, 100) Style:XKRWEnergyCircleStyleSelected];
+        _firstCircleView = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(frame.origin.x + frame.size.width/2 - 50, frame.origin.y - 70, 100, 100) Style:XKRWEnergyCircleStyleSelected];
      
         _firstCircleView.tag = 1;
         
@@ -78,7 +78,7 @@
         [_dicAll setObject:@(NO) forKey:sportNum1];
         [_dicAll setObject:@(YES) forKey:sportNum2];
         
-        [self setEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:sportNum];
+        [self setEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:sportNum];
     }
     [self runCircleView];
 }
@@ -90,19 +90,45 @@
 
 -(void)singleRunCircle{
     if (_type == Food) {
-         secondsToFire = 15.000f;
-        [_firstCircleView runToNextNumber:[eatNum1 integerValue] duration:2.0 resetIsBehaveCurrect:[[_dicAll objectForKey:eatNum1] boolValue]];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [_firstCircleView runToNextNumber:[eatNum2 integerValue] duration:1.0 resetIsBehaveCurrect:[[_dicAll objectForKey:eatNum2] boolValue]];
+         secondsToFire = 12.000f;
+        _label.text = @"";
+        
+        [_firstCircleView runToNextNumber:0 duration:0 resetIsBehaveCurrect:NO];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_firstCircleView runToNextNumber:[eatNum1 integerValue] duration:2.0 resetIsBehaveCurrect:[[_dicAll objectForKey:eatNum1] boolValue]];
+            _label.text = @"摄入偏少";
+            _label.textColor = XKWarningColor;
+            
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [_firstCircleView runToNextNumber:[eatNum3 integerValue] duration:.5 resetIsBehaveCurrect:[[_dicAll objectForKey:eatNum3] boolValue]];
+                [_firstCircleView runToNextNumber:[eatNum2 integerValue] duration:1.0 resetIsBehaveCurrect:[[_dicAll objectForKey:eatNum2] boolValue]];
+                _label.text = @"摄入正常";
+                _label.textColor = XKMainToneColor_29ccb1;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [_firstCircleView runToNextNumber:[eatNum3 integerValue] duration:.2 resetIsBehaveCurrect:[[_dicAll objectForKey:eatNum3] boolValue]];
+                    _label.text = @"摄入偏多";
+                    _label.textColor = XKWarningColor;
+                });
             });
+
         });
     }else if (_type == Sport){
-         secondsToFire = 10.000f;
-        [_firstCircleView runToNextNumber:[sportNum1 integerValue] duration:2.0 resetIsBehaveCurrect:[[_dicAll objectForKey:sportNum1] boolValue]];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [_firstCircleView runToNextNumber:[sportNum2 integerValue] duration:1.0 resetIsBehaveCurrect:[[_dicAll objectForKey:sportNum2] boolValue]];
+         secondsToFire = 8.000f;
+         _label.text = @"";
+        
+        [_firstCircleView runToNextNumber:0 duration:0 resetIsBehaveCurrect:NO];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_firstCircleView runToNextNumber:[sportNum1 integerValue] duration:1.5 resetIsBehaveCurrect:[[_dicAll objectForKey:sportNum1] boolValue]];
+            _label.text = @"运动不足";
+            _label.textColor = XKWarningColor;
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [_firstCircleView runToNextNumber:[sportNum2 integerValue] duration:.2 resetIsBehaveCurrect:[[_dicAll objectForKey:sportNum2] boolValue]];
+                _label.text = @"运动达标";
+                _label.textColor = XKMainToneColor_29ccb1;
+            });
         });
     }
 }
@@ -110,7 +136,11 @@
 - (void)startTimer
 {
     [self resetCirclesStyle];
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_queue_t queue = dispatch_get_main_queue();
+//    _timer = [NSTimer timerWithTimeInterval:secondsToFire target:self selector:@selector(singleRunCircle) userInfo:nil repeats:YES];
+//    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSDefaultRunLoopMode];
+    
     _timer = CreateDispatchTimer(secondsToFire, queue, ^{
         [self singleRunCircle];
     });
@@ -118,6 +148,10 @@
 
 - (void)cancelTimer
 {
+//    if (_timer) {
+//        [_timer invalidate];
+//        _timer = nil;
+//    }
     if (_timer) {
         dispatch_source_cancel(_timer);
         _timer = nil;
@@ -137,7 +171,6 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
 }
 
 - (void)setEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
-    __weak typeof(self) weakSelf = self;
     
     BOOL isBehaveCurrect = NO;
     if (currentNumber <= goalNumber) {
@@ -145,15 +178,7 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     } else {
         isBehaveCurrect = NO;
     }
-    [_firstCircleView setOpenedViewTiltle:@"已摄入" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
-    _firstCircleView.energyCircleViewClickBlock = ^(){
-        [weakSelf resetCirclesStyle];
-        
-        [weakSelf runEatEnergyCircleWithNewCurrentNumber:currentNumber];
-        
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
-        }
-    };
+    [_firstCircleView setOpenedViewTiltle:@"已摄入" currentNumber:@"0" goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
 }
 
 - (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {

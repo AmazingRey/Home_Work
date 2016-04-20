@@ -43,8 +43,10 @@
     return self;
 }
 - (void)setPercentage:(CGFloat)percentage {
-    _percentage = percentage;
-    _progressShapeLayer.strokeEnd = percentage;
+    CGFloat tempPercentage = percentage > 1 ? 1 : percentage;
+    tempPercentage = percentage < 0 ? 0 :percentage;
+    _percentage = tempPercentage;
+    _progressShapeLayer.strokeEnd = tempPercentage;
 }
 
 - (void)setPathStartAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle {

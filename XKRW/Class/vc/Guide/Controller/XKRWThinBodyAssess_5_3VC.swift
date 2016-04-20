@@ -34,8 +34,12 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
         self.initHabitData()
         let viewHeight : Int = 450
         let numLines = ceilf(Float(dicData.count)/4)
+        var nonHabitHeight : CGFloat = 30
+        if numLines == 0 {
+            nonHabitHeight = 100;
+        }
         
-        scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, headView.frame.size.height+CGFloat(viewHeight)*2+CGFloat(numLines*180)+30)
+        scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, headView.frame.size.height+CGFloat(viewHeight)*2+CGFloat(numLines*180)+nonHabitHeight)
         var frame = CGRectZero
         
         for view in scrollView.subviews {

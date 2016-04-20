@@ -14,7 +14,7 @@ typedef NS_ENUM(NSInteger,energyType) {
 @protocol XKRWRecordFood5_3ViewDelegate <NSObject>
 @optional
 -(void)RecordFoodViewpressCancle;
-
+-(void)addMoreView;
 @end
 
 #import <UIKit/UIKit.h>
@@ -38,6 +38,9 @@ typedef NS_ENUM(NSInteger,energyType) {
 @property (weak, nonatomic) IBOutlet UIButton *btnRecordSport;
 @property (weak, nonatomic) IBOutlet UIButton *btnRecordFood;
 @property (weak, nonatomic) IBOutlet UILabel *labSeperate;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowLeft;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowMiddle;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowRight;
 
 - (IBAction)actCancle:(id)sender;
 
@@ -58,4 +61,5 @@ typedef NS_ENUM(NSInteger,energyType) {
 @property (nonatomic) NSArray *arrRecord;
 @property (strong ,nonatomic) NSArray *arrMenu;
 @property (assign ,nonatomic) energyType type;
+
 @end

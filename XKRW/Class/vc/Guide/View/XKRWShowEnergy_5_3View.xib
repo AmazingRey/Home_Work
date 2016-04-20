@@ -19,7 +19,7 @@
                         <constraint firstAttribute="width" secondItem="L9y-FI-lbs" secondAttribute="height" multiplier="1:1" id="7vl-bY-5Bt"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="达标" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ct9-eO-tgs">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ct9-eO-tgs">
                     <rect key="frame" x="115" y="92" width="70" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="ct9-eO-tgs" secondAttribute="height" multiplier="7:2" id="Hcv-Bj-Am2"/>

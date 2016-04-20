@@ -12,8 +12,11 @@
 #import "XKRWRecordFood5_3Cell.h"
 #import "XKRWPushMenu5_3Cell.h"
 #import "XKRWAlgolHelper.h"
+#import "XKRWRecordMore5_3View.h"
 
 @interface XKRWRecordFood5_3View () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate>
+@property (strong ,nonatomic) XKRWRecordMore5_3View *moreView;
+
 @end
 
 @implementation XKRWRecordFood5_3View
@@ -39,7 +42,6 @@
 }
 
 -(void)initSubViews{
-    
     _scrollView = [[UIScrollView alloc] initWithFrame:self.tableView.frame];
     _scrollView.contentSize = CGSizeMake(self.tableView.frame.size.width, self.tableView.frame.size.height);
     _scrollView.pagingEnabled = YES;
@@ -55,6 +57,18 @@
     [_scrollView addSubview:_tableRecord];
     [_scrollView addSubview:_tableMenu];
     [self addSubview:_scrollView];
+    
+    _btnAnalyze.layer.cornerRadius = 5;
+    _btnAnalyze.layer.borderWidth = 1;
+    _btnAnalyze.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    
+    _btnRecordSport.layer.cornerRadius = 5;
+    _btnRecordSport.layer.borderWidth = 1;
+    _btnRecordSport.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    
+    _btnRecordFood.layer.cornerRadius = 5;
+    _btnRecordFood.layer.borderWidth = 1;
+    _btnRecordFood.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
 }
 
 -(void)setTitle{
@@ -65,16 +79,28 @@
             _labRecordWeight.text = @"记录饮食";
             _labPushMenu.text = @"推荐食谱";
             _labRecordWeightNum.text = @"1111kcal";
-            
             _labPushMenuNum.text = @"2222kcal";
+            _labRecordWeight.textColor = XKMainToneColor_29ccb1;
+            _labRecordWeightNum.textColor = XKMainToneColor_29ccb1;
+            
+            _btnAnalyze.hidden = NO;
+            _btnRecordFood.hidden = NO;
+            _btnRecordSport.hidden = YES;
+            [self showViewControl:@[_arrowLeft]];
             break;
         case 2:
             _labRecordWeight.text = @"记录运动";
             _labPushMenu.text = @"运动计划";
             int cal = [XKRWAlgolHelper dailyConsumeSportEnergy];
             _labRecordWeightNum.text = [NSString stringWithFormat:@"%dkcal",cal];
-            
             _labPushMenuNum.text = @"4444kcal";
+            _labRecordWeight.textColor = XKMainToneColor_29ccb1;
+            _labRecordWeightNum.textColor = XKMainToneColor_29ccb1;
+            
+            _btnAnalyze.hidden = YES;
+            _btnRecordFood.hidden = YES;
+            _btnRecordSport.hidden = NO;
+            [self showViewControl:@[_arrowMiddle]];
             break;
         case 3:
             _labRecordWeight.text = @"";
@@ -85,6 +111,7 @@
             
             [_btnRecordWeight setTitle:@"今天，我改正了:" forState:UIControlStateNormal];
             [_btnRecordWeight sizeToFit];
+            [self showViewControl:@[_arrowRight]];
             break;
         default:
             break;
@@ -151,6 +178,7 @@
     _labPushMenu.textColor = colorSecondary_666666;
     _labPushMenuNum.textColor = colorSecondary_666666;
     [self scrollToPage:1];
+    [self showViewControl:@[_btnAnalyze,_btnRecordFood]];
 }
 
 - (IBAction)actPushMenu:(id)sender {
@@ -159,9 +187,26 @@
     _labRecordWeight.textColor = colorSecondary_666666;
     _labRecordWeightNum.textColor = colorSecondary_666666;
     [self scrollToPage:2];
+    [self showViewControl:@[_btnRecordSport]];
+}
+
+-(void)showViewControl:(NSArray *)objs{
+    _arrowLeft.hidden = YES;
+    _arrowMiddle.hidden = YES;
+    _arrowRight.hidden = YES;
+    
+    _btnAnalyze.hidden = YES;
+    _btnRecordFood.hidden = YES;
+    _btnRecordSport.hidden = YES;
+    for (UIView *obj in objs) {
+        obj.hidden = NO;
+    }
 }
 
 - (IBAction)actMore:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(addMoreView)]) {
+        [self.delegate addMoreView];
+    }
     
 }
 
@@ -200,18 +245,18 @@
      if (tableView.tag == 5031) {
          identify = @"recordFoodCell";
          entity = [_arrRecord lastObject];
+         XKRWRecordFood5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
+         cell.leftImage.image = [UIImage imageNamed:[self getImageNameWithType:entity.type]];
+         cell.labMain.text = [self getNameWithType:entity.type];
+         return  cell;
      }else if (tableView.tag == 5032){
-          identify = @"pushMenuCell";
-          entity = [_arrMenu objectAtIndex:indexPath.row];;
-     }
-    XKRWRecordFood5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
-    
-    if (cell) {
+        identify = @"pushMenuCell";
+        entity = [_arrMenu objectAtIndex:indexPath.row];
+        XKRWPushMenu5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:identify];
         cell.leftImage.image = [UIImage imageNamed:[self getImageNameWithType:entity.type]];
         cell.labMain.text = [self getNameWithType:entity.type];
-        return  cell;
-    }
-    
+         return  cell;
+     }
     return [UITableViewCell new];
 }
 

@@ -127,7 +127,12 @@
         [weakSelf resetCirclesStyle];
         
         [weakSelf runEatEnergyCircleWithNewCurrentNumber:currentNumber];
-
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.eatEnergyCircle runToNextNumber:1200 duration:1.5 resetIsBehaveCurrect:YES];
+        });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.eatEnergyCircle runToNextNumber:2000 duration:1.5 resetIsBehaveCurrect:NO];
+        });
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
 
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];

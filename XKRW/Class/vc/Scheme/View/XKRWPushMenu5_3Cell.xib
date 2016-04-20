@@ -3,6 +3,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,29 +16,41 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sqW-8x-axV">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sqW-8x-axV">
                         <rect key="frame" x="15" y="15" width="29" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="sqW-8x-axV" secondAttribute="height" multiplier="1:1" id="3ob-xn-2Bh"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="早餐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7IA-Z8-QXW">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="早餐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7IA-Z8-QXW">
                         <rect key="frame" x="60" y="10" width="142" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="7IA-Z8-QXW" secondAttribute="height" multiplier="71:10" id="Nqc-yF-1LE"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="米饭+手撕包菜+鱼肉汤" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEf-8h-OTF">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="米饭+手撕包菜+鱼肉汤" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eEf-8h-OTF">
                         <rect key="frame" x="60" y="35" width="210" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="eEf-8h-OTF" secondAttribute="height" multiplier="21:2" id="NNl-8w-fLb"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVc-Gl-A4a">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVc-Gl-A4a">
                         <rect key="frame" x="292" y="19" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="jVc-Gl-A4a" secondAttribute="height" multiplier="1:1" id="VIQ-06-6nq"/>
+                        </constraints>
                         <state key="normal" image="details"/>
                         <connections>
                             <action selector="actArrow:" destination="YUR-hW-HSV" eventType="touchUpInside" id="UfS-1F-0S5"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q60-rB-Bj7">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q60-rB-Bj7">
                         <rect key="frame" x="224" y="20" width="60" height="20"/>
                         <state key="normal" title="查看食谱">
                             <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -46,6 +60,23 @@
                         </connections>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="sqW-8x-axV" secondAttribute="bottom" constant="6" id="0vA-Cx-7iH"/>
+                    <constraint firstItem="sqW-8x-axV" firstAttribute="top" secondItem="8Nz-IV-9ZY" secondAttribute="topMargin" constant="7" id="1fn-WJ-JET"/>
+                    <constraint firstItem="eEf-8h-OTF" firstAttribute="top" secondItem="7IA-Z8-QXW" secondAttribute="bottom" constant="5" id="3R5-UX-FuO"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="7IA-Z8-QXW" secondAttribute="bottom" constant="20" id="3k8-D7-wRd"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="jVc-Gl-A4a" secondAttribute="trailing" id="AH2-7F-hfV"/>
+                    <constraint firstItem="7IA-Z8-QXW" firstAttribute="leading" secondItem="sqW-8x-axV" secondAttribute="trailing" constant="16" id="FmS-dY-23p"/>
+                    <constraint firstItem="q60-rB-Bj7" firstAttribute="top" secondItem="8Nz-IV-9ZY" secondAttribute="topMargin" constant="12" id="H2E-iR-glD"/>
+                    <constraint firstItem="sqW-8x-axV" firstAttribute="leading" secondItem="8Nz-IV-9ZY" secondAttribute="leadingMargin" constant="7" id="IGP-kX-NxQ"/>
+                    <constraint firstItem="7IA-Z8-QXW" firstAttribute="top" secondItem="8Nz-IV-9ZY" secondAttribute="topMargin" constant="2" id="Yx5-Zt-CnE"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="jVc-Gl-A4a" secondAttribute="bottom" constant="11" id="alA-P9-6B2"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="eEf-8h-OTF" secondAttribute="bottom" constant="-5" id="fn3-y8-A27"/>
+                    <constraint firstItem="jVc-Gl-A4a" firstAttribute="leading" secondItem="q60-rB-Bj7" secondAttribute="trailing" constant="8" id="gzu-I2-Scf"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="q60-rB-Bj7" secondAttribute="bottom" constant="10" id="nyo-g4-PUa"/>
+                    <constraint firstItem="eEf-8h-OTF" firstAttribute="leading" secondItem="sqW-8x-axV" secondAttribute="trailing" constant="16" id="ubQ-Ij-tPL"/>
+                    <constraint firstItem="jVc-Gl-A4a" firstAttribute="top" secondItem="8Nz-IV-9ZY" secondAttribute="topMargin" constant="11" id="wbN-ql-wga"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="btnArrow" destination="jVc-Gl-A4a" id="TDn-G8-Mej"/>

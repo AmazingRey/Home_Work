@@ -28,6 +28,8 @@
     NSArray *recentRecordArray;
     NSString *tableName;
     XKRWRecordEntity4_0 *recordEntity4_0;
+    NSInteger collectionType;
+    
     KMSearchBar *recordSearchBar;
     KMSearchDisplayController *searchDisplayCtrl;
     IFlyRecognizerView *iFlyControl;
@@ -49,9 +51,11 @@
     if(_schemeType == eSchemeFood){
         self.title = @"记录运动";
         tableName = @"sport_record";
+        collectionType = 2;
     }else{
         self.title = @"记录食物";
         tableName = @"food_record";
+        collectionType = 1;
     }
     
     recordSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, 44)];
@@ -137,6 +141,7 @@
     if (dataArray == nil){
         dataArray = [NSMutableArray array];
     }
+    dataArray =  [[XKRWCollectionService sharedService] queryCollectionWithType:collectionType];
     recentRecordArray = [[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName];
     XKLog(@"%@",[[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName]);
 }
@@ -238,6 +243,17 @@
     return 0;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (tableView.tag == 10002) {
+        if (collectionType == 1) {
+            return 64.f;
+        } else if (collectionType == 0) {
+            return 44.f;
+        }
+    }
+    return 0;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     /*
      let entity = self.searchResults[indexPath.row] as! XKRWSportEntity
@@ -301,8 +317,17 @@
     } else if (tableView.tag == 10002) {
         
         if ([tableName isEqualToString:@"food_record"]) {
-            
-            return [XKRWFoodCell new];
+            XKRWFoodCell *foodCell = [tableView dequeueReusableCellWithIdentifier:@"collectionFoodCell"];
+            if (foodCell == nil) {
+                foodCell = [[XKRWFoodCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"collectionFoodCell"];
+                
+            }
+            if ([dataArray count] > indexPath.row) {
+                NSDictionary *dict_value = (NSDictionary*)[dataArray objectAtIndex:indexPath.row];
+                [foodCell setCollectCellValue:dict_value];
+            }
+
+            return foodCell;
         } else if ([tableName isEqualToString:@"sport_record"]) {
             
             return [XKRWSportCell new];
