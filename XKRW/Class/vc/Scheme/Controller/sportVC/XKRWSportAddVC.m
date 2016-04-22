@@ -227,6 +227,11 @@
         componentTextField.text = [NSString stringWithFormat:@"%ld",(long)_recordSportEntity.number];
         kcalLabel.text = [NSString stringWithFormat:@"%ldKcal",(long)_recordSportEntity.calorie];
     }
+    if (_sportID) {
+        _recordSportEntity.sportId = _sportID;
+    } else if (_sportEntity) {
+        _recordSportEntity.sportId = _sportEntity.sportId;
+    }
 }
 
 #pragma --mark UITextFieldDelegate

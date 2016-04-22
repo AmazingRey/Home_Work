@@ -65,6 +65,9 @@
             CGFloat numLines = ceilf((CGFloat)_dicCollection.count/4);
             
             UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+            layout.itemSize = CGSizeMake(80, 95);
+            layout.minimumInteritemSpacing = 0;
+            layout.minimumLineSpacing = 30;
             
             XKRWPlan_5_3CollectionView *habitCollectionView = [[XKRWPlan_5_3CollectionView alloc] initWithFrame:CGRectMake(15, 70, XKAppWidth-30, 180*numLines) collectionViewLayout:layout];
             

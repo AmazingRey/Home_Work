@@ -27,6 +27,35 @@
     }
     return self;
 }
+
+-(void)setType:(energyType)type{
+    if (_type != type) {
+        _type = type;
+    }
+    switch (type) {
+        case 1:
+            _btnChange.titleLabel.text = @"调整四餐比例";
+            _btnSet.titleLabel.text = @"设置饮食提醒";
+            break;
+        case 2:
+            
+            [_btnChange setTitle:@"" forState:UIControlStateNormal];
+            [_btnSet setTitle:@"设置饮食提醒" forState:UIControlStateNormal];
+            
+            _btnChange.titleLabel.text = @"";
+            _btnSet.titleLabel.text = @"设置饮食提醒";
+            break;
+        case 3:
+            [_btnChange setTitle:@"重新测评习惯" forState:UIControlStateNormal];
+            [_btnSet setTitle:@"设置习惯提醒" forState:UIControlStateNormal];
+            _btnChange.titleLabel.text = @"重新测评习惯";
+            _btnSet.titleLabel.text = @"设置习惯提醒";
+            break;
+        default:
+            break;
+    }
+}
+
 - (IBAction)actChange:(id)sender {
     if ([self.delegate respondsToSelector:@selector(pressChangeEatPercent)]) {
         [self.delegate pressChangeEatPercent];

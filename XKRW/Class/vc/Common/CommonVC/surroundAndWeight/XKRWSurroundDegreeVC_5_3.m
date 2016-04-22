@@ -137,21 +137,24 @@
     currentSelectBuuton = button;
     switch (button.tag) {
         case 1000:
-            _dataType = eBustType;
+            _dataType = eWeightType;
             break;
         case 1001:
-            _dataType = eArmType;
+            _dataType = eBustType;
             break;
         case 1002:
-            _dataType = eWaistType;
+            _dataType = eArmType;
             break;
         case 1003:
-            _dataType = eHipType;
+            _dataType = eWaistType;
             break;
         case 1004:
-            _dataType = eThighType;
+            _dataType = eHipType;
             break;
         case 1005:
+            _dataType = eThighType;
+            break;
+        case 1006:
             _dataType = ecalfType;
             break;
         default:

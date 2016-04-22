@@ -15,4 +15,5 @@
 @property (strong, nonatomic) NSDictionary *dicData;
 @property (strong, nonatomic) NSArray *arrImg;
 @property (strong, nonatomic) NSArray *arrText;
+
 @end

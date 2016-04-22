@@ -21,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnWeight;
 @property (weak, nonatomic) IBOutlet UIButton *btnContain;
 @property (weak, nonatomic) IBOutlet UIButton *btnGraph;
-@property (weak, nonatomic) IBOutlet UIView *childrenView;
+@property (strong, nonatomic) IBOutlet UIView *childrenView;
+@property (strong, nonatomic) IBOutlet UIImageView *imgArrow;
 - (IBAction)actWeight:(id)sender;
 - (IBAction)actContain:(id)sender;
 - (IBAction)actGraph:(id)sender;

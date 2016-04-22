@@ -34,9 +34,7 @@
 }
 
 - (instancetype)initWithPath:(NSString*)aPath {
-    
     assert(sqlite3_threadsafe()); // whoa there big boy- gotta make sure sqlite it happy with what we're going to do.
-    
     self = [super init];
     
     if (self) {

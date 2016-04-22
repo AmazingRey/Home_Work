@@ -17,11 +17,7 @@
 @property (nonatomic, strong) UIView *upLineView;
 @property (nonatomic, strong) UIView *downLineView;
 
-
-
 @property (nonatomic, strong) UIView *lineView;
-
-
 @end
 
 

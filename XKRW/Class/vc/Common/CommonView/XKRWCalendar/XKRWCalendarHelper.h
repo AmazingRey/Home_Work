@@ -13,7 +13,13 @@
 
 typedef NS_ENUM(NSInteger, XKRWCalendarType) {
     XKRWCalendarTypeWeek,
-    XKRWCalendarTypeMonth
+    XKRWCalendarTypeMonth,
+    
+};
+
+typedef NS_ENUM(NSInteger,XKRWCalendarMonthType) {
+    XKRWCalendarDefault,
+    XKRWCalendarTypeStrongMonth    //月份显示增强版
 };
 
 typedef NS_ENUM(NSInteger, XKRWCalendarHeaderType) {

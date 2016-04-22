@@ -20,9 +20,12 @@
 @property (nonatomic        ) XKRWCalendarType type;
 @property (nonatomic, weak  ) NSArray          *recordDateArray;
 
+@property (nonatomic) XKRWCalendarMonthType monthType;
+
 - (instancetype)initWithDate:(NSDate *)date
              recordDateArray:(NSArray *)dateArray
                 returnHeight:(void (^)(CGFloat height))block
+           calendarMonthType:(XKRWCalendarMonthType )monthType
               clickDateBlock:(void (^)(NSDate *date, BOOL outOfMonth))block2;
 
 - (void)resetWithDate:(NSDate *)date returnHeight:(void (^)(CGFloat height))block;

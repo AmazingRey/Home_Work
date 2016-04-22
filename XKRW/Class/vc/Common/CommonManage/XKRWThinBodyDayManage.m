@@ -228,7 +228,6 @@ static XKRWThinBodyDayManage * shareInstance;
             return @"当前计划已结束";
         }
     }
-    
     return nil;
 }
 
@@ -246,6 +245,56 @@ static XKRWThinBodyDayManage * shareInstance;
             return @"点击“开启”，来监督今天的行为";
         }
     }
+}
+
+- (NSDate *)planExpectFinishDay {
+    NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+    
+    NSNumber *planDay = [XKRWAlgolHelper expectDayOfAchieveTarget];
+    
+    
+    NSTimeInterval startTime = [startDate timeIntervalSince1970];
+    
+    
+    NSTimeInterval endTime = startTime + planDay.integerValue *60*60*24 ;
+    
+    return [NSDate dateWithTimeIntervalSince1970:endTime];
+}
+
+- (BOOL) calendarDateInPlanTimeWithDate:(NSDate *)date {
+     NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+    
+    NSDate *endDate =[self planExpectFinishDay];
+    
+    NSTimeInterval startTime = [startDate timeIntervalSince1970];
+    
+    NSTimeInterval endTime =[endDate timeIntervalSince1970] ;
+    
+    NSTimeInterval calendarTime = [date timeIntervalSince1970];
+    
+    if (calendarTime < endTime && calendarTime >= startTime) {
+        return YES;
+    }
+    return NO;
+
+}
+
+- (BOOL) calendarDateIsStartDayWithDate:(NSDate *)date {
+    NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+
+    if(startDate.day == date.day && startDate.month == date.month && startDate.year == date.year ) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL) calendarDateIsEndDayWithDate:(NSDate *)date {
+    NSDate *endDate =[self planExpectFinishDay];
+
+    if(endDate.day == date.day && endDate.month == date.month && endDate.year == date.year) {
+        return YES;
+    }
+    return NO;
 }
 
 

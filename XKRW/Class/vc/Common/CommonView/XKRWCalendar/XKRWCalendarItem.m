@@ -7,12 +7,14 @@
 //
 
 #import "XKRWCalendarItem.h"
+#import "XKRWThinBodyDayManage.h"
 
 @implementation XKRWCalendarItem
 {
     UIImageView *_dot;
     UIImageView *_selectedView;
-    
+   
+    XKRWCalendarMonthType _CalendarMonthType;
     void (^_clickBlock)(XKRWCalendarItem *item);
 }
 
@@ -22,10 +24,12 @@
           isSelected:(BOOL)isSelected
           outOfMonth:(BOOL)outOfMonth
              isToday:(BOOL)isToday
+   calendarMonthType:(XKRWCalendarMonthType )monthType
         onClickBlock:(void (^)(XKRWCalendarItem *item))block
 {
-    self = [self initWithOrigin:origin withTitle:title record:yesOrNo isSelected:isSelected outOfMonth:outOfMonth isToday:isToday];
+    _CalendarMonthType = monthType;
     _clickBlock = block;
+    self = [self initWithOrigin:origin withTitle:title record:yesOrNo isSelected:isSelected outOfMonth:outOfMonth isToday:isToday];
     return self;
 }
 
@@ -36,19 +40,28 @@
           outOfMonth:(BOOL)outOfMonth
              isToday:(BOOL)isToday
 {
-    if (self = [super initWithFrame:CGRectMake(origin.x, origin.y, ITEM_WIDTH, ITEM_HEIGHT)]) {
+    if (self = [super init]) {
+        if (_CalendarMonthType == XKRWCalendarTypeStrongMonth) {
+            self.frame = CGRectMake(origin.x, origin.y, ITEM_WIDTH, 69);
+            [self.titleLabel setFont:XKDefaultNumEnFontWithSize(15.f)];
+            _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 30) / 2, (69-30)/2 -10, 30.f, 30.f)];
+          
+            _dot.contentMode = UIViewContentModeScaleAspectFit;
+        }else{
+            self.frame = CGRectMake(origin.x, origin.y, ITEM_WIDTH, 30);
+            [self.titleLabel setFont:XKDefaultNumEnFontWithSize(13.f)];
+            _selectedView = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 18.f) / 2, 6.f, 18.f, 18.)];
+            [_selectedView setImage:[UIImage imageNamed:@"circleGreen"]];
+            _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 4.f) / 2, 24.5f, 4.f, 4.f)];
+            [_dot setImage:[UIImage imageNamed:@"dotGreen"]];
+            _dot.contentMode = UIViewContentModeScaleAspectFit;
+            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        }
         self.outOfMonth = outOfMonth;
-        _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 4.f) / 2, 24.5f, 4.f, 4.f)];
-        [_dot setImage:[UIImage imageNamed:@"dotGreen"]];
-        _dot.contentMode = UIViewContentModeScaleAspectFit;
-        
         [self setBackgroundColor:[UIColor whiteColor]];
-        _selectedView = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 18.f) / 2, 6.f, 18.f, 18.)];
-        [_selectedView setImage:[UIImage imageNamed:@"circleGreen"]];
-        
         [self setDay:title outOfMonth:yesOrNo isToday:isToday isRecord:yesOrNo];
-        [self.titleLabel setFont:XKDefaultNumEnFontWithSize(13.f)];
-        [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+        
+       
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         
         [self addTarget:self action:@selector(pressButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -62,23 +75,83 @@
 
 - (void)setDay:(NSString *)day outOfMonth:(BOOL)yesOrNO isToday:(BOOL)isToday isRecord:(BOOL)isRecord
 {
-    [self setTitle:day forState:UIControlStateNormal];
-    self.outOfMonth = yesOrNO;
-    self.isRecord = isRecord;
-    
-    if (isRecord) {
-        [self addSubview:_dot];
-    } else {
-        [_dot removeFromSuperview];
-    }
-    if (isToday) {
-        [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
-        return;
-    }
     if (yesOrNO) {
         [self setTitleColor:XK_ASSIST_TEXT_COLOR forState:UIControlStateNormal];
     } else {
         [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
+    
+    
+    [self setTitle:day forState:UIControlStateNormal];
+    self.outOfMonth = yesOrNO;
+    self.isRecord = isRecord;
+    
+    
+    if (_CalendarMonthType == XKRWCalendarTypeStrongMonth) {
+        [_storangIsToday removeFromSuperview];
+        [_dot removeFromSuperview];
+        NSCalendar *cal = [NSCalendar currentCalendar];
+        NSDateComponents *comps = [cal components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitTimeZone fromDate:self.date];
+        
+        if (yesOrNO) {
+            [comps setDay:self.tag - 100];
+            if (comps.day < 8) {
+                [comps setMonth:comps.month + 1];
+            } else {
+                [comps setMonth:comps.month - 1];
+            }
+            
+        } else {
+            [comps setDay:self.tag];
+        }
+        [comps setHour:12];
+        NSDate *currentDate = [cal dateFromComponents:comps];
+        
+        BOOL isInPlan = [[XKRWThinBodyDayManage shareInstance ] calendarDateInPlanTimeWithDate:currentDate];
+        BOOL isEndDay = [[XKRWThinBodyDayManage shareInstance ] calendarDateIsEndDayWithDate:currentDate];
+        BOOL isStartDay =  [[XKRWThinBodyDayManage shareInstance] calendarDateIsStartDayWithDate:currentDate];
+
+        
+        if (isInPlan) {
+            [_dot setImage:[UIImage imageNamed:@"circleGray"]];
+            [self insertSubview:_dot belowSubview:self.titleLabel];
+            
+        }
+        
+        if (isRecord) {
+            [_dot setImage:[UIImage imageNamed:@"circleGreen"]];
+            [self insertSubview:_dot belowSubview:self.titleLabel];
+            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }else{
+        
+        }
+        
+        if (isEndDay) {
+          
+            [_dot removeFromSuperview];
+            _storangIsToday = [[UIView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 30) / 2, (69-30)/2 - 10 , 30.f, 30.f)];
+            _storangIsToday.layer.cornerRadius = 15;
+            _storangIsToday.layer.masksToBounds = YES;
+            _storangIsToday.layer.borderWidth = 1;
+            _storangIsToday.layer.borderColor = XKMainSchemeColor.CGColor;
+            [self insertSubview:_storangIsToday belowSubview:self.titleLabel];
+             [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
+        }
+        
+    }else{
+        if (isRecord) {
+             [self addSubview:_dot];
+        }else{
+            [_dot removeFromSuperview];
+        }
+        
+        if (isToday) {
+             [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
+        }
+    }
+    
+    if (_CalendarMonthType == XKRWCalendarTypeStrongMonth) {
+        self.titleEdgeInsets = UIEdgeInsetsMake(-20,0,0,0);
     }
 }
 

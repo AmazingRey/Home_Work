@@ -51,19 +51,30 @@
                             <action selector="actDown:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MK2-2G-Ygf"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Eb-0U-f1i">
+                        <rect key="frame" x="0.0" y="58" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="4RG-vo-Dme"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="deviceRGB"/>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="9uX-Xa-qfh" secondAttribute="trailing" id="22J-7d-cqU"/>
                     <constraint firstAttribute="bottomMargin" secondItem="39Z-89-mg0" secondAttribute="bottom" constant="6" id="4dP-OR-EEG"/>
                     <constraint firstAttribute="bottomMargin" secondItem="6xO-xY-ve5" secondAttribute="bottom" constant="20" id="Acf-EM-xnr"/>
                     <constraint firstItem="9uX-Xa-qfh" firstAttribute="leading" secondItem="kcV-Ia-zeP" secondAttribute="trailing" constant="8" id="IxV-6m-amK"/>
                     <constraint firstItem="kcV-Ia-zeP" firstAttribute="top" secondItem="9uX-Xa-qfh" secondAttribute="top" id="KTY-Dt-LY2"/>
+                    <constraint firstItem="3Eb-0U-f1i" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="Kvb-Ac-hGf"/>
                     <constraint firstItem="9uX-Xa-qfh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="Mm5-IM-qHQ"/>
                     <constraint firstItem="6xO-xY-ve5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="UNH-cO-3Jo"/>
                     <constraint firstAttribute="bottomMargin" secondItem="9uX-Xa-qfh" secondAttribute="bottom" constant="15" id="cJu-YN-ZkK"/>
                     <constraint firstItem="39Z-89-mg0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="f5X-9f-0Pf"/>
                     <constraint firstItem="6xO-xY-ve5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="52" id="fIp-kr-8G6"/>
                     <constraint firstItem="39Z-89-mg0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="hdE-D4-bTy"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="3Eb-0U-f1i" secondAttribute="bottom" constant="-9" id="lor-6v-EFt"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="3Eb-0U-f1i" secondAttribute="trailing" constant="-8" id="oZJ-4k-Fid"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -164,7 +164,9 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             
             self.calendar = XKRWCalendar(origin: CGPointMake(0, 44), recordDateArray: self.recordDates, headerType: .Simple, andResizeBlock: { () -> Void in
                 
-            })
+            },andMonthType:.Default)
+            
+          
             self.calendar.addBackToTodayButtonInFooterView()
             self.calendar.delegate = self
             self.calendar.reloadCalendar()
@@ -474,7 +476,6 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
     func checkSelectedDate(date: NSDate) -> Bool {
         
         if date.originTimeOfADay() > NSDate().originTimeOfADay() {
-            
             XKRWCui.showInformationHudWithText("不能查看今天以后的日期哦~")
             return false
         }

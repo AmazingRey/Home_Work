@@ -372,4 +372,9 @@ typedef NS_ENUM(NSInteger, PlanType) {
     Habit
 };
 
+typedef NS_ENUM(NSInteger,energyType) {
+    energyTypeEat = 1,
+    energyTypeSport,
+    energyTypeHabit
+};
 #endif

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "XKRWCalendarHelper.h"
 #define ITEM_HEIGHT 30.f
 #define ITEM_WIDTH ([UIScreen mainScreen].bounds.size.width - 30.f) / 7.f
 
@@ -15,6 +15,9 @@
 
 @property BOOL outOfMonth;
 @property BOOL isRecord;
+@property (nonatomic ,strong) NSDate *date;
+@property (nonatomic ,strong) UIView * storangIsToday;
+
 
 - (id)initWithOrigin:(CGPoint)origin
            withTitle:(NSString *)title
@@ -22,6 +25,7 @@
           isSelected:(BOOL)isSelected
           outOfMonth:(BOOL)outOfMonth
              isToday:(BOOL)isToday
+    calendarMonthType:(XKRWCalendarMonthType )monthType
         onClickBlock:(void (^)(XKRWCalendarItem *item))block;
 
 - (id)initWithOrigin:(CGPoint)origin

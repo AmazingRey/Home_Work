@@ -38,8 +38,9 @@
 #import "XKRWTipsManage.h"
 #import "XKRWCalendarVC.h"
 #import "XKRWRecordMore5_3View.h"
+#import "XKRWRecordSingleMore5_3View.h"
 
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate>
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
     KMSearchBar* foodAndSportSearchBar;
@@ -58,6 +59,7 @@
     NSMutableArray *tipsArray;
     UIButton  *btnBackBounds;
     XKRWRecordMore5_3View *recordMoreView;
+    XKRWRecordSingleMore5_3View *recordSingleMoreView;
 }
 
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
@@ -65,8 +67,8 @@
 @property (nonatomic, strong) XKRWWeightRecordPullView *pullView;
 @property (nonatomic, strong) XKRWWeightPopView *popView;
 
-@property (strong , nonatomic) NSArray *mealSchemes;
-@property (strong , nonatomic) XKRWSchemeEntity_5_0 *sportSchemes;
+@property (strong , nonatomic) NSArray *mealSchemeArray;
+@property (strong , nonatomic) XKRWSchemeEntity_5_0 *sportSchemeEntity;
 @property (strong , nonatomic) XKRWRecordFood5_3View *recordPopView;
 @end
 
@@ -109,6 +111,7 @@
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView];
     [self getTipsData];
+    [self getRecordAndMenuScheme];
 }
 
 - (void)getTipsData {
@@ -291,7 +294,10 @@
     [btnBackBounds addTarget:self action:@selector(removePullView:) forControlEvents:UIControlEventTouchDown];
     
     if (_pullView == nil) {
-        _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, 80, 90)];
+        CGFloat pullWidth = 138*XKAppWidth/375;
+        CGFloat pullHeight = 143*pullWidth/138;
+        
+        _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, pullWidth, pullHeight)];
         CGPoint center = button.center;
         center.x = XKAppWidth - _pullView.frame.size.width/2 - 15;
         center.y = button.center.y + button.frame.size.height + _pullView.frame.size.height/2+foodAndSportSearchBar.frame.size.height;
@@ -299,7 +305,6 @@
         [btnBackBounds addSubview:_pullView];
         _pullView.alpha = 0;
         _pullView.delegate = self;
-        
         [self.view addSubview:btnBackBounds];
     }
     [self removePullView:btnBackBounds];
@@ -343,42 +348,58 @@
         }];
     }
 }
+ 
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
+    CGFloat positionX ;
     if (index == 1) {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];
+        positionX = energyCircleView.eatEnergyCircle.center.x;
+      
     } else if (index == 2) {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eSportType];
-    } else if (index == 3) {
+        positionX = energyCircleView.sportEnergyCircle.center.x;
+    } else {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eHabitType];
+         positionX = energyCircleView.habitEnergyCircle.center.x;
     }
     [self setPlanEnergyViewTitle];
+
     
     [self removePullView:nil];
     [self removeMenuView];
-    [self addmenuView:index];
+    [self addmenuView:index andArrowX:positionX];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
-//    XKRWRecordVC *recordVC = [[XKRWRecordVC alloc] init];
-//    recordVC.schemeType = eSchemeFood;
-//    [self.navigationController pushViewController:recordVC animated:YES];
 }
 
 
 #pragma mark - XKRWRecordFood5_3View
--(void)addmenuView:(NSInteger)index{
-    XKRWRecordFood5_3View *popView = [[XKRWRecordFood5_3View alloc] init];
+-(void)addmenuView:(NSInteger)index andArrowX:(CGFloat) postitonX{
+    NSLog(@"%f",XKAppWidth);
+    CGRect popViewFrame = CGRectMake(0, 0, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height);
+    XKRWRecordFood5_3View *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordFood5_3View");
+    popView.frame = popViewFrame;
+    popView.positionX = postitonX;
+    [popView initSubViews];
     _recordPopView = popView;
-    
+    if (index == 1) {
+        _recordPopView.schemeArray = _mealSchemeArray;
+    }else if(index == 2){
+        _recordPopView.schemeArray = [NSArray arrayWithObject:_sportSchemeEntity];
+    }
+
     UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchRecordView:)];
     [_recordPopView addGestureRecognizer:ges];
     
-    [self getRecordAndMenuScheme];
     CGRect recordFrame = _recordPopView.frame;
     recordFrame.origin.y -= recordFrame.size.height;
     _recordPopView.frame = recordFrame;
+    [_recordPopView layoutIfNeeded];
+    
     [UIView animateWithDuration:.6 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:.1 options:0 animations:^{
-        if (!recordBackView) {
-            recordBackView = [[UIView alloc] initWithFrame:CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height)];
+        if (!recordBackView){
+            CGRect recFrame = CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height);
+            recordBackView = [[UIView alloc] initWithFrame:recFrame];
             recordBackView.backgroundColor = [UIColor whiteColor];
             recordBackView.clipsToBounds = YES;
         }
@@ -387,6 +408,8 @@
         frame.origin.y = 0;
         _recordPopView.frame = frame;
         _recordPopView.type = index;
+        [_recordPopView layoutIfNeeded];
+        
         _recordPopView.delegate = self;
         [[UIApplication sharedApplication].keyWindow addSubview:recordBackView];
     } completion:^(BOOL finished) {
@@ -414,38 +437,31 @@
 }
 
 -(void)getRecordAndMenuScheme{
-    [self getMenuScheme];
+    [self getMealScheme];
     [self getSportScheme];
 }
 
--(void)getMenuScheme{
-    __weak typeof(self) weakSelf = self;
+-(void)getMealScheme{
     [self downloadWithTaskID:@"getMealSchemeAndRecord" outputTask:^id{
-        if (weakSelf) {
-            weakSelf.mealSchemes = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
-           NSArray *arr = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithSchemes:weakSelf.mealSchemes date:[NSDate date]];
-            if (arr) {
-                weakSelf.mealSchemes = arr;
+        NSArray *mealArray = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
+           NSArray *recordMealArray = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithSchemes:mealArray date:[NSDate date]];
+            if (recordMealArray) {
+                return recordMealArray;
             }
-        }
-        return weakSelf.mealSchemes;
+        return mealArray;
     }];
 }
 
 -(void)getSportScheme{
-    __weak typeof(self) weakSelf = self;
+    
     [self downloadWithTaskID:@"getSportSchemeAndRecord" outputTask:^id{
-        if (weakSelf) {
-            NSInteger i =[[XKRWRecordService4_0 sharedService]getMenstruationSituation]?1:0;
-            
-            weakSelf.sportSchemes = [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
-            
-            NSArray *arr = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithSchemes:@[weakSelf.sportSchemes] date:[NSDate date]];
-            if (arr) {
-                weakSelf.sportSchemes = [arr lastObject];
-            }
+        NSInteger i =[[XKRWRecordService4_0 sharedService]getMenstruationSituation]?1:0;
+        XKRWSchemeEntity_5_0 *sportEntity = [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
+        NSArray *arr = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithSchemes:@[sportEntity] date:[NSDate date]];
+        if (arr) {
+            return  [arr lastObject];
         }
-        return weakSelf.sportSchemes;
+        return sportEntity;
     }];
 }
 
@@ -457,12 +473,22 @@
 
 #pragma mark XKRWRecordMore5_3View & XKRWRecordMore5_3ViewDelegate
 -(void)addMoreView{
-    if (!recordMoreView) {
-        CGRect frame = CGRectMake(recordBackView.frame.size.width - 140, _recordPopView.btnMore.frame.origin.y + _recordPopView.btnMore.frame.size.height+15, 138, 105);
-        recordMoreView = [[XKRWRecordMore5_3View alloc] initWithFrame:frame];
-        [_recordPopView addSubview:recordMoreView];
-        recordMoreView.delegate = self;
-    }else{
+    if (!recordMoreView && !recordSingleMoreView) {
+        CGRect frame = CGRectMake(recordBackView.frame.size.width - 140, _recordPopView.moreButton.frame.origin.y + _recordPopView.moreButton.frame.size.height+15, 138, 105);
+        if (_recordPopView.type == 2) {
+            frame.size.height = 59;
+            
+            recordSingleMoreView = [[XKRWRecordSingleMore5_3View alloc] initWithFrame:frame];
+            [_recordPopView addSubview:recordSingleMoreView];
+            recordSingleMoreView.type = _recordPopView.type;
+            recordSingleMoreView.delegate = self;
+        }else{
+            recordMoreView = [[XKRWRecordMore5_3View alloc] initWithFrame:frame];
+            [_recordPopView addSubview:recordMoreView];
+            recordMoreView.type = _recordPopView.type;
+            recordMoreView.delegate = self;
+        }
+    }else if (recordSingleMoreView || recordMoreView){
         [self removeMoreView];
     }
 }
@@ -470,6 +496,9 @@
 -(void)removeMoreView{
     [recordMoreView removeFromSuperview];
     recordMoreView = nil;
+    
+    [recordSingleMoreView removeFromSuperview];
+    recordSingleMoreView = nil;
 }
 
 -(void)pressChangeEatPercent{
@@ -477,6 +506,10 @@
 }
 
 -(void)pressSetEatNotify{
+    [self removeMoreView];
+}
+
+-(void)pressSetSportNotify{
     [self removeMoreView];
 }
 #pragma mark XKRWWeightRecordPullViewDelegate method
@@ -515,12 +548,22 @@
  */
 -(void)popViewAppear:(NSInteger)type{
     [self removePullView:btnBackBounds];
-    _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - 100, 240)];
     _popView.delegate = self;
     CGPoint center = self.view.center;
     center.y -= 0;
     _popView.center = center;
     _popView.alpha = 0;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasHidden:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
+    
     [UIView animateWithDuration:.3 delay:.1 options:0 animations:^{
         [_popView.textField becomeFirstResponder];
         [[UIApplication sharedApplication].keyWindow addSubview:_popView];
@@ -532,6 +575,27 @@
         self.view.userInteractionEnabled = NO;
         self.tabBarController.tabBar.hidden = YES;
     } completion:nil];
+}
+
+- (void)keyboardWasShown:(NSNotification *)notification
+{
+    if (_popView) {
+        CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        CGFloat height = MIN(keyboardSize.height,keyboardSize.width);
+    //    CGFloat width = MAX(keyboardSize.height,keyboardSize.width);
+        
+        CGPoint cen = CGPointMake(self.view.center.x, (CGFloat)(XKAppHeight - height)/2);
+        [UIView animateWithDuration:.2 animations:^{
+            _popView.center = cen;
+        }];
+    }
+}
+
+- (void)keyboardWasHidden:(NSNotification *)notification
+{
+    if (_popView && !_popView.isCalendarShown) {
+        _popView.center = self.view.center;
+    }
 }
 
 -(void)cancelPopView{
@@ -548,6 +612,8 @@
             _popView = nil;
             self.view.userInteractionEnabled = YES;
             self.tabBarController.tabBar.hidden = NO;
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];            
         }];
     }else{
         [self setUserDataAction:nil];
@@ -598,15 +664,19 @@
     if ([taskID isEqualToString:@"getMealSchemeAndRecord"]) {
         [XKRWCui hideProgressHud];
         if (result != nil) {
-            _recordPopView.arrMenu = (NSArray *)result;
-        }else [XKRWCui showInformationHudWithText:@"获取推荐食谱失败"];
+            _mealSchemeArray = (NSArray *)result;
+        }else {
+            [XKRWCui showInformationHudWithText:@"获取推荐食谱失败"];
+        }
         return;
     }
     if ([taskID isEqualToString:@"getSportSchemeAndRecord"]) {
         [XKRWCui hideProgressHud];
         if (result != nil) {
-            _recordPopView.arrRecord = @[result];
-        }else [XKRWCui showInformationHudWithText:@"获取记录体重失败，请稍后尝试"];
+            _sportSchemeEntity = result;
+        }else {
+            [XKRWCui showInformationHudWithText:@"获取记录体重失败，请稍后尝试"];
+        }
         return;
     }
 }

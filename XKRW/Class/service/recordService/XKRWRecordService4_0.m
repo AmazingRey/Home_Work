@@ -1294,8 +1294,39 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 #pragma - mark QUERY
 - (NSArray *)queryRecent_20_RecordTable:(NSString *)tableName {
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
-    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld GROUP BY food_id ORDER BY date DESC LIMIT 20",tableName,(long)uid];
-    return [self query:sql];
+    NSString *sql;
+    
+    NSMutableArray *array = [NSMutableArray array];
+    if ([tableName isEqualToString:@"food_record"]) {
+        sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld GROUP BY %@ ORDER BY date DESC LIMIT 20",tableName,(long)uid,@"food_id"];
+        NSArray *data = [self query:sql];
+        for (NSDictionary *temp in data) {
+            XKRWFoodEntity *entity = [XKRWFoodEntity new];
+            entity.foodId = [temp[@"food_id"] integerValue];
+            entity.foodName = temp[@"food_name"];
+            entity.foodLogo = temp[@"image_url"];
+            entity.foodEnergy = [temp[@"calorie"] integerValue];
+            [array addObject:entity];
+        }
+        
+    } else if ([tableName isEqualToString:@"sport_record"]) {
+        sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld GROUP BY %@ ORDER BY date DESC LIMIT 20",tableName,(long)uid,@"sport_name"];
+        NSArray *data = [self query:sql];
+        for (NSDictionary *sportTemp in data) {
+            XKRWSportEntity *entity = [XKRWSportEntity new];
+            entity.sportId = [sportTemp[@"sport_id"] intValue];
+            entity.sportName = sportTemp[@"sport_name"];
+            entity.sportPic = sportTemp[@"image_url"];
+            entity.sportMets = [sportTemp[@"sport_METS"] floatValue];
+            entity.sportUnit = [sportTemp[@"unit"] intValue];
+            if (entity.sportId) {
+                [array addObject:entity];
+            } else continue;
+        }
+        
+    } else return [NSArray new];
+    
+    return array;
 }
 - (NSArray *)queryRecordWithDate:(NSDate *)date table:(NSString *)tableName
 {

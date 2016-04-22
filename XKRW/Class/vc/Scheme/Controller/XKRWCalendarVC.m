@@ -8,8 +8,14 @@
 
 #import "XKRWCalendarVC.h"
 #import "XKRWPlanCalendarView.h"
+#import "XKRWCalendar.h"
+#import "XKRWRecordService4_0.h"
+
 @interface XKRWCalendarVC () {
     UIScrollView *calendarScrollView;
+    XKRWCalendar *calendar;
+    
+    NSMutableArray *recordDates;
 }
 
 @end
@@ -37,7 +43,7 @@
     XKRWPlanCalendarView *headView = [[NSBundle mainBundle] loadNibNamed:@"XKRWPlanCalendarView" owner:self options:nil][0];
     headView.frame = CGRectMake(0, 0, XKAppWidth, 130);
     
-    [self.view addSubview:headView];
+    [calendarScrollView addSubview:headView];
     
     UIButton *popButton = [UIButton buttonWithType:UIButtonTypeCustom];
     popButton.frame = CGRectMake(0, 0, 64, 64);
@@ -47,6 +53,16 @@
     [popButton addSubview:imageview];
     [popButton addTarget:self action:@selector(popAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:popButton];
+    
+    
+    recordDates = [[XKRWRecordService4_0 sharedService] getUserRecordDateFromDB];
+    
+    calendar =[[XKRWCalendar alloc] initWithOrigin:CGPointMake(0, 130) recordDateArray:recordDates headerType:XKRWCalendarHeaderTypeCustom andResizeBlock:^{
+        
+    } andMonthType:XKRWCalendarTypeStrongMonth];
+    [calendar addBackToTodayButtonInFooterView];
+    [calendar reloadCalendar];
+    [calendarScrollView addSubview:calendar];
 }
 
 

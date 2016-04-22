@@ -60,6 +60,19 @@
     }
     return self;
 }
+- (instancetype)initWithOrigin:(CGPoint)origin
+               recordDateArray:(NSMutableArray *)dateArray
+                    headerType:(XKRWCalendarHeaderType)type
+                andResizeBlock:(void (^)(void))block
+                  andMonthType:(XKRWCalendarMonthType )monthType {
+    _monthType = monthType;
+
+    if (self ==[self initWithOrigin:origin recordDateArray:dateArray headerType:type andResizeBlock:block]){
+    
+    }
+    
+    return self;
+}
 
 - (instancetype)initWithOrigin:(CGPoint)origin recordDateArray:(NSMutableArray *)dateArray headerType:(XKRWCalendarHeaderType)type andResizeBlock:(void (^)(void))block {
     
@@ -145,13 +158,14 @@
     
     self.calendarView = [[XKRWCalendarView alloc] initWithDate:self.currentDate
                                                recordDateArray:_recordDateArray
+                         
                                                   returnHeight:^(CGFloat height) {
-                                                      
                                                       CGRect rect = _calendarScrollView.frame;
                                                       rect.size.height = height;
                                                       _calendarScrollView.frame = rect;
                                                       
                                                   }
+                                             calendarMonthType:_monthType
                                                 clickDateBlock:^(NSDate *date, BOOL outOfMonth) {
                                                     XKLog(@"\n=========\nclick: %@", date);
                                                     
@@ -200,6 +214,7 @@
                                                   returnHeight:^(CGFloat height) {
                                                       
                                                   }
+                                             calendarMonthType:_monthType
                                                 clickDateBlock:nil];
             [_preMonth setX:0.f];
             [_calendarScrollView addSubview:_preMonth];
@@ -212,6 +227,7 @@
                                                    returnHeight:^(CGFloat height) {
                                                        
                                                    }
+                                              calendarMonthType:_monthType
                                                  clickDateBlock:nil];
             [_nextMonth setX:XKAppWidth * 2];
             [_calendarScrollView addSubview:_nextMonth];

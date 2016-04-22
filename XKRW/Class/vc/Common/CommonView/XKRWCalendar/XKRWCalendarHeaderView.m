@@ -18,11 +18,8 @@
     UIButton *preMonthButton;
     UIButton *nextMonthButton;
     UILabel *dateLabel;
-
     UIView *weekdayView;
-    
     UIButton *_backToTodayButton;
-    
     void (^_preMonth)(void);
     void (^_nextMonth)(void);
     void (^_backToToday)(void);
@@ -72,7 +69,7 @@
             for (int i = 0; i < 7; i ++) {
                 [weekdayView addSubview:
                  [self weekdayLabelWithOrigin:CGPointMake(_xPoint, 0.f)
-                                      andText:dateStringArr[i]]];
+                                      andText:dateStringArr[i] andLabelColor:[UIColor whiteColor]]];
                 _xPoint += LABEL_WIDTH;
             }
             
@@ -105,7 +102,23 @@
             for (int i = 0; i < 7; i ++) {
                 [weekdayView addSubview:
                  [self weekdayLabelWithOrigin:CGPointMake(_xPoint, 0.f)
-                                      andText:dateStringArr[i]]];
+                                      andText:dateStringArr[i] andLabelColor:[UIColor whiteColor]]];
+                _xPoint += LABEL_WIDTH;
+            }
+        }else if (type == XKRWCalendarHeaderTypeCustom){
+            self.frame = CGRectMake(0, 0, XKAppWidth, LABEL_HEIGHT);
+            self.backgroundColor = [UIColor whiteColor];
+            
+            weekdayView = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, XKAppWidth, LABEL_HEIGHT)];
+            weekdayView.backgroundColor = XK_BACKGROUND_COLOR;
+            [self addSubview:weekdayView];
+            
+            NSArray *dateStringArr = [NSArray arrayWithObjects:@"日", @"一", @"二", @"三", @"四", @"五", @"六", nil];
+            CGFloat _xPoint = 15.f;
+            for (int i = 0; i < 7; i ++) {
+                [weekdayView addSubview:
+                 [self weekdayLabelWithOrigin:CGPointMake(_xPoint, 0.f)
+                                      andText:dateStringArr[i] andLabelColor:colorSecondary_333333]];
                 _xPoint += LABEL_WIDTH;
             }
         }
@@ -113,12 +126,12 @@
     return self;
 }
 
-- (UILabel *)weekdayLabelWithOrigin:(CGPoint)origin andText:(NSString *)text
+- (UILabel *)weekdayLabelWithOrigin:(CGPoint)origin andText:(NSString *)text andLabelColor:(UIColor *)color
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(origin.x, origin.y, LABEL_WIDTH, LABEL_HEIGHT)];
     label.backgroundColor = [UIColor clearColor];
     [label setFont:[UIFont boldSystemFontOfSize:14.f]];
-    [label setTextColor:[UIColor whiteColor]];
+    [label setTextColor:color];
     [label setText:text];
     label.textAlignment = NSTextAlignmentCenter;
     

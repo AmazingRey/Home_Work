@@ -26,6 +26,8 @@
 
 @property (nonatomic          ) XKRWCalendarType       type;
 
+@property (nonatomic)  XKRWCalendarMonthType   monthType;
+
 @property (nonatomic, readonly) CGFloat                heightOfCurrentType;
 
 @property (nonatomic, strong  ) XKRWCalendarView       *calendarView;
@@ -51,7 +53,16 @@
                recordDateArray:(NSMutableArray *)dateArray
                 andResizeBlock:(void (^)(void))block;
 
-- (instancetype)initWithOrigin:(CGPoint)origin recordDateArray:(NSMutableArray *)dateArray headerType:(XKRWCalendarHeaderType)type andResizeBlock:(void (^)(void))block;
+- (instancetype)initWithOrigin:(CGPoint)origin
+               recordDateArray:(NSMutableArray *)dateArray
+                    headerType:(XKRWCalendarHeaderType)type
+                andResizeBlock:(void (^)(void))block;
+
+- (instancetype)initWithOrigin:(CGPoint)origin
+               recordDateArray:(NSMutableArray *)dateArray
+                    headerType:(XKRWCalendarHeaderType)type
+                andResizeBlock:(void (^)(void))block
+                  andMonthType:(XKRWCalendarMonthType )monthType;
 
 - (void)transformToType:(XKRWCalendarType)type;
 

@@ -35,8 +35,8 @@
         CGRect frame = self.frame;
         _dicAll = [NSMutableDictionary dictionary];
         
-        _firstCircleView = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(frame.origin.x + frame.size.width/2 - 50, frame.origin.y - 70, 100, 100) Style:XKRWEnergyCircleStyleSelected];
-     
+        _firstCircleView = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(XKAppWidth/2-15-50, frame.size.height - 120, 100, 100) Style:XKRWEnergyCircleStyleSelected];
+        
         _firstCircleView.tag = 1;
         
         _label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 20)];

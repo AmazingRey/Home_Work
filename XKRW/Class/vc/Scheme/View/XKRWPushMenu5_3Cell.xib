@@ -59,10 +59,19 @@
                             <action selector="actRight:" destination="YUR-hW-HSV" eventType="touchUpInside" id="BuR-Wj-RNN"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dEs-ch-yaO">
+                        <rect key="frame" x="0.0" y="58" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="wW2-17-bj4"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="deviceRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="sqW-8x-axV" secondAttribute="bottom" constant="6" id="0vA-Cx-7iH"/>
                     <constraint firstItem="sqW-8x-axV" firstAttribute="top" secondItem="8Nz-IV-9ZY" secondAttribute="topMargin" constant="7" id="1fn-WJ-JET"/>
+                    <constraint firstItem="dEs-ch-yaO" firstAttribute="leading" secondItem="8Nz-IV-9ZY" secondAttribute="leadingMargin" constant="-8" id="30B-UK-QxK"/>
                     <constraint firstItem="eEf-8h-OTF" firstAttribute="top" secondItem="7IA-Z8-QXW" secondAttribute="bottom" constant="5" id="3R5-UX-FuO"/>
                     <constraint firstAttribute="bottomMargin" secondItem="7IA-Z8-QXW" secondAttribute="bottom" constant="20" id="3k8-D7-wRd"/>
                     <constraint firstAttribute="trailingMargin" secondItem="jVc-Gl-A4a" secondAttribute="trailing" id="AH2-7F-hfV"/>
@@ -71,8 +80,10 @@
                     <constraint firstItem="sqW-8x-axV" firstAttribute="leading" secondItem="8Nz-IV-9ZY" secondAttribute="leadingMargin" constant="7" id="IGP-kX-NxQ"/>
                     <constraint firstItem="7IA-Z8-QXW" firstAttribute="top" secondItem="8Nz-IV-9ZY" secondAttribute="topMargin" constant="2" id="Yx5-Zt-CnE"/>
                     <constraint firstAttribute="bottomMargin" secondItem="jVc-Gl-A4a" secondAttribute="bottom" constant="11" id="alA-P9-6B2"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="dEs-ch-yaO" secondAttribute="bottom" constant="-9" id="cmE-MJ-V3P"/>
                     <constraint firstAttribute="bottomMargin" secondItem="eEf-8h-OTF" secondAttribute="bottom" constant="-5" id="fn3-y8-A27"/>
                     <constraint firstItem="jVc-Gl-A4a" firstAttribute="leading" secondItem="q60-rB-Bj7" secondAttribute="trailing" constant="8" id="gzu-I2-Scf"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="dEs-ch-yaO" secondAttribute="trailing" constant="-8" id="kIf-qR-uZ9"/>
                     <constraint firstAttribute="bottomMargin" secondItem="q60-rB-Bj7" secondAttribute="bottom" constant="10" id="nyo-g4-PUa"/>
                     <constraint firstItem="eEf-8h-OTF" firstAttribute="leading" secondItem="sqW-8x-axV" secondAttribute="trailing" constant="16" id="ubQ-Ij-tPL"/>
                     <constraint firstItem="jVc-Gl-A4a" firstAttribute="top" secondItem="8Nz-IV-9ZY" secondAttribute="topMargin" constant="11" id="wbN-ql-wga"/>

@@ -38,15 +38,24 @@
 - (instancetype)initWithDate:(NSDate *)date
              recordDateArray:(NSArray *)dateArray
                 returnHeight:(void (^)(CGFloat height))block
-              clickDateBlock:(void (^)(NSDate *date, BOOL outOfMonth))block2
+           calendarMonthType:(XKRWCalendarMonthType )monthType
+              clickDateBlock:(void (^)(NSDate *date, BOOL outOfMonth))block2;
 {
     self = [self init];
     self.recordDateArray = dateArray;
+    self.monthType = monthType;
     [self initCalendarItemsWithDate:date clickDateBlock:block2];
-    block(_numberOfLine * 30.f);
+     CGRect rect = self.frame;
+    if(monthType == XKRWCalendarTypeStrongMonth){
+        block(_numberOfLine * 70.f);
+        rect.size.height = _numberOfLine * 70.f;
+    }else{
+        block(_numberOfLine * 30.f);
+        rect.size.height = _numberOfLine * 30.f;
+    }
     
-    CGRect rect = self.frame;
-    rect.size.height = _numberOfLine * 30.f;
+   
+    
     self.frame = rect;
     
     return self;
@@ -92,11 +101,13 @@
                     break;
                 }
             }
+            item.tag = day;
+            item.date = date;
             [item setDay:[NSString stringWithFormat:@"%d", (int)day]
               outOfMonth:NO
                  isToday:isToday
                 isRecord:isRecord];
-            item.tag = day;
+            
             day ++;
             if (item.hidden == YES) {
 //                [item setHidden:NO withAnimation:YES];
@@ -113,11 +124,13 @@
                     break;
                 }
             }
+            item.tag = [[date firstDayInMonth] offsetDay:offset].day + 100;
+            item.date = date;
             [item setDay:[NSString stringWithFormat:@"%ld", (long)[[date firstDayInMonth] offsetDay:offset].day]
               outOfMonth:YES
                  isToday:isToday
                 isRecord:isRecord];
-            item.tag = [[date firstDayInMonth] offsetDay:offset].day + 100;
+            
             
 //            [item setHidden:YES withAnimation:YES];
         }
@@ -144,12 +157,20 @@
     } else {
         self.currentLine = 1;
     }
-    if (block) {
-        block(_numberOfLine * 30.f);
-    }
+    
     
     CGRect rect = self.frame;
-    rect.size.height = _numberOfLine * 30.f;
+    if(_monthType == XKRWCalendarTypeStrongMonth){
+        if (block) {
+            block(_numberOfLine * 70.f);
+        }
+        rect.size.height = _numberOfLine * 70.f;
+    }else{
+        if (block) {
+            block(_numberOfLine * 30.f);
+        }
+        rect.size.height = _numberOfLine * 30.f;
+    }
     self.frame = rect;
 }
 /**
@@ -171,7 +192,13 @@
     }
 
     CGFloat _xPoint = 15.f, _yPoint = 0.f;
-
+    
+    if (_monthType == XKRWCalendarTypeStrongMonth) {
+        UIView  *lineView  =[[UIView alloc]initWithFrame:CGRectMake(0, 69, XKAppWidth, 1)];
+        lineView.backgroundColor = XK_ASSIST_LINE_COLOR;
+        [self addSubview:lineView];
+    }
+    
     _numberOfDayInMonth = [date numberOfDaysInMonth];
     _numberOfLine = 1;
     _weekday = [date firstWeekDayInMonth];
@@ -182,7 +209,15 @@
     for (int i = 1; i <= 42; i ++) {
         if (_xPoint > XKAppWidth - 15.f - ITEM_WIDTH / 2) {
             _xPoint = 15.f;
-            _yPoint += 30.f;
+            if(_monthType == XKRWCalendarTypeStrongMonth){
+                _yPoint += 70.f;
+                UIView  *lineView  = [[UIView alloc] init];
+                lineView.backgroundColor = XK_ASSIST_LINE_COLOR;
+                lineView.frame = CGRectMake(0, 69 + _yPoint, XKAppWidth, 1);
+                [self addSubview:lineView];
+            }else{
+                _yPoint += 30.f;
+            }
             if (day <= _numberOfDayInMonth) {
                 _numberOfLine ++;
             }
@@ -201,6 +236,7 @@
                                       isSelected:NO
                                       outOfMonth:NO
                                          isToday:NO
+                               calendarMonthType:_monthType
                                     onClickBlock:^(XKRWCalendarItem *item) {
                                         if (item.isSelected == NO) {
                                             [_itemArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -244,11 +280,13 @@
                     break;
                 }
             }
+            item.tag = day;
+            item.date = itemDate;
             [item setDay:[NSString stringWithFormat:@"%d", (int)day]
               outOfMonth:NO
                  isToday:isToday
                 isRecord:isRecord];
-            item.tag = day;
+            
             day ++;
         } else {
             NSDate *itemDate = [[date firstDayInMonth] offsetDay:offset];
@@ -262,11 +300,13 @@
                     break;
                 }
             }
+            item.date = itemDate;
+            item.tag = [[date firstDayInMonth] offsetDay:offset].day + 100;
             [item setDay:[NSString stringWithFormat:@"%ld", (long)[[date firstDayInMonth] offsetDay:offset].day]
               outOfMonth:YES
                  isToday:isToday
                 isRecord:isRecord];
-            item.tag = [[date firstDayInMonth] offsetDay:offset].day + 100;
+            
             
             
 //            [item setHidden:YES withAnimation:NO];

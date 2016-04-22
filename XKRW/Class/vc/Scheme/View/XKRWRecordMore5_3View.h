@@ -18,5 +18,5 @@
 - (IBAction)actChange:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnSet;
 - (IBAction)actSet:(id)sender;
-
+@property (assign ,nonatomic) energyType type;
 @end

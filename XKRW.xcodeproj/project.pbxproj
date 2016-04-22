@@ -222,6 +222,7 @@
 		2F3C632B1C3CAA6F007D9E20 /* XKRWActionSheetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F3C63291C3CAA6F007D9E20 /* XKRWActionSheetCell.xib */; };
 		2F3F4BBD1C48CC4B002F685A /* XKRWLikeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3F4BBC1C48CC4B002F685A /* XKRWLikeView.m */; };
 		2F3F4BBF1C48CC60002F685A /* XKRWLikeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F3F4BBE1C48CC60002F685A /* XKRWLikeView.xib */; };
+		2F44EFC01CC8AB7400653BCC /* XKRWRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F44EFBF1CC8AB7400653BCC /* XKRWRecordVC.m */; };
 		2F46E3CF1C5710FE00B8D03B /* XKRWInputBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F46E3CE1C5710FE00B8D03B /* XKRWInputBoxView.m */; };
 		2F4E2F971C47385F00EBAE6E /* XKRWTopicListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F4E2F951C47385F00EBAE6E /* XKRWTopicListCell.m */; };
 		2F4E2F981C47385F00EBAE6E /* XKRWTopicListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F4E2F961C47385F00EBAE6E /* XKRWTopicListCell.xib */; };
@@ -732,7 +733,6 @@
 		BC9A96FA1CC61102007EE97E /* XKRWCalendarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9A96F91CC61102007EE97E /* XKRWCalendarVC.m */; };
 		BC9A96FD1CC619B6007EE97E /* XKRWPlanCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9A96FC1CC619B6007EE97E /* XKRWPlanCalendarView.m */; };
 		BC9A96FF1CC619D9007EE97E /* XKRWPlanCalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC9A96FE1CC619D9007EE97E /* XKRWPlanCalendarView.xib */; };
-		BC9A97031CC63A0C007EE97E /* XKRWNewCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9A97021CC63A0C007EE97E /* XKRWNewCalendar.m */; };
 		BC9C0C2C1B2682270088BBDC /* slim3.db in Resources */ = {isa = PBXBuildFile; fileRef = BC9C0C2B1B2682270088BBDC /* slim3.db */; };
 		BCA4044C1C31063800F39044 /* share_photo_verify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCA4044A1C31063800F39044 /* share_photo_verify@2x.png */; };
 		BCA4044D1C31063800F39044 /* share_photo_verify@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCA4044B1C31063800F39044 /* share_photo_verify@3x.png */; };
@@ -750,7 +750,6 @@
 		BCC7E96A1C5A08B3008B560F /* TeamPostNumEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC7E9681C5A08B3008B560F /* TeamPostNumEntity+CoreDataProperties.swift */; };
 		BCC7E96B1C5A08B3008B560F /* TeamPostNumEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC7E9691C5A08B3008B560F /* TeamPostNumEntity.swift */; };
 		BCCAB1AC1B85C92D005DF85A /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCCAB1A81B85C92D005DF85A /* iflyMSC.framework */; };
-		BCCC441F1CBE31C000177A40 /* XKRWRecordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCC441D1CBE31C000177A40 /* XKRWRecordVC.m */; };
 		BCCCE64E1C8E7BC9007AA2FF /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCCCE64D1C8E7BC9007AA2FF /* RTLabel.m */; };
 		BCD0CD0E1CA2418B00A6E284 /* XKRWAppCommentUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD0CD0D1CA2418B00A6E284 /* XKRWAppCommentUtil.m */; };
 		BCD416EB1A51051E00DD9665 /* YLGIFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD416E81A51051E00DD9665 /* YLGIFImage.m */; };
@@ -1009,6 +1008,8 @@
 		CC1B9A7F1CBF85100041103D /* XKRWRecordFood5_3Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1B9A7D1CBF85100041103D /* XKRWRecordFood5_3Cell.xib */; };
 		CC1B9A831CBF852E0041103D /* XKRWPushMenu5_3Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1B9A811CBF852E0041103D /* XKRWPushMenu5_3Cell.m */; };
 		CC1B9A841CBF852E0041103D /* XKRWPushMenu5_3Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1B9A821CBF852E0041103D /* XKRWPushMenu5_3Cell.xib */; };
+		CC24920A1CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2492091CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m */; };
+		CC24920C1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC24920B1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib */; };
 		CC25086A1CB5EE1D00FFF00C /* XKRWWeightPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */; };
 		CC25086C1CB5EE3700FFF00C /* XKRWWeightPopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */; };
 		CC520B7D1CBE440A007FEDBA /* XKRWRecordFood5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CC520B7C1CBE440A007FEDBA /* XKRWRecordFood5_3View.m */; };
@@ -1454,6 +1455,8 @@
 		2F3F4BBB1C48CC4B002F685A /* XKRWLikeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWLikeView.h; sourceTree = "<group>"; };
 		2F3F4BBC1C48CC4B002F685A /* XKRWLikeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWLikeView.m; sourceTree = "<group>"; };
 		2F3F4BBE1C48CC60002F685A /* XKRWLikeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWLikeView.xib; sourceTree = "<group>"; };
+		2F44EFBF1CC8AB7400653BCC /* XKRWRecordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordVC.m; sourceTree = "<group>"; };
+		2F44EFC11CC8AB8800653BCC /* XKRWRecordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordVC.h; sourceTree = "<group>"; };
 		2F46E3CD1C5710FE00B8D03B /* XKRWInputBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWInputBoxView.h; sourceTree = "<group>"; };
 		2F46E3CE1C5710FE00B8D03B /* XKRWInputBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWInputBoxView.m; sourceTree = "<group>"; };
 		2F4E2F941C47385F00EBAE6E /* XKRWTopicListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWTopicListCell.h; sourceTree = "<group>"; };
@@ -2277,8 +2280,6 @@
 		BC9A96FB1CC619B6007EE97E /* XKRWPlanCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanCalendarView.h; sourceTree = "<group>"; };
 		BC9A96FC1CC619B6007EE97E /* XKRWPlanCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanCalendarView.m; sourceTree = "<group>"; };
 		BC9A96FE1CC619D9007EE97E /* XKRWPlanCalendarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlanCalendarView.xib; sourceTree = "<group>"; };
-		BC9A97011CC63A0C007EE97E /* XKRWNewCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWNewCalendar.h; sourceTree = "<group>"; };
-		BC9A97021CC63A0C007EE97E /* XKRWNewCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWNewCalendar.m; sourceTree = "<group>"; };
 		BC9C0C2B1B2682270088BBDC /* slim3.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = slim3.db; sourceTree = "<group>"; };
 		BCA4044A1C31063800F39044 /* share_photo_verify@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_photo_verify@2x.png"; sourceTree = "<group>"; };
 		BCA4044B1C31063800F39044 /* share_photo_verify@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_photo_verify@3x.png"; sourceTree = "<group>"; };
@@ -2297,8 +2298,6 @@
 		BCC7E9681C5A08B3008B560F /* TeamPostNumEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TeamPostNumEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		BCC7E9691C5A08B3008B560F /* TeamPostNumEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamPostNumEntity.swift; sourceTree = "<group>"; };
 		BCCAB1A81B85C92D005DF85A /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
-		BCCC441C1CBE31C000177A40 /* XKRWRecordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordVC.h; sourceTree = "<group>"; };
-		BCCC441D1CBE31C000177A40 /* XKRWRecordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordVC.m; sourceTree = "<group>"; };
 		BCCCE64C1C8E7BC9007AA2FF /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
 		BCCCE64D1C8E7BC9007AA2FF /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 		BCD0CD0C1CA2418B00A6E284 /* XKRWAppCommentUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWAppCommentUtil.h; sourceTree = "<group>"; };
@@ -2700,6 +2699,9 @@
 		CC1B9A801CBF852E0041103D /* XKRWPushMenu5_3Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPushMenu5_3Cell.h; sourceTree = "<group>"; };
 		CC1B9A811CBF852E0041103D /* XKRWPushMenu5_3Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPushMenu5_3Cell.m; sourceTree = "<group>"; };
 		CC1B9A821CBF852E0041103D /* XKRWPushMenu5_3Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPushMenu5_3Cell.xib; sourceTree = "<group>"; };
+		CC2492081CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordSingleMore5_3View.h; sourceTree = "<group>"; };
+		CC2492091CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordSingleMore5_3View.m; sourceTree = "<group>"; };
+		CC24920B1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWRecordSingleMore5_3View.xib; sourceTree = "<group>"; };
 		CC2508681CB5EE1D00FFF00C /* XKRWWeightPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeightPopView.h; sourceTree = "<group>"; };
 		CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeightPopView.m; sourceTree = "<group>"; };
 		CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWWeightPopView.xib; sourceTree = "<group>"; };
@@ -4600,6 +4602,8 @@
 				BCEF35F21C1E618300740ACC /* foodVC */,
 				BC31B94D1C1ACDD50045817B /* XKRWAlarmVC.h */,
 				BC31B94E1C1ACDD50045817B /* XKRWAlarmVC.m */,
+				2F44EFC11CC8AB8800653BCC /* XKRWRecordVC.h */,
+				2F44EFBF1CC8AB7400653BCC /* XKRWRecordVC.m */,
 				BC31B8EA1C1ACA520045817B /* XKRWEstimateWeightVC.swift */,
 				BC31B8EB1C1ACA520045817B /* XKRWHistoryAndProcessVC.swift */,
 				BC31B8EC1C1ACA520045817B /* XKRWHowToUserSchemeVC.swift */,
@@ -4615,8 +4619,6 @@
 				BCEF36521C1E63EF00740ACC /* XKRWRecordOthersVC.xib */,
 				BCF6646A1CAE1D4B006EBC61 /* XKRWPlanVC.h */,
 				BCF6646B1CAE1D4B006EBC61 /* XKRWPlanVC.m */,
-				BCCC441C1CBE31C000177A40 /* XKRWRecordVC.h */,
-				BCCC441D1CBE31C000177A40 /* XKRWRecordVC.m */,
 				BC9A96F81CC61102007EE97E /* XKRWCalendarVC.h */,
 				BC9A96F91CC61102007EE97E /* XKRWCalendarVC.m */,
 			);
@@ -5889,15 +5891,6 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
-		BC9A97001CC639E1007EE97E /* XKRWNewCalendar */ = {
-			isa = PBXGroup;
-			children = (
-				BC9A97011CC63A0C007EE97E /* XKRWNewCalendar.h */,
-				BC9A97021CC63A0C007EE97E /* XKRWNewCalendar.m */,
-			);
-			name = XKRWNewCalendar;
-			sourceTree = "<group>";
-		};
 		BCADABB019108D30009E7C49 /* cityControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -6071,7 +6064,6 @@
 		BCEF362F1C1E63B200740ACC /* XKRWCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				BC9A97001CC639E1007EE97E /* XKRWNewCalendar */,
 				BCEF36301C1E63B200740ACC /* NSDate+XKRWCalendar.h */,
 				BCEF36311C1E63B200740ACC /* NSDate+XKRWCalendar.m */,
 				BCEF36321C1E63B200740ACC /* XKRWCalendar.h */,
@@ -6601,6 +6593,9 @@
 				CC05E7601CC4B852007D872D /* XKRWRecordMore5_3View.h */,
 				CC05E7611CC4B852007D872D /* XKRWRecordMore5_3View.m */,
 				CC05E7631CC4B8B1007D872D /* XKRWRecordMore5_3View.xib */,
+				CC2492081CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.h */,
+				CC2492091CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m */,
+				CC24920B1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib */,
 			);
 			name = RecordFoodAndmenu;
 			sourceTree = "<group>";
@@ -6710,7 +6705,7 @@
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
 					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = KFHY8Z75E6;
+						DevelopmentTeam = 2H2WTQZ7Y8;
 					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = WT58P44WAK;
@@ -6904,6 +6899,7 @@
 				BCEF37651C1E75D900740ACC /* XKRWIslimDietHeaderCell.xib in Resources */,
 				BC31B9541C1ACDF70045817B /* XKRWAlarmCell.xib in Resources */,
 				BC81EAB81BF43A9900317D1A /* UMSocialLocalizable.strings in Resources */,
+				CC24920C1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib in Resources */,
 				2F8FB47118FBB24A00AB8400 /* weightHint.plist in Resources */,
 				BC31B9451C1ACA520045817B /* XKRWMealSchemeCell.xib in Resources */,
 				BC31B92F1C1ACA520045817B /* HPMealCell.xib in Resources */,
@@ -7599,6 +7595,7 @@
 				BCEF37811C1E75D900740ACC /* XKColorProgressView.m in Sources */,
 				044DA1D118558DC100CA30F7 /* main.m in Sources */,
 				A7E917361B5CA48A0017F5FD /* PNScatterChartDataItem.m in Sources */,
+				2F44EFC01CC8AB7400653BCC /* XKRWRecordVC.m in Sources */,
 				2E9686FA1A04AEE500CB5D77 /* TApplicationException.m in Sources */,
 				BCEF375C1C1E75D900740ACC /* XKRWOrderDetailCell.m in Sources */,
 				2FDBAF091B4A97A3008B04B9 /* XKRWShareCourseService.m in Sources */,
@@ -7735,6 +7732,7 @@
 				BCEF382E1C1E90ED00740ACC /* XKRWCollectVC.m in Sources */,
 				2E9686C01A04AEE500CB5D77 /* XKDefaultNotification.m in Sources */,
 				BC6F2F991C1A70D3005B54E8 /* XKRWDiscoverCell.m in Sources */,
+				CC24920A1CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m in Sources */,
 				BC31B92E1C1ACA520045817B /* HPMealCell.swift in Sources */,
 				BC769D981C33CA3500E96B1A /* XKRWUserInfoShowEntity.swift in Sources */,
 				BC6F2F7A1C1A70D3005B54E8 /* XKRWStarGatherNumVC.m in Sources */,
@@ -7745,7 +7743,6 @@
 				BCEF37861C1E8ED600740ACC /* XKRWMoreCells.m in Sources */,
 				BC769E9C1C33D3DD00E96B1A /* WheelView.m in Sources */,
 				2E9686F41A04AEE500CB5D77 /* user.m in Sources */,
-				BCCC441F1CBE31C000177A40 /* XKRWRecordVC.m in Sources */,
 				BC769DEA1C33D1B700E96B1A /* XKRWRecordFoodEntity.m in Sources */,
 				BC0BAF311C5766B800BAD05C /* XKRWBigImageAndTitleCell.swift in Sources */,
 				BCEF362A1C1E619700740ACC /* XKRWSportDetailImageCell.m in Sources */,
@@ -7802,7 +7799,6 @@
 				BCCCE64E1C8E7BC9007AA2FF /* RTLabel.m in Sources */,
 				A786D4D71BB5192200B6535D /* MLSelectPhotoPickerGroup.m in Sources */,
 				BC6F2FA01C1A70D3005B54E8 /* XKRWMoreCommetCell.m in Sources */,
-				BC9A97031CC63A0C007EE97E /* XKRWNewCalendar.m in Sources */,
 				BCEF37731C1E75D900740ACC /* XKRWiSlimBaseCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7991,8 +7987,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8040,10 +8036,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWLRP;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -8062,8 +8058,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8111,10 +8107,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWLRP;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";

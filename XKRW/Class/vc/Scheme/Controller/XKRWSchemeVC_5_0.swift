@@ -79,7 +79,7 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
     // MARK: - System functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.addNaviBarBackButton()
         XKRWAppCommentUtil.shareAppComment().setEntryPageTimeWithPage(SCHEMEPAGE)
         
        
