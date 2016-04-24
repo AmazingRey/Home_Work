@@ -39,6 +39,7 @@
 #import "XKRWCalendarVC.h"
 #import "XKRWRecordMore5_3View.h"
 #import "XKRWRecordSingleMore5_3View.h"
+#import "XKRWChangeMealPercentVC.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate>
 {
@@ -501,8 +502,13 @@
     recordSingleMoreView = nil;
 }
 
+//调整四餐比例
 -(void)pressChangeEatPercent{
     [self removeMoreView];
+    XKRWChangeMealPercentVC *changeMealVC = [[XKRWChangeMealPercentVC alloc] init];
+    changeMealVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:changeMealVC animated:YES];
+    [changeMealVC.navigationController setNavigationBarHidden:NO];
 }
 
 -(void)pressSetEatNotify{

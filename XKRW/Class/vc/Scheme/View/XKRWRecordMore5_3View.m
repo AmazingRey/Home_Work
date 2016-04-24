@@ -38,12 +38,11 @@
             _btnSet.titleLabel.text = @"设置饮食提醒";
             break;
         case 2:
-            
-            [_btnChange setTitle:@"" forState:UIControlStateNormal];
-            [_btnSet setTitle:@"设置饮食提醒" forState:UIControlStateNormal];
-            
-            _btnChange.titleLabel.text = @"";
-            _btnSet.titleLabel.text = @"设置饮食提醒";
+//            [_btnChange setTitle:@"" forState:UIControlStateNormal];
+//            [_btnSet setTitle:@"设置饮食提醒" forState:UIControlStateNormal];
+//            
+//            _btnChange.titleLabel.text = @"";
+//            _btnSet.titleLabel.text = @"设置饮食提醒";
             break;
         case 3:
             [_btnChange setTitle:@"重新测评习惯" forState:UIControlStateNormal];
@@ -56,12 +55,17 @@
     }
 }
 
+//按钮一
 - (IBAction)actChange:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(pressChangeEatPercent)]) {
-        [self.delegate pressChangeEatPercent];
+    //调整四餐比例
+    if (_type == 1) {
+        if ([self.delegate respondsToSelector:@selector(pressChangeEatPercent)]) {
+            [self.delegate pressChangeEatPercent];
+        }
     }
 }
 
+//按钮二
 - (IBAction)actSet:(id)sender {
     if ([self.delegate respondsToSelector:@selector(pressSetEatNotify)]) {
         [self.delegate pressSetEatNotify];

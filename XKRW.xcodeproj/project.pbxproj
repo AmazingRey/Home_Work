@@ -1028,6 +1028,8 @@
 		CCA73FC01CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCA73FBE1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.xib */; };
 		CCFA188D1CB518770025EC12 /* XKRWWeightRecordPullView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFA188B1CB518770025EC12 /* XKRWWeightRecordPullView.m */; };
 		CCFA188E1CB518770025EC12 /* XKRWWeightRecordPullView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCFA188C1CB518770025EC12 /* XKRWWeightRecordPullView.xib */; };
+		E06172D01CCC6AEA006618A3 /* XKRWChangeMealPercentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E06172CF1CCC6AEA006618A3 /* XKRWChangeMealPercentVC.m */; };
+		E061C8891CCCF3650031A57E /* XKRWMealPercentSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = E061C8881CCCF3650031A57E /* XKRWMealPercentSlider.m */; };
 		E33DCA831B17FDA2006FE125 /* XKRWSchemeService_5_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCA821B17FDA2006FE125 /* XKRWSchemeService_5_0.swift */; };
 		E39E8F9A1AAD4F3100B1E5DD /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39E8F931AAD4F3100B1E5DD /* payRequsestHandler.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E39E8F9B1AAD4F3100B1E5DD /* TenpayUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39E8F951AAD4F3100B1E5DD /* TenpayUtil.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2729,6 +2731,10 @@
 		CCFA188B1CB518770025EC12 /* XKRWWeightRecordPullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeightRecordPullView.m; sourceTree = "<group>"; };
 		CCFA188C1CB518770025EC12 /* XKRWWeightRecordPullView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWWeightRecordPullView.xib; sourceTree = "<group>"; };
 		DAB99B331D6C4CE3697BE5BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E06172CE1CCC6AEA006618A3 /* XKRWChangeMealPercentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWChangeMealPercentVC.h; sourceTree = "<group>"; };
+		E06172CF1CCC6AEA006618A3 /* XKRWChangeMealPercentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWChangeMealPercentVC.m; sourceTree = "<group>"; };
+		E061C8871CCCF3650031A57E /* XKRWMealPercentSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWMealPercentSlider.h; sourceTree = "<group>"; };
+		E061C8881CCCF3650031A57E /* XKRWMealPercentSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWMealPercentSlider.m; sourceTree = "<group>"; };
 		E30DE8DD1AF9BAA90092E8DC /* XKRW-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "XKRW-Bridging-Header.h"; path = "Class/XKRW-Bridging-Header.h"; sourceTree = "<group>"; };
 		E33DCA821B17FDA2006FE125 /* XKRWSchemeService_5_0.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWSchemeService_5_0.swift; sourceTree = "<group>"; };
 		E36AAFB019F77FE600CF80A5 /* libsp.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsp.dylib; path = usr/lib/libsp.dylib; sourceTree = SDKROOT; };
@@ -4621,6 +4627,8 @@
 				BCF6646B1CAE1D4B006EBC61 /* XKRWPlanVC.m */,
 				BC9A96F81CC61102007EE97E /* XKRWCalendarVC.h */,
 				BC9A96F91CC61102007EE97E /* XKRWCalendarVC.m */,
+				E06172CE1CCC6AEA006618A3 /* XKRWChangeMealPercentVC.h */,
+				E06172CF1CCC6AEA006618A3 /* XKRWChangeMealPercentVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -4646,6 +4654,7 @@
 		BC31B8F71C1ACA520045817B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E061C8831CCCEA740031A57E /* ChangeMealPercent */,
 				CC520B7A1CBE4353007FEDBA /* RecordFoodAndmenu */,
 				CCFA188F1CB5188D0025EC12 /* WeightRecoderView */,
 				BCF6646D1CAE280D006EBC61 /* PlanView */,
@@ -6613,6 +6622,15 @@
 			name = WeightRecoderView;
 			sourceTree = "<group>";
 		};
+		E061C8831CCCEA740031A57E /* ChangeMealPercent */ = {
+			isa = PBXGroup;
+			children = (
+				E061C8871CCCF3650031A57E /* XKRWMealPercentSlider.h */,
+				E061C8881CCCF3650031A57E /* XKRWMealPercentSlider.m */,
+			);
+			name = ChangeMealPercent;
+			sourceTree = "<group>";
+		};
 		E39E8F901AAD4F3100B1E5DD /* WXPayment */ = {
 			isa = PBXGroup;
 			children = (
@@ -7352,6 +7370,7 @@
 				BCEF361C1C1E619300740ACC /* XKRWSearchResultCell.swift in Sources */,
 				BCEF37741C1E75D900740ACC /* XKRWZheDieCell.m in Sources */,
 				BC31B9491C1ACA520045817B /* XKRWSchemeScrollCell.swift in Sources */,
+				E061C8891CCCF3650031A57E /* XKRWMealPercentSlider.m in Sources */,
 				BCEF37671C1E75D900740ACC /* XKRWHabitHeadView.m in Sources */,
 				A786D4ED1BB5192200B6535D /* UIImage+RSKImageCropper.m in Sources */,
 				2E96880C1A04AEFE00CB5D77 /* SDWebImageCompat.m in Sources */,
@@ -7698,6 +7717,7 @@
 				A7E9172F1B5CA48A0017F5FD /* PNLineChart.m in Sources */,
 				2E9686E01A04AEE500CB5D77 /* XKRpcUtil.m in Sources */,
 				A786D4E21BB5192200B6535D /* MLSelectPhotoPickerCollectionViewCell.m in Sources */,
+				E06172D01CCC6AEA006618A3 /* XKRWChangeMealPercentVC.m in Sources */,
 				BC6F2F7B1C1A70D3005B54E8 /* XKRWTopicVC.m in Sources */,
 				BCD0CD0E1CA2418B00A6E284 /* XKRWAppCommentUtil.m in Sources */,
 				2E9686B61A04AEE500CB5D77 /* XKVerticalAlignableLabel.m in Sources */,

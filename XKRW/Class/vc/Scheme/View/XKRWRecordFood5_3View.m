@@ -183,7 +183,6 @@
         cell.leftImage.image = [UIImage imageNamed:[self getImageNameWithType:entity.type]];
         cell.labMain.text = [self getNameWithType:entity.type];
          return  cell;
-         
      }
     return [UITableViewCell new];
 }
@@ -281,8 +280,5 @@
         [self.delegate addMoreView];
     }
 }
-
-
-
 
 @end
