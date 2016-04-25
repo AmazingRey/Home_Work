@@ -537,7 +537,13 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
                             teamCell.showStatelabel.hidden = true
                         }else{
                             teamCell.showStatelabel.hidden = false
-                            teamCell.showStatelabel.text = "\(showState.newPostNum)"
+                            let stateLabelText:String
+                            if showState.newPostNum > 99 {
+                                stateLabelText = "99+"
+                            } else {
+                                stateLabelText = "\(showState.newPostNum)"
+                            }
+                            teamCell.showStatelabel.text = stateLabelText
                         }
                     }
 

@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setTitle:title forState:UIControlStateNormal];
-        [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self setTitleColor:XKMainToneColor_29ccb1 forState:UIControlStateNormal];
         [self  setTitleColor:XKBtnSelectedColor forState:UIControlStateHighlighted];
         float version = XKSystemVersion;
         if (version >= 7.0f) {

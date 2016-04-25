@@ -16,7 +16,7 @@
 #import "XKRWUserDefaultService.h"
 #import "XKRWBaseService.h"
 #import "XKRWUserService.h"
-#import "XKRWSettingService.h"
+//#import "XKRWSettingService.h"
 #import "NSDate+Helper.h"
 
 #import "XKRWWeightService.h"
@@ -139,128 +139,128 @@ static XKRWBaseService *service;
 }
 
 /*从2.0升级上来，同步三餐比例*/
-+ (void) updateDietScaleFromV2
-{
-    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
-    NSString *scalFile = [NSString stringWithFormat:@"ThreeDietPart_%li.plist",(long)uid];
-    NSString *filePath = [[self class] fileFullPath:scalFile];
-    if(filePath){
-        NSDictionary *dictionary = [[NSDictionary alloc]initWithContentsOfFile:filePath];
-        NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[dictionary objectForKey:@"ThreeDietPart"]];
-        if ([array count] >=4) {
-            int32_t breakfast = ((XKRWDietPartStruct*) [array objectAtIndex:0]).proportion;
-            int32_t lunch = ((XKRWDietPartStruct*) [array objectAtIndex:1]).proportion;
-            int32_t snack = ((XKRWDietPartStruct*) [array objectAtIndex:2]).proportion;
-            int32_t dinner = ((XKRWDietPartStruct*) [array objectAtIndex:3]).proportion;
-            NSDictionary *scal = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:breakfast],kBreakfast,
-                                  [NSNumber numberWithInt:lunch],kLunch,
-                                  [NSNumber numberWithInt:snack],kSnack,
-                                  [NSNumber numberWithInt:dinner],kDinner
-                                  ,nil];
-            [[XKRWSettingService shareService] setMealScales:scal];
-        }
-    }
-    
-}
-/*从旧版本同步数据到本地账号中*/
-+ (void) updateUserFromOldVersion
-{
-    NSString *user_sel_sql = @"SELECT slimnum AS slimID,\
-    name AS accountname,\
-    nickname ,\
-    birthday,\
-    stars AS starnum,\
-    height,\
-    sex,\
-    0 AS crowd,\
-    token,\
-    0 AS hipline,0 AS waistline,\
-    exercise AS labor_level,\
-    avatar,\
-    '' AS disease,\
-    uid AS userid,\
-    initialWeight AS origweight,\
-    targetWeight AS destweight,\
-    part,\
-    purpose AS position,\
-    degreeDifficult+1 AS diffculty,\
-    numberWeeks*7 AS duration,\
-    currentWeight AS currentweight,\
-    '' AS weightcurve,\
-    '' AS address FROM account";
-    NSString *add_user_sql = @"REPLACE INTO account (slimID,accountname,nickname,birthday,starnum,height,sex,crowd,token,hipline,waistline,labor_level,avatar,disease,userid,origweight,destweight,part,position,diffculty,duration,currentweight,weightcurve,address) VALUES(:slimID,:accountname,:nickname,:birthday,:starnum,:height,:sex,:crowd,:token,:hipline,:waistline,:labor_level,:avatar,:disease,:userid,:origweight,:destweight,:part,:position,:diffculty,:duration,:currentweight,:weightcurve,:address)";
-    /*是否登录*/
-    uint32_t cur_uid = 0;
-    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"KEY_OF_USER_TOKEN"];
-    if (token) {
-        cur_uid = [[[NSUserDefaults standardUserDefaults] objectForKey:@"KEY_OF_USER_ID"] intValue] ;
-        if (cur_uid > 0) {
-            [XKRWUserDefaultService setCurrentUserId:cur_uid];
-            [[self class] updateDietScaleFromV2];
-        }
-        [XKRWUserDefaultService setStepForNewUser:kStepComplete];
-        
-    }
-//    XKRWBaseService *service = [[XKRWBaseService alloc ] init];
-    
-    NSArray *rst = [[self class] executeQuery:user_sel_sql];
-    if ([rst count] > 0) {
-        NSMutableArray *uids = [[NSMutableArray alloc] init];
-        for (NSDictionary *dict in rst) {
-            BOOL __block isOK = NO;
-            [service writeDefaultDBWithTask:^(FMDatabase *db,BOOL *rollback){
-                if (add_user_sql) {  
-                    NSMutableDictionary *user_dict = [[NSMutableDictionary alloc] initWithDictionary:dict];
-                    NSString *birth_str = [dict objectForKey:@"birthday"];
-                    
-                    if (!birth_str  || [birth_str isKindOfClass:[NSNull class]]) {
-                        birth_str = @"1990-01-01";
-                    }
-                    
-                    NSRange range = [birth_str rangeOfString:@"-"];
-                    NSTimeInterval timestamp = 0;
-                    if (range.location !=NSNotFound) {
-                        NSArray *birth_arr = [birth_str componentsSeparatedByString:@"-"];
-                        if ([birth_arr count] == 3) {
-                            NSString *sy = [birth_arr objectAtIndex:0];
-                            NSString *sm = [birth_arr objectAtIndex:1];
-                            NSString *sd = [birth_arr objectAtIndex:2];
-                            int im = [sm intValue];
-                            if (im < 10) {
-                                sm = [NSString stringWithFormat:@"0%i",im ];
-                            }
-                            int idy = [sd intValue];
-                            if (idy < 9) {
-                                sd = [NSString stringWithFormat:@"0%i",idy ];
-                            }
-                            
-                            birth_str =[NSString stringWithFormat:@"%@-%@-%@",sy,sm,sd ];
-                            NSDate *_birthday = [NSDate dateFromString:birth_str withFormat:[NSDate dateFormatString]];
-                            timestamp = [_birthday timeIntervalSince1970];
-                            
-                        }
-                    }
-                    [user_dict setObject:[NSNumber numberWithInt:timestamp] forKey:@"birthday"];
-                    
-                    [uids addObject:[dict objectForKey:@"userid"]];
-                    isOK = [db executeUpdate:add_user_sql withParameterDictionary:user_dict];
-                }
-            }];        
-            
-        }
-        if ([uids count] > 0) {
-            for (NSString *u_id in uids) {
-                [[self class] getQAWithUID:[u_id intValue]];
-            }
-        }
-#pragma mark 当用户为试用用户时 也需要更新信息
-//        if (cur_uid > 0) {
-            /*更新当前用户信息*/
-//            [[XKRWUserService sharedService] getUserInfoByUserId:cur_uid];
+//+ (void) updateDietScaleFromV2
+//{
+//    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+//    NSString *scalFile = [NSString stringWithFormat:@"ThreeDietPart_%li.plist",(long)uid];
+//    NSString *filePath = [[self class] fileFullPath:scalFile];
+//    if(filePath){
+//        NSDictionary *dictionary = [[NSDictionary alloc]initWithContentsOfFile:filePath];
+//        NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[dictionary objectForKey:@"ThreeDietPart"]];
+//        if ([array count] >=4) {
+//            int32_t breakfast = ((XKRWDietPartStruct*) [array objectAtIndex:0]).proportion;
+//            int32_t lunch = ((XKRWDietPartStruct*) [array objectAtIndex:1]).proportion;
+//            int32_t snack = ((XKRWDietPartStruct*) [array objectAtIndex:2]).proportion;
+//            int32_t dinner = ((XKRWDietPartStruct*) [array objectAtIndex:3]).proportion;
+//            NSDictionary *scal = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:breakfast],kBreakfast,
+//                                  [NSNumber numberWithInt:lunch],kLunch,
+//                                  [NSNumber numberWithInt:snack],kSnack,
+//                                  [NSNumber numberWithInt:dinner],kDinner
+//                                  ,nil];
+//            [[XKRWSettingService shareService] setMealScales:scal];
 //        }
-        
-    }
-}
+//    }
+//    
+//}
+///*从旧版本同步数据到本地账号中*/
+//+ (void) updateUserFromOldVersion
+//{
+//    NSString *user_sel_sql = @"SELECT slimnum AS slimID,\
+//    name AS accountname,\
+//    nickname ,\
+//    birthday,\
+//    stars AS starnum,\
+//    height,\
+//    sex,\
+//    0 AS crowd,\
+//    token,\
+//    0 AS hipline,0 AS waistline,\
+//    exercise AS labor_level,\
+//    avatar,\
+//    '' AS disease,\
+//    uid AS userid,\
+//    initialWeight AS origweight,\
+//    targetWeight AS destweight,\
+//    part,\
+//    purpose AS position,\
+//    degreeDifficult+1 AS diffculty,\
+//    numberWeeks*7 AS duration,\
+//    currentWeight AS currentweight,\
+//    '' AS weightcurve,\
+//    '' AS address FROM account";
+//    NSString *add_user_sql = @"REPLACE INTO account (slimID,accountname,nickname,birthday,starnum,height,sex,crowd,token,hipline,waistline,labor_level,avatar,disease,userid,origweight,destweight,part,position,diffculty,duration,currentweight,weightcurve,address) VALUES(:slimID,:accountname,:nickname,:birthday,:starnum,:height,:sex,:crowd,:token,:hipline,:waistline,:labor_level,:avatar,:disease,:userid,:origweight,:destweight,:part,:position,:diffculty,:duration,:currentweight,:weightcurve,:address)";
+//    /*是否登录*/
+//    uint32_t cur_uid = 0;
+//    NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey:@"KEY_OF_USER_TOKEN"];
+//    if (token) {
+//        cur_uid = [[[NSUserDefaults standardUserDefaults] objectForKey:@"KEY_OF_USER_ID"] intValue] ;
+//        if (cur_uid > 0) {
+//            [XKRWUserDefaultService setCurrentUserId:cur_uid];
+//            [[self class] updateDietScaleFromV2];
+//        }
+//        [XKRWUserDefaultService setStepForNewUser:kStepComplete];
+//        
+//    }
+////    XKRWBaseService *service = [[XKRWBaseService alloc ] init];
+//    
+//    NSArray *rst = [[self class] executeQuery:user_sel_sql];
+//    if ([rst count] > 0) {
+//        NSMutableArray *uids = [[NSMutableArray alloc] init];
+//        for (NSDictionary *dict in rst) {
+//            BOOL __block isOK = NO;
+//            [service writeDefaultDBWithTask:^(FMDatabase *db,BOOL *rollback){
+//                if (add_user_sql) {  
+//                    NSMutableDictionary *user_dict = [[NSMutableDictionary alloc] initWithDictionary:dict];
+//                    NSString *birth_str = [dict objectForKey:@"birthday"];
+//                    
+//                    if (!birth_str  || [birth_str isKindOfClass:[NSNull class]]) {
+//                        birth_str = @"1990-01-01";
+//                    }
+//                    
+//                    NSRange range = [birth_str rangeOfString:@"-"];
+//                    NSTimeInterval timestamp = 0;
+//                    if (range.location !=NSNotFound) {
+//                        NSArray *birth_arr = [birth_str componentsSeparatedByString:@"-"];
+//                        if ([birth_arr count] == 3) {
+//                            NSString *sy = [birth_arr objectAtIndex:0];
+//                            NSString *sm = [birth_arr objectAtIndex:1];
+//                            NSString *sd = [birth_arr objectAtIndex:2];
+//                            int im = [sm intValue];
+//                            if (im < 10) {
+//                                sm = [NSString stringWithFormat:@"0%i",im ];
+//                            }
+//                            int idy = [sd intValue];
+//                            if (idy < 9) {
+//                                sd = [NSString stringWithFormat:@"0%i",idy ];
+//                            }
+//                            
+//                            birth_str =[NSString stringWithFormat:@"%@-%@-%@",sy,sm,sd ];
+//                            NSDate *_birthday = [NSDate dateFromString:birth_str withFormat:[NSDate dateFormatString]];
+//                            timestamp = [_birthday timeIntervalSince1970];
+//                            
+//                        }
+//                    }
+//                    [user_dict setObject:[NSNumber numberWithInt:timestamp] forKey:@"birthday"];
+//                    
+//                    [uids addObject:[dict objectForKey:@"userid"]];
+//                    isOK = [db executeUpdate:add_user_sql withParameterDictionary:user_dict];
+//                }
+//            }];        
+//            
+//        }
+//        if ([uids count] > 0) {
+//            for (NSString *u_id in uids) {
+//                [[self class] getQAWithUID:[u_id intValue]];
+//            }
+//        }
+//#pragma mark 当用户为试用用户时 也需要更新信息
+////        if (cur_uid > 0) {
+//            /*更新当前用户信息*/
+////            [[XKRWUserService sharedService] getUserInfoByUserId:cur_uid];
+////        }
+//        
+//    }
+//}
 
 /*从旧版本同步数据到本地账号中*/
 + (void) updateWeightLogFromOldVersion{
@@ -626,20 +626,20 @@ static XKRWBaseService *service;
 }
 
 
-+ (void) updateHandelFromV2
-{
-    NSString *dbFile = [XKConfigUtil stringForKey:@"oldVersionDbName"];
-    if (dbFile && [[self class] fileExists:dbFile]) {
-        [self initOldDbQueue];
-        [[self class] updateUserFromOldVersion];
-        //同步体重记录
-        [[self class] updateWeightLogFromOldVersion];
-        //同步三餐比例
-    }
-    [[self class] synWeightLogFromVersion1];
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUpdateFromV2];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+//+ (void) updateHandelFromV2
+//{
+//    NSString *dbFile = [XKConfigUtil stringForKey:@"oldVersionDbName"];
+//    if (dbFile && [[self class] fileExists:dbFile]) {
+//        [self initOldDbQueue];
+//        [[self class] updateUserFromOldVersion];
+//        //同步体重记录
+//        [[self class] updateWeightLogFromOldVersion];
+//        //同步三餐比例
+//    }
+//    [[self class] synWeightLogFromVersion1];
+//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUpdateFromV2];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//}
 /*当天第一次打开app时，需要处理的任务*/
 + (void) firstOpenHandler
 {

@@ -382,7 +382,7 @@ typedef NS_ENUM(NSInteger, XKRWExpType) {
  *
  *  @return 返回修改结果
  */
-- (NSDictionary *)changeUserInfo:(NSString *)info WithType:(NSString *)InfoType;
+- (NSDictionary *)changeUserInfo:(id)info WithType:(NSString *)InfoType;
 
 /**获取疾病类型*/
 -(NSString *)getDiseaseString;
@@ -503,6 +503,25 @@ typedef NS_ENUM(NSInteger, XKRWExpType) {
 - (NSArray *)getAppRecommendInfo;
 
 - (NSDictionary *)setSchemeStartData;
+
+/**
+ *  获取餐次比例
+ *
+ *  @return 返回餐次比例详情
+ */
+- (NSDictionary *)getMealRatio;
+
+/**
+ *  保存餐次比例到服务器 保存成功返回YES  失败 NO
+ *
+ *  @param breakfast 早餐百分比
+ *  @param lunch     午餐百分比
+ *  @param snack     加餐百分比
+ *  @param supper    晚餐百分比
+ *
+ *  @return 保存成功返回YES  失败 NO
+ */
+- (BOOL) saveMealRatioWithBreakfast:(NSInteger)breakfast andLunch:(NSInteger)lunch andSnack:(NSInteger)snack andSupper:(NSInteger) supper;
 
 
 @end

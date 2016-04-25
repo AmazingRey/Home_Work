@@ -15,10 +15,10 @@
     UIImageView *_shadowView;
     UIImage *_shadowImage;
     UIButton *_startButton;
+    UIImageView *_perfectImageView;
     
     UILabel *_titleLabel;
     UILabel *_currentNumLabel;
-    UILabel *_goalLabel;
     
     XKRWAnimationCircle *_backgroundCircle;
     XKRWAnimationCircle *_progressCircle;
@@ -40,7 +40,6 @@
     self = [super initWithFrame:frame];
     CGFloat scale = self.width / 95.0;
     if (self) {
-        _style = style;
         _shadowView = [[UIImageView alloc] initWithFrame:self.bounds];
         [self addSubview:_shadowView];
         
@@ -91,12 +90,20 @@
         _labelAnimation.toValue = @(0);
         
         _stateImageView = [[YYAnimatedImageView alloc] init];
+        _stateImageView.hidden = YES;
         _stateImageView.size = CGSizeMake(20 * scale, 20 * scale);
         _stateImageView.center = CGPointMake(CGRectGetMidX(self.bounds), _shadowView.bottom - 12 * scale);
         [_stateImageView addObserver:self forKeyPath:@"currentAnimatedImageIndex" options:NSKeyValueObservingOptionNew context:nil];
-    
         _stateImageView.autoPlayAnimatedImage = NO;
         [self addSubview:_stateImageView];
+
+       
+        _perfectImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"perfect"]];
+        [_perfectImageView sizeToFit];
+        _perfectImageView.center = CGPointMake(self.width/2.0, self.height/2.0);
+        _perfectImageView.hidden = YES;
+        [self addSubview:_perfectImageView];
+        
         [self setStyle:style];
         
     }
@@ -128,6 +135,7 @@
         _goalLabel.hidden = YES;
         
     } else if (style == XKRWEnergyCircleStyleOpened) {
+        _perfectImageView.hidden = YES;
         _stateImageView.hidden = YES;
         [_startButton setBackgroundImage:[UIImage createImageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
         _startButton.hidden = NO;
@@ -137,14 +145,38 @@
         _currentNumLabel.hidden = NO;
         _goalLabel.hidden = NO;
         _shadowView.image = _shadowImage;
-        
     } else if (style == XKRWEnergyCircleStyleSelected) {
+        _perfectImageView.hidden = YES;
         _stateImageView.hidden = NO;
         _startButton.hidden = YES;
         _backgroundCircle.hidden = NO;
         _progressCircle.hidden = NO;
         _titleLabel.hidden = NO;
         _currentNumLabel.hidden = NO;
+        _goalLabel.hidden = NO;
+        _shadowView.image = _shadowImage;
+        
+    } else if (style == XKRWEnergyCircleStyleHideStateImage) {
+        _perfectImageView.hidden = YES;
+        _stateImageView.image = nil;
+        _stateImageView.hidden = YES;
+        _startButton.hidden = YES;
+        _backgroundCircle.hidden = NO;
+        _progressCircle.hidden = NO;
+        _titleLabel.hidden = NO;
+        _currentNumLabel.hidden = NO;
+        _goalLabel.hidden = NO;
+        _shadowView.image = _shadowImage;
+        
+    } else if (style == XKRWEnergyCircleStylePerfect) {
+        _perfectImageView.hidden = NO;
+        _stateImageView.hidden = YES;
+        [_startButton setBackgroundImage:[UIImage createImageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
+        _startButton.hidden = NO;
+        _backgroundCircle.hidden = YES;
+        _progressCircle.hidden = YES;
+        _titleLabel.hidden = NO;
+        _currentNumLabel.hidden = YES;
         _goalLabel.hidden = NO;
         _shadowView.image = _shadowImage;
     }
@@ -160,14 +192,19 @@
     } completion:^(BOOL finished) {
         
         [UIView animateWithDuration:0.5 animations:^{
+            
             sender.transform = CGAffineTransformMakeScale(0.5, 0.5);
-            self.style = XKRWEnergyCircleStyleSelected;
+            if (_style != XKRWEnergyCircleStylePerfect) {
+                self.style = XKRWEnergyCircleStyleSelected;
+            } else {
+                
+            }
             
         } completion:^(BOOL finished) {
             [_startButton setBackgroundImage:[UIImage createImageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
             sender.transform = CGAffineTransformMakeScale(1.0, 1.0);
             if (self.energyCircleViewClickBlock) {
-                self.energyCircleViewClickBlock();
+                self.energyCircleViewClickBlock(self.tag);
             }
         }];
         
@@ -180,24 +217,8 @@
     _goalLabel.text = [NSString stringWithFormat:@"%ld%@",(long)goalNumber,unit];
     _goalNumber = goalNumber;
     
-    if (isBehaveCurrect) {
-        _shadowImage = [UIImage imageNamed:@"circle_shadow"];
-        _shadowColor = XKMainSchemeColor;
-        _currentNumLabel.textColor = XKMainSchemeColor;
-        _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"green" ofType:@"gif"]]];
-        
-    } else {
-        _shadowImage = [UIImage imageNamed:@"circle_warming_shadow"];
-        _shadowColor = XKWarningColor;
-        _currentNumLabel.textColor = XKWarningColor;
-        _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"red" ofType:@"gif"]]];
-    }
-    [self setStyle:_style];
-}
-
-- (void)setShadowColor:(UIColor *)shadowColor {
-    _shadowColor = shadowColor;
-    
+    [self setColorWithAbool:isBehaveCurrect];
+//    [self setStyle:_style];
 }
 
 - (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration {
@@ -211,32 +232,46 @@
     _labelAnimation.duration = duration;
     [_currentNumLabel pop_addAnimation:_labelAnimation forKey:@"run_Number"];
     
+    if (_style == XKRWEnergyCircleStyleSelected) {
+        _stateImageView.image = _stateImage;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [_stateImageView startAnimating];
             
         });
+
+    } else {
+        _stateImageView.hidden = YES;
+    }
+    
+}
+
+- (void)setColorWithAbool:(BOOL)abool {
+    if (abool) {
+        _shadowImage = [UIImage imageNamed:@"circle_shadow"];
+        _progressCircleColor = XKMainSchemeColor;
+        _currentNumLabel.textColor = XKMainSchemeColor;
+        _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"green" ofType:@"gif"]]];
         
+    } else {
+        _shadowImage = [UIImage imageNamed:@"circle_warming_shadow"];
+        _progressCircleColor = XKWarningColor;
+        _currentNumLabel.textColor = XKWarningColor;
+        _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"red" ofType:@"gif"]]];
+    }
+    if (_style != XKRWEnergyCircleStyleNotOpen) {
+        _shadowView.image = _shadowImage;
+    }
+
 }
 
 - (void)runToNextNumber:(NSInteger)nextNumber duration:(CGFloat)duration resetIsBehaveCurrect:(BOOL)isBehaveCurrect {
     id exNumber = _labelAnimation.toValue;
     _labelAnimation.fromValue = exNumber;
-    
     _progressCircle.percentage = [exNumber integerValue]/(CGFloat)_goalNumber;
-    UIColor *progressColor;
-    if (isBehaveCurrect) {
-        _shadowImage = [UIImage imageNamed:@"circle_shadow"];
-        _shadowView.image = _shadowImage;
-        _currentNumLabel.textColor = XKMainSchemeColor;
-        progressColor = XKMainSchemeColor;
-    } else {
-        _shadowImage = [UIImage imageNamed:@"circle_warming_shadow"];
-        _shadowView.image = _shadowImage;
-        _currentNumLabel.textColor = XKWarningColor;
-        progressColor = XKWarningColor;
-    }
+    
+    [self setColorWithAbool:isBehaveCurrect];
     CGFloat currentPercentage = (CGFloat)nextNumber/_goalNumber;
-    [self runProgressCircleWithColor:progressColor percentage:currentPercentage duration:duration];
+    [self runProgressCircleWithColor:_progressCircleColor percentage:currentPercentage duration:duration];
     [self runToCurrentNum:nextNumber duration:duration];
 }
 

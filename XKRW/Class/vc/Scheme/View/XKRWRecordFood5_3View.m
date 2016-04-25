@@ -15,11 +15,14 @@
 #import "XKRWRecordMore5_3View.h"
 #import "XKRWPlan_5_3CollectionView.h"
 #import "XKRWFatReasonService.h"
-
+#import "XKRWRecordVC.h"
 @interface XKRWRecordFood5_3View () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate>
 {
     UITableView *recordTableView;
     UITableView *recommendedTableView;
+    
+    NSArray  *recordTypeTitleArray;
+    NSArray  *recordTypeImageArray;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *testViewFrame;
@@ -29,11 +32,17 @@
 
 @implementation XKRWRecordFood5_3View
 
--(void)initSubViews{
-    _scrollView.contentSize = CGSizeMake( XKAppWidth * 2, 184);
+-(void)initSubViews {
+    
+    _shadowImageView =[[UIImageView alloc]initWithFrame:CGRectMake((XKAppWidth - 800) /2 + (_positionX - XKAppWidth /2) , 0, 800, 10)];
+    _shadowImageView.image = [UIImage imageNamed:@"shadow"];
+    [self addSubview:_shadowImageView];
+
+    _scrollView.contentSize = CGSizeMake( XKAppWidth * 2, _scrollView.height);
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.pagingEnabled = YES;
-    recordTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 184) style:UITableViewStylePlain];
+    _scrollView.backgroundColor = XK_BACKGROUND_COLOR ;
+    recordTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, _scrollView.height) style:UITableViewStylePlain];
     recordTableView.tag = 5031;
     recordTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     recordTableView.delegate = self;
@@ -41,7 +50,7 @@
     recordTableView.dataSource = self;
     [recordTableView registerNib:[UINib nibWithNibName:@"XKRWRecordFood5_3Cell" bundle:nil] forCellReuseIdentifier:@"recordFoodCell"];
 
-    recommendedTableView = [[UITableView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, 184) style:UITableViewStylePlain];
+    recommendedTableView = [[UITableView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, _scrollView.height) style:UITableViewStylePlain];
     recommendedTableView.tag = 5032;
     recommendedTableView.delegate = self;
     recommendedTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -64,12 +73,10 @@
     _recordSportButton.layer.borderWidth = 1;
     _recordSportButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
     
-    CGRect frame =  _shadowImageView.frame ;
-    frame.origin.x += (_positionX - XKAppWidth /2);
-    _shadowImageView.frame = frame;
+   
 }
 
--(void)setTitle{
+-(void)setTitle {
     _labSeperate.hidden = YES;
     _habitLabel.hidden = YES;
     _recordTypeLabel.hidden = NO;
@@ -79,8 +86,9 @@
     _recordFoodButton.hidden = YES;
     _nutritionAnalyzeButton.hidden = YES;
     _recordSportButton.hidden = YES;
+    
     switch (_type) {
-        case 1:
+        case energyTypeEat:
             _recordTypeLabel.text = @"记录饮食";
             _recommendedTypeLabel.text = @"推荐食谱";
             _recordCalorieLabel.text = @"1111kcal";
@@ -90,21 +98,23 @@
             _labSeperate.hidden = NO;
             _recordFoodButton.hidden = NO;
             _nutritionAnalyzeButton.hidden = NO;
+            recordTypeTitleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
+            recordTypeImageArray = @[@"breakfast5_3",@"lunch5_3",@"dinner5_3",@"addmeal5_3"];
             break;
-        case 2:
+        case energyTypeSport:
             _recordTypeLabel.text = @"记录运动";
-            _recommendedTypeLabel.text = @"推荐方案";
+            _recommendedTypeLabel.text = @"推荐运动";
             int cal = [XKRWAlgolHelper dailyConsumeSportEnergy];
             _recordCalorieLabel.text = [NSString stringWithFormat:@"%dkcal",cal];
             _recommendedCalorieLabel.text = @"4444kcal";
             _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
             _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;
             _labSeperate.hidden = NO;
-            _recordFoodButton.hidden = NO;
-            _nutritionAnalyzeButton.hidden = NO;
-
+            _recordSportButton.hidden = NO;
+            recordTypeTitleArray = @[@"运动"];
+            recordTypeImageArray =@[@"sports5_3"];
             break;
-        case 3:
+        case energyTypeHabit:
             _recordTypeLabel.hidden = YES;
             _recommendedTypeLabel.hidden = YES;
             _recordCalorieLabel.hidden = YES;
@@ -115,6 +125,9 @@
         default:
             break;
     }
+    
+    [recordTableView reloadData];
+    [recommendedTableView reloadData];
 }
 
 - (void)layoutSubviews {
@@ -156,7 +169,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView.tag == 5031) {
-        return _reocrdArray.count;
+        return recordTypeTitleArray.count;
     }else if (tableView.tag == 5032){
         return _schemeArray.count;
     }
@@ -173,8 +186,8 @@
          entity = [_reocrdArray objectAtIndex:indexPath.row];
          XKRWRecordFood5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"recordFoodCell"];
          cell.frame = CGRectMake(0, 0, self.width, 59);
-         cell.leftImage.image = [UIImage imageNamed:[self getImageNameWithType:entity.type]];
-         cell.labMain.text = [self getNameWithType:entity.type];
+         cell.leftImage.image = [UIImage imageNamed:[recordTypeImageArray objectAtIndex:indexPath.row]];
+         cell.labMain.text = [recordTypeTitleArray objectAtIndex:indexPath.row];
          return  cell;
      }else if (tableView.tag == 5032){
         entity = [_schemeArray objectAtIndex:indexPath.row];
@@ -192,7 +205,7 @@
 }
 
 -(NSString *)getImageNameWithType:(RecordType)type{
-    NSString *imgName = @"";
+    NSString *imgName ;
     switch (type) {
         case RecordTypeSport:
             imgName = @"sports5_3";
@@ -217,7 +230,7 @@
 }
 
 -(NSString *)getNameWithType:(RecordType)type{
-    NSString *name = @"";
+    NSString *name ;
     switch (type) {
         case RecordTypeSport:
             name = @"运动";
@@ -244,14 +257,21 @@
 
 //营养分析
 - (IBAction)nutritionAnalyzeAction:(UIButton *)sender {
+    
 }
 
 //记录运动
 - (IBAction)recordSportAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
+        [self.delegate entryRecordVCWith:eSchemeSport];
+    }
 }
 
 //记录食物
 - (IBAction)recordFoodAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
+        [self.delegate entryRecordVCWith:eSchemeFood];
+    }
 }
 
 //关闭

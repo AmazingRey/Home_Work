@@ -93,15 +93,16 @@ const int FixedDisplayCount = 4;   //固定显示的个数
 #pragma mark - UI
 
 - (void)initUI {
-    self.navigationItem.title = @"食物详情";
-//    NSLog(@"%d",self.isNeedHideNaviBarWhenPoped);
-//    [self.navigationController.interactivePopGestureRecognizer addTarget:self action:@selector(checkNeedHideNaviBarWhenPoped)];
+    self.title = @"食物详情";
     self.forbidAutoAddCloseButton = YES;
     [self addNaviBarBackButton];
     
     if (self.needShowRecord) {
         [self addNaviBarRightButton];
     }
+    
+
+    
     [self drawSubviews];
 }
 
@@ -240,10 +241,10 @@ const int FixedDisplayCount = 4;   //固定显示的个数
 
 - (void)addNaviBarBackButton {
     if (self.isPresent) {
-        //
         UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [leftItemButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-        leftItemButton.frame = CGRectMake(0, 0, 28, 44);
+        [leftItemButton setImage:[UIImage imageNamed:@"off_n5_3"] forState:UIControlStateNormal];
+        [leftItemButton setImage:[UIImage imageNamed:@"off_p5_3"] forState:UIControlStateHighlighted];
+        leftItemButton.frame = CGRectMake(0, 0, 20, 20);
         [leftItemButton setTitleColor:[UIColor colorWithRed:247/255.f green:106/255.f blue:8/255.f alpha:1.0] forState:UIControlStateNormal];
         [leftItemButton addTarget:self action:@selector(popView) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftItemButton];

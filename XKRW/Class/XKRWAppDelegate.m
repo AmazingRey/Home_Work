@@ -247,10 +247,10 @@
     
      [self dealWithUserFeedback];
     
-    /*判断是否从旧版本升级过来的*/
-    if ([XKRWCommHelper isUpdateFromV2]) {
-        [XKRWCommHelper updateHandelFromV2];
-    }
+//    /*判断是否从旧版本升级过来的*/
+//    if ([XKRWCommHelper isUpdateFromV2]) {
+//        [XKRWCommHelper updateHandelFromV2];
+//    }
     
     //判断是否为今天第一次打开，如果是，处理一些缓存清理
     if ([XKRWCommHelper isFirstOpenToday]) {

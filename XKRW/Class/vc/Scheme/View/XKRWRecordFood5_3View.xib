@@ -211,9 +211,6 @@
                         <constraint firstAttribute="height" constant="184" id="9xF-mK-gag"/>
                     </constraints>
                 </scrollView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="shadow" translatesAutoresizingMaskIntoConstraints="NO" id="UFt-d0-E5G">
-                    <rect key="frame" x="-88" y="0.0" width="550" height="10"/>
-                </imageView>
             </subviews>
             <constraints>
                 <constraint firstItem="eTd-3I-sWi" firstAttribute="top" secondItem="MDZ-gd-aNF" secondAttribute="bottom" id="1SG-tj-tdb"/>
@@ -241,7 +238,6 @@
                 <outlet property="recordSportButton" destination="5id-Ej-dY7" id="gSc-Ja-Vkm"/>
                 <outlet property="recordTypeLabel" destination="Qug-Cf-kNw" id="mLP-TN-LtM"/>
                 <outlet property="scrollView" destination="MDZ-gd-aNF" id="J4S-AF-Trb"/>
-                <outlet property="shadowImageView" destination="UFt-d0-E5G" id="znv-Xh-a2g"/>
                 <outlet property="testViewFrame" destination="fpV-2j-Yb7" id="9nh-sX-uY8"/>
             </connections>
             <point key="canvasLocation" x="286.5" y="228"/>
@@ -254,6 +250,5 @@
         <image name="off_n1" width="49" height="49"/>
         <image name="off_p1" width="49" height="49"/>
         <image name="off_p5_3" width="15" height="15"/>
-        <image name="shadow" width="550" height="10"/>
     </resources>
 </document>

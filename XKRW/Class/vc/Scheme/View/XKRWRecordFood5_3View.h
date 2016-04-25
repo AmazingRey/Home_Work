@@ -10,6 +10,7 @@
 @optional
 -(void)RecordFoodViewpressCancle;
 -(void)addMoreView;
+-(void)entryRecordVCWith:(SchemeType)schemeType;
 @end
 
 #import <UIKit/UIKit.h>
@@ -24,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *habitLabel;
 @property (weak, nonatomic) IBOutlet UIButton *recordSportButton;
 @property (weak, nonatomic) IBOutlet UILabel *recordTypeLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *shadowImageView;
+
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIButton *nutritionAnalyzeButton;
 @property (weak, nonatomic) IBOutlet UILabel *labSeperate;
@@ -51,5 +52,5 @@
 @property (strong ,nonatomic) NSArray *schemeArray;
 @property (assign ,nonatomic) energyType type;
 @property (strong ,nonatomic) NSMutableDictionary *dicCollection;
-
+@property (strong ,nonatomic) UIImageView *shadowImageView;
 @end

@@ -10,21 +10,22 @@
 
 @implementation XKRWMealPercentSlider
 
+-(CGRect)trackRectForBounds:(CGRect)bounds
+{
+    bounds.size.height=10;
+    return bounds;
+}
+
 - (CGRect)thumbRectForBounds:(CGRect)bounds trackRect:(CGRect)rect value:(float)value
 {
     rect.origin.x = rect.origin.x - 10 ;
     rect.size.width = rect.size.width +20;
-    return CGRectInset ([super thumbRectForBounds:bounds trackRect:rect value:value], 0 , 0);
+    CGRect res = CGRectInset ([super thumbRectForBounds:bounds trackRect:rect value:value], 10 , 10);
+    return res;
 }
 
-//-(CGRect)trackRectForBounds:(CGRect)bounds
-//{
-//    bounds.size.height=20;
-//    return bounds;
-//}
-//
 //- (CGRect)minimumValueImageRectForBounds:(CGRect)bounds{
-//    bounds.size.height=20;
+//    bounds.size.height=50;
 //    return bounds;
 //}
 //

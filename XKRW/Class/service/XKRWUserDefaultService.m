@@ -214,8 +214,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-
-
 /*
  保存三餐比例对象
  如果scale为空，则为删除

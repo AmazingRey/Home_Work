@@ -110,7 +110,7 @@
     
     [self addNaviBarRightButtonWithText:@"保存" action:@selector(rightNaviItemClicked:)];
     
-    self.navigationItem.title = @"记录食物";
+    self.title = @"记录食物";
     
     topView = [[XKRWFoodTopView alloc] initWithFrameAndFoodEntity:CGRectMake(0.f, 15.f,XKAppWidth, 75.f) foodEntity:_foodRecordEntity linePosition:NO isDetail:NO] ;
     [scrollView addSubview:topView];
@@ -237,8 +237,9 @@
     if (self.isPresent) {
         //
         UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [leftItemButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-        leftItemButton.frame = CGRectMake(0, 0, 28, 44);
+        [leftItemButton setImage:[UIImage imageNamed:@"off_n5_3"] forState:UIControlStateNormal];
+        [leftItemButton setImage:[UIImage imageNamed:@"off_p5_3"] forState:UIControlStateHighlighted];
+        leftItemButton.frame = CGRectMake(0, 0, 30, 30);
         [leftItemButton setTitleColor:[UIColor colorWithRed:247/255.f green:106/255.f blue:8/255.f alpha:1.0] forState:UIControlStateNormal];
         [leftItemButton addTarget:self action:@selector(popView) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftItemButton];

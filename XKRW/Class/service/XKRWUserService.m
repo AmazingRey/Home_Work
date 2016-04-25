@@ -1077,6 +1077,10 @@ static BOOL canUpdatePlan = YES;
                   int32_t degree = ((NSString *)userPlanDic[@"degree"]).intValue;
                   [self setUserPlanDifficulty:degree];
                 }
+              
+              //保存三餐比例到本地
+              [[NSUserDefaults standardUserDefaults] setObject:[userPlanDic objectForKey:@"meal_ratio"] forKey:[NSString stringWithFormat:@"meal_ratio_%ld",(long)[self getUserId]]];
+              [[NSUserDefaults standardUserDefaults] synchronize];
             }
       }
     
@@ -1421,9 +1425,8 @@ static BOOL canUpdatePlan = YES;
 
 }
 
-
 //改变用户信息
-- (NSDictionary *)changeUserInfo:(NSString *)info WithType:(NSString *)InfoType
+- (NSDictionary *)changeUserInfo:(id)info WithType:(NSString *)InfoType
 {
     NSURL *changeInfoUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewServer,v5_setAllUserInfoUrl]];
     NSDictionary *dic = @{InfoType:info};
@@ -2006,6 +2009,36 @@ static BOOL canUpdatePlan = YES;
     NSDictionary *result = [self syncBatchDataWith:url andPostForm:nil];
 
     return result;
+}
+
+- (NSDictionary *)getMealRatio {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"meal_ratio_%ld",(long)[self getUserId]]];
+}
+
+- (BOOL) saveMealRatioWithBreakfast:(NSInteger)breakfast andLunch:(NSInteger)lunch andSnack:(NSInteger)snack andSupper:(NSInteger) supper{
+    
+    NSInteger destiWeight =   [XKRWUserService sharedService].getUserDestiWeight;
+    CGFloat  targetWeight = destiWeight/1000.0f;
+    
+    NSDictionary *meal_ratio = @{@"breakfast":[NSNumber numberWithInteger:breakfast],@"lunch":[NSNumber numberWithInteger:lunch],@"supper":[NSNumber numberWithInteger:supper],@"snack":[NSNumber numberWithInteger:snack]};
+    
+    XKDifficulty degree = [[XKRWUserService sharedService ]getUserPlanDifficulty];
+    NSDictionary *slim_Plan = @{@"meal_ratio":meal_ratio,
+                                @"target_weight":[NSNumber numberWithFloat:targetWeight],
+                                @"part":@"1,2,3,4,5,6",
+                                @"degree":[NSNumber numberWithInt:degree]
+                                };
+    
+   NSDictionary *dic =  [[XKRWUserService sharedService] changeUserInfo:slim_Plan WithType:@"slim_plan"];
+    
+    if([[dic objectForKey:@"success"] integerValue] ==1){
+        [[NSUserDefaults standardUserDefaults] setObject:meal_ratio forKey:[NSString stringWithFormat:@"meal_ratio_%ld",(long)[self getUserId]]];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return YES;
+    }
+    
+    return NO;
+
 }
 
 

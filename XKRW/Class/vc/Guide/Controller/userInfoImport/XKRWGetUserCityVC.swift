@@ -149,10 +149,7 @@ class XKRWGetUserCityVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDelegate 
     //保存用户信息到远程服务器
     func saveUserInfoToRemoteServer(){
         
-        
         let questionString:NSString = XKRWFatReasonService .sharedService().getFatReasonFromDB()
-        
-        
         let sex  = XKRWUserService.sharedService().getSex()
         let birthday = XKRWUserService.sharedService().getBirthdayString()
         let height = XKRWUserService.sharedService().getUserHeight()

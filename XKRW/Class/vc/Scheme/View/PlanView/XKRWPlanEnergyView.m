@@ -17,9 +17,10 @@
 
 @implementation XKRWPlanEnergyView
 {
-    XKRWEnergyCircleView *_exClickedCircle;
+    NSInteger _exClickedIndex;
     XKRWFlashingTextView *_remindTextView;
     UILabel *_checkTodayAnalyze;
+    UIView *_line;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -27,6 +28,8 @@
     CGFloat circleWidth = 95*(XKAppWidth/320.0);
     CGFloat separateWidth = (XKAppWidth - circleWidth * 3) / 4.0;
     if (self) {
+        
+        _exClickedIndex = 0;
         
         _remindTextView = [[XKRWFlashingTextView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 12)];
         _remindTextView.foreColor = [UIColor colorFromHexString:@"000000"];
@@ -67,6 +70,10 @@
             label.center = CGPointMake(separateWidth *(i + 1) + circleWidth*(i*2 + 1)/2.0, _eatEnergyCircle.bottom + 34);
             [self addSubview:label];
         }
+        
+        _line = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 0.5, XKAppWidth, 0.5)];
+        _line.backgroundColor = colorSecondary_e0e0e0;
+        [self addSubview:_line];
     }
     return self;
 }
@@ -93,52 +100,54 @@
 #pragma mark -- reset meals、sports and habits' current number
 - (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     CGFloat percentage = (currentNumber / (CGFloat)_eatEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_eatEnergyCircle.goalNumber);
-    [_eatEnergyCircle runProgressCircleWithColor:_eatEnergyCircle.shadowColor percentage:percentage duration:1.5 * percentage];
+    [_eatEnergyCircle runProgressCircleWithColor:_eatEnergyCircle.progressCircleColor percentage:percentage duration:1.5 * percentage];
     [_eatEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
 }
 
 - (void)runSportEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     CGFloat percentage = (currentNumber / (CGFloat)_sportEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_sportEnergyCircle.goalNumber);
-    [_sportEnergyCircle runProgressCircleWithColor:_sportEnergyCircle.shadowColor percentage:percentage duration:1.5 * percentage];
+    [_sportEnergyCircle runProgressCircleWithColor:_sportEnergyCircle.progressCircleColor percentage:percentage duration:1.5 * percentage];
     [_sportEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
 }
 
 - (void)runHabitEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     CGFloat percentage = (currentNumber / (CGFloat)_habitEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_habitEnergyCircle.goalNumber);
-    [_habitEnergyCircle runProgressCircleWithColor:_habitEnergyCircle.shadowColor percentage:percentage duration:1.5 * percentage];
+    [_habitEnergyCircle runProgressCircleWithColor:_habitEnergyCircle.progressCircleColor percentage:percentage duration:1.5 * percentage];
     [_habitEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
 }
 
 #pragma mark -- set meals、sports and habits' original state data
 - (void)noneSelectedCircleStyle {
-    [_exClickedCircle setStyle:XKRWEnergyCircleStyleOpened];
+    
+    if (_exClickedIndex != 1 && _exClickedIndex != 2 && _exClickedIndex != 3) return;
+    
+    XKRWEnergyCircleView *exCircle = (XKRWEnergyCircleView *)[self viewWithTag:_exClickedIndex];
+    
+    if (exCircle.style != XKRWEnergyCircleStylePerfect && exCircle) [exCircle setStyle:XKRWEnergyCircleStyleOpened];
+    
+    if (_line.hidden == YES) {
+        _line.hidden = NO;
+    } else return;
 }
 - (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
     __weak typeof(self) weakSelf = self;
     
     BOOL isBehaveCurrect = NO;
-    if (currentNumber <= goalNumber) {
+    if (currentNumber <= goalNumber && currentNumber >= 1200) {
         isBehaveCurrect = YES;
     } else {
         isBehaveCurrect = NO;
     }
     [_eatEnergyCircle setOpenedViewTiltle:@"已摄入" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
-    _eatEnergyCircle.energyCircleViewClickBlock = ^(){
-        [weakSelf resetCirclesStyle];
+    _eatEnergyCircle.energyCircleViewClickBlock = ^(NSInteger index){
+        [weakSelf resetCirclesStyle:index];
         
         [weakSelf runEatEnergyCircleWithNewCurrentNumber:currentNumber];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.eatEnergyCircle runToNextNumber:1200 duration:1.5 resetIsBehaveCurrect:YES];
-        });
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.eatEnergyCircle runToNextNumber:2000 duration:1.5 resetIsBehaveCurrect:NO];
-        });
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
 
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
         }
         _selectedIndex = 1;
-        _exClickedCircle = _eatEnergyCircle;
     };
  
 }
@@ -146,57 +155,85 @@
 - (void)setSportEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
     __weak typeof(self) weakSelf = self;
     
-    BOOL isBehaveCurrect = NO;
-    if (currentNumber >= goalNumber) {
-        isBehaveCurrect = YES;
+    if (goalNumber == 0) {
+        _sportEnergyCircle.style = XKRWEnergyCircleStylePerfect;
+        [_sportEnergyCircle setOpenedViewTiltle:@"无需运动" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:YES];
+        
     } else {
-        isBehaveCurrect = NO;
-    }
-    [_sportEnergyCircle setOpenedViewTiltle:@"已消耗" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
-    
-    _sportEnergyCircle.energyCircleViewClickBlock = ^(){
-        [weakSelf resetCirclesStyle];
-        
-        [weakSelf runSportEnergyCircleWithNewCurrentNumber:currentNumber];
-        
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
-
-            [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:2];
+        BOOL isBehaveCurrect = NO;
+        if (currentNumber >= goalNumber) {
+            isBehaveCurrect = YES;
+        } else {
+            isBehaveCurrect = NO;
         }
-        _selectedIndex = 2;
-        _exClickedCircle = _sportEnergyCircle;
-    };
+        [_sportEnergyCircle setOpenedViewTiltle:@"已消耗" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
+    }
+
+        _sportEnergyCircle.energyCircleViewClickBlock = ^(NSInteger index){
+            
+            [weakSelf resetCirclesStyle:index];
+            
+            [weakSelf runSportEnergyCircleWithNewCurrentNumber:currentNumber];
+            
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+                
+                [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:2];
+            }
+            _selectedIndex = 2;
+        };
+        
 }
 
 - (void)setHabitEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
     __weak typeof(self) weakSelf = self;
     
-    BOOL isBehaveCurrect = NO;
-    if (currentNumber == goalNumber) {
-        isBehaveCurrect = YES;
+    if (goalNumber == 0) {
+        [_habitEnergyCircle setOpenedViewTiltle:@"无需改正" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:0 unit:@"个" isBehaveCurrect:YES];
+        _habitEnergyCircle.style = XKRWEnergyCircleStylePerfect;
+        _habitEnergyCircle.goalLabel.text = @"Perfect";
+        _habitEnergyCircle.userInteractionEnabled = NO;
+        
     } else {
-        isBehaveCurrect = NO;
-    }
-    [_habitEnergyCircle setOpenedViewTiltle:@"已改正" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"个" isBehaveCurrect:isBehaveCurrect];
-
-    _habitEnergyCircle.energyCircleViewClickBlock = ^(){
-        [weakSelf resetCirclesStyle];
         
-        [weakSelf runHabitEnergyCircleWithNewCurrentNumber:currentNumber];
-        
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
-
-            [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:3];
+        BOOL isBehaveCurrect = NO;
+        if (currentNumber == goalNumber) {
+            isBehaveCurrect = YES;
+        } else {
+            isBehaveCurrect = NO;
         }
-        _selectedIndex = 3;
-        _exClickedCircle = _habitEnergyCircle;
-    };
-}
-- (void)resetCirclesStyle {
-    
-    if (_exClickedCircle) {
-        _exClickedCircle.style = XKRWEnergyCircleStyleOpened;
+        [_habitEnergyCircle setOpenedViewTiltle:@"已改正" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"个" isBehaveCurrect:isBehaveCurrect];
+        _habitEnergyCircle.energyCircleViewClickBlock = ^(NSInteger index){
+            [weakSelf resetCirclesStyle:index];
+            
+            [weakSelf runHabitEnergyCircleWithNewCurrentNumber:currentNumber];
+            
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+                
+                [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:3];
+            }
+            _selectedIndex = 3;
+        };
     }
+}
+- (void)resetCirclesStyle:(NSInteger)currentIndex {
+    
+    if (_line.hidden == NO) {
+        _line.hidden = YES;
+    }
+    
+    if (_exClickedIndex != 1 && _exClickedIndex != 2 && _exClickedIndex != 3) {
+        _exClickedIndex = currentIndex;
+        return;
+    }
+
+    XKRWEnergyCircleView *circle = (XKRWEnergyCircleView *)[self viewWithTag:_exClickedIndex];
+
+    if (circle && circle.style != XKRWEnergyCircleStylePerfect) {
+        circle.style = XKRWEnergyCircleStyleOpened;
+    }
+    
+    _exClickedIndex = currentIndex;
+    
 }
 
 /*

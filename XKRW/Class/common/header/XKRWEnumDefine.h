@@ -259,7 +259,15 @@ typedef NS_ENUM(NSInteger,XKRWEnergyCircleStyle){
     /**
      *  已开启未选中
      */
-    XKRWEnergyCircleStyleOpened
+    XKRWEnergyCircleStyleOpened,
+    /**
+     *  选中不显示闪烁对错标示状态
+     */
+    XKRWEnergyCircleStyleHideStateImage,
+    /**
+     *  完美状态
+     */
+    XKRWEnergyCircleStylePerfect
 };
 /**
  *  记录类型

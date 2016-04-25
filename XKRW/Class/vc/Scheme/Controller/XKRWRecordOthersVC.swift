@@ -512,8 +512,7 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             let vc = XKRWSportDetailVC()
                             vc.sportEntity = entity
                             vc.sportID = entity.sportId
-//                            vc.isNeedHideNaviBarWhenPoped = false
-//                            self.isNeedHideNaviBarWhenPoped = true;
+
                             
                             vc.isPresent = true
                             let nav = XKRWNavigationController(rootViewController: vc)
@@ -559,7 +558,6 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             
                             self.search_bar.resignFirstResponder()
                             self.search_bar.setCancelButtonEnable(true)
-                                
                             // new entity
                             let recordEntity = XKRWRecordFoodEntity()
                             recordEntity.recordType = RecordType(rawValue: self.type!.rawValue)!
@@ -570,11 +568,8 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             properties.setPropertiesToObject(recordEntity)
                             
                             let vc = XKRWAddFoodVC4_0()
-//                            vc.isNeedHideNaviBarWhenPoped = false
                             vc.foodRecordEntity = recordEntity
                             vc.recordEntity = self.recordEntity
-//                            vc.isNeedHideNaviBarWhenPoped = false
-//                            self.isNeedHideNaviBarWhenPoped = true;
                             XKRWAddFoodVC4_0.presentAddFoodVC(vc, onViewController: self)
                         })
                     }

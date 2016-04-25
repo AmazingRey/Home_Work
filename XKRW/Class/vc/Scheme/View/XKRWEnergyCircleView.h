@@ -9,12 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "XKRWRecordFood5_3View.h"
 
-typedef void(^startButtonClickBlock)(void);
+typedef void(^startButtonClickBlock)(NSInteger index);
 @interface XKRWEnergyCircleView : UIView
-/**
- *  shadow color
- */
-@property (nonatomic, strong) UIColor *shadowColor;
 /**
  *  circle goal number
  */
@@ -31,6 +27,8 @@ typedef void(^startButtonClickBlock)(void);
  *  percentage of the goalNumber
  */
 @property (nonatomic, assign) CGFloat percentage;
+
+@property (nonatomic, strong) UILabel *goalLabel;
 /**
  *  progress run time
  */

@@ -35,7 +35,7 @@
         CGRect frame = self.frame;
         _dicAll = [NSMutableDictionary dictionary];
         
-        _firstCircleView = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(XKAppWidth/2-15-50, frame.size.height - 120, 100, 100) Style:XKRWEnergyCircleStyleSelected];
+        _firstCircleView = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(XKAppWidth/2-15-50, frame.size.height - 120, 100, 100) Style:XKRWEnergyCircleStyleHideStateImage];
         
         _firstCircleView.tag = 1;
         
@@ -183,13 +183,13 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
 
 - (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     CGFloat percentage = (currentNumber / (CGFloat)_firstCircleView.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_firstCircleView.goalNumber);
-    [_firstCircleView runProgressCircleWithColor:_firstCircleView.shadowColor percentage:percentage duration:1.5 * percentage];
+    [_firstCircleView runProgressCircleWithColor:_firstCircleView.progressCircleColor percentage:percentage duration:1.5 * percentage];
     [_firstCircleView runToCurrentNum:currentNumber duration:1.5 * percentage];
 }
 
 - (void)resetCirclesStyle {
     if (_firstCircleView) {
-        _firstCircleView.style = XKRWEnergyCircleStyleSelected;
+        _firstCircleView.style = XKRWEnergyCircleStyleHideStateImage;
     }
 }
 @end

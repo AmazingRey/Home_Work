@@ -7,7 +7,7 @@
 //
 
 #import "XKRWRecordVC.h"
-#import "KMSearchBar.h"
+#import "KMSearchBar.h" 
 #import "XKRWRecordService4_0.h"
 #import "KMSearchDisplayController.h"
 #import "XKRWFoodCell.h"
@@ -16,6 +16,7 @@
 #import <iflyMSC/IFlyRecognizerView.h>
 #import <iflyMSC/IFlyRecognizerViewDelegate.h>
 #import <iflyMSC/iflyMSC.h>
+#import "XKRWSportDetailVC.h"
 
 @interface XKRWRecordVC ()<UISearchControllerDelegate,KMSearchDisplayControllerDelegate,IFlyRecognizerViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource> {
     UISegmentedControl *segmentCtl;
@@ -35,11 +36,21 @@
     KMSearchBar *recordSearchBar;
     KMSearchDisplayController *searchDisplayCtrl;
     IFlyRecognizerView *iFlyControl;
+    
+    NSArray *searchResults;
+    
+    NSString *recordSearchBarplaceText;
+ 
 }
 
 @end
 
 @implementation XKRWRecordVC
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -78,12 +89,16 @@
         tableName = @"food_record";
         segementTitles = @[@"最近吃过",@"收藏的食物"];
         collectionType = 1;
+        recordSearchBarplaceText = @"查询食物";
     }else{
         self.title = @"记录运动";
         tableName = @"sport_record";
         segementTitles = @[@"最近做过",@"收藏的运动"];
+         recordSearchBarplaceText = @"查询运动";
         collectionType = 2;
     }
+    
+    
     [self setFoodRecordType];
     
     recordSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, 44)];
@@ -98,22 +113,14 @@
     recordSearchBar.showsScopeBar = true;
     
     [recordSearchBar setImage:[UIImage imageNamed:@"voice"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
-    recordSearchBar.placeholder = @"查询食物" ;
+    recordSearchBar.placeholder = recordSearchBarplaceText ;
     searchDisplayCtrl = [[KMSearchDisplayController alloc] initWithSearchBar:recordSearchBar contentsController:self];
     searchDisplayCtrl.delegate = self ;
- //   searchDisplayCtrl.searchResultDelegate = self ;
- //   searchDisplayCtrl.searchResultDataSource = self ;
-    
+    searchDisplayCtrl.searchResultDelegate = self ;
+    searchDisplayCtrl.searchResultDataSource = self ;
     searchDisplayCtrl.searchResultTableView.tag = 201 ;
-    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCell" bundle:nil] forCellReuseIdentifier:@"searchResultCell"];
-    
-
-    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCategoryCell" bundle:nil] forCellReuseIdentifier:@"searchResultCategoryCell"];
-    
-    
-    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWMoreSearchResultCell" bundle:nil] forCellReuseIdentifier:@"moreSearchResultCell"];
-    
-    
+   
+    [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWFoodRecordCell" bundle:nil] forCellReuseIdentifier:@"searchResultCell"];
     searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
    
     [self.view addSubview:recordSearchBar];
@@ -195,6 +202,7 @@
     segmentCtl .hidden = YES;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [searchDisplayCtrl showSearchResultView];
+ 
     return YES;
 }
 
@@ -207,6 +215,7 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:NO];
     [searchDisplayCtrl hideSearchResultView];
+    segmentCtl.hidden = NO;
 }
 
 
@@ -220,7 +229,7 @@
     CGRect frame = recordSearchBar.frame;
     frame.origin.y = 0;
     recordSearchBar.frame = frame;
-    segmentCtl .hidden = NO;
+
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     return YES;
 }
@@ -232,7 +241,7 @@
         searchKey = searchBar.text;
         [self downloadWithTaskID:@"search" outputTask:^id{
             
-            return nil;
+            return [[XKRWSearchService sharedService] searchWithKey:searchKey type:XKRWSearchTypeAll page:1 pageSize:30];
         }];
         
         if([searchBar resignFirstResponder])
@@ -268,6 +277,8 @@
         return recentRecordArray.count;
     } else if (tableView.tag == 10002) {
         return dataArray.count;
+    }else if (tableView.tag == 201) {
+        return searchResults.count;
     }
     
     return 0;
@@ -282,6 +293,8 @@
         }
     } else if (tableView.tag == 10001) {
         return 88;
+    } else if (tableView.tag == 201){
+        return 83;
     }
     return 0;
 }
@@ -358,6 +371,68 @@
             
             return [XKRWSportCell new];
         }
+    }else if (tableView.tag == 201){
+        XKRWFoodRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCell"];
+        cell.indexPath = indexPath ;
+        
+        if(_schemeType == eSchemeSport){
+            XKRWSportEntity *sportEntity = [searchResults objectAtIndex:indexPath.row];
+            [cell setTitle:sportEntity.sportName logoURL:sportEntity.sportActionPic clickDetail:^(NSIndexPath * indexPath) {
+                [recordSearchBar resignFirstResponder];
+                [recordSearchBar setCancelButtonEnable:YES];
+                
+                XKRWSportDetailVC *sportDetailVC = [[XKRWSportDetailVC alloc] init];
+                sportDetailVC.sportEntity = sportEntity;
+                sportDetailVC.sportID = sportEntity.sportId;
+                sportDetailVC.isPresent = YES;
+                XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:sportDetailVC];
+                [weakSelf presentViewController:nav animated:YES completion:nil];
+            } clickRecord:^(NSIndexPath * indexPath) {
+                [recordSearchBar resignFirstResponder];
+                [recordSearchBar setCancelButtonEnable:YES];
+                
+                XKRWSportAddVC *sportAddVC = [[XKRWSportAddVC alloc] init];
+                sportAddVC.sportEntity = sportEntity;
+                sportAddVC.sportID = sportEntity.sportId;
+                
+                sportAddVC.passMealTypeTemp = eSport;
+                sportAddVC.needHiddenDate = true;
+                
+                sportAddVC.isPresent = true;
+                XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:sportAddVC];
+                [weakSelf presentViewController:nav animated:YES completion:nil];
+            }];
+            
+        }else {
+            XKRWFoodEntity *foodEntity = [searchResults objectAtIndex:indexPath.row];
+            [cell setTitle:foodEntity.foodName logoURL:foodEntity.foodLogo clickDetail:^(NSIndexPath * indexPath) {
+                [recordSearchBar resignFirstResponder];
+                [recordSearchBar setCancelButtonEnable:YES];
+                XKRWFoodDetailVC *foodDetailVC = [[XKRWFoodDetailVC alloc] init];
+                foodDetailVC.foodEntity = foodEntity;
+                foodDetailVC.isPresent = YES;
+                XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:foodDetailVC];
+                [weakSelf presentViewController:nav animated:YES completion:nil];
+                
+            } clickRecord:^(NSIndexPath * indexPath) {
+                [recordSearchBar resignFirstResponder];
+                [recordSearchBar setCancelButtonEnable:YES];
+                XKRWRecordFoodEntity *recordFoodEntity = [[XKRWRecordFoodEntity alloc] init];
+                recordFoodEntity.date = recordEntity4_0.date;
+                recordFoodEntity.foodId = foodEntity.foodId;
+                recordFoodEntity.foodLogo = foodEntity.foodLogo;
+                recordFoodEntity.foodName = foodEntity.foodName;
+                recordFoodEntity.foodNutri = foodEntity.foodNutri;
+                recordFoodEntity.foodEnergy = foodEntity.foodEnergy;
+                recordFoodEntity.foodUnit = foodEntity.foodUnit;
+                recordFoodEntity.recordType = foodRecordType;
+                XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
+                addFoodVC.foodRecordEntity = recordFoodEntity;
+                [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:self];
+            }];
+        
+        }
+        return  cell;
     }
     return [UITableViewCell new];
 }
@@ -415,8 +490,31 @@
     }
 }
 
+#pragma --mark  NetWorkDeal
+- (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
+    if ([taskID isEqualToString:@"search"]){
+    
+        if (_schemeType == eSchemeSport) {
+            searchResults = [result objectForKey:@"sport"];
+        } else {
+            searchResults = [result objectForKey:@"food"];
+        }
+        if(!searchDisplayCtrl.isShowSearchResultTableView){
+            [searchDisplayCtrl showSearchResultTableView];
+        }
+        [searchDisplayCtrl reloadSearchResultTableView];
+        return ;
+    }
+}
 
+- (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID {
+    [super handleDownloadProblem:problem withTaskID:taskID];
+    
+ }
 
+- (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication {
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

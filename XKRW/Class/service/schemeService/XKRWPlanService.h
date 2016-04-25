@@ -13,7 +13,7 @@
 + (instancetype)shareService;
 
 /**
- *  根据时间获取当时的食物、运动等记录
+ *  根据时间获取当时的食物、运动等记录XKRWRecordEntity4_0.foodArray(XKRWFoodRecordEntity *)
  *
  *  @param date 记录日期
  *
@@ -30,13 +30,13 @@
  */
 - (BOOL)saveRecord:(id)recordEntity ofType:(XKRWRecordType)type;
 /**
- *  <#Description#>
+ *  根据表名获取最近记录的20条不同的运动或食物
  *
- *  @param date <#date description#>
+ *  @param tableName @“food_record”/@"sport_record"
  *
- *  @return <#return value description#>
+ *  @return (NSArray <XKRWFoodEntity *> *)/(NSArray <XKRWSportEntity *> *)
  */
-- (NSArray *)queryLatestItemNumber:(NSInteger)itemNumber FoodRecord:(NSDate *)date;
+- (NSArray *)getRecent_20_RecordWithTableName:(NSString *)tableName;
 /**
  *  存储当天能量环是否被点击过
  *

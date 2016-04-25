@@ -57,7 +57,12 @@
     UILabel  *dayLabel;
     UIView *planHeaderView;
     UIView *recordBackView;
+    
     NSMutableArray *tipsArray;
+    XKRWRecordEntity4_0 *recordEntity;
+    NSInteger intakeCalorie;
+    NSInteger expendCalorie;
+    
     UIButton  *btnBackBounds;
     XKRWRecordMore5_3View *recordMoreView;
     XKRWRecordSingleMore5_3View *recordSingleMoreView;
@@ -108,7 +113,23 @@
 #pragma mark - data
 - (void)initData {
     mealEntitys = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
-        [_planEnergyView setHabitEnergyCircleGoalNumber:12 currentNumber:3];
+        [_planEnergyView setHabitEnergyCircleGoalNumber:0 currentNumber:0];
+    recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:[NSDate today]];
+    
+    // deal with energyCircle data
+    {
+        intakeCalorie = 0;
+        expendCalorie = 0;
+        
+    for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
+        intakeCalorie += foodEntity.calorie;
+    }
+    for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
+        expendCalorie += sportEntity.calorie;
+    }
+        
+    }
+    
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView];
     [self getTipsData];
@@ -134,8 +155,9 @@
 }
 
 - (void)refreshEnergyCircleView {
-    [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:600];
-    [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:0];
+    
+    [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:intakeCalorie];
+    [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:expendCalorie];
 }
 #pragma --mark UI
 - (void)initView {
@@ -260,7 +282,7 @@
     [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
     [planHeaderView addSubview:_recordAndTargetView];
     
-    _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, 68 + (XKAppWidth - 66)/3.0)];
+    _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, planHeaderView.height - 120)];
     [_planEnergyView.eatEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     [_planEnergyView.sportEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     [_planEnergyView.habitEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
@@ -364,22 +386,18 @@
          positionX = energyCircleView.habitEnergyCircle.center.x;
     }
     [self setPlanEnergyViewTitle];
-
-    
     [self removePullView:nil];
     [self removeMenuView];
-    [self addmenuView:index andArrowX:positionX];
+    [self addschemeOrRecordView:index andArrowX:positionX];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
 }
 
 
 #pragma mark - XKRWRecordFood5_3View
--(void)addmenuView:(NSInteger)index andArrowX:(CGFloat) postitonX{
-    NSLog(@"%f",XKAppWidth);
-    CGRect popViewFrame = CGRectMake(0, 0, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height);
+-(void)addschemeOrRecordView:(NSInteger)index andArrowX:(CGFloat) postitonX {
     XKRWRecordFood5_3View *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordFood5_3View");
-    popView.frame = popViewFrame;
+    popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
     popView.positionX = postitonX;
     [popView initSubViews];
     _recordPopView = popView;
@@ -473,6 +491,13 @@
 }
 
 #pragma mark XKRWRecordMore5_3View & XKRWRecordMore5_3ViewDelegate
+- (void)entryRecordVCWith:(SchemeType)schemeType {
+    XKRWRecordVC *recordvc = [[XKRWRecordVC alloc] init];
+    recordvc.schemeType = schemeType;
+    recordvc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:recordvc animated:YES];
+}
+
 -(void)addMoreView{
     if (!recordMoreView && !recordSingleMoreView) {
         CGRect frame = CGRectMake(recordBackView.frame.size.width - 140, _recordPopView.moreButton.frame.origin.y + _recordPopView.moreButton.frame.size.height+15, 138, 105);

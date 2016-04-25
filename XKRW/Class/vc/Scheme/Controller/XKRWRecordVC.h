@@ -15,8 +15,4 @@
 
 @property (nonatomic,assign) MealType mealType;
 
-
-//@property (nonatomic,strong) SchemeType schemeType;
-//
-////@property (nonatomic,strong) SchemeType schemeType;
 @end

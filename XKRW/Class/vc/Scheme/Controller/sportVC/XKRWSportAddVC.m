@@ -98,7 +98,7 @@
     
     [self addNaviBarRightButton];
     
-    self.navigationItem.title = @"记录运动";
+    self.title = @"记录运动";
     self.view.backgroundColor = XK_BACKGROUND_COLOR;
     topView = [[UIView alloc] init];
     topView.frame = CGRectMake(0, 15, XKAppWidth, 75);
@@ -583,8 +583,9 @@
     if (self.isPresent) {
         //
         UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [leftItemButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
-        leftItemButton.frame = CGRectMake(0, 0, 28, 44);
+        [leftItemButton setImage:[UIImage imageNamed:@"off_n5_3"] forState:UIControlStateNormal];
+        [leftItemButton setImage:[UIImage imageNamed:@"off_p5_3"] forState:UIControlStateHighlighted];
+        leftItemButton.frame = CGRectMake(0, 0, 30, 30);
         [leftItemButton setTitleColor:[UIColor colorWithRed:247/255.f green:106/255.f blue:8/255.f alpha:1.0] forState:UIControlStateNormal];
         [leftItemButton addTarget:self action:@selector(popView) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftItemButton];

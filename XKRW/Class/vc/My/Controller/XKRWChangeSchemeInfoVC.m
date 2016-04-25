@@ -1100,7 +1100,7 @@
     
     XKDifficulty degree = [[XKRWUserService sharedService ]getUserPlanDifficulty];
     
-    NSDictionary *slim_Plan = @{@"meal_ratio":@{@"breakfast":@30,@"lunch":@50,@"supper":@20,@"snack":@0},
+    NSDictionary *slim_Plan = @{@"meal_ratio":[[XKRWUserService sharedService] getMealRatio],
                                 @"target_weight":[NSNumber numberWithFloat:targetWeight],
                                 @"part":@"1,2,3,4,5,6",
                                 @"degree":[NSNumber numberWithInt:degree]
