@@ -15,8 +15,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _startValue = [value floatValue];
-        _currentPerCent = @(value.floatValue *100);
+        _startValue = [value floatValue]/100;
+        _currentPerCent = value;
          [self addMySlider];
     }
     return self;
@@ -94,6 +94,16 @@
     
     if ([self.delegate respondsToSelector:@selector(lockMealPercentView:withPercent:lock:)]) {
         [self.delegate lockMealPercentView:self.slider.tag withPercent:ceilf(_startValue*100) lock:_lock];
+    }
+}
+
+-(void)cancleBtnLock:(UIButton *)btnLock{
+    _lock = NO;
+    self.slider.userInteractionEnabled = !_lock;
+    [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
+    
+    if ([self.delegate respondsToSelector:@selector(cancleAutoLockView:)]) {
+        [self.delegate cancleAutoLockView:self.slider.tag];
     }
 }
 

@@ -17,6 +17,7 @@
 @property (strong, nonatomic) XKRWMealPercentView *dinnerView;
 @property (strong, nonatomic) XKRWMealPercentView *addmealView;
 @property (strong, nonatomic) NSMutableDictionary *dicLockTags;
+@property (strong, nonatomic) NSMutableDictionary *dicMealPercents;
 @property (assign, nonatomic) NSInteger currentMax;
 @property (strong, nonatomic) UILabel *labExplain;
 @property (strong, nonatomic) UIButton *btnDefault;
@@ -24,13 +25,16 @@
 @end
 
 @implementation XKRWChangeMealPercentVC
-
+{
+    XKRWMealPercentView *autoLockView;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addNaviBarBackButton];
     [self addNaviBarRightButtonWithText:@"保存" action:@selector(saveData)];
     self.title = @"调整四餐比例";
     _currentMax = 100;
+    _dicMealPercents = [NSMutableDictionary dictionary];
     _dicLockTags = [NSMutableDictionary dictionary];
     [self makeDicData];
 }
@@ -52,15 +56,15 @@
     NSDictionary *dic = [[XKRWUserService sharedService] getMealRatio];
     [_dicData addEntriesFromDictionary:dic];
     
-    [_dicData setObject:[NSNumber numberWithFloat:.3] forKey:@"早餐"];
-    [_dicData setObject:[NSNumber numberWithFloat:.4] forKey:@"午餐"];
-    [_dicData setObject:[NSNumber numberWithFloat:.1] forKey:@"晚餐"];
-    [_dicData setObject:[NSNumber numberWithFloat:.2] forKey:@"加餐"];
+    [_dicData setObject:[NSNumber numberWithInteger:30] forKey:[NSNumber numberWithInteger:3001]];
+    [_dicData setObject:[NSNumber numberWithInteger:40] forKey:[NSNumber numberWithInteger:3002]];
+    [_dicData setObject:[NSNumber numberWithInteger:10] forKey:[NSNumber numberWithInteger:3003]];
+    [_dicData setObject:[NSNumber numberWithInteger:20] forKey:[NSNumber numberWithInteger:3004]];
     [self addChangeMealView];
 }
 
 -(void)saveData{
-    [[XKRWUserService sharedService] saveMealRatioWithBreakfast:[[_dicData objectForKey:@"早餐"] integerValue] andLunch:[[_dicData objectForKey:@"午餐"] integerValue] andSnack:[[_dicData objectForKey:@"晚餐"] integerValue] andSupper:[[_dicData objectForKey:@"加餐"] integerValue]];
+    [[XKRWUserService sharedService] saveMealRatioWithBreakfast:[[_dicData objectForKey:[NSNumber numberWithInteger:3001]] integerValue] andLunch:[[_dicData objectForKey:[NSNumber numberWithInteger:3002]] integerValue] andSnack:[[_dicData objectForKey:[NSNumber numberWithInteger:3003]] integerValue] andSupper:[[_dicData objectForKey:[NSNumber numberWithInteger:3004]] integerValue]];
 }
 
 -(void)addChangeMealView{
@@ -135,36 +139,39 @@
 
 -(XKRWMealPercentView *)breakFastView{
     if (_breakFastView == nil) {
-        _breakFastView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, 0, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:@"早餐"]];
+        _breakFastView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, 0, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3001]]];
         _breakFastView.slider.tag = 3001;
         _breakFastView.imgHead.image = [UIImage imageNamed:@"breakfast5_3"];
         _breakFastView.labTitle.text = @"早餐";
         _breakFastView.delegate = self;
         [self.view addSubview:_breakFastView];
+        [_dicMealPercents setObject:_breakFastView forKey:[NSNumber numberWithInteger:3001]];
     }
     return _breakFastView;
 }
 
 -(XKRWMealPercentView *)lunchView{
     if (_lunchView == nil) {
-        _lunchView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:@"午餐"]];
+        _lunchView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3002]]];
         _lunchView.slider.tag = 3002;
         _lunchView.imgHead.image = [UIImage imageNamed:@"lunch5_3"];
         _lunchView.labTitle.text = @"午餐";
         _lunchView.delegate = self;
         [self.view addSubview:_lunchView];
+        [_dicMealPercents setObject:_lunchView forKey:[NSNumber numberWithInteger:3002]];
     }
     return _lunchView;
 }
 
 -(XKRWMealPercentView *)dinnerView{
     if (_dinnerView == nil) {
-        _dinnerView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight*2, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:@"晚餐"]];
+        _dinnerView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight*2, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3003]]];
         _dinnerView.slider.tag = 3003;
         _dinnerView.imgHead.image = [UIImage imageNamed:@"dinner5_3"];
         _dinnerView.labTitle.text = @"晚餐";
         _dinnerView.delegate = self;
         [self.view addSubview:_dinnerView];
+        [_dicMealPercents setObject:_dinnerView forKey:[NSNumber numberWithInteger:3003]];
     }
     
     return _dinnerView;
@@ -172,12 +179,13 @@
 
 -(XKRWMealPercentView *)addmealView{
     if (_addmealView == nil) {
-        _addmealView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight*3, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:@"加餐"]];
+        _addmealView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight*3, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3004]]];
         _addmealView.slider.tag = 3004;
         _addmealView.imgHead.image = [UIImage imageNamed:@"addmeal5_3"];
         _addmealView.labTitle.text = @"加餐";
         _addmealView.delegate = self;
         [self.view addSubview:_addmealView];
+        [_dicMealPercents setObject:_addmealView forKey:[NSNumber numberWithInteger:3004]];
     }
     
     return _addmealView;
@@ -261,6 +269,23 @@
     }else{
         [_dicLockTags removeObjectForKey:[NSNumber numberWithInteger:tag]];
     }
+    if (_dicLockTags.count == _dicData.count - 1) {
+        if (autoLockView) {
+            [autoLockView cancleBtnLock:autoLockView.btnLock];
+            autoLockView = nil;
+        }else{
+            for (NSNumber *num in [_dicData allKeys]) {
+                if (![[_dicLockTags allKeys] containsObject:num]) {
+                    autoLockView = [_dicMealPercents objectForKey:num];
+                    [autoLockView actBtnLock:autoLockView.btnLock];
+                }
+            }
+        }
+    }
+}
+
+-(void)cancleAutoLockView:(NSInteger)tag{
+    [_dicLockTags removeObjectForKey:[NSNumber numberWithInteger:tag]];
 }
 
 -(void)slideDidScroll:(NSInteger)tag currentPercent:(NSInteger)percent{
@@ -308,7 +333,7 @@
         if (curTag3 != tag  && ![[_dicLockTags allKeys] containsObject:[NSNumber numberWithInteger:curTag3]]) {
             NSInteger ratio = (NSInteger)((CGFloat)(_currentMax-percent)*[num3 floatValue]/total);
             
-            if (dicRatio.count == _arrMealRatio.count - 1) {
+            if (dicRatio.count == _arrMealRatio.count - _dicLockTags.count - 1) {
                 NSInteger existTotal = 0;
                 for (NSNumber *existNum in [dicRatio allValues]) {
                     existTotal += [existNum integerValue];

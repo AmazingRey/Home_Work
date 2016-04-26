@@ -11,6 +11,7 @@
 @optional
 -(void)slideDidScroll:(NSInteger)tag currentPercent:(NSInteger)percent;
 -(void)lockMealPercentView:(NSInteger)tag withPercent:(NSInteger)percent lock:(BOOL)lock;
+-(void)cancleAutoLockView:(NSInteger)tag;
 @end
 
 #import <UIKit/UIKit.h>
@@ -30,4 +31,6 @@
 @property (strong, nonatomic) UIImageView *imgHead;
 @property (strong, nonatomic) UILabel *labSeperate;
 - (instancetype)initWithFrame:(CGRect)frame currentValue:(NSNumber *)value;
+-(void)actBtnLock:(UIButton *)btnLock;
+-(void)cancleBtnLock:(UIButton *)btnLock;
 @end
