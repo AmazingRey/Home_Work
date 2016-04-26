@@ -10,27 +10,26 @@
 //slideView size
 #define SlideViewLeading 15
 #define SlideViewWidth XKAppWidth - 2*SlideViewLeading
-#define SlideViewHeight 127
+#define SlideViewHeight 90
 
 //subviews size
 #define ImageHeadWidth 30
 #define ImageHeadHeight 30
 #define LabTitleWidth 50
 #define LabTitleHeight 30
-#define LabPercentWidth 40
+#define LabPercentWidth 50
 #define LabPercentHeight 20
-#define ImageLockWidth 30
-#define ImageLockHeight 30
+#define ButtonLockWidth 30
+#define ButtonLockHeight 30
 
 #define SlideLeading 15
-#define SlideWidth SlideViewWidth - 2*SlideLeading - ImageHeadWidth - LabTitleWidth - LabPercentWidth - ImageLockWidth
+#define SlideWidth SlideViewWidth - 2*SlideLeading - ImageHeadWidth - LabTitleWidth - LabPercentWidth - ButtonLockHeight
 #define SlideHeight 10
 
-#define SlideTop 50
-
+#define SlideTop 30
 
 @interface XKRWChangeMealPercentVC : XKRWBaseVC
 
 @property (strong, nonatomic) NSMutableDictionary *dicData;
-
+@property (strong, nonatomic) NSMutableArray *arrMealRatio;
 @end

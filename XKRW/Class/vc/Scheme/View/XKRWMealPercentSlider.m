@@ -12,15 +12,15 @@
 
 -(CGRect)trackRectForBounds:(CGRect)bounds
 {
-    bounds.size.height=10;
+    bounds.size.height=7;
     return bounds;
 }
 
 - (CGRect)thumbRectForBounds:(CGRect)bounds trackRect:(CGRect)rect value:(float)value
 {
-    rect.origin.x = rect.origin.x - 10 ;
-    rect.size.width = rect.size.width +20;
-    CGRect res = CGRectInset ([super thumbRectForBounds:bounds trackRect:rect value:value], 10 , 10);
+    rect.origin.x = rect.origin.x - 5 ;
+    rect.size.width = rect.size.width +10;
+    CGRect res = CGRectInset ([super thumbRectForBounds:bounds trackRect:rect value:value], 5 , 5);
     return res;
 }
 

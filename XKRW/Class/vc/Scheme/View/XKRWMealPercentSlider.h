@@ -9,5 +9,4 @@
 #import <UIKit/UIKit.h>
 
 @interface XKRWMealPercentSlider : UISlider
-@property (assign, nonatomic) BOOL lock;
 @end
