@@ -255,10 +255,10 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
 
     func OperatingCellFormDequeueReusableCell(tableView:UITableView) ->XKRWDiscoverOperatingCell{
         OperatingCell = tableView.dequeueReusableCellWithIdentifier("OperatingCell") as? XKRWDiscoverOperatingCell
-        OperatingCell!.pkButton.addTarget(self, action: "entryPKList", forControlEvents: .TouchUpInside)
-        OperatingCell!.motivationalButton.addTarget(self, action: "entryMotivationList", forControlEvents: .TouchUpInside)
-        OperatingCell!.sportRecommendButton.addTarget(self, action: "entrySportRecommandList", forControlEvents: .TouchUpInside)
-        OperatingCell!.lossWeightOfKnowledgeButton.addTarget(self, action: "entryLossWeightKnowledgeList", forControlEvents: .TouchUpInside)
+        OperatingCell!.pkButton.addTarget(self, action: #selector(XKRWDiscover_5_2.entryPKList), forControlEvents: .TouchUpInside)
+        OperatingCell!.motivationalButton.addTarget(self, action: #selector(XKRWDiscover_5_2.entryMotivationList), forControlEvents: .TouchUpInside)
+        OperatingCell!.sportRecommendButton.addTarget(self, action: #selector(XKRWDiscover_5_2.entrySportRecommandList), forControlEvents: .TouchUpInside)
+        OperatingCell!.lossWeightOfKnowledgeButton.addTarget(self, action: #selector(XKRWDiscover_5_2.entryLossWeightKnowledgeList), forControlEvents: .TouchUpInside)
         return OperatingCell!
     }
     
@@ -282,7 +282,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         
         self.changeCommentNoticeNum()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeCommentNoticeNum", name: "CommentAndSystemNoticeChanged", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(XKRWDiscover_5_2.changeCommentNoticeNum), name: "CommentAndSystemNoticeChanged", object: nil)
         
     }
     
@@ -730,7 +730,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         self.getIslimShareNewestArticle()
         self.getDiscoverOperationState()
         self.getUserJoinTeam()
-        self.performSelector("stopReflash", withObject: nil, afterDelay: 2)
+        self.performSelector(#selector(XKRWDiscover_5_2.stopReflash), withObject: nil, afterDelay: 2)
     }
     
     func refreshViewEndRefreshing(refreshView: MJRefreshBaseView!) {

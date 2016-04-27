@@ -247,6 +247,8 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
         
         XKRWNoticeService.sharedService().addNotificationInViewController(self, andKeyWindow: UIApplication.sharedApplication().keyWindow)
 
+    
+        
         scope("do fix or sync data") { () -> () in
             // do fix
             dispatch_async(dispatch_get_global_queue(0, 0), { () -> Void in

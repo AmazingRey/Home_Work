@@ -16,13 +16,16 @@
 #import "XKRWPlan_5_3CollectionView.h"
 #import "XKRWFatReasonService.h"
 #import "XKRWRecordVC.h"
+#import "XKRWUtil.h"
 @interface XKRWRecordFood5_3View () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate>
 {
     UITableView *recordTableView;
     UITableView *recommendedTableView;
-    
     NSArray  *recordTypeTitleArray;
     NSArray  *recordTypeImageArray;
+    BOOL     isRecommended;     //判断当前是推荐状态 还是记录状态
+    
+    NSInteger  showDetailSection;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *testViewFrame;
@@ -33,7 +36,8 @@
 @implementation XKRWRecordFood5_3View
 
 -(void)initSubViews {
-    
+    _scrollView.delegate = self;
+    showDetailSection = -1;
     _shadowImageView =[[UIImageView alloc]initWithFrame:CGRectMake((XKAppWidth - 800) /2 + (_positionX - XKAppWidth /2) , 0, 800, 10)];
     _shadowImageView.image = [UIImage imageNamed:@"shadow"];
     [self addSubview:_shadowImageView];
@@ -61,19 +65,17 @@
     [_scrollView addSubview:recordTableView];
     [_scrollView addSubview:recommendedTableView];
   
-    _nutritionAnalyzeButton.layer.cornerRadius = 5;
-    _nutritionAnalyzeButton.layer.borderWidth = 1;
-    _nutritionAnalyzeButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    _leftButton.layer.cornerRadius = 5;
+    _leftButton.layer.borderWidth = 1;
+    _leftButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
     
-    _recordFoodButton.layer.cornerRadius = 5;
-    _recordFoodButton.layer.borderWidth = 1;
-    _recordFoodButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    _centerbutton.layer.cornerRadius = 5;
+    _centerbutton.layer.borderWidth = 1;
+    _centerbutton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
     
-    _recordSportButton.layer.cornerRadius = 5;
-    _recordSportButton.layer.borderWidth = 1;
-    _recordSportButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-    
-   
+    _rightButton.layer.cornerRadius = 5;
+    _rightButton.layer.borderWidth = 1;
+    _rightButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
 }
 
 -(void)setTitle {
@@ -81,46 +83,38 @@
     _habitLabel.hidden = YES;
     _recordTypeLabel.hidden = NO;
     _recommendedTypeLabel.hidden = NO;
-    _recordCalorieLabel.hidden = NO;
-    _recommendedCalorieLabel.hidden = NO;
-    _recordFoodButton.hidden = YES;
-    _nutritionAnalyzeButton.hidden = YES;
-    _recordSportButton.hidden = YES;
+
+    _leftButton.hidden = YES;
+    _centerbutton.hidden = YES;
+    _rightButton.hidden = YES;
     
     switch (_type) {
         case energyTypeEat:
             _recordTypeLabel.text = @"记录饮食";
             _recommendedTypeLabel.text = @"推荐食谱";
-            _recordCalorieLabel.text = @"1111kcal";
-            _recommendedCalorieLabel.text = @"2222kcal";
             _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
-            _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;
+            _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
             _labSeperate.hidden = NO;
-            _recordFoodButton.hidden = NO;
-            _nutritionAnalyzeButton.hidden = NO;
+            _leftButton.hidden = NO;
+            _rightButton.hidden = NO;
             recordTypeTitleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
             recordTypeImageArray = @[@"breakfast5_3",@"lunch5_3",@"dinner5_3",@"addmeal5_3"];
             break;
         case energyTypeSport:
             _recordTypeLabel.text = @"记录运动";
             _recommendedTypeLabel.text = @"推荐运动";
-            int cal = [XKRWAlgolHelper dailyConsumeSportEnergy];
-            _recordCalorieLabel.text = [NSString stringWithFormat:@"%dkcal",cal];
-            _recommendedCalorieLabel.text = @"4444kcal";
             _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
-            _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;
+            _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
             _labSeperate.hidden = NO;
-            _recordSportButton.hidden = NO;
+            _centerbutton.hidden = NO;
             recordTypeTitleArray = @[@"运动"];
             recordTypeImageArray =@[@"sports5_3"];
             break;
         case energyTypeHabit:
             _recordTypeLabel.hidden = YES;
             _recommendedTypeLabel.hidden = YES;
-            _recordCalorieLabel.hidden = YES;
-            _recommendedCalorieLabel.hidden = YES;
             _habitLabel.hidden = NO;
-             _recordSportButton.hidden = NO;
+            _actionView.hidden = YES;
             break;
         default:
             break;
@@ -164,12 +158,15 @@
 #pragma mark UITableView Delegate & Datasource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    if (tableView.tag == 5031) {
+        return recordTypeTitleArray.count;
+    }
     return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView.tag == 5031) {
-        return recordTypeTitleArray.count;
+        return 0;
     }else if (tableView.tag == 5032){
         return _schemeArray.count;
     }
@@ -183,12 +180,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     XKRWRecordSchemeEntity *entity;
      if (tableView.tag == 5031) {
-         entity = [_reocrdArray objectAtIndex:indexPath.row];
-         XKRWRecordFood5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"recordFoodCell"];
-         cell.frame = CGRectMake(0, 0, self.width, 59);
-         cell.leftImage.image = [UIImage imageNamed:[recordTypeImageArray objectAtIndex:indexPath.row]];
-         cell.labMain.text = [recordTypeTitleArray objectAtIndex:indexPath.row];
-         return  cell;
+         return nil;
      }else if (tableView.tag == 5032){
         entity = [_schemeArray objectAtIndex:indexPath.row];
         XKRWPushMenu5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"pushMenuCell"];
@@ -203,6 +195,181 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if(tableView.tag == 5031){
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 59)];
+        headerView.backgroundColor = XK_BACKGROUND_COLOR;
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, (59-29)/2, 29, 29)];
+      
+        imageView.image = [UIImage imageNamed:[recordTypeImageArray objectAtIndex:section]];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right + 10, 0, 100, 59)];
+        label.text = [recordTypeTitleArray objectAtIndex:section];
+        label.font = XKDefaultFontWithSize(15.f);
+        label.textColor = colorSecondary_333333;
+        [headerView addSubview:imageView];
+        [headerView addSubview:label];
+        
+        UIImageView *arrowImageView = [[UIImageView alloc]init];
+        if(showDetailSection == section){
+            arrowImageView.image = [UIImage imageNamed:@"details"];
+            arrowImageView.frame = CGRectMake(XKAppWidth-15-6, (59-8)/2, 6, 8);
+        }else{
+            arrowImageView.image = [UIImage imageNamed:@"dropdown menu"];
+            arrowImageView.frame = CGRectMake(XKAppWidth-15-8, (59-6)/2, 8, 6);
+        }
+        [headerView addSubview:arrowImageView];
+        
+        UILabel *calorieLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth-150-15-15, 0, 150, 59)];
+        calorieLabel.font = XKDefaultFontWithSize(15.f);
+        calorieLabel.textColor = colorSecondary_333333;
+        
+        [headerView addSubview:calorieLabel];
+        
+        UIButton *showDetailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 59)];
+        showDetailButton.tag = 100 + section;
+        [showDetailButton addTarget:self action:@selector(showDetail:) forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:showDetailButton];
+        
+        [XKRWUtil addViewUpLineAndDownLine:headerView andUpLineHidden:YES DownLineHidden:NO];
+        return headerView;
+        
+    }
+    return nil;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (tableView.tag == 5031) {
+        return 59;
+    }
+    return 0;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if(scrollView.tag == 1005){
+        if (scrollView.contentOffset.x >= XKAppWidth) {
+            _recordTypeLabel.textColor = XK_TEXT_COLOR;
+            _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;
+        }else{
+            _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
+            _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
+        }
+    }else{
+        CGFloat sectionHeaderHeight = 59;
+        if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+            scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+            scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+        }
+    }
+}
+
+
+
+#pragma --mark Action
+//点击展示 早餐 午餐 晚餐 加餐 的详细情况
+- (void)showDetail:(UIButton *)button {
+    showDetailSection = button.tag -100;
+}
+
+//关闭
+- (IBAction)cancleAction:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(RecordFoodViewpressCancle)]) {
+        [self.delegate RecordFoodViewpressCancle];
+    }
+}
+
+//点击记录按钮
+- (IBAction)recordSeclctAction:(UIButton *)sender {
+     isRecommended = NO;
+    _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
+    _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
+    if (_type == energyTypeEat) {
+        _leftButton.hidden = NO;
+        _centerbutton.hidden = YES;
+        _rightButton.hidden = NO;
+    }else if (_type == energyTypeSport){
+        _leftButton.hidden = YES;
+        _centerbutton.hidden = NO;
+        [_centerbutton setTitle:@"记录运动" forState:UIControlStateNormal];
+        _rightButton.hidden = YES;
+    }
+
+    [UIView animateWithDuration:0.5 animations:^{
+        _scrollView.contentOffset = CGPointMake(0, 0);
+    }];
+}
+
+//点击推荐按钮
+- (IBAction)recommendedSelectAction:(UIButton *)sender {
+    
+    isRecommended = YES;
+    _recordTypeLabel.textColor = XK_TEXT_COLOR;
+    _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;
+
+    if (_type == energyTypeEat) {
+        _leftButton.hidden = YES;
+        _centerbutton.hidden = NO;
+        [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
+        _rightButton.hidden = YES;
+    }else if (_type == energyTypeSport){
+        _leftButton.hidden = YES;
+        _centerbutton.hidden = NO;
+        [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
+        _rightButton.hidden = YES;
+    }
+    [UIView animateWithDuration:0.5 animations:^{
+        _scrollView.contentOffset = CGPointMake(XKAppWidth, 0);
+    }];
+    
+}
+
+- (IBAction)actMore:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(addMoreView)]) {
+        [self.delegate addMoreView];
+    }
+}
+
+// 用来处理营养分析
+- (IBAction)leftButtonAction:(UIButton *)sender {
+    
+}
+
+- (IBAction)centerButtonAction:(UIButton *)sender {
+    //用来处理记录推荐运动
+    if (isRecommended == YES && _type == energyTypeSport) {
+        
+        
+        return;
+    }
+    //用来处理记录自定义运动
+    if (isRecommended == NO && _type == energyTypeSport) {
+        if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
+            [self.delegate entryRecordVCWith:eSchemeSport];
+        }
+        return;
+    }
+    
+    //用来处理记录推荐饮食
+    if (isRecommended == YES && _type == energyTypeEat) {
+      
+        return;
+    }
+    
+    
+}
+
+// 用来处理记录自定义饮食
+- (IBAction)rightButtonAction:(UIButton *)sender {
+    
+    if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
+        [self.delegate entryRecordVCWith:eSchemeFood];
+    }
+}
+
 
 -(NSString *)getImageNameWithType:(RecordType)type{
     NSString *imgName ;
@@ -254,51 +421,5 @@
     return name;
 }
 
-
-//营养分析
-- (IBAction)nutritionAnalyzeAction:(UIButton *)sender {
-    
-}
-
-//记录运动
-- (IBAction)recordSportAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
-        [self.delegate entryRecordVCWith:eSchemeSport];
-    }
-}
-
-//记录食物
-- (IBAction)recordFoodAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
-        [self.delegate entryRecordVCWith:eSchemeFood];
-    }
-}
-
-//关闭
-- (IBAction)cancleAction:(UIButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(RecordFoodViewpressCancle)]) {
-        [self.delegate RecordFoodViewpressCancle];
-    }
-}
-
-//点击记录按钮
-- (IBAction)recordSeclctAction:(UIButton *)sender {
-    [UIView animateWithDuration:0.5 animations:^{
-        _scrollView.contentOffset = CGPointMake(0, 0);
-    }];
-}
-
-//点击推荐按钮
-- (IBAction)recommendedSelectAction:(UIButton *)sender {
-    [UIView animateWithDuration:0.5 animations:^{
-        _scrollView.contentOffset = CGPointMake(XKAppWidth, 0);
-    }];
-}
-
-- (IBAction)actMore:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(addMoreView)]) {
-        [self.delegate addMoreView];
-    }
-}
 
 @end

@@ -19,6 +19,8 @@
 #define LabTitleHeight 30
 #define LabPercentWidth 50
 #define LabPercentHeight 20
+#define LabNumWidth 100
+#define LabNumHeight 30
 #define ButtonLockWidth 30
 #define ButtonLockHeight 30
 

@@ -74,7 +74,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
             
         } else {
             var array = self.identifier?.componentsSeparatedByString("+")
-            
+        
             if let timeStamp = Int((array!.last)!) {
                 if timeStamp < Int(NSDate().offsetDay(-1).timeIntervalSince1970) {
                     // do clean
@@ -86,7 +86,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
                 let idsStringArray = array![0].componentsSeparatedByString(",")
                 var ids = [Int]()
                 
-                for i in 0...2 {
+                for i in 0...array!.count {
                     if let idNumber = Int(idsStringArray[i]) {
                         ids.append(idNumber)
                     }
@@ -257,6 +257,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
             postForm.setValue(NSString(format:"%d", type!.rawValue), forKey: "type")
         }
         var result = self.syncBatchDataWith(url!, andPostForm: postForm as [NSObject : AnyObject])
+        print("wwwww\(result)")
         var returnValue = [XKRWSchemeEntity_5_0]()
         
         for dic in result["data"] as! NSArray {

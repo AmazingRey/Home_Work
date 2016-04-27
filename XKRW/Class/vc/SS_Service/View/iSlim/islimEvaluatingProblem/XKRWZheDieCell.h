@@ -13,10 +13,7 @@
 {
     UITableView  *foldTableView;  // tableView
     NSMutableArray *selectedArr;  //已经选过的 标题
-//    UIView  *progressBarView;
     NSInteger  selectSection;  //选中的section
-//    UIView     *lineView1;
-//    UIView     *lineView2;
     NSMutableArray  *checkStateArray;
 }
 

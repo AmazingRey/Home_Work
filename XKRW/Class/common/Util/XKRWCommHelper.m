@@ -625,28 +625,13 @@ static XKRWBaseService *service;
     [[XKRWFatReasonService sharedService] saveQuenstionAnswer:userFatReason WithUID:u_id];
 }
 
-
-//+ (void) updateHandelFromV2
-//{
-//    NSString *dbFile = [XKConfigUtil stringForKey:@"oldVersionDbName"];
-//    if (dbFile && [[self class] fileExists:dbFile]) {
-//        [self initOldDbQueue];
-//        [[self class] updateUserFromOldVersion];
-//        //同步体重记录
-//        [[self class] updateWeightLogFromOldVersion];
-//        //同步三餐比例
-//    }
-//    [[self class] synWeightLogFromVersion1];
-//    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUpdateFromV2];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//}
 /*当天第一次打开app时，需要处理的任务*/
 + (void) firstOpenHandler
 {
     //需要同步的数据
-//    [XKSilentDispatcher asynExecuteTask:^{
-//        [XKRWCommHelper syncRemoteData];
-//    }];
+    [XKSilentDispatcher asynExecuteTask:^{
+        [XKRWCommHelper syncRemoteData];
+    }];
 
     //设置日期为今天
     [[self class] setFirstOpenToday];
@@ -658,31 +643,6 @@ static XKRWBaseService *service;
     if (![XKRWUserDefaultService isLogin]) {
         return NO;
     }
-    
-    /*
-     *检查体重记录√
-     
-     *检查DIY食谱√
-     
-     *检查记录√
-    
-     *检查预测√
-     
-     *检查提醒√
-     
-     *检查比例 √
-     
-     *肥胖原因√
-     */
-    
-//    @try {
-//        //闹钟
-//        [[XKRWAlarmService shareService] getRemoteAlarms];
-//    }
-//    @catch (NSException *exception) {
-//        NSLog(@"获取闹钟出错了:%@",[exception description]);
-//
-//    }
     
     @try {
         //获取记录值

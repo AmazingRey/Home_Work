@@ -9,6 +9,7 @@
 
 #import "XKRWMealPercentView.h"
 #import "masonry.h"
+#import "XKRWAlgolHelper.h"
 
 @implementation XKRWMealPercentView
 - (instancetype)initWithFrame:(CGRect)frame currentValue:(NSNumber *)value
@@ -45,13 +46,13 @@
     _labPercent = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
     _labPercent.textAlignment = NSTextAlignmentLeft;
     _labPercent.textColor = colorSecondary_999999;
-    _labPercent.font = [UIFont systemFontOfSize:17];
+    _labPercent.font = [UIFont systemFontOfSize:15];
     _labPercent.text = [NSString stringWithFormat:@"%d%%",_currentPerCent.intValue];
     [self addSubview:_labPercent];
     
     _btnLock = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnLock.frame = CGRectMake(0, 0, 30, 30);
-    [_btnLock addTarget:self action:@selector(actBtnLock:) forControlEvents:UIControlEventTouchUpInside];
+    [_btnLock addTarget:self action:@selector(actBtnLock) forControlEvents:UIControlEventTouchUpInside];
     [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
     [_btnLock setImage:[UIImage imageNamed:@"lock2"] forState:UIControlStateSelected];
     [self addSubview:_btnLock];
@@ -62,8 +63,16 @@
     _labTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
     _labTitle.textAlignment = NSTextAlignmentLeft;
     _labTitle.textColor = colorSecondary_999999;
-    _labTitle.font = [UIFont systemFontOfSize:17];
+    _labTitle.font = [UIFont systemFontOfSize:15];
     [self addSubview:_labTitle];
+    
+    _labNum = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    _labNum.textAlignment = NSTextAlignmentCenter;
+    _labNum.textColor = colorSecondary_999999;
+    _labNum.font = [UIFont systemFontOfSize:15];
+    float value = _currentPerCent.integerValue / 100.0f;
+    _labNum.text = [NSString stringWithFormat:@"%.0fkcal",ceilf(value * [XKRWAlgolHelper dailyIntakeRecomEnergy]) ];
+    [self addSubview:_labNum];
     
     _labSeperate = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 1)];
     _labSeperate.backgroundColor = [UIColor colorFromHexString:@"#e7e7e7"];
@@ -83,28 +92,38 @@
     }
 }
 
--(void)actBtnLock:(UIButton *)btnLock{
-    _lock = !_lock;
-    self.slider.userInteractionEnabled = !_lock;
+-(void)actBtnLock{
     if (_lock) {
-        [_btnLock setImage:[UIImage imageNamed:@"lock2"] forState:UIControlStateNormal];
-    }else{
         [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
-    }
-    
-    if ([self.delegate respondsToSelector:@selector(lockMealPercentView:withPercent:lock:)]) {
-        [self.delegate lockMealPercentView:self.slider.tag withPercent:ceilf(_startValue*100) lock:_lock];
+        _lock = NO;
+        self.slider.userInteractionEnabled = !_lock;
+        if ([self.delegate respondsToSelector:@selector(lockpercentView:withPercent:lock:)]) {
+            [self.delegate lockpercentView:self.slider.tag withPercent:ceilf(_startValue*100)lock:YES];
+        }
+    }else{
+        [_btnLock setImage:[UIImage imageNamed:@"lock2"] forState:UIControlStateNormal];
+        if ([self.delegate respondsToSelector:@selector(lockpercentView:withPercent:lock:)]) {
+            [self.delegate lockpercentView:self.slider.tag withPercent:_currentPerCent.integerValue lock:_lock];
+        }
+        _lock = YES;
+        self.slider.userInteractionEnabled = !_lock;
     }
 }
 
--(void)cancleBtnLock:(UIButton *)btnLock{
-    _lock = NO;
-    self.slider.userInteractionEnabled = !_lock;
+-(void)cancleBtnLock{
     [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
     
-    if ([self.delegate respondsToSelector:@selector(cancleAutoLockView:)]) {
-        [self.delegate cancleAutoLockView:self.slider.tag];
+    if ([self.delegate respondsToSelector:@selector(unlockPercentView:)]) {
+        [self.delegate unlockPercentView:self.slider.tag];
     }
+    _lock = NO;
+    self.slider.userInteractionEnabled = !_lock;
+}
+
+-(void)cancleBtnLockWithoutDelegate{
+    [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
+    _lock = NO;
+    self.slider.userInteractionEnabled = !_lock;
 }
 
 -(XKRWMealPercentSlider *)slider{
@@ -122,6 +141,7 @@
     if (fabs(_startValue - _slider.value) >.01) {
         _startValue = _slider.value;
     }
+    
     _currentPerCent = @(ceilf(_startValue*100));
     if ([self.delegate respondsToSelector:@selector(slideDidScroll:currentPercent:)]) {
         [self.delegate slideDidScroll:_slider.tag currentPercent:_currentPerCent.integerValue];

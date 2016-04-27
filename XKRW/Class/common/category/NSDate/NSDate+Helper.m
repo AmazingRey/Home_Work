@@ -307,6 +307,7 @@
     
     return [[NSCalendar currentCalendar] dateFromComponents:comps];
 }
+
 + (BOOL)dateIsLatterThanToday:(NSDate *)date {
     BOOL abool = NO;
     NSCalendar *calendar = [NSCalendar currentCalendar];

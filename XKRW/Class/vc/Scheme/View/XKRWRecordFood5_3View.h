@@ -18,25 +18,27 @@
 
 @interface XKRWRecordFood5_3View : UIView
 @property (assign,nonatomic) id<XKRWRecordFood5_3ViewDelegate> delegate;
-@property (weak, nonatomic) IBOutlet UILabel *recordCalorieLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *recommendedTypeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *recommendedCalorieLabel;
-@property (weak, nonatomic) IBOutlet UIButton *recordFoodButton;
 @property (weak, nonatomic) IBOutlet UILabel *habitLabel;
-@property (weak, nonatomic) IBOutlet UIButton *recordSportButton;
 @property (weak, nonatomic) IBOutlet UILabel *recordTypeLabel;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UIButton *nutritionAnalyzeButton;
 @property (weak, nonatomic) IBOutlet UILabel *labSeperate;
 @property (weak, nonatomic) IBOutlet UIButton *moreButton;
 
-//营养分析
-- (IBAction)nutritionAnalyzeAction:(UIButton *)sender;
-//记录运动
-- (IBAction)recordSportAction:(UIButton *)sender;
-//记录食物
-- (IBAction)recordFoodAction:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+@property (weak, nonatomic) IBOutlet UIButton *centerbutton;
+@property (weak, nonatomic) IBOutlet UIButton *rightButton;
+@property (weak, nonatomic) IBOutlet UIView *actionView;
+
+// 点击的是记录饮食圆环  进入营养分析
+- (IBAction)leftButtonAction:(UIButton *)sender;
+// 记录推荐饮食  推荐运动  运动
+- (IBAction)centerButtonAction:(UIButton *)sender;
+//点击的是记录饮食圆环  进入记录食物
+- (IBAction)rightButtonAction:(UIButton *)sender;
+
 //关闭页面
 - (IBAction)cancleAction:(UIButton *)sender;
 //选中记录按钮 action
@@ -53,4 +55,7 @@
 @property (assign ,nonatomic) energyType type;
 @property (strong ,nonatomic) NSMutableDictionary *dicCollection;
 @property (strong ,nonatomic) UIImageView *shadowImageView;
+
+@property (nonatomic,strong) UIViewController *vc;
+
 @end

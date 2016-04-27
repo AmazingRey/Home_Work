@@ -425,6 +425,9 @@
 		BC29E6D91C76C44B00CF923D /* XKRWServerChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC29E6D71C76C44B00CF923D /* XKRWServerChatCell.swift */; };
 		BC29E6DA1C76C44B00CF923D /* XKRWServerChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC29E6D81C76C44B00CF923D /* XKRWServerChatCell.xib */; };
 		BC29E6DC1C76F47E00CF923D /* XKRWChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC29E6DB1C76F47E00CF923D /* XKRWChatMessageModel.swift */; };
+		BC3127871CCE104300867F51 /* XKRWRecordShowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3127861CCE104300867F51 /* XKRWRecordShowCell.m */; };
+		BC31278E1CCF7F3F00867F51 /* XKRWThinBodyDayManage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31278B1CCF7F3F00867F51 /* XKRWThinBodyDayManage.m */; };
+		BC31278F1CCF7F3F00867F51 /* XKRWTipsManage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31278D1CCF7F3F00867F51 /* XKRWTipsManage.m */; };
 		BC318E831C2B8A35008C6366 /* XKRWAppRecommendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC318E811C2B8A35008C6366 /* XKRWAppRecommendVC.swift */; };
 		BC318E841C2B8A35008C6366 /* XKRWAppRecommendVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC318E821C2B8A35008C6366 /* XKRWAppRecommendVC.xib */; };
 		BC318E871C2B8AA9008C6366 /* XKRWAppRecommendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC318E851C2B8AA9008C6366 /* XKRWAppRecommendCell.swift */; };
@@ -491,7 +494,6 @@
 		BC45077B1CB7887000B8DF00 /* XKRWPostDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4507791CB7887000B8DF00 /* XKRWPostDetailVC.m */; };
 		BC45077C1CB7887000B8DF00 /* XKRWPostDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC45077A1CB7887000B8DF00 /* XKRWPostDetailVC.xib */; };
 		BC4D7DFE1CC4D2580080C944 /* XKRWPlanTipsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4D7DFD1CC4D2580080C944 /* XKRWPlanTipsEntity.m */; };
-		BC4D7E041CC5CC230080C944 /* XKRWTipsManage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC4D7E031CC5CC230080C944 /* XKRWTipsManage.m */; };
 		BC4F89EA1BEB62FC0038B50B /* SMS_SDKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC4F89E61BEB62FC0038B50B /* SMS_SDKLocalizable.strings */; };
 		BC4F89EB1BEB62FC0038B50B /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC4F89E81BEB62FC0038B50B /* SMS_SDK.framework */; };
 		BC4F8D451C9108D300CABD2F /* libUMessage_Sdk_1.2.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC4F8D431C9108D300CABD2F /* libUMessage_Sdk_1.2.6.a */; };
@@ -733,6 +735,7 @@
 		BC9A96FA1CC61102007EE97E /* XKRWCalendarVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9A96F91CC61102007EE97E /* XKRWCalendarVC.m */; };
 		BC9A96FD1CC619B6007EE97E /* XKRWPlanCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9A96FC1CC619B6007EE97E /* XKRWPlanCalendarView.m */; };
 		BC9A96FF1CC619D9007EE97E /* XKRWPlanCalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC9A96FE1CC619D9007EE97E /* XKRWPlanCalendarView.xib */; };
+		BC9B95CA1CD099FD0030EAD1 /* XKRWHomePagePretreatmentManage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9B95C91CD099FD0030EAD1 /* XKRWHomePagePretreatmentManage.m */; };
 		BC9C0C2C1B2682270088BBDC /* slim3.db in Resources */ = {isa = PBXBuildFile; fileRef = BC9C0C2B1B2682270088BBDC /* slim3.db */; };
 		BCA4044C1C31063800F39044 /* share_photo_verify@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCA4044A1C31063800F39044 /* share_photo_verify@2x.png */; };
 		BCA4044D1C31063800F39044 /* share_photo_verify@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCA4044B1C31063800F39044 /* share_photo_verify@3x.png */; };
@@ -995,7 +998,6 @@
 		BCF123AD1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF123AB1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.swift */; };
 		BCF123AE1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF123AC1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.xib */; };
 		BCF4F80B19A7372400E7644E /* ProvincesAndCities.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCF4F80A19A7372400E7644E /* ProvincesAndCities.plist */; };
-		BCF664641CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF664631CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m */; };
 		BCF6646C1CAE1D4B006EBC61 /* XKRWPlanVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF6646B1CAE1D4B006EBC61 /* XKRWPlanVC.m */; };
 		BCF664701CAE28BA006EBC61 /* XKRWRecordAndTargetView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF6646F1CAE28BA006EBC61 /* XKRWRecordAndTargetView.m */; };
 		BCF664721CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF664711CAE28E3006EBC61 /* XKRWRecordAndTargetView.xib */; };
@@ -1826,6 +1828,12 @@
 		BC29E6D71C76C44B00CF923D /* XKRWServerChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XKRWServerChatCell.swift; path = ../XKRWServerChatCell.swift; sourceTree = "<group>"; };
 		BC29E6D81C76C44B00CF923D /* XKRWServerChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = XKRWServerChatCell.xib; path = ../XKRWServerChatCell.xib; sourceTree = "<group>"; };
 		BC29E6DB1C76F47E00CF923D /* XKRWChatMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWChatMessageModel.swift; sourceTree = "<group>"; };
+		BC3127851CCE104300867F51 /* XKRWRecordShowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordShowCell.h; sourceTree = "<group>"; };
+		BC3127861CCE104300867F51 /* XKRWRecordShowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordShowCell.m; sourceTree = "<group>"; };
+		BC31278A1CCF7F3F00867F51 /* XKRWThinBodyDayManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWThinBodyDayManage.h; sourceTree = "<group>"; };
+		BC31278B1CCF7F3F00867F51 /* XKRWThinBodyDayManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWThinBodyDayManage.m; sourceTree = "<group>"; };
+		BC31278C1CCF7F3F00867F51 /* XKRWTipsManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWTipsManage.h; sourceTree = "<group>"; };
+		BC31278D1CCF7F3F00867F51 /* XKRWTipsManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWTipsManage.m; sourceTree = "<group>"; };
 		BC318E811C2B8A35008C6366 /* XKRWAppRecommendVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWAppRecommendVC.swift; sourceTree = "<group>"; };
 		BC318E821C2B8A35008C6366 /* XKRWAppRecommendVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWAppRecommendVC.xib; sourceTree = "<group>"; };
 		BC318E851C2B8AA9008C6366 /* XKRWAppRecommendCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWAppRecommendCell.swift; sourceTree = "<group>"; };
@@ -1906,8 +1914,6 @@
 		BC45077A1CB7887000B8DF00 /* XKRWPostDetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPostDetailVC.xib; sourceTree = "<group>"; };
 		BC4D7DFC1CC4D2580080C944 /* XKRWPlanTipsEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanTipsEntity.h; sourceTree = "<group>"; };
 		BC4D7DFD1CC4D2580080C944 /* XKRWPlanTipsEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanTipsEntity.m; sourceTree = "<group>"; };
-		BC4D7E021CC5CC230080C944 /* XKRWTipsManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWTipsManage.h; sourceTree = "<group>"; };
-		BC4D7E031CC5CC230080C944 /* XKRWTipsManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWTipsManage.m; sourceTree = "<group>"; };
 		BC4F89E71BEB62FC0038B50B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SMS_SDKLocalizable.strings; sourceTree = "<group>"; };
 		BC4F89E81BEB62FC0038B50B /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
 		BC4F89E91BEB62FC0038B50B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/SMS_SDKLocalizable.strings"; sourceTree = "<group>"; };
@@ -2283,6 +2289,8 @@
 		BC9A96FB1CC619B6007EE97E /* XKRWPlanCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanCalendarView.h; sourceTree = "<group>"; };
 		BC9A96FC1CC619B6007EE97E /* XKRWPlanCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanCalendarView.m; sourceTree = "<group>"; };
 		BC9A96FE1CC619D9007EE97E /* XKRWPlanCalendarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlanCalendarView.xib; sourceTree = "<group>"; };
+		BC9B95C81CD099FD0030EAD1 /* XKRWHomePagePretreatmentManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWHomePagePretreatmentManage.h; sourceTree = "<group>"; };
+		BC9B95C91CD099FD0030EAD1 /* XKRWHomePagePretreatmentManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWHomePagePretreatmentManage.m; sourceTree = "<group>"; };
 		BC9C0C2B1B2682270088BBDC /* slim3.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = slim3.db; sourceTree = "<group>"; };
 		BCA4044A1C31063800F39044 /* share_photo_verify@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_photo_verify@2x.png"; sourceTree = "<group>"; };
 		BCA4044B1C31063800F39044 /* share_photo_verify@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_photo_verify@3x.png"; sourceTree = "<group>"; };
@@ -2682,8 +2690,6 @@
 		BCF123AB1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWDiscoverOperatingCell.swift; sourceTree = "<group>"; };
 		BCF123AC1C45FF6D00BAB8F0 /* XKRWDiscoverOperatingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWDiscoverOperatingCell.xib; sourceTree = "<group>"; };
 		BCF4F80A19A7372400E7644E /* ProvincesAndCities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ProvincesAndCities.plist; sourceTree = "<group>"; };
-		BCF664621CAE0B7C006EBC61 /* XKRWThinBodyDayManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWThinBodyDayManage.h; sourceTree = "<group>"; };
-		BCF664631CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWThinBodyDayManage.m; sourceTree = "<group>"; };
 		BCF6646A1CAE1D4B006EBC61 /* XKRWPlanVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlanVC.h; sourceTree = "<group>"; };
 		BCF6646B1CAE1D4B006EBC61 /* XKRWPlanVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlanVC.m; sourceTree = "<group>"; };
 		BCF6646E1CAE28BA006EBC61 /* XKRWRecordAndTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordAndTargetView.h; sourceTree = "<group>"; };
@@ -2864,6 +2870,7 @@
 		044C4D321855996100B1BFBF /* service */ = {
 			isa = PBXGroup;
 			children = (
+				BC3127891CCF7F3F00867F51 /* ManageServer */,
 				5DD8D9881C5070E000B8B38C /* groupService */,
 				5D9F1B221C34C3A400049FA5 /* newservice */,
 				BC5C3EEB1B6F15EA00953C37 /* noticeService */,
@@ -4593,6 +4600,19 @@
 			path = notice;
 			sourceTree = "<group>";
 		};
+		BC3127891CCF7F3F00867F51 /* ManageServer */ = {
+			isa = PBXGroup;
+			children = (
+				BC31278A1CCF7F3F00867F51 /* XKRWThinBodyDayManage.h */,
+				BC31278B1CCF7F3F00867F51 /* XKRWThinBodyDayManage.m */,
+				BC31278C1CCF7F3F00867F51 /* XKRWTipsManage.h */,
+				BC31278D1CCF7F3F00867F51 /* XKRWTipsManage.m */,
+				BC9B95C81CD099FD0030EAD1 /* XKRWHomePagePretreatmentManage.h */,
+				BC9B95C91CD099FD0030EAD1 /* XKRWHomePagePretreatmentManage.m */,
+			);
+			path = ManageServer;
+			sourceTree = "<group>";
+		};
 		BC31B8E81C1ACA520045817B /* Scheme */ = {
 			isa = PBXGroup;
 			children = (
@@ -4745,7 +4765,6 @@
 		BC31B9951C1AD3B40045817B /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				BCF664611CAE0B3D006EBC61 /* CommonManage */,
 				BCD0CD0B1CA2412500A6E284 /* CommonUtil */,
 				BC31B9961C1AD3B40045817B /* CommonModel */,
 				BC31B9971C1AD3B40045817B /* CommonVC */,
@@ -6550,17 +6569,6 @@
 			path = UserInfo;
 			sourceTree = "<group>";
 		};
-		BCF664611CAE0B3D006EBC61 /* CommonManage */ = {
-			isa = PBXGroup;
-			children = (
-				BC4D7E021CC5CC230080C944 /* XKRWTipsManage.h */,
-				BC4D7E031CC5CC230080C944 /* XKRWTipsManage.m */,
-				BCF664621CAE0B7C006EBC61 /* XKRWThinBodyDayManage.h */,
-				BCF664631CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m */,
-			);
-			path = CommonManage;
-			sourceTree = "<group>";
-		};
 		BCF6646D1CAE280D006EBC61 /* PlanView */ = {
 			isa = PBXGroup;
 			children = (
@@ -6600,6 +6608,8 @@
 				CC2492081CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.h */,
 				CC2492091CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m */,
 				CC24920B1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib */,
+				BC3127851CCE104300867F51 /* XKRWRecordShowCell.h */,
+				BC3127861CCE104300867F51 /* XKRWRecordShowCell.m */,
 			);
 			name = RecordFoodAndmenu;
 			sourceTree = "<group>";
@@ -6719,9 +6729,6 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
-					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = 2H2WTQZ7Y8;
-					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = WT58P44WAK;
 						TestTargetID = 044DA1C018558DC100CA30F7;
@@ -7135,6 +7142,7 @@
 				E39E8F9A1AAD4F3100B1E5DD /* payRequsestHandler.mm in Sources */,
 				BC31B9361C1ACA520045817B /* XKRWCalendarTitleCell.swift in Sources */,
 				A7E917351B5CA48A0017F5FD /* PNScatterChartData.m in Sources */,
+				BC9B95CA1CD099FD0030EAD1 /* XKRWHomePagePretreatmentManage.m in Sources */,
 				A7E917321B5CA48A0017F5FD /* PNPieChart.m in Sources */,
 				A7C867A01BC8E503009A94B1 /* GTM_Base64.m in Sources */,
 				BC769E781C33D3DD00E96B1A /* README.md in Sources */,
@@ -7322,6 +7330,7 @@
 				BC31B93A1C1ACA520045817B /* SDDescriptionHeaderView.m in Sources */,
 				BCEF375E1C1E75D900740ACC /* XKRWOrderEvaluateCell.m in Sources */,
 				5D9F1B0B1C34C28B00049FA5 /* XKRWFileManager.m in Sources */,
+				BC3127871CCE104300867F51 /* XKRWRecordShowCell.m in Sources */,
 				2FF817DC1C3E634E0032CED5 /* XKRWActionSheetTitleHeader.m in Sources */,
 				5D7458A91C4C8459006B4309 /* ADView.m in Sources */,
 				BC6F2F781C1A70D3005B54E8 /* XKRWFitnessShareVC.m in Sources */,
@@ -7478,6 +7487,7 @@
 				2E9688161A04AEFE00CB5D77 /* UIImageView+WebCache.m in Sources */,
 				BCEF37F61C1E901B00740ACC /* XKRWMyNoticeDetailVC.swift in Sources */,
 				BCC3A8FB1C83E56D00986A56 /* OperationEntity.swift in Sources */,
+				BC31278E1CCF7F3F00867F51 /* XKRWThinBodyDayManage.m in Sources */,
 				BC769E701C33D3DD00E96B1A /* HMSegmentedControl.m in Sources */,
 				2E9686AD1A04AEE500CB5D77 /* XKPullRefreshView.m in Sources */,
 				BC769E7D1C33D3DD00E96B1A /* XKRWIconAndLevelView.m in Sources */,
@@ -7592,7 +7602,6 @@
 				2E9687061A04AEE500CB5D77 /* XKTableViewController.m in Sources */,
 				BCEF37F11C1E901B00740ACC /* XKRWBePraisedVC.swift in Sources */,
 				BCEF37F31C1E901B00740ACC /* XKRWChangeSchemeInfoVC.m in Sources */,
-				BC4D7E041CC5CC230080C944 /* XKRWTipsManage.m in Sources */,
 				BCEF37361C1E75D900740ACC /* XKRWShareVC.m in Sources */,
 				BCC3A8FA1C83E56D00986A56 /* OperationEntity+CoreDataProperties.swift in Sources */,
 				BC769DE81C33D1B700E96B1A /* XKRWRecordEntity.m in Sources */,
@@ -7755,7 +7764,6 @@
 				BC31B92E1C1ACA520045817B /* HPMealCell.swift in Sources */,
 				BC769D981C33CA3500E96B1A /* XKRWUserInfoShowEntity.swift in Sources */,
 				BC6F2F7A1C1A70D3005B54E8 /* XKRWStarGatherNumVC.m in Sources */,
-				BCF664641CAE0B7C006EBC61 /* XKRWThinBodyDayManage.m in Sources */,
 				BC31B9281C1ACA520045817B /* XKRWTabooFoodVC.swift in Sources */,
 				BCEF38251C1E901B00740ACC /* XKRWPraiseCell.swift in Sources */,
 				BCEF37721C1E75D900740ACC /* XKRWEvaluatingProblemCell.m in Sources */,
@@ -7817,6 +7825,7 @@
 				BCCCE64E1C8E7BC9007AA2FF /* RTLabel.m in Sources */,
 				A786D4D71BB5192200B6535D /* MLSelectPhotoPickerGroup.m in Sources */,
 				BC6F2FA01C1A70D3005B54E8 /* XKRWMoreCommetCell.m in Sources */,
+				BC31278F1CCF7F3F00867F51 /* XKRWTipsManage.m in Sources */,
 				BCEF37731C1E75D900740ACC /* XKRWiSlimBaseCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8054,7 +8063,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWLRP;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW321;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -8125,7 +8134,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWLRP;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW321;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
 				PROVISIONING_PROFILE = "";

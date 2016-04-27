@@ -10,14 +10,6 @@
 
 @implementation XKRWZheDieCell
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier page:(NSInteger)page
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier page:page];
@@ -38,25 +30,12 @@
         self.height = XKAppHeight;
     }
     foldTableView.frame = CGRectMake(0, 0, XKAppWidth, self.height);
-    
     self.contenHeight = 44.f * [_sectionTitleArray count] + 44.f * [_cellTitleArray count];
-    
-//    progressBarView.backgroundColor = _color;
-//    progressBarView.frame = CGRectMake(0, 0, 15, self.height);
-
     [self initData];
 }
 
 - (void)initView
 {
-//    if(progressBarView == nil)
-//    {
-//        progressBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 15, XKAppHeight-44)];
-//    }
-//    progressBarView.alpha = 0.3;
-//    [self addSubview:progressBarView];
-    
-  
     if(foldTableView == nil)
     {
         foldTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight-44) style:UITableViewStylePlain];
@@ -74,12 +53,6 @@
 
 - (void)initData
 {
-//    stateArrays =[NSMutableArray arrayWithCapacity:[_sectionTitleArray count]];
-//    
-//    for (int i = 0; i < [_sectionTitleArray count]; i++) {
-//        stateArrays[i] = [NSNumber numberWithInteger:0];
-//    }
-    
     if (checkStateArray == nil) {
         checkStateArray = [NSMutableArray arrayWithCapacity:_sectionTitleArray.count];
         
@@ -95,19 +68,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
     return _sectionTitleArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//     NSString *indexStr = [NSString stringWithFormat:@"%ld",(long)section];
     if (selectSection == section) {
            return  1;
     }else {
-            return  0;
+            return 0;
     }
- 
 }
 
 
@@ -125,8 +95,6 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 44)];
- //   view.backgroundColor = colorSecondary_f4f4f4;
-    
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, XKAppWidth-65, 44)];
     titleLabel.text = [_sectionTitleArray objectAtIndex:section];
     titleLabel.font = [UIFont systemFontOfSize:14.f];
@@ -156,30 +124,6 @@
     UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 43.5, XKAppWidth, .5)];
     lineImage.backgroundColor = colorSecondary_e0e0e0;
     [view addSubview:lineImage];
-    
-//    lineView1 = [[UIView alloc]init];
-//    lineView2 = [[UIView alloc]init];
-//    lineView1.backgroundColor = XKMainToneColor_29ccb1;
-//    lineView2.backgroundColor = XKMainToneColor_29ccb1;
-//    if (section == 0) {
-//        lineView2.frame =CGRectMake(30+(10-1)/2, (44+10)/2 , 1, 44-(44+10)/2);
-//        [view addSubview:lineView2];
-//       
-//    }else if (section == [_sectionTitleArray count]-1)
-//    {
-//        lineView1.frame =CGRectMake(30+(10-1)/2, 0 , 1, (44-10)/2);
-//        [view addSubview:lineView1];
-//    }else
-//    {
-//        lineView1.frame =CGRectMake(30+(10-1)/2, 0 , 1, (44-10)/2);
-//        lineView2.frame =CGRectMake(30+(10-1)/2, (44+10)/2 , 1, 44-(44+10)/2);
-//        [view addSubview:lineView1];
-//        [view addSubview:lineView2];
-//    }
-    
-//    lineView2.backgroundColor = XKMainToneColor_29ccb1;
-//    [view addSubview:lineView2];
-    
     return view;
 }
 
@@ -193,23 +137,14 @@
         if (cell == nil ) {
             cell = [[XKRWEvaluatingProblemCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
             cell.needLayoutSubviews = YES;
-//            cell =
-//            [[XKRWEvaluatingProblemCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                             reuseIdentifier:identifier
-//                                                        page:0
-//                                               iSlimCellType:_cellType
-//                                                  titleArray:_cellTitleArray
-//                                                       color:nil];
-//            
         }
         cell.cellTitleArray= _cellTitleArray;
         cell.cellType = _cellType;
         cell.refreshDelegate = self;
         cell.selectedSection = selectSection;
-  //      cell.isShowLine = YES;
         cell.checkedArray = [checkStateArray objectAtIndex:selectSection];
         if (selectSection == [_sectionTitleArray count]-1) {
-   //         cell.isShowLine = NO;
+
         }
         return cell;
         

@@ -40,6 +40,7 @@
 #import "XKRWRecordMore5_3View.h"
 #import "XKRWRecordSingleMore5_3View.h"
 #import "XKRWChangeMealPercentVC.h"
+#import "XKRWHomePagePretreatmentManage.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate>
 {
@@ -52,7 +53,6 @@
     NSArray *sportsArray;
     NSInteger foodsCount;
     NSInteger sportsCount;
-    NSArray <XKRWSchemeEntity_5_0 *> *mealEntitys;
     NSInteger mealGoalCarol;
     UILabel  *dayLabel;
     UIView *planHeaderView;
@@ -85,7 +85,6 @@
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     
     [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
-   // dayLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -96,6 +95,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initView];
+    [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
     [self initData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView) name:@"energyCircleDataChanged" object:nil];
@@ -112,8 +112,7 @@
 }
 #pragma mark - data
 - (void)initData {
-    mealEntitys = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
-        [_planEnergyView setHabitEnergyCircleGoalNumber:0 currentNumber:0];
+    [_planEnergyView setHabitEnergyCircleGoalNumber:0 currentNumber:0];
     recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:[NSDate today]];
     
     // deal with energyCircle data
@@ -396,9 +395,11 @@
 
 #pragma mark - XKRWRecordFood5_3View
 -(void)addschemeOrRecordView:(NSInteger)index andArrowX:(CGFloat) postitonX {
+    NSArray *array =  [[NSBundle mainBundle] loadNibNamed:@"XKRWRecordFood5_3View" owner:self options:nil];
     XKRWRecordFood5_3View *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordFood5_3View");
     popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
     popView.positionX = postitonX;
+    popView.vc = self;
     [popView initSubViews];
     _recordPopView = popView;
     if (index == 1) {
@@ -815,6 +816,7 @@
     }
     return [UITableViewCell new];
 }
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if(tableView.tag == 1000){
         return 1;

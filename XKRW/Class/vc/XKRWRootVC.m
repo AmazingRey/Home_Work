@@ -244,7 +244,6 @@
     }
     else if([XKRWUserDefaultService isLogin]) {
         if ([[XKRWUserService sharedService] checkUserInfoIsComplete]) {
-            
             XKRWTabbarVC *tabbarVC = [[XKRWTabbarVC alloc] init];
             
             if (IOS_8_OR_LATER) {

@@ -29,21 +29,9 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="记录食物" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qug-Cf-kNw">
-                            <rect key="frame" x="49" y="5" width="136" height="24"/>
+                            <rect key="frame" x="49" y="0.0" width="136" height="49"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="24" id="p3u-KD-lwf"/>
-                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1213kcal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qxf-dl-lpB">
-                            <rect key="frame" x="49" y="30" width="136" height="15"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="15" id="HU3-ir-z9Y"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -57,21 +45,9 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推荐食谱" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLj-61-zzZ">
-                            <rect key="frame" x="190" y="5" width="136" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="24" id="iIK-pA-HGs"/>
-                            </constraints>
+                            <rect key="frame" x="190" y="0.0" width="136" height="49"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4213kcal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qxo-Sy-8OI">
-                            <rect key="frame" x="190" y="30" width="136" height="15"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="15" id="1V1-Dt-sZE"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOJ-3E-NT4">
@@ -120,31 +96,27 @@
                         <constraint firstItem="YJU-qp-bL4" firstAttribute="leading" secondItem="luM-MC-hck" secondAttribute="trailing" constant="2" id="2yT-m7-Kub"/>
                         <constraint firstItem="Qug-Cf-kNw" firstAttribute="leading" secondItem="1Tg-tV-OQC" secondAttribute="trailing" id="5Rs-SP-W5V"/>
                         <constraint firstItem="luM-MC-hck" firstAttribute="leading" secondItem="1Tg-tV-OQC" secondAttribute="trailing" id="70m-IV-QJa"/>
+                        <constraint firstAttribute="bottom" secondItem="Qug-Cf-kNw" secondAttribute="bottom" id="7iO-UF-Wkh"/>
                         <constraint firstItem="1Vt-27-68u" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="8eq-zE-kHD"/>
-                        <constraint firstItem="xOJ-3E-NT4" firstAttribute="leading" secondItem="Qxo-Sy-8OI" secondAttribute="trailing" id="9Qg-Eq-LQB"/>
                         <constraint firstItem="YJU-qp-bL4" firstAttribute="leading" secondItem="Qug-Cf-kNw" secondAttribute="trailing" constant="2" id="AgO-6c-n1W"/>
                         <constraint firstItem="xOJ-3E-NT4" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="BEH-N9-Eip"/>
                         <constraint firstItem="YJU-qp-bL4" firstAttribute="centerX" secondItem="fpV-2j-Yb7" secondAttribute="centerX" id="GyK-Rd-T46"/>
                         <constraint firstAttribute="bottom" secondItem="1Tg-tV-OQC" secondAttribute="bottom" id="I9A-8X-L59"/>
                         <constraint firstItem="xOJ-3E-NT4" firstAttribute="leading" secondItem="vve-JI-KGx" secondAttribute="trailing" id="MIZ-VK-Wa1"/>
                         <constraint firstItem="xOJ-3E-NT4" firstAttribute="leading" secondItem="1Vt-27-68u" secondAttribute="trailing" constant="2" id="MmO-h9-cpT"/>
-                        <constraint firstItem="Qug-Cf-kNw" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" constant="5" id="Nmp-BK-xNY"/>
-                        <constraint firstItem="Qxf-dl-lpB" firstAttribute="top" secondItem="Qug-Cf-kNw" secondAttribute="bottom" constant="1" id="OEg-tG-ayn"/>
                         <constraint firstItem="vve-JI-KGx" firstAttribute="leading" secondItem="1Tg-tV-OQC" secondAttribute="trailing" id="Qs7-10-zwR"/>
                         <constraint firstItem="xOJ-3E-NT4" firstAttribute="leading" secondItem="dLj-61-zzZ" secondAttribute="trailing" id="TMI-bT-ajT"/>
                         <constraint firstAttribute="bottom" secondItem="vve-JI-KGx" secondAttribute="bottom" id="TUc-kl-QAt"/>
-                        <constraint firstItem="Qxf-dl-lpB" firstAttribute="leading" secondItem="1Tg-tV-OQC" secondAttribute="trailing" id="U1F-3r-E9i"/>
-                        <constraint firstItem="Qxo-Sy-8OI" firstAttribute="leading" secondItem="YJU-qp-bL4" secondAttribute="trailing" constant="2" id="W8S-vq-Pvv"/>
+                        <constraint firstAttribute="bottom" secondItem="dLj-61-zzZ" secondAttribute="bottom" id="YSd-ly-ns7"/>
                         <constraint firstAttribute="bottom" secondItem="YJU-qp-bL4" secondAttribute="bottom" constant="10" id="YfM-dl-ZMh"/>
                         <constraint firstItem="luM-MC-hck" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="a5Z-x8-Bkg"/>
                         <constraint firstAttribute="bottom" secondItem="luM-MC-hck" secondAttribute="bottom" id="aX7-3p-yQ7"/>
                         <constraint firstAttribute="bottom" secondItem="xOJ-3E-NT4" secondAttribute="bottom" id="dVN-fL-1Bv"/>
+                        <constraint firstItem="dLj-61-zzZ" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="hJi-y5-aiF"/>
                         <constraint firstItem="dLj-61-zzZ" firstAttribute="leading" secondItem="YJU-qp-bL4" secondAttribute="trailing" constant="2" id="hn1-cw-ykY"/>
                         <constraint firstItem="1Vt-27-68u" firstAttribute="leading" secondItem="YJU-qp-bL4" secondAttribute="trailing" constant="1" id="jjY-oI-cm4"/>
                         <constraint firstItem="1Tg-tV-OQC" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="kIF-OP-Pkq"/>
-                        <constraint firstItem="dLj-61-zzZ" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" constant="5" id="per-gk-K6Y"/>
-                        <constraint firstItem="Qxo-Sy-8OI" firstAttribute="top" secondItem="dLj-61-zzZ" secondAttribute="bottom" constant="1" id="qtZ-dc-Ffd"/>
-                        <constraint firstItem="YJU-qp-bL4" firstAttribute="leading" secondItem="Qxf-dl-lpB" secondAttribute="trailing" constant="2" id="rL7-DA-brg"/>
+                        <constraint firstItem="Qug-Cf-kNw" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="qRW-Jk-B4o"/>
                         <constraint firstAttribute="height" constant="49" id="t33-Df-WpN"/>
                         <constraint firstItem="vve-JI-KGx" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="vth-lE-mpx"/>
                         <constraint firstAttribute="trailing" secondItem="xOJ-3E-NT4" secondAttribute="trailing" id="xC0-zb-DCm"/>
@@ -165,20 +137,7 @@
                                 <color key="titleColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
-                                <action selector="recordFoodAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="jjI-ho-lHL"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oC2-cv-vlm">
-                            <rect key="frame" x="36" y="13" width="116" height="33"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="33" id="E3n-gF-4lz"/>
-                                <constraint firstAttribute="width" constant="116" id="lO9-6W-z3i"/>
-                            </constraints>
-                            <state key="normal" title="营养分析">
-                                <color key="titleColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="nutritionAnalyzeAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="cL7-Jj-8lr"/>
+                                <action selector="rightButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="agI-Z3-rcp"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5id-Ej-dY7">
@@ -191,7 +150,20 @@
                                 <color key="titleColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
-                                <action selector="recordSportAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="1QI-3Y-vD0"/>
+                                <action selector="centerButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="T3u-qm-y7E"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oC2-cv-vlm">
+                            <rect key="frame" x="36" y="13" width="116" height="33"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="33" id="E3n-gF-4lz"/>
+                                <constraint firstAttribute="width" constant="116" id="lO9-6W-z3i"/>
+                            </constraints>
+                            <state key="normal" title="营养分析">
+                                <color key="titleColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="leftButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="Hto-Ys-BcL"/>
                             </connections>
                         </button>
                     </subviews>
@@ -205,7 +177,7 @@
                         <constraint firstItem="oC2-cv-vlm" firstAttribute="centerY" secondItem="eTd-3I-sWi" secondAttribute="centerY" id="yfx-TI-9RD"/>
                     </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MDZ-gd-aNF">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1005" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MDZ-gd-aNF">
                     <rect key="frame" x="0.0" y="59" width="375" height="184"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="184" id="9xF-mK-gag"/>
@@ -227,16 +199,15 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="actionView" destination="eTd-3I-sWi" id="pGw-KB-kFy"/>
+                <outlet property="centerbutton" destination="5id-Ej-dY7" id="10k-QV-ZKh"/>
                 <outlet property="habitLabel" destination="vve-JI-KGx" id="tNR-ft-kYT"/>
                 <outlet property="labSeperate" destination="YJU-qp-bL4" id="R7N-Ky-bNu"/>
+                <outlet property="leftButton" destination="oC2-cv-vlm" id="QFR-zW-ukj"/>
                 <outlet property="moreButton" destination="xOJ-3E-NT4" id="vjq-fk-7RZ"/>
-                <outlet property="nutritionAnalyzeButton" destination="oC2-cv-vlm" id="1XE-zr-sOp"/>
-                <outlet property="recommendedCalorieLabel" destination="Qxo-Sy-8OI" id="du4-Ku-xKo"/>
                 <outlet property="recommendedTypeLabel" destination="dLj-61-zzZ" id="09W-zM-Zpl"/>
-                <outlet property="recordCalorieLabel" destination="Qxf-dl-lpB" id="w95-Wv-G7w"/>
-                <outlet property="recordFoodButton" destination="HQK-ga-FUD" id="3ka-Hu-Ysf"/>
-                <outlet property="recordSportButton" destination="5id-Ej-dY7" id="gSc-Ja-Vkm"/>
                 <outlet property="recordTypeLabel" destination="Qug-Cf-kNw" id="mLP-TN-LtM"/>
+                <outlet property="rightButton" destination="HQK-ga-FUD" id="GNj-BT-oQG"/>
                 <outlet property="scrollView" destination="MDZ-gd-aNF" id="J4S-AF-Trb"/>
                 <outlet property="testViewFrame" destination="fpV-2j-Yb7" id="9nh-sX-uY8"/>
             </connections>
