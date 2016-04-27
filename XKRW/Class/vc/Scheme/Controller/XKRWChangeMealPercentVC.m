@@ -241,7 +241,7 @@
         make.top.mas_equalTo(self.dinnerView.mas_bottom);
     }];
 
-    [self.labExplain mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.labExplain mas_updateConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(SlideViewWidth);
 //        make.height.mas_equalTo(@SlideViewHeight);
         make.leading.mas_equalTo(self.dinnerView.mas_leading);
@@ -260,8 +260,9 @@
     [self makeSliderMasonry:self.dinnerView];
     [self makeSliderMasonry:self.addmealView];
     
+    
     CGFloat screenH = XKAppHeight;
-    CGFloat totalHeight = self.labExplain.frame.origin.y + self.labExplain.frame.size.height + 4*SlideViewHeight + self.btnDefault.frame.size.height + 30 + 50;
+    CGFloat totalHeight = self.btnDefault.frame.size.height + self.btnDefault.origin.y + 30;
     if (totalHeight > screenH) {
         NSLog(@"高度超了");
         _scrollView.scrollEnabled = YES;
@@ -358,6 +359,7 @@
 -(void)unlockPercentView:(NSInteger)tag{
     NSNumber *numTag = [NSNumber numberWithInteger:tag];
     NSNumber *autoLockTag = [NSNumber numberWithInteger:autoLockView.slider.tag];
+    NSNumber *autoUnLockTag = [NSNumber numberWithInteger:autoUnLockView.slider.tag];
     self.currentMax += [[_dicLockTags objectForKey:numTag] integerValue];
     
     if (autoLockView && autoLockView.slider.tag == tag && [[_dicLockTags allKeys] containsObject:autoLockTag]){
@@ -365,7 +367,8 @@
         [autoLockView cancleBtnLockWithoutDelegate];
         autoLockView = nil;
         [autoUnLockView cancleBtnLockWithoutDelegate];
-         [_dicLockTags removeObjectForKey:[NSNumber numberWithInteger:autoUnLockView.slider.tag]];
+        self.currentMax += [[_dicLockTags objectForKey:autoUnLockTag] integerValue];
+         [_dicLockTags removeObjectForKey:autoUnLockTag];
         autoUnLockView = nil;
     }else{
         [_dicLockTags removeObjectForKey:numTag];
