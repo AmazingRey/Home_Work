@@ -43,6 +43,7 @@
 
 @property (nonatomic, weak) id <XKRWCalendarDelegate> delegate;
 @property (nonatomic, weak) NSMutableArray *recordDateArray;
+@property (nonatomic, strong) NSMutableArray *weightRecordArray;
 
 - (instancetype)initWithOrigin:(CGPoint)origin
                recordDateArray:(NSMutableArray *)dateArray

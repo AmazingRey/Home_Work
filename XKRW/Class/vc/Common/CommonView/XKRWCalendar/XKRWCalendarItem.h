@@ -25,7 +25,8 @@
           isSelected:(BOOL)isSelected
           outOfMonth:(BOOL)outOfMonth
              isToday:(BOOL)isToday
-    calendarMonthType:(XKRWCalendarMonthType )monthType
+              weight:(CGFloat)weight
+   calendarMonthType:(XKRWCalendarMonthType )monthType
         onClickBlock:(void (^)(XKRWCalendarItem *item))block;
 
 - (id)initWithOrigin:(CGPoint)origin
@@ -33,9 +34,10 @@
               record:(BOOL)yesOrNo
           isSelected:(BOOL)isSelected
           outOfMonth:(BOOL)outOfMonth
-             isToday:(BOOL)isToday;
+             isToday:(BOOL)isToday
+              weight:(CGFloat)weight;
 
-- (void)setDay:(NSString *)day outOfMonth:(BOOL)yesOrNO isToday:(BOOL)isToday isRecord:(BOOL)isRecord;
+- (void)setDay:(NSString *)day outOfMonth:(BOOL)yesOrNO isToday:(BOOL)isToday isRecord:(BOOL)isRecord weight:(CGFloat)weight;
 - (void)setHidden:(BOOL)hidden withAnimation:(BOOL)yesOrNo;
 
 @end

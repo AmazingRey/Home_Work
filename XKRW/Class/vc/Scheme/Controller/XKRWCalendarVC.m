@@ -9,13 +9,18 @@
 #import "XKRWCalendarVC.h"
 #import "XKRWPlanCalendarView.h"
 #import "XKRWCalendar.h"
+#import "XKRWUserService.h"
+#import "XKRWPlanVC.h"
 #import "XKRWRecordService4_0.h"
+#import "XKRWThinBodyDayManage.h"
+#import "XKRWAlgolHelper.h"
 
-@interface XKRWCalendarVC () {
+@interface XKRWCalendarVC ()<XKRWCalendarDelegate> {
     UIScrollView *calendarScrollView;
     XKRWCalendar *calendar;
-    
+    XKRWPlanCalendarView *headView;
     NSMutableArray *recordDates;
+    NSDate *todayDate;
 }
 
 @end
@@ -40,9 +45,23 @@
     calendarScrollView.contentSize = CGSizeMake(XKAppWidth, 700);
     [self.view addSubview:calendarScrollView];
     
-    XKRWPlanCalendarView *headView = [[NSBundle mainBundle] loadNibNamed:@"XKRWPlanCalendarView" owner:self options:nil][0];
+    headView = [[NSBundle mainBundle] loadNibNamed:@"XKRWPlanCalendarView" owner:self options:nil][0];
     headView.frame = CGRectMake(0, 0, XKAppWidth, 130);
+    [calendarScrollView addSubview:headView];
+
+    headView.progressLabel.attributedText = [[XKRWThinBodyDayManage shareInstance] calenderPlanDayText];
+    headView.weightDescriptionLabel.text = [NSString stringWithFormat:@"从%.1fkg瘦到%.1fkg",[[XKRWUserService sharedService] getUserOrigWeight]/1000.0,[XKRWUserService sharedService].getUserDestiWeight/1000.0];
     
+    if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1) {
+        headView.planFinishLabel.text = @"";
+        
+    } else {
+        NSDate *planFinishDate = [[NSDate today] offsetDay:[XKRWAlgolHelper remainDayToAchieveTarget]];
+        headView.planFinishLabel.text = [NSString stringWithFormat:@"预计将于%d年%d月%d日 完成",(int)[planFinishDate year],(int)[planFinishDate month],(int)[planFinishDate day]];
+    }
+   
+    todayDate = [NSDate date];
+    [self dealWithMonthLabel];
     [calendarScrollView addSubview:headView];
     
     UIButton *popButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -60,12 +79,46 @@
     calendar =[[XKRWCalendar alloc] initWithOrigin:CGPointMake(0, 130) recordDateArray:recordDates headerType:XKRWCalendarHeaderTypeCustom andResizeBlock:^{
         
     } andMonthType:XKRWCalendarTypeStrongMonth];
+    calendar.delegate = self;
     [calendar addBackToTodayButtonInFooterView];
     [calendar reloadCalendar];
     [calendarScrollView addSubview:calendar];
 }
-
-
+- (void)dealWithMonthLabel {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:[NSDate dateFormatString]];
+    NSString *todayString = [formatter stringFromDate:todayDate];
+    
+    NSArray *dateArray = [todayString componentsSeparatedByString:@"-"];
+    headView.monthLabel.text = [NSString stringWithFormat:@"%@年%@月",dateArray[0],dateArray[1]];
+}
+#pragma mark -XKRWCalendarDelegate
+- (void)calendarSelectedDate:(NSDate *)date {
+    NSDate *registerDate = [NSDate dateFromString:[[XKRWUserService sharedService] getREGDate]];
+    NSDate *originOfDate = [NSDate dateWithTimeIntervalSince1970:[date originTimeOfADay]];
+    NSComparisonResult result = [originOfDate compare:registerDate];
+    if (result == NSOrderedAscending) {
+        [XKRWCui showInformationHudWithText:@"注册日以前不能查看"];
+        return;
+        
+    } else if ([[NSDate today] compare:originOfDate] == NSOrderedAscending) {
+        [XKRWCui showInformationHudWithText:@"明天还没来，别着急哦~"];
+        return;
+        
+    } else {
+        XKRWPlanVC *planVC = [[XKRWPlanVC alloc] init];
+        planVC.recordDate = originOfDate;
+        [self.navigationController pushViewController:planVC animated:YES];
+    }
+}
+- (void)calendarScrollToPreMonth {
+    todayDate = [todayDate offsetMonth:-1];
+    [self dealWithMonthLabel];
+}
+- (void)calendarScrollToNextMonth {
+    todayDate = [todayDate offsetMonth:1];
+    [self dealWithMonthLabel];
+}
 #pragma --mark Action
 - (void) popAction :(UIButton *) button {
     [self.navigationController popViewControllerAnimated:YES];

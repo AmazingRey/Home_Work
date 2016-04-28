@@ -1684,6 +1684,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [self recordFoodToDB:recordEntity];
         if ([self saveFoodRecordToRemote:entity]) {
             [self recordFoodToDB:entity];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:nil];
             return YES;
         } else {
             return NO;
@@ -1708,6 +1709,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [self recordSportToDB:recordEntity];
         if ([self saveSportRecordToRemote:recordEntity]) {
             [self recordSportToDB:recordEntity];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:nil];
             return YES;
         } else {
             return NO;
@@ -1798,6 +1800,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         if (isRemoteSuccess) {
             entity.sync = 1;
             [self recordInfomationToDB:entity];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:nil];
             return YES;
         }
         return NO;
@@ -1834,6 +1837,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         
         if (isSuccess) {
             [self recordSchemeToDB:entity];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:nil];
             return YES;
         }
         return NO;
@@ -2225,6 +2229,79 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return sum;
 }
 
+
+- (NSMutableDictionary *)getTotalCalorieOfDay:(NSDate *)date andRecordType:(MealType ) type {
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    NSString *dateString = [date stringWithFormat:@"yyyy-MM-dd"];
+    NSString *sql = nil;
+    NSString *schemeSql = nil;
+    if (type == eSport) {
+        schemeSql = [NSString stringWithFormat:@"SELECT record_value , calorie FROM record_scheme  WHERE date = '%@' AND uid = %ld and type = 0 ",dateString,(long)uid];
+        
+        sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE date = '%@' AND uid = %ld AND sync != -1", sportRecordTable, dateString, (long)uid];
+    }else if (type == eMealBreakfast){
+        schemeSql = [NSString stringWithFormat:@"SELECT record_value , calorie FROM record_scheme  WHERE date = '%@' AND uid = %ld and type = 1 ",dateString,(long)uid];
+        sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE date = '%@' AND uid = %ld AND sync != -1 and record_type = 1 ", foodRecordTable, dateString, (long)uid];
+    }else if (type == eMealLunch){
+        schemeSql = [NSString stringWithFormat:@"SELECT record_value , calorie FROM record_scheme  WHERE date = '%@' AND uid = %ld and type = 2 ",dateString,(long)uid];
+        sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE date = '%@' AND uid = %ld AND sync != -1 and record_type = 2 ", foodRecordTable, dateString, (long)uid];
+    }else if (type == eMealDinner){
+        schemeSql = [NSString stringWithFormat:@"SELECT record_value , calorie FROM record_scheme  WHERE dat e = '%@' AND uid = %ld and type = 3 ",dateString,(long)uid];
+        sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE date = '%@' AND uid = %ld AND sync != -1 and record_type = 3 ", foodRecordTable, dateString, (long)uid];
+    }else{
+        schemeSql = [NSString stringWithFormat:@"SELECT record_value , calorie FROM record_scheme  WHERE date = '%@' AND uid = %ld and type = 4 ",dateString,(long)uid];
+        sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE date = '%@' AND uid = %ld AND sync != -1 and record_type = 4 ", foodRecordTable, dateString, (long)uid];
+    
+    }
+    
+    NSMutableDictionary *dic =[NSMutableDictionary dictionary];
+    
+    NSArray *schemeResult = [self query:schemeSql];
+    NSDictionary *resultDict = schemeResult[0];
+    if ([[resultDict objectForKey:@"record_value"] integerValue]== 2) {
+        [dic setObject:[resultDict objectForKey:@"calorie"] forKey:@"calorie"];
+        NSMutableArray *mutableArray = [NSMutableArray array];
+        NSDictionary *foodDic = @{@"title":@"完美执行",@"calorie":[resultDict objectForKey:@"calorie"]};
+        [mutableArray addObject:foodDic];
+        [dic setObject:@"allRecord" forKey:mutableArray];
+    }else{
+        NSMutableArray *mutableArray = [NSMutableArray array];
+        NSArray *array = [self query:sql];
+        NSInteger sum = 0;
+        if(type == eSport ){
+            for (int i = 0; i < array.count; i++) {
+                NSDictionary *sportDic = [array objectAtIndex:i];
+                XKRWSportEntity *entity = [[XKRWSportEntity alloc] init];
+                entity.sportId = [sportDic[@"sport_id"] intValue];
+                entity.sportName = sportDic[@"sport_name"];
+                entity.sportPic = sportDic[@"image_url"];
+                entity.sportMets = [sportDic[@"sport_METS"] floatValue];
+                entity.sportUnit = [sportDic[@"unit"] intValue];
+                sum += [sportDic[@"calorie"] integerValue];
+                if (entity.sportId) {
+                    [mutableArray addObject:entity];
+                } else continue;
+            }
+        }else{
+            for (int i = 0; i < array.count; i++) {
+                NSDictionary *foodDic = [array objectAtIndex:i];
+                XKRWFoodEntity *entity = [XKRWFoodEntity new];
+                entity.foodId = [foodDic[@"food_id"] integerValue];
+                entity.foodName = foodDic[@"food_name"];
+                entity.foodLogo = foodDic[@"image_url"];
+                entity.foodEnergy = [foodDic[@"calorie"] integerValue];
+                sum += [foodDic[@"calorie"] integerValue];
+                [mutableArray addObject:entity];
+            }
+        }
+        
+        [dic setObject:[NSNumber numberWithInteger:sum] forKey:@"calorie"];
+        [dic setObject:mutableArray forKey:@"allRecord"];
+        
+    }
+    return dic;
+}
+
 - (NSDictionary *)getCircumferenceAndWeightRecordOfDays:(NSInteger)numOfDays {
     
     NSMutableDictionary *resultDictionary = [NSMutableDictionary dictionary];
@@ -2609,7 +2686,11 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }
     return result;
 }
-
+/**
+ *  我要的，标记下
+ *
+ *  @return <#return value description#>
+ */
 - (NSMutableArray *)getUserRecordDateFromDB
 {
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
@@ -3181,6 +3262,34 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }
     return NO;
 }
+
+- (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDate:(NSDate *)date {
+    
+    XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
+    CGFloat  calorie = 0;
+    if (type == efoodCalories) {
+        for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
+                calorie += foodEntity.calorie;
+        }
+    }else if (type == eSportCalories){
+          for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
+              calorie += sportEntity.calorie;
+          }
+    }
+    return calorie ;
+}
+
+
+- (BOOL) getUserRecordStateWithDate:(NSDate *)date {
+     XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
+    if (recordEntity.FoodArray.count == 0 && recordEntity.SportArray.count== 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+
 
 //- (BOOL)isShowDataCenterRedDot
 //{

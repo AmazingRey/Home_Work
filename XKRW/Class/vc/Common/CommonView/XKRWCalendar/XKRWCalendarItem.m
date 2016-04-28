@@ -13,9 +13,12 @@
 {
     UIImageView *_dot;
     UIImageView *_selectedView;
+    UIImageView *_changPlanView;
    
     XKRWCalendarMonthType _CalendarMonthType;
     void (^_clickBlock)(XKRWCalendarItem *item);
+    
+    UILabel *_weightLabel;
 }
 
 - (id)initWithOrigin:(CGPoint)origin
@@ -24,12 +27,13 @@
           isSelected:(BOOL)isSelected
           outOfMonth:(BOOL)outOfMonth
              isToday:(BOOL)isToday
+              weight:(CGFloat)weight
    calendarMonthType:(XKRWCalendarMonthType )monthType
         onClickBlock:(void (^)(XKRWCalendarItem *item))block
 {
     _CalendarMonthType = monthType;
     _clickBlock = block;
-    self = [self initWithOrigin:origin withTitle:title record:yesOrNo isSelected:isSelected outOfMonth:outOfMonth isToday:isToday];
+    self = [self initWithOrigin:origin withTitle:title record:yesOrNo isSelected:isSelected outOfMonth:outOfMonth isToday:isToday weight:weight];
     return self;
 }
 
@@ -39,6 +43,7 @@
           isSelected:(BOOL)isSelected
           outOfMonth:(BOOL)outOfMonth
              isToday:(BOOL)isToday
+              weight:(CGFloat)weight
 {
     if (self = [super init]) {
         if (_CalendarMonthType == XKRWCalendarTypeStrongMonth) {
@@ -58,8 +63,19 @@
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         }
         self.outOfMonth = outOfMonth;
+        _weightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _dot.bottom + 2, self.width, 14)];
+        _weightLabel.textAlignment = NSTextAlignmentCenter;
+        _weightLabel.font = XKDefaultFontWithSize(12);
+        _weightLabel.textColor = XKMainSchemeColor;
+        
+        _changPlanView = [[UIImageView alloc] init];
+        UIImage *changPlanImage = [UIImage imageNamed:@"cz"];
+        _changPlanView.image = changPlanImage;
+        _changPlanView.size = changPlanImage.size;
+        _changPlanView.center = CGPointMake(CGRectGetMidX(_weightLabel.frame), _weightLabel.bottom + 2 + changPlanImage.size.height / 2.0);
+        
         [self setBackgroundColor:[UIColor whiteColor]];
-        [self setDay:title outOfMonth:yesOrNo isToday:isToday isRecord:yesOrNo];
+        [self setDay:title outOfMonth:yesOrNo isToday:isToday isRecord:yesOrNo weight:weight];
         
        
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -73,7 +89,7 @@
     return self;
 }
 
-- (void)setDay:(NSString *)day outOfMonth:(BOOL)yesOrNO isToday:(BOOL)isToday isRecord:(BOOL)isRecord
+- (void)setDay:(NSString *)day outOfMonth:(BOOL)yesOrNO isToday:(BOOL)isToday isRecord:(BOOL)isRecord weight:(CGFloat)weight
 {
     if (yesOrNO) {
         [self setTitleColor:XK_ASSIST_TEXT_COLOR forState:UIControlStateNormal];
@@ -111,6 +127,18 @@
         BOOL isEndDay = [[XKRWThinBodyDayManage shareInstance ] calendarDateIsEndDayWithDate:currentDate];
         BOOL isStartDay =  [[XKRWThinBodyDayManage shareInstance] calendarDateIsStartDayWithDate:currentDate];
 
+        if (weight) {
+            _weightLabel.text = [NSString stringWithFormat:@"%.1fkg",weight];
+            [self addSubview:_weightLabel];
+        } else {
+            [_weightLabel removeFromSuperview];
+        }
+        
+        if (isStartDay) {
+            [self addSubview:_changPlanView];
+        } else {
+            [_changPlanView removeFromSuperview];
+        }
         
         if (isInPlan) {
             [_dot setImage:[UIImage imageNamed:@"circleGray"]];

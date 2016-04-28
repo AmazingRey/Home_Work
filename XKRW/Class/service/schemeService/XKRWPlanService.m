@@ -7,6 +7,7 @@
 //
 
 #import "XKRWPlanService.h"
+#import "XKRWUserService.h"
 
 static XKRWPlanService *planService;
 @implementation XKRWPlanService
@@ -64,9 +65,30 @@ static XKRWPlanService *planService;
         key = [NSString stringWithFormat:@"%ld_eHabitType",(long)uid];
         
     }
-    id date = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    NSDate * date = (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:key];
     
-    return [[NSCalendar currentCalendar] isDateInToday:(NSDate *)date];
+    if (date) {
+        NSDate *today = [NSDate today];
+        if ([today year] == [date year] && [today month] == [date month] && [today day] == [date day]) {
+            return YES;
+        } else {
+            return NO;
+        }
+        
+    } else return NO;
 }
-
+- (CGFloat)getHistoryWeightWithDate:(NSDate *)date {
+    
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    int dateFormat = [[date stringWithFormat:@"yyyyMMdd"] intValue];
+    NSString *sql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date <= %d ORDER BY date DESC LIMIT 1",(long)uid,dateFormat];
+    NSArray *result = [self query:sql];
+    
+    if (!result || !result.count) {
+        return [[XKRWUserService sharedService] getUserOrigWeight] / 1000.f;
+        
+    } else return [result[0][@"weight"] floatValue] / 1000.f;
+    
+    return 0.f;
+}
 @end

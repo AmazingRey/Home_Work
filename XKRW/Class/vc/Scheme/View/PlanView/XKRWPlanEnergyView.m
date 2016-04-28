@@ -191,8 +191,9 @@
         [_habitEnergyCircle setOpenedViewTiltle:@"无需改正" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:0 unit:@"个" isBehaveCurrect:YES];
         _habitEnergyCircle.style = XKRWEnergyCircleStylePerfect;
         _habitEnergyCircle.goalLabel.text = @"Perfect";
-        _habitEnergyCircle.userInteractionEnabled = NO;
-        
+        _habitEnergyCircle.energyCircleViewClickBlock = ^(NSInteger index){
+            [XKRWCui showInformationHudWithText:@"你的习惯很好，无需改正！"];
+        };
     } else {
         
         BOOL isBehaveCurrect = NO;
@@ -221,7 +222,7 @@
         _line.hidden = YES;
     }
     
-    if (_exClickedIndex != 1 && _exClickedIndex != 2 && _exClickedIndex != 3) {
+    if ((_exClickedIndex != 1 && _exClickedIndex != 2 && _exClickedIndex != 3) || _exClickedIndex == currentIndex) {
         _exClickedIndex = currentIndex;
         return;
     }

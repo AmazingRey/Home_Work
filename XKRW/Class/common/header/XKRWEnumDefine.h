@@ -87,7 +87,10 @@ typedef enum {
     eHeavy,             //重体力
 }XKPhysicalLabor; 
 
-
+typedef enum {
+    efoodCalories = 0,
+    eSportCalories
+}XKCaloriesType;
 
 
 
@@ -384,5 +387,19 @@ typedef NS_ENUM(NSInteger,energyType) {
     energyTypeEat = 1,
     energyTypeSport,
     energyTypeHabit
+};
+
+/**
+ *  查看每日分析枚举
+ */
+typedef NS_ENUM(NSInteger, AnalysizeType) {
+    /**
+     *  饮食摄入
+     */
+    analysizeEat = 1,
+    /**
+     *  运动消耗
+     */
+    analysizeSport
 };
 #endif

@@ -231,6 +231,25 @@ static XKRWThinBodyDayManage * shareInstance;
     return nil;
 }
 
+- (NSAttributedString *)calenderPlanDayText {
+    if ([XKRWAlgolHelper expectDayOfAchieveTarget] == nil) {
+        
+        return [XKRWUtil createAttributeStringWithString:[NSString stringWithFormat:@"已坚持%ld天",(long)[[XKRWUserService sharedService] getInsisted]] font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight];
+    }else{
+        if([XKRWAlgolHelper remainDayToAchieveTarget] > -1){
+            NSAttributedString *start = [XKRWUtil createAttributeStringWithString:@"已进行" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight];
+            NSAttributedString *startDay = [XKRWUtil createAttributeStringWithString:[NSString stringWithFormat:@"%ld",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]] font:XKDefaultFontWithSize(15) color:XKMainSchemeColor lineSpacing:0 alignment:NSTextAlignmentRight];
+            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithAttributedString:start];
+            [str appendAttributedString:startDay];
+            [str appendAttributedString:[XKRWUtil createAttributeStringWithString:[NSString stringWithFormat:@"天剩%ld天",(long)[XKRWAlgolHelper remainDayToAchieveTarget]] font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight]];
+            return str;
+            
+        }else if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1){
+            return [XKRWUtil createAttributeStringWithString:@"当前计划已结束" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight];
+        }
+    }
+    return nil;
+}
 
 - (NSString *)TipsTextWithDayAndWhetherOpen {
     
@@ -289,12 +308,16 @@ static XKRWThinBodyDayManage * shareInstance;
 }
 
 - (BOOL) calendarDateIsEndDayWithDate:(NSDate *)date {
-    NSDate *endDate =[self planExpectFinishDay];
-
-    if(endDate.day == date.day && endDate.month == date.month && endDate.year == date.year) {
-        return YES;
-    }
-    return NO;
+    NSInteger targetRemainDay = [XKRWAlgolHelper remainDayToAchieveTarget];
+    if (targetRemainDay != -1) {
+        NSDate *endDate = [[NSDate today] offsetDay:targetRemainDay];
+        if(endDate.day == date.day && endDate.month == date.month && endDate.year == date.year) {
+            return YES;
+        }
+        return NO;
+        
+    } else return NO;
+    
 }
 
 

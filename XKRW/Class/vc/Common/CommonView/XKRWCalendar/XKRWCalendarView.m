@@ -10,6 +10,7 @@
 #import "XKRWCalendarItem.h"
 #import "XKRWCalendarHelper.h"
 #import "NSDate+XKRWCalendar.h"
+#import "XKRWWeightService.h"
 
 @implementation XKRWCalendarView
 {
@@ -94,6 +95,7 @@
         }
         if ((idx + 1) >= _weekday && day <= _numberOfDayInMonth) {
             NSDate *itemDate = [[date firstDayInMonth] offsetDay:day - 1];
+            CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:itemDate];
             BOOL isRecord = NO;
             for (NSDate *temp_date in self.recordDateArray) {
                 if ([temp_date isDayEqualToDate:itemDate]) {
@@ -106,7 +108,8 @@
             [item setDay:[NSString stringWithFormat:@"%d", (int)day]
               outOfMonth:NO
                  isToday:isToday
-                isRecord:isRecord];
+                isRecord:isRecord
+                  weight:weight];
             
             day ++;
             if (item.hidden == YES) {
@@ -114,6 +117,7 @@
             }
         } else {
             NSDate *itemDate = [[date firstDayInMonth] offsetDay:offset];
+            CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:itemDate];
             if ([itemDate isDayEqualToDate:[NSDate date]]) {
                 isToday = YES;
             }
@@ -129,7 +133,7 @@
             [item setDay:[NSString stringWithFormat:@"%ld", (long)[[date firstDayInMonth] offsetDay:offset].day]
               outOfMonth:YES
                  isToday:isToday
-                isRecord:isRecord];
+                isRecord:isRecord weight:weight];
             
             
 //            [item setHidden:YES withAnimation:YES];
@@ -236,6 +240,7 @@
                                       isSelected:NO
                                       outOfMonth:NO
                                          isToday:NO
+                                          weight:0
                                calendarMonthType:_monthType
                                     onClickBlock:^(XKRWCalendarItem *item) {
                                         if (item.isSelected == NO) {
@@ -273,6 +278,7 @@
                                     }];
         if (i >= _weekday && day <= _numberOfDayInMonth) {
             NSDate *itemDate = [[date firstDayInMonth] offsetDay:day - 1];
+            CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:itemDate];
             BOOL isRecord = NO;
             for (NSDate *temp_date in self.recordDateArray) {
                 if ([temp_date isDayEqualToDate:itemDate]) {
@@ -285,7 +291,8 @@
             [item setDay:[NSString stringWithFormat:@"%d", (int)day]
               outOfMonth:NO
                  isToday:isToday
-                isRecord:isRecord];
+                isRecord:isRecord
+                  weight:weight];
             
             day ++;
         } else {
@@ -305,7 +312,8 @@
             [item setDay:[NSString stringWithFormat:@"%ld", (long)[[date firstDayInMonth] offsetDay:offset].day]
               outOfMonth:YES
                  isToday:isToday
-                isRecord:isRecord];
+                isRecord:isRecord
+                  weight:[[XKRWWeightService shareService] getWeightRecordWithDate:itemDate]];
             
             
             
@@ -441,6 +449,7 @@
         
         if (idx < 7) {
             NSDate *itemDate = [self.date offsetDay:offset + idx + 1];
+            CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:itemDate];
             if ([itemDate isDayEqualToDate:[NSDate date]]) {
                 isToday = YES;
             }
@@ -461,7 +470,8 @@
             [item setDay:[NSString stringWithFormat:@"%ld", (long)itemDate.day]
               outOfMonth:outOfMonth
                  isToday:isToday
-                isRecord:isRecord];
+                isRecord:isRecord
+                  weight:weight];
             if (item.isHidden) {
 //                [item setHidden:NO withAnimation:YES];
             }

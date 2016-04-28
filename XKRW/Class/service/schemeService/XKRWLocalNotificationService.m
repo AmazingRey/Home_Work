@@ -327,7 +327,6 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
     NSDate *temp = [calender dateFromComponents:comps];
     for (NSInteger i = schemeStartDay; i <= schemeDay; i++) {
         NSString *uid = [NSString stringWithFormat:@"%li",(long)[XKRWUserDefaultService getCurrentUserId]];
-        //        NSDate *fireDate = [temp offsetMinute:i-schemeStartDay];
         NSDate *fireDate = [temp offsetDay:i-schemeStartDay];
         NSString *alertBody = [NSString stringWithFormat:@"蜕变之旅第%ld天，要努力完成哦！",(long)i];
         NSDictionary *schemeNotificationDic = @{@"alertName":alertName,@"fireDate":fireDate,@"alertBody":alertBody,@"type":@(111),@"hour":@"8",@"minutes":@"30",@"uid":uid};

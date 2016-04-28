@@ -241,7 +241,7 @@
         make.top.mas_equalTo(self.dinnerView.mas_bottom);
     }];
 
-    [self.labExplain mas_updateConstraints:^(MASConstraintMaker *make) {
+    [self.labExplain mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(SlideViewWidth);
 //        make.height.mas_equalTo(@SlideViewHeight);
         make.leading.mas_equalTo(self.dinnerView.mas_leading);
@@ -262,7 +262,7 @@
     
     
     CGFloat screenH = XKAppHeight;
-    CGFloat totalHeight = self.btnDefault.frame.size.height + self.btnDefault.origin.y + 30;
+    CGFloat totalHeight = self.labExplain.frame.size.height + 4*SlideViewHeight + self.btnDefault.frame.size.height + 30 + 50;
     if (totalHeight > screenH) {
         NSLog(@"高度超了");
         _scrollView.scrollEnabled = YES;

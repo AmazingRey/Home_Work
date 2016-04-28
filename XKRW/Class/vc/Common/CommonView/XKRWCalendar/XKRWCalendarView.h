@@ -19,7 +19,7 @@
 
 @property (nonatomic        ) XKRWCalendarType type;
 @property (nonatomic, weak  ) NSArray          *recordDateArray;
-
+@property (nonatomic, strong) NSArray          *weightRecordArray;
 @property (nonatomic) XKRWCalendarMonthType monthType;
 
 - (instancetype)initWithDate:(NSDate *)date

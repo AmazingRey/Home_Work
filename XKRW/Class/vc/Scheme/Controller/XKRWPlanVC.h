@@ -10,4 +10,6 @@
 
 @interface XKRWPlanVC : XKRWBaseVC
 
+@property (nonatomic, strong) NSDate *recordDate;
+
 @end

@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 #import "XKRWRecordSchemeEntity.h"
 
-@interface XKRWRecordFood5_3View : UIView
+@interface XKRWRecordView_5_3 : UIView
 @property (assign,nonatomic) id<XKRWRecordFood5_3ViewDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UILabel *recommendedTypeLabel;
@@ -50,12 +50,11 @@
 
 @property (assign) NSInteger positionX;
 @property (assign ,nonatomic) NSInteger pageIndex;
-@property (strong ,nonatomic) NSArray *reocrdArray;
 @property (strong ,nonatomic) NSArray *schemeArray;
 @property (assign ,nonatomic) energyType type;
 @property (strong ,nonatomic) NSMutableDictionary *dicCollection;
 @property (strong ,nonatomic) UIImageView *shadowImageView;
-
+@property (strong ,nonatomic) NSDate  *date;
 @property (nonatomic,strong) UIViewController *vc;
 
 @end

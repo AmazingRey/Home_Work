@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -65,12 +65,21 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_line.png" translatesAutoresizingMaskIntoConstraints="NO" id="gEH-Nd-HDN">
                         <rect key="frame" x="239" y="41" width="1" height="1"/>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJP-bE-5Nk">
+                        <rect key="frame" x="0.0" y="79" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="3me-lP-Td9"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="AZI-RW-msF" firstAttribute="leading" secondItem="gEH-Nd-HDN" secondAttribute="trailing" constant="-10" id="7fp-fx-gHr"/>
                     <constraint firstItem="ONK-E4-84F" firstAttribute="bottom" secondItem="rz8-aT-7g8" secondAttribute="bottom" constant="10" id="9nM-hj-JlG"/>
+                    <constraint firstItem="aJP-bE-5Nk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="C7r-tA-Q6b"/>
                     <constraint firstItem="ONK-E4-84F" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="DPA-V3-yyw"/>
                     <constraint firstAttribute="trailing" secondItem="AZI-RW-msF" secondAttribute="trailing" constant="-10" id="Dje-82-ruW"/>
+                    <constraint firstAttribute="bottom" secondItem="aJP-bE-5Nk" secondAttribute="bottom" constant="1" id="GKF-uK-mwC"/>
                     <constraint firstItem="gEH-Nd-HDN" firstAttribute="centerY" secondItem="AZI-RW-msF" secondAttribute="centerY" id="Iww-oO-InX"/>
                     <constraint firstItem="0VC-tH-KqO" firstAttribute="bottom" secondItem="ONK-E4-84F" secondAttribute="bottom" constant="5" id="VDB-xt-ana"/>
                     <constraint firstItem="rz8-aT-7g8" firstAttribute="leading" secondItem="ONK-E4-84F" secondAttribute="trailing" constant="10" id="Yil-Fo-idu"/>
@@ -80,6 +89,7 @@
                     <constraint firstItem="gEH-Nd-HDN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HIi-ly-FVS" secondAttribute="trailing" id="ifE-3B-eew"/>
                     <constraint firstAttribute="centerY" secondItem="AZI-RW-msF" secondAttribute="centerY" id="oea-f8-Onn"/>
                     <constraint firstItem="HIi-ly-FVS" firstAttribute="top" secondItem="ONK-E4-84F" secondAttribute="top" constant="2" id="rdN-Q2-9Ip"/>
+                    <constraint firstAttribute="trailing" secondItem="aJP-bE-5Nk" secondAttribute="trailing" id="xq2-gb-vZL"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

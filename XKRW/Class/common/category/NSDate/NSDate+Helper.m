@@ -310,9 +310,8 @@
 
 + (BOOL)dateIsLatterThanToday:(NSDate *)date {
     BOOL abool = NO;
-    NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDate *today = [NSDate date];
-    if ([calendar isDateInToday:date]) {
+    if ([today year] == [date year] && [today month] == [date month] && [today day] == [date day]) {
         abool = NO;
     } else if ([today year] < [date year]) {
         abool = YES;
@@ -324,4 +323,5 @@
     
     return abool;
 }
+
 @end

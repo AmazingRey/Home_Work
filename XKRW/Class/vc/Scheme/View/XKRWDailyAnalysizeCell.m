@@ -1,14 +1,14 @@
 //
-//  XKRWRecordFood5_3Cell.m
+//  XKRWDailyAnalysizeCell.m
 //  XKRW
 //
-//  Created by ss on 16/4/14.
+//  Created by ss on 16/4/28.
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
-#import "XKRWRecordFood5_3Cell.h"
+#import "XKRWDailyAnalysizeCell.h"
 
-@implementation XKRWRecordFood5_3Cell
+@implementation XKRWDailyAnalysizeCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -21,6 +21,4 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)actDown:(id)sender {
-}
 @end

@@ -28,6 +28,8 @@
     UISegmentedControl  *unitSecondSegmentCtr;//第二个
     UISegmentedControl  *unitThirdSegmentCtr;//第三个
     
+    UISegmentedControl  *mealSegmentCtr;
+    UISegmentedControl  *mealSecondSegmentCtr;
     UITextField *componentTextField;
     
     RecordType mealType;
@@ -47,6 +49,7 @@
     NSArray *unitOthersArray;
     //单位View
     UIView *unitView;
+    UIView *mealView;
 }
 
 
@@ -124,6 +127,34 @@
     kcalLabel.text = [NSString stringWithFormat:@"0kcal"];
     [topView addSubview:kcalLabel];
     
+    // meals
+    mealView = [[UIView alloc] initWithFrame:CGRectMake(0.f, topView.bottom + 15, XKAppWidth, 88)];
+    mealView.backgroundColor = [UIColor whiteColor];
+    UILabel *mealLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, 44)];
+    mealLabel.textColor = [UIColor blackColor];
+    mealLabel.font = XKDefaultFontWithSize(14.f);
+    mealLabel.text = @"餐别：";
+    [mealView addSubview:mealLabel];
+    UIView *mealLine = [[UIView alloc] initWithFrame:CGRectMake(0.f, 88 - 0.5, XKAppWidth, 0.5)];
+    mealLine.backgroundColor = XK_ASSIST_LINE_COLOR;
+    [mealView addSubview:mealLine];
+    [scrollView addSubview:mealView];
+    
+    NSArray *mealArrays = @[@"早餐",@"午餐",@"晚餐"];
+    mealSegmentCtr = [[UISegmentedControl alloc] initWithItems:mealArrays];
+    mealSegmentCtr.frame = CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth, 30);
+    mealSegmentCtr.selectedSegmentIndex = 0;
+    _foodRecordEntity.recordType = eMealBreakfast;
+    mealSegmentCtr.tintColor = XKMainToneColor_29ccb1;
+    [mealSegmentCtr addTarget:self action:@selector(mealSegmentAction:) forControlEvents:UIControlEventValueChanged];
+    [mealView addSubview:mealSegmentCtr];
+    
+    mealSecondSegmentCtr = [[UISegmentedControl alloc] initWithItems:@[@"加餐"]];
+    mealSecondSegmentCtr.frame = CGRectMake(XKAppWidth-kSegmentWidth-15,44+7, kSegmentWidth / 3, 30);
+    mealSecondSegmentCtr.tintColor = XKMainToneColor_29ccb1;
+    [mealSecondSegmentCtr addTarget:self action:@selector(mealSegmentAction:) forControlEvents:UIControlEventValueChanged];
+    [mealView addSubview:mealSecondSegmentCtr];
+
     //传入 额外单位
     NSMutableArray *keys = [NSMutableArray arrayWithArray:[_foodRecordEntity.foodUnit allKeys]];
     
@@ -132,9 +163,10 @@
     if (keys.count % 3) {
         i = i + 1;
     }
+    
     //单位
     unitView = [[UIView alloc] init];
-    unitView.frame = CGRectMake(0.f, topView.bottom+15, XKAppWidth, 44*(i+1));
+    unitView.frame = CGRectMake(0.f, mealView.bottom, XKAppWidth, 44*(i+1));
 
     unitView.backgroundColor = [UIColor whiteColor];
     
@@ -454,7 +486,7 @@
     [XKRWCui showProgressHud:@""];
     
     [MobClick event:@"clk_mark"];
-    
+    _foodRecordEntity.date = [NSDate today];
     [self downloadWithTaskID:@"saveFoodRecord" outputTask:^id{
         return @([[XKRWRecordService4_0 sharedService] saveRecord:_foodRecordEntity ofType:XKRWRecordTypeFood]);
     }];
@@ -486,6 +518,36 @@
     }
 }
 
+- (void)mealSegmentAction:(UISegmentedControl *)segmentCtl {
+    
+    if ([componentTextField isFirstResponder]) {
+        [componentTextField resignFirstResponder];
+    }
+    
+    if ([segmentCtl isEqual:mealSegmentCtr]) {
+        [mealSecondSegmentCtr setSelectedSegmentIndex:UISegmentedControlNoSegment];
+        switch (mealSegmentCtr.selectedSegmentIndex) {
+            case 0:
+                _foodRecordEntity.recordType = eMealBreakfast;
+                break;
+                
+            case 1:
+                _foodRecordEntity.recordType = eMealLunch;
+                break;
+                
+            case 2:
+                _foodRecordEntity.recordType = eMealDinner;
+                break;
+                
+            default:
+                break;
+        }
+        
+    } else if ([segmentCtl isEqual:mealSecondSegmentCtr]) {
+        [mealSegmentCtr setSelectedSegmentIndex:UISegmentedControlNoSegment];
+        _foodRecordEntity.recordType = eMealSnack;
+    }
+}
 
 - (void) unitSegmentAction:(UISegmentedControl *)segment
 {

@@ -236,23 +236,54 @@
     });
     
     
-    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.f, _calendarScrollView.bottom, XKAppWidth, 40.f)];
+    self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.f, _calendarScrollView.bottom, XKAppWidth, XKAppHeight - _calendarScrollView.bottom - 44 - 64)];
     self.footerView.backgroundColor = [UIColor whiteColor];
     self.footerView.clipsToBounds = YES;
     [self addSubview:self.footerView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(27.f, 0.f, 150.f, 40.f)];
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = NSTextAlignmentLeft;
-    label.text = @"为记录日期";
-    label.font = XKDefaultFontWithSize(14);
-    label.textColor =  XK_ASSIST_TEXT_COLOR;
+    UIView *grayBgView = [[UIView alloc] initWithFrame:CGRectMake(15, XKAppHeight - 50 - 64 - 49, XKAppWidth - 30, 35)];
+    grayBgView.backgroundColor = colorSecondary_f4f4f4;
+    grayBgView.layer.cornerRadius = 2.5;
+//    [self addSubview:grayBgView];
+    [self insertSubview:grayBgView aboveSubview:_footerView];
     
-    [self.footerView addSubview:label];
+    UILabel *declareLabel = [[UILabel alloc] init];
+    declareLabel.font = XKDefaultFontWithSize(14);
+    declareLabel.textAlignment = NSTextAlignmentLeft;
+    declareLabel.textColor = colorSecondary_333333;
+    declareLabel.text = @"点击日期来查看历史";
+    [declareLabel sizeToFit];
+    declareLabel.center = CGPointMake(0, grayBgView.height / 2.0);
+    declareLabel.left = 15;
+    [grayBgView addSubview:declareLabel];
     
-    UIImageView *dot = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dotGreen"]];
-    dot.frame = CGRectMake(18.f, 19.f, 4.f, 4.f);
-    [self.footerView addSubview:dot];
+    UIImage *greenDotImage = [UIImage imageNamed:@"circleGreen"];
+    UIImageView *greenDotImageView = [[UIImageView alloc] initWithImage:greenDotImage];
+    greenDotImageView.size = CGSizeMake(10, 10);
+    greenDotImageView.center = CGPointMake(declareLabel.right + 20, grayBgView.height / 2.0);
+    [grayBgView addSubview:greenDotImageView];
+    UILabel *greenDotLabel = [[UILabel alloc] init];
+    greenDotLabel.font = XKDefaultFontWithSize(14);
+    greenDotLabel.textAlignment = NSTextAlignmentLeft;
+    greenDotLabel.textColor = colorSecondary_333333;
+    greenDotLabel.text = @"已有记录";
+    [greenDotLabel sizeToFit];
+    greenDotLabel.origin = CGPointMake(greenDotImageView.right + 5, declareLabel.top);
+    [grayBgView addSubview:greenDotLabel];
+    
+    UIImage *grayDotImage = [UIImage imageNamed:@"circleGray"];
+    UIImageView *grayDotImageView = [[UIImageView alloc] initWithImage:grayDotImage];
+    grayDotImageView.size = CGSizeMake(10, 10);
+    grayDotImageView.center = CGPointMake(greenDotLabel.right + 20, grayBgView.height / 2.0);
+    [grayBgView addSubview:grayDotImageView];
+    UILabel *grayDotLabel = [[UILabel alloc] init];
+    grayDotLabel.font = XKDefaultFontWithSize(14);
+    grayDotLabel.textAlignment = NSTextAlignmentLeft;
+    grayDotLabel.textColor = colorSecondary_333333;
+    grayDotLabel.text = @"尚未记录";
+    [grayDotLabel sizeToFit];
+    grayDotLabel.origin = CGPointMake(grayDotImageView.right + 5, declareLabel.top);
+    [grayBgView addSubview:grayDotLabel];
     
     _footerLine = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, XKAppWidth, 0.5f)];
     [_footerLine setY:self.height - 0.5f];

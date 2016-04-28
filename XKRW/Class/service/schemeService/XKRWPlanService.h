@@ -51,5 +51,12 @@
  *  @return a bool value
  */
 - (BOOL)getEnergyCircleClickEvent:(ResultType)type;
-
+/**
+ *  获取date之前离date日期最近的体重记录，若没有则返回体重原始值
+ *
+ *  @param date NSDate
+ *
+ *  @return float (kg)
+ */
+- (CGFloat)getHistoryWeightWithDate:(NSDate *)date;
 @end

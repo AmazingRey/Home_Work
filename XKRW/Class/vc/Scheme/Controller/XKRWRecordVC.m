@@ -24,6 +24,8 @@
     UIScrollView  *backgroundScrollView;
     UITableView  *recentRecordTableView;
     UITableView  *collectTableView;
+    UIView *nonCollectionView;
+    UIView *nonRecentRecordView;
     
     NSArray *segementTitles;
     NSMutableArray     *dataArray;
@@ -84,20 +86,25 @@
 
 }
 - (void) initView {
+    
+    UILabel *noRecentRecordLabel = [[UILabel alloc] init];
+    noRecentRecordLabel.font = XKDefaultFontWithSize(14);
+    noRecentRecordLabel.textColor = XK_ASSIST_TEXT_COLOR;
     if(_schemeType == eSchemeFood){
         self.title = @"记录食物";
         tableName = @"food_record";
         segementTitles = @[@"最近吃过",@"收藏的食物"];
         collectionType = 1;
         recordSearchBarplaceText = @"查询食物";
+        noRecentRecordLabel.text = @"最近没有任何饮食记录哦~";
     }else{
         self.title = @"记录运动";
         tableName = @"sport_record";
         segementTitles = @[@"最近做过",@"收藏的运动"];
          recordSearchBarplaceText = @"查询运动";
         collectionType = 2;
+        noRecentRecordLabel.text = @"最近没有任何运动记录哦~";
     }
-    
     
     [self setFoodRecordType];
     
@@ -136,9 +143,11 @@
     backgroundScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, segmentCtl.bottom+10, XKAppWidth, XKAppHeight - 50)];
     backgroundScrollView.contentSize = CGSizeMake(XKAppWidth * 2, XKAppHeight - 50);
     backgroundScrollView.contentOffset = CGPointMake(0, 0);
+    backgroundScrollView.scrollEnabled = NO;
     [self.view addSubview:backgroundScrollView];
     
     recentRecordTableView = [[UITableView alloc] initWithFrame:backgroundScrollView.bounds style:UITableViewStylePlain];
+    recentRecordTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     recentRecordTableView.delegate = self;
     recentRecordTableView.dataSource = self;
     recentRecordTableView.tag = 10001;
@@ -146,6 +155,7 @@
     [backgroundScrollView addSubview:recentRecordTableView];
 
     collectTableView = [[UITableView alloc] initWithFrame:backgroundScrollView.bounds style:UITableViewStylePlain];
+    collectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     collectTableView.delegate = self;
     collectTableView.dataSource = self;
     collectTableView.tag = 10002;
@@ -153,6 +163,29 @@
     [collectTableView registerClass:[XKRWSportCell class] forCellReuseIdentifier:@"collectionSportCell"];
     [backgroundScrollView addSubview:collectTableView];
     
+    nonRecentRecordView = [[UIView alloc] initWithFrame:recentRecordTableView.frame];
+    nonRecentRecordView.backgroundColor = [UIColor whiteColor];
+    nonRecentRecordView.hidden = YES;
+    UIImage *noRecentRecordImage = [UIImage imageNamed:@"nothing_"];
+    UIImageView *noRecentRecordImageView = [[UIImageView alloc] initWithImage:noRecentRecordImage];
+    noRecentRecordImageView.size = noRecentRecordImage.size;
+    noRecentRecordImageView.center = CGPointMake(XKAppWidth / 2.0, nonRecentRecordView.height / 2.0);
+    [nonRecentRecordView addSubview:noRecentRecordImageView];
+    [noRecentRecordLabel sizeToFit];
+    noRecentRecordLabel.center = CGPointMake(XKAppWidth / 2.0, 0);
+    noRecentRecordLabel.top = noRecentRecordImageView.bottom + 20;
+    [nonRecentRecordView addSubview:noRecentRecordLabel];
+    [backgroundScrollView insertSubview:nonRecentRecordView aboveSubview:recentRecordTableView];
+    
+    nonCollectionView = [[UIView alloc] initWithFrame:collectTableView.frame];
+    nonCollectionView.backgroundColor = [UIColor whiteColor];
+    UIImage *nonCollectionImage = [UIImage imageNamed:@"me_none_640"];
+    UIImageView *nonCollectionImageView = [[UIImageView alloc] initWithImage:nonCollectionImage];
+    nonCollectionImageView.size = nonCollectionImage.size;
+    nonCollectionImageView.center = CGPointMake(XKAppWidth / 2.0, nonCollectionView.height / 2.0);
+    [nonCollectionView addSubview:nonCollectionImageView];
+    nonCollectionView.hidden = YES;
+    [backgroundScrollView insertSubview:nonCollectionView aboveSubview:collectTableView];
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
     [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
@@ -177,8 +210,23 @@
         dataArray = [NSMutableArray array];
     }
     [dataArray addObjectsFromArray:[[XKRWCollectionService sharedService] queryCollectionWithType:collectionType]];
+    
+    // deal with haven't collectionData
+    if (!dataArray || !dataArray.count) {
+        nonCollectionView.hidden = NO;
+    } else {
+        nonCollectionView.hidden = YES;
+    }
+
     [collectTableView reloadData];
     recentRecordArray = [[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName];
+    
+    // deal with no recent record
+    if (!recentRecordArray || !recentRecordArray.count) {
+        nonRecentRecordView.hidden = NO;
+    } else {
+        nonRecentRecordView.hidden = YES;
+    }
     [recentRecordTableView reloadData];
     XKLog(@"%@",[[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName]);
 }
@@ -215,6 +263,7 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:NO];
     [searchDisplayCtrl hideSearchResultView];
+    [self initData];
     segmentCtl.hidden = NO;
 }
 

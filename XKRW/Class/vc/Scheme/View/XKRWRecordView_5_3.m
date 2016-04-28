@@ -8,16 +8,25 @@
 #define labStatus_RecordWeight @"_labRecordWeight"
 #define labStatus_PushMenu @"_labPushMenu"
 #import "define.h"
-#import "XKRWRecordFood5_3View.h"
-#import "XKRWRecordFood5_3Cell.h"
-#import "XKRWPushMenu5_3Cell.h"
+#import "XKRWRecordView_5_3.h"
+#import "XKRWRecordCell_5_3.h"
+#import "XKRWRecommandedCell_5_3.h"
 #import "XKRWAlgolHelper.h"
 #import "XKRWRecordMore5_3View.h"
 #import "XKRWPlan_5_3CollectionView.h"
 #import "XKRWFatReasonService.h"
 #import "XKRWRecordVC.h"
 #import "XKRWUtil.h"
-@interface XKRWRecordFood5_3View () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate>
+#import "XKRWAlgolHelper.h"
+#import "XKRWUserService.h"
+#import "XKRWRecordService4_0.h"
+#import "XKRWSportEntity.h"
+#import "XKRWFoodEntity.h"
+#import "XKRWSportAddVC.h"
+#import "XKRWAddFoodVC4_0.h"
+#import "XKRW-Swift.h"
+
+@interface XKRWRecordView_5_3 () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate>
 {
     UITableView *recordTableView;
     UITableView *recommendedTableView;
@@ -26,6 +35,10 @@
     BOOL     isRecommended;     //判断当前是推荐状态 还是记录状态
     
     NSInteger  showDetailSection;
+    
+    NSArray  *recordArray;  //早午晚加
+    
+    NSArray  *detailRecordArray;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *testViewFrame;
@@ -33,13 +46,14 @@
 
 @end
 
-@implementation XKRWRecordFood5_3View
+@implementation XKRWRecordView_5_3
 
 -(void)initSubViews {
     _scrollView.delegate = self;
     showDetailSection = -1;
     _shadowImageView =[[UIImageView alloc]initWithFrame:CGRectMake((XKAppWidth - 800) /2 + (_positionX - XKAppWidth /2) , 0, 800, 10)];
     _shadowImageView.image = [UIImage imageNamed:@"shadow"];
+    
     [self addSubview:_shadowImageView];
 
     _scrollView.contentSize = CGSizeMake( XKAppWidth * 2, _scrollView.height);
@@ -52,7 +66,7 @@
     recordTableView.delegate = self;
     recordTableView.backgroundColor = XK_BACKGROUND_COLOR;
     recordTableView.dataSource = self;
-    [recordTableView registerNib:[UINib nibWithNibName:@"XKRWRecordFood5_3Cell" bundle:nil] forCellReuseIdentifier:@"recordFoodCell"];
+    [recordTableView registerNib:[UINib nibWithNibName:@"XKRWRecordCell_5_3" bundle:nil] forCellReuseIdentifier:@"recordCell"];
 
     recommendedTableView = [[UITableView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, _scrollView.height) style:UITableViewStylePlain];
     recommendedTableView.tag = 5032;
@@ -60,7 +74,8 @@
     recommendedTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     recommendedTableView.dataSource = self;
     recommendedTableView.backgroundColor = XK_BACKGROUND_COLOR;
-    [recommendedTableView registerNib:[UINib nibWithNibName:@"XKRWPushMenu5_3Cell" bundle:nil] forCellReuseIdentifier:@"pushMenuCell"];
+    
+    [recommendedTableView registerNib:[UINib nibWithNibName:@"XKRWRecommandedCell_5_3" bundle:nil] forCellReuseIdentifier:@"recommendedCell"];
     
     [_scrollView addSubview:recordTableView];
     [_scrollView addSubview:recommendedTableView];
@@ -88,6 +103,27 @@
     _centerbutton.hidden = YES;
     _rightButton.hidden = YES;
     
+    //每日饮食推荐值
+    CGFloat totalFoodCalories = [XKRWAlgolHelper dailyIntakeRecomEnergy];
+    //每日运动消耗推荐值
+    CGFloat totalSportCalories = [XKRWAlgolHelper dailyConsumeSportEnergy];
+    
+    //获取就餐比例的 百分比
+    NSDictionary *mealRatioDic =[[XKRWUserService sharedService] getMealRatio];
+    
+    CGFloat breakfast = totalFoodCalories * [[mealRatioDic objectForKey:@"breakfast"] floatValue] /100.f;
+    CGFloat lunch = totalFoodCalories *[[mealRatioDic objectForKey:@"lunch"] floatValue] /100.f;
+    CGFloat supper = totalFoodCalories* [[mealRatioDic objectForKey:@"supper"] floatValue] /100.f;
+    CGFloat snack = totalFoodCalories *[[mealRatioDic objectForKey:@"snack"] floatValue] /100.f;
+    
+    _date =[NSDate date];
+    
+    NSDictionary *sportDetail =  [[XKRWRecordService4_0 sharedService] getTotalCalorieOfDay:_date andRecordType:eSport];
+    NSDictionary *breakDetail = [[XKRWRecordService4_0 sharedService] getTotalCalorieOfDay:_date andRecordType:eMealBreakfast];
+    NSDictionary *LunchDetail = [[XKRWRecordService4_0 sharedService] getTotalCalorieOfDay:_date andRecordType:eMealLunch];
+    NSDictionary *dinnerDetail = [[XKRWRecordService4_0 sharedService] getTotalCalorieOfDay:_date andRecordType:eMealDinner];
+    NSDictionary *mealDetail = [[XKRWRecordService4_0 sharedService] getTotalCalorieOfDay:_date andRecordType:eMealSnack];
+    
     switch (_type) {
         case energyTypeEat:
             _recordTypeLabel.text = @"记录饮食";
@@ -99,6 +135,8 @@
             _rightButton.hidden = NO;
             recordTypeTitleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
             recordTypeImageArray = @[@"breakfast5_3",@"lunch5_3",@"dinner5_3",@"addmeal5_3"];
+            detailRecordArray = @[breakDetail,LunchDetail,dinnerDetail,mealDetail];
+            recordArray =@[[NSNumber numberWithFloat:breakfast],[NSNumber numberWithFloat:lunch],[NSNumber numberWithFloat:supper],[NSNumber numberWithFloat:snack]];
             break;
         case energyTypeSport:
             _recordTypeLabel.text = @"记录运动";
@@ -109,6 +147,8 @@
             _centerbutton.hidden = NO;
             recordTypeTitleArray = @[@"运动"];
             recordTypeImageArray =@[@"sports5_3"];
+            detailRecordArray = @[sportDetail];
+            recordArray = @[[NSNumber numberWithFloat:totalSportCalories]];
             break;
         case energyTypeHabit:
             _recordTypeLabel.hidden = YES;
@@ -136,14 +176,7 @@
 }
 
 
--(void)scrollToPage:(NSInteger)page{
-    if (_pageIndex == page) {
-        return;
-    }
-    CGFloat offset = (page-1) * XKAppWidth;
-    [_scrollView setContentOffset:CGPointMake(offset, 0) animated:YES];
-    _pageIndex = page;
-}
+
 
 
 
@@ -166,7 +199,12 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView.tag == 5031) {
-        return 0;
+        if (section == showDetailSection) {
+            return [[[detailRecordArray objectAtIndex:section] objectForKey:@"allRecord"] count];
+        }else{
+            return 0;
+        }
+        
     }else if (tableView.tag == 5032){
         return _schemeArray.count;
     }
@@ -174,38 +212,106 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 59;
+    if(tableView.tag == 5031){
+        return 44;
+    }else if (tableView.tag == 5032){
+        return 59;
+    }
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    XKRWRecordSchemeEntity *entity;
+   
      if (tableView.tag == 5031) {
-         return nil;
+        XKRWRecordCell_5_3 *cell = [tableView dequeueReusableCellWithIdentifier:@"recordCell"];
+       
+         if (indexPath.section == showDetailSection){
+             id temp = [[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"allRecord"] objectAtIndex:indexPath.row];
+             
+             if (![temp isKindOfClass:[XKRWFoodEntity class]] && ![temp isKindOfClass:[XKRWSportEntity class]]) {
+                 cell.recordDetailTitle.text = [temp objectForKey:@"title"];
+                 cell.recordDetailCalories.text =[temp objectForKey:@"calorie"];
+                 cell.recordArrowImageView.hidden = YES;
+             }else if ([temp isKindOfClass:[XKRWFoodEntity class]]){
+                 cell.recordArrowImageView.hidden = NO;
+                 cell.recordDetailTitle.text = ((XKRWFoodEntity *)temp).foodName;
+                 cell.recordDetailCalories.text = [NSString stringWithFormat:@"%@Kcal",[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"calorie"]];
+             }else{
+                 cell.recordArrowImageView.hidden = NO;
+                 cell.recordDetailTitle.text = ((XKRWSportEntity *)temp).sportName;
+                 cell.recordDetailCalories.text = [NSString stringWithFormat:@"%@Kcal",[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"calorie"]];
+             }
+         }
+        [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
+        return cell;
      }else if (tableView.tag == 5032){
-        entity = [_schemeArray objectAtIndex:indexPath.row];
-        XKRWPushMenu5_3Cell *cell = [tableView dequeueReusableCellWithIdentifier:@"pushMenuCell"];
+        XKRWSchemeEntity_5_0 *entity = [_schemeArray objectAtIndex:indexPath.row];
+        XKRWRecommandedCell_5_3 *cell = [tableView dequeueReusableCellWithIdentifier:@"recommendedCell"];
         cell.frame = CGRectMake(0, 0, self.width, 59);
-        cell.leftImage.image = [UIImage imageNamed:[self getImageNameWithType:entity.type]];
-        cell.labMain.text = [self getNameWithType:entity.type];
-         return  cell;
+        cell.mealImageView.image = [UIImage imageNamed:[self getImageNameWithType:entity.schemeType]];
+         NSMutableString *schemeDetail =[NSMutableString string];
+         for (XKRWFoodCategoryEntity *foodEntity in entity.foodCategories ) {
+             if (schemeDetail.length == 0) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                  [schemeDetail appendString:foodEntity.categoryName];
+             }else{
+                 [schemeDetail appendString:[NSString stringWithFormat:@"+%@",foodEntity.categoryName]];
+             }
+         }
+         
+        cell.mealLabel.text = entity.schemeName;
+        cell.mealDetailLabel.text = schemeDetail;
+        [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
+        return  cell;
      }
     return [UITableViewCell new];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (tableView.tag == 5031) {
+            id temp = [[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"allRecord"] objectAtIndex:indexPath.row];
+            
+            if (![temp isKindOfClass:[XKRWFoodEntity class]] && ![temp isKindOfClass:[XKRWSportEntity class]]) {
+                return;
+            }else if ([temp isKindOfClass:[XKRWFoodEntity class]]){
+                XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
+                XKRWRecordFoodEntity *recordFoodEntity = [[XKRWRecordFoodEntity alloc] init];
+                recordFoodEntity.date = _date;
+                recordFoodEntity.foodId = ((XKRWFoodEntity *)temp).foodId;
+                recordFoodEntity.foodLogo = ((XKRWFoodEntity *)temp).foodLogo;
+                recordFoodEntity.foodName = ((XKRWFoodEntity *)temp).foodName;
+                recordFoodEntity.foodNutri = ((XKRWFoodEntity *)temp).foodNutri;
+                recordFoodEntity.foodEnergy = ((XKRWFoodEntity *)temp).foodEnergy;
+                recordFoodEntity.foodUnit = ((XKRWFoodEntity *)temp).foodUnit;
+                addFoodVC.foodRecordEntity = recordFoodEntity;
+                [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:_vc];
+
+            }else{
+                XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
+                addVC.sportEntity = ((XKRWSportEntity *)temp);
+                addVC.passMealTypeTemp = eSport;
+                addVC.needHiddenDate = YES;
+                addVC.isPresent = YES;
+                [_vc.navigationController presentViewController:addVC animated:YES completion:nil];
+            }
+
+    }else if (tableView.tag == 5032){
+    
+    
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if(tableView.tag == 5031){
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 59)];
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 44)];
         headerView.backgroundColor = XK_BACKGROUND_COLOR;
         
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, (59-29)/2, 29, 29)];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, (44-29)/2, 29, 29)];
       
         imageView.image = [UIImage imageNamed:[recordTypeImageArray objectAtIndex:section]];
         
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right + 10, 0, 100, 59)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right + 10, 0, 100, 44)];
         label.text = [recordTypeTitleArray objectAtIndex:section];
         label.font = XKDefaultFontWithSize(15.f);
         label.textColor = colorSecondary_333333;
@@ -213,22 +319,28 @@
         [headerView addSubview:label];
         
         UIImageView *arrowImageView = [[UIImageView alloc]init];
+        arrowImageView.frame = CGRectMake(XKAppWidth-15-8, (44-6)/2, 8, 6);
         if(showDetailSection == section){
-            arrowImageView.image = [UIImage imageNamed:@"details"];
-            arrowImageView.frame = CGRectMake(XKAppWidth-15-6, (59-8)/2, 6, 8);
+            arrowImageView.image = [UIImage imageNamed:@"upmenu"];
         }else{
             arrowImageView.image = [UIImage imageNamed:@"dropdown menu"];
-            arrowImageView.frame = CGRectMake(XKAppWidth-15-8, (59-6)/2, 8, 6);
         }
         [headerView addSubview:arrowImageView];
         
-        UILabel *calorieLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth-150-15-15, 0, 150, 59)];
+        UILabel *calorieLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth-150-15-15, 0, 150, 44)];
         calorieLabel.font = XKDefaultFontWithSize(15.f);
         calorieLabel.textColor = colorSecondary_333333;
-        
+        calorieLabel.textAlignment = NSTextAlignmentRight;
         [headerView addSubview:calorieLabel];
         
-        UIButton *showDetailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 59)];
+        //推荐卡路里
+        CGFloat recommendedCalorie = [[recordArray objectAtIndex:section] floatValue];
+        //当前已经记录的卡路里
+        CGFloat sumCalorie = [[[detailRecordArray objectAtIndex:section] objectForKey:@"calorie"] floatValue];
+        
+        calorieLabel.text =[NSString stringWithFormat:@"%.0f/%.0f",sumCalorie,recommendedCalorie];
+        
+        UIButton *showDetailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 44)];
         showDetailButton.tag = 100 + section;
         [showDetailButton addTarget:self action:@selector(showDetail:) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:showDetailButton];
@@ -243,10 +355,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (tableView.tag == 5031) {
-        return 59;
+        return 44;
     }
     return 0;
 }
+
+
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if(scrollView.tag == 1005){
@@ -272,7 +386,12 @@
 #pragma --mark Action
 //点击展示 早餐 午餐 晚餐 加餐 的详细情况
 - (void)showDetail:(UIButton *)button {
-    showDetailSection = button.tag -100;
+    if (showDetailSection == button.tag -100) {
+        showDetailSection = -1;
+    }else{
+        showDetailSection = button.tag -100;
+    }
+    [recordTableView reloadData];
 }
 
 //关闭
@@ -371,22 +490,22 @@
 }
 
 
--(NSString *)getImageNameWithType:(RecordType)type{
+-(NSString *)getImageNameWithType:(XKRWSchemeType)type{
     NSString *imgName ;
     switch (type) {
-        case RecordTypeSport:
+        case XKRWSchemeTypeSport:
             imgName = @"sports5_3";
             break;
-        case RecordTypeBreakfirst:
+        case XKRWSchemeTypeBreakfast:
             imgName = @"breakfast5_3";
             break;
-        case RecordTypeLanch:
+        case XKRWSchemeTypeLunch:
             imgName = @"lunch5_3";
             break;
-        case RecordTypeDinner:
+        case XKRWSchemeTypeDinner:
             imgName = @"dinner5_3";
             break;
-        case RecordTypeSnack:
+        case XKRWSchemeTypeSnack:
             imgName = @"addmeal5_3";
             break;
             
@@ -396,22 +515,22 @@
     return imgName;
 }
 
--(NSString *)getNameWithType:(RecordType)type{
+-(NSString *)getNameWithType:(XKRWSchemeType)type{
     NSString *name ;
     switch (type) {
-        case RecordTypeSport:
+        case XKRWSchemeTypeSport:
             name = @"运动";
             break;
-        case RecordTypeBreakfirst:
+        case XKRWSchemeTypeBreakfast:
             name = @"早餐";
             break;
-        case RecordTypeLanch:
+        case XKRWSchemeTypeLunch:
             name = @"午餐";
             break;
-        case RecordTypeDinner:
+        case XKRWSchemeTypeDinner:
             name = @"晚餐";
             break;
-        case RecordTypeSnack:
+        case XKRWSchemeTypeSnack:
             name = @"加餐";
             break;
             

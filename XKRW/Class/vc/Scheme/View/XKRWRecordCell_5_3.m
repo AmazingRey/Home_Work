@@ -1,14 +1,14 @@
 //
-//  XKRWPushMenu5_3Cell.m
+//  XKRWRecordCell_5_3.m
 //  XKRW
 //
-//  Created by ss on 16/4/14.
+//  Created by 忘、 on 16/4/28.
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
-#import "XKRWPushMenu5_3Cell.h"
+#import "XKRWRecordCell_5_3.h"
 
-@implementation XKRWPushMenu5_3Cell
+@implementation XKRWRecordCell_5_3
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -21,9 +21,4 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)actRight:(id)sender {
-}
-
-- (IBAction)actArrow:(id)sender {
-}
 @end

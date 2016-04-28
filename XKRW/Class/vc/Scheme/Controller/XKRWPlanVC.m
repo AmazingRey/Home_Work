@@ -41,6 +41,9 @@
 #import "XKRWRecordSingleMore5_3View.h"
 #import "XKRWChangeMealPercentVC.h"
 #import "XKRWHomePagePretreatmentManage.h"
+#import "XKRWDailyAnalysizeVC.h"
+
+
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate>
 {
@@ -62,10 +65,16 @@
     XKRWRecordEntity4_0 *recordEntity;
     NSInteger intakeCalorie;
     NSInteger expendCalorie;
+    NSInteger currentHabit;
     
     UIButton  *btnBackBounds;
     XKRWRecordMore5_3View *recordMoreView;
     XKRWRecordSingleMore5_3View *recordSingleMoreView;
+    
+    // 是不是今天的方案
+    BOOL isTodaysPlan;
+    // 历史方案是否可补记
+    BOOL isCanRevisionRecord;
 }
 
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
@@ -75,7 +84,7 @@
 
 @property (strong , nonatomic) NSArray *mealSchemeArray;
 @property (strong , nonatomic) XKRWSchemeEntity_5_0 *sportSchemeEntity;
-@property (strong , nonatomic) XKRWRecordFood5_3View *recordPopView;
+@property (strong , nonatomic) XKRWRecordView_5_3 *recordPopView;
 @end
 
 @implementation XKRWPlanVC
@@ -94,6 +103,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // judge for is today's record or history,is the history record can be changed.
+    NSDate *todayDate = [NSDate today];
+    if (!self.recordDate || [_recordDate compare:todayDate] == NSOrderedSame ) {
+        _recordDate = [NSDate today];
+        isTodaysPlan = YES;
+        
+    } else {
+        isTodaysPlan = NO;
+        if ([_recordDate compare:[todayDate offsetDay:-1]] == NSOrderedSame || [_recordDate compare:[todayDate offsetDay:-2]] == NSOrderedSame) {
+            isCanRevisionRecord = YES;
+        } else {
+            isCanRevisionRecord = NO;
+        }
+    }
+    
     [self initView];
     [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
     [self initData];
@@ -112,22 +137,8 @@
 }
 #pragma mark - data
 - (void)initData {
-    [_planEnergyView setHabitEnergyCircleGoalNumber:0 currentNumber:0];
-    recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:[NSDate today]];
-    
-    // deal with energyCircle data
-    {
-        intakeCalorie = 0;
-        expendCalorie = 0;
-        
-    for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
-        intakeCalorie += foodEntity.calorie;
-    }
-    for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
-        expendCalorie += sportEntity.calorie;
-    }
-        
-    }
+ 
+//    mealEntitys = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
     
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView];
@@ -142,21 +153,47 @@
 }
 
 - (void)setPlanEnergyViewTitle {
-    NSString *title = [[XKRWThinBodyDayManage shareInstance] TipsTextWithDayAndWhetherOpen];
+    NSString *title;
+    if (isTodaysPlan) {
+        title = [[XKRWThinBodyDayManage shareInstance] TipsTextWithDayAndWhetherOpen];
+    } else {
+        title = @"回到今天";
+    }
     BOOL isflash;
     if ([title rangeOfString:@"点击“开启”，"].location != NSNotFound) {
         isflash = YES;
-        [_planEnergyView setTitle:title isflashing:isflash];
+    } else if ([title rangeOfString:@"回到今天"].location != NSNotFound) {
+        isflash = NO;
     } else {
         isflash = NO;
-        [_planEnergyView setTitle:[title stringByAppendingString:@" >"] isflashing:isflash];
+        title = [title stringByAppendingString:@" >"];
     }
+    [_planEnergyView setTitle:title isflashing:isflash];
 }
 
 - (void)refreshEnergyCircleView {
+    recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_recordDate];
     
+    // deal with energyCircle data
+    {
+        intakeCalorie = 0;
+        expendCalorie = 0;
+        currentHabit = 0;
+        
+        for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
+            intakeCalorie += foodEntity.calorie;
+        }
+        for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
+            expendCalorie += sportEntity.calorie;
+        }
+        for (XKRWHabbitEntity *habitEntity in recordEntity.habitArray) {
+            currentHabit += habitEntity.situation;
+        }
+    }
+
     [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:intakeCalorie];
     [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:expendCalorie];
+    [_planEnergyView setHabitEnergyCircleGoalNumber:recordEntity.habitArray.count currentNumber:currentHabit];
 }
 #pragma --mark UI
 - (void)initView {
@@ -262,15 +299,24 @@
     _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
     _recordAndTargetView.dayLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
     _recordAndTargetView.dayLabel.layer.borderWidth = 1;
-    _recordAndTargetView.planTimeLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
     _recordAndTargetView.currentWeightLabel.layer.masksToBounds = YES;
     _recordAndTargetView.currentWeightLabel.layer.cornerRadius = 16;
     _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
     _recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
-    _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWUserService sharedService] getCurrentWeight]/1000.f];
-    _recordAndTargetView.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)[NSDate date].day];
-    _recordAndTargetView.monthLabel.text = [NSString stringWithFormat:@"%ld月",(long)[NSDate date].month];
-    _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
+    _recordAndTargetView.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)_recordDate.day];
+    _recordAndTargetView.monthLabel.text = [NSString stringWithFormat:@"%ld月",(long)_recordDate.month];
+    
+    if (isTodaysPlan) {
+         _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
+        _recordAndTargetView.planTimeLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
+        _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWUserService sharedService] getCurrentWeight]/1000.f];
+
+    } else {
+        _recordAndTargetView.targetWeightLabel.text = @"";
+        _recordAndTargetView.planTimeLabel.text = @"";
+        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",[[XKRWPlanService shareService] getHistoryWeightWithDate:_recordDate]];
+    }
+   
     [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
     
     UILongPressGestureRecognizer *gesLongPressed = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressRecognizer:)];
@@ -282,9 +328,9 @@
     [planHeaderView addSubview:_recordAndTargetView];
     
     _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, planHeaderView.height - 120)];
-    [_planEnergyView.eatEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
-    [_planEnergyView.sportEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
-    [_planEnergyView.habitEnergyCircle setStyle:([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType] ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
+    [_planEnergyView.eatEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] || !isTodaysPlan) ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
+    [_planEnergyView.sportEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] || !isTodaysPlan )? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
+    [_planEnergyView.habitEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType] || !isTodaysPlan) ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     _planEnergyView.delegate = self;
     [planHeaderView addSubview:_planEnergyView];
     planHeaderView.clipsToBounds = YES;
@@ -359,15 +405,19 @@
 - (void)energyCircleViewTitleClicked:(NSString *)title {
     
     if ([title rangeOfString:@"查看今日分析"].location != NSNotFound) {
-        XKRWHistoryAndProcessVC *vc = [[XKRWHistoryAndProcessVC alloc] init];
+        XKRWDailyAnalysizeVC *vc = [[XKRWDailyAnalysizeVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         [vc.navigationController setNavigationBarHidden:NO];
+        
     } else if ([title rangeOfString:@"计划已结束"].location != NSNotFound) {
         [XKRWCui showConfirmWithMessage:@"确定要重置方案吗？" okButtonTitle:@"确定" cancelButtonTitle:@"取消" onOKBlock:^{
             [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:self];
         }];
+        
+    } else if ([title rangeOfString:@"回到今天"].location != NSNotFound) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
  
@@ -395,8 +445,8 @@
 
 #pragma mark - XKRWRecordFood5_3View
 -(void)addschemeOrRecordView:(NSInteger)index andArrowX:(CGFloat) postitonX {
-    NSArray *array =  [[NSBundle mainBundle] loadNibNamed:@"XKRWRecordFood5_3View" owner:self options:nil];
-    XKRWRecordFood5_3View *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordFood5_3View");
+
+    XKRWRecordView_5_3 *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordView_5_3");
     popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
     popView.positionX = postitonX;
     popView.vc = self;
@@ -408,8 +458,6 @@
         _recordPopView.schemeArray = [NSArray arrayWithObject:_sportSchemeEntity];
     }
 
-    UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchRecordView:)];
-    [_recordPopView addGestureRecognizer:ges];
     
     CGRect recordFrame = _recordPopView.frame;
     recordFrame.origin.y -= recordFrame.size.height;
@@ -437,13 +485,11 @@
     }];
 }
 
--(void)touchRecordView:(UITapGestureRecognizer *)recognizer{
-    [self removeMoreView];
-}
+
 
 -(void)removeMenuView{
     if (_recordPopView) {
-        XKRWRecordFood5_3View *popView = _recordPopView;
+        XKRWRecordView_5_3 *popView = _recordPopView;
         _recordPopView = nil;
         [UIView animateWithDuration:.7 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:1 options:0 animations:^{
             CGRect frame = popView.frame;
@@ -463,12 +509,8 @@
 
 -(void)getMealScheme{
     [self downloadWithTaskID:@"getMealSchemeAndRecord" outputTask:^id{
-        NSArray *mealArray = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
-           NSArray *recordMealArray = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithSchemes:mealArray date:[NSDate date]];
-            if (recordMealArray) {
-                return recordMealArray;
-            }
-        return mealArray;
+        return   [[XKRWSchemeService_5_0 sharedService] getMealScheme];
+
     }];
 }
 
@@ -476,13 +518,8 @@
     
     [self downloadWithTaskID:@"getSportSchemeAndRecord" outputTask:^id{
         NSInteger i =[[XKRWRecordService4_0 sharedService]getMenstruationSituation]?1:0;
-        XKRWSchemeEntity_5_0 *sportEntity = [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
-        NSArray *arr = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithSchemes:@[sportEntity] date:[NSDate date]];
-        if (arr) {
-            return  [arr lastObject];
-        }
-        return sportEntity;
-    }];
+        return [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
+        }];
 }
 
 -(void)RecordFoodViewpressCancle{

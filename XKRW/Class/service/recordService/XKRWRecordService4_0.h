@@ -272,13 +272,23 @@ typedef NS_ENUM(NSInteger, XKRWRecordType) {
  *  获得当天饮食/运动总量（KCAL）type = 1为食物， type = 0为运动
  */
 - (NSInteger)getTotalCalorieOfDay:(NSDate *)date type:(int)type __deprecated_msg("Deprecated after Version 5.0");
+
+/**
+ *  获取当天早 中 晚 加 运 分别消耗的卡路里   首先查找是否完美执行  如果完美执行就显示 完美执行 否则查找方案中是否吃了别的  两个都没有再去查找记录食物
+ *
+ *  @param date <#date description#>
+ *  @param type <#type description#>
+ *
+ *  @return <#return value description#>
+ */
+- (NSMutableDictionary *)getTotalCalorieOfDay:(NSDate *)date andRecordType:(MealType ) type ;
+
 /**_
  *  获得所有记录的维度、体重、时间
  *
  *  @return 返回值为字典，字典通过“waistline”等键值可以拿到响应部位存储数据的字典，子字典对应关系如下（例）：(key = value) name = 胸围， max = 最大值， min = 最小值， content = 数组；content数组中存放单个记录字典，对应关系如下：date = 日期（string），value = 当日值；取围度、体重字典key值：weight
  *
  */
-
 - (NSDictionary *)getAllCircumferenceAndWeightRecord;
 
 /**
@@ -400,6 +410,26 @@ typedef NS_ENUM(NSInteger, XKRWRecordType) {
  *  删除使用用户记录信息
  */
 - (BOOL)deleteTrialUserData;
+
+
+/**
+ *  获取当天运动消耗的卡路里 以及记录食物摄入的卡路里
+ *
+ *  @param type XKCaloriesType
+ *  @param date <#date description#>
+ *
+ *  @return 卡路里
+ */
+- (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDate:(NSDate *)date;
+/**
+ *  获取用户某一天的 记录状态
+ *
+ *  @param date <#date description#>
+ *
+ *  @return YES 已记录  NO未记录
+ */
+
+- (BOOL) getUserRecordStateWithDate:(NSDate *)date ;
 
 ///**
 // *  判断是否显示数据中心小红点

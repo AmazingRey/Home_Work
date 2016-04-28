@@ -14,7 +14,12 @@
 
 
 - (void)viewWillApperShowFlower:(XKRWBaseVC *) vc;
-
+/**
+ *  获取日历中计划进程描述
+ *
+ *  @return <#return value description#>
+ */
+- (NSAttributedString *)calenderPlanDayText;
 - (NSString *)PlanDayText ;
 
 - (NSString *)TipsTextWithDayAndWhetherOpen ;

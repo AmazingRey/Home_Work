@@ -76,6 +76,9 @@
     } else {
         entity.situation = 0;
     }
-    
+    if (self.saveBlock) {
+        self.saveBlock(_entity.habitArray);
+        
+    }
 }
 @end

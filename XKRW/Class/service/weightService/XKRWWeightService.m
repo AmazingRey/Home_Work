@@ -834,4 +834,13 @@ static XKRWWeightService *shareInstance;
     }
     return [result[0][@"weight"] floatValue] / 1000.f;
 }
+- (float)getWeightRecordWithDate:(NSDate *)date {
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    int dateFormat = [[date stringWithFormat:@"yyyyMMdd"] intValue];
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM weightrecord WHERE userid = %ld AND date = %d",(long)(long)uid,dateFormat];
+    NSArray *array = [self query:sql];
+    if (array.count) {
+        return [array.firstObject[@"weight"] floatValue] / 1000.f;
+    } else return 0.f;
+}
 @end

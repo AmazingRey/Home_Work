@@ -78,6 +78,12 @@
 
 //获取最初的时间  
 -(NSDate*)getOrWeightTime;
-
-
+/**
+ *  根据date获取记录的体重
+ *
+ *  @param date nsdate
+ *
+ *  @return 有则返回数值，无则返回0
+ */
+- (float)getWeightRecordWithDate:(NSDate *)date;
 @end
