@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "XKRWRecordEntity4_0.h"
 
-typedef void(^saveHabit)(NSArray *habitArray);
+typedef void(^changeHabitBlock)(NSInteger index,BOOL abool);
 @interface XKRWHabitListView : UIView
 
 @property (nonatomic, strong) XKRWRecordEntity4_0 *entity;
-@property (nonatomic, copy) saveHabit saveBlock;
+@property (nonatomic, copy) changeHabitBlock changeHabit;
 @end

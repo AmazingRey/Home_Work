@@ -1099,7 +1099,6 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
                         let cell: UITableViewCell = UITableViewCell(style: .Default, reuseIdentifier: "weightCell")
                         cell.contentView.addSubview(weightView!)
 //                        cell.selectionStyle = .None
-
                         return cell
                     }
 

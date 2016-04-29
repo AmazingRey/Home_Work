@@ -70,14 +70,14 @@
     sender.selected = !sender.selected;
     
     NSInteger index = sender.tag - 1;
-    XKRWHabbitEntity *entity = _entity.habitArray[index];
-    if (sender.selected) {
-        entity.situation = 1;
-    } else {
-        entity.situation = 0;
-    }
-    if (self.saveBlock) {
-        self.saveBlock(_entity.habitArray);
+//    XKRWHabbitEntity *entity = _entity.habitArray[index];
+//    if (sender.selected) {
+//        entity.situation = 1;
+//    } else {
+//        entity.situation = 0;
+//    }
+    if (self.changeHabit) {
+        self.changeHabit(index,sender.selected);
         
     }
 }

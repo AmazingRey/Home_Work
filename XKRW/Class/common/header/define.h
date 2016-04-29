@@ -350,5 +350,14 @@
 #define ANALYZEPAGE  @"analyzePage"
 
 #define ReLoadTipsData @"ReLoadTipsData"
-
+// 能量环接收数据变化通知中心 名称
+#define EnergyCircleDataNotificationName @"energyCircleDataChanged"
+// 能量环接收数据变化通知中心 object 传值 影响饮食能量环
+#define EffectFoodCircle @"food"
+// 能量环接收数据变化通知中心 object 传值 影响运动能量环
+#define EffectSportCircle @"sport"
+// 能量环接收数据变化通知中心 object 传值 影响习惯能量环
+#define EffectHabit @"habit"
+// 能量环接收数据变化通知中心 object 传值 影响饮食和运动能量环
+#define EffectFoodAndSportCircle @"foodAndSport"
 #endif

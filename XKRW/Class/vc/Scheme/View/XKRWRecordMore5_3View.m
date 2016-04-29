@@ -67,6 +67,7 @@
 
 //按钮二
 - (IBAction)actSet:(id)sender {
+    //设置饮食提醒
     if ([self.delegate respondsToSelector:@selector(pressSetEatNotify)]) {
         [self.delegate pressSetEatNotify];
     }

@@ -6,15 +6,21 @@
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
-@protocol XKRWRecordFood5_3ViewDelegate <NSObject>
-@optional
--(void)RecordFoodViewpressCancle;
--(void)addMoreView;
--(void)entryRecordVCWith:(SchemeType)schemeType;
-@end
-
 #import <UIKit/UIKit.h>
 #import "XKRWRecordSchemeEntity.h"
+
+@protocol XKRWRecordFood5_3ViewDelegate <NSObject>
+@optional
+- (void)RecordFoodViewpressCancle;
+- (void)addMoreView;
+- (void)entryRecordVCWith:(SchemeType)schemeType;
+
+- (void)saveSchemeRecord:(XKRWRecordSchemeEntity *)entity andType:( XKRWRecordType ) type;
+-(void)fixHabitAt:(NSInteger)index isCurrect:(BOOL)abool;
+@end
+
+#import "XKRWRecordEntity4_0.h"
+
 
 @interface XKRWRecordView_5_3 : UIView
 @property (assign,nonatomic) id<XKRWRecordFood5_3ViewDelegate> delegate;
@@ -31,6 +37,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *centerbutton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollviewHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *activeHeight;
 
 // 点击的是记录饮食圆环  进入营养分析
 - (IBAction)leftButtonAction:(UIButton *)sender;
@@ -51,10 +59,11 @@
 @property (assign) NSInteger positionX;
 @property (assign ,nonatomic) NSInteger pageIndex;
 @property (strong ,nonatomic) NSArray *schemeArray;
+@property (strong ,nonatomic) XKRWRecordEntity4_0 *entity;
 @property (assign ,nonatomic) energyType type;
 @property (strong ,nonatomic) NSMutableDictionary *dicCollection;
 @property (strong ,nonatomic) UIImageView *shadowImageView;
 @property (strong ,nonatomic) NSDate  *date;
-@property (nonatomic,strong) UIViewController *vc;
+@property (strong ,nonatomic) UIViewController *vc;
 
 @end

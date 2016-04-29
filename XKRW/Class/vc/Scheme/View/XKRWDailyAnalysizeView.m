@@ -23,14 +23,12 @@
         _dailyNormal = [XKRWAlgolHelper dailyIntakEnergy];
         //饮食消耗
         _dailyFoodDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:efoodCalories andDate:[NSDate date]];
-        
         //运动消耗
         _dailySportDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:eSportCalories andDate:[NSDate date]];
         
-        
         NSMutableDictionary *dicEat = [NSMutableDictionary dictionary];
-        [dicEat setObject:[NSString stringWithFormat:@"%.0fkcal",_dailyFoodDecrease] forKey:@"实际摄入"];
         [dicEat setObject:[NSString stringWithFormat:@"%.0fkcal",_dailyNormal] forKey:@"正常所需热量"];
+        [dicEat setObject:[NSString stringWithFormat:@"%.0fkcal",_dailyFoodDecrease] forKey:@"实际摄入"];
         
         NSMutableDictionary *dicSport = [NSMutableDictionary dictionary];
         [dicSport setObject:@"321kcal" forKey:@"跑步30分钟"];
@@ -60,7 +58,7 @@
             make.left.equalTo(@32);
             make.width.mas_equalTo(XKAppWidth - 64);
             make.height.mas_equalTo(80);
-            make.top.mas_equalTo(self.labCal.mas_bottom).offset(10);
+            make.top.mas_equalTo(self.labCal.mas_bottom).offset(30);
         }];
         [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(@32);
@@ -115,7 +113,13 @@
     if (!_imgView) {
         _imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 98)];
 //        _imgView.contentMode = UIViewContentModeScaleAspectFill;
-         UIImage *img = [UIImage imageNamed:@"date_indicator"];
+        NSString *imgName = @"";
+        if (XKAppWidth == 320) {
+            imgName = @"date_indicator320_Big";
+        }else{
+            imgName = @"date_indicator_Big";
+        }
+         UIImage *img = [UIImage imageNamed:imgName];
 //        [img resizableImageWithCapInsets:UIEdgeInsetsMake(0, 100, 0, 100) resizingMode:UIImageResizingModeStretch];
         _imgView.image = img;
         [self addSubview:_imgView];
@@ -147,11 +151,11 @@
         cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWDailyAnalysizeCell");
     }
     NSDictionary *tmpDic = [_dicData objectForKey:[NSNumber numberWithInteger:_type]];
-    NSArray *tmpArr = [tmpDic allKeys];
+    NSArray *tmpArr = [[[tmpDic allKeys] reverseObjectEnumerator] allObjects];
     NSString *tmpStr = [tmpArr objectAtIndex:indexPath.row];
     cell.labLeft.text = tmpStr;
     cell.labRight.text = [tmpDic objectForKey:tmpStr];
-    
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 @end

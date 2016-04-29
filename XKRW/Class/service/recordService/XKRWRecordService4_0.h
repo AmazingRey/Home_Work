@@ -19,20 +19,7 @@
 #define SUCCESS @"success"
 #define ERROR @"error"
 
-typedef NS_ENUM(NSInteger, XKRWRecordType) {
-    XKRWRecordTypeFood = 0,
-    XKRWRecordTypeSport,
-    XKRWRecordTypeCustom,
-    XKRWRecordTypeWeight,
-    XKRWRecordTypeCircumference,
-    XKRWRecordTypeHabit,
-    XKRWRecordTypeMenstruation,
-    XKRWRecordTypeSleep,
-    XKRWRecordTypeWater,
-    XKRWRecordTypeMood,
-    XKRWRecordTypeRemark,
-    XKRWRecordTypeScheme = 100
-};
+
 
 @interface XKRWRecordService4_0 : XKRWBaseService
 
@@ -281,7 +268,20 @@ typedef NS_ENUM(NSInteger, XKRWRecordType) {
  *
  *  @return <#return value description#>
  */
-- (NSMutableDictionary *)getTotalCalorieOfDay:(NSDate *)date andRecordType:(MealType ) type ;
+- (NSMutableDictionary *)getRecordTotalCalorieOfDay:(NSDate *)date andRecordType:(MealType ) type ;
+
+
+/**
+ *  获取是否方案记录  以及具体卡路里
+ *
+ *  @param date <#date description#>
+ *  @param type <#type description#>
+ *
+ *  @return <#return value description#>
+ */
+- (NSDictionary *)getSchemeRecordWithDate:(NSDate *)date andType:(NSInteger) type;
+
+
 
 /**_
  *  获得所有记录的维度、体重、时间

@@ -26,6 +26,12 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
     
     // MARK: - System's function
 
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController!.setNavigationBarHidden(false, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,15 +42,12 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         self.addNaviBarBackButton()
         self.edgesForExtendedLayout = UIRectEdge.Top
         
-        self.tableView = UITableView(frame: self.view.bounds, style: UITableViewStyle.Plain)
+        self.tableView = UITableView(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT), style: UITableViewStyle.Plain)
         self.tableView.backgroundColor = XK_BACKGROUND_COLOR
         self.tableView.separatorStyle = .None
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
         self.view.addSubview(self.tableView)
-        
-        
         
         let width = ("换一组" as NSString).boundingRectWithSize(CGSizeMake(CGFloat.max, CGFloat.max),
             options: NSStringDrawingOptions.UsesLineFragmentOrigin,

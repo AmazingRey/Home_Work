@@ -24,6 +24,8 @@
 #import "XKRWDataCenterVC.h"
 #import "XKRWLikeVC.h"
 #import "RSKImageCropper.h"
+#import "XKRWStatisticAnalysizeVC.h"
+
 #pragma mark - XKRWMyVC
 
 @interface XKRWMyVC () <XKRWMyViewPraiseCellDelagate, RSKImageCropViewControllerDelegate, RSKImageCropViewControllerDataSource>
@@ -332,9 +334,13 @@
                 break;
             case 1:
             {
-                XKRWDataCenterVC *dataCenterVC =  [[XKRWDataCenterVC alloc]init];
-                dataCenterVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:dataCenterVC animated:YES];
+//                XKRWDataCenterVC *dataCenterVC =  [[XKRWDataCenterVC alloc]init];
+//                dataCenterVC.hidesBottomBarWhenPushed = YES;
+//                [self.navigationController pushViewController:dataCenterVC animated:YES];
+                XKRWStatisticAnalysizeVC *vc =  [[XKRWStatisticAnalysizeVC alloc]init];
+                vc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+                
             }
                 break;
             case 2:

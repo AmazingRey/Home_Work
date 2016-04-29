@@ -8,6 +8,7 @@
 
 #import "XKRWCalendarItem.h"
 #import "XKRWThinBodyDayManage.h"
+#import "XKRWWeightService.h"
 
 @implementation XKRWCalendarItem
 {
@@ -27,13 +28,12 @@
           isSelected:(BOOL)isSelected
           outOfMonth:(BOOL)outOfMonth
              isToday:(BOOL)isToday
-              weight:(CGFloat)weight
    calendarMonthType:(XKRWCalendarMonthType )monthType
         onClickBlock:(void (^)(XKRWCalendarItem *item))block
 {
     _CalendarMonthType = monthType;
     _clickBlock = block;
-    self = [self initWithOrigin:origin withTitle:title record:yesOrNo isSelected:isSelected outOfMonth:outOfMonth isToday:isToday weight:weight];
+    self = [self initWithOrigin:origin withTitle:title record:yesOrNo isSelected:isSelected outOfMonth:outOfMonth isToday:isToday];
     return self;
 }
 
@@ -43,7 +43,6 @@
           isSelected:(BOOL)isSelected
           outOfMonth:(BOOL)outOfMonth
              isToday:(BOOL)isToday
-              weight:(CGFloat)weight
 {
     if (self = [super init]) {
         if (_CalendarMonthType == XKRWCalendarTypeStrongMonth) {
@@ -75,9 +74,9 @@
         _changPlanView.center = CGPointMake(CGRectGetMidX(_weightLabel.frame), _weightLabel.bottom + 2 + changPlanImage.size.height / 2.0);
         
         [self setBackgroundColor:[UIColor whiteColor]];
-        [self setDay:title outOfMonth:yesOrNo isToday:isToday isRecord:yesOrNo weight:weight];
-        
-       
+
+        [self setDay:title outOfMonth:yesOrNo isToday:isToday isRecord:yesOrNo];
+
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         
         [self addTarget:self action:@selector(pressButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -89,7 +88,7 @@
     return self;
 }
 
-- (void)setDay:(NSString *)day outOfMonth:(BOOL)yesOrNO isToday:(BOOL)isToday isRecord:(BOOL)isRecord weight:(CGFloat)weight
+- (void)setDay:(NSString *)day outOfMonth:(BOOL)yesOrNO isToday:(BOOL)isToday isRecord:(BOOL)isRecord
 {
     if (yesOrNO) {
         [self setTitleColor:XK_ASSIST_TEXT_COLOR forState:UIControlStateNormal];
@@ -126,7 +125,8 @@
         BOOL isInPlan = [[XKRWThinBodyDayManage shareInstance ] calendarDateInPlanTimeWithDate:currentDate];
         BOOL isEndDay = [[XKRWThinBodyDayManage shareInstance ] calendarDateIsEndDayWithDate:currentDate];
         BOOL isStartDay =  [[XKRWThinBodyDayManage shareInstance] calendarDateIsStartDayWithDate:currentDate];
-
+        
+        CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:currentDate];
         if (weight) {
             _weightLabel.text = [NSString stringWithFormat:@"%.1fkg",weight];
             [self addSubview:_weightLabel];

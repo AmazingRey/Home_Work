@@ -87,7 +87,6 @@
     }
     self.navigationItem.title = @"运动记录";
     
-//    [self drawSubviews];
     [self initView];
     [self initData];
 }
@@ -259,13 +258,11 @@
         NSInteger num = [textField.text integerValue];
         if (num == 0) {
             [XKRWCui showInformationHudWithText:@"消耗热量不能为0"];
-//            [XKRWCui showAlertWithMessage:@"消耗热量不能为0"];
             textField.text = @"1";
         }
         
         if (num >1440) {
             [XKRWCui showInformationHudWithText:@"超过记录值"];
-//            [XKRWCui showAlertWithMessage:@"超过记录值"];
             textField.text = @"1440";
         }
         
@@ -608,8 +605,11 @@
 {
     if (componentTextField.text.length == 0 && componentTextField.text.floatValue == 0) {
         [XKRWCui showInformationHudWithText:@"时间不能为空"];
-//        [XKRWCui showAlertWithMessage:@"时间不能为空"];
         return ;
+    }
+    NSDate *todayDate = [NSDate today];
+    if (!_recordEneity.date || [_recordEneity.date compare:[todayDate offsetDay:-2]] == NSOrderedAscending) {
+        _recordEneity.date = todayDate;
     }
     
     _recordSportEntity.uid = (int)[[XKRWUserService sharedService] getUserId];

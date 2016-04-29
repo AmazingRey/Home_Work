@@ -705,6 +705,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return isSuccess;
 }
 
+
+
 - (BOOL)saveUniversalRecordToRemote:(XKRWUniversalRecordEntity *)entity {
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -1684,7 +1686,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [self recordFoodToDB:recordEntity];
         if ([self saveFoodRecordToRemote:entity]) {
             [self recordFoodToDB:entity];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:@{@"type":@"food"}];
             return YES;
         } else {
             return NO;
@@ -1800,7 +1802,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         if (isRemoteSuccess) {
             entity.sync = 1;
             [self recordInfomationToDB:entity];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:@"habit"];
             return YES;
         }
         return NO;
@@ -1828,7 +1830,9 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             if (entity.record_value == 1) {
                 entity.calorie = 0;
             } else if (entity.record_value == 2) {
-                entity.calorie = [XKRWAlgolHelper getSchemeRecomandCalorieWithType:entity.type date:entity.date];
+                if(entity.type <5 ){
+                    entity.calorie = [XKRWAlgolHelper getSchemeRecomandCalorieWithType:entity.type date:entity.date];
+                }
             }
         }
         [self recordSchemeToDB:entity];
@@ -1837,7 +1841,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         
         if (isSuccess) {
             [self recordSchemeToDB:entity];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:@[@"habit"]];
             return YES;
         }
         return NO;
@@ -2230,7 +2234,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 }
 
 
-- (NSMutableDictionary *)getTotalCalorieOfDay:(NSDate *)date andRecordType:(MealType ) type {
+- (NSMutableDictionary *)getRecordTotalCalorieOfDay:(NSDate *)date andRecordType:(MealType ) type {
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
     NSString *dateString = [date stringWithFormat:@"yyyy-MM-dd"];
     NSString *sql = nil;
@@ -2301,6 +2305,29 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }
     return dic;
 }
+
+
+
+- (NSDictionary *)getSchemeRecordWithDate:(NSDate *)date andType:(NSInteger) type {
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    NSString *dateString = [date stringWithFormat:@"yyyy-MM-dd"];
+    
+    NSString *schemeSql = [NSString stringWithFormat:@"SELECT record_value , calorie FROM record_scheme  WHERE date = '%@' AND uid = %ld and type = %ld ",dateString,(long)uid,(long)type];
+    NSArray *schemeResult = [self query:schemeSql];
+    
+    NSMutableDictionary *dic =[NSMutableDictionary dictionary];
+    
+    if (schemeResult.count > 0) {
+        NSDictionary *resultDict = schemeResult[0];
+        [dic setObject:@1 forKey:@"schemeHadRecord"];
+        [dic setObject:[resultDict objectForKey:@"calorie"] forKey:@"calorie"];
+    }else{
+        [dic setObject:@1 forKey:@"schemeHadRecord"];
+        [dic setObject:@"0" forKey:@"calorie"];
+    }
+    return dic;
+}
+
 
 - (NSDictionary *)getCircumferenceAndWeightRecordOfDays:(NSInteger)numOfDays {
     

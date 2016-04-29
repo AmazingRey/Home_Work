@@ -272,6 +272,7 @@ typedef NS_ENUM(NSInteger,XKRWEnergyCircleStyle){
      */
     XKRWEnergyCircleStylePerfect
 };
+
 /**
  *  记录类型
  */
@@ -387,6 +388,21 @@ typedef NS_ENUM(NSInteger,energyType) {
     energyTypeEat = 1,
     energyTypeSport,
     energyTypeHabit
+};
+
+typedef NS_ENUM(NSInteger, XKRWRecordType) {
+    XKRWRecordTypeFood = 0,
+    XKRWRecordTypeSport,
+    XKRWRecordTypeCustom,
+    XKRWRecordTypeWeight,
+    XKRWRecordTypeCircumference,
+    XKRWRecordTypeHabit,
+    XKRWRecordTypeMenstruation,
+    XKRWRecordTypeSleep,
+    XKRWRecordTypeWater,
+    XKRWRecordTypeMood,
+    XKRWRecordTypeRemark,
+    XKRWRecordTypeScheme = 100
 };
 
 /**

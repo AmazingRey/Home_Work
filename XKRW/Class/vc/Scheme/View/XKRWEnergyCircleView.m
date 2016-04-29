@@ -222,6 +222,7 @@
 }
 
 - (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration {
+    _progressCircle.percentage = 0;
     _currentNumLabel.textColor = progressColor;
     _progressCircle.circleProgressColor = progressColor;
     [_progressCircle drawCirclePercentage:percentage animation:YES duration:duration];
