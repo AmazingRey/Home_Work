@@ -9,7 +9,7 @@
 #import "XKRWStatiscHeadView.h"
 #import "Masonry.h"
 
-#define LabLength XKAppWidth/4 - 30
+#define LabLength XKAppWidth/4 - 10
 
 @implementation XKRWStatiscHeadView
 - (instancetype)initWithFrame:(CGRect)frame
@@ -87,6 +87,7 @@
         _lab3.text = str;
         _lab3.textAlignment = NSTextAlignmentCenter;
         _lab3.textColor = colorSecondary_333333;
+        _lab3.font = [UIFont systemFontOfSize:12];
         [self addSubview:_lab3];
     }
     return _lab3;
@@ -98,6 +99,8 @@
         _subLab3.text = @"98kg";
         _subLab3.textAlignment = NSTextAlignmentCenter;
         _subLab3.textColor = colorSecondary_333333;
+        _subLab3.font = [UIFont systemFontOfSize:12];
+        [self addSubview:_subLab3];
     }
     return _subLab3;
 }
@@ -186,6 +189,8 @@
         _lab6.text = str;
         _lab6.textAlignment = NSTextAlignmentCenter;
         _lab6.textColor = colorSecondary_333333;
+        _lab6.font = [UIFont systemFontOfSize:12];
+        [self addSubview:_lab6];
     }
     return _lab6;
 }
@@ -196,6 +201,8 @@
         _subLab6.text = @"2天";
         _subLab6.textAlignment = NSTextAlignmentCenter;
         _subLab6.textColor = XKWarningColor;
+        _subLab6.font = [UIFont systemFontOfSize:12];
+        [self addSubview:_subLab6];
     }
     return _subLab6;
 }
@@ -237,18 +244,20 @@
         make.left.mas_equalTo(self.view3.mas_right);
         make.centerY.mas_equalTo(self.view3.mas_centerY).offset(-15);
     }];
+    
     [self.subLab5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.left.mas_equalTo(self.view3.mas_right);
         make.centerY.mas_equalTo(self.view3.mas_centerY).offset(15);
     }];
-//    [self.view4 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.width.equalTo(@.5);
-//        make.height.equalTo(@11);
-//        make.left.mas_equalTo(self.subLab5.right);
-//        make.bottom.mas_equalTo(self.mas_bottom).offset(-57);
-//    }];
+    
+    [self.view4 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@.5);
+        make.height.equalTo(@11);
+        make.left.mas_equalTo(self.lab5.mas_right);
+        make.top.mas_equalTo(self.lab2.mas_bottom).offset(40);
+    }];
     
     [self.lab4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
@@ -262,11 +271,35 @@
         make.right.mas_equalTo(self.view3.mas_left);
         make.centerY.mas_equalTo(self.view3.mas_centerY).offset(15);
     }];
-//    [self.view2 mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.width.equalTo(@.5);
-//        make.height.equalTo(@11);
-//        make.right.mas_equalTo(self.subLab4.left);
-//        make.bottom.mas_equalTo(self.mas_bottom).offset(-57);
-//    }];
+    [self.view2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@.5);
+        make.height.equalTo(@11);
+        make.right.mas_equalTo(self.subLab4.mas_left);
+        make.top.mas_equalTo(self.lab2.mas_bottom).offset(40);
+    }];
+    [self.lab3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(LabLength);
+        make.height.mas_equalTo(30);
+        make.right.mas_equalTo(self.view2.mas_left);
+        make.centerY.mas_equalTo(self.view2.mas_centerY).offset(-15);
+    }];
+    [self.subLab3 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(LabLength);
+        make.height.mas_equalTo(30);
+        make.right.mas_equalTo(self.view2.mas_left);
+        make.centerY.mas_equalTo(self.view2.mas_centerY).offset(15);
+    }];
+    [self.lab6 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(LabLength);
+        make.height.mas_equalTo(30);
+        make.left.mas_equalTo(self.view4.mas_right);
+        make.centerY.mas_equalTo(self.view4.mas_centerY).offset(-15);
+    }];
+    [self.subLab6 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(LabLength);
+        make.height.mas_equalTo(30);
+        make.left.mas_equalTo(self.view4.mas_right);
+        make.centerY.mas_equalTo(self.view4.mas_centerY).offset(15);
+    }];
 }
 @end
