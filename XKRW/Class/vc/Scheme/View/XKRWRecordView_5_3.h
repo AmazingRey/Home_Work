@@ -8,18 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "XKRWRecordSchemeEntity.h"
+#import "XKRWRecordEntity4_0.h"
 
 @protocol XKRWRecordFood5_3ViewDelegate <NSObject>
 @optional
 - (void)RecordFoodViewpressCancle;
 - (void)addMoreView;
 - (void)entryRecordVCWith:(SchemeType)schemeType;
-
-- (void)saveSchemeRecord:(XKRWRecordSchemeEntity *)entity andType:( XKRWRecordType ) type;
+- (void)saveSchemeRecord:(XKRWRecordSchemeEntity *)entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
+- (void)deleteSchemeRecord:(XKRWRecordSchemeEntity *)entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
 -(void)fixHabitAt:(NSInteger)index isCurrect:(BOOL)abool;
 @end
-
-#import "XKRWRecordEntity4_0.h"
 
 
 @interface XKRWRecordView_5_3 : UIView
@@ -55,6 +54,8 @@
 - (IBAction)recommendedSelectAction:(UIButton *)sender;
 
 -(void)initSubViews;
+
+-(void)setsubViewUI;
 
 @property (assign) NSInteger positionX;
 @property (assign ,nonatomic) NSInteger pageIndex;

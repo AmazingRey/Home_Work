@@ -6,16 +6,22 @@
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
-@protocol XKRWWeightPopViewDelegate <NSObject>
-@optional
--(void)pressPopViewSure:(NSDictionary *)dic;
--(void)pressPopViewCancle;
-@end
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 #import "XKHeader.h"
 #import "XKRW-Swift.h"
 #import "XKTaskDispatcher.h"
+
+
+@protocol XKRWWeightPopViewDelegate <NSObject>
+@optional
+-(void)pressPopViewSure:(NSDictionary *)dic;
+-(void)pressPopViewCancle;
+
+- (void)saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType) recordType andEntity:(XKRWRecordEntity4_0 *)entity;
+
+@end
+
 
 @interface XKRWWeightPopView : UIView <UITextFieldDelegate,iCarouselDataSource,iCarouselDelegate,XKRWCalendarDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (assign, nonatomic) id<XKRWWeightPopViewDelegate> delegate;

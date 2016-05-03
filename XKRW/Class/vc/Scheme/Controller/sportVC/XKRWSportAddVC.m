@@ -607,10 +607,7 @@
         [XKRWCui showInformationHudWithText:@"时间不能为空"];
         return ;
     }
-    NSDate *todayDate = [NSDate today];
-    if (!_recordEneity.date || [_recordEneity.date compare:[todayDate offsetDay:-2]] == NSOrderedAscending) {
-        _recordEneity.date = todayDate;
-    }
+    
     
     _recordSportEntity.uid = (int)[[XKRWUserService sharedService] getUserId];
     
@@ -643,6 +640,11 @@
     
     [MobClick event:@"clk_mark"];
     
+    NSDate *todayDate = [NSDate today];
+    if (!_recordEneity.date || [_recordEneity.date compare:[todayDate offsetDay:-2]] == NSOrderedAscending) {
+        _recordEneity.date = todayDate;
+    }
+    
     [self downloadWithTaskID:@"saveSportRecord" outputTask:^id{
         return @([[XKRWRecordService4_0 sharedService] saveRecord:_recordSportEntity ofType:XKRWRecordTypeSport]);
     }];
@@ -661,6 +663,7 @@
         [XKRWRecordService4_0 setNeedUpdate:YES];
         [self.recordEneity.SportArray addObject:_recordSportEntity];
         [self popView];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectSportCircle];
     }
 }
 

@@ -12,12 +12,12 @@
 #define LabLength XKAppWidth/4 - 10
 
 @implementation XKRWStatiscHeadView
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _type = type;
         [self makeMasonryLayout];
-        self.backgroundColor = [UIColor yellowColor];
     }
     return self;
 }
@@ -25,35 +25,43 @@
 #pragma getter Method
 -(UILabel *)lab1{
     if (!_lab1) {
-        _lab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 110, 30)];
-        NSString *weightTarget = @"90kg";
-        NSString *week = @"第一周";
-        NSString *string = [NSString stringWithFormat:@"目标%@%@",weightTarget,week];
-
-        NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:string];
-        
-        [attributeStr addAttribute:NSForegroundColorAttributeName value:colorSecondary_333333 range:NSMakeRange(0, 2)];
-        [attributeStr addAttribute:NSForegroundColorAttributeName value:XKMainToneColor_29ccb1 range:[string rangeOfString:weightTarget]];
-        [attributeStr addAttribute:NSForegroundColorAttributeName value:colorSecondary_333333 range:[string rangeOfString:week]];
-//        NSTextAttachment *textAttachment = [NSTextAttachment new];
-//        textAttachment.image = [UIImage imageNamed:@"dropdown menu"];
-//        NSAttributedString *imgString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-//        [attributeStr replaceCharactersInRange:[string rangeOfString:@"*"] withAttributedString:imgString];
-        _lab1.attributedText = attributeStr;
+        _lab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 30)];
+        if (_type == 1) {
+            [self lab1ReloadText:@"第1周"];
+        }else{
+            _lab1.text = @"2015年5月12日－至今";
+        }
         _lab1.textAlignment = NSTextAlignmentCenter;
         _lab1.font = [UIFont systemFontOfSize:15];
-//        [_lab1 sizeToFit];
         [self addSubview:_lab1];
     }
     return _lab1;
 }
 
--(UIImageView *)imgView{
-    if (!_imgView) {
-        _imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dropdown menu"]];
-        [self addSubview:_imgView];
+-(void)lab1ReloadText:(NSString *)week{
+    NSString *weightTarget = @"90kg";
+    NSString *string = [NSString stringWithFormat:@"目标%@%@",weightTarget,week];
+    
+    NSMutableAttributedString *attributeStr = [[NSMutableAttributedString alloc] initWithString:string];
+    
+    [attributeStr addAttribute:NSForegroundColorAttributeName value:colorSecondary_333333 range:NSMakeRange(0, 2)];
+    [attributeStr addAttribute:NSForegroundColorAttributeName value:XKMainToneColor_29ccb1 range:[string rangeOfString:weightTarget]];
+    [attributeStr addAttribute:NSForegroundColorAttributeName value:colorSecondary_333333 range:[string rangeOfString:week]];
+    //        NSTextAttachment *textAttachment = [NSTextAttachment new];
+    //        textAttachment.image = [UIImage imageNamed:@"dropdown menu"];
+    //        NSAttributedString *imgString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    //        [attributeStr replaceCharactersInRange:[string rangeOfString:@"*"] withAttributedString:imgString];
+    _lab1.attributedText = attributeStr;
+}
+
+-(UIButton *)btnDown{
+    if (!_btnDown) {
+        _btnDown = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_btnDown setImage:[UIImage imageNamed:@"dropdown menu"] forState:UIControlStateNormal];
+        [_btnDown addTarget:self action:@selector(btnDownPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_btnDown];
     }
-    return _imgView;
+    return _btnDown;
 }
 
 -(UILabel *)lab2{
@@ -209,97 +217,112 @@
 
 #pragma mark masonry 
 -(void)makeMasonryLayout{
-    [self.lab1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(110);
-        make.centerX.mas_equalTo(self.mas_centerX);
-        make.top.mas_equalTo(self.mas_top).offset(11);
-    }];
-    [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(_lab1.mas_right).offset(9);
-        make.width.mas_equalTo(12);
-        make.height.mas_equalTo(9);
-        make.centerY.mas_equalTo(self.lab1.mas_centerY);
-    }];
-    [self.lab2 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(XKAppWidth);
-        make.height.mas_equalTo(30);
-        make.top.mas_equalTo(self.lab1.mas_bottom).offset(4);
-    }];
+    if (_type == 1){
+        [self.lab1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(110);
+            make.centerX.mas_equalTo(self.mas_centerX);
+            make.top.mas_equalTo(self.mas_top).offset(11);
+        }];
+        [self.btnDown mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(_lab1.mas_right).offset(0);
+            make.width.mas_equalTo(24);
+            make.height.mas_equalTo(18);
+            make.centerY.mas_equalTo(self.lab1.mas_centerY);
+        }];
+        [self.lab2 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(XKAppWidth);
+            make.height.mas_equalTo(15);
+            make.top.mas_equalTo(self.lab1.mas_bottom).offset(4);
+        }];
+
+    }else{
+        [self.lab1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.width.mas_equalTo(220);
+            make.centerX.mas_equalTo(self.mas_centerX);
+            make.top.mas_equalTo(self.mas_top).offset(25);
+        }];
+    }
     [self.view1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.equalTo(@.5);
         make.left.right.equalTo(@0);
-        make.top.mas_equalTo(self.lab2.mas_bottom).offset(14);
+        make.top.mas_equalTo(self.lab1.mas_bottom).offset(30);
     }];
     
     [self.view3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@.5);
         make.height.equalTo(@11);
         make.centerX.mas_equalTo(self.mas_centerX);
-        make.top.mas_equalTo(self.lab2.mas_bottom).offset(40);
+        make.top.mas_equalTo(self.lab1.mas_bottom).offset(55);
     }];
     
     [self.lab5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.left.mas_equalTo(self.view3.mas_right);
-        make.centerY.mas_equalTo(self.view3.mas_centerY).offset(-15);
+        make.centerY.mas_equalTo(self.view3.mas_centerY).offset(-10);
     }];
     
     [self.subLab5 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.left.mas_equalTo(self.view3.mas_right);
-        make.centerY.mas_equalTo(self.view3.mas_centerY).offset(15);
+        make.centerY.mas_equalTo(self.view3.mas_centerY).offset(10);
     }];
     
     [self.view4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@.5);
         make.height.equalTo(@11);
         make.left.mas_equalTo(self.lab5.mas_right);
-        make.top.mas_equalTo(self.lab2.mas_bottom).offset(40);
+        make.top.mas_equalTo(self.lab1.mas_bottom).offset(55);
     }];
     
     [self.lab4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.right.mas_equalTo(self.view3.mas_left);
-        make.centerY.mas_equalTo(self.view3.mas_centerY).offset(-15);
+        make.centerY.mas_equalTo(self.view3.mas_centerY).offset(-10);
     }];
     [self.subLab4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.right.mas_equalTo(self.view3.mas_left);
-        make.centerY.mas_equalTo(self.view3.mas_centerY).offset(15);
+        make.centerY.mas_equalTo(self.view3.mas_centerY).offset(10);
     }];
     [self.view2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@.5);
         make.height.equalTo(@11);
         make.right.mas_equalTo(self.subLab4.mas_left);
-        make.top.mas_equalTo(self.lab2.mas_bottom).offset(40);
+        make.top.mas_equalTo(self.lab1.mas_bottom).offset(55);
     }];
     [self.lab3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.right.mas_equalTo(self.view2.mas_left);
-        make.centerY.mas_equalTo(self.view2.mas_centerY).offset(-15);
+        make.centerY.mas_equalTo(self.view2.mas_centerY).offset(-10);
     }];
     [self.subLab3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.right.mas_equalTo(self.view2.mas_left);
-        make.centerY.mas_equalTo(self.view2.mas_centerY).offset(15);
+        make.centerY.mas_equalTo(self.view2.mas_centerY).offset(10);
     }];
     [self.lab6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.left.mas_equalTo(self.view4.mas_right);
-        make.centerY.mas_equalTo(self.view4.mas_centerY).offset(-15);
+        make.centerY.mas_equalTo(self.view4.mas_centerY).offset(-10);
     }];
     [self.subLab6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.left.mas_equalTo(self.view4.mas_right);
-        make.centerY.mas_equalTo(self.view4.mas_centerY).offset(15);
+        make.centerY.mas_equalTo(self.view4.mas_centerY).offset(10);
     }];
+}
+
+-(void)btnDownPressed:(UIButton *)btn{
+    if ([self.delegate respondsToSelector:@selector(makeAnalysisPickerViewAppear)]) {
+        [self.delegate makeAnalysisPickerViewAppear];
+    }
 }
 @end

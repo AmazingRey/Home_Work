@@ -1686,7 +1686,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [self recordFoodToDB:recordEntity];
         if ([self saveFoodRecordToRemote:entity]) {
             [self recordFoodToDB:entity];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:@{@"type":@"food"}];
             return YES;
         } else {
             return NO;
@@ -1711,7 +1710,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [self recordSportToDB:recordEntity];
         if ([self saveSportRecordToRemote:recordEntity]) {
             [self recordSportToDB:recordEntity];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:nil];
             return YES;
         } else {
             return NO;
@@ -1802,7 +1800,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         if (isRemoteSuccess) {
             entity.sync = 1;
             [self recordInfomationToDB:entity];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:@"habit"];
             return YES;
         }
         return NO;
@@ -1841,7 +1838,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         
         if (isSuccess) {
             [self recordSchemeToDB:entity];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"energyCircleDataChanged" object:@[@"habit"]];
             return YES;
         }
         return NO;
@@ -2312,20 +2308,27 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
     NSString *dateString = [date stringWithFormat:@"yyyy-MM-dd"];
     
-    NSString *schemeSql = [NSString stringWithFormat:@"SELECT record_value , calorie FROM record_scheme  WHERE date = '%@' AND uid = %ld and type = %ld ",dateString,(long)uid,(long)type];
+    NSString *schemeSql = [NSString stringWithFormat:@"SELECT * FROM record_scheme  WHERE date = '%@' AND uid = %ld and type = %ld ",dateString,(long)uid,(long)type];
     NSArray *schemeResult = [self query:schemeSql];
     
     NSMutableDictionary *dic =[NSMutableDictionary dictionary];
     
     if (schemeResult.count > 0) {
         NSDictionary *resultDict = schemeResult[0];
+        XKRWRecordSchemeEntity *entity = [[XKRWRecordSchemeEntity alloc] init];
+        entity.create_time = [[resultDict objectForKey:@"create_time"] integerValue];
+        entity.record_value = [[resultDict objectForKey:@"record_value"] integerValue];
+        entity.sid = [[resultDict objectForKey:@"sid"] integerValue];;
+        entity.type = [[resultDict objectForKey:@"type"] integerValue];;
+        entity.calorie = [[resultDict objectForKey:@"calorie"] integerValue];
+        entity.uid = [[resultDict objectForKey:@"uid"] integerValue];
         [dic setObject:@1 forKey:@"schemeHadRecord"];
-        [dic setObject:[resultDict objectForKey:@"calorie"] forKey:@"calorie"];
+        [dic setObject:entity forKey:@"schemeEntity"];
+        return dic;
     }else{
-        [dic setObject:@1 forKey:@"schemeHadRecord"];
-        [dic setObject:@"0" forKey:@"calorie"];
+         return nil;
     }
-    return dic;
+   
 }
 
 
@@ -3309,6 +3312,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 
 - (BOOL) getUserRecordStateWithDate:(NSDate *)date {
      XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
+    
     if (recordEntity.FoodArray.count == 0 && recordEntity.SportArray.count== 0) {
         return NO;
     }

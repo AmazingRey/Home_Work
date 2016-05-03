@@ -109,7 +109,11 @@
     }
     return self;
 }
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary<NSString *,id> *)change
+                       context:(void *)context {
+    
     if ([keyPath isEqualToString:@"currentAnimatedImageIndex"]) {
         if ([[change objectForKey:NSKeyValueChangeNewKey] integerValue] == 6) {
             [_stateImageView stopAnimating];
@@ -211,24 +215,35 @@
     }];
 }
 
-- (void)setOpenedViewTiltle:(NSString *)ViewTitle currentNumber:(NSString *)currentNumber goalNumber:(NSInteger)goalNumber unit:(NSString *)unit isBehaveCurrect:(BOOL)isBehaveCurrect {
+- (void)setOpenedViewTiltle:(NSString *)ViewTitle
+              currentNumber:(NSString *)currentNumber
+                 goalNumber:(NSInteger)goalNumber
+                       unit:(NSString *)unit
+            isBehaveCurrect:(BOOL)isBehaveCurrect {
+    
     _titleLabel.text = ViewTitle;
     _currentNumLabel.text = currentNumber;
     _goalLabel.text = [NSString stringWithFormat:@"%ld%@",(long)goalNumber,unit];
     _goalNumber = goalNumber;
     
     [self setColorWithAbool:isBehaveCurrect];
-//    [self setStyle:_style];
 }
 
-- (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration {
-    _progressCircle.percentage = 0;
+- (void)runProgressCircleWithColor:(UIColor *)progressColor
+                        percentage:(CGFloat)percentage
+                          duration:(CGFloat)duration {
+//    _progressCircle.percentage = 0;
     _currentNumLabel.textColor = progressColor;
     _progressCircle.circleProgressColor = progressColor;
     [_progressCircle drawCirclePercentage:percentage animation:YES duration:duration];
 }
 
-- (void)runToCurrentNum:(NSInteger)currentNum duration:(CGFloat)duration {
+- (void)runToCurrentNum:(NSInteger)currentNum
+               duration:(CGFloat)duration
+        isBehaveCurrect:(BOOL)isBehaveCurrent {
+    
+    [self setColorWithAbool:isBehaveCurrent];
+    _progressCircle.percentage = 0;
     _labelAnimation.toValue = @(currentNum);
     _labelAnimation.duration = duration;
     [_currentNumLabel pop_addAnimation:_labelAnimation forKey:@"run_Number"];
@@ -265,15 +280,18 @@
 
 }
 
-- (void)runToNextNumber:(NSInteger)nextNumber duration:(CGFloat)duration resetIsBehaveCurrect:(BOOL)isBehaveCurrect {
+- (void)runToNextNumber:(NSInteger)nextNumber
+               duration:(CGFloat)duration
+   resetIsBehaveCurrect:(BOOL)isBehaveCurrect {
+    
     id exNumber = _labelAnimation.toValue;
     _labelAnimation.fromValue = exNumber;
-    _progressCircle.percentage = [exNumber integerValue]/(CGFloat)_goalNumber;
     
     [self setColorWithAbool:isBehaveCurrect];
     CGFloat currentPercentage = (CGFloat)nextNumber/_goalNumber;
+    [self runToCurrentNum:nextNumber duration:duration isBehaveCurrect:isBehaveCurrect];
+    _progressCircle.percentage = [exNumber integerValue]/(CGFloat)_goalNumber;
     [self runProgressCircleWithColor:_progressCircleColor percentage:currentPercentage duration:duration];
-    [self runToCurrentNum:nextNumber duration:duration];
 }
 
 - (POPMutableAnimatableProperty *)animationProperty {

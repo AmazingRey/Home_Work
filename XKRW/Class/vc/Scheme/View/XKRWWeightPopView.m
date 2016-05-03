@@ -260,6 +260,7 @@
     [dayDiction setObject:_textField.text forKey:[self getCurrentType:_currentIndex]];
     [_dicAll setObject:dayDiction forKey:_selectDateStr];
 }
+//EffectFoodAndSportCircle
 -(void)saveRemote{
     _oldRecord.circumference.uid = (int)[XKRWUserDefaultService getCurrentUserId];
     NSDictionary *dic = [_dicAll objectForKey:_selectDateStr];
@@ -274,6 +275,11 @@
     
     _oldRecord.circumference.date = _selectedDate;
     _oldRecord.date = _selectedDate;
+    
+//    if ([self.delegate respondsToSelector:@selector(saveSurroundDegreeOrWeightDataToServer:andEntity:)]) {
+//        [self.delegate saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType) andEntity:_oldRecord];
+//    }
+    
     [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeCircumference];
     [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeWeight];
 }
@@ -408,6 +414,7 @@
     [_datePicker removeFromSuperview];
     _datePicker = nil;
     [_textField resignFirstResponder];
+    
     [self saveRemote];
     
     if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]) {

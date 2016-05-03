@@ -44,11 +44,21 @@ typedef void(^startButtonClickBlock)(NSInteger index);
  *  @param goalNumber      expectate they consume number and unit
  *  @param isBehaveCurrect is the goalNumber range of our expectation
  */
-- (void)setOpenedViewTiltle:(NSString *)ViewTitle currentNumber:(NSString *)currentNumber goalNumber:(NSInteger)goalNumber unit:(NSString *)unit isBehaveCurrect:(BOOL)isBehaveCurrect;
+- (void)setOpenedViewTiltle:(NSString *)ViewTitle
+              currentNumber:(NSString *)currentNumber
+                 goalNumber:(NSInteger)goalNumber
+                       unit:(NSString *)unit
+            isBehaveCurrect:(BOOL)isBehaveCurrect;
 
-- (void)runProgressCircleWithColor:(UIColor *)progressColor percentage:(CGFloat)percentage duration:(CGFloat)duration;
+- (void)runProgressCircleWithColor:(UIColor *)progressColor
+                        percentage:(CGFloat)percentage
+                          duration:(CGFloat)duration;
 
-- (void)runToCurrentNum:(NSInteger)currentNum duration:(CGFloat)duration;
+- (void)runToCurrentNum:(NSInteger)currentNum
+               duration:(CGFloat)duration
+        isBehaveCurrect:(BOOL)isBehaveCurrent;
 
-- (void)runToNextNumber:(NSInteger)nextNumber duration:(CGFloat)duration resetIsBehaveCurrect:(BOOL)isBehaveCurrect;
+- (void)runToNextNumber:(NSInteger)nextNumber
+               duration:(CGFloat)duration
+   resetIsBehaveCurrect:(BOOL)isBehaveCurrect;
 @end

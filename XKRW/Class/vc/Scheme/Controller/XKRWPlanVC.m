@@ -42,14 +42,14 @@
 #import "XKRWChangeMealPercentVC.h"
 #import "XKRWHomePagePretreatmentManage.h"
 #import "XKRWDailyAnalysizeVC.h"
-
+#import "XKRWUtil.h"
 
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
-    KMSearchBar* foodAndSportSearchBar;
-    KMSearchDisplayController * searchDisplayCtrl;
+    KMSearchBar *foodAndSportSearchBar;
+    KMSearchDisplayController *searchDisplayCtrl;
     IFlyRecognizerView *iFlyControl;
     NSString *searchKey;
     NSArray *foodsArray;
@@ -114,6 +114,7 @@
         isTodaysPlan = NO;
         if ([_recordDate compare:[todayDate offsetDay:-1]] == NSOrderedSame || [_recordDate compare:[todayDate offsetDay:-2]] == NSOrderedSame) {
             isCanRevisionRecord = YES;
+            
         } else {
             isCanRevisionRecord = NO;
         }
@@ -123,22 +124,24 @@
     [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
     [self initData];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView:) name:@"energyCircleDataChanged" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView:) name:EnergyCircleDataNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTipsData) name:ReLoadTipsData object:nil];
 }
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 -(void)addTouchWindowEvent{
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];
     singleTap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:singleTap];
 }
+
+
 #pragma mark - data
+
 - (void)initData {
- 
-//    mealEntitys = [[XKRWSchemeService_5_0 sharedService] getMealScheme];
     
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView:nil];
@@ -159,6 +162,7 @@
     } else {
         title = @"回到今天";
     }
+    
     BOOL isflash;
     if ([title rangeOfString:@"点击“开启”，"].location != NSNotFound) {
         isflash = YES;
@@ -168,6 +172,7 @@
         isflash = NO;
         title = [title stringByAppendingString:@" >"];
     }
+    
     [_planEnergyView setTitle:title isflashing:isflash];
 }
 
@@ -187,31 +192,43 @@
         for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
             intakeCalorie += foodEntity.calorie;
         }
+
         if (todayRecordSchemeFood) {
-            intakeCalorie += [todayRecordSchemeFood[@"calorie"] integerValue];
+            XKRWRecordSchemeEntity *recordFoodEntity = [todayRecordSchemeFood objectForKey:@"schemeEntity"];
+            intakeCalorie += recordFoodEntity.calorie;
         }
         for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
             expendCalorie += sportEntity.calorie;
         }
         if (todayRecordSchemeSport) {
-            expendCalorie += [todayRecordSchemeSport[@"calorie"] integerValue];
+             XKRWRecordSchemeEntity *recordSportEntity = [todayRecordSchemeSport objectForKey:@"schemeEntity"];
+            expendCalorie += recordSportEntity.calorie;
         }
         for (XKRWHabbitEntity *habitEntity in recordEntity.habitArray) {
             currentHabit += habitEntity.situation;
         }
     }
-    XKLog(@"%@",[notification object]);
-    if (notification) {
+    
+    if ([[notification object] isEqualToString:EffectHabit]) {
         [_planEnergyView runHabitEnergyCircleWithNewCurrentNumber:currentHabit];
-//        [_planEnergyView.habitEnergyCircle runToNextNumber:currentHabit duration:1.5/recordEntity.habitArray.count resetIsBehaveCurrect:currentHabit == recordEntity.habitArray.count ? YES : NO];
+        
+    } else if ([[notification object] isEqualToString:EffectFoodCircle]) {
+        [_planEnergyView runEatEnergyCircleWithNewCurrentNumber:intakeCalorie];
+        
+    } else if ([[notification object] isEqualToString:EffectSportCircle]) {
+        [_planEnergyView runSportEnergyCircleWithNewCurrentNumber:expendCalorie];
+        
     } else {
-    [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:intakeCalorie];
-    [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:expendCalorie];
-    [_planEnergyView setHabitEnergyCircleGoalNumber:recordEntity.habitArray.count currentNumber:currentHabit];
+        [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:intakeCalorie];
+        [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:expendCalorie];
+        [_planEnergyView setHabitEnergyCircleGoalNumber:recordEntity.habitArray.count currentNumber:currentHabit];
     }
     
 }
-#pragma --mark UI
+
+
+#pragma -- mark UI
+
 - (void)initView {
     if(XKAppHeight > 480){
         planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 350, XKAppWidth, XKAppHeight- 350 -49) style:UITableViewStylePlain];
@@ -254,7 +271,7 @@
     foodAndSportSearchBar.searchBarStyle = UISearchBarStyleMinimal;
     foodAndSportSearchBar.showsBookmarkButton = true;
     foodAndSportSearchBar.showsScopeBar = true;
-   
+    
     [foodAndSportSearchBar setImage:[UIImage imageNamed:@"voice"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
     foodAndSportSearchBar.placeholder = @"查询食物和运动" ;
     searchDisplayCtrl = [[KMSearchDisplayController alloc] initWithSearchBar:foodAndSportSearchBar contentsController:self];
@@ -303,10 +320,10 @@
     [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCategoryCell" bundle:nil] forCellReuseIdentifier:@"searchResultCategoryCell"];
     [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWMoreSearchResultCell" bundle:nil] forCellReuseIdentifier:@"moreSearchResultCell"];
     
-
+    
     searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
     [planHeaderView addSubview:foodAndSportSearchBar];
-
+    
     _recordAndTargetView
     = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordAndTargetView");
     _recordAndTargetView.frame = CGRectMake(0, 64, planHeaderView.width, 30);
@@ -323,16 +340,16 @@
     _recordAndTargetView.monthLabel.text = [NSString stringWithFormat:@"%ld月",(long)_recordDate.month];
     
     if (isTodaysPlan) {
-         _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
+        _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
         _recordAndTargetView.planTimeLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
         _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWUserService sharedService] getCurrentWeight]/1000.f];
-
+        
     } else {
         _recordAndTargetView.targetWeightLabel.text = @"";
         _recordAndTargetView.planTimeLabel.text = @"";
         _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",[[XKRWPlanService shareService] getHistoryWeightWithDate:_recordDate]];
     }
-   
+    
     [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
     
     UILongPressGestureRecognizer *gesLongPressed = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressRecognizer:)];
@@ -436,19 +453,19 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
- 
+
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
     CGFloat positionX ;
     if (index == 1) {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];
         positionX = energyCircleView.eatEnergyCircle.center.x;
-      
+        
     } else if (index == 2) {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eSportType];
         positionX = energyCircleView.sportEnergyCircle.center.x;
     } else {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eHabitType];
-         positionX = energyCircleView.habitEnergyCircle.center.x;
+        positionX = energyCircleView.habitEnergyCircle.center.x;
     }
     [self setPlanEnergyViewTitle];
     [self removePullView:nil];
@@ -465,15 +482,23 @@
     popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
     popView.entity = recordEntity;
     popView.positionX = postitonX;
+    popView.type = index;
     popView.vc = self;
+    if (_recordDate == nil) {
+        popView.date = [NSDate date];
+    }else{
+        popView.date = _recordDate;
+    }
     [popView initSubViews];
+    [popView setsubViewUI];
     _recordPopView = popView;
     if (index == 1) {
         _recordPopView.schemeArray = _mealSchemeArray;
     }else if(index == 2){
         _recordPopView.schemeArray = [NSArray arrayWithObject:_sportSchemeEntity];
     }
-
+    
+    
     
     CGRect recordFrame = _recordPopView.frame;
     recordFrame.origin.y -= recordFrame.size.height;
@@ -491,9 +516,6 @@
         CGRect frame = _recordPopView.frame;
         frame.origin.y = 0;
         _recordPopView.frame = frame;
-        _recordPopView.type = index;
-        [_recordPopView layoutIfNeeded];
-        
         _recordPopView.delegate = self;
         [[UIApplication sharedApplication].keyWindow addSubview:recordBackView];
     } completion:^(BOOL finished) {
@@ -520,19 +542,20 @@
 
 - (void)fixHabitAt:(NSInteger)index isCurrect:(BOOL)abool {
     [recordEntity.habitArray[index] setSituation:abool];
-    if ([[XKRWPlanService shareService] saveRecord:recordEntity ofType:XKRWRecordTypeHabit]) {
+    
+    if (![XKRWUtil isNetWorkAvailable]) {
+        [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
         return;
-//        if (abool) {
-//            currentHabit += 1;
-//        } else {
-//            currentHabit -= 1;
-//        }
-//         [_planEnergyView.habitEnergyCircle runToNextNumber:currentHabit duration:1.5/recordEntity.habitArray.count resetIsBehaveCurrect:currentHabit == recordEntity.habitArray.count ? YES:NO];
+        
     } else {
-        [XKRWCui showInformationHudWithText:@"保存失败，请再次尝试~"];
+        [self downloadWithTaskID:@"saveHabit" task:^{
+            [[XKRWPlanService shareService] saveRecord:recordEntity ofType:XKRWRecordTypeHabit];
+        }];
+        
         return;
+        
     }
-   
+    
 }
 
 -(void)getRecordAndMenuScheme{
@@ -543,7 +566,7 @@
 -(void)getMealScheme{
     [self downloadWithTaskID:@"getMealSchemeAndRecord" outputTask:^id{
         return   [[XKRWSchemeService_5_0 sharedService] getMealScheme];
-
+        
     }];
 }
 
@@ -552,7 +575,7 @@
     [self downloadWithTaskID:@"getSportSchemeAndRecord" outputTask:^id{
         NSInteger i =[[XKRWRecordService4_0 sharedService]getMenstruationSituation]?1:0;
         return [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
-        }];
+    }];
 }
 
 -(void)RecordFoodViewpressCancle{
@@ -561,11 +584,39 @@
     [recordBackView removeFromSuperview];
 }
 
-- (void)saveSchemeRecord:(id)entity andType:(XKRWRecordType)type
+- (void)saveSchemeRecord:(id)entity andType:(XKRWRecordType)recordtype andEntryType:(energyType)entryRype
 {
-    [self downloadWithTaskID:@"saveScheme" task:^{
-        [[XKRWPlanService shareService] saveRecord:entity ofType:type];
-    }];
+    if (![XKRWUtil isNetWorkAvailable]) {
+        [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
+        return;
+    }
+    if (entryRype == energyTypeEat) {
+        [self downloadWithTaskID:@"saveFoodScheme" outputTask:^id{
+            return [NSNumber numberWithBool:[[XKRWPlanService shareService] saveRecord:entity ofType:recordtype]];
+        }];
+    }else if(entryRype == energyTypeSport){
+        [self downloadWithTaskID:@"saveSportScheme" outputTask:^id{
+            return [NSNumber numberWithBool:[[XKRWPlanService shareService] saveRecord:entity ofType:recordtype]];
+        }];
+    }
+    
+}
+
+- (void) deleteSchemeRecord:(XKRWRecordSchemeEntity *)entity andType:(XKRWRecordType)recordtype andEntryType:(energyType)entryRype
+{
+    if (![XKRWUtil isNetWorkAvailable]) {
+        [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
+        return;
+    }
+    if (entryRype == energyTypeEat) {
+        [self downloadWithTaskID:@"deleteFoodScheme" outputTask:^{
+            return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
+        }];
+    }else if(entryRype == energyTypeSport){
+        [self downloadWithTaskID:@"deleteSportScheme" outputTask:^{
+            return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
+        }];
+    }
 }
 
 #pragma mark XKRWRecordMore5_3View & XKRWRecordMore5_3ViewDelegate
@@ -647,7 +698,7 @@
  *  查看曲线
  */
 -(void)pressGraph{
-//    [self popViewAppear:2];
+    //    [self popViewAppear:2];
     [self removePullView:btnBackBounds];
     XKRWSurroundDegreeVC_5_3 *vc = [[XKRWSurroundDegreeVC_5_3 alloc]init];
     vc.dataType = 1;
@@ -657,7 +708,7 @@
 /**
  *  点击不同的按钮类型不同
  *
- *  @param type 0:记录体重 
+ *  @param type 0:记录体重
  *              1:记录围度
  *              2:查看曲线
  */
@@ -697,7 +748,7 @@
     if (_popView) {
         CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
         CGFloat height = MIN(keyboardSize.height,keyboardSize.width);
-    //    CGFloat width = MAX(keyboardSize.height,keyboardSize.width);
+        //    CGFloat width = MAX(keyboardSize.height,keyboardSize.width);
         
         CGPoint cen = CGPointMake(self.view.center.x, (CGFloat)(XKAppHeight - height)/2);
         [UIView animateWithDuration:.2 animations:^{
@@ -728,20 +779,31 @@
             self.view.userInteractionEnabled = YES;
             self.tabBarController.tabBar.hidden = NO;
             [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];            
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
         }];
     }else{
         [self setUserDataAction:nil];
     }
 }
 
-#pragma XKRWWeightPopViewDelegate 
+#pragma XKRWWeightPopViewDelegate
 -(void)pressPopViewSure:(NSDictionary *)dic{
     [self cancelPopView];
 }
 
 -(void)pressPopViewCancle{
     [self cancelPopView];
+}
+
+- (void)saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType)recordType andEntity:(XKRWRecordEntity4_0 *)entity
+{
+    if (![XKRWUtil isNetWorkAvailable]) {
+        [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
+        return;
+    }
+    [self downloadWithTaskID:@"recordWeightAndDegree" outputTask:^id{
+        return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
+    }];
 }
 
 #pragma --mark Network
@@ -766,7 +828,7 @@
         if (result != nil) {
             if ([[result objectForKey:@"success"] integerValue] == 1){
                 [[XKRWSchemeService_5_0 sharedService] dealResetUserScheme:self];
-                 XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc] initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
+                XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc] initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
                 fatReasonVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:fatReasonVC animated:YES];
                 [fatReasonVC.navigationController setNavigationBarHidden:NO];
@@ -797,10 +859,43 @@
         return;
     }
     
-    if ([taskID isEqualToString:@"saveScheme"]) {
-        
+    if ([taskID isEqualToString:@"saveFoodScheme"]) {
+        [XKRWCui showInformationHudWithText:@"保存成功"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
         return;
     }
+    
+    if ([taskID isEqualToString:@"saveSportScheme"]) {
+        [XKRWCui showInformationHudWithText:@"保存成功"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectSportCircle];
+        return;
+    }
+    
+    if ([taskID isEqualToString:@"deleteFoodScheme"]) {
+        [XKRWCui showInformationHudWithText:@"取消执行"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
+        return;
+    }
+    if ([taskID isEqualToString:@"deleteSportScheme"]) {
+        [XKRWCui showInformationHudWithText:@"取消执行"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectSportCircle];
+        return;
+    }
+    
+    
+    if ([taskID isEqualToString:@"saveHabit"]) {
+        [XKRWCui showInformationHudWithText:@"保存成功"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectHabit];
+        return;
+
+    }
+    
+    //保存体重围度成功
+    if ([taskID isEqualToString:@"recordWeightAndDegree"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
+        return;
+    }
+    
 }
 
 - (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID {
@@ -814,6 +909,12 @@
         [XKRWCui showInformationHudWithText:@"获取记录体重失败，请稍后尝试"];
         return;
     }
+    
+    if ([taskID isEqualToString:@"saveFoodScheme"] ||[taskID isEqualToString:@"saveSportScheme"]||[taskID isEqualToString:@"deleteFoodScheme"]||[taskID isEqualToString:@"deleteSportScheme"]||[taskID isEqualToString:@"saveHabit"]) {
+        [XKRWCui showInformationHudWithText:@"保存失败，请稍后尝试"];
+        return;
+    }
+    
 }
 
 - (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication {
@@ -827,7 +928,7 @@
     if(tableView.tag == 1000){
         XKRWPlanTipsCell *tipCell = [tableView dequeueReusableCellWithIdentifier:XKRWPlanTipsCellIdentifier];
         tipCell.selectionStyle = UITableViewCellSelectionStyleNone;
-       
+        
         
         if (indexPath.row == 0) {
             tipCell.TipLabelColor = colorSecondary_333333;
@@ -862,7 +963,7 @@
                     cell.title.text = foodEntity.foodName;
                     cell.subtitle.text = [NSString stringWithFormat:@"%ldkcal/100g",(long)foodEntity.foodEnergy];
                     [cell.logoImageView setImageWithURL:[NSURL URLWithString:foodEntity.foodLogo] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
-                     return cell;
+                    return cell;
                 }
             }else {
                 if (indexPath.row == 0) {
@@ -880,7 +981,7 @@
                     cell.title.text = sportEntity.sportName;
                     cell.subtitle.text = [NSString stringWithFormat:@"%fkcal/60分钟",sportEntity.sportMets];
                     [cell.logoImageView setImageWithURL:[NSURL URLWithString:sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
-                     return cell;
+                    return cell;
                 }
             }
             
@@ -900,7 +1001,7 @@
                 cell.title.text = sportEntity.sportName;
                 cell.subtitle.text = [NSString stringWithFormat:@"%fkcal/60分钟",sportEntity.sportMets];
                 [cell.logoImageView setImageWithURL:[NSURL URLWithString:sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
-                 return cell;
+                return cell;
             }
         }
     }
@@ -1004,7 +1105,7 @@
         if (indexPath.section == 0){
             if (foodsArray.count > 0) {
                 if (indexPath.row == 0){
-                
+                    
                 }else if (indexPath.row == foodsCount + 1) {
                     XKRWMoreSearchResultVC *moreSearchVC = [[XKRWMoreSearchResultVC alloc] init];
                     moreSearchVC.dataArray = foodsArray;
@@ -1053,7 +1154,7 @@
                 [self.navigationController pushViewController:sportDetailVC animated:YES];
                 [sportDetailVC.navigationController setNavigationBarHidden:NO];
             }
-
+            
         }
     }
 }
@@ -1063,14 +1164,14 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     [searchDisplayCtrl showSearchResultView];
-
+    
     return YES;
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
     [searchBar setShowsCancelButton:YES animated:YES];
- 
+    
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -1121,7 +1222,7 @@
     }else{
         iFlyControl.hidden = YES;
         [iFlyControl cancel];
-
+        
     }
 }
 
@@ -1138,12 +1239,12 @@
     if (resultArray != nil && resultArray.count > 0 ){
         
         NSLog(@"%@\n%@",resultArray,[[resultArray lastObject] allKeys].lastObject);
-  
+        
         foodAndSportSearchBar.text = [[[resultArray lastObject] allKeys] lastObject];
         [self searchBarSearchButtonClicked:foodAndSportSearchBar];
         
     }
-
+    
     
 }
 

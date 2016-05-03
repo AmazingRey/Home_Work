@@ -6,14 +6,22 @@
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
+#define ScrollViewHeight XKAppHeight-56
+
 #import "XKRWStatisticAnalysizeVC.h"
 #import "Masonry.h"
 #import "XKRWStatiscHeadView.h"
+#import "XKRWWeekAnalysisView.h"
+#import "XKRWStatisAnalysisView.h"
 
-@interface XKRWStatisticAnalysizeVC ()
+
+@interface XKRWStatisticAnalysizeVC ()<XKRWStatisticAnalysisPickerViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 @property (strong, nonatomic) UISegmentedControl *segmentControl;
 @property (strong, nonatomic) UIScrollView *scrollView;
-@property (strong, nonatomic) XKRWStatiscHeadView *headView;
+@property (strong, nonatomic) XKRWWeekAnalysisView *weekAnalysisView;
+@property (strong, nonatomic) UIButton *btnBack;
+@property (strong, nonatomic) UIPickerView *pickerView;
+@property (strong, nonatomic) XKRWStatisAnalysisView *statisAnalysisView;
 @end
 
 @implementation XKRWStatisticAnalysizeVC
@@ -29,18 +37,6 @@
 }
 
 #pragma mark getter Method
-- (UIScrollView *)scrollView
-{
-    if (!_scrollView) {
-        _scrollView = [[XKRWUIScrollViewBase alloc]initWithFrame:CGRectMake(0, _segmentControl.bottom + 10, XKAppWidth , XKAppHeight - 50 - 64)];
-        _scrollView.backgroundColor = [UIColor colorFromHexString:@"f5f7f9"];
-        _scrollView.contentSize = CGSizeMake(XKAppWidth*2, _scrollView.height);
-        _scrollView.pagingEnabled = YES;
-        _scrollView.scrollEnabled = NO;
-        [self.view addSubview:_scrollView];
-    }
-    return _scrollView;
-}
 
 -(UISegmentedControl *)segmentControl
 {
@@ -57,51 +53,169 @@
         
         _segmentControl.selectedSegmentIndex = 0;
         [_segmentControl addTarget:self action:@selector(segmentControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
-        [self.scrollView addSubview:_segmentControl];
+        [self.view addSubview:_segmentControl];
     }
     return _segmentControl;
 }
 
--(XKRWStatiscHeadView *)headView{
-    if (!_headView) {
-        _headView = [[XKRWStatiscHeadView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 123)];
-        _headView.backgroundColor = [UIColor yellowColor];
-        [self.scrollView addSubview:_headView];
+- (UIScrollView *)scrollView
+{
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, _segmentControl.bottom + 13, XKAppWidth , ScrollViewHeight)];
+        _scrollView.backgroundColor = [UIColor colorFromHexString:@"f5f7f9"];
+        _scrollView.pagingEnabled = YES;
+        _scrollView.scrollEnabled = NO;
+        _scrollView.contentSize = CGSizeMake(XKAppWidth*2, _scrollView.frame.size.height);
+        [self.view addSubview:_scrollView];
     }
-    return _headView;
+    return _scrollView;
+}
+
+-(XKRWWeekAnalysisView *)weekAnalysisView{
+    if (!_weekAnalysisView) {
+        _weekAnalysisView = [[XKRWWeekAnalysisView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, ScrollViewHeight)];
+        _weekAnalysisView.headView.delegate = self;
+        [self.scrollView addSubview:_weekAnalysisView];
+    }
+    return _weekAnalysisView;
+}
+
+-(XKRWStatisAnalysisView *)statisAnalysisView{
+    if (!_statisAnalysisView) {
+        _statisAnalysisView = [[XKRWStatisAnalysisView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, ScrollViewHeight)];
+        _statisAnalysisView.headView.delegate = self;
+        [self.scrollView addSubview:_statisAnalysisView];
+    }
+    return _statisAnalysisView;
+}
+
+-(UIButton *)btnBack{
+    if (!_btnBack) {
+        _btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+        _btnBack.frame = self.view.bounds;
+        _btnBack.backgroundColor = [UIColor lightGrayColor];
+        [_btnBack addTarget:self action:@selector(btnBackPressed:) forControlEvents:UIControlEventTouchDown];
+    }
+    return _btnBack;
+}
+
+-(UIPickerView *)pickerView{
+    if (!_pickerView){
+        CGRect frame = CGRectMake(0, self.view.frame.size.height-200, XKAppWidth, 200);
+        _pickerView = [[UIPickerView alloc] initWithFrame:frame];
+        _pickerView.backgroundColor = [UIColor whiteColor];
+        _pickerView.opaque = YES;
+        _pickerView.delegate = self;
+        _pickerView.dataSource = self;
+    }
+    return _pickerView;
 }
 
 #pragma mark masonry Subviews
 -(void)addMasonryToLayout{
-    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.bottom.leading.and.right.mas_equalTo(0);
-    }];
     [self.segmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view.mas_top).offset(13);
         make.centerX.mas_equalTo(self.view.mas_centerX);
         make.width.mas_equalTo(XKAppWidth - 30);
         make.height.mas_equalTo(30);
     }];
-    [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@0);
-        make.right.equalTo(@0);
-        make.width.mas_equalTo(XKAppWidth);
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.leading.and.right.mas_equalTo(0);
         make.top.mas_equalTo(self.segmentControl.mas_bottom).offset(13);
+        make.width.mas_equalTo(XKAppWidth);
+        make.height.mas_equalTo(ScrollViewHeight);
+    }];
+    [self.weekAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.left.mas_equalTo(_scrollView.left);
+        make.width.mas_equalTo(_scrollView.width);
+        make.height.mas_equalTo(_scrollView.height);
+        make.bottom.mas_equalTo(_scrollView.bottom);
+    }];
+    [self.statisAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(@0);
+        make.left.mas_equalTo(_weekAnalysisView.mas_right);
+        make.width.mas_equalTo(_scrollView.width);
+        make.height.mas_equalTo(_scrollView.height);
+        make.bottom.mas_equalTo(_scrollView.bottom);
     }];
 }
 
 #pragma mark segementControl Method
-
 -(void)segmentControlIndexChanged:(UISegmentedControl *)segement{
     _currentIndex = segement.selectedSegmentIndex;
     _pageTime = 0;
-    [self.scrollView scrollRectToVisible:CGRectMake(XKAppWidth*_currentIndex, 0, XKAppWidth, _scrollView.height) animated:NO];
+    CGRect scrollRect = CGRectMake(XKAppWidth*_currentIndex, 0, XKAppWidth, _scrollView.height);
+    [self.scrollView scrollRectToVisible:scrollRect animated:YES];
     
     if (_currentIndex == 0) {
         
     } else {
         
     }
+}
+
+#pragma mark XKRWStatisticAnalysisPickerViewDelegate Method
+-(void)makeAnalysisPickerViewAppear{
+    self.btnBack.alpha = 0;
+    [self.view addSubview:_btnBack];
+    self.pickerView.alpha = 0;
+    [self.view addSubview:self.pickerView];
+    
+    [UIView animateWithDuration:.5 animations:^{
+        _btnBack.alpha = .5;
+        _pickerView.alpha = 1;
+    }];
+}
+
+#pragma mark button Method
+-(void)btnBackPressed:(UIButton *)btn{
+    [UIView animateWithDuration:.5 animations:^{
+        self.btnBack.alpha = 0;
+        self.pickerView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [_pickerView removeFromSuperview];
+        _pickerView = nil;
+        [self.btnBack removeFromSuperview];
+        self.btnBack = nil;
+    }];
+}
+
+#pragma mark UIPickerView Method
+#pragma mark UIPickerViewDataSource
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return 10;
+}
+#pragma mark UIPickerViewDelegate
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    UILabel *myView = nil;
+    myView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 100, 30)];
+    myView.textAlignment = NSTextAlignmentCenter;
+    myView.text = [NSString stringWithFormat:@"第%ld行",(long)row];
+    myView.font = [UIFont systemFontOfSize:14];         //用label来设置字体大小
+    myView.backgroundColor = [UIColor clearColor];
+    return myView;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    return 200;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 40.0;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    [self.weekAnalysisView.headView lab1ReloadText:[NSString stringWithFormat:@"第%ld周",(long)row]];
 }
 
 - (void)didReceiveMemoryWarning {

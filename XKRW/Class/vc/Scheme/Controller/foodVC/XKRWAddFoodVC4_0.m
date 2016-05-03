@@ -397,7 +397,7 @@
         [XKRWRecordService4_0 setNeedUpdate:YES];
         [self.recordEntity.FoodArray addObject:_foodRecordEntity];
         [self popView];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
     } else if ([taskID isEqualToString:@"downloadFoodDetail"]) {
         
         [self initView];

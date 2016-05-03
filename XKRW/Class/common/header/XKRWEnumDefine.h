@@ -418,4 +418,18 @@ typedef NS_ENUM(NSInteger, AnalysizeType) {
      */
     analysizeSport
 };
+
+/**
+ *  统计分析枚举
+ */
+typedef NS_ENUM(NSInteger, StatisticType) {
+    /**
+     *  饮食摄入
+     */
+    statisticWeek = 1,
+    /**
+     *  运动消耗
+     */
+    statisticTotal
+};
 #endif

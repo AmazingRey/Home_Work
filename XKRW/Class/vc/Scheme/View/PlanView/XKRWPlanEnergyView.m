@@ -94,6 +94,7 @@
         _line.hidden = NO;
     } else return;
 }
+
 - (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
     _intakeNumber = currentNumber;
     __weak typeof(self) weakSelf = self;
@@ -108,7 +109,7 @@
     _eatEnergyCircle.energyCircleViewClickBlock = ^(NSInteger index){
         [weakSelf resetCirclesStyle:index];
         
-        [weakSelf runEatEnergyCircleWithNewCurrentNumber:currentNumber];
+        [weakSelf runEatEnergyCircleWithNewCurrentNumber:weakSelf.intakeNumber];
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
             
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
@@ -122,7 +123,7 @@
     _expendNumber = currentNumber;
     __weak typeof(self) weakSelf = self;
     
-    if (goalNumber == 0) {
+    if (goalNumber == 0 && _expendNumber == 0) {
         _sportEnergyCircle.style = XKRWEnergyCircleStylePerfect;
         [_sportEnergyCircle setOpenedViewTiltle:@"无需运动" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:YES];
         
@@ -185,7 +186,6 @@
     }
 }
 
-
 - (void)setTitle:(NSString *)title isflashing:(BOOL)isflashing {
     _remindTextView.text = title;
     if (isflashing) {
@@ -205,30 +205,50 @@
         [_delegate energyCircleViewTitleClicked:_remindTextView.text];
     }
 }
+
 #pragma mark -- reset meals、sports and habits' current number
 - (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     
     _intakeNumber = currentNumber;
+
+    BOOL abool;
+    if (_intakeNumber < 1200 || _intakeNumber > _eatEnergyCircle.goalNumber) {
+        abool = NO;
+    } else {
+        abool = YES;
+    }
+    
     CGFloat percentage = (currentNumber / (CGFloat)_eatEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_eatEnergyCircle.goalNumber);
+    [_eatEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage isBehaveCurrect:abool];
     [_eatEnergyCircle runProgressCircleWithColor:_eatEnergyCircle.progressCircleColor percentage:percentage duration:1.5 * percentage];
-    [_eatEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
 }
 
 - (void)runSportEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     
     _expendNumber = currentNumber;
-    CGFloat percentage = (currentNumber / (CGFloat)_sportEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_sportEnergyCircle.goalNumber);
+    if (_sportEnergyCircle.style == XKRWEnergyCircleStylePerfect && _expendNumber) {
+        _sportEnergyCircle.style = XKRWEnergyCircleStyleOpened;
+        [_sportEnergyCircle setOpenedViewTiltle:@"已消耗" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:0 unit:@"kcal" isBehaveCurrect:YES];
+    }
+    
+    CGFloat percentage;
+    if (_sportEnergyCircle.goalNumber) {
+        percentage = (currentNumber / (CGFloat)_sportEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_sportEnergyCircle.goalNumber);
+    } else {
+        percentage = 1;
+    }
+    
+    [_sportEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage isBehaveCurrect:(percentage < 1 ? NO : YES)];
     [_sportEnergyCircle runProgressCircleWithColor:_sportEnergyCircle.progressCircleColor percentage:percentage duration:1.5 * percentage];
-    [_sportEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
 }
 
 - (void)runHabitEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     
     _currectHabitNumber = currentNumber;
     CGFloat percentage = (currentNumber / (CGFloat)_habitEnergyCircle.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_habitEnergyCircle.goalNumber);
-    [_habitEnergyCircle runProgressCircleWithColor:_habitEnergyCircle.progressCircleColor percentage:percentage duration:1.5 * percentage];
     [_habitEnergyCircle runToNextNumber:currentNumber duration:1.5 * percentage resetIsBehaveCurrect: (percentage == 1)];
-//    [_habitEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
+    [_habitEnergyCircle runProgressCircleWithColor:_habitEnergyCircle.progressCircleColor percentage:percentage duration:1.5 * percentage];
+    //    [_habitEnergyCircle runToCurrentNum:currentNumber duration:1.5 * percentage];
 }
 
 - (void)resetCirclesStyle:(NSInteger)currentIndex {
@@ -241,9 +261,9 @@
         _exClickedIndex = currentIndex;
         return;
     }
-
+    
     XKRWEnergyCircleView *circle = (XKRWEnergyCircleView *)[self viewWithTag:_exClickedIndex];
-
+    
     if (circle && circle.style != XKRWEnergyCircleStylePerfect) {
         circle.style = XKRWEnergyCircleStyleOpened;
     }
@@ -253,11 +273,11 @@
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end

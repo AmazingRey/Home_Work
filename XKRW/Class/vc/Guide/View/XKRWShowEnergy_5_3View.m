@@ -73,10 +73,17 @@
     }
     if (!_timer && _type == Sport) {
         int sportNum =  [XKRWAlgolHelper dailyConsumeSportEnergy];
-        sportNum1 = [NSNumber numberWithInt:sportNum - 1];
-        sportNum2 = [NSNumber numberWithInt:sportNum + 1];
-        [_dicAll setObject:@(NO) forKey:sportNum1];
-        [_dicAll setObject:@(YES) forKey:sportNum2];
+        if (sportNum == 0) {
+            sportNum1 = [NSNumber numberWithInteger:0];
+            sportNum2 = [NSNumber numberWithInteger:0];
+            [_dicAll setObject:@(YES) forKey:sportNum1];
+            [_dicAll setObject:@(YES) forKey:sportNum2];
+        }else{
+            sportNum1 = [NSNumber numberWithInt:sportNum - 1];
+            sportNum2 = [NSNumber numberWithInt:sportNum + 1];
+            [_dicAll setObject:@(NO) forKey:sportNum1];
+            [_dicAll setObject:@(YES) forKey:sportNum2];
+        }
         
         [self setEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:sportNum];
     }
@@ -136,10 +143,9 @@
 - (void)startTimer
 {
     [self resetCirclesStyle];
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
     dispatch_queue_t queue = dispatch_get_main_queue();
-//    _timer = [NSTimer timerWithTimeInterval:secondsToFire target:self selector:@selector(singleRunCircle) userInfo:nil repeats:YES];
-//    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSDefaultRunLoopMode];
+
     
     _timer = CreateDispatchTimer(secondsToFire, queue, ^{
         [self singleRunCircle];
@@ -148,10 +154,7 @@
 
 - (void)cancelTimer
 {
-//    if (_timer) {
-//        [_timer invalidate];
-//        _timer = nil;
-//    }
+
     if (_timer) {
         dispatch_source_cancel(_timer);
         _timer = nil;
@@ -181,11 +184,11 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     [_firstCircleView setOpenedViewTiltle:@"已摄入" currentNumber:@"0" goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
 }
 
-- (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
-    CGFloat percentage = (currentNumber / (CGFloat)_firstCircleView.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_firstCircleView.goalNumber);
-    [_firstCircleView runProgressCircleWithColor:_firstCircleView.progressCircleColor percentage:percentage duration:1.5 * percentage];
-    [_firstCircleView runToCurrentNum:currentNumber duration:1.5 * percentage];
-}
+//- (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
+//    CGFloat percentage = (currentNumber / (CGFloat)_firstCircleView.goalNumber) > 1 ? 1:(currentNumber / (CGFloat)_firstCircleView.goalNumber);
+//    [_firstCircleView runProgressCircleWithColor:_firstCircleView.progressCircleColor percentage:percentage duration:1.5 * percentage];
+//    [_firstCircleView runToCurrentNum:currentNumber duration:1.5 * percentage isBehaveCurrect:<#(BOOL)#>];
+//}
 
 - (void)resetCirclesStyle {
     if (_firstCircleView) {

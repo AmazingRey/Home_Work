@@ -398,7 +398,8 @@
                 addVC.passMealTypeTemp = eSport;
                 addVC.needHiddenDate = YES;
                 addVC.isPresent = YES;
-                [weakSelf.navigationController presentViewController:addVC animated:YES completion:nil];
+                XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:addVC];
+                [weakSelf.navigationController presentViewController:nav animated:YES completion:nil];
             }];
         }
         return recentRecordCell;
@@ -445,11 +446,8 @@
                 sportAddVC.sportID = sportEntity.sportId;
                 
                 sportAddVC.passMealTypeTemp = eSport;
-                sportAddVC.needHiddenDate = true;
-                
-                sportAddVC.isPresent = true;
-                XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:sportAddVC];
-                [weakSelf presentViewController:nav animated:YES completion:nil];
+                sportAddVC.needHiddenDate = YES;
+                [weakSelf.navigationController pushViewController:sportAddVC animated:YES];
             }];
             
         }else {

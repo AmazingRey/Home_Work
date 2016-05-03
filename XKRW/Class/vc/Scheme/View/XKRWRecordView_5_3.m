@@ -54,7 +54,7 @@
 @implementation XKRWRecordView_5_3
 
 -(void)initSubViews {
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reflashUIAndData:) name:EnergyCircleDataNotificationName object:nil];
     _scrollView.delegate = self;
     showDetailSection = -1;
     _shadowImageView =[[UIImageView alloc]initWithFrame:CGRectMake((XKAppWidth - 800) /2 + (_positionX - XKAppWidth /2) , 0, 800, 10)];
@@ -72,7 +72,7 @@
     recordTableView.backgroundColor = XK_BACKGROUND_COLOR;
     recordTableView.dataSource = self;
     [recordTableView registerNib:[UINib nibWithNibName:@"XKRWRecordCell_5_3" bundle:nil] forCellReuseIdentifier:@"recordCell"];
-
+    
     recommendedTableView = [[UITableView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, _scrollView.height) style:UITableViewStylePlain];
     recommendedTableView.tag = 5032;
     recommendedTableView.delegate = self;
@@ -90,7 +90,7 @@
     
     __block NSInteger currectHabitCount = 0;
     for (XKRWHabbitEntity *habitEntity in _entity.habitArray) {
-       currectHabitCount += habitEntity.situation;
+        currectHabitCount += habitEntity.situation;
     }
     
     habitView.changeHabit = ^(NSInteger habitIndex,BOOL abool) {
@@ -101,7 +101,7 @@
         }
     };
     [_scrollView addSubview:habitView];
-  
+    
     _leftButton.layer.cornerRadius = 5;
     _leftButton.layer.borderWidth = 1;
     _leftButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
@@ -117,7 +117,7 @@
 }
 
 
--(void)setTitle {
+-(void)setsubViewUI {
     _labSeperate.hidden = YES;
     _habitLabel.hidden = YES;
     _recordTypeLabel.hidden = NO;
@@ -125,27 +125,7 @@
     _leftButton.hidden = YES;
     _centerbutton.hidden = YES;
     _rightButton.hidden = YES;
-    //每日饮食推荐值
-    CGFloat totalFoodCalories = [XKRWAlgolHelper dailyIntakeRecomEnergy];
-    //每日运动消耗推荐值
-    CGFloat totalSportCalories = [XKRWAlgolHelper dailyConsumeSportEnergy];
     
-    //获取就餐比例的 百分比
-    NSDictionary *mealRatioDic =[[XKRWUserService sharedService] getMealRatio];
-    
-    CGFloat breakfast = totalFoodCalories * [[mealRatioDic objectForKey:@"breakfast"] floatValue] /100.f;
-    CGFloat lunch = totalFoodCalories *[[mealRatioDic objectForKey:@"lunch"] floatValue] /100.f;
-    CGFloat supper = totalFoodCalories* [[mealRatioDic objectForKey:@"supper"] floatValue] /100.f;
-    CGFloat snack = totalFoodCalories *[[mealRatioDic objectForKey:@"snack"] floatValue] /100.f;
-    
-    _date =[NSDate date];
-    
-    NSDictionary *sportDetail =  [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eSport];
-    NSDictionary *breakDetail = [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eMealBreakfast];
-    NSDictionary *LunchDetail = [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eMealLunch];
-    NSDictionary *dinnerDetail = [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eMealDinner];
-    NSDictionary *mealDetail = [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eMealSnack];
-
     switch (_type) {
         case energyTypeEat:
             _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
@@ -153,53 +133,13 @@
             _labSeperate.hidden = NO;
             _leftButton.hidden = NO;
             _rightButton.hidden = NO;
-            recordTypeTitleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
-            recordTypeImageArray = @[@"breakfast5_3",@"lunch5_3",@"dinner5_3",@"addmeal5_3"];
-            detailRecordArray = @[breakDetail,LunchDetail,dinnerDetail,mealDetail];
-            recordArray =@[[NSNumber numberWithFloat:breakfast],[NSNumber numberWithFloat:lunch],[NSNumber numberWithFloat:supper],[NSNumber numberWithFloat:snack]];
-            habitView.hidden = YES;
-            schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_date andType:6];
-            
-            if ([[schemeDetail objectForKey:@"schemeHadRecord"] integerValue] == 1) {
-                _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐食谱\n%@Kcal",[schemeDetail objectForKey:@"calorie"]];
-            }else{
-                _recommendedTypeLabel.text = @"推荐食谱";
-            }
-            
-            CGFloat recordFoodColories = [[breakDetail objectForKey:@"calorie"] floatValue] +[[LunchDetail objectForKey:@"calorie"] floatValue] + [[dinnerDetail objectForKey:@"calorie"] floatValue] +[[mealDetail objectForKey:@"calorie"] floatValue] ;
-            
-            if (recordFoodColories > 0) {
-                _recordTypeLabel.text = [NSString stringWithFormat:@"记录饮食\n%.0fKcal",recordFoodColories];
-            }else{
-                _recordTypeLabel.text = @"记录饮食";
-            }
-            
             break;
         case energyTypeSport:
             _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
             _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
             _labSeperate.hidden = NO;
             _centerbutton.hidden = NO;
-            recordTypeTitleArray = @[@"运动"];
-            recordTypeImageArray =@[@"sports5_3"];
-            detailRecordArray = @[sportDetail];
-            recordArray = @[[NSNumber numberWithFloat:totalSportCalories]];
-            habitView.hidden = YES;
-            schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_date andType:5];
-            
-            if ([[schemeDetail objectForKey:@"schemeHadRecord"] integerValue] == 1) {
-                _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐运动\n%@Kcal",[schemeDetail objectForKey:@"calorie"]];
-            }else{
-                _recommendedTypeLabel.text = @"推荐运动";
-            }
-            
-            CGFloat recordSportColories = [[sportDetail objectForKey:@"calorie"] floatValue] ;
-            if (recordSportColories > 0) {
-                _recordTypeLabel.text = [NSString stringWithFormat:@"记录运动\n%.0fKcal",recordSportColories];
-            }else{
-                _recordTypeLabel.text = @"记录运动";
-            }
-
+             habitView.hidden = YES;
             break;
         case energyTypeHabit:
             _recordTypeLabel.hidden = YES;
@@ -208,6 +148,7 @@
             _actionView.hidden = YES;
             habitView.hidden = NO;
             habitView.entity = self.entity;
+            _scrollView.scrollEnabled = NO;
             _scrollviewHeight.constant = 243;
             _activeHeight.constant = 0;
             break;
@@ -215,19 +156,106 @@
             break;
     }
     
-    [recordTableView reloadData];
-    [recommendedTableView reloadData];
+    [self setDataToUI];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
+- (void) setDataToUI {
+    switch (_type) {
+        case energyTypeEat:
+            [self setFoodDataToUI];
+            break;
+        case energyTypeSport:
+            [self setSportDataToUI];
+            break;
+        case energyTypeHabit:
+            break;
+        default:
+            break;
+    }
 }
+
+
+- (void) setFoodDataToUI {
+    //每日饮食推荐值
+    CGFloat totalFoodCalories = [XKRWAlgolHelper dailyIntakeRecomEnergy];
+    //获取就餐比例的 百分比
+    NSDictionary *mealRatioDic =[[XKRWUserService sharedService] getMealRatio];
+    CGFloat breakfast = totalFoodCalories * [[mealRatioDic objectForKey:@"breakfast"] floatValue] /100.f;
+    CGFloat lunch = totalFoodCalories *[[mealRatioDic objectForKey:@"lunch"] floatValue] /100.f;
+    CGFloat supper = totalFoodCalories* [[mealRatioDic objectForKey:@"supper"] floatValue] /100.f;
+    CGFloat snack = totalFoodCalories *[[mealRatioDic objectForKey:@"snack"] floatValue] /100.f;
+
+    NSDictionary *breakDetail = [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eMealBreakfast];
+    NSDictionary *LunchDetail = [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eMealLunch];
+    NSDictionary *dinnerDetail = [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eMealDinner];
+    NSDictionary *mealDetail = [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eMealSnack];
+
+    recordTypeTitleArray = @[@"早餐",@"午餐",@"晚餐",@"加餐"];
+    recordTypeImageArray = @[@"breakfast5_3",@"lunch5_3",@"dinner5_3",@"addmeal5_3"];
+    detailRecordArray = @[breakDetail,LunchDetail,dinnerDetail,mealDetail];
+    recordArray =@[[NSNumber numberWithFloat:breakfast],[NSNumber numberWithFloat:lunch],[NSNumber numberWithFloat:supper],[NSNumber numberWithFloat:snack]];
+    habitView.hidden = YES;
+    schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_date andType:6];
+    
+    if (schemeDetail != nil) {
+        XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
+        _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐食谱\n%ldKcal",(long)entity.calorie];
+        [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
+    }else{
+        _recommendedTypeLabel.text = @"推荐食谱";
+        [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
+    }
+    
+    CGFloat recordFoodColories = [[breakDetail objectForKey:@"calorie"] floatValue] +[[LunchDetail objectForKey:@"calorie"] floatValue] + [[dinnerDetail objectForKey:@"calorie"] floatValue] +[[mealDetail objectForKey:@"calorie"] floatValue] ;
+    
+    if (recordFoodColories > 0) {
+        _recordTypeLabel.text = [NSString stringWithFormat:@"记录饮食\n%.0fKcal",recordFoodColories];
+    }else{
+        _recordTypeLabel.text = @"记录饮食";
+    }
+    [recordTableView reloadData];
+    [recommendedTableView reloadData];
+
+}
+
+
+- (void) setSportDataToUI{
+    //每日运动消耗推荐值
+
+    CGFloat totalSportCalories = [XKRWAlgolHelper dailyConsumeSportEnergy];
+     NSDictionary *sportDetail =  [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eSport];
+    recordTypeTitleArray = @[@"运动"];
+    recordTypeImageArray =@[@"sports5_3"];
+    detailRecordArray = @[sportDetail];
+    recordArray = @[[NSNumber numberWithFloat:totalSportCalories]];
+    
+    schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_date andType:5];
+    
+    if (schemeDetail != nil) {
+        XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
+        _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐运动\n%ldKcal",(long)entity.calorie];
+        [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
+    }else{
+        _recommendedTypeLabel.text = @"推荐运动";
+        [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
+    }
+    
+    CGFloat recordSportColories = [[sportDetail objectForKey:@"calorie"] floatValue] ;
+    if (recordSportColories > 0) {
+        _recordTypeLabel.text = [NSString stringWithFormat:@"记录运动\n%.0fKcal",recordSportColories];
+    }else{
+        _recordTypeLabel.text = @"记录运动";
+    }
+    [recordTableView reloadData];
+    [recommendedTableView reloadData];
+
+}
+
 
 -(void)setType:(energyType)type{
     if (_type != type) {
         _type = type;
     }
-    [self setTitle];
 }
 
 //设置每个item的UIEdgeInsets
@@ -270,57 +298,57 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-   
-     if (tableView.tag == 5031) {
+    
+    if (tableView.tag == 5031) {
         XKRWRecordCell_5_3 *cell = [tableView dequeueReusableCellWithIdentifier:@"recordCell"];
-       
-         if (indexPath.section == showDetailSection){
-             id temp = [[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"allRecord"] objectAtIndex:indexPath.row];
-             
-             if (![temp isKindOfClass:[XKRWFoodEntity class]] && ![temp isKindOfClass:[XKRWSportEntity class]]) {
-                 cell.recordDetailTitle.text = [temp objectForKey:@"title"];
-                 cell.recordDetailCalories.text =[temp objectForKey:@"calorie"];
-                 cell.recordArrowImageView.hidden = YES;
-             }else if ([temp isKindOfClass:[XKRWFoodEntity class]]){
-                 cell.recordArrowImageView.hidden = NO;
-                 cell.recordDetailTitle.text = ((XKRWFoodEntity *)temp).foodName;
-                 cell.recordDetailCalories.text = [NSString stringWithFormat:@"%@Kcal",[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"calorie"]];
-             }else{
-                 cell.recordArrowImageView.hidden = NO;
-                 cell.recordDetailTitle.text = ((XKRWSportEntity *)temp).sportName;
-                 cell.recordDetailCalories.text = [NSString stringWithFormat:@"%@Kcal",[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"calorie"]];
-             }
-         }
+        
+        if (indexPath.section == showDetailSection){
+            id temp = [[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"allRecord"] objectAtIndex:indexPath.row];
+            
+            if (![temp isKindOfClass:[XKRWFoodEntity class]] && ![temp isKindOfClass:[XKRWSportEntity class]]) {
+                cell.recordDetailTitle.text = [temp objectForKey:@"title"];
+                cell.recordDetailCalories.text =[temp objectForKey:@"calorie"];
+                cell.recordArrowImageView.hidden = YES;
+            }else if ([temp isKindOfClass:[XKRWFoodEntity class]]){
+                cell.recordArrowImageView.hidden = NO;
+                cell.recordDetailTitle.text = ((XKRWFoodEntity *)temp).foodName;
+                cell.recordDetailCalories.text = [NSString stringWithFormat:@"%@Kcal",[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"calorie"]];
+            }else{
+                cell.recordArrowImageView.hidden = NO;
+                cell.recordDetailTitle.text = ((XKRWSportEntity *)temp).sportName;
+                cell.recordDetailCalories.text = [NSString stringWithFormat:@"%@Kcal",[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"calorie"]];
+            }
+        }
         [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
         return cell;
-     }else if (tableView.tag == 5032){
+    }else if (tableView.tag == 5032){
         XKRWSchemeEntity_5_0 *entity = [_schemeArray objectAtIndex:indexPath.row];
         XKRWRecommandedCell_5_3 *cell = [tableView dequeueReusableCellWithIdentifier:@"recommendedCell"];
         cell.frame = CGRectMake(0, 0, self.width, 59);
         cell.mealImageView.image = [UIImage imageNamed:[self getImageNameWithType:entity.schemeType]];
         NSMutableString *schemeDetailStr =[NSMutableString string];
-         if (_type == energyTypeEat) {
-             for (XKRWFoodCategoryEntity *foodEntity in entity.foodCategories ) {
-                 if (schemeDetailStr.length == 0) {
-                     [schemeDetailStr appendString:foodEntity.categoryName];
-                 }else{
-                     [schemeDetailStr appendString:[NSString stringWithFormat:@"+%@",foodEntity.categoryName]];
-                 }
-             }
-         }else if (_type == energyTypeSport){
-             for (XKRWSportEntity *sportEntity in [[XKRWSchemeService_5_0 sharedService] getCurrentSchemeSportEntities]) {
-                 if (schemeDetailStr.length == 0) {
-                     [schemeDetailStr appendString:sportEntity.sportName];
-                 }else{
-                     [schemeDetailStr appendString:[NSString stringWithFormat:@"+%@",sportEntity.sportName]];
-                 }
-             }
-         }
+        if (_type == energyTypeEat) {
+            for (XKRWFoodCategoryEntity *foodEntity in entity.foodCategories ) {
+                if (schemeDetailStr.length == 0) {
+                    [schemeDetailStr appendString:foodEntity.categoryName];
+                }else{
+                    [schemeDetailStr appendString:[NSString stringWithFormat:@"+%@",foodEntity.categoryName]];
+                }
+            }
+        }else if (_type == energyTypeSport){
+            for (XKRWSportEntity *sportEntity in [[XKRWSchemeService_5_0 sharedService] getCurrentSchemeSportEntities]) {
+                if (schemeDetailStr.length == 0) {
+                    [schemeDetailStr appendString:sportEntity.sportName];
+                }else{
+                    [schemeDetailStr appendString:[NSString stringWithFormat:@"+%@",sportEntity.sportName]];
+                }
+            }
+        }
         cell.mealLabel.text = entity.schemeName;
         cell.mealDetailLabel.text = schemeDetailStr;
         [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
         return  cell;
-     }
+    }
     return [UITableViewCell new];
 }
 
@@ -328,32 +356,32 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (tableView.tag == 5031) {
-            id temp = [[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"allRecord"] objectAtIndex:indexPath.row];
+        id temp = [[[detailRecordArray objectAtIndex:indexPath.section] objectForKey:@"allRecord"] objectAtIndex:indexPath.row];
+        
+        if (![temp isKindOfClass:[XKRWFoodEntity class]] && ![temp isKindOfClass:[XKRWSportEntity class]]) {
+            return;
+        }else if ([temp isKindOfClass:[XKRWFoodEntity class]]){
+            XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
+            XKRWRecordFoodEntity *recordFoodEntity = [[XKRWRecordFoodEntity alloc] init];
+            recordFoodEntity.date = _date;
+            recordFoodEntity.foodId = ((XKRWFoodEntity *)temp).foodId;
+            recordFoodEntity.foodLogo = ((XKRWFoodEntity *)temp).foodLogo;
+            recordFoodEntity.foodName = ((XKRWFoodEntity *)temp).foodName;
+            recordFoodEntity.foodNutri = ((XKRWFoodEntity *)temp).foodNutri;
+            recordFoodEntity.foodEnergy = ((XKRWFoodEntity *)temp).foodEnergy;
+            recordFoodEntity.foodUnit = ((XKRWFoodEntity *)temp).foodUnit;
+            addFoodVC.foodRecordEntity = recordFoodEntity;
+            [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:_vc];
             
-            if (![temp isKindOfClass:[XKRWFoodEntity class]] && ![temp isKindOfClass:[XKRWSportEntity class]]) {
-                return;
-            }else if ([temp isKindOfClass:[XKRWFoodEntity class]]){
-                XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
-                XKRWRecordFoodEntity *recordFoodEntity = [[XKRWRecordFoodEntity alloc] init];
-                recordFoodEntity.date = _date;
-                recordFoodEntity.foodId = ((XKRWFoodEntity *)temp).foodId;
-                recordFoodEntity.foodLogo = ((XKRWFoodEntity *)temp).foodLogo;
-                recordFoodEntity.foodName = ((XKRWFoodEntity *)temp).foodName;
-                recordFoodEntity.foodNutri = ((XKRWFoodEntity *)temp).foodNutri;
-                recordFoodEntity.foodEnergy = ((XKRWFoodEntity *)temp).foodEnergy;
-                recordFoodEntity.foodUnit = ((XKRWFoodEntity *)temp).foodUnit;
-                addFoodVC.foodRecordEntity = recordFoodEntity;
-                [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:_vc];
-
-            }else{
-                XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
-                addVC.sportEntity = ((XKRWSportEntity *)temp);
-                addVC.passMealTypeTemp = eSport;
-                addVC.needHiddenDate = YES;
-                addVC.isPresent = YES;
-                [_vc.navigationController presentViewController:addVC animated:YES completion:nil];
-            }
-
+        }else{
+            XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
+            addVC.sportEntity = ((XKRWSportEntity *)temp);
+            addVC.passMealTypeTemp = eSport;
+            addVC.needHiddenDate = YES;
+            addVC.isPresent = YES;
+            [_vc.navigationController presentViewController:addVC animated:YES completion:nil];
+        }
+        
     }else if (tableView.tag == 5032){
         XKRWSchemeEntity_5_0 *entity = [_schemeArray objectAtIndex:indexPath.row];
         XKRWSchemeDetailVC *schemeDetailVC = [[XKRWSchemeDetailVC alloc] init];
@@ -369,7 +397,7 @@
         headerView.backgroundColor = XK_BACKGROUND_COLOR;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, (44-29)/2, 29, 29)];
-      
+        
         imageView.image = [UIImage imageNamed:[recordTypeImageArray objectAtIndex:section]];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right + 10, 0, 100, 44)];
@@ -408,7 +436,6 @@
         
         [XKRWUtil addViewUpLineAndDownLine:headerView andUpLineHidden:YES DownLineHidden:NO];
         return headerView;
-        
     }
     return nil;
 }
@@ -445,6 +472,15 @@
 
 
 #pragma --mark Action
+
+- (void)reflashUIAndData:(NSNotification *)notification {
+    if ([[notification object] isEqualToString:EffectFoodCircle]) {
+        [self setFoodDataToUI];
+    }else if ([[notification object] isEqualToString:EffectSportCircle]){
+        [self setSportDataToUI];
+    }
+}
+
 //点击展示 早餐 午餐 晚餐 加餐 的详细情况
 - (void)showDetail:(UIButton *)button {
     if (showDetailSection == button.tag -100) {
@@ -464,7 +500,7 @@
 
 //点击记录按钮
 - (IBAction)recordSeclctAction:(UIButton *)sender {
-     isRecommended = NO;
+    isRecommended = NO;
     _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
     _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
     if (_type == energyTypeEat) {
@@ -477,7 +513,7 @@
         [_centerbutton setTitle:@"记录运动" forState:UIControlStateNormal];
         _rightButton.hidden = YES;
     }
-
+    
     [UIView animateWithDuration:0.5 animations:^{
         _scrollView.contentOffset = CGPointMake(0, 0);
     }];
@@ -489,12 +525,12 @@
     isRecommended = YES;
     _recordTypeLabel.textColor = XK_TEXT_COLOR;
     _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;
-
+    
     if (_type == energyTypeEat) {
         _leftButton.hidden = YES;
         _centerbutton.hidden = NO;
         
-        if ([[schemeDetail objectForKey:@"schemeHadRecord"] integerValue] == 1) {
+        if (schemeDetail !=nil) {
             [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
             
         }else{
@@ -505,7 +541,7 @@
         _leftButton.hidden = YES;
         _centerbutton.hidden = NO;
         
-        if ([[schemeDetail objectForKey:@"schemeHadRecord"] integerValue] == 1) {
+        if (schemeDetail !=nil) {
             [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
         }else{
             [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
@@ -532,14 +568,24 @@
 - (IBAction)centerButtonAction:(UIButton *)sender {
     //用来处理记录推荐运动
     if (isRecommended == YES && _type == energyTypeSport) {
-        XKRWRecordSchemeEntity *entity = [[XKRWRecordSchemeEntity alloc] init];
-        entity.create_time = [_date timeIntervalSince1970];
-        entity.record_value = 2;
-        entity.sid = 0;
-        entity.type = 5;
-        entity.calorie = [XKRWAlgolHelper dailyConsumeSportEnergy];
-        if ([self.delegate respondsToSelector:@selector(saveSchemeRecord:andType:)]) {
-            [self.delegate saveSchemeRecord:entity andType:XKRWRecordTypeScheme];
+        
+        
+        if (schemeDetail !=nil){
+            
+            if ([self.delegate respondsToSelector:@selector(deleteSchemeRecord:andType:andEntryType:)]) {
+                [self.delegate deleteSchemeRecord:[schemeDetail objectForKey:@"schemeEntity"] andType:XKRWRecordTypeScheme andEntryType:energyTypeSport];
+            }
+        }else{
+            XKRWRecordSchemeEntity *entity = [[XKRWRecordSchemeEntity alloc] init];
+            entity.create_time = [_date timeIntervalSince1970];
+            entity.record_value = 2;
+            entity.sid = 0;
+            entity.type = 5;
+            entity.uid =[[XKRWUserService sharedService] getUserId];
+            entity.calorie = [XKRWAlgolHelper dailyConsumeSportEnergy];
+            if ([self.delegate respondsToSelector:@selector(saveSchemeRecord:andType:andEntryType:)]) {
+                [self.delegate saveSchemeRecord:entity andType:XKRWRecordTypeScheme andEntryType:energyTypeSport];
+            }
         }
         return;
     }
@@ -550,18 +596,23 @@
         }
         return;
     }
-    
     //用来处理记录推荐饮食
     if (isRecommended == YES && _type == energyTypeEat) {
-        XKRWRecordSchemeEntity *entity = [[XKRWRecordSchemeEntity alloc] init];
-        entity.create_time = [_date timeIntervalSince1970];
-        entity.record_value = 2;
-        entity.sid = 0;
-        entity.type = 6;
-        entity.calorie = [XKRWAlgolHelper dailyIntakeRecomEnergy];
-        
-        if ([self.delegate respondsToSelector:@selector(saveSchemeRecord:andType:)]) {
-            [self.delegate saveSchemeRecord:entity andType:XKRWRecordTypeScheme];
+        if (schemeDetail != nil){
+            if ([self.delegate respondsToSelector:@selector(deleteSchemeRecord:andType:andEntryType:)]) {
+                [self.delegate deleteSchemeRecord:[schemeDetail objectForKey:@"schemeEntity"] andType:XKRWRecordTypeScheme andEntryType:energyTypeEat];
+            }
+        }else{
+            XKRWRecordSchemeEntity *entity = [[XKRWRecordSchemeEntity alloc] init];
+            entity.create_time = [_date timeIntervalSince1970];
+            entity.record_value = 2;
+            entity.sid = 0;
+            entity.type = 6;
+            entity.calorie = [XKRWAlgolHelper dailyIntakeRecomEnergy];
+            entity.uid =[[XKRWUserService sharedService] getUserId];
+            if ([self.delegate respondsToSelector:@selector(saveSchemeRecord:andType:andEntryType:)]) {
+                [self.delegate saveSchemeRecord:entity andType:XKRWRecordTypeScheme andEntryType:energyTypeEat];
+            }
         }
         return;
     }
@@ -574,6 +625,10 @@
     if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
         [self.delegate entryRecordVCWith:eSchemeFood];
     }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
