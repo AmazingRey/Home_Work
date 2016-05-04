@@ -1035,6 +1035,7 @@
 		CCA3B8891CB78AB300D564DA /* XKRWShowEnergy_5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCA3B8881CB78AB300D564DA /* XKRWShowEnergy_5_3View.xib */; };
 		CCA73FBF1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA73FBD1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.m */; };
 		CCA73FC01CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCA73FBE1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.xib */; };
+		CCDEABD61CD99A26006E2D81 /* XKRWCustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDEABD51CD99A26006E2D81 /* XKRWCustomPickerView.m */; };
 		CCEBA7241CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA7231CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m */; };
 		CCEBA7271CD84EA500C3DFA8 /* XKRWStatisticDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA7261CD84EA500C3DFA8 /* XKRWStatisticDetailView.m */; };
 		CCEBA72D1CD8973500C3DFA8 /* XKRWStatisAnalysisView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA72C1CD8973500C3DFA8 /* XKRWStatisAnalysisView.m */; };
@@ -2758,6 +2759,8 @@
 		CCA73FBC1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlan_5_3CollectionReusableView.h; sourceTree = "<group>"; };
 		CCA73FBD1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlan_5_3CollectionReusableView.m; sourceTree = "<group>"; };
 		CCA73FBE1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlan_5_3CollectionReusableView.xib; sourceTree = "<group>"; };
+		CCDEABD41CD99A26006E2D81 /* XKRWCustomPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWCustomPickerView.h; sourceTree = "<group>"; };
+		CCDEABD51CD99A26006E2D81 /* XKRWCustomPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWCustomPickerView.m; sourceTree = "<group>"; };
 		CCEBA7221CD83FA800C3DFA8 /* XKRWWeekAnalysisView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeekAnalysisView.h; sourceTree = "<group>"; };
 		CCEBA7231CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeekAnalysisView.m; sourceTree = "<group>"; };
 		CCEBA7251CD84EA500C3DFA8 /* XKRWStatisticDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWStatisticDetailView.h; sourceTree = "<group>"; };
@@ -6657,6 +6660,8 @@
 				CC315A741CD331B9004D46DB /* XKRWStatiscHeadView.m */,
 				CCEBA7251CD84EA500C3DFA8 /* XKRWStatisticDetailView.h */,
 				CCEBA7261CD84EA500C3DFA8 /* XKRWStatisticDetailView.m */,
+				CCDEABD41CD99A26006E2D81 /* XKRWCustomPickerView.h */,
+				CCDEABD51CD99A26006E2D81 /* XKRWCustomPickerView.m */,
 			);
 			name = StatiscAnalysizeView;
 			sourceTree = "<group>";
@@ -6800,6 +6805,9 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
+					044DA1C018558DC100CA30F7 = {
+						DevelopmentTeam = WT58P44WAK;
+					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = WT58P44WAK;
 						TestTargetID = 044DA1C018558DC100CA30F7;
@@ -7285,6 +7293,7 @@
 				BCC7E9611C59FBCE008B560F /* XKRWCoreDataModel.xcdatamodeld in Sources */,
 				BC31B93C1C1ACA520045817B /* SDMealSchemeCell.swift in Sources */,
 				A786D4DD1BB5192200B6535D /* MLPhotoPickerImageView.m in Sources */,
+				CCDEABD61CD99A26006E2D81 /* XKRWCustomPickerView.m in Sources */,
 				BC769D971C33CA3500E96B1A /* XKRWUserHonorEnity.swift in Sources */,
 				2E9687E41A04AEFD00CB5D77 /* FMResultSet.m in Sources */,
 				BC769DD41C33D19900E96B1A /* XKRWProductEntity.m in Sources */,

@@ -241,7 +241,7 @@
     self.footerView.clipsToBounds = YES;
     [self addSubview:self.footerView];
     
-    UIView *grayBgView = [[UIView alloc] initWithFrame:CGRectMake(15, XKAppHeight - 50 - 64 - 49, XKAppWidth - 30, 35)];
+    UIView *grayBgView = [[UIView alloc] initWithFrame:CGRectMake(15, XKAppHeight - _footerView.height, XKAppWidth - 30, 35)];
     grayBgView.backgroundColor = colorSecondary_f4f4f4;
     grayBgView.layer.cornerRadius = 2.5;
 //    [self addSubview:grayBgView];

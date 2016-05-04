@@ -30,6 +30,7 @@
     self = [super initWithFrame:frame];
     CGFloat circleWidth = 95*(XKAppWidth/320.0);
     CGFloat separateWidth = (XKAppWidth - circleWidth * 3) / 4.0;
+    
     if (self) {
         
         _exClickedIndex = 0;
@@ -39,17 +40,21 @@
         _remindTextView.backColor = [UIColor colorFromHexString:@"c7c7c7"];
         _remindTextView.font = XKDefaultFontWithSize(12);
         _remindTextView.alignment = NSTextAlignmentCenter;
-        _remindTextView.center = CGPointMake(XKAppWidth/2.0, 34);
+        _remindTextView.center = CGPointMake(XKAppWidth/2.0, self.height / 8.0);
         [self addSubview:_remindTextView];
         [_remindTextView textFlashingWithDuration:1.5];
         
         _titleClickButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _titleClickButton.frame = _remindTextView.frame;
+        _titleClickButton.size = CGSizeMake(200, 30);
+        _titleClickButton.layer.cornerRadius = 5.0;
+        _titleClickButton.clipsToBounds = YES;
+        _titleClickButton.center = _remindTextView.center;
         [_titleClickButton setBackgroundImage:[UIImage createImageWithColor:colorSecondary_000000_02] forState:UIControlStateHighlighted];
         [_titleClickButton addTarget:self action:@selector(titleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
         [self insertSubview:_titleClickButton aboveSubview:_remindTextView];
         
-        _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 68, circleWidth, circleWidth) Style: XKRWEnergyCircleStyleNotOpen];
+        _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 0, circleWidth, circleWidth) Style: XKRWEnergyCircleStyleNotOpen];
+        _eatEnergyCircle.center = CGPointMake(separateWidth + circleWidth / 2.0, self.height / 2.0);
         _eatEnergyCircle.tag = 1;
         [self addSubview:_eatEnergyCircle];
         
@@ -70,7 +75,7 @@
             label.font = XKDefaultFontWithSize(14);
             label.text = titles[i];
             [label sizeToFit];
-            label.center = CGPointMake(separateWidth *(i + 1) + circleWidth*(i*2 + 1)/2.0, _eatEnergyCircle.bottom + 34);
+            label.center = CGPointMake(separateWidth *(i + 1) + circleWidth*(i*2 + 1)/2.0, self.height * 7 / 8.0);
             [self addSubview:label];
         }
         
@@ -210,7 +215,7 @@
 - (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {
     
     _intakeNumber = currentNumber;
-
+    
     BOOL abool;
     if (_intakeNumber < 1200 || _intakeNumber > _eatEnergyCircle.goalNumber) {
         abool = NO;

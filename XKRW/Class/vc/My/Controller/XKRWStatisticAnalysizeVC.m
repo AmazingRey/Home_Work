@@ -13,14 +13,16 @@
 #import "XKRWStatiscHeadView.h"
 #import "XKRWWeekAnalysisView.h"
 #import "XKRWStatisAnalysisView.h"
+#import "XKRWCustomPickerView.h"
 
-
-@interface XKRWStatisticAnalysizeVC ()<XKRWStatisticAnalysisPickerViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface XKRWStatisticAnalysizeVC ()<XKRWStatisticAnalysisPickerViewDelegate,XKRWCustomPickerViewDelegate>
 @property (strong, nonatomic) UISegmentedControl *segmentControl;
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) XKRWWeekAnalysisView *weekAnalysisView;
 @property (strong, nonatomic) UIButton *btnBack;
-@property (strong, nonatomic) UIPickerView *pickerView;
+//@property (strong, nonatomic) UIPickerView *pickerView;
+@property (strong, nonatomic) XKRWCustomPickerView *pickView;
+
 @property (strong, nonatomic) XKRWStatisAnalysisView *statisAnalysisView;
 @end
 
@@ -99,16 +101,27 @@
     return _btnBack;
 }
 
--(UIPickerView *)pickerView{
-    if (!_pickerView){
+//-(UIPickerView *)pickerView{
+//    if (!_pickerView){
+//        CGRect frame = CGRectMake(0, self.view.frame.size.height-200, XKAppWidth, 200);
+//        _pickerView = [[UIPickerView alloc] initWithFrame:frame];
+//        _pickerView.backgroundColor = [UIColor whiteColor];
+//        _pickerView.opaque = YES;
+//        _pickerView.delegate = self;
+//        _pickerView.dataSource = self;
+//    }
+//    return _pickerView;
+//}
+
+-(XKRWCustomPickerView *)pickView{
+    if (!_pickView) {
         CGRect frame = CGRectMake(0, self.view.frame.size.height-200, XKAppWidth, 200);
-        _pickerView = [[UIPickerView alloc] initWithFrame:frame];
-        _pickerView.backgroundColor = [UIColor whiteColor];
-        _pickerView.opaque = YES;
-        _pickerView.delegate = self;
-        _pickerView.dataSource = self;
+        _pickView = [[XKRWCustomPickerView alloc] initWithFrame:frame];
+        _pickView.backgroundColor = [UIColor whiteColor];
+        _pickView.opaque = YES;
+        _pickView.delegate = self;
     }
-    return _pickerView;
+    return _pickView;
 }
 
 #pragma mark masonry Subviews
@@ -147,24 +160,18 @@
     _pageTime = 0;
     CGRect scrollRect = CGRectMake(XKAppWidth*_currentIndex, 0, XKAppWidth, _scrollView.height);
     [self.scrollView scrollRectToVisible:scrollRect animated:YES];
-    
-    if (_currentIndex == 0) {
-        
-    } else {
-        
-    }
 }
 
 #pragma mark XKRWStatisticAnalysisPickerViewDelegate Method
 -(void)makeAnalysisPickerViewAppear{
     self.btnBack.alpha = 0;
     [self.view addSubview:_btnBack];
-    self.pickerView.alpha = 0;
-    [self.view addSubview:self.pickerView];
+    self.pickView.alpha = 0;
+    [self.view addSubview:self.pickView];
     
     [UIView animateWithDuration:.5 animations:^{
         _btnBack.alpha = .5;
-        _pickerView.alpha = 1;
+        _pickView.alpha = 1;
     }];
 }
 
@@ -172,50 +179,22 @@
 -(void)btnBackPressed:(UIButton *)btn{
     [UIView animateWithDuration:.5 animations:^{
         self.btnBack.alpha = 0;
-        self.pickerView.alpha = 0;
+        self.pickView.alpha = 0;
     } completion:^(BOOL finished) {
-        [_pickerView removeFromSuperview];
-        _pickerView = nil;
+        [_pickView removeFromSuperview];
+        _pickView = nil;
         [self.btnBack removeFromSuperview];
         self.btnBack = nil;
     }];
 }
 
-#pragma mark UIPickerView Method
-#pragma mark UIPickerViewDataSource
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
+#pragma mark XKRWCustomPickerViewDelegate
+-(void)pickerViewPressedDone:(NSString *)singleStr{
+    [self btnBackPressed:nil];
+    [self.weekAnalysisView.headView lab1ReloadText:singleStr];
 }
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return 10;
-}
-#pragma mark UIPickerViewDelegate
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
-{
-    UILabel *myView = nil;
-    myView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 100, 30)];
-    myView.textAlignment = NSTextAlignmentCenter;
-    myView.text = [NSString stringWithFormat:@"第%ld行",(long)row];
-    myView.font = [UIFont systemFontOfSize:14];         //用label来设置字体大小
-    myView.backgroundColor = [UIColor clearColor];
-    return myView;
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
-{
-    return 200;
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
-{
-    return 40.0;
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    [self.weekAnalysisView.headView lab1ReloadText:[NSString stringWithFormat:@"第%ld周",(long)row]];
+-(void)pickerViewPressedCancle{
+    [self btnBackPressed:nil];
 }
 
 - (void)didReceiveMemoryWarning {

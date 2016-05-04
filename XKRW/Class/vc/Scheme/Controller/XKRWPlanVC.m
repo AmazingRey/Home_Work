@@ -230,11 +230,8 @@
 #pragma -- mark UI
 
 - (void)initView {
-    if(XKAppHeight > 480){
-        planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 350, XKAppWidth, XKAppHeight- 350 -49) style:UITableViewStylePlain];
-    }else{
-        planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 300, XKAppWidth, XKAppHeight -300 -49) style:UITableViewStylePlain];
-    }
+    
+    planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 120 + 171 * XKAppHeight / 480.0, XKAppWidth, XKAppHeight -(120 + 171 * XKAppHeight / 480.0) -49) style:UITableViewStylePlain];
     planTableView.delegate = self;
     planTableView.dataSource = self;
     planTableView.tag = 1000;
@@ -261,7 +258,7 @@
 
 - (UIView *)createPlanHeaderView
 {
-    planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 350)];
+    planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 120 + 171 * XKAppHeight / 480.0)];
     planHeaderView.backgroundColor = [UIColor whiteColor];
     foodAndSportSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
     
@@ -360,7 +357,7 @@
     [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
     [planHeaderView addSubview:_recordAndTargetView];
     
-    _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, planHeaderView.height - 120)];
+    _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, 171 * XKAppHeight / 480.0)];
     [_planEnergyView.eatEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] || !isTodaysPlan) ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     [_planEnergyView.sportEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] || !isTodaysPlan )? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     [_planEnergyView.habitEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType] || !isTodaysPlan) ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];

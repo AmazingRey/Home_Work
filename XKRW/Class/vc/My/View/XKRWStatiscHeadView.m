@@ -16,7 +16,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _type = type;
+        _statisType = type;
         [self makeMasonryLayout];
     }
     return self;
@@ -26,7 +26,7 @@
 -(UILabel *)lab1{
     if (!_lab1) {
         _lab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 30)];
-        if (_type == 1) {
+        if (_statisType == 1) {
             [self lab1ReloadText:@"第1周"];
         }else{
             _lab1.text = @"2015年5月12日－至今";
@@ -62,6 +62,16 @@
         [self addSubview:_btnDown];
     }
     return _btnDown;
+}
+
+-(UIButton *)btnQuestion{
+    if (!_btnQuestion) {
+        _btnQuestion = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_btnQuestion setImage:[UIImage imageNamed:@"question"] forState:UIControlStateNormal];
+        [_btnQuestion addTarget:self action:@selector(btnQuestionPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_btnQuestion];
+    }
+    return _btnQuestion;
 }
 
 -(UILabel *)lab2{
@@ -217,7 +227,7 @@
 
 #pragma mark masonry 
 -(void)makeMasonryLayout{
-    if (_type == 1){
+    if (_statisType == 1){
         [self.lab1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(110);
             make.centerX.mas_equalTo(self.mas_centerX);
@@ -234,25 +244,29 @@
             make.height.mas_equalTo(15);
             make.top.mas_equalTo(self.lab1.mas_bottom).offset(4);
         }];
-
+        [self.view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@.5);
+            make.left.right.equalTo(@0);
+            make.top.mas_equalTo(self.lab1.mas_bottom).offset(30);
+        }];
     }else{
         [self.lab1 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(220);
             make.centerX.mas_equalTo(self.mas_centerX);
-            make.top.mas_equalTo(self.mas_top).offset(25);
+            make.top.mas_equalTo(self.mas_top).offset(26);
+        }];
+        [self.view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@.5);
+            make.left.right.equalTo(@0);
+            make.top.mas_equalTo(self.lab1.mas_bottom).offset(15);
         }];
     }
-    [self.view1 mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@.5);
-        make.left.right.equalTo(@0);
-        make.top.mas_equalTo(self.lab1.mas_bottom).offset(30);
-    }];
     
     [self.view3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@.5);
         make.height.equalTo(@11);
         make.centerX.mas_equalTo(self.mas_centerX);
-        make.top.mas_equalTo(self.lab1.mas_bottom).offset(55);
+        make.top.mas_equalTo(self.view1.mas_bottom).offset(30);
     }];
     
     [self.lab5 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -273,7 +287,7 @@
         make.width.equalTo(@.5);
         make.height.equalTo(@11);
         make.left.mas_equalTo(self.lab5.mas_right);
-        make.top.mas_equalTo(self.lab1.mas_bottom).offset(55);
+        make.centerY.mas_equalTo(self.view3.mas_centerY);
     }];
     
     [self.lab4 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -292,7 +306,7 @@
         make.width.equalTo(@.5);
         make.height.equalTo(@11);
         make.right.mas_equalTo(self.subLab4.mas_left);
-        make.top.mas_equalTo(self.lab1.mas_bottom).offset(55);
+        make.centerY.mas_equalTo(self.view3.mas_centerY);
     }];
     [self.lab3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
@@ -312,6 +326,12 @@
         make.left.mas_equalTo(self.view4.mas_right);
         make.centerY.mas_equalTo(self.view4.mas_centerY).offset(-10);
     }];
+    [self.btnQuestion mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@20);
+        make.height.equalTo(@20);
+        make.left.mas_equalTo(self.lab6.mas_right).offset(-30);
+        make.centerY.mas_equalTo(self.lab6.mas_centerY);
+    }];
     [self.subLab6 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
@@ -325,4 +345,11 @@
         [self.delegate makeAnalysisPickerViewAppear];
     }
 }
+
+-(void)btnQuestionPressed:(UIButton *)btn{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"完成计划的说明" message:@"每天，饮食和运动的进度圈均为绿色状态时，计作计划完成" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+    [alertView show];
+}
+
+
 @end

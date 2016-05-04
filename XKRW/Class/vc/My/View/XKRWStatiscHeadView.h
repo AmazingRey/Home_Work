@@ -13,7 +13,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XKRWStatiscHeadView : UIView
+@interface XKRWStatiscHeadView : UIView <UIAlertViewDelegate>
 
 @property (assign, nonatomic) id <XKRWStatisticAnalysisPickerViewDelegate> delegate;
 @property (strong, nonatomic) UILabel *lab1;
@@ -37,7 +37,8 @@
 @property (strong, nonatomic) UIView *view4;
 
 @property (strong, nonatomic) UIButton *btnDown;
-@property (assign, nonatomic) StatisticType type;
+@property (strong, nonatomic) UIButton *btnQuestion;
+@property (assign, nonatomic) StatisticType statisType;
 
 - (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type;
 -(void)lab1ReloadText:(NSString *)week;
