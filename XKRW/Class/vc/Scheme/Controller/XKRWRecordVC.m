@@ -21,15 +21,13 @@
 @interface XKRWRecordVC ()<UISearchControllerDelegate,KMSearchDisplayControllerDelegate,IFlyRecognizerViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource> {
     UISegmentedControl *segmentCtl;
     NSString *searchKey;
-    UIScrollView  *backgroundScrollView;
-    UITableView  *recentRecordTableView;
-    UITableView  *collectTableView;
+    UITableView  *recentRecordOrCollectTableView;
     UIView *nonCollectionView;
     UIView *nonRecentRecordView;
     
     NSArray *segementTitles;
     NSMutableArray     *dataArray;
-    NSArray *recentRecordArray;
+    NSArray *recentRecordOrCollectArray;
     NSString *tableName;
     XKRWRecordEntity4_0 *recordEntity4_0;
     NSInteger collectionType;
@@ -43,6 +41,7 @@
     
     NSString *recordSearchBarplaceText;
  
+    NSInteger  selectSegmentIndex;
 }
 
 @end
@@ -52,12 +51,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self initDataWithSegmentIndex:selectSegmentIndex];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initView];
-    [self initData];
+    [self initDataWithSegmentIndex:0];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -113,7 +113,6 @@
     recordSearchBar.delegate = self;
     recordSearchBar.barTintColor = XKBGDefaultColor;
   
-//    [recordSearchBar setSearchBarTextFieldColor:[UIColor whiteColor]];
     recordSearchBar.layer.borderWidth = 0.5;
     recordSearchBar.layer.borderColor = XK_ASSIST_LINE_COLOR.CGColor;
     recordSearchBar.showsBookmarkButton = true;
@@ -140,30 +139,19 @@
     [segmentCtl addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:segmentCtl];
     
-    backgroundScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, segmentCtl.bottom+10, XKAppWidth, XKAppHeight - 50)];
-    backgroundScrollView.contentSize = CGSizeMake(XKAppWidth * 2, XKAppHeight - 50);
-    backgroundScrollView.contentOffset = CGPointMake(0, 0);
-    backgroundScrollView.scrollEnabled = NO;
-    [self.view addSubview:backgroundScrollView];
-    
-    recentRecordTableView = [[UITableView alloc] initWithFrame:backgroundScrollView.bounds style:UITableViewStylePlain];
-    recentRecordTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    recentRecordTableView.delegate = self;
-    recentRecordTableView.dataSource = self;
-    recentRecordTableView.tag = 10001;
-    [recentRecordTableView registerNib:[UINib nibWithNibName:@"XKRWFoodRecordCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentRecordCell"];
-    [backgroundScrollView addSubview:recentRecordTableView];
 
-    collectTableView = [[UITableView alloc] initWithFrame:backgroundScrollView.bounds style:UITableViewStylePlain];
-    collectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    collectTableView.delegate = self;
-    collectTableView.dataSource = self;
-    collectTableView.tag = 10002;
-    collectTableView.origin = CGPointMake(XKAppWidth, 0);
-    [collectTableView registerClass:[XKRWSportCell class] forCellReuseIdentifier:@"collectionSportCell"];
-    [backgroundScrollView addSubview:collectTableView];
     
-    nonRecentRecordView = [[UIView alloc] initWithFrame:recentRecordTableView.frame];
+    recentRecordOrCollectTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, segmentCtl.bottom+10, XKAppWidth, XKAppHeight - 50) style:UITableViewStylePlain];
+    recentRecordOrCollectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    recentRecordOrCollectTableView.delegate = self;
+    recentRecordOrCollectTableView.dataSource = self;
+    recentRecordOrCollectTableView.tag = 10001;
+    [recentRecordOrCollectTableView registerNib:[UINib nibWithNibName:@"XKRWFoodRecordCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentRecordCell"];
+    [self.view addSubview:recentRecordOrCollectTableView];
+
+
+    
+    nonRecentRecordView = [[UIView alloc] initWithFrame:recentRecordOrCollectTableView.frame];
     nonRecentRecordView.backgroundColor = [UIColor whiteColor];
     nonRecentRecordView.hidden = YES;
     UIImage *noRecentRecordImage = [UIImage imageNamed:@"nothing_"];
@@ -175,17 +163,9 @@
     noRecentRecordLabel.center = CGPointMake(XKAppWidth / 2.0, 0);
     noRecentRecordLabel.top = noRecentRecordImageView.bottom + 20;
     [nonRecentRecordView addSubview:noRecentRecordLabel];
-    [backgroundScrollView insertSubview:nonRecentRecordView aboveSubview:recentRecordTableView];
-    
-    nonCollectionView = [[UIView alloc] initWithFrame:collectTableView.frame];
-    nonCollectionView.backgroundColor = [UIColor whiteColor];
-    UIImage *nonCollectionImage = [UIImage imageNamed:@"me_none_640"];
-    UIImageView *nonCollectionImageView = [[UIImageView alloc] initWithImage:nonCollectionImage];
-    nonCollectionImageView.size = nonCollectionImage.size;
-    nonCollectionImageView.center = CGPointMake(XKAppWidth / 2.0, nonCollectionView.height / 2.0);
-    [nonCollectionView addSubview:nonCollectionImageView];
-    nonCollectionView.hidden = YES;
-    [backgroundScrollView insertSubview:nonCollectionView aboveSubview:collectTableView];
+    [recentRecordOrCollectTableView addSubview:nonCollectionView];
+
+
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
     [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
@@ -204,40 +184,29 @@
 
 #pragma --mark Data
 
-- (void) initData {
-    recordEntity4_0 = [[XKRWRecordService4_0 sharedService]getAllRecordOfDay:[NSDate today]];
-    if (dataArray == nil){
-        dataArray = [NSMutableArray array];
+- (void) initDataWithSegmentIndex:(NSInteger ) index {
+    if (index == 0) {
+         recentRecordOrCollectArray = [[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName];
+    }else{
+         recentRecordOrCollectArray = [[XKRWCollectionService sharedService] queryCollectionWithType:collectionType];
     }
-    [dataArray addObjectsFromArray:[[XKRWCollectionService sharedService] queryCollectionWithType:collectionType]];
-    
-    // deal with haven't collectionData
-    if (!dataArray || !dataArray.count) {
-        nonCollectionView.hidden = NO;
-    } else {
-        nonCollectionView.hidden = YES;
-    }
-
-    [collectTableView reloadData];
-    recentRecordArray = [[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName];
-    
-    // deal with no recent record
-    if (!recentRecordArray || !recentRecordArray.count) {
+   
+    if (!recentRecordOrCollectArray || !recentRecordOrCollectArray.count) {
         nonRecentRecordView.hidden = NO;
     } else {
         nonRecentRecordView.hidden = YES;
     }
-    [recentRecordTableView reloadData];
-    XKLog(@"%@",[[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName]);
+    
+    [recentRecordOrCollectTableView reloadData];
+
 }
 
 
 #pragma --mark Action
 
 - (void)segmentChange:(UISegmentedControl *)segment {
-    [UIView animateWithDuration:0.2 animations:^{
-        backgroundScrollView.contentOffset = CGPointMake(segment.selectedSegmentIndex * XKAppWidth, 0);
-    }];
+    selectSegmentIndex = segment.selectedSegmentIndex ;
+    [self initDataWithSegmentIndex:segment.selectedSegmentIndex];
 }
 
 
@@ -250,7 +219,6 @@
     segmentCtl .hidden = YES;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [searchDisplayCtrl showSearchResultView];
- 
     return YES;
 }
 
@@ -262,9 +230,7 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:NO];
-    [searchDisplayCtrl hideSearchResultView];
-    [self initData];
-    segmentCtl.hidden = NO;
+
 }
 
 
@@ -280,6 +246,8 @@
     recordSearchBar.frame = frame;
 
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [searchDisplayCtrl hideSearchResultView];
+    segmentCtl.hidden = NO;
     return YES;
 }
 
@@ -323,9 +291,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView.tag == 10001) {
-        return recentRecordArray.count;
-    } else if (tableView.tag == 10002) {
-        return dataArray.count;
+        return recentRecordOrCollectArray.count;
+        
     }else if (tableView.tag == 201) {
         return searchResults.count;
     }
@@ -334,17 +301,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView.tag == 10002) {
-        if (collectionType == 1) {
-            return 64.f;
-        } else if (collectionType == 0) {
-            return 44.f;
-        }
-    } else if (tableView.tag == 10001) {
-        return 88;
+    if(tableView.tag == 10001) {
+        return 88.f;
     } else if (tableView.tag == 201){
         return 83;
     }
+    
     return 0;
 }
 
@@ -354,7 +316,7 @@
     if (tableView.tag == 10001) {
         XKRWFoodRecordCell *recentRecordCell = [tableView dequeueReusableCellWithIdentifier:@"recentRecordCell" forIndexPath:indexPath];
         if ([tableName isEqualToString:@"food_record"]) {
-            XKRWFoodEntity *recentRecordFoodEntity = recentRecordArray[indexPath.row];
+            XKRWFoodEntity *recentRecordFoodEntity = recentRecordOrCollectArray[indexPath.row];
             [recentRecordCell setTitle:recentRecordFoodEntity.foodName logoURL:recentRecordFoodEntity.foodLogo clickDetail:^(NSIndexPath * recordFoodIndexPath) {
                 XKRWFoodDetailVC *foodDetailVC = [[XKRWFoodDetailVC alloc] init];
                 foodDetailVC.foodId = recentRecordFoodEntity.foodId;
@@ -380,7 +342,7 @@
             }];
 
         } else if ([tableName isEqualToString:@"sport_record"]) {
-            XKRWSportEntity *entity = recentRecordArray[indexPath.row];
+            XKRWSportEntity *entity = recentRecordOrCollectArray[indexPath.row];
             
             [recentRecordCell setTitle:entity.sportName logoURL:entity.sportActionPic clickDetail:^(NSIndexPath * sportIndexPath) {
                 XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc] init];
@@ -391,6 +353,7 @@
                 vc.isPresent = NO;
                 vc.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:vc animated:YES];
+                
             } clickRecord:^(NSIndexPath * sportIndexPath) {
                 XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
                 addVC.sportEntity = entity;
@@ -403,24 +366,6 @@
             }];
         }
         return recentRecordCell;
-    } else if (tableView.tag == 10002) {
-        
-        if ([tableName isEqualToString:@"food_record"]) {
-            XKRWFoodCell *foodCell = [tableView dequeueReusableCellWithIdentifier:@"collectionFoodCell"];
-            if (foodCell == nil) {
-                foodCell = [[XKRWFoodCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"collectionFoodCell"];
-                
-            }
-            if ([dataArray count] > indexPath.row) {
-                NSDictionary *dict_value = (NSDictionary*)[dataArray objectAtIndex:indexPath.row];
-                [foodCell setCollectCellValue:dict_value];
-            }
-
-            return foodCell;
-        } else if ([tableName isEqualToString:@"sport_record"]) {
-            
-            return [XKRWSportCell new];
-        }
     }else if (tableView.tag == 201){
         XKRWFoodRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCell"];
         cell.indexPath = indexPath ;
@@ -490,32 +435,6 @@
     if (tableView.tag == 10001) {
         return;
         
-    } else if (tableView.tag == 10002) {
-        
-        if (collectionType == 1) {
-            if ([dataArray count] > indexPath.row) {
-                XKRWFoodDetailVC *vc = [[XKRWFoodDetailVC alloc ]init];
-                vc.foodId = [[dataArray[indexPath.row] valueForKey:@"original_id"] intValue];
-                vc.foodName = [dataArray[indexPath.row] valueForKey:@"collect_name"];
-                
-                vc.date = [NSDate date];
-                
-                [self.navigationController pushViewController:vc animated:YES];
-                
-            }
-            
-        } else if (collectionType == 2) {
-            if ([dataArray count] > indexPath.row) {
-                
-                XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc]init];
-                vc.sportID = [[dataArray[indexPath.row] valueForKey:@"original_id"] intValue];
-                vc.sportName = [dataArray[indexPath.row] valueForKey:@"collect_name"];
-                vc.date = [NSDate date];
-                vc.needHiddenDate = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            } else return;
-            
-        }
     }
 }
 #pragma --mark IFlyDelegate

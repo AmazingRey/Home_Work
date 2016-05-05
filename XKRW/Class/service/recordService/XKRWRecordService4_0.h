@@ -455,5 +455,5 @@
 
 - (void)deleteHabitRecord:(XKRWRecordEntity4_0 *)entity;
 
-
+- (NSMutableDictionary *)getSchemeStatesOfDays:(NSInteger)num withType:(RecordType)type;
 @end

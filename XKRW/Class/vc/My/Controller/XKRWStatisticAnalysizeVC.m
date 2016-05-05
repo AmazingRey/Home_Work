@@ -28,13 +28,16 @@
 
 @implementation XKRWStatisticAnalysizeVC
 {
-     NSInteger _currentIndex;
-     NSInteger _pageTime;
+    NSInteger segmentIndex;
+    NSInteger pickerIndex;
+    NSMutableArray *pickerArray;
+    NSInteger _pageTime;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"统计分析";
+    pickerArray = [NSMutableArray arrayWithObjects:@"第1周",@"第2周",@"第3周",@"第4周",@"第5周",@"第6周",@"第7周",@"第8周",@"第9周",@"第10周", nil];
     [self addMasonryToLayout];
 }
 
@@ -118,6 +121,7 @@
         CGRect frame = CGRectMake(0, self.view.frame.size.height-200, XKAppWidth, 200);
         _pickView = [[XKRWCustomPickerView alloc] initWithFrame:frame];
         _pickView.backgroundColor = [UIColor whiteColor];
+        _pickView.currentStr = [pickerArray objectAtIndex:pickerIndex];
         _pickView.opaque = YES;
         _pickView.delegate = self;
     }
@@ -156,14 +160,15 @@
 
 #pragma mark segementControl Method
 -(void)segmentControlIndexChanged:(UISegmentedControl *)segement{
-    _currentIndex = segement.selectedSegmentIndex;
+    segmentIndex = segement.selectedSegmentIndex;
     _pageTime = 0;
-    CGRect scrollRect = CGRectMake(XKAppWidth*_currentIndex, 0, XKAppWidth, _scrollView.height);
+    CGRect scrollRect = CGRectMake(XKAppWidth*segmentIndex, 0, XKAppWidth, _scrollView.height);
     [self.scrollView scrollRectToVisible:scrollRect animated:YES];
 }
 
 #pragma mark XKRWStatisticAnalysisPickerViewDelegate Method
--(void)makeAnalysisPickerViewAppear{
+-(void)makeAnalysisPickerViewAppear:(NSInteger)index{
+    pickerIndex = index;
     self.btnBack.alpha = 0;
     [self.view addSubview:_btnBack];
     self.pickView.alpha = 0;
@@ -189,10 +194,11 @@
 }
 
 #pragma mark XKRWCustomPickerViewDelegate
--(void)pickerViewPressedDone:(NSString *)singleStr{
+-(void)pickerViewPressedDone:(NSInteger)currentIndex{
     [self btnBackPressed:nil];
-    [self.weekAnalysisView.headView lab1ReloadText:singleStr];
+    [self.weekAnalysisView.headView lab1ReloadText:[pickerArray objectAtIndex:currentIndex]];
 }
+
 -(void)pickerViewPressedCancle{
     [self btnBackPressed:nil];
 }

@@ -63,8 +63,11 @@
     
     NSMutableArray *tipsArray;
     XKRWRecordEntity4_0 *recordEntity;
+    // 摄入卡路里
     NSInteger intakeCalorie;
+    // 消耗卡路里
     NSInteger expendCalorie;
+    // 改正习惯
     NSInteger currentHabit;
     
     UIButton  *btnBackBounds;
@@ -73,8 +76,9 @@
     
     // 是不是今天的方案
     BOOL isTodaysPlan;
-    // 历史方案是否可补记
-    BOOL isCanRevisionRecord;
+
+    
+    RevisionType revisionType ;
 }
 
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
@@ -103,20 +107,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // judge for is today's record or history,is the history record can be changed.
     NSDate *todayDate = [NSDate today];
     if (!self.recordDate || [_recordDate compare:todayDate] == NSOrderedSame ) {
         _recordDate = [NSDate today];
         isTodaysPlan = YES;
-        
+        revisionType = XKRWNotNeedRevision;
     } else {
         isTodaysPlan = NO;
         if ([_recordDate compare:[todayDate offsetDay:-1]] == NSOrderedSame || [_recordDate compare:[todayDate offsetDay:-2]] == NSOrderedSame) {
-            isCanRevisionRecord = YES;
-            
+            revisionType = XKRWCanRevision;
         } else {
-            isCanRevisionRecord = NO;
+            revisionType = XKRWCanNotRevision;
         }
     }
     
@@ -142,7 +144,6 @@
 #pragma mark - data
 
 - (void)initData {
-    
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView:nil];
     [self getTipsData];
@@ -150,7 +151,7 @@
 }
 
 - (void)getTipsData {
-    tipsArray = [[XKRWTipsManage shareInstance ] TipsInfoWithUseSituation];
+    tipsArray = [[XKRWTipsManage shareInstance ] TipsInfoWithUseSituationwithRecordDate:_recordDate];
     
     [planTableView reloadData];
 }
@@ -270,7 +271,7 @@
     foodAndSportSearchBar.showsScopeBar = true;
     
     [foodAndSportSearchBar setImage:[UIImage imageNamed:@"voice"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
-    foodAndSportSearchBar.placeholder = @"查询食物和运动" ;
+    foodAndSportSearchBar.placeholder = @"查询食物和运动";
     searchDisplayCtrl = [[KMSearchDisplayController alloc] initWithSearchBar:foodAndSportSearchBar contentsController:self];
     searchDisplayCtrl.delegate = self ;
     
@@ -323,7 +324,7 @@
     
     _recordAndTargetView
     = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordAndTargetView");
-    _recordAndTargetView.frame = CGRectMake(0, 64, planHeaderView.width, 30);
+    _recordAndTargetView.frame = CGRectMake(0, 64, planHeaderView.width, 59);
     _recordAndTargetView.backgroundColor = [UIColor whiteColor];
     _recordAndTargetView.dayLabel.layer.masksToBounds = YES;
     _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
@@ -335,16 +336,16 @@
     _recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
     _recordAndTargetView.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)_recordDate.day];
     _recordAndTargetView.monthLabel.text = [NSString stringWithFormat:@"%ld月",(long)_recordDate.month];
-    
+    [_recordAndTargetView.entryThinPlanButton addTarget:self action:@selector(entryTHinPlayButton:) forControlEvents:UIControlEventTouchUpInside];
     if (isTodaysPlan) {
         _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
         _recordAndTargetView.planTimeLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
-        _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWUserService sharedService] getCurrentWeight]/1000.f];
+        _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
         
     } else {
         _recordAndTargetView.targetWeightLabel.text = @"";
         _recordAndTargetView.planTimeLabel.text = @"";
-        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",[[XKRWPlanService shareService] getHistoryWeightWithDate:_recordDate]];
+        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
     }
     
     [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -359,7 +360,7 @@
     
     _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, 171 * XKAppHeight / 480.0)];
     [_planEnergyView.eatEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] || !isTodaysPlan) ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
-    [_planEnergyView.sportEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] || !isTodaysPlan )? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
+    [_planEnergyView.sportEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] || !isTodaysPlan)? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     [_planEnergyView.habitEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType] || !isTodaysPlan) ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     _planEnergyView.delegate = self;
     [planHeaderView addSubview:_planEnergyView];
@@ -430,6 +431,12 @@
     [self.navigationController pushViewController:calendar animated:YES];
 }
 
+- (void)entryTHinPlayButton:(UIButton *)button {
+    XKRWThinBodyAssess_5_3VC *thinBodyVC = [[XKRWThinBodyAssess_5_3VC alloc] initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
+    thinBodyVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:thinBodyVC animated:YES];
+}
+
 #pragma mark - XKRWPlanEnergyViewDelegate
 
 - (void)energyCircleViewTitleClicked:(NSString *)title {
@@ -453,6 +460,13 @@
 
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
     CGFloat positionX ;
+    if (XKAppWidth < 375) {
+        [UIView animateWithDuration:0.25 animations:^{
+            self.view.frame = CGRectMake(0, -64, XKAppWidth, XKAppHeight);
+        }];
+    }
+
+    
     if (index == 1) {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];
         positionX = energyCircleView.eatEnergyCircle.center.x;
@@ -481,6 +495,7 @@
     popView.positionX = postitonX;
     popView.type = index;
     popView.vc = self;
+    popView.revisionType = revisionType;
     if (_recordDate == nil) {
         popView.date = [NSDate date];
     }else{

@@ -17,7 +17,6 @@
     if (self) {
         // Initialization code
         self.selectionStyle = UITableViewCellSelectionStyleGray;
-//        self.contentView.backgroundColor = [UIColor colorFromHexString:@"##FEF7F2"];
         self.textLabel.textColor = [UIColor colorFromHexString:@"#333333"];
         //右边的图片
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -25,9 +24,6 @@
         [btn setFrame:CGRectMake(XKAppWidth-44.f, 0.f, 44.f, 44.f)];
         [btn setUserInteractionEnabled:NO];
         [self.contentView addSubview:btn];
-        
-//        XKRWSepLine *sepLine = [[XKRWSepLine alloc] initWithFrame:CGRectMake(0.f, self.frame.size.height-1.f, self.frame.size.width, 1.f)];
-        
         UIView *sep_line = [[UIView alloc] initWithFrame:CGRectMake(15.f, 44-0.5f, XKAppWidth-15.f, .5f)];
         [sep_line setBackgroundColor:[UIColor colorFromHexString:@"#cccccc"]];
         [self.contentView addSubview:sep_line];

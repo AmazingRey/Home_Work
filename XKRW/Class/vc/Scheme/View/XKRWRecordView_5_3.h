@@ -66,5 +66,6 @@
 @property (strong ,nonatomic) UIImageView *shadowImageView;
 @property (strong ,nonatomic) NSDate  *date;
 @property (strong ,nonatomic) UIViewController *vc;
-
+//@property (assign,nonatomic) BOOL isCanRevisionRecord;
+@property (assign,nonatomic) RevisionType revisionType;
 @end

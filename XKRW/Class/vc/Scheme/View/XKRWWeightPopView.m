@@ -136,6 +136,7 @@
         _oldRecord = oldRecord;
     }
     [self makeEntityConvertToDicall];
+    [self showCurrentText];
 }
 
 -(void)makeEntityConvertToDicall{
@@ -239,9 +240,15 @@
 }
 
 -(void)showCurrentText{
-    CGFloat str = [_dicAll[_selectDateStr][[self getCurrentType:_currentIndex]] floatValue];
-    
-    _textField.text = str == 0 ? @"" : [NSString stringWithFormat:@"%.02f",str];
+    dispatch_queue_t TextQueue = dispatch_queue_create("TextQueue", NULL);
+    dispatch_async(TextQueue, ^{
+        CGFloat str = [_dicAll[_selectDateStr][[self getCurrentType:_currentIndex]] floatValue];
+        NSString *txt = str == 0 ? @"" : [NSString stringWithFormat:@"%.01f",str];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _textField.text = txt;
+        });
+    });
+    dispatch_release(TextQueue);
 }
 
 -(NSString *)getCurrentType:(NSNumber *)indexNum{

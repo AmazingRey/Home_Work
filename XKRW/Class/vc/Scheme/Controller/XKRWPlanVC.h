@@ -9,7 +9,8 @@
 #import "XKRWBaseVC.h"
 
 @interface XKRWPlanVC : XKRWBaseVC
-
+// transfer calendar date 
 @property (nonatomic, strong) NSDate *recordDate;
+
 
 @end

@@ -8,7 +8,7 @@
 
 @protocol XKRWStatisticAnalysisPickerViewDelegate <NSObject>
 @optional
--(void)makeAnalysisPickerViewAppear;
+-(void)makeAnalysisPickerViewAppear:(NSInteger)index;
 @end
 
 #import <UIKit/UIKit.h>
@@ -39,6 +39,8 @@
 @property (strong, nonatomic) UIButton *btnDown;
 @property (strong, nonatomic) UIButton *btnQuestion;
 @property (assign, nonatomic) StatisticType statisType;
+
+@property (assign, nonatomic) NSInteger currentIndex;
 
 - (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type;
 -(void)lab1ReloadText:(NSString *)week;

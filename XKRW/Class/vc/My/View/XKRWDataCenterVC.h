@@ -13,13 +13,6 @@ typedef NS_ENUM(NSInteger, DateType) {
     thirtyDay,
 };
 
-typedef NS_ENUM(NSInteger, LifeStyleType) {
-    diet = 1,
-    sport,
-    habit,
-    weight
-};
-
 @interface XKRWDataCenterVC : XKRWBaseVC
 {
     UINib *weightNib;

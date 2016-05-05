@@ -28,6 +28,8 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
         
         self.loadDataAndReload()
         scrollView.contentOffset = CGPointZero
+        
+        self.navigationController!.setNavigationBarHidden(false, animated: animated)
     }
     
     func loadDataAndReload(){

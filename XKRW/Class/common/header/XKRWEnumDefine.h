@@ -405,6 +405,12 @@ typedef NS_ENUM(NSInteger, XKRWRecordType) {
     XKRWRecordTypeScheme = 100
 };
 
+typedef NS_ENUM(NSInteger ,RevisionType){
+    XKRWNotNeedRevision = 0,   //不需要补记
+    XKRWCanRevision,           //可以补记
+    XKRWCanNotRevision         //不能补记
+};
+
 /**
  *  查看每日分析枚举
  */
@@ -432,4 +438,12 @@ typedef NS_ENUM(NSInteger, StatisticType) {
      */
     statisticTotal
 };
+
+typedef NS_ENUM(NSInteger, LifeStyleType) {
+    diet = 1,
+    sport,
+    habit,
+    weight
+};
+
 #endif

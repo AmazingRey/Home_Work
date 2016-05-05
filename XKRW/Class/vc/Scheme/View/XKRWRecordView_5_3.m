@@ -31,6 +31,8 @@
 @interface XKRWRecordView_5_3 () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate>
 {
     UITableView *recordTableView;
+    UIImageView *schemePastImageView ;
+    
     UITableView *recommendedTableView;
     XKRWHabitListView *habitView;
     NSArray  *recordTypeTitleArray;
@@ -79,9 +81,7 @@
     recommendedTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     recommendedTableView.dataSource = self;
     recommendedTableView.backgroundColor = XK_BACKGROUND_COLOR;
-    
     [recommendedTableView registerNib:[UINib nibWithNibName:@"XKRWRecommandedCell_5_3" bundle:nil] forCellReuseIdentifier:@"recommendedCell"];
-    
     [_scrollView addSubview:recordTableView];
     [_scrollView addSubview:recommendedTableView];
     
@@ -92,6 +92,8 @@
     for (XKRWHabbitEntity *habitEntity in _entity.habitArray) {
         currectHabitCount += habitEntity.situation;
     }
+    
+    _habitLabel.text = [NSString stringWithFormat:@"改正了%ld个不良习惯",(long)currectHabitCount];
     
     habitView.changeHabit = ^(NSInteger habitIndex,BOOL abool) {
         
@@ -112,10 +114,37 @@
     
     _rightButton.layer.cornerRadius = 5;
     _rightButton.layer.borderWidth = 1;
-    _rightButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    if (_revisionType == XKRWNotNeedRevision) {
+        _rightButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    }else if (_revisionType == XKRWCanRevision){
+        _rightButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+         [_rightButton setTitle:@"补记" forState:UIControlStateNormal];
+    }else{
+        _rightButton.layer.borderColor = colorSecondary_666666.CGColor;
+        [_rightButton setTitleColor:colorSecondary_666666 forState:UIControlStateNormal];
+        [_rightButton setTitle:@"不能补记" forState:UIControlStateNormal];
+        _rightButton.enabled = NO;
+    }
     
+    schemePastImageView = [[UIImageView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, _scrollView.width, _scrollView.height)];
+    
+    UILabel *schemePastLabel = [[UILabel alloc]initWithFrame:CGRectMake((_scrollView.width - 200)/2 , (_scrollView.height - 30)/2, 200, 30)];
+    schemePastLabel.font = XKDefaultFontWithSize(14);
+    schemePastLabel.textColor = colorSecondary_666666;
+    schemePastLabel.textAlignment = NSTextAlignmentCenter;
+    [schemePastImageView addSubview:schemePastLabel];
+    if (_type == energyTypeEat) {
+        schemePastImageView.image = [UIImage imageNamed:@"schemePast"];
+        schemePastLabel.text = @"食谱已过期";
+    }else if(_type == energyTypeSport) {
+        schemePastImageView.image = [UIImage imageNamed:@"sportSchemePast"];
+        schemePastLabel.text = @"运动已过期";
+    }
+    schemePastImageView.hidden = YES;
+    
+    
+    [_scrollView addSubview:schemePastImageView];
 }
-
 
 -(void)setsubViewUI {
     _labSeperate.hidden = YES;
@@ -125,7 +154,6 @@
     _leftButton.hidden = YES;
     _centerbutton.hidden = YES;
     _rightButton.hidden = YES;
-    
     switch (_type) {
         case energyTypeEat:
             _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
@@ -138,7 +166,6 @@
             _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
             _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
             _labSeperate.hidden = NO;
-            _centerbutton.hidden = NO;
              habitView.hidden = YES;
             break;
         case energyTypeHabit:
@@ -174,7 +201,6 @@
     }
 }
 
-
 - (void) setFoodDataToUI {
     //每日饮食推荐值
     CGFloat totalFoodCalories = [XKRWAlgolHelper dailyIntakeRecomEnergy];
@@ -200,11 +226,12 @@
     if (schemeDetail != nil) {
         XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
         _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐食谱\n%ldKcal",(long)entity.calorie];
-        [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
     }else{
         _recommendedTypeLabel.text = @"推荐食谱";
-        [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
+
     }
+    
+    [self dealCenterButtonShowAndAction];
     
     CGFloat recordFoodColories = [[breakDetail objectForKey:@"calorie"] floatValue] +[[LunchDetail objectForKey:@"calorie"] floatValue] + [[dinnerDetail objectForKey:@"calorie"] floatValue] +[[mealDetail objectForKey:@"calorie"] floatValue] ;
     
@@ -221,7 +248,6 @@
 
 - (void) setSportDataToUI{
     //每日运动消耗推荐值
-
     CGFloat totalSportCalories = [XKRWAlgolHelper dailyConsumeSportEnergy];
      NSDictionary *sportDetail =  [[XKRWRecordService4_0 sharedService] getRecordTotalCalorieOfDay:_date andRecordType:eSport];
     recordTypeTitleArray = @[@"运动"];
@@ -234,12 +260,12 @@
     if (schemeDetail != nil) {
         XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
         _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐运动\n%ldKcal",(long)entity.calorie];
-        [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
     }else{
         _recommendedTypeLabel.text = @"推荐运动";
-        [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
     }
     
+    [self dealCenterButtonShowAndAction];
+
     CGFloat recordSportColories = [[sportDetail objectForKey:@"calorie"] floatValue] ;
     if (recordSportColories > 0) {
         _recordTypeLabel.text = [NSString stringWithFormat:@"记录运动\n%.0fKcal",recordSportColories];
@@ -248,7 +274,6 @@
     }
     [recordTableView reloadData];
     [recommendedTableView reloadData];
-
 }
 
 
@@ -418,7 +443,7 @@
         
         UILabel *calorieLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth-150-15-15, 0, 150, 44)];
         calorieLabel.font = XKDefaultFontWithSize(15.f);
-        calorieLabel.textColor = colorSecondary_333333;
+       
         calorieLabel.textAlignment = NSTextAlignmentRight;
         [headerView addSubview:calorieLabel];
         
@@ -426,6 +451,12 @@
         CGFloat recommendedCalorie = [[recordArray objectAtIndex:section] floatValue];
         //当前已经记录的卡路里
         CGFloat sumCalorie = [[[detailRecordArray objectAtIndex:section] objectForKey:@"calorie"] floatValue];
+        
+        if (_type == energyTypeEat && recommendedCalorie < sumCalorie) {
+            calorieLabel.textColor = XKWarningColorDeep;
+        }else{
+             calorieLabel.textColor = colorSecondary_333333;
+        }
         
         calorieLabel.text =[NSString stringWithFormat:@"%.0f/%.0f",sumCalorie,recommendedCalorie];
         
@@ -453,12 +484,32 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if(scrollView.tag == 1005){
         if (scrollView.contentOffset.x >= XKAppWidth) {
+            isRecommended = YES;
             _recordTypeLabel.textColor = XK_TEXT_COLOR;
             _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;
+            if (_type == energyTypeEat) {
+                _leftButton.hidden = YES;
+                _rightButton.hidden = YES;
+                [self dealCenterButtonShowAndAction];
+            }else if (_type == energyTypeSport){
+                _leftButton.hidden = YES;
+                _rightButton.hidden = YES;
+                [self dealCenterButtonShowAndAction];
+            }
         }else{
+            isRecommended = NO;
             _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
             _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
+            if (_type == energyTypeEat) {
+                _leftButton.hidden = NO;
+                _rightButton.hidden = NO;
+            }else if (_type == energyTypeSport) {
+                _leftButton.hidden = YES;
+                _rightButton.hidden = YES;
+            }
         }
+        
+        [self dealCenterButtonShowAndAction];
     }else{
         CGFloat sectionHeaderHeight = 59;
         if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
@@ -469,6 +520,55 @@
     }
 }
 
+
+- (void)dealCenterButtonShowAndAction
+{
+    _centerbutton.hidden =  NO;
+    if (schemeDetail !=nil) {
+        if (_type == energyTypeEat && isRecommended == NO){
+            _centerbutton.hidden = YES;
+        }else{
+            [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
+            if (_revisionType == XKRWCanNotRevision) {
+                _centerbutton.layer.borderColor = colorSecondary_666666.CGColor;
+                [_centerbutton setTitleColor:colorSecondary_666666 forState:UIControlStateNormal];
+                _centerbutton.enabled = NO;
+                schemePastImageView.hidden = NO;
+            }
+        }
+        
+    }else{
+        if (_revisionType == XKRWNotNeedRevision) {
+            if( _type == energyTypeSport && isRecommended == NO){
+                [_centerbutton setTitle:@"记录运动" forState:UIControlStateNormal];
+            }else if (_type == energyTypeEat && isRecommended == NO){
+                _centerbutton.hidden = YES;
+            }
+            else if (_type == energyTypeSport || _type == energyTypeEat  ){
+                
+                [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
+            }
+        }else if (_revisionType == XKRWCanRevision){
+            if (_type == energyTypeEat && isRecommended == NO){
+                _centerbutton.hidden = YES;
+            }else{
+                [_centerbutton setTitle:@"补记" forState:UIControlStateNormal];
+                schemePastImageView.hidden = NO;
+            }
+        }
+        else{
+            if (_type == energyTypeEat && isRecommended == NO){
+                _centerbutton.hidden = YES;
+            }else{
+                [_centerbutton setTitle:@"不能补记" forState:UIControlStateNormal];
+                _centerbutton.enabled = NO;
+                _centerbutton.layer.borderColor = colorSecondary_666666.CGColor;
+                [_centerbutton setTitleColor:colorSecondary_666666 forState:UIControlStateNormal];
+                schemePastImageView.hidden = NO;
+            }
+        }
+    }
+}
 
 
 #pragma --mark Action
@@ -505,15 +605,12 @@
     _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
     if (_type == energyTypeEat) {
         _leftButton.hidden = NO;
-        _centerbutton.hidden = YES;
         _rightButton.hidden = NO;
     }else if (_type == energyTypeSport){
         _leftButton.hidden = YES;
-        _centerbutton.hidden = NO;
-        [_centerbutton setTitle:@"记录运动" forState:UIControlStateNormal];
         _rightButton.hidden = YES;
     }
-    
+    [self dealCenterButtonShowAndAction];
     [UIView animateWithDuration:0.5 animations:^{
         _scrollView.contentOffset = CGPointMake(0, 0);
     }];
@@ -528,24 +625,15 @@
     
     if (_type == energyTypeEat) {
         _leftButton.hidden = YES;
-        _centerbutton.hidden = NO;
+
         
-        if (schemeDetail !=nil) {
-            [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
-            
-        }else{
-            [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
-        }
+        [self dealCenterButtonShowAndAction];
         _rightButton.hidden = YES;
     }else if (_type == energyTypeSport){
         _leftButton.hidden = YES;
-        _centerbutton.hidden = NO;
+  
         
-        if (schemeDetail !=nil) {
-            [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
-        }else{
-            [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
-        }
+       [self dealCenterButtonShowAndAction];
         _rightButton.hidden = YES;
     }
     [UIView animateWithDuration:0.5 animations:^{
@@ -553,6 +641,7 @@
     }];
     
 }
+
 
 - (IBAction)actMore:(id)sender {
     if ([self.delegate respondsToSelector:@selector(addMoreView)]) {

@@ -19,7 +19,7 @@
     NSMutableArray *tempArray;
     NSString *maxValue;     //最大值
     NSString *minValue;     //最小值
-//    CGFloat  lineHighest;
+    UILabel *promptLabel;   //提示Label
 }
 
 @end
@@ -37,10 +37,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//     lineHighest = XKAppWidth - LABELHEIGHT -2*20 ;
     [self initData];
     [self initView];
-    // Do any additional setup after loading the view.
+    [self AdjustSurroundTableViewUI];
 }
 
 #pragma --mark UI
@@ -91,7 +90,32 @@
     XKLog(@"%@",surroundTableView);
     [self.view addSubview:surroundTableView];
     
+    
+    promptLabel = [[UILabel alloc] initWithFrame:CGRectMake((surroundTableView.height -200)/2, (surroundTableView.width -20)/2, 200, 20)];
+    promptLabel.transform = CGAffineTransformMakeRotation(M_PI_2);
+    promptLabel.textAlignment = NSTextAlignmentCenter;
+    promptLabel.textColor = colorSecondary_666666;
+    promptLabel.text = @"还没有记录数据哦!";
+    promptLabel.font = XKDefaultFontWithSize(14.f);
+    promptLabel.hidden  = YES;
+    [surroundTableView addSubview:promptLabel];
+
 }
+
+/**
+ *  调整UI
+ */
+- (void)AdjustSurroundTableViewUI {
+    if (tempArray.count == 0) {
+        promptLabel.hidden = NO;
+    }else{
+        promptLabel.hidden = YES;
+    }
+    if (tempArray.count > 0) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:tempArray.count - 1 inSection:0];
+        [surroundTableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionBottom];
+    }
+ }
 
 #pragma --mark Data
 - (void) initData {
@@ -121,7 +145,8 @@
     }
     
     [surroundTableView reloadData];
-}
+    
+   }
 
 
 #pragma  --mark Action
@@ -160,8 +185,16 @@
         default:
             break;
     }
+    
     [self initData];
+    
+   
+    [self AdjustSurroundTableViewUI];
+
 }
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -229,6 +262,8 @@
 
 }
 
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 64;
@@ -267,11 +302,10 @@
     return array;
 }
 
-#pragma --mark drawAction
 
+#pragma --mark drawAction
 - (void)drawImageViewInCell:(NSString *)currentValue And:(NSIndexPath *) indexPath andCell:(UITableViewCell *)cell
 {
-
     CGPoint prevPoint;
     CGPoint currentPoint;
     CGPoint nextPoint;

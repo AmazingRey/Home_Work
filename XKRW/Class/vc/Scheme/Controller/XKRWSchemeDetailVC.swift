@@ -25,7 +25,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
     var selectionView: KMPopSelectionView?
     
     // MARK: - System's function
-
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,7 +34,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         
         MobClick.event("clk_DietDetail")
@@ -42,25 +42,15 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         self.addNaviBarBackButton()
         self.edgesForExtendedLayout = UIRectEdge.Top
         
-        self.tableView = UITableView(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT), style: UITableViewStyle.Plain)
+        self.tableView = UITableView(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT - 64), style: UITableViewStyle.Plain)
         self.tableView.backgroundColor = XK_BACKGROUND_COLOR
         self.tableView.separatorStyle = .None
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
-        let width = ("换一组" as NSString).boundingRectWithSize(CGSizeMake(CGFloat.max, CGFloat.max),
-            options: NSStringDrawingOptions.UsesLineFragmentOrigin,
-            attributes: [NSFontAttributeName: UIFont.systemFontOfSize(15)],
-            context: nil).size.width
-        
-        let rightNaviButton = UIButton(frame: CGRectMake(0, 0, width, 50))
-        rightNaviButton.setTitle("换一组", forState: UIControlState.Normal)
-        rightNaviButton.titleLabel?.font = UIFont.systemFontOfSize(15)
-        rightNaviButton.addTarget(self, action: #selector(XKRWBaseVC.doClickNaviBarRightButton(_:)), forControlEvents: .TouchUpInside)
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviButton)
-        
+        self.addNaviBarRightButtonWithText("换一组", action: #selector(XKRWBaseVC.doClickNaviBarRightButton(_:)))
+    
         if self.schemeEntity?.schemeType == .Sport {
             // sport
             self.title = self.schemeEntity!.schemeName
@@ -87,7 +77,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
             
             self.tableView.registerNib(UINib(nibName: "SDChangeSizeCell", bundle: nil), forCellReuseIdentifier: "changeCell")
             self.tableView.registerNib(UINib(nibName: "SDMealSchemeCell", bundle: nil), forCellReuseIdentifier: "mealCell")
-//            self.mealComputeCell = self.tableView.dequeueReusableCellWithIdentifier("mealCell") as! SDMealSchemeCell
+            
         }
     }
     
@@ -105,7 +95,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
             XKRWUserService.sharedService().setShouldShowTips(false, inVC: self, withFlag: 1)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -119,7 +109,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
         if self.schemeEntity?.schemeType != .Sport {
-            return 2
+            return 1
         } else {
             return 1
         }
@@ -129,7 +119,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         
         if self.schemeEntity?.schemeType != .Sport {
             
-            if section == 1 {
+            if section == 0 {
                 return self.mealDescriptionHeader.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).height
             }
         }
@@ -140,7 +130,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         
         if self.schemeEntity?.schemeType != .Sport {
             
-            if section == 1 {
+            if section == 0 {
                 return self.mealDescriptionHeader
             }
         }
@@ -157,13 +147,8 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
             
         } else {
             
-            if section == 0 {
-                return 1
-            } else {
-                
-                if self.schemeEntity != nil {
-                    return self.schemeEntity!.foodCategories.count
-                }
+            if self.schemeEntity != nil {
+                return self.schemeEntity!.foodCategories.count
             }
         }
         return 0
@@ -184,20 +169,14 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
             }
             
         } else {
-            // meal
-            if indexPath.section == 0 {
-                return 44
+            
+            if let cell = self.tableView.dequeueReusableCellWithIdentifier("mealCell") as? SDMealSchemeCell {
                 
+                cell.calculateHeightWithEntity(self.schemeEntity!.foodCategories[indexPath.row])
+                print(cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).height + 1)
+                return cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).height + 1
             } else {
-                
-                if let cell = self.tableView.dequeueReusableCellWithIdentifier("mealCell") as? SDMealSchemeCell {
-                    
-                    cell.calculateHeightWithEntity(self.schemeEntity!.foodCategories[indexPath.row])
-                    print(cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).height + 1)
-                    return cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingExpandedSize).height + 1
-                } else {
-                    return 366
-                }
+                return 366
             }
         }
     }
@@ -223,115 +202,38 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
             }
         } else {
             // meal
-            if indexPath.section == 0 {
+            
+            if let cell = tableView.dequeueReusableCellWithIdentifier("mealCell") as? SDMealSchemeCell {
                 
-                if let cell = tableView.dequeueReusableCellWithIdentifier("changeCell") as? SDChangeSizeCell {
-                    cell.setContentWithEntity(self.schemeEntity!)
+                let foodCategoy = self.schemeEntity!.foodCategories[indexPath.row]
+                
+                cell.setContentWithEntity(foodCategoy, indexPath: indexPath)
+                
+                weak var weakSelf = self
+                
+                cell.clickToBanFoodsAction = {
                     
-                    return cell
-                }
-            } else {
-                if let cell = tableView.dequeueReusableCellWithIdentifier("mealCell") as? SDMealSchemeCell {
+                    MobClick.event("clk_forbid")
                     
-                    let foodCategoy = self.schemeEntity!.foodCategories[indexPath.row]
+                    let vc = XKRWTabooFoodVC(nibName: "XKRWTabooFoodVC", bundle: nil)
+                    let stringArray = foodCategoy.banFoods.componentsSeparatedByString(",")
                     
-                    cell.setContentWithEntity(foodCategoy, indexPath: indexPath)
-                    
-                    weak var weakSelf = self
-                    
-                    cell.clickToBanFoodsAction = {
-                        
-                        MobClick.event("clk_forbid")
-                        
-                        let vc = XKRWTabooFoodVC(nibName: "XKRWTabooFoodVC", bundle: nil)
-                        let stringArray = foodCategoy.banFoods.componentsSeparatedByString(",")
-                        
-                        var ids = [Int]()
-                        for temp in stringArray {
-                            ids.append(Int(temp)!)
-                        }
-                        vc.tabooFoodId = ids
-                        
-                        weakSelf?.navigationController?.pushViewController(vc, animated: true)
+                    var ids = [Int]()
+                    for temp in stringArray {
+                        ids.append(Int(temp)!)
                     }
-                    cell.clickToDescriptionAction = {
-                        let vc = XKRWHowToUserSchemeVC(nibName: "XKRWHowToUserSchemeVC", bundle: nil)
-                        weakSelf?.navigationController?.pushViewController(vc, animated: true)
-                    }
-                    return cell
+                    vc.tabooFoodId = ids
+                    
+                    weakSelf?.navigationController?.pushViewController(vc, animated: true)
                 }
+                cell.clickToDescriptionAction = {
+                    let vc = XKRWHowToUserSchemeVC(nibName: "XKRWHowToUserSchemeVC", bundle: nil)
+                    weakSelf?.navigationController?.pushViewController(vc, animated: true)
+                }
+                return cell
             }
         }
         return UITableViewCell()
-    }
-    
-    // MARK: Action
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if self.schemeEntity?.schemeType != .Sport {
-            
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            
-            if indexPath.section == 0 && indexPath.row == 0 {
-                
-                if self.selectionView == nil {
-                    
-                    var titles = [String]()
-                    
-                    var ratio = 0.0
-                    switch self.schemeEntity!.schemeType {
-                    case .Breakfast:
-                        ratio = 0.3
-                    case .Lunch:
-                        ratio = 0.5
-                    case .Dinner:
-                        ratio = 0.2
-                        
-                    default:
-                        break
-                    }
-                    let LMax = Int(2200 * ratio)
-                    let LMin = Int(1800 * ratio)
-                    let MMin = Int(1400 * ratio)
-                    let SMin = Int(1200 * ratio)
-                    
-                    let Large = "大份（\(LMin)-\(LMax)kcal）"
-                    let Middle = "中份（\(MMin)-\(LMin)kcal）"
-                    let Small = "小份（\(SMin)-\(MMin)kcal）"
-                    
-                    switch XKRWAlgolHelper.getDailyIntakeSizeNumber() {
-                    case 1:
-                        titles = [Large, Middle, Small]
-                    case 2:
-                        titles = [Middle, Small]
-                    case 3:
-                        titles = [Small]
-                    default:
-                        titles = [Small]
-                    }
-                    
-                    selectionView = KMPopSelectionView(frame: CGRectMake(0, 108, UI_SCREEN_WIDTH, 0), type: .Default, titles: titles, options: nil)
-                    selectionView!.setCellTextAlignment(.Center)
-                    selectionView!.setSelectedImage(UIImage(named: "list_select"), unselectedImage: nil)
-                    
-                    selectionView!.transparentButton = UIButton(frame: CGRectMake(0, 108, UI_SCREEN_WIDTH, self.view.height - 44))
-                    selectionView!.transparentButton.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.4)
-                    
-                    self.selectionView!.delegate = self
-                }
-                
-                if self.selectionView!.isShown {
-                    self.selectionView!.hide()
-                } else {
-                    let selectedIndex = self.schemeEntity!.size - XKRWAlgolHelper.getDailyIntakeSizeNumber()
-                    self.selectionView?.setCellSelectedWithIndex(selectedIndex)
-                    selectionView!.doAnimationToPoint(CGPointMake(0, 108.4), inView: self.view, fromDirection: KMDirection.Up)
-                }
-            }
-        } else {
-            
-        }
     }
     
     // MARK: - Actions
@@ -361,7 +263,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         let tipView = KMHeaderTips(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 64), text: tipString, type: .Default)
         self.view.addSubview(tipView)
         
-        tipView.startAnimationWithStartOrigin(CGPointMake(0, -tipView.height + 64), endOrigin: CGPointMake(0, 64))
+        tipView.startAnimationWithStartOrigin(CGPointMake(0, -tipView.height + 64), endOrigin: CGPointMake(0, 0))
     }
     
     //MARK: - Networking
@@ -437,15 +339,15 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         })
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

@@ -115,9 +115,12 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5O4-Bo-KIS">
                             <rect key="frame" x="0.0" y="0.0" width="55" height="44"/>
+                            <state key="normal">
+                                <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </state>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="2GB-G1-zbv" firstAttribute="top" secondItem="ycR-KM-fjU" secondAttribute="top" constant="4" id="45C-zh-4en"/>
                         <constraint firstItem="30p-27-FR4" firstAttribute="centerY" secondItem="2GB-G1-zbv" secondAttribute="centerY" id="Amr-sc-dMk"/>
@@ -154,24 +157,47 @@
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="94L-BL-St4">
+                    <rect key="frame" x="0.0" y="55" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="Xth-RJ-l26"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="365-Yb-eMG">
+                    <rect key="frame" x="78" y="0.0" width="219" height="56"/>
+                </button>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Lhr-Op-FVk" firstAttribute="leading" secondItem="365-Yb-eMG" secondAttribute="trailing" constant="8" id="35W-IX-F1t"/>
                 <constraint firstItem="4PW-2M-oai" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="38D-eb-7BC"/>
+                <constraint firstAttribute="bottom" secondItem="94L-BL-St4" secondAttribute="bottom" id="48d-cK-OyJ"/>
                 <constraint firstItem="ycR-KM-fjU" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="98Q-bx-Mz2"/>
                 <constraint firstItem="Lhr-Op-FVk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="6" id="B8y-FM-num"/>
                 <constraint firstItem="NST-yd-u8z" firstAttribute="top" secondItem="4PW-2M-oai" secondAttribute="bottom" constant="2" id="Hrk-CM-mW7"/>
+                <constraint firstItem="365-Yb-eMG" firstAttribute="leading" secondItem="ycR-KM-fjU" secondAttribute="trailing" constant="8" id="I3f-D1-bCi"/>
+                <constraint firstItem="94L-BL-St4" firstAttribute="top" secondItem="NST-yd-u8z" secondAttribute="bottom" constant="3" id="OxR-2n-k3u"/>
                 <constraint firstItem="ycR-KM-fjU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Vn7-Sq-A1b"/>
                 <constraint firstItem="4PW-2M-oai" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="crz-YS-tnx"/>
+                <constraint firstItem="94L-BL-St4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fgJ-z7-ydk"/>
+                <constraint firstItem="365-Yb-eMG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="i5o-ee-6Nf"/>
+                <constraint firstAttribute="trailing" secondItem="94L-BL-St4" secondAttribute="trailing" id="sSQ-Dq-uXx"/>
+                <constraint firstAttribute="bottom" secondItem="365-Yb-eMG" secondAttribute="bottom" id="tRD-tY-FzM"/>
                 <constraint firstItem="NST-yd-u8z" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uTZ-EO-XKz"/>
                 <constraint firstAttribute="trailing" secondItem="Lhr-Op-FVk" secondAttribute="trailing" constant="15" id="vaI-Lo-lm4"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="48d-cK-OyJ"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="calendarButton" destination="5O4-Bo-KIS" id="dXf-RS-gAV"/>
                 <outlet property="currentWeightLabel" destination="cPe-v9-Qni" id="Fqx-Li-kZN"/>
                 <outlet property="dayLabel" destination="TyV-f3-T67" id="vss-qm-PWC"/>
+                <outlet property="entryThinPlanButton" destination="365-Yb-eMG" id="O8D-c3-0QU"/>
                 <outlet property="monthLabel" destination="2GB-G1-zbv" id="aZk-87-SGU"/>
                 <outlet property="planTimeLabel" destination="NST-yd-u8z" id="zYa-qE-qEk"/>
                 <outlet property="targetWeightLabel" destination="4PW-2M-oai" id="8ru-zZ-xRd"/>

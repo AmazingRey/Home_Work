@@ -57,6 +57,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
             </subviews>
+            <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>

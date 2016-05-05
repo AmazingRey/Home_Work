@@ -8,7 +8,7 @@
 
 @protocol XKRWCustomPickerViewDelegate <NSObject>
 @optional
--(void)pickerViewPressedDone:(NSString *)singleStr;
+-(void)pickerViewPressedDone:(NSInteger)currentIndex;
 -(void)pickerViewPressedCancle;
 @end
 #import <UIKit/UIKit.h>
@@ -41,5 +41,8 @@
  *  key:组编号  value:组内容数组
  */
 @property (strong, nonatomic) NSDictionary *dicData;
+
+@property (copy, nonatomic)  NSString *currentStr;
+@property (assign, nonatomic)  NSInteger currentIndex;
 
 @end

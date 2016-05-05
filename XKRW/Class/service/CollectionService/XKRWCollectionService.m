@@ -9,6 +9,7 @@
 #import "XKRWCollectionService.h"
 #import "XKRWNeedLoginAgain.h"
 #import "XKRWUserService.h"
+#import "XKRWSportEntity.h"
 
 //收藏操作sql语句    等最后修改好之后还需要检查
 static NSString *updateCollectionSql = @"REPLACE INTO CollectionTable_5 ( uid, collect_type,original_id,collect_name, content_url, category_type, image_url, food_energy, date) VALUES ( :uid, :collect_type, :original_id,:collect_name, :content_url, :category_type, :image_url, :food_energy, :date)";
@@ -61,8 +62,32 @@ static XKRWCollectionService *sharedInstance = nil;
 #pragma - mark QUERY
 
 - (NSMutableArray *)queryCollectionWithType:(NSInteger)type{
+
     NSString *sql = [NSString stringWithFormat:@"SELECT * FROM CollectionTable_5 WHERE collect_type=%li ORDER BY date DESC",(long)type];
-    return [self query:sql];
+    NSArray *data =[self query:sql];
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:data.count];
+    
+    if (type == 1) {
+        for (int i = 0 ; i < data.count; i++) {
+            NSDictionary *temp = [data objectAtIndex:i];
+            XKRWFoodEntity *entity = [XKRWFoodEntity new];
+            entity.foodId = [temp[@"original_id"] integerValue];
+            entity.foodName = temp[@"collect_name"];
+            entity.foodLogo = temp[@"image_url"];
+            entity.foodEnergy = [temp[@"food_energy"] integerValue];
+            [mutableArray addObject:entity];
+        }
+    }else{
+         for (int i = 0 ; i < data.count; i++) {
+            NSDictionary *temp = [data objectAtIndex:i];
+             XKRWSportEntity *entity = [XKRWSportEntity new];
+             entity.sportId = [temp[@"original_id"] intValue];
+             entity.sportName = temp[@"collect_name"];
+             entity.sportPic = temp[@"image_url"];
+             [mutableArray addObject:entity];
+         }
+    }
+    return mutableArray;
 }
 
 -(BOOL)queryCollectionWithCollectType:(NSInteger)type andNid:(NSInteger)nid{

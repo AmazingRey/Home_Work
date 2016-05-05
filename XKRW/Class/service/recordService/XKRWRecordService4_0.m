@@ -747,6 +747,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     
     if (isSuccess) {
         entity.sync = 1;
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
     }
     return isSuccess;
 }
@@ -3432,7 +3433,60 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }
 }
 
+- (NSMutableDictionary *)getSchemeStatesOfDays:(NSInteger)num withType:(RecordType)type {
+    
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    NSDate *now = [NSDate date];
+    
+    NSMutableDictionary *returnValue = [NSMutableDictionary dictionary];
+    
+    for (NSInteger i = 1; i <= num; i++) {
+        NSString *date = [[now offsetDay:-i+1] stringWithFormat:@"yyyy-MM-dd"];
+        NSString *sql = nil;
+        
+        if (type == RecordTypeSport) {
+            sql = [NSString stringWithFormat:@"SELECT * FROM record_scheme WHERE uid = %ld AND date = '%@' AND type = 0 AND sync != -1", (long)uid, date];
+        } else {
+            sql = [NSString stringWithFormat:@"SELECT * FROM record_scheme WHERE uid = %ld AND date = '%@' AND type != 0 AND sync != -1", (long)uid, date];
+        }
+
+        NSArray *rst = [self query:sql];
+        
+        if (rst == nil || rst.count == 0) {
+            [returnValue setObject:@(0) forKey:date];
+            continue;
+        }
+        
+        int state = 1;
+        // if not record all meals, it begins with yellow stamp
+        if (type != RecordTypeSport) {
+            if (rst.count < 3) {
+                state = 3;
+            }
+        }
+        for (NSDictionary *temp in rst) {
+            
+            NSInteger recordValue = [temp[@"record_value"] integerValue];
+            
+            if (type == RecordTypeSport) {
+                if (recordValue == 1 || recordValue == 0) {
+                    state = 2;
+                    break;
+                } else if (recordValue == 3) {
+                    state = 3;
+                }
+            } else {
+                if (recordValue > 3) {
+                    state = 2;
+                    break;
+                } else if (recordValue == 1 || recordValue == 3 || recordValue == 0) {
+                    state = 3;
+                }
+            }
+        }
+        [returnValue setObject:@(state) forKey:date];
+    }
+    return returnValue;
+}
+
 @end
-
-
-

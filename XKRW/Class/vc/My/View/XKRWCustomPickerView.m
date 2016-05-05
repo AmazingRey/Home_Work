@@ -11,14 +11,12 @@
 @implementation XKRWCustomPickerView{
     UIToolbar *toolBar;
     UIPickerView *picker;
-    NSString *currentStr;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        currentStr = @"第一周";
         _leftBtnText = @"取消";
         _rightBtnText = @"确定";
         
@@ -47,7 +45,7 @@
     
     barButtonCancle.tintColor = [UIColor blackColor];
     
-    UIBarButtonItem *barTitle = [[UIBarButtonItem alloc] initWithTitle:currentStr
+    UIBarButtonItem *barTitle = [[UIBarButtonItem alloc] initWithTitle:@"选择周期"
                                                                         style:UIBarButtonItemStyleBordered
                                                                        target:self
                                                                        action:nil];
@@ -73,7 +71,7 @@
 
 - (void)doneClicked {
     if ([self.delegate respondsToSelector:@selector(pickerViewPressedDone:)]) {
-        [self.delegate pickerViewPressedDone:currentStr];
+        [self.delegate pickerViewPressedDone:_currentIndex];
     }
 }
 
@@ -117,9 +115,10 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    currentStr = [[_dicData objectForKey:[NSNumber numberWithInteger:component]] objectAtIndex:row];
+    _currentIndex = row;
+    _currentStr = [[_dicData objectForKey:[NSNumber numberWithInteger:component]] objectAtIndex:row];
     UILabel *lab = (UILabel *)[pickerView viewForRow:row forComponent:component];
-    currentStr = lab.text;
+    _currentStr = lab.text;
 }
 
 @end
