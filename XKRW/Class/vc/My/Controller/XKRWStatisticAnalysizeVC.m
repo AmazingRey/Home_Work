@@ -38,7 +38,7 @@
     [super viewDidLoad];
     self.title = @"统计分析";
     pickerArray = [NSMutableArray arrayWithObjects:@"第1周",@"第2周",@"第3周",@"第4周",@"第5周",@"第6周",@"第7周",@"第8周",@"第9周",@"第10周", nil];
-    [self addMasonryToLayout];
+    [self addMasonryLayout];
 }
 
 #pragma mark getter Method
@@ -119,17 +119,18 @@
 -(XKRWCustomPickerView *)pickView{
     if (!_pickView) {
         CGRect frame = CGRectMake(0, self.view.frame.size.height-200, XKAppWidth, 200);
-        _pickView = [[XKRWCustomPickerView alloc] initWithFrame:frame];
+        _pickView = [[XKRWCustomPickerView alloc] initWithFrame:frame withindex:pickerIndex];
         _pickView.backgroundColor = [UIColor whiteColor];
         _pickView.currentStr = [pickerArray objectAtIndex:pickerIndex];
         _pickView.opaque = YES;
         _pickView.delegate = self;
+        
     }
     return _pickView;
 }
 
 #pragma mark masonry Subviews
--(void)addMasonryToLayout{
+-(void)addMasonryLayout{
     [self.segmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.view.mas_top).offset(13);
         make.centerX.mas_equalTo(self.view.mas_centerX);
@@ -196,6 +197,7 @@
 #pragma mark XKRWCustomPickerViewDelegate
 -(void)pickerViewPressedDone:(NSInteger)currentIndex{
     [self btnBackPressed:nil];
+    self.weekAnalysisView.headView.currentIndex = currentIndex;
     [self.weekAnalysisView.headView lab1ReloadText:[pickerArray objectAtIndex:currentIndex]];
 }
 

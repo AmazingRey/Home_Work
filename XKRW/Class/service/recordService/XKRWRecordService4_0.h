@@ -225,8 +225,7 @@
  *
  *  @return 状态数组，0：未计，1：完美执行(green)，2：偷了个懒/暴饮暴食(red)，3：吃了别的/做了别的(yellow)
  */
-- (NSArray *)getSchemeStateOfNumberOfDays:(NSInteger)num withType:(RecordType)type;
-
+- (NSArray *)getSchemeStateOfNumberOfDays:(NSInteger)num withType:(RecordType)type withCurrentDate:(NSDate *)currentdate;
 /**
  *  获取最近days天数的习惯统计数据
  *
@@ -421,6 +420,15 @@
  *  @return 卡路里
  */
 - (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDate:(NSDate *)date;
+
+/**
+ *  获取某一天 用户运动以及运动推荐信息
+ *
+ *  @param date <#date description#>
+ *
+ *  @return <#return value description#>
+ */
+- (NSMutableArray *)getSportRecordAndSportSchemeRecordWithDate:(NSDate *)date;
 /**
  *  获取用户某一天的 记录状态
  *
@@ -455,5 +463,5 @@
 
 - (void)deleteHabitRecord:(XKRWRecordEntity4_0 *)entity;
 
-- (NSMutableDictionary *)getSchemeStatesOfDays:(NSInteger)num withType:(RecordType)type;
+- (NSMutableDictionary *)getSchemeStatesOfDays:(NSInteger)num withType:(RecordType)type withDate:(NSDate *)curDate;
 @end

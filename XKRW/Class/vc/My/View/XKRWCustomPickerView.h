@@ -45,4 +45,5 @@
 @property (copy, nonatomic)  NSString *currentStr;
 @property (assign, nonatomic)  NSInteger currentIndex;
 
+- (instancetype)initWithFrame:(CGRect)frame withindex:(NSInteger)index;
 @end

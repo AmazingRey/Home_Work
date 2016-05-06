@@ -248,7 +248,7 @@
             return weightCell;
         }else if (indexPath.section == 1){
             
-            NSArray *dietArrays = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:7 withType:RecordTypeBreakfirst];
+            NSArray *dietArrays = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:7 withType:RecordTypeBreakfirst withCurrentDate:nil];
             
             
             //完美执行
@@ -270,7 +270,7 @@
             return dietCell;
         }else if (indexPath.section == 2){
             
-            NSArray *sportArrays = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:7 withType:RecordTypeSport];
+            NSArray *sportArrays = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:7 withType:RecordTypeSport withCurrentDate:nil];
             
             NSInteger perfect = [self theNumberOfExecutionStatus:sportArrays andState:1 andLifeStyle:sport];
             NSInteger other = [self theNumberOfExecutionStatus:sportArrays andState:3 andLifeStyle:sport];
@@ -339,7 +339,7 @@
             
             XKRWCourseDietAndSportCell *dietCell =  [tableView dequeueReusableCellWithIdentifier:identifier];
             if (!dietNib) {
-                NSArray *dietArrays = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:30 withType:RecordTypeBreakfirst];
+                NSArray *dietArrays = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:30 withType:RecordTypeBreakfirst withCurrentDate:nil];
                 NSInteger perfect = [self theNumberOfExecutionStatus:dietArrays andState:1 andLifeStyle:diet];
                 NSInteger other = [self theNumberOfExecutionStatus:dietArrays andState:3 andLifeStyle:diet];
                 NSInteger lazy  = [self theNumberOfExecutionStatus:dietArrays andState:2 andLifeStyle:diet];
@@ -367,7 +367,7 @@
             XKRWCourseDietAndSportCell *sportCell = [tableView dequeueReusableCellWithIdentifier:identifier];
             
             if (!sportNib) {
-                NSArray *sportArrays = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:30 withType:RecordTypeSport];
+                NSArray *sportArrays = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:30 withType:RecordTypeSport withCurrentDate:nil];
                 NSInteger perfect = [self theNumberOfExecutionStatus:sportArrays andState:1 andLifeStyle:sport];
                 NSInteger other = [self theNumberOfExecutionStatus:sportArrays andState:3 andLifeStyle:sport];
                 NSInteger lazy  = [self theNumberOfExecutionStatus:sportArrays andState:2 andLifeStyle:sport];

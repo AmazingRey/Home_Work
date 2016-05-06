@@ -144,6 +144,8 @@
     
     
     [_scrollView addSubview:schemePastImageView];
+    
+    _scrollView.scrollEnabled = NO;
 }
 
 -(void)setsubViewUI {
@@ -254,9 +256,7 @@
     recordTypeImageArray =@[@"sports5_3"];
     detailRecordArray = @[sportDetail];
     recordArray = @[[NSNumber numberWithFloat:totalSportCalories]];
-    
     schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_date andType:5];
-    
     if (schemeDetail != nil) {
         XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
         _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐运动\n%ldKcal",(long)entity.calorie];
@@ -321,6 +321,24 @@
     }
     return 0;
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView.tag == 5031) {
+        
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (tableView.tag == 5031) {
+        return UITableViewCellEditingStyleDelete;
+    }else{
+        return UITableViewCellEditingStyleNone;
+    }
+}
+
+
+
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -400,9 +418,7 @@
             
         }else{
             XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
-            addVC.sportEntity = ((XKRWSportEntity *)temp);
-            addVC.passMealTypeTemp = eSport;
-            addVC.needHiddenDate = YES;
+            addVC.sportID = ((XKRWSportEntity *)temp).sportId;
             addVC.isPresent = YES;
             [_vc.navigationController presentViewController:addVC animated:YES completion:nil];
         }

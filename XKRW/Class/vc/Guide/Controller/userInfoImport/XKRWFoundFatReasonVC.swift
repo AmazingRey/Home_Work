@@ -37,17 +37,15 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
    
         // hide back button
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIView())
-        self.rightNaviButton = UIButton(type: UIButtonType.Custom)
-        rightNaviButton.frame = CGRectMake(0, 0, 40, 20)
-        rightNaviButton.setTitle("保存", forState: UIControlState.Normal)
-        rightNaviButton.titleLabel?.font = UIFont.systemFontOfSize(14)
-        rightNaviButton.addTarget(self, action: "rightNaviBarButtonClicked", forControlEvents: UIControlEvents.TouchUpInside)
+        
         if(fromWhichVC == FromWhichVC.SchemeInfoChangeVC)
         {
             self.addNaviBarBackButton()
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviButton)
+//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviButton)
+            self.addNaviBarRightButtonWithText("保存", action: #selector(XKRWFoundFatReasonVC.rightNaviBarButtonClicked))
             nextButton.hidden = true
         } else {
+            nextButton.hidden = false
             UIBarButtonItem.appearance().setTitlePositionAdjustment(UIOffsetMake(0, -100), forBarMetrics: UIBarMetrics.Default)
         }
         self.title = "找出肥胖原因"
@@ -78,15 +76,6 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
             spaceRightConstraint.constant = 32;
         }
         
-//        let topLine:UIView = UIView.init(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 0.5))
-//        topLine.backgroundColor = XK_ASSIST_LINE_COLOR
-//        let bottomLine:UIView = UIView.init(frame: CGRectMake(0, 50.5, UI_SCREEN_WIDTH, 0.5))
-//        bottomLine.backgroundColor = XK_ASSIST_LINE_COLOR
-//        nextButton!.setTitleColor(XKMainSchemeColor, forState: UIControlState.Normal)
-//        nextButton!.addSubview(topLine)
-//        nextButton!.addSubview(bottomLine)
-//        nextButton!.titleLabel?.font = XKDEFAULFONT
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,9 +98,11 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
         
         if(XKRWUtil.isNetWorkAvailable()){
             XKRWCui.showProgressHud()
+          
             self.downloadWithTaskID("saveFatReason", task: { () -> Void in
                 XKRWFatReasonService .sharedService().saveFatReasonToDB(self.fatReason as [AnyObject], andUserId: XKRWUserService.sharedService().getUserId(), andSync: 0);
                 XKRWFatReasonService .sharedService().saveFatReasonToRemoteServer()
+                
             })
         }else{
             XKRWCui.showInformationHudWithText("网络错误，请稍后再试")
@@ -290,8 +281,10 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
         {
             XKRWFatReasonService .sharedService().saveFatReasonToDB(fatReason as [AnyObject], andUserId: XKRWUserService.sharedService().getUserId(), andSync: 1);
             
+              XKRWRecordService4_0.sharedService().resetUserRecords()
             if((!userfatReasonNoSet)){
-                NSNotificationCenter.defaultCenter().postNotificationName("SCHEME_RELOAD_HABIT", object: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName(EnergyCircleDataNotificationName, object: nil)
+            
             }
             
             if(fromWhichVC == FromWhichVC.SchemeInfoChangeVC)

@@ -96,7 +96,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
-    
     [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
 }
 
@@ -129,6 +128,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView:) name:EnergyCircleDataNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTipsData) name:ReLoadTipsData object:nil];
 }
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -178,7 +178,7 @@
 }
 
 - (void)refreshEnergyCircleView:(NSNotification *)notification {
-    recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_recordDate];
+       recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_recordDate];
     
     // deal with energyCircle data
     {
@@ -205,6 +205,7 @@
              XKRWRecordSchemeEntity *recordSportEntity = [todayRecordSchemeSport objectForKey:@"schemeEntity"];
             expendCalorie += recordSportEntity.calorie;
         }
+        
         for (XKRWHabbitEntity *habitEntity in recordEntity.habitArray) {
             currentHabit += habitEntity.situation;
         }
@@ -439,6 +440,10 @@
 
 #pragma mark - XKRWPlanEnergyViewDelegate
 
+- (void)energyCircleViewBackgroundClicked {
+    [self RecordFoodViewpressCancle];
+}
+
 - (void)energyCircleViewTitleClicked:(NSString *)title {
     
     if ([title rangeOfString:@"查看今日分析"].location != NSNotFound) {
@@ -491,7 +496,8 @@
 -(void)addschemeOrRecordView:(NSInteger)index andArrowX:(CGFloat) postitonX {
     XKRWRecordView_5_3 *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordView_5_3");
     popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
-    popView.entity = recordEntity;
+    popView.entity = [[XKRWPlanService shareService] getAllRecordOfDay:_recordDate];
+
     popView.positionX = postitonX;
     popView.type = index;
     popView.vc = self;
@@ -553,6 +559,7 @@
 }
 
 - (void)fixHabitAt:(NSInteger)index isCurrect:(BOOL)abool {
+  
     [recordEntity.habitArray[index] setSituation:abool];
     
     if (![XKRWUtil isNetWorkAvailable]) {
@@ -813,6 +820,7 @@
         [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
         return;
     }
+    
     [self downloadWithTaskID:@"recordWeightAndDegree" outputTask:^id{
         return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
     }];
@@ -820,6 +828,9 @@
 
 #pragma --mark Network
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
+    if ([taskID isEqualToString:@"getRecodEntity"]) {
+        recordEntity = result;
+    }
     
     if ([taskID isEqualToString:@"search"]){
         [XKRWCui hideProgressHud];
@@ -888,12 +899,12 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
         return;
     }
+    
     if ([taskID isEqualToString:@"deleteSportScheme"]) {
         [XKRWCui showInformationHudWithText:@"取消执行"];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectSportCircle];
         return;
     }
-    
     
     if ([taskID isEqualToString:@"saveHabit"]) {
         [XKRWCui showInformationHudWithText:@"保存成功"];
@@ -904,7 +915,6 @@
     
     //保存体重围度成功
     if ([taskID isEqualToString:@"recordWeightAndDegree"]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
         return;
     }
     

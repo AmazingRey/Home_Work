@@ -247,6 +247,7 @@
 
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [searchDisplayCtrl hideSearchResultView];
+
     segmentCtl.hidden = NO;
     return YES;
 }
@@ -301,6 +302,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
     if(tableView.tag == 10001) {
         return 88.f;
     } else if (tableView.tag == 201){
@@ -356,10 +358,8 @@
                 
             } clickRecord:^(NSIndexPath * sportIndexPath) {
                 XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
+                addVC.sportID = entity.sportId;
                 addVC.sportEntity = entity;
-                addVC.recordEneity = recordEntity4_0;
-                addVC.passMealTypeTemp = eSport;
-                addVC.needHiddenDate = YES;
                 addVC.isPresent = YES;
                 XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:addVC];
                 [weakSelf.navigationController presentViewController:nav animated:YES completion:nil];
@@ -390,8 +390,8 @@
                 sportAddVC.sportEntity = sportEntity;
                 sportAddVC.sportID = sportEntity.sportId;
                 
-                sportAddVC.passMealTypeTemp = eSport;
-                sportAddVC.needHiddenDate = YES;
+//                sportAddVC.passMealTypeTemp = eSport;
+//                sportAddVC.needHiddenDate = YES;
                 [weakSelf.navigationController pushViewController:sportAddVC animated:YES];
             }];
             

@@ -12,32 +12,45 @@
 #import "XKRWUserService.h"
 #import "XKRWWeightService.h"
 #import "XKRWRecordService4_0.h"
+#import "XKRWStatiscBussiness5_3.h"
 
 #define LabLength XKAppWidth/4 - 10
 
-#define DayInterval 1*24*60*60
+@implementation XKRWStatiscHeadView{
+    NSMutableArray *pickerArray;
+    NSArray *dataArray;
+    XKRWStatiscEntity5_3 *statiscEntity;
+}
 
-#define Days 6
-#define DateInterval Days*24*60*60
-
-@implementation XKRWStatiscHeadView
 - (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type
 {
     self = [super initWithFrame:frame];
     if (self) {
         _statisType = type;
+        if (![self judgeTotalHasRecordDays]) {
+            //不足7天
+        }
+        
+        XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
+        if (_statisType == 1) {
+            dataArray = bussiness.array;
+        }else{
+            statiscEntity = bussiness.statiscEntity;
+        }
+        pickerArray = [NSMutableArray arrayWithObjects:@"第1周",@"第2周",@"第3周",@"第4周",@"第5周",@"第6周",@"第7周",@"第8周",@"第9周",@"第10周", nil];
     }
     return self;
 }
+
 
 #pragma getter Method
 -(UILabel *)lab1{
     if (!_lab1) {
         _lab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 30)];
         if (_statisType == 1) {
-            [self lab1ReloadText:@""];
+            [self lab1ReloadText:[pickerArray objectAtIndex:_currentIndex]];
         }else{
-            _lab1.text = [NSString stringWithFormat:@"%@－至今",[self getPlanStartDate]];
+            _lab1.text = [NSString stringWithFormat:@"至今"];
         }
         _lab1.textAlignment = NSTextAlignmentCenter;
         _lab1.font = [UIFont systemFontOfSize:15];
@@ -47,9 +60,6 @@
 }
 
 -(void)lab1ReloadText:(NSString *)week{
-    if (week == nil || [week isEqualToString:@""]) {
-//        week = _week;
-    }
     float weight = [[XKRWUserService sharedService] getUserDestiWeight] / 1000.0;
     NSString *weightTarget =[NSString stringWithFormat:@"%.1fkg",weight];
     
@@ -91,7 +101,7 @@
 -(UILabel *)lab2{
     if (!_lab2) {
         _lab2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 30)];
-        _lab2.text = [self getDateRange];
+        _lab2.text = @"";
         _lab2.textAlignment = NSTextAlignmentCenter;
         _lab2.textColor = colorSecondary_999999;
         _lab2.font = [UIFont systemFontOfSize:12];
@@ -160,7 +170,7 @@
     if (!_subLab4) {
         _subLab4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
         CGFloat currentWeight = [[XKRWUserService sharedService] getCurrentWeight]/1000.f;
-         NSDate *earlyDate = [[NSDate date] dateByAddingTimeInterval:-DateInterval];
+         NSDate *earlyDate = [[NSDate date] dateByAddingTimeInterval:0];
         CGFloat earlyWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:earlyDate];
         
         NSString *txt = @"";
@@ -204,7 +214,7 @@
     if (!_subLab5) {
         _subLab5 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
         
-        _subLab5.text =[NSString stringWithFormat:@"%ld天",(long)[self getHasRecordDays:7]];
+        _subLab5.text = @"";
         _subLab5.textAlignment = NSTextAlignmentCenter;
         _subLab5.font = [UIFont systemFontOfSize:12];
         _subLab5.textColor = XKWarningColor;
@@ -238,7 +248,7 @@
 -(UILabel *)subLab6{
     if (!_subLab6) {
         _subLab6 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
-        _subLab6.text = [NSString stringWithFormat:@"%d天",[self getPerfectDays:7]];
+        _subLab6.text = @"";
         _subLab6.textAlignment = NSTextAlignmentCenter;
         _subLab6.textColor = XKWarningColor;
         _subLab6.font = [UIFont systemFontOfSize:12];
@@ -322,18 +332,21 @@
         make.right.mas_equalTo(self.view3.mas_left);
         make.centerY.mas_equalTo(self.view3.mas_centerY).offset(-10);
     }];
+    
     [self.subLab4 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
         make.right.mas_equalTo(self.view3.mas_left);
         make.centerY.mas_equalTo(self.view3.mas_centerY).offset(10);
     }];
+    
     [self.view2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@.5);
         make.height.equalTo(@11);
         make.right.mas_equalTo(self.subLab4.mas_left);
         make.centerY.mas_equalTo(self.view3.mas_centerY);
     }];
+    
     [self.lab3 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(LabLength);
         make.height.mas_equalTo(30);
@@ -379,75 +392,32 @@
     [alertView show];
 }
 
-#pragma mark calculateMethod
--(NSString *)getPlanStartDate{
+-(BOOL)judgeTotalHasRecordDays{
     NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
     NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
-    NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    df.dateFormat = @"yyyy年MM月dd日";
-    return [df stringFromDate:crearDate];
-}
-
--(NSString *)getDateRange{
-    NSString *dateStart = @"2016年5月12日";
-    NSString *dateEnd = @"2016年5月18日";
-    NSString *dateRegister = [[XKRWUserService sharedService] getREGDate]; //带-的 2014-12-11
-    NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    df.dateFormat = @"yyyy年MM月dd日";
-    NSInteger timestamp =(long) [[df dateFromString:dateRegister]timeIntervalSince1970];
-    //    }
-    if ([[XKRWUserService sharedService]getResetTime]) {
-        NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
-        if (timestamp < resetTime)
-        {
-            NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
-            NSDate *weekDate = [crearDate dateByAddingTimeInterval:DateInterval];
-            dateStart = [df stringFromDate:crearDate];
-            dateEnd = [df stringFromDate:weekDate];
-        }
+    NSInteger days = [self daysBetweenDate:crearDate andDate:[NSDate date]];
+    if (days < 7) {
+        return NO;
     }
-    return [NSString stringWithFormat:@"%@-%@",dateStart,dateEnd];
+    return YES;
 }
 
--(NSInteger)getHasRecordDays:(NSInteger)days{
-    NSArray *arraySport = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:days withType:RecordTypeSport];
-    NSInteger nullSport = [self theNumberOfExecutionStatus:arraySport andState:0];
-    
-    NSArray *arrayEat = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:days withType:RecordTypeBreakfirst];
-    NSInteger nullEat = [self theNumberOfExecutionStatus:arrayEat andState:0];
-    return MAX(arrayEat.count-nullEat, arraySport.count-nullSport);
-}
-
--(int)getPerfectDays:(NSInteger)days{
-    int j = 0;
-    
-    NSDictionary *dicSport = [[XKRWRecordService4_0 sharedService] getSchemeStatesOfDays:days withType:RecordTypeSport];
-    
-    NSDictionary *dicEat = [[XKRWRecordService4_0 sharedService] getSchemeStatesOfDays:days withType:RecordTypeBreakfirst];
-    
-    for (NSString *dateStr in [dicSport allKeys]) {
-        NSNumber *stateSport = [dicSport objectForKey:dateStr];
-        if (stateSport.integerValue != 0 ) {
-            NSNumber *stateEat = [dicEat objectForKey:dateStr];
-            if (stateEat.integerValue != 0) {
-                j++;
-            }
-        }
-    }
-    return j;
-}
-
-- (NSInteger)theNumberOfExecutionStatus:(NSArray *)array andState:(NSInteger) state
+-(NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
 {
-    NSInteger num = 0;
-    for (int i = 0; i < [array count]; i++) {
-            if ([[array objectAtIndex:i]integerValue] == state) {
-                num ++;
-            }
-        }
-    return num;
+    NSDate *fromDate;
+    NSDate *toDate;
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate
+                 interval:NULL forDate:fromDateTime];
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate
+                 interval:NULL forDate:toDateTime];
+    
+    NSDateComponents *difference = [calendar components:NSCalendarUnitDay
+                                               fromDate:fromDate toDate:toDate options:0];
+    
+    return [difference day];
 }
 
 @end

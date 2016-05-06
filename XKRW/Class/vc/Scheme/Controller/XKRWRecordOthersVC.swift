@@ -524,13 +524,13 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             self.search_bar.setCancelButtonEnable(true)
                                 
                             let vc = XKRWSportAddVC()
-                            vc.sportEntity = entity
-                            vc.recordEneity = self.recordEntity
+                       //     vc.sportEntity = entity
+//                            vc.recordEneity = self.recordEntity
 //                            vc.isNeedHideNaviBarWhenPoped = false
 //                            self.isNeedHideNaviBarWhenPoped = true;
                             
-                            vc.passMealTypeTemp = eSport;
-                            vc.needHiddenDate = true;
+//                            vc.passMealTypeTemp = eSport;
+//                            vc.needHiddenDate = true;
                             
                             vc.isPresent = true
                             let nav = XKRWNavigationController(rootViewController: vc)
@@ -597,7 +597,7 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                     
                     let vc = XKRWSportAddVC()
                     vc.recordSportEntity = entity
-                    vc.isModify = true
+//                    vc.isModify = true
 //                    self.navigationController?.pushViewController(vc, animated: true)
                     vc.isPresent = true
 //                    vc.isNeedHideNaviBarWhenPoped = false;

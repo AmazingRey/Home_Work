@@ -23,7 +23,6 @@
 @property (nonatomic) NSInteger u_id;
 
 @property (nonatomic) int32_t sync;
-
 -(NSString *) description;
 
 @end

@@ -14,6 +14,7 @@
 #import "FMDatabase.h"
 #import "XKRWWeightService.h"
 #import "XKRWUserService.h"
+#import "XKRWRecordService4_0.h"
 //static XKRWUserService *userService;
 
 @implementation XKRWAlgolHelper
@@ -83,11 +84,18 @@
 + (float)BMI_with_height:(float)height weight:(float)weight {
     return weight / (height * height);
 }
+
 /*每日正常饮食摄入量*/
 + (float) dailyIntakEnergy
 {
     float dailyIntakEnergy = [[self class] dailyIntakEnergyWithBM:[[self class] BM] PAL:[[self class] PAL]];
     return  dailyIntakEnergy;
+}
+
++ (float) dailyIntakEnergyOfDate:(NSDate *)date
+{
+    float dailyIntakEnergy  = [self dailyIntakEnergyWithBM:[self BM_of_date:date] PAL:[self PAL]];
+    return dailyIntakEnergy;
 }
 
 + (float)dailyIntakEnergyWithBM:(float)BM PAL:(float)PAL {
@@ -270,6 +278,17 @@
                                                               sex:sex];
 }
 
++ (float)dailyConsumeSportEnergyOfDate:(NSDate *)date {
+    XKPhysicalLabor physicalLevel = [[XKRWUserService sharedService] getUserLabor];
+    XKSex sex = [[XKRWUserService sharedService] getSex];
+    
+    return [[self class] dailyConsumeSportEnergyWithPhysicalLabor:physicalLevel
+                                                               BM:[[self class] BM_of_date:date]
+                                                              PAL:[[self class] PAL]
+                                                              sex:sex];
+
+}
+
 + (float)dailyConsumeSportEnergyWithPhysicalLabor:(XKPhysicalLabor)labor BM:(float)BM PAL:(float)PAL sex:(XKSex)sex {
     if (labor == eHeavy) {
         return 0.f;
@@ -298,6 +317,28 @@
             return [[sportLimit objectAtIndex:3] floatValue];
         }
     }
+}
+
+/**
+ *  记录的运动总时长
+ *
+ *  @param date 该日期记录的
+ *
+ *  @return 总时长
+ */
++ (NSInteger )getSportRecordAndSportSchemeRecordTimeWithDate:(NSDate *)date {
+    NSInteger  totalTime = 0;
+    NSDictionary *sportSchemeDic = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date andType:5];
+
+    if (sportSchemeDic) {
+        totalTime += 45;
+    }
+    
+    XKRWRecordEntity4_0 *recordEntity = [[XKRWRecordService4_0 sharedService ] getAllRecordOfDay:date];
+    for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
+        totalTime += sportEntity.number;
+    }
+    return totalTime;
 }
 
 /** 达成目标需要的天数*/

@@ -706,7 +706,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 }
 
 
-
 - (BOOL)saveUniversalRecordToRemote:(XKRWUniversalRecordEntity *)entity {
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -748,6 +747,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     if (isSuccess) {
         entity.sync = 1;
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
     }
     return isSuccess;
 }
@@ -2036,15 +2036,17 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }
 }
 
-- (NSArray *)getSchemeStateOfNumberOfDays:(NSInteger)num withType:(RecordType)type {
+- (NSArray *)getSchemeStateOfNumberOfDays:(NSInteger)num withType:(RecordType)type withCurrentDate:(NSDate *)currentdate{
     
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
-    NSDate *now = [NSDate date];
+    if (!currentdate) {
+        currentdate = [NSDate date];
+    }
    
     NSMutableArray *returnValue = [NSMutableArray array];
     
     for (NSInteger i = 1; i <= num; i++) {
-        NSString *date = [[now offsetDay:-i+1] stringWithFormat:@"yyyy-MM-dd"];
+        NSString *date = [[currentdate offsetDay:-i+1] stringWithFormat:@"yyyy-MM-dd"];
         NSString *sql = nil;
         
         if (type == RecordTypeSport) {
@@ -2330,6 +2332,35 @@ static XKRWRecordService4_0 *sharedInstance = nil;
          return nil;
     }
    
+}
+
+
+/**
+ *  记录运动的详情
+ *
+ *  @param date 该日期记录的
+ *
+ *  @return dictionary （key：运动   value：kcal）
+ */
+- (NSMutableArray *)getSportRecordAndSportSchemeRecordWithDate:(NSDate *)date {
+    NSDictionary *sportSchemeDic = [self getSchemeRecordWithDate:date andType:5];
+    NSMutableArray *mutableArray = [NSMutableArray mutableCopy];
+    if (sportSchemeDic) {
+        XKRWRecordSchemeEntity *entity = [sportSchemeDic objectForKey:@"schemeEntity"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"推荐运动45分钟" forKey:@"text"];
+        [dic setObject:[NSNumber numberWithFloat:entity.calorie] forKey:@"calorie"];
+        [mutableArray addObject:dic];
+    }
+    
+    XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
+    for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:[NSString stringWithFormat:@"%@%ld分钟",sportEntity.sportName,sportEntity.number] forKey:@"text"];
+        [dic setObject:[NSNumber numberWithFloat:sportEntity.calorie] forKey:@"calorie"];
+        [mutableArray addObject:dic];
+    }
+    return mutableArray;
 }
 
 
@@ -3297,15 +3328,24 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 - (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDate:(NSDate *)date {
     
     XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
+    NSDictionary *  schemeDetail;
     CGFloat  calorie = 0;
     if (type == efoodCalories) {
         for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
                 calorie += foodEntity.calorie;
         }
+        schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date andType:6];
     }else if (type == eSportCalories){
           for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
               calorie += sportEntity.calorie;
           }
+        
+       schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date andType:5];
+      
+    }
+    if (schemeDetail != nil) {
+        XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
+        calorie += entity.calorie;
     }
     return calorie ;
 }
@@ -3428,20 +3468,22 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     
     if ([self saveHabitRecordToRemote:entity]) {
         
-        NSString *sql = [NSString stringWithFormat:@"UPDATE %@ SET habit = '' WHERE uid = %ld AND date = %@", recordTable, (long)uid, [entity.date stringWithFormat:@"yyyy-MM-dd"]];
+        NSString *sql = [NSString stringWithFormat:@"UPDATE %@ SET habit = '' WHERE uid = %ld AND date = '%@'", recordTable, (long)uid, [entity.date stringWithFormat:@"yyyy-MM-dd"]];
         [self executeSql:sql];
     }
 }
 
-- (NSMutableDictionary *)getSchemeStatesOfDays:(NSInteger)num withType:(RecordType)type {
+- (NSMutableDictionary *)getSchemeStatesOfDays:(NSInteger)num withType:(RecordType)type withDate:(NSDate *)curDate{
     
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
-    NSDate *now = [NSDate date];
+    if (!curDate) {
+        curDate = [NSDate date];
+    }
     
     NSMutableDictionary *returnValue = [NSMutableDictionary dictionary];
     
     for (NSInteger i = 1; i <= num; i++) {
-        NSString *date = [[now offsetDay:-i+1] stringWithFormat:@"yyyy-MM-dd"];
+        NSString *date = [[curDate offsetDay:-i+1] stringWithFormat:@"yyyy-MM-dd"];
         NSString *sql = nil;
         
         if (type == RecordTypeSport) {

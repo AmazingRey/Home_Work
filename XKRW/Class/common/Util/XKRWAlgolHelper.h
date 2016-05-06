@@ -24,7 +24,8 @@
 
 /*每日正常饮食摄入量*/
 + (float) dailyIntakEnergy;
-+ (float)dailyIntakEnergyWithBM:(float)BM PAL:(float)PAL;
++ (float) dailyIntakEnergyOfDate:(NSDate *)date;
++ (float) dailyIntakEnergyWithBM:(float)BM PAL:(float)PAL;
 
 /*每日推荐饮食摄入量*/
 + (float)dailyIntakeRecomEnergy;
@@ -33,11 +34,15 @@
 
 /*每日运动消耗量*/
 + (float)dailyConsumeSportEnergy;
++ (float)dailyConsumeSportEnergyOfDate:(NSDate *)date;
 + (float)dailyConsumeSportEnergyWithPhysicalLabor:(XKPhysicalLabor)labor BM:(float)BM PAL:(float)PAL sex:(XKSex)sex;
 
 //至少需要的热量
 +(float)atLeastEnergy;
 + (float)atLeastEnergyWithBM:(float)BM PAL:(float)PAL sex:(XKSex)sex age:(NSInteger)age;
+
+//获取用户某一天的运动总时长
++ (NSInteger )getSportRecordAndSportSchemeRecordTimeWithDate:(NSDate *)date;
 
 //4.1新增  获取 每日 三种  营养标准
 +(NSDictionary*)getAdviceThreeNutrition;

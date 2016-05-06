@@ -13,13 +13,14 @@
     UIPickerView *picker;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame withindex:(NSInteger)index
 {
     self = [super initWithFrame:frame];
     if (self) {
         _leftBtnText = @"取消";
         _rightBtnText = @"确定";
         
+        _currentIndex = index;
         [self createToolBar];
     }
     return self;
@@ -63,6 +64,7 @@
     picker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, toolBar.frame.size.height, XKAppWidth, 200)];
     picker.delegate = self;
     picker.dataSource = self;
+    [picker selectRow:_currentIndex inComponent:0 animated:YES];
     picker.showsSelectionIndicator = YES;
     
     [self addSubview:picker];

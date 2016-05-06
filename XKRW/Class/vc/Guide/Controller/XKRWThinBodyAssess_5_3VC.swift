@@ -76,14 +76,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
         }
         if(fromWhichVC == FromWhichVC.MyVC)
         {
-            let rightNaviBarButton:UIButton = UIButton(type: UIButtonType.Custom)
-            rightNaviBarButton.setTitle("修改方案", forState: UIControlState.Normal)
-            rightNaviBarButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            rightNaviBarButton.setTitleColor(XKGrayDefaultColor, forState: .Highlighted)
-            rightNaviBarButton.titleLabel!.font = UIFont.systemFontOfSize(14)
-            rightNaviBarButton.frame = CGRectMake(0, 0, 60, 20)
-            rightNaviBarButton.addTarget(self, action: #selector(XKRWThinBodyAssess_5_3VC.doClickNaviBarRightButton as (XKRWThinBodyAssess_5_3VC) -> () -> ()), forControlEvents:UIControlEvents.TouchUpInside)
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviBarButton)
+            self.addNaviBarRightButtonWithText("修改方案", action: #selector(XKRWThinBodyAssess_5_3VC.doClickNaviBarRightButton as (XKRWThinBodyAssess_5_3VC) -> () -> ()))
         }else{
             let myFirstButton = UIButton(type:UIButtonType.Custom)
             myFirstButton.setTitle("开始瘦身", forState: .Normal)
@@ -94,7 +87,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
             
             scrollView.addSubview(myFirstButton)
         }
-
+        
     }
     func setFromWhichVC(type:FromWhichVC){
         fromWhichVC = type

@@ -123,7 +123,7 @@
         NSDate *currentDate = [cal dateFromComponents:comps];
         
         BOOL isInPlan = [[XKRWThinBodyDayManage shareInstance ] calendarDateInPlanTimeWithDate:currentDate];
-        BOOL isEndDay = [[XKRWThinBodyDayManage shareInstance ] calendarDateIsEndDayWithDate:currentDate];
+//        BOOL isEndDay = [[XKRWThinBodyDayManage shareInstance ] calendarDateIsEndDayWithDate:currentDate];
         BOOL isStartDay =  [[XKRWThinBodyDayManage shareInstance] calendarDateIsStartDayWithDate:currentDate];
         
         CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:currentDate];
@@ -157,7 +157,7 @@
             [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
         }
         
-        if (isRecord) {
+        if (isRecord || weight) {
             [_dot setImage:[UIImage imageNamed:@"circleGreen"]];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

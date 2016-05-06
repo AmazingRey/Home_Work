@@ -10,4 +10,5 @@
 
 @interface XKRWStatisticAnalysizeVC : XKRWBaseVC
 
+
 @end

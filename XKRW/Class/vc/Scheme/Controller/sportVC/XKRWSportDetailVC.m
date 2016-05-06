@@ -79,7 +79,6 @@
     [super viewDidLoad];
     [self initUI];
     [self initData];
-//    [self.navigationController.interactivePopGestureRecognizer addTarget:self action:@selector(checkNeedHideNaviBarWhenPoped)];
     [self resetContents];
 }
 

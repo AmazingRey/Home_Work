@@ -15,6 +15,7 @@
 @optional
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index;
 - (void)energyCircleViewTitleClicked:(NSString *)title;
+- (void)energyCircleViewBackgroundClicked;
 @end
 @interface XKRWPlanEnergyView : UIView
 @property (nonatomic, weak) id<XKRWPlanEnergyViewDelegate> delegate;

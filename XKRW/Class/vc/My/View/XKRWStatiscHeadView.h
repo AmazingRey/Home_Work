@@ -40,6 +40,9 @@
 @property (strong, nonatomic) UIButton *btnQuestion;
 @property (assign, nonatomic) StatisticType statisType;
 
+/**
+ *  所选择的周数 （第1周、第2周。。。）
+ */
 @property (assign, nonatomic) NSInteger currentIndex;
 
 - (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type;

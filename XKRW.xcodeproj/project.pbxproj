@@ -1035,6 +1035,8 @@
 		CCA3B8891CB78AB300D564DA /* XKRWShowEnergy_5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCA3B8881CB78AB300D564DA /* XKRWShowEnergy_5_3View.xib */; };
 		CCA73FBF1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA73FBD1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.m */; };
 		CCA73FC01CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCA73FBE1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.xib */; };
+		CCB5F12F1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.m in Sources */ = {isa = PBXBuildFile; fileRef = CCB5F12E1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.m */; };
+		CCB5F1321CDC4362000BA06E /* XKRWStatiscBussiness5_3.m in Sources */ = {isa = PBXBuildFile; fileRef = CCB5F1311CDC4362000BA06E /* XKRWStatiscBussiness5_3.m */; };
 		CCDEABD61CD99A26006E2D81 /* XKRWCustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDEABD51CD99A26006E2D81 /* XKRWCustomPickerView.m */; };
 		CCEBA7241CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA7231CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m */; };
 		CCEBA7271CD84EA500C3DFA8 /* XKRWStatisticDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA7261CD84EA500C3DFA8 /* XKRWStatisticDetailView.m */; };
@@ -2759,6 +2761,10 @@
 		CCA73FBC1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlan_5_3CollectionReusableView.h; sourceTree = "<group>"; };
 		CCA73FBD1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPlan_5_3CollectionReusableView.m; sourceTree = "<group>"; };
 		CCA73FBE1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlan_5_3CollectionReusableView.xib; sourceTree = "<group>"; };
+		CCB5F12D1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWStatiscEntity5_3.h; sourceTree = "<group>"; };
+		CCB5F12E1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWStatiscEntity5_3.m; sourceTree = "<group>"; };
+		CCB5F1301CDC4362000BA06E /* XKRWStatiscBussiness5_3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWStatiscBussiness5_3.h; sourceTree = "<group>"; };
+		CCB5F1311CDC4362000BA06E /* XKRWStatiscBussiness5_3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWStatiscBussiness5_3.m; sourceTree = "<group>"; };
 		CCDEABD41CD99A26006E2D81 /* XKRWCustomPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWCustomPickerView.h; sourceTree = "<group>"; };
 		CCDEABD51CD99A26006E2D81 /* XKRWCustomPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWCustomPickerView.m; sourceTree = "<group>"; };
 		CCEBA7221CD83FA800C3DFA8 /* XKRWWeekAnalysisView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeekAnalysisView.h; sourceTree = "<group>"; };
@@ -6516,6 +6522,7 @@
 		BCEF37B61C1E901B00740ACC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CCB5F12C1CDC3D5F000BA06E /* StatiscModel */,
 				BC29E6D21C76C0F900CF923D /* notice */,
 				BC769DAE1C33D0EC00E96B1A /* XKRWCollectionEntity.h */,
 				BC769DAF1C33D0EC00E96B1A /* XKRWCollectionEntity.m */,
@@ -6688,6 +6695,17 @@
 				BC3127861CCE104300867F51 /* XKRWRecordShowCell.m */,
 			);
 			name = RecordFoodAndmenu;
+			sourceTree = "<group>";
+		};
+		CCB5F12C1CDC3D5F000BA06E /* StatiscModel */ = {
+			isa = PBXGroup;
+			children = (
+				CCB5F12D1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.h */,
+				CCB5F12E1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.m */,
+				CCB5F1301CDC4362000BA06E /* XKRWStatiscBussiness5_3.h */,
+				CCB5F1311CDC4362000BA06E /* XKRWStatiscBussiness5_3.m */,
+			);
+			name = StatiscModel;
 			sourceTree = "<group>";
 		};
 		CCFA188F1CB5188D0025EC12 /* WeightRecoderView */ = {
@@ -7367,6 +7385,7 @@
 				2FDEC6311AF9B25900C33EB8 /* XKRWCollectionService.m in Sources */,
 				BCEF381D1C1E901B00740ACC /* XKRWDataCenterVC.m in Sources */,
 				2E9686B01A04AEE500CB5D77 /* XKTimePicker.m in Sources */,
+				CCB5F1321CDC4362000BA06E /* XKRWStatiscBussiness5_3.m in Sources */,
 				BC769DB01C33D0EC00E96B1A /* XKRWCollectionEntity.m in Sources */,
 				BC769E841C33D3DD00E96B1A /* KMImageItem.swift in Sources */,
 				BC769EA11C33D3DD00E96B1A /* KMSwitchCell.swift in Sources */,
@@ -7755,6 +7774,7 @@
 				BCEF37271C1E75D900740ACC /* XKRWiSlimExchangeVC.m in Sources */,
 				5D7458AF1C4CB655006B4309 /* XKRWGroupItem.m in Sources */,
 				BCEF36401C1E63B200740ACC /* XKRWCalendarItem.m in Sources */,
+				CCB5F12F1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.m in Sources */,
 				5D5CCB431C740E3600083F2C /* UserHadReadPostEntity+CoreDataProperties.m in Sources */,
 				2E9686B41A04AEE500CB5D77 /* UIView+XKCui.m in Sources */,
 				BCEF38321C1E91F400740ACC /* NZLabel.m in Sources */,
@@ -8152,7 +8172,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0506;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -8223,7 +8243,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0506;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
 				PROVISIONING_PROFILE = "";

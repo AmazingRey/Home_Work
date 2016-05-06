@@ -82,8 +82,17 @@
         _line = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 0.5, XKAppWidth, 0.5)];
         _line.backgroundColor = colorSecondary_e0e0e0;
         [self addSubview:_line];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapAction)];
+        [self addGestureRecognizer:tap];
     }
     return self;
+}
+
+- (void)backgroundTapAction {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(energyCircleViewBackgroundClicked)]) {
+        [_delegate energyCircleViewBackgroundClicked];
+    }
 }
 
 #pragma mark -- set meals、sports and habits' original state data
@@ -177,6 +186,9 @@
             isBehaveCurrect = NO;
         }
         [_habitEnergyCircle setOpenedViewTiltle:@"已改正" currentNumber:[NSString stringWithFormat:@"%d",(int)currentNumber] goalNumber:goalNumber unit:@"个" isBehaveCurrect:isBehaveCurrect];
+        if (_habitEnergyCircle.style == XKRWEnergyCircleStylePerfect) {
+            _habitEnergyCircle.style = XKRWEnergyCircleStyleOpened;
+        }
         _habitEnergyCircle.energyCircleViewClickBlock = ^(NSInteger index){
             [weakSelf resetCirclesStyle:index];
             

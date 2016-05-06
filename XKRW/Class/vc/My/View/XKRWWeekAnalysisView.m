@@ -16,7 +16,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self addMasonryLayOut];
     }
     return self;
 }
@@ -49,7 +48,12 @@
     return _sportDecreaseView;
 }
 
--(void)addMasonryLayOut{
++ (BOOL)requiresConstraintBasedLayout {
+    return YES;
+}
+
+// this is Apple's recommended place for adding/updating constraints
+- (void)updateConstraints {
     [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.mas_top);
         make.width.mas_equalTo(XKAppWidth);
@@ -69,5 +73,6 @@
         make.left.equalTo(@0);
         make.right.equalTo(@0);
     }];
+     [super updateConstraints];
 }
 @end
