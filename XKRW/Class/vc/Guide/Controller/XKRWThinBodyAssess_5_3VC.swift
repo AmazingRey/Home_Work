@@ -8,7 +8,7 @@
 
 import UIKit
 
-class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
+class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
  
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -64,6 +64,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
             case 2:
                 view.dicCollection = dicData
                 view.type = .Habit
+                view.delegate = self
                 frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*180))
                 break
             default:
@@ -92,7 +93,11 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
     func setFromWhichVC(type:FromWhichVC){
         fromWhichVC = type
     }
-    
+    func tapCollectionView() {
+        let fatReasonVC = XKRWFoundFatReasonVC(nibName:"XKRWFoundFatReasonVC", bundle:nil)
+        fatReasonVC.fromWhichVC = FromWhichVC.ThinBodyAssesssVC
+        navigationController?.pushViewController(fatReasonVC, animated: true)
+    }
     func doClickNaviBarRightButton(){
         if (XKUtil.isNetWorkAvailable() == false) {
             XKRWCui.showInformationHudWithText("没有网络，请检查网络设置")
@@ -122,51 +127,51 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC {
             switch reason{
             case 1:
                 if(!arrKeys.containsObject("饮食油腻")){
-                    dicData.setObject("lead_reason_oil_640×1136_", forKey: "饮食油腻")
+                    dicData.setObject("habit_ic_oily_p_", forKey: "饮食油腻")
                 }
             case 2:
                 if(!arrKeys.containsObject("吃零食")){
-                    dicData.setObject("lead_reason_ice cream_640×1136_", forKey: "吃零食")
+                    dicData.setObject("habit_ic_snacks_p_", forKey: "吃零食")
                 }
             case 3:
                 if(!arrKeys.containsObject("喝饮料")){
-                    dicData.setObject("lead_reason_juice_640×1136_", forKey: "喝饮料")
+                    dicData.setObject("habit_ic_drink_p_", forKey: "喝饮料")
                 }
             case 4...6:
                 if(!arrKeys.containsObject("饮酒")){
-                    dicData.setObject("lead_reason_winel_640×1136_", forKey: "饮酒")
+                    dicData.setObject("habit_ic_alcohol_p_", forKey: "饮酒")
                 }
             case 7:
                 if(!arrKeys.containsObject("吃肥肉")){
-                    dicData.setObject("lead_reason_fat_640×1136_", forKey: "吃肥肉")
+                    dicData.setObject("habit_ic_fat_p_", forKey: "吃肥肉")
                 }
             case 8:
                 if(!arrKeys.containsObject("吃坚果")){
-                    dicData.setObject("lead_reason_nuts_640×1136_", forKey: "吃坚果")
+                    dicData.setObject("habit_ic_nut_p_", forKey: "吃坚果")
                 }
             case 9:
                 if(!arrKeys.containsObject("吃宵夜")){
-                    dicData.setObject("lead_reason_bbq_640×1136_", forKey: "吃宵夜")
+                    dicData.setObject("habit_ic_nightsnack_p_", forKey: "吃宵夜")
                 }
             case 10:
                 if(!arrKeys.containsObject("吃饭晚")){
-                    dicData.setObject("lead_reason_late_640×1136_", forKey: "吃饭晚")
+                    dicData.setObject("habit_ic_late_p_", forKey: "吃饭晚")
                 }
             case 11:
                 if(!arrKeys.containsObject("吃饭快")){
-                    dicData.setObject("lead_reason_fast _640×1136_", forKey: "吃饭快")
+                    dicData.setObject("habit_ic_fast_p_", forKey: "吃饭快")
                 }
             case 12:
                 if(!arrKeys.containsObject("饭量时多时少")){
-                    dicData.setObject("lead_reason_not normal_640×1136_", forKey: "饭量时多时少")
+                    dicData.setObject("habit_ic_inordinate_p_", forKey: "饭量时多时少")
                 }
             case 13:
                 if(!arrKeys.containsObject("活动量少")){
-                    dicData.setObject("lead_reason_sit_640×1136_", forKey: "活动量少")
+                    dicData.setObject("habit_ic_hypomotility_p_", forKey: "活动量少")
                 }
             case 14:
                 if(!arrKeys.containsObject("缺乏锻炼")){
-                    dicData.setObject("lead_reason_running_640×1136_", forKey: "缺乏锻炼")
+                    dicData.setObject("habit_ic_littlepractice_p_", forKey: "缺乏锻炼")
                 }
             default:
                 break

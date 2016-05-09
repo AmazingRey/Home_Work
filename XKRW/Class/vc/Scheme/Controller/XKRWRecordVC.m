@@ -63,7 +63,6 @@
 
 #pragma --mark UI
 - (void)setFoodRecordType {
-   
     switch (_mealType) {
         case eSport:
             foodRecordType = RecordTypeSport;
@@ -83,10 +82,9 @@
         default:
             break;
     }
-
 }
+
 - (void) initView {
-    
     UILabel *noRecentRecordLabel = [[UILabel alloc] init];
     noRecentRecordLabel.font = XKDefaultFontWithSize(14);
     noRecentRecordLabel.textColor = XK_ASSIST_TEXT_COLOR;
@@ -139,8 +137,6 @@
     [segmentCtl addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:segmentCtl];
     
-
-    
     recentRecordOrCollectTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, segmentCtl.bottom+10, XKAppWidth, XKAppHeight - 50) style:UITableViewStylePlain];
     recentRecordOrCollectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     recentRecordOrCollectTableView.delegate = self;
@@ -148,7 +144,6 @@
     recentRecordOrCollectTableView.tag = 10001;
     [recentRecordOrCollectTableView registerNib:[UINib nibWithNibName:@"XKRWFoodRecordCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentRecordCell"];
     [self.view addSubview:recentRecordOrCollectTableView];
-
 
     
     nonRecentRecordView = [[UIView alloc] initWithFrame:recentRecordOrCollectTableView.frame];
@@ -164,7 +159,6 @@
     noRecentRecordLabel.top = noRecentRecordImageView.bottom + 20;
     [nonRecentRecordView addSubview:noRecentRecordLabel];
     [recentRecordOrCollectTableView addSubview:nonCollectionView];
-
 
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
@@ -230,7 +224,6 @@
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:NO];
-
 }
 
 
@@ -329,7 +322,7 @@
             } clickRecord:^(NSIndexPath * recordFoodIndexPath) {
                 XKRWRecordFoodEntity *recordEntity = [XKRWRecordFoodEntity new];
                 XKRWFoodEntity *tempEntity = [[XKRWFoodService shareService] syncQueryFoodWithId:recentRecordFoodEntity.foodId];
-                recordEntity.date = recordEntity4_0.date;
+                recordEntity.date = [NSDate date];
                 recordEntity.foodId = tempEntity.foodId;
                 recordEntity.foodLogo = tempEntity.foodLogo;
                 recordEntity.foodName = tempEntity.foodName;
@@ -410,7 +403,7 @@
                 [recordSearchBar resignFirstResponder];
                 [recordSearchBar setCancelButtonEnable:YES];
                 XKRWRecordFoodEntity *recordFoodEntity = [[XKRWRecordFoodEntity alloc] init];
-                recordFoodEntity.date = recordEntity4_0.date;
+                recordFoodEntity.date = [NSDate date];
                 recordFoodEntity.foodId = foodEntity.foodId;
                 recordFoodEntity.foodLogo = foodEntity.foodLogo;
                 recordFoodEntity.foodName = foodEntity.foodName;
@@ -433,6 +426,26 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (tableView.tag == 10001) {
+        if ([tableName isEqualToString:@"food_record"]) {
+            XKRWFoodEntity *recentRecordFoodEntity = recentRecordOrCollectArray[indexPath.row];
+            XKRWFoodDetailVC *foodDetailVC = [[XKRWFoodDetailVC alloc] init];
+            foodDetailVC.foodId = recentRecordFoodEntity.foodId;
+            foodDetailVC.foodName = recentRecordFoodEntity.foodName;
+            foodDetailVC.date = [NSDate date];
+            [self.navigationController pushViewController:foodDetailVC animated:YES];
+            
+        } else if ([tableName isEqualToString:@"sport_record"]) {
+            XKRWSportEntity *entity = recentRecordOrCollectArray[indexPath.row];
+            XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc] init];
+            XKRWSportEntity *detailSportEntity = [[XKRWSportService shareService] syncQuerySportWithId:entity.sportId];
+            vc.sportEntity = detailSportEntity;
+            vc.sportID = entity.sportId;
+            vc.sportName = entity.sportName;
+            vc.isPresent = NO;
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+            
+        }
         return;
         
     }

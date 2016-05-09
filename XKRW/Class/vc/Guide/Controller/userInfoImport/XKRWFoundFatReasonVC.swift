@@ -44,7 +44,10 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
 //            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviButton)
             self.addNaviBarRightButtonWithText("保存", action: #selector(XKRWFoundFatReasonVC.rightNaviBarButtonClicked))
             nextButton.hidden = true
-        } else {
+        }else if(fromWhichVC == FromWhichVC.ThinBodyAssesssVC){
+            self.addNaviBarBackButton()
+            nextButton.hidden = true
+        }else{
             nextButton.hidden = false
             UIBarButtonItem.appearance().setTitlePositionAdjustment(UIOffsetMake(0, -100), forBarMetrics: UIBarMetrics.Default)
         }

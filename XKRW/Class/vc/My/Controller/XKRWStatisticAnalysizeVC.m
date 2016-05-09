@@ -14,6 +14,7 @@
 #import "XKRWWeekAnalysisView.h"
 #import "XKRWStatisAnalysisView.h"
 #import "XKRWCustomPickerView.h"
+#import "XKRWUserService.h"
 
 @interface XKRWStatisticAnalysizeVC ()<XKRWStatisticAnalysisPickerViewDelegate,XKRWCustomPickerViewDelegate>
 @property (strong, nonatomic) UISegmentedControl *segmentControl;
@@ -30,15 +31,28 @@
 {
     NSInteger segmentIndex;
     NSInteger pickerIndex;
-    NSMutableArray *pickerArray;
+    NSDictionary *pickerDic;
     NSInteger _pageTime;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (![self judgeTotalHasRecordDays]) {
+        //不足7天
+    }
+
     self.title = @"统计分析";
-    pickerArray = [NSMutableArray arrayWithObjects:@"第1周",@"第2周",@"第3周",@"第4周",@"第5周",@"第6周",@"第7周",@"第8周",@"第9周",@"第10周", nil];
     [self addMasonryLayout];
+}
+
+-(BOOL)judgeTotalHasRecordDays{
+    NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
+    NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
+    NSInteger days = [NSDate daysBetweenDate:crearDate andDate:[NSDate date]];
+    if (days < 7) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark getter Method
@@ -70,7 +84,15 @@
         _scrollView.backgroundColor = [UIColor colorFromHexString:@"f5f7f9"];
         _scrollView.pagingEnabled = YES;
         _scrollView.scrollEnabled = NO;
-        _scrollView.contentSize = CGSizeMake(XKAppWidth*2, _scrollView.frame.size.height);
+        
+        CGFloat height = _scrollView.frame.size.height;
+        if (XKAppHeight == 480) {
+            height += (568-480);
+            _scrollView.scrollEnabled = YES;
+            _scrollView.alwaysBounceVertical = YES;
+            _scrollView.alwaysBounceHorizontal = NO;
+        }
+        _scrollView.contentSize = CGSizeMake(XKAppWidth*2, height);
         [self.view addSubview:_scrollView];
     }
     return _scrollView;
@@ -119,9 +141,9 @@
 -(XKRWCustomPickerView *)pickView{
     if (!_pickView) {
         CGRect frame = CGRectMake(0, self.view.frame.size.height-200, XKAppWidth, 200);
-        _pickView = [[XKRWCustomPickerView alloc] initWithFrame:frame withindex:pickerIndex];
+        _pickView = [[XKRWCustomPickerView alloc] initWithFrame:frame withindex:pickerIndex withDicData:pickerDic];
         _pickView.backgroundColor = [UIColor whiteColor];
-        _pickView.currentStr = [pickerArray objectAtIndex:pickerIndex];
+        _pickView.currentStr = [pickerDic objectForKey:[NSNumber numberWithInteger:pickerIndex]];
         _pickView.opaque = YES;
         _pickView.delegate = self;
         
@@ -168,8 +190,9 @@
 }
 
 #pragma mark XKRWStatisticAnalysisPickerViewDelegate Method
--(void)makeAnalysisPickerViewAppear:(NSInteger)index{
+-(void)makeAnalysisPickerViewAppear:(NSInteger)index withDicData:(NSDictionary *)dic{
     pickerIndex = index;
+    pickerDic = dic;
     self.btnBack.alpha = 0;
     [self.view addSubview:_btnBack];
     self.pickView.alpha = 0;
@@ -198,7 +221,10 @@
 -(void)pickerViewPressedDone:(NSInteger)currentIndex{
     [self btnBackPressed:nil];
     self.weekAnalysisView.headView.currentIndex = currentIndex;
-    [self.weekAnalysisView.headView lab1ReloadText:[pickerArray objectAtIndex:currentIndex]];
+    self.weekAnalysisView.eatDecreaseView.currentIndex = currentIndex;
+    self.weekAnalysisView.sportDecreaseView.currentIndex = currentIndex;
+    [self.weekAnalysisView refreshViews];
+    [self.statisAnalysisView refreshViews];
 }
 
 -(void)pickerViewPressedCancle{

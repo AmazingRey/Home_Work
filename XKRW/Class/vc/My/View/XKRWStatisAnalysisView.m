@@ -21,11 +21,21 @@
     return self;
 }
 
+-(void)refreshViews{
+    [self addMasonryLayOut];
+//    [self.headView setNeedsDisplay];
+//    [self.eatDecreaseView setNeedsDisplay];
+//    [self.sportDecreaseView setNeedsDisplay];
+}
+
 -(XKRWStatiscHeadView *)headView{
     if (!_headView) {
         CGRect frame = CGRectMake(0, 0, XKAppWidth, HeadViewHeight);
         _headView = [[XKRWStatiscHeadView alloc] initWithFrame:frame type:2];
         _headView.backgroundColor = [UIColor whiteColor];
+        _headView.currentIndex = 0;
+        _headView.statiscEntity = _bussiness.statiscEntity;
+        _headView.currentEntity = _bussiness.statiscEntity;
         [self addSubview:_headView];
     }
     return _headView;

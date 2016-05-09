@@ -32,8 +32,6 @@
     UISegmentedControl  *mealSecondSegmentCtr;
     UITextField *componentTextField;
     
-    RecordType mealType;
-    NSString *componentStr;
     MetricUnit unitType;
     
     NSString *_unit_new;
@@ -45,10 +43,13 @@
     //单位
     UILabel *selectUnitLabel;
     
+    BOOL isRecord;
+    
     //额外单位数组
     NSArray *unitOthersArray;
     //单位View
     UIView *unitView;
+    //餐次View
     UIView *mealView;
 }
 
@@ -143,8 +144,6 @@
     NSArray *mealArrays = @[@"早餐",@"午餐",@"晚餐"];
     mealSegmentCtr = [[UISegmentedControl alloc] initWithItems:mealArrays];
     mealSegmentCtr.frame = CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth, 30);
-    mealSegmentCtr.selectedSegmentIndex = 0;
-    _foodRecordEntity.recordType = eMealBreakfast;
     mealSegmentCtr.tintColor = XKMainToneColor_29ccb1;
     [mealSegmentCtr addTarget:self action:@selector(mealSegmentAction:) forControlEvents:UIControlEventValueChanged];
     [mealView addSubview:mealSegmentCtr];
@@ -154,6 +153,27 @@
     mealSecondSegmentCtr.tintColor = XKMainToneColor_29ccb1;
     [mealSecondSegmentCtr addTarget:self action:@selector(mealSegmentAction:) forControlEvents:UIControlEventValueChanged];
     [mealView addSubview:mealSecondSegmentCtr];
+ 
+    isRecord = YES;
+    switch (_foodRecordEntity.recordType) {
+        case RecordTypeBreakfirst:
+            mealSegmentCtr.selectedSegmentIndex = 0;
+            break;
+        case RecordTypeLanch:
+            mealSegmentCtr.selectedSegmentIndex = 1;
+            break;
+        case RecordTypeDinner:
+            mealSegmentCtr.selectedSegmentIndex = 2;
+            break;
+        case RecordTypeSnack:
+            mealSecondSegmentCtr.selectedSegmentIndex = 0;
+            break;
+        default:
+            mealSecondSegmentCtr.selectedSegmentIndex = 0;
+            _foodRecordEntity.recordType = RecordTypeSnack;
+            isRecord = NO;
+            break;
+    }
 
     //传入 额外单位
     NSMutableArray *keys = [NSMutableArray arrayWithArray:[_foodRecordEntity.foodUnit allKeys]];
@@ -283,9 +303,8 @@
 
 -(void)initData{
     
-    XKLog(@"%@", _foodRecordEntity.foodUnit);
     
-    if(!_foodRecordEntity.unit_new || _foodRecordEntity.unit_new.length == 0)
+    if(!_foodRecordEntity.unit)
     {
         unitSegmentCtr.selectedSegmentIndex = 0;
         unitType = eUnitGram;
@@ -297,10 +316,10 @@
                 unitType = 0;
             }
         }
-        if (_foodRecordEntity.number_new) {
-            componentTextField.text = [NSString stringWithFormat:@"%ld",(long)_foodRecordEntity.number_new];
+        if (_foodRecordEntity.number) {
+            componentTextField.text = [NSString stringWithFormat:@"%ld",(long)_foodRecordEntity.number];
         }else{
-            componentTextField.placeholder =@"0";
+            componentTextField.placeholder =@"";
         }
         selectUnitLabel.text = _foodRecordEntity.unit_new;
         
@@ -315,7 +334,10 @@
         if(unitSecondSegmentCtr.selectedSegmentIndex > 2){
             [XKRWCui showInformationHudWithText:@"超出范围"];
         }
-        
+        if (_foodRecordEntity.calorie) {
+            kcalLabel.text = [NSString stringWithFormat:@"%lukcal",(unsigned long)_foodRecordEntity.calorie];
+        }
+        [componentTextField becomeFirstResponder];
     }
     
     
@@ -376,7 +398,6 @@
         theRange.location = 3;
         theRange.length = unitOthersArray.count-3;
         secondArr = [unitOthersArray subarrayWithRange:theRange];
-        XKLog(@"%@",secondArr);
         
         unitThirdSegmentCtr = [[UISegmentedControl alloc]initWithItems:secondArr];
         unitThirdSegmentCtr.frame = CGRectMake(XKAppWidth-kSegmentWidth-15,88+7, kSegmentWidth, 30);
@@ -395,7 +416,6 @@
     
     if ([taskID isEqualToString:@"saveFoodRecord"]) {
         [XKRWRecordService4_0 setNeedUpdate:YES];
-        [self.recordEntity.FoodArray addObject:_foodRecordEntity];
         [self popView];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
     } else if ([taskID isEqualToString:@"downloadFoodDetail"]) {
@@ -466,12 +486,11 @@
         _foodRecordEntity.number = [componentTextField.text integerValue];
         
         if (_foodRecordEntity.serverid == 0) {
-            NSInteger recordTimeStamp = [_recordEntity.date timeIntervalSince1970];
+            NSInteger recordTimeStamp = [_foodRecordEntity.date timeIntervalSince1970];
             NSInteger now = [[NSDate date] timeIntervalSince1970];
             
             NSInteger plus = (now - recordTimeStamp) % 86400;
             _foodRecordEntity.serverid = recordTimeStamp + plus;
-            _foodRecordEntity.date = _recordEntity.date;
         }
         
         _foodRecordEntity.unit = unitType;
@@ -733,7 +752,6 @@
             }
         }
         
-        componentStr = textField.text;
         
         int textNum = [textField.text intValue];
         if (unitType == eUnitGram){

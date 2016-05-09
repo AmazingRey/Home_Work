@@ -281,9 +281,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [self downloadWithTaskID:@"syncData" task:^{
-        [XKRWCommHelper syncRemoteData];
-    }];
+    
 }
 
 - (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication

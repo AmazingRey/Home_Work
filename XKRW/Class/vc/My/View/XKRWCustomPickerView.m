@@ -13,10 +13,11 @@
     UIPickerView *picker;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame withindex:(NSInteger)index
+- (instancetype)initWithFrame:(CGRect)frame withindex:(NSInteger)index withDicData:(NSDictionary *)dic
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _dicData = dic;
         _leftBtnText = @"取消";
         _rightBtnText = @"确定";
         
@@ -83,7 +84,7 @@
     }
 }
 
-#pragma mark UIPickerView Method
+#pragma UIPickerView Method
 #pragma mark UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -92,15 +93,17 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 10;
+    return _dicData.count;
 }
+
 #pragma mark UIPickerViewDelegate
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
     UILabel *myView = nil;
-    myView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, 100, 30)];
+    myView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, 30)];
     myView.textAlignment = NSTextAlignmentCenter;
-    myView.text = [NSString stringWithFormat:@"第%ld周",(long)row+1];
+    NSString *str = [_dicData objectForKey:[NSNumber numberWithInteger:row]];
+    myView.text = str;
     myView.font = [UIFont systemFontOfSize:14];         //用label来设置字体大小
     myView.backgroundColor = [UIColor clearColor];
     return myView;
@@ -118,7 +121,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     _currentIndex = row;
-    _currentStr = [[_dicData objectForKey:[NSNumber numberWithInteger:component]] objectAtIndex:row];
+    _currentStr = [_dicData objectForKey:[NSNumber numberWithInteger:row]];
     UILabel *lab = (UILabel *)[pickerView viewForRow:row forComponent:component];
     _currentStr = lab.text;
 }

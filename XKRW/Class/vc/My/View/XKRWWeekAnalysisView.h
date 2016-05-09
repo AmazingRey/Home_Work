@@ -16,4 +16,6 @@
 @property (strong, nonatomic) XKRWStatisticDetailView *eatDecreaseView;
 @property (strong, nonatomic) XKRWStatisticDetailView *sportDecreaseView;
 
+
+-(void)refreshViews;
 @end

@@ -9,6 +9,7 @@
 #import "Masonry.h"
 #import "XKRWAlgolHelper.h"
 #import "XKRWRecordService4_0.h"
+#import "XKRWStatiscBussiness5_3.h"
 
 @implementation XKRWStatisticDetailView
 
@@ -18,6 +19,15 @@
     if (self) {
         _type = type;
         _statisticType = statisType;
+        
+        XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
+        if (_statisticType == 1) {
+            _dataArray = bussiness.array;
+            _currentEntity = [_dataArray objectAtIndex:_currentIndex];
+        }else {
+            _currentEntity = bussiness.statiscEntity;
+        }
+        
         //每日正常饮食摄入
         _dailyNormal = [XKRWAlgolHelper dailyIntakEnergy];
         //饮食消耗
@@ -27,6 +37,34 @@
         [self makeViewAutoLayout];
     }
     return self;
+}
+
+-(XKRWStatiscEntity5_3 *)currentEntity{
+    if (!_currentEntity) {
+        if (_statisticType == 1) {
+            _currentEntity = [_dataArray objectAtIndex:_currentIndex];
+        }else{
+            _currentEntity = [[XKRWStatiscBussiness5_3 alloc] init].statiscEntity;
+        }
+    }
+    return _currentEntity;
+}
+
+-(void)setCurrentIndex:(NSInteger)currentIndex{
+    if (_currentIndex != currentIndex) {
+        _currentIndex = currentIndex;
+        _currentEntity = nil;
+        [self refreshControls];
+    }
+}
+
+-(void)refreshControls{
+//    [self makeViewAutoLayout];
+    [self.labCal setNeedsDisplay];
+    [self.labTarget setNeedsDisplay];
+    [self.labEatRight1 setNeedsDisplay];
+    [self.labEatRight2 setNeedsDisplay];
+    [self.labSportRight setNeedsDisplay];
 }
 
 -(void)makeViewAutoLayout{
@@ -90,25 +128,25 @@
 -(UILabel *)labTitle{
     if (!_labTitle) {
         _labTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-        _labTitle.text = _type == 1? @"饮食减少摄入总计" : @"运动消耗总计";
         _labTitle.textAlignment = NSTextAlignmentCenter;
         _labTitle.textColor = colorSecondary_333333;
         _labTitle.font = [UIFont systemFontOfSize:12];
         [self addSubview:_labTitle];
     }
+    _labTitle.text = _type == 1? @"饮食减少摄入总计" : @"运动消耗总计";
     return _labTitle;
 }
 
 -(UILabel *)labCal{
     if (!_labCal) {
         _labCal = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-        _labCal.text = _type == 1? [NSString stringWithFormat:@"%.0fkcal",_dailyNormal-_dailyFoodDecrease]: [NSString stringWithFormat:@"%.0fkcal",_dailySportDecrease];
         
         _labCal.textAlignment = NSTextAlignmentCenter;
         _labCal.textColor = XKMainToneColor_29ccb1;
         _labCal.font = [UIFont systemFontOfSize:27];
         [self addSubview:_labCal];
     }
+    _labCal.text = _type == 1? [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.decreaseIntake.floatValue]: [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.decreaseSport.floatValue];
     return _labCal;
 }
 
@@ -116,13 +154,14 @@
     if (!_labTarget) {
         _labTarget = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
         _labTarget.font = [UIFont systemFontOfSize:12];
-        _labTarget.text = @"目标842kcal";
-        if (_statisticType == 2 && _type == 1) {
-            _labTarget.text = @"";
-        }
         _labTarget.textColor = colorSecondary_333333;
         _labTarget.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_labTarget];
+    }
+    _labTarget.text = _type == 1? [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.targetIntake.floatValue]: [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.targetSport.floatValue];
+    
+    if (_statisticType == 2 && _type == 1) {
+        _labTarget.text = @"";
     }
     return _labTarget;
 }
@@ -180,24 +219,24 @@
 -(UILabel *)labEatRight1{
     if (!_labEatRight1) {
         _labEatRight1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-        _labEatRight1.text = @"23421kcal";
         _labEatRight1.textColor = colorSecondary_333333;
         _labEatRight1.font = [UIFont systemFontOfSize:12];
         _labEatRight1.textAlignment = NSTextAlignmentRight;
         [self addSubview:_labEatRight1];
     }
+    _labEatRight1.text = [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.normalIntake.floatValue];
     return _labEatRight1;
 }
 
 -(UILabel *)labEatRight2{
     if (!_labEatRight2) {
         _labEatRight2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-        _labEatRight2.text = @"-23000kcal";
         _labEatRight2.textColor = colorSecondary_333333;
         _labEatRight2.font = [UIFont systemFontOfSize:12];
         _labEatRight2.textAlignment = NSTextAlignmentRight;
         [self addSubview:_labEatRight2];
     }
+    _labEatRight2.text = [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.actualIntake.floatValue];
     return _labEatRight2;
 }
 
@@ -216,12 +255,12 @@
 -(UILabel *)labSportRight{
     if (!_labSportRight) {
         _labSportRight = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-        _labSportRight.text = @"200分钟";
         _labSportRight.textColor = colorSecondary_333333;
         _labSportRight.font = [UIFont systemFontOfSize:12];
         _labSportRight.textAlignment = NSTextAlignmentRight;
         [self addSubview:_labSportRight];
     }
+    _labSportRight.text = [NSString stringWithFormat:@"%.0f分钟",self.currentEntity.timeSport.floatValue];
     return _labSportRight;
 }
 @end

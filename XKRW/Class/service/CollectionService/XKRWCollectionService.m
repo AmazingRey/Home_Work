@@ -10,7 +10,7 @@
 #import "XKRWNeedLoginAgain.h"
 #import "XKRWUserService.h"
 #import "XKRWSportEntity.h"
-
+#import "XKRWUserService.h"
 //收藏操作sql语句    等最后修改好之后还需要检查
 static NSString *updateCollectionSql = @"REPLACE INTO CollectionTable_5 ( uid, collect_type,original_id,collect_name, content_url, category_type, image_url, food_energy, date) VALUES ( :uid, :collect_type, :original_id,:collect_name, :content_url, :category_type, :image_url, :food_energy, :date)";
 //删除操作
@@ -63,7 +63,7 @@ static XKRWCollectionService *sharedInstance = nil;
 
 - (NSMutableArray *)queryCollectionWithType:(NSInteger)type{
 
-    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM CollectionTable_5 WHERE collect_type=%li ORDER BY date DESC",(long)type];
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM CollectionTable_5 WHERE collect_type=%li and uid=%ld ORDER BY date DESC",(long)type,(long)[[XKRWUserService sharedService] getUserId]];
     NSArray *data =[self query:sql];
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:data.count];
     

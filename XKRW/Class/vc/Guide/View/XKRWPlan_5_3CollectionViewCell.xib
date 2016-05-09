@@ -13,8 +13,8 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="80" height="95"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UMS_wechat_timeline_off.png" translatesAutoresizingMaskIntoConstraints="NO" id="MYF-pL-CPf">
-                        <rect key="frame" x="0.0" y="0.0" width="80" height="95"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UMS_wechat_timeline_off.png" translatesAutoresizingMaskIntoConstraints="NO" id="MYF-pL-CPf">
+                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DAd-Hw-6Vu">
                         <rect key="frame" x="35" y="90" width="0.0" height="0.0"/>
@@ -26,7 +26,7 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="MYF-pL-CPf" secondAttribute="bottom" id="038-4r-A6v"/>
+                <constraint firstAttribute="bottom" secondItem="MYF-pL-CPf" secondAttribute="bottom" constant="15" id="038-4r-A6v"/>
                 <constraint firstAttribute="trailing" secondItem="MYF-pL-CPf" secondAttribute="trailing" id="3PP-np-2hi"/>
                 <constraint firstItem="MYF-pL-CPf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4w1-F1-Ngr"/>
                 <constraint firstItem="MYF-pL-CPf" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Dwr-It-vxk"/>

@@ -153,7 +153,9 @@ class XKRWLoginVC: XKRWBaseVC {
             if XKRWAlgolHelper.expectDayOfAchieveTarget() != nil {
                 XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
             }
-
+            self.downloadWithTaskID("syncData", task: {
+                XKRWCommHelper.syncRemoteData()
+            })
             if (self.navigationController?.tabBarController != nil) {
                 self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
             } else {
@@ -164,8 +166,6 @@ class XKRWLoginVC: XKRWBaseVC {
             {
                 //暂时 未处理   当当前账号被挤下来  在登录一个数据不全的帐号的时候 会出现问题
                  self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-//                let fatReasonVC = XKRWFoundFatReasonVC(nibName:"XKRWFoundFatReasonVC", bundle: nil)
-//                self.navigationController?.pushViewController(fatReasonVC, animated: true)
             }else{
                 self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
             }
@@ -241,7 +241,10 @@ class XKRWLoginVC: XKRWBaseVC {
                 if XKRWAlgolHelper.expectDayOfAchieveTarget() != nil {
                     XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
                 }
-
+                self.downloadWithTaskID("syncData", task: { 
+                    XKRWCommHelper.syncRemoteData()
+                })
+                
                 if (self.navigationController?.tabBarController != nil){
                     self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
                 }else{

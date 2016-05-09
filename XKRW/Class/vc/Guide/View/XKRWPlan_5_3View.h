@@ -6,12 +6,18 @@
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
+@protocol XKRWPlan_5_3ViewDelegate <NSObject>
+@optional
+-(void)tapCollectionView;
+
+@end
 #import <UIKit/UIKit.h>
 #import "NZLabel.h"
 #import "XKRWPlan_5_3CollectionView.h"
 #import "XKRWShowEnergy_5_3View.h"
 
 @interface XKRWPlan_5_3View : UIView
+@property (assign, nonatomic) id<XKRWPlan_5_3ViewDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIImageView *numImg;
 @property (strong, nonatomic) IBOutlet UILabel *titleLab;
 @property (strong, nonatomic) IBOutlet NZLabel *detailLab;

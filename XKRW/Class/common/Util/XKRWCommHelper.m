@@ -667,6 +667,35 @@ static XKRWBaseService *service;
     }
     return YES;
 }
++ (BOOL) syncTodayRemoteData
+{
+    if (![XKRWUserDefaultService isLogin]) {
+        return NO;
+    }
+    
+    @try {
+        //获取记录值
+        NSNumber *result = [[XKRWRecordService4_0 sharedService] syncTodayRecordData];
+        if ([result boolValue]) {
+            [XKRWRecordService4_0 setNeedUpdate:YES];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"获记录出错了:%@",[exception description]);
+        return NO;
+    }
+    
+    //4.2收藏  新增
+    @try {
+        /*加载收藏*/
+        [[XKRWCollectionService sharedService] getCollectionRemoteData];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"出错了，错误原因:%@",[exception reason]);
+        return NO;
+    }
+    return YES;
+}
 
 //上传
 + (BOOL) syncDataToRemote

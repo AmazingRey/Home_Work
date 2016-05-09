@@ -7,7 +7,7 @@
 //
 #import <UIKit/UIKit.h>
 #import "XKRWDailyAnalysizeCell.h"
-
+#import "XKRWStatiscEntity5_3.h"
 
 @interface XKRWStatisticDetailView : UIView
 @property (strong, nonatomic) UILabel *labTitle;
@@ -23,6 +23,11 @@
 
 @property (assign, nonatomic) AnalysizeType type;
 @property (assign, nonatomic) StatisticType statisticType;
+
+
+@property (assign, nonatomic) NSInteger currentIndex;
+@property (strong, nonatomic) NSArray *dataArray;
+@property (strong, nonatomic) XKRWStatiscEntity5_3 *currentEntity;
 //每日正常饮食摄入
 @property (assign, nonatomic) CGFloat dailyNormal;
 //饮食消耗

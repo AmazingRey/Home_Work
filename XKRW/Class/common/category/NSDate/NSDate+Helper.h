@@ -64,4 +64,5 @@
 - (NSDate *)endofADay;
 
 + (BOOL)dateIsLatterThanToday:(NSDate *)date;
++(NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime;
 @end

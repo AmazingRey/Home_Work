@@ -12,54 +12,86 @@
 #import "XKRWUserService.h"
 #import "XKRWWeightService.h"
 #import "XKRWRecordService4_0.h"
-#import "XKRWStatiscBussiness5_3.h"
+
 
 #define LabLength XKAppWidth/4 - 10
 
-@implementation XKRWStatiscHeadView{
-    NSMutableArray *pickerArray;
-    NSArray *dataArray;
-    XKRWStatiscEntity5_3 *statiscEntity;
-}
+@implementation XKRWStatiscHeadView
 
-- (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type
+- (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type 
 {
     self = [super initWithFrame:frame];
     if (self) {
         _statisType = type;
-        if (![self judgeTotalHasRecordDays]) {
-            //不足7天
-        }
-        
         XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
         if (_statisType == 1) {
-            dataArray = bussiness.array;
+            _currentIndex = 0;
+            _dataArray = bussiness.array;
+            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:bussiness.array.count];
+            
+            for (XKRWStatiscEntity5_3 *entity in bussiness.array){
+                [dic setObject:[NSString stringWithFormat:@"第%ld周 %@",(long)entity.num,entity.dateRange] forKey:[NSNumber numberWithInteger:entity.index]];
+            }
+            _pickerDic = dic;
+            _currentEntity = [_dataArray objectAtIndex:_currentIndex];
         }else{
-            statiscEntity = bussiness.statiscEntity;
+            
         }
-        pickerArray = [NSMutableArray arrayWithObjects:@"第1周",@"第2周",@"第3周",@"第4周",@"第5周",@"第6周",@"第7周",@"第8周",@"第9周",@"第10周", nil];
     }
     return self;
 }
 
+#pragma mark refresh Controls
+-(void)refreshControls{
+    [self updateConstraints];
+//    [self.lab1 setNeedsDisplay];
+//    [self.lab2 setNeedsDisplay];
+//    [self.subLab3 setNeedsDisplay];
+//    [self.subLab4 setNeedsDisplay];
+//    [self.subLab5 setNeedsDisplay];
+//    [self.subLab6 setNeedsDisplay];
+}
+
+#pragma mark setter Method
+-(void)setCurrentIndex:(NSInteger)currentIndex{
+    if (_currentIndex != currentIndex) {
+        _currentIndex = currentIndex;
+    }
+    if (_dataArray && _statisType == 1) {
+        _currentEntity = [_dataArray objectAtIndex:_currentIndex];
+    }
+}
 
 #pragma getter Method
+
+-(XKRWStatiscEntity5_3 *)currentEntity{
+    if (!_currentEntity) {
+        if (_statisType == 1) {
+             _currentEntity = [_dataArray objectAtIndex:_currentIndex];
+        }else{
+            _currentEntity = [[XKRWStatiscBussiness5_3 alloc] init].statiscEntity;
+        }
+    }
+    return _currentEntity;
+}
+
 -(UILabel *)lab1{
     if (!_lab1) {
         _lab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 30)];
-        if (_statisType == 1) {
-            [self lab1ReloadText:[pickerArray objectAtIndex:_currentIndex]];
-        }else{
-            _lab1.text = [NSString stringWithFormat:@"至今"];
-        }
         _lab1.textAlignment = NSTextAlignmentCenter;
         _lab1.font = [UIFont systemFontOfSize:15];
         [self addSubview:_lab1];
     }
+    if (_statisType == 1) {
+        [self lab1ReloadText];
+    }else{
+        _lab1.text = self.currentEntity.dateRange;
+    }
     return _lab1;
 }
 
--(void)lab1ReloadText:(NSString *)week{
+-(void)lab1ReloadText{
+    NSString *week = [[_pickerDic objectForKey:[NSNumber numberWithInteger:_currentIndex]] substringToIndex:3];
     float weight = [[XKRWUserService sharedService] getUserDestiWeight] / 1000.0;
     NSString *weightTarget =[NSString stringWithFormat:@"%.1fkg",weight];
     
@@ -107,6 +139,9 @@
         _lab2.font = [UIFont systemFontOfSize:12];
         [self addSubview:_lab2];
     }
+    if (_statisType == 1) {
+        _lab2.text = self.currentEntity.dateRange;
+    }
     return _lab2;
 }
 
@@ -135,12 +170,12 @@
 -(UILabel *)subLab3{
     if (!_subLab3) {
         _subLab3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
-        _subLab3.text = [NSString stringWithFormat:@"%.1f",[[XKRWUserService sharedService] getCurrentWeight]/1000.f];
         _subLab3.textAlignment = NSTextAlignmentCenter;
         _subLab3.textColor = colorSecondary_333333;
         _subLab3.font = [UIFont systemFontOfSize:12];
         [self addSubview:_subLab3];
     }
+    _subLab3.text = [NSString stringWithFormat:@"%.1f",self.currentEntity.weight];
     return _subLab3;
 }
 
@@ -169,22 +204,19 @@
 -(UILabel *)subLab4{
     if (!_subLab4) {
         _subLab4 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
-        CGFloat currentWeight = [[XKRWUserService sharedService] getCurrentWeight]/1000.f;
-         NSDate *earlyDate = [[NSDate date] dateByAddingTimeInterval:0];
-        CGFloat earlyWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:earlyDate];
-        
-        NSString *txt = @"";
-        if (currentWeight > earlyWeight) {
-            txt = [NSString stringWithFormat:@"增重%.1f",currentWeight - earlyWeight];
-        }else{
-            txt = [NSString stringWithFormat:@"减重%.1f",earlyWeight - currentWeight];
-        }
-        _subLab4.text = txt;
         _subLab4.textAlignment = NSTextAlignmentCenter;
         _subLab4.font = [UIFont systemFontOfSize:12];
         _subLab4.textColor = XKMainToneColor_29ccb1;
         [self addSubview:_subLab4];
     }
+    
+    NSString *txt = @"";
+    if (self.currentEntity.weightChange > 0) {
+        txt = [NSString stringWithFormat:@"增重%.1f",self.currentEntity.weightChange];
+    }else{
+        txt = [NSString stringWithFormat:@"减重%.1f",self.currentEntity.weightChange];
+    }
+    _subLab4.text = txt;
     return _subLab4;
 }
 
@@ -213,13 +245,12 @@
 -(UILabel *)subLab5{
     if (!_subLab5) {
         _subLab5 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
-        
-        _subLab5.text = @"";
         _subLab5.textAlignment = NSTextAlignmentCenter;
         _subLab5.font = [UIFont systemFontOfSize:12];
         _subLab5.textColor = XKWarningColor;
         [self addSubview:_subLab5];
     }
+     _subLab5.text = [NSString stringWithFormat:@"%d",self.currentEntity.dayRecord.intValue];
     return _subLab5;
 }
 
@@ -248,12 +279,12 @@
 -(UILabel *)subLab6{
     if (!_subLab6) {
         _subLab6 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
-        _subLab6.text = @"";
         _subLab6.textAlignment = NSTextAlignmentCenter;
         _subLab6.textColor = XKWarningColor;
         _subLab6.font = [UIFont systemFontOfSize:12];
         [self addSubview:_subLab6];
     }
+    _subLab6.text = [NSString stringWithFormat:@"%d",self.currentEntity.dayAchieve.intValue];
     return _subLab6;
 }
 
@@ -382,24 +413,14 @@
 }
 
 -(void)btnDownPressed:(UIButton *)btn{
-    if ([self.delegate respondsToSelector:@selector(makeAnalysisPickerViewAppear:)]) {
-        [self.delegate makeAnalysisPickerViewAppear:_currentIndex];
+    if ([self.delegate respondsToSelector:@selector(makeAnalysisPickerViewAppear:withDicData:)]) {
+        [self.delegate makeAnalysisPickerViewAppear:_currentIndex withDicData:_pickerDic];
     }
 }
 
 -(void)btnQuestionPressed:(UIButton *)btn{
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"完成计划的说明" message:@"每天，饮食和运动的进度圈均为绿色状态时，计作计划完成" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
     [alertView show];
-}
-
--(BOOL)judgeTotalHasRecordDays{
-    NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
-    NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
-    NSInteger days = [self daysBetweenDate:crearDate andDate:[NSDate date]];
-    if (days < 7) {
-        return NO;
-    }
-    return YES;
 }
 
 -(NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime

@@ -8,10 +8,11 @@
 
 @protocol XKRWStatisticAnalysisPickerViewDelegate <NSObject>
 @optional
--(void)makeAnalysisPickerViewAppear:(NSInteger)index;
+-(void)makeAnalysisPickerViewAppear:(NSInteger)index withDicData:(NSDictionary *)dic;
 @end
 
 #import <UIKit/UIKit.h>
+#import "XKRWStatiscBussiness5_3.h"
 
 @interface XKRWStatiscHeadView : UIView <UIAlertViewDelegate>
 
@@ -44,7 +45,10 @@
  *  所选择的周数 （第1周、第2周。。。）
  */
 @property (assign, nonatomic) NSInteger currentIndex;
-
+@property (strong, nonatomic) NSMutableDictionary *pickerDic;
+@property (strong, nonatomic) NSArray *dataArray;
+@property (strong, nonatomic) XKRWStatiscEntity5_3 *statiscEntity;
+@property (strong, nonatomic) XKRWStatiscEntity5_3 *currentEntity;
 - (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type;
--(void)lab1ReloadText:(NSString *)week;
+-(void)refreshControls;
 @end

@@ -126,7 +126,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             XKRWCui.showProgressHud("")
             
             self.downloadWithTaskID("dealData", outputTask: { () -> AnyObject! in
-                self.viewModel.dealWithSchemeRecords(&self.schemeReocrds, oldRecord: &self.oldRecord)
+           //     self.viewModel.dealWithSchemeRecords(&self.schemeReocrds, oldRecord: &self.oldRecord)
                 return true
             })
             

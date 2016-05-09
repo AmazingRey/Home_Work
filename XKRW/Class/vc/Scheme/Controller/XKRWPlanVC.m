@@ -99,9 +99,18 @@
     [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if (recordBackView) {
+        [[UIApplication sharedApplication].keyWindow bringSubviewToFront:recordBackView];
+    }
+}
+
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self RecordFoodViewpressCancle];
+    if (recordBackView) {
+        [[UIApplication sharedApplication].keyWindow sendSubviewToBack:recordBackView];
+    }
 }
 
 - (void)viewDidLoad {
@@ -109,7 +118,7 @@
     // judge for is today's record or history,is the history record can be changed.
     NSDate *todayDate = [NSDate today];
     if (!self.recordDate || [_recordDate compare:todayDate] == NSOrderedSame ) {
-        _recordDate = [NSDate today];
+        _recordDate = [NSDate date];
         isTodaysPlan = YES;
         revisionType = XKRWNotNeedRevision;
     } else {
@@ -122,6 +131,9 @@
     }
     
     [self initView];
+    [self downloadWithTaskID:@"syncData" outputTask:^id{
+       return @([XKRWCommHelper syncTodayRemoteData]);
+    }];
     [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
     [self initData];
     
@@ -145,7 +157,6 @@
 
 - (void)initData {
     [self setPlanEnergyViewTitle];
-    [self refreshEnergyCircleView:nil];
     [self getTipsData];
     [self getRecordAndMenuScheme];
 }
@@ -471,7 +482,6 @@
         }];
     }
 
-    
     if (index == 1) {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];
         positionX = energyCircleView.eatEnergyCircle.center.x;
@@ -496,8 +506,6 @@
 -(void)addschemeOrRecordView:(NSInteger)index andArrowX:(CGFloat) postitonX {
     XKRWRecordView_5_3 *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordView_5_3");
     popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
-    popView.entity = [[XKRWPlanService shareService] getAllRecordOfDay:_recordDate];
-
     popView.positionX = postitonX;
     popView.type = index;
     popView.vc = self;
@@ -603,7 +611,7 @@
     [recordBackView removeFromSuperview];
 }
 
-- (void)saveSchemeRecord:(id)entity andType:(XKRWRecordType)recordtype andEntryType:(energyType)entryRype
+- (void)saveSchemeRecord:(id )entity andType:(XKRWRecordType)recordtype andEntryType:(energyType)entryRype
 {
     if (![XKRWUtil isNetWorkAvailable]) {
         [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
@@ -621,19 +629,27 @@
     
 }
 
-- (void) deleteSchemeRecord:(XKRWRecordSchemeEntity *)entity andType:(XKRWRecordType)recordtype andEntryType:(energyType)entryRype
+- (void) deleteSchemeRecord:(id )entity andType:(XKRWRecordType)recordtype andEntryType:(energyType)entryRype
 {
     if (![XKRWUtil isNetWorkAvailable]) {
         [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
         return;
     }
-    if (entryRype == energyTypeEat) {
+    if (entryRype == energyTypeEat && recordtype == XKRWRecordTypeScheme) {
         [self downloadWithTaskID:@"deleteFoodScheme" outputTask:^{
             return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
         }];
-    }else if(entryRype == energyTypeSport){
+    }else if(entryRype == energyTypeSport && recordtype == XKRWRecordTypeScheme){
         [self downloadWithTaskID:@"deleteSportScheme" outputTask:^{
             return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
+        }];
+    }else if (recordtype == XKRWRecordTypeFood){
+        [self downloadWithTaskID:@"deleteRecordFood" outputTask:^{
+             return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
+        }];
+    }else if (recordtype == XKRWRecordTypeSport){
+        [self downloadWithTaskID:@"deleteRecordSport" outputTask:^{
+             return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
         }];
     }
 }
@@ -828,6 +844,14 @@
 
 #pragma --mark Network
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
+    if ([taskID isEqualToString:@"syncData"]) {
+        if ([result boolValue]) {
+            [self refreshEnergyCircleView:nil];
+            return;
+        } else {
+            
+        }
+    }
     if ([taskID isEqualToString:@"getRecodEntity"]) {
         recordEntity = result;
     }
@@ -913,6 +937,18 @@
 
     }
     
+    if ([taskID isEqualToString:@"deleteRecordFood"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
+        [_recordPopView setsubViewUI];
+        return;
+    }
+    
+    if ([taskID isEqualToString:@"deleteRecordSport"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectSportCircle];
+        [_recordPopView setsubViewUI];
+        return;
+    }
+    
     //保存体重围度成功
     if ([taskID isEqualToString:@"recordWeightAndDegree"]) {
         return;
@@ -927,6 +963,7 @@
         [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
         return;
     }
+    
     if ([taskID isEqualToString:@"getSportSchemeAndRecord"]) {
         [XKRWCui showInformationHudWithText:@"获取记录体重失败，请稍后尝试"];
         return;

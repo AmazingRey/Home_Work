@@ -58,7 +58,7 @@
             return NO;
         }];
         //这数据加载是否有问题
-        [XKRWCommHelper syncRemoteData];
+        //        [XKRWCommHelper syncRemoteData];
     });
 }
 

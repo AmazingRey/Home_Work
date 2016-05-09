@@ -15,5 +15,7 @@
 @property (strong, nonatomic) XKRWStatiscHeadView *headView;
 @property (strong, nonatomic) XKRWStatisticDetailView *eatDecreaseView;
 @property (strong, nonatomic) XKRWStatisticDetailView *sportDecreaseView;
+@property (strong, nonatomic) XKRWStatiscBussiness5_3 *bussiness;
 
+-(void)refreshViews;
 @end

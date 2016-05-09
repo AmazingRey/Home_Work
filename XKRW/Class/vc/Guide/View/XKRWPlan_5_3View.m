@@ -65,7 +65,8 @@
             CGFloat numLines = ceilf((CGFloat)_dicCollection.count/4);
             
             UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-            layout.itemSize = CGSizeMake(80, 95);
+            CGFloat side = 80;
+            layout.itemSize = CGSizeMake(side, side);
             layout.minimumInteritemSpacing = 0;
             layout.minimumLineSpacing = 30;
             
@@ -74,6 +75,10 @@
             habitCollectionView.dicData = _dicCollection;
             habitCollectionView.arrText = [_dicCollection allKeys];
             habitCollectionView.arrImg = [_dicCollection allValues];
+            
+            UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToFatReason:)];
+            ges.numberOfTapsRequired = 1;
+            [habitCollectionView addGestureRecognizer:ges];
             [self addSubview:habitCollectionView];
             break;
 //        default:
@@ -86,6 +91,13 @@
     [self setNeedsDisplay];
     [self layoutIfNeeded];
 }
+
+-(void)pushToFatReason:(UITapGestureRecognizer *)ges{
+    if ([self.delegate respondsToSelector:@selector(tapCollectionView)]) {
+        [self.delegate tapCollectionView];
+    }
+}
+
 
 - (IBAction)pressStart:(id)sender {
 }

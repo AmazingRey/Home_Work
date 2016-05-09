@@ -370,6 +370,11 @@
  *  同步本地离线数据到服务器，再拉取从date至今为止的所有数据
  */
 - (NSNumber *)syncRecordData;
+/**
+ *  同步本地离线数据到服务器，再拉取今天的数据
+ *
+ */
+- (NSNumber *)syncTodayRecordData;
 
 /// 下载所有记录，5.0方案数据处理用
 - (BOOL)downloadAllRecords;

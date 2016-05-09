@@ -34,22 +34,23 @@
             XKRWStatiscEntity5_3 *entity = [[XKRWStatiscEntity5_3 alloc] init];
             entity.type = 1;
             entity.index = i;
+            entity.num = num - i;
             entity.dateRange = [self getDateRange:i];
-            entity.weekDays = [self getWeekDaysInIndex:i];
+            entity.arrDaysDate = [self getWeekDaysInIndex:i];
             entity.weight = [self getWeightSpecific:i];
             entity.weightChange = entity.weight - [[XKRWWeightService shareService] getWeightRecordWithDate:[self getDateRangeStart:i]];
             entity.dayRecord = [NSNumber numberWithInteger:[self getHasRecordDays:Days curDate:[self getDateRangeEnd:i]]];
             entity.dayAchieve = [NSNumber numberWithInteger:[self getPerfectDays:Days curDate:[self getDateRangeEnd:i]]];
             
-            entity.normalIntake = [NSNumber numberWithFloat:[self getNormalIntake:entity.weekDays]];
-            entity.actualIntake = [NSNumber numberWithFloat:[self getActualRangeIntake:entity.weekDays]];
-            entity.recommondIntake = [NSNumber numberWithFloat:[self getRecommondIntake:entity.weekDays]];
+            entity.normalIntake = [NSNumber numberWithFloat:[self getNormalIntake:entity.arrDaysDate]];
+            entity.actualIntake = [NSNumber numberWithFloat:[self getActualRangeIntake:entity.arrDaysDate]];
+            entity.recommondIntake = [NSNumber numberWithFloat:[self getRecommondIntake:entity.arrDaysDate]];
             entity.decreaseIntake = [NSNumber numberWithFloat:(entity.normalIntake.floatValue - entity.actualIntake.floatValue)];
             entity.targetIntake = [NSNumber numberWithFloat:(entity.normalIntake.floatValue - entity.recommondIntake.floatValue)];
             
-            entity.decreaseSport = [NSNumber numberWithFloat:[self getActualRangeSport:entity.weekDays]];
-            entity.targetSport = [NSNumber numberWithFloat:[self getRecommondSport:entity.weekDays]];
-            entity.timeSport = [NSNumber numberWithInteger:[self getSportTotalTime:entity.weekDays]];
+            entity.decreaseSport = [NSNumber numberWithFloat:[self getActualRangeSport:entity.arrDaysDate]];
+            entity.targetSport = [NSNumber numberWithFloat:[self getRecommondSport:entity.arrDaysDate]];
+            entity.timeSport = [NSNumber numberWithInteger:[self getSportTotalTime:entity.arrDaysDate]];
             
             [_array addObject:entity];
         }
@@ -64,16 +65,33 @@
         _statiscEntity.type = 2;
         _statiscEntity.startDateStr = [self getPlanStartDate];
         _statiscEntity.dateRange = [NSString stringWithFormat:@"%@-至今",[self getPlanStartDate]];
+        _statiscEntity.arrDaysDate = [self getAllDaysInIndex];
         _statiscEntity.weight = [self getCurrentWeight];
         _statiscEntity.weightChange = [self getTotalWeightChange];
         _statiscEntity.dayRecord = [NSNumber numberWithInteger:[self getHasRecordDays:[[self getTotalHasRecordDays] integerValue] curDate:[NSDate date]]];
         ;
         _statiscEntity.dayAchieve = [NSNumber numberWithInteger:[self getPerfectDays:_statiscEntity.dayRecord.integerValue curDate:nil]];
+        
+        _statiscEntity.normalIntake = [NSNumber numberWithFloat:[self getNormalIntake:_statiscEntity.arrDaysDate]];
+        _statiscEntity.actualIntake = [NSNumber numberWithFloat:[self getActualRangeIntake:_statiscEntity.arrDaysDate]];
+        _statiscEntity.recommondIntake = [NSNumber numberWithFloat:[self getRecommondIntake:_statiscEntity.arrDaysDate]];
+        _statiscEntity.decreaseIntake = [NSNumber numberWithFloat:(_statiscEntity.normalIntake.floatValue - _statiscEntity.actualIntake.floatValue)];
+        _statiscEntity.targetIntake = [NSNumber numberWithFloat:(_statiscEntity.normalIntake.floatValue - _statiscEntity.recommondIntake.floatValue)];
+        
+        _statiscEntity.decreaseSport = [NSNumber numberWithFloat:[self getActualRangeSport:_statiscEntity.arrDaysDate]];
+        _statiscEntity.targetSport = [NSNumber numberWithFloat:[self getRecommondSport:_statiscEntity.arrDaysDate]];
+        _statiscEntity.timeSport = [NSNumber numberWithInteger:[self getSportTotalTime:_statiscEntity.arrDaysDate]];
+        
     }
     return _statiscEntity;
 }
 
 #pragma mark calculateMethod
+/**
+ *  获取统计分析开始日期
+ *
+ *  @return 开始日期的nsstring
+ */
 -(NSString *)getPlanStartDate{
     NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
     NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
@@ -83,6 +101,13 @@
     return [df stringFromDate:crearDate];
 }
 
+/**
+ *  获取第几周的日期范围
+ *
+ *  @param index 第几周
+ *
+ *  @return 该周日期范围（nsstring 类型）
+ */
 -(NSString *)getDateRange:(int)index{
     NSString *dateStart = @"2016年5月12日";
     NSString *dateEnd = @"2016年5月18日";
@@ -96,15 +121,21 @@
         NSInteger resetTime = [[[XKRWUserService sharedService] getResetTime] integerValue];
         if (timestamp < resetTime)
         {
-            NSDate *createDate  = [NSDate dateWithTimeIntervalSince1970:resetTime-DrecreaseDateInterval*index];
-            NSDate *weekDate = [createDate dateByAddingTimeInterval:DateInterval];
-            dateStart = [df stringFromDate:createDate];
-            dateEnd = [df stringFromDate:weekDate];
+            NSArray *arr = [self getWeekDaysInIndex:index];
+            dateStart = [df stringFromDate:[arr firstObject]];
+            dateEnd = [df stringFromDate:[arr lastObject]];
         }
     }
     return [NSString stringWithFormat:@"%@-%@",dateStart,dateEnd];
 }
 
+/**
+ *  获取日期范围内第一天
+ *
+ *  @param index 第几周
+ *
+ *  @return 该周内第一天日期
+ */
 -(NSDate *)getDateRangeStart:(int)index{
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
     df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
@@ -123,6 +154,14 @@
     return nil;
 }
 
+
+/**
+ *  获取日期范围内最后一天
+ *
+ *  @param index 第几周
+ *
+ *  @return 该周内最后日期
+ */
 -(NSDate *)getDateRangeEnd:(int)index{
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
     df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
@@ -151,11 +190,18 @@
  *  @return 该周的每天的日期所构成的数组（正序，小在前，大在后）
  */
 -(NSArray *)getWeekDaysInIndex:(int)index{
-    NSDate *endDate = [self getDateRangeEnd:index];
+//    NSDate *endDate = [self getDateRangeEnd:index];
+    NSDate *endDate = [[NSDate date] offsetDay:-Days*index];
+    NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
+    NSDate *createDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
+    
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:Days];
     for (int i = 0 ; i < Days; i++) {
         NSDate *date = [endDate offsetDay:-i];
         [arr addObject:date];
+        if ([date isDayEqualToDate:createDate]) {
+            break;
+        }
     }
     [arr sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         NSDate *p1 = (NSDate*)obj1;
@@ -171,6 +217,33 @@
     }];
     
     return [arr copy];
+}
+
+/**
+ *  获取所有日期的数组
+ *
+ *  @return 所有计划内日期数组
+ */
+-(NSArray *)getAllDaysInIndex{
+    NSInteger days = [[self getTotalHasRecordDays] integerValue];
+    NSMutableArray *arr = [NSMutableArray arrayWithCapacity:days];
+    for (int i = 0 ; i < days; i++) {
+        NSDate *date = [[NSDate date] offsetDay:-i];
+        [arr addObject:date];
+    }
+    [arr sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSDate *p1 = (NSDate*)obj1;
+        NSDate *p2 = (NSDate*)obj2;
+        if ([p1 earlierDate:p2]) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        
+        if ([p2 earlierDate:p1]) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    return arr;
 }
 
 -(CGFloat)getCurrentWeight{
@@ -262,8 +335,6 @@
     }
     return j;
 }
-
-
 
 /**
  *  获取一周内正常所需摄入
@@ -363,34 +434,9 @@
 -(NSNumber *)getTotalHasRecordDays{
     NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
     NSDate *createDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
-    NSInteger days = [self daysBetweenDate:createDate andDate:_date];
+    NSInteger days = [NSDate daysBetweenDate:createDate andDate:_date];
     
-    return [NSNumber numberWithInteger:days];
+    return [NSNumber numberWithInteger:days + 1];
 }
 
-/**
- *  两个日期之间相差几天
- *
- *  @param fromDateTime 开始日期
- *  @param toDateTime   结束日期
- *
- *  @return 所差天数
- */
--(NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
-{
-    NSDate *fromDate;
-    NSDate *toDate;
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    
-    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate
-                 interval:NULL forDate:fromDateTime];
-    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate
-                 interval:NULL forDate:toDateTime];
-    
-    NSDateComponents *difference = [calendar components:NSCalendarUnitDay
-                                               fromDate:fromDate toDate:toDate options:0];
-    
-    return [difference day];
-}
 @end

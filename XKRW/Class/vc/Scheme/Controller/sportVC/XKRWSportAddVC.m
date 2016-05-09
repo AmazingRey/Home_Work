@@ -41,12 +41,9 @@
 @property (nonatomic, strong) UILabel           *lbTitle;   //标题s
 @property (nonatomic, strong) UIScrollView      *lbTitleBG;  //作为背景
 @property (nonatomic, strong) UILabel           *lbDesc;    //描述
-
 @property (nonatomic, strong) UIView            *datePart; //日期选择  View
-
 @property (nonatomic, assign) DayType            dayTemp;   //日期类型  用来注明 今天明天
-
-@property (nonatomic, strong) XKRWNaviRightBar *rightBar;
+@property (nonatomic, strong) XKRWNaviRightBar   *rightBar;
 @end
 
 @implementation XKRWSportAddVC
@@ -87,6 +84,9 @@
     kcalLabel.backgroundColor = XKClearColor;
     kcalLabel.text = [NSString stringWithFormat:@"0Kcal"];
     [topView addSubview:kcalLabel];
+    
+
+ 
     
     //logo背景
     logoIV = [[UIImageView alloc] initWithFrame:CGRectMake(15.f, 10.f, 55.f, 55.f)];
@@ -188,19 +188,29 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
     [self.view addGestureRecognizer:tapGesture];
     
-    if (_sportEntity.sportMets != 0) {
+    if (_sportEntity.sportMets != 0 || _recordSportEntity != nil) {
         [self setDataToUI];
     }
 }
 
 
 - (void) setDataToUI {
-    [logoIV setImageWithURL:[NSURL URLWithString:_sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"default_pic"]];
-    sportName.text = _sportEntity.sportName;
+    if (_recordSportEntity != nil) {
+        [logoIV setImageWithURL:[NSURL URLWithString:_recordSportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"default_pic"]];
+        sportName.text = _recordSportEntity.sportName;
+        if (_recordSportEntity) {//修改
+            kcalLabel.text = [NSString stringWithFormat:@"%liKcal",(long)_recordSportEntity.calorie];
+            componentTextField.text = [NSString stringWithFormat:@"%ld",(long)_recordSportEntity.number];
+        }
+
+    }else{
+        [logoIV setImageWithURL:[NSURL URLWithString:_sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"default_pic"]];
+        sportName.text = _sportEntity.sportName;
+    }
 }
 
 -(void)initData{
-    if (_sportEntity.sportMets == 0) {
+    if (_recordSportEntity == nil && _sportEntity.sportMets == 0) {
         if([XKRWUtil isNetWorkAvailable]){
             [XKRWCui showProgressHud:@"加载中..."];
             [self downloadWithTaskID:@"getSportDetail" outputTask:^(){
@@ -293,8 +303,13 @@
     
     if (_recordSportEntity == nil) {
         _recordSportEntity = [[XKRWRecordSportEntity alloc] init];
+        _recordSportEntity.imageURL = _sportEntity.sportPic;
+        _recordSportEntity.sportMets = _sportEntity.sportMets;
+        _recordSportEntity.sportName = _sportEntity.sportName;
+        _recordSportEntity.unit = _sportEntity.sportUnit;
+        _recordSportEntity.sportId = _sportEntity.sportId;
     }
-    
+    _recordSportEntity.recordType = 0;
     _recordSportEntity.uid = (int)[[XKRWUserService sharedService] getUserId];
     _recordSportEntity.calorie = [kcalLabel.text intValue];
     _recordSportEntity.number = [componentTextField.text integerValue];

@@ -10,7 +10,7 @@ import UIKit
 
 class XKRWHPMealAnalysisVC: XKRWBaseVC {
     
-    weak var viewModel: XKRWHistoryAndProcessModel?
+    var viewModel: XKRWHistoryAndProcessModel =  XKRWHistoryAndProcessModel()
 
     @IBOutlet weak var circleView: UIView!
     
@@ -22,11 +22,15 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
     var needShowTip: Bool = false
     var isThreesperfect: Bool = false
     var needShowPie:Bool = true
-    
+    var recordDate:NSDate!
     var tipView: KMHeaderTips!
     var calorieValue: Float!
     var proteinValue: Float!
     var fatValue: Float!
+    
+    var recordEntity:XKRWRecordEntity4_0 = XKRWRecordEntity4_0()
+    
+    var schemeReocrds:[XKRWRecordSchemeEntity] = []
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -38,6 +42,7 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
         
     }
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,17 +50,19 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
         
         self.title = "饮食分析"
         self.addNaviBarBackButton()
-        
-        
-        
-        let fat = (viewModel!.nutriPersentage![kFat] as! NSNumber).floatValue
-        let protein = (viewModel!.nutriPersentage![kProtein] as! NSNumber).floatValue
-        let carbohydrate = (viewModel!.nutriPersentage![kCarbohydrate] as! NSNumber).floatValue
+        recordEntity = XKRWRecordService4_0.sharedService().getAllRecordOfDay(recordDate)
+
+        self.schemeReocrds = XKRWRecordService4_0.sharedService().getSchemeRecordWithDate(recordDate) as!   [XKRWRecordSchemeEntity]
+        viewModel = XKRWHistoryAndProcessModel();
+        viewModel.dealWithSchemeRecords(&self.schemeReocrds, oldRecord: &self.recordEntity)
+        let fat = (viewModel.nutriPersentage![kFat] as! NSNumber).floatValue
+        let protein = (viewModel.nutriPersentage![kProtein] as! NSNumber).floatValue
+        let carbohydrate = (viewModel.nutriPersentage![kCarbohydrate] as! NSNumber).floatValue
         self.proteinLabel.textColor = XKMainSchemeColor
         self.fatLabel.textColor = XKMainSchemeColor
         self.carbLabel.textColor = XKMainSchemeColor
         
-        if self.viewModel?.breakfast?.record_value == 2 && self.viewModel?.lunch?.record_value == 2 && self.viewModel?.dinner?.record_value == 2{
+        if self.viewModel.breakfast?.record_value == 2 && self.viewModel.lunch?.record_value == 2 && self.viewModel.dinner?.record_value == 2{
             self.isThreesperfect = true
         }else{
             self.isThreesperfect = false
@@ -69,7 +76,7 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
             proteinValue = 15
             fatValue = 25
             self.needShowPie = true
-            if self.viewModel?.breakfast?.record_value <= 1 && self.viewModel?.lunch?.record_value <= 1 && self.viewModel?.dinner?.record_value <= 1{
+            if self.viewModel.breakfast?.record_value <= 1 && self.viewModel.lunch?.record_value <= 1 && self.viewModel.dinner?.record_value <= 1{
                 self.proteinLabel.text = "0%"
                 self.fatLabel.text = "0%"
                 self.carbLabel.text = "0%"
@@ -120,11 +127,11 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
         pieChart.strokeChart()
         
 //        self.calorieLabel.text = String(format: "%dkcal / %dkcal", self.viewModel!.otherIntakeCalorie, self.viewModel!.otherIntakeMaxCalorie)
-        let intakeCalorie = self.viewModel!.intakeCalorie
-        let tatolCaolorie = (self.isThreesperfect == true ? self.viewModel!.intakeCalorie :self.viewModel!.recomandCalorie)
+        let intakeCalorie = self.viewModel.intakeCalorie
+        let tatolCaolorie = (self.isThreesperfect == true ? self.viewModel.intakeCalorie :self.viewModel.recomandCalorie)
         var color = XKMainSchemeColor;
-        let intakeCalorieString = String(format: "%dkcal",self.viewModel!.intakeCalorie)
-        let text = String(format: "%dkcal / %dkcal", self.viewModel!.intakeCalorie, (self.isThreesperfect == true ? self.viewModel!.intakeCalorie :self.viewModel!.recomandCalorie))
+        let intakeCalorieString = String(format: "%dkcal",self.viewModel.intakeCalorie)
+        let text = String(format: "%dkcal / %dkcal", self.viewModel.intakeCalorie, (self.isThreesperfect == true ? self.viewModel.intakeCalorie :self.viewModel.recomandCalorie))
         if intakeCalorie > tatolCaolorie {
            color = UIColor.redColor()
         }else
@@ -168,7 +175,7 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -218,7 +225,7 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
         
 //        var remain = self.viewModel!.otherIntakeMaxCalorie - self.viewModel!.otherIntakeCalorie
 
-        var remain =  (self.isThreesperfect == true ? self.viewModel!.intakeCalorie :self.viewModel!.recomandCalorie) - self.viewModel!.intakeCalorie
+        var remain =  (self.isThreesperfect == true ? self.viewModel.intakeCalorie :self.viewModel.recomandCalorie) - self.viewModel.intakeCalorie
         var color: UIColor
         
         if remain < 0  {
@@ -231,7 +238,7 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
         
         
         
-        items.append(PNPieChartDataItem(value: CGFloat(self.viewModel!.intakeCalorie), color: colors[0], description: ""))
+        items.append(PNPieChartDataItem(value: CGFloat(self.viewModel.intakeCalorie), color: colors[0], description: ""))
         items.append(PNPieChartDataItem(value: CGFloat(remain), color: colors[1], description: ""))
         
         let outerRadius: CGFloat = 183

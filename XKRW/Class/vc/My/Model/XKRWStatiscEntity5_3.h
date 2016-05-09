@@ -20,14 +20,19 @@
 @property (strong, nonatomic) NSString *startDateStr;
 
 /**
+ *  所选周数显示的num
+ */
+@property (assign, nonatomic) NSInteger num;
+
+/**
  *  所选周数的index
  */
 @property (assign, nonatomic) NSInteger index;
 
 /**
- *  所选周的所有具体日期
+ *  所选的所有具体日期
  */
-@property (strong, nonatomic) NSArray *weekDays;
+@property (strong, nonatomic) NSArray *arrDaysDate;
 
 /**
  *  所选周数对应的日期区间

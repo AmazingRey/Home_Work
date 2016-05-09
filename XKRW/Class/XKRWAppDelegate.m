@@ -6,6 +6,11 @@
 //  Copyright (c) 2013年 XiKang. All rights reserved.
 //
 
+#include <sys/socket.h>
+#include <sys/sysctl.h>
+#include <net/if.h>
+#include <net/if_dl.h>
+
 #import "XKRWAccountService.h"
 #import "XKRWAppDelegate.h"
 #import "XKAppInfoHelper.h"
@@ -30,14 +35,12 @@
 #import "UMSocialSinaHandler.h"
 #import "UMSocialQQHandler.h"
 #import "XKRWAdService.h"
-#include <sys/socket.h>
-#include <sys/sysctl.h>
-#include <net/if.h>
-#include <net/if_dl.h>
+
 #import <AdSupport/AdSupport.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <AlipaySDK/AlipaySDK.h>
+
 
 #pragma --mark 5.0  添加的头文件    （废弃使用storyboard）
 #import "XKRWRootVC.h"

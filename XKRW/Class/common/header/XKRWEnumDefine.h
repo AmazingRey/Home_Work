@@ -314,7 +314,8 @@ typedef  NS_ENUM(NSInteger,FromWhichVC) {
     RegisterVC,
     MyVC,
     SchemeInfoChangeVC,
-    Appdelegate
+    Appdelegate,
+    ThinBodyAssesssVC
 };
 
 typedef NS_ENUM(NSInteger, NavigationBarType) {

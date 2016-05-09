@@ -2174,8 +2174,9 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 - (void)resetUserRecords {
     
     XKRWRecordEntity4_0 *entity = [self getOtherInfoOfDay:[NSDate date]];
-    
-    [self deleteHabitRecord:entity];
+    if(entity != nil){
+        [self deleteHabitRecord:entity];
+    }
 }
 
 - (void)resetCurrentUserWeight:(float)weight {
@@ -2274,12 +2275,13 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         if(type == eSport ){
             for (int i = 0; i < array.count; i++) {
                 NSDictionary *sportDic = [array objectAtIndex:i];
-                XKRWSportEntity *entity = [[XKRWSportEntity alloc] init];
+                XKRWRecordSportEntity *entity = [[XKRWRecordSportEntity alloc] init];
                 entity.sportId = [sportDic[@"sport_id"] intValue];
                 entity.sportName = sportDic[@"sport_name"];
                 entity.sportPic = sportDic[@"image_url"];
                 entity.sportMets = [sportDic[@"sport_METS"] floatValue];
                 entity.sportUnit = [sportDic[@"unit"] intValue];
+                entity.calorie = [sportDic[@"calorie"]  integerValue];
                 sum += [sportDic[@"calorie"] integerValue];
                 if (entity.sportId) {
                     [mutableArray addObject:entity];
@@ -2331,7 +2333,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }else{
          return nil;
     }
-   
 }
 
 
@@ -2352,7 +2353,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [dic setObject:[NSNumber numberWithFloat:entity.calorie] forKey:@"calorie"];
         [mutableArray addObject:dic];
     }
-    
     XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
     for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -3199,6 +3199,22 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return @NO;
 }
 
+- (NSNumber *)syncTodayRecordData {
+    NSDate *today = [NSDate today];
+    if ([[self syncOfflineRecordToRemote] boolValue]) {
+        NSDictionary *result = [self syncServerRecordFromDate:today];
+        if ([result[@"isSuccess"] isEqualToString:SUCCESS]) {
+            
+            if ([result[@"isNeedUpdate"] boolValue]) {
+                [[self class] setRecordSyncDate:[NSDate date]];
+            }
+            return @YES;
+        }
+        return @NO;
+    }
+    return @NO;
+}
+
 - (BOOL)downloadAllRecords {
 
     NSDate *fromDate = [NSDate dateWithTimeIntervalSince1970:1000000000];
@@ -3249,9 +3265,16 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                             objectForKey:[NSString stringWithFormat:@"%ld_RecordSync", (long)uid]];
     if (dateString) {
         double interval = [dateString doubleValue];
-        return [NSDate dateWithTimeIntervalSince1970:interval];
-    }
-    return [NSDate dateWithTimeIntervalSince1970:1000000000];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
+        
+        if ([date compare:[[NSDate today] offsetDay:-2]] == NSOrderedDescending) {
+            return [[NSDate today] offsetDay:-2];
+            
+        } else {
+            return date;
+        }
+        
+    } else return [NSDate dateWithTimeIntervalSince1970:1000000000];
 }
 
 + (BOOL)isNeedUpdate

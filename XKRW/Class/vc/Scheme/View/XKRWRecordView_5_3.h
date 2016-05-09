@@ -15,8 +15,8 @@
 - (void)RecordFoodViewpressCancle;
 - (void)addMoreView;
 - (void)entryRecordVCWith:(SchemeType)schemeType;
-- (void)saveSchemeRecord:(XKRWRecordSchemeEntity *)entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
-- (void)deleteSchemeRecord:(XKRWRecordSchemeEntity *)entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
+- (void)saveSchemeRecord:(id )entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
+- (void)deleteSchemeRecord:(id )entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
 -(void)fixHabitAt:(NSInteger)index isCurrect:(BOOL)abool;
 @end
 
@@ -60,12 +60,11 @@
 @property (assign) NSInteger positionX;
 @property (assign ,nonatomic) NSInteger pageIndex;
 @property (strong ,nonatomic) NSArray *schemeArray;
-@property (strong ,nonatomic) XKRWRecordEntity4_0 *entity;
+
 @property (assign ,nonatomic) energyType type;
 @property (strong ,nonatomic) NSMutableDictionary *dicCollection;
 @property (strong ,nonatomic) UIImageView *shadowImageView;
 @property (strong ,nonatomic) NSDate  *date;
 @property (strong ,nonatomic) UIViewController *vc;
-//@property (assign,nonatomic) BOOL isCanRevisionRecord;
 @property (assign,nonatomic) RevisionType revisionType;
 @end

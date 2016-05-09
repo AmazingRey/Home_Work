@@ -28,6 +28,8 @@
 + (void) updateHandelFromV2;
 /*将远程数据同步到本地*/
 + (BOOL) syncRemoteData;
+/*将今天远程数据同步到本地*/
++ (BOOL) syncTodayRemoteData;
 /*同步本地数据到服务器上*/
 + (BOOL) syncDataToRemote;
 //

@@ -569,7 +569,6 @@ class XKRWRecordOthersVC: XKRWBaseVC, UIScrollViewDelegate, UITableViewDelegate,
                             
                             let vc = XKRWAddFoodVC4_0()
                             vc.foodRecordEntity = recordEntity
-                            vc.recordEntity = self.recordEntity
                             XKRWAddFoodVC4_0.presentAddFoodVC(vc, onViewController: self)
                         })
                     }
