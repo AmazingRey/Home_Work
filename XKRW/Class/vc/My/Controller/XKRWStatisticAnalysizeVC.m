@@ -25,6 +25,7 @@
 @property (strong, nonatomic) XKRWCustomPickerView *pickView;
 
 @property (strong, nonatomic) XKRWStatisAnalysisView *statisAnalysisView;
+@property (strong, nonatomic) XKRWStatiscBussiness5_3 *bussiness;
 @end
 
 @implementation XKRWStatisticAnalysizeVC
@@ -37,6 +38,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
+    
     if (![self judgeTotalHasRecordDays]) {
         //不足7天
     }
@@ -100,7 +103,7 @@
 
 -(XKRWWeekAnalysisView *)weekAnalysisView{
     if (!_weekAnalysisView) {
-        _weekAnalysisView = [[XKRWWeekAnalysisView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, ScrollViewHeight)];
+        _weekAnalysisView = [[XKRWWeekAnalysisView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, ScrollViewHeight) withBussiness:_bussiness];
         _weekAnalysisView.headView.delegate = self;
         [self.scrollView addSubview:_weekAnalysisView];
     }
@@ -109,7 +112,7 @@
 
 -(XKRWStatisAnalysisView *)statisAnalysisView{
     if (!_statisAnalysisView) {
-        _statisAnalysisView = [[XKRWStatisAnalysisView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, ScrollViewHeight)];
+        _statisAnalysisView = [[XKRWStatisAnalysisView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, ScrollViewHeight) withBussiness:_bussiness];
         _statisAnalysisView.headView.delegate = self;
         [self.scrollView addSubview:_statisAnalysisView];
     }

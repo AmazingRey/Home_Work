@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "XKRWDailyAnalysizeCell.h"
 #import "XKRWStatiscEntity5_3.h"
+#import "XKRWStatiscBussiness5_3.h"
 
 @interface XKRWStatisticDetailView : UIView
 @property (strong, nonatomic) UILabel *labTitle;
@@ -24,7 +25,7 @@
 @property (assign, nonatomic) AnalysizeType type;
 @property (assign, nonatomic) StatisticType statisticType;
 
-
+@property (strong, nonatomic) XKRWStatiscBussiness5_3 *bussiness;
 @property (assign, nonatomic) NSInteger currentIndex;
 @property (strong, nonatomic) NSArray *dataArray;
 @property (strong, nonatomic) XKRWStatiscEntity5_3 *currentEntity;
@@ -35,5 +36,7 @@
 //运动消耗
 @property (assign, nonatomic) CGFloat dailySportDecrease;
 
-- (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type statisType:(StatisticType)statisType;
+- (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type statisType:(StatisticType)statisType withBussiness:(XKRWStatiscBussiness5_3 *)bussiness;
+
+-(void)refreshControls;
 @end

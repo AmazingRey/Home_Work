@@ -12,24 +12,29 @@
 
 @implementation XKRWWeekAnalysisView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame withBussiness:(XKRWStatiscBussiness5_3 *)bussiness
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _bussiness = bussiness;
     }
     return self;
 }
 
 -(void)refreshViews{
+//    [self.headView refreshControls];
+//    [self.eatDecreaseView refreshControls];
+//    [self.sportDecreaseView refreshControls];
+    
 //    [self.headView setNeedsDisplay];
-    [self.eatDecreaseView setNeedsDisplay];
-    [self.sportDecreaseView setNeedsDisplay];
+//    [self.eatDecreaseView setNeedsDisplay];
+//    [self.sportDecreaseView setNeedsDisplay];
 }
 
 -(XKRWStatiscHeadView *)headView{
     if (!_headView) {
         CGRect frame = CGRectMake(0, 0, XKAppWidth, HeadViewHeight);
-        _headView = [[XKRWStatiscHeadView alloc] initWithFrame:frame type:1];
+        _headView = [[XKRWStatiscHeadView alloc] initWithFrame:frame type:1 withBussiness:_bussiness];
         _headView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_headView];
     }
@@ -38,7 +43,7 @@
 
 -(XKRWStatisticDetailView *)eatDecreaseView{
     if (!_eatDecreaseView) {
-        _eatDecreaseView = [[XKRWStatisticDetailView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, StatisticAnalysisViewHeight) type:analysizeEat statisType:1];
+        _eatDecreaseView = [[XKRWStatisticDetailView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, StatisticAnalysisViewHeight) type:analysizeEat statisType:1 withBussiness:_bussiness];
         _eatDecreaseView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_eatDecreaseView];
     }
@@ -47,7 +52,7 @@
 
 -(XKRWStatisticDetailView *)sportDecreaseView{
     if (!_sportDecreaseView) {
-        _sportDecreaseView = [[XKRWStatisticDetailView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, StatisticAnalysisViewHeight) type:analysizeSport statisType:1];
+        _sportDecreaseView = [[XKRWStatisticDetailView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, StatisticAnalysisViewHeight) type:analysizeSport statisType:1 withBussiness:_bussiness];
         _sportDecreaseView.backgroundColor = [UIColor whiteColor];
         [self addSubview:_sportDecreaseView];
     }

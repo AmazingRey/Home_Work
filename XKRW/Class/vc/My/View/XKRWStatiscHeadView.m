@@ -18,18 +18,20 @@
 
 @implementation XKRWStatiscHeadView
 
-- (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type 
+- (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type withBussiness:(XKRWStatiscBussiness5_3 *)bussiness
 {
     self = [super initWithFrame:frame];
     if (self) {
         _statisType = type;
-        XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
+        _bussiness = bussiness;
+        
+//        XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
         if (_statisType == 1) {
             _currentIndex = 0;
-            _dataArray = bussiness.array;
+            _dataArray = _bussiness.array;
             NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:bussiness.array.count];
             
-            for (XKRWStatiscEntity5_3 *entity in bussiness.array){
+            for (XKRWStatiscEntity5_3 *entity in _bussiness.array){
                 [dic setObject:[NSString stringWithFormat:@"第%ld周 %@",(long)entity.num,entity.dateRange] forKey:[NSNumber numberWithInteger:entity.index]];
             }
             _pickerDic = dic;
@@ -60,6 +62,7 @@
     if (_dataArray && _statisType == 1) {
         _currentEntity = [_dataArray objectAtIndex:_currentIndex];
     }
+    [self refreshControls];
 }
 
 #pragma getter Method
@@ -69,7 +72,7 @@
         if (_statisType == 1) {
              _currentEntity = [_dataArray objectAtIndex:_currentIndex];
         }else{
-            _currentEntity = [[XKRWStatiscBussiness5_3 alloc] init].statiscEntity;
+            _currentEntity = _bussiness.statiscEntity;
         }
     }
     return _currentEntity;
@@ -421,24 +424,6 @@
 -(void)btnQuestionPressed:(UIButton *)btn{
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"完成计划的说明" message:@"每天，饮食和运动的进度圈均为绿色状态时，计作计划完成" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
     [alertView show];
-}
-
--(NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
-{
-    NSDate *fromDate;
-    NSDate *toDate;
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    
-    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate
-                 interval:NULL forDate:fromDateTime];
-    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate
-                 interval:NULL forDate:toDateTime];
-    
-    NSDateComponents *difference = [calendar components:NSCalendarUnitDay
-                                               fromDate:fromDate toDate:toDate options:0];
-    
-    return [difference day];
 }
 
 @end

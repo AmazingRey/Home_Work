@@ -9,23 +9,23 @@
 #import "Masonry.h"
 #import "XKRWAlgolHelper.h"
 #import "XKRWRecordService4_0.h"
-#import "XKRWStatiscBussiness5_3.h"
 
 @implementation XKRWStatisticDetailView
 
-- (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type statisType:(StatisticType)statisType
+- (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type statisType:(StatisticType)statisType withBussiness:(XKRWStatiscBussiness5_3 *)bussiness
 {
     self = [super initWithFrame:frame];
     if (self) {
         _type = type;
         _statisticType = statisType;
+        _bussiness = bussiness;
         
-        XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
+//        XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
         if (_statisticType == 1) {
-            _dataArray = bussiness.array;
+            _dataArray = _bussiness.array;
             _currentEntity = [_dataArray objectAtIndex:_currentIndex];
         }else {
-            _currentEntity = bussiness.statiscEntity;
+            _currentEntity = _bussiness.statiscEntity;
         }
         
         //每日正常饮食摄入
@@ -44,7 +44,7 @@
         if (_statisticType == 1) {
             _currentEntity = [_dataArray objectAtIndex:_currentIndex];
         }else{
-            _currentEntity = [[XKRWStatiscBussiness5_3 alloc] init].statiscEntity;
+            _currentEntity = _bussiness.statiscEntity;
         }
     }
     return _currentEntity;
@@ -59,12 +59,12 @@
 }
 
 -(void)refreshControls{
-//    [self makeViewAutoLayout];
-    [self.labCal setNeedsDisplay];
-    [self.labTarget setNeedsDisplay];
-    [self.labEatRight1 setNeedsDisplay];
-    [self.labEatRight2 setNeedsDisplay];
-    [self.labSportRight setNeedsDisplay];
+    [self makeViewAutoLayout];
+//    [self.labCal setNeedsDisplay];
+//    [self.labTarget setNeedsDisplay];
+//    [self.labEatRight1 setNeedsDisplay];
+//    [self.labEatRight2 setNeedsDisplay];
+//    [self.labSportRight setNeedsDisplay];
 }
 
 -(void)makeViewAutoLayout{
@@ -158,7 +158,7 @@
         _labTarget.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_labTarget];
     }
-    _labTarget.text = _type == 1? [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.targetIntake.floatValue]: [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.targetSport.floatValue];
+    _labTarget.text = _type == 1? [NSString stringWithFormat:@"目标%.0fkcal",self.currentEntity.targetIntake.floatValue]: [NSString stringWithFormat:@"目标%.0fkcal",self.currentEntity.targetSport.floatValue];
     
     if (_statisticType == 2 && _type == 1) {
         _labTarget.text = @"";

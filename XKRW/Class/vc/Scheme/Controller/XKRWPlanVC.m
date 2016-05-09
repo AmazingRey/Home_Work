@@ -97,12 +97,10 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
     if (recordBackView) {
-        [[UIApplication sharedApplication].keyWindow bringSubviewToFront:recordBackView];
+        dispatch_after(3.0, dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication].keyWindow bringSubviewToFront:recordBackView];
+        });
     }
 }
 
