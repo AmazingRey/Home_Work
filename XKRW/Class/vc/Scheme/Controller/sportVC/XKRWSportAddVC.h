@@ -13,8 +13,16 @@
 
 #import "XKRWRecordService4_0.h"
 
+@protocol XKRWSportAddVCDelegate <NSObject>
+
+- (void)refreshSportData;
+
+@end
+
+
 @interface XKRWSportAddVC : XKRWBaseVC <UIScrollViewDelegate>
 //运动 ID
+@property (nonatomic, strong) NSDate *recordDate;
 @property (nonatomic, assign) int32_t           sportID;
 
 @property (nonatomic,retain) XKRWRecordSportEntity *recordSportEntity;
@@ -24,5 +32,7 @@
 @property (nonatomic, assign) MetricUnit        unit;
 
 @property (nonatomic,assign) BOOL isPresent;
+
+@property (nonatomic,assign) id <XKRWSportAddVCDelegate> delegate;
 
 @end

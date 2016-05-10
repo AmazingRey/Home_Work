@@ -127,7 +127,7 @@ class XKRWHistoryAndProcessModel: NSObject {
                     if x == .Sport {
                         self.sportTag = HPTag.None
                     } else {
-                        noneNum++
+                        noneNum += 1
                         if self.mealTag != .Bad {
                             self.mealTag = HPTag.Other
                         }

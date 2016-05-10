@@ -9,7 +9,7 @@
 import UIKit
 
 
-class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, XKRWCalendarDelegate, HPMealCellDelegate, HPSportCellDelegate, UIAlertViewDelegate {
+class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, XKRWCalendarDelegate, UIAlertViewDelegate {
     
     var tableView: XKRWUITableViewBase!
     var calendar: XKRWCalendar!
@@ -100,11 +100,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             }
             
             self.mealCell = self.tableView.dequeueReusableCellWithIdentifier("mealCell") as! HPMealCell
-            self.mealCell.delegate = self
-            
             self.sportCell = self.tableView.dequeueReusableCellWithIdentifier("sportCell") as! HPSportCell
-            self.sportCell.delegate = self
-            
             self.habitCell = self.tableView.dequeueReusableCellWithIdentifier("habitCell") as! HPHabitCell
         }
         initSubviews()
@@ -620,10 +616,10 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
         
         self.needReload = false
         
-        let vc = XKRWHPMealAnalysisVC(nibName: "XKRWHPMealAnalysisVC", bundle: nil)
-        vc.viewModel = self.viewModel
+//        let vc = XKRWHPMealAnalysisVC(nibName: "XKRWHPMealAnalysisVC", bundle: nil)
+//        vc.viewModel = self.viewModel
         
-        self.navigationController?.pushViewController(vc, animated: true)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     // MARK: - Sport Cell's Delegate
     

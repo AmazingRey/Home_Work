@@ -2798,59 +2798,40 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 }
 
 - (NSArray *)getDietNutriIngredientWithDate:(NSDate *)date {
-    
-    NSArray *schemes = [self getSchemeRecordWithDate:date];
-    
     NSMutableArray *result = [NSMutableArray array];
     NSArray *foods = [self queryFoodRecord:date];
-    
-    for (XKRWRecordSchemeEntity *scheme in schemes) {
+    for (XKRWRecordFoodEntity *entity in foods) {
         
-        if (scheme.record_value < 3) {
-            continue;
+        XKRWFoodEntity *foodEntity = [[XKRWFoodService shareService] getFoodDetailByFoodId:entity.foodId];
+        CGFloat num = 0.f;
+        if (entity.unit == eUnitGram) {
+            num = entity.number / 100.f;
+        } else if (entity.unit == eUnitKiloCalories) {
+            num = entity.number / (float)foodEntity.foodEnergy;
+        } else if (entity.unit == eUnitKilojoules) {
+            num = entity.number * 0.239 / (float)foodEntity.foodEnergy;
         }
-        for (XKRWRecordFoodEntity *entity in foods) {
+        
+        for (int i = 0; i < foodEntity.foodNutri.count; i ++) {
+            float sum = 0.f;
+            NSString *key = foodEntity.foodNutri[i][@"nutr"];
             
-            if (entity.recordType != scheme.type) {
-                continue;
+            if (result.count > i) {
+                sum = [result[i][key] floatValue];
             }
+            CGFloat gram = sum + [foodEntity.foodNutri[i][@"quantity"] floatValue] * num;
             
-            @try {
-                
-            }
-            @catch (NSException *exception) {
-                
-            }
-            XKRWFoodEntity *foodEntity = [[XKRWFoodService shareService] getFoodDetailByFoodId:entity.foodId];
-            CGFloat num = 0.f;
-            if (entity.unit == eUnitGram) {
-                num = entity.number / 100.f;
-            } else if (entity.unit == eUnitKiloCalories) {
-                num = entity.number / (float)foodEntity.foodEnergy;
-            } else if (entity.unit == eUnitKilojoules) {
-                num = entity.number * 0.239 / (float)foodEntity.foodEnergy;
-            }
+            NSDictionary *temp = @{key : [NSNumber numberWithFloat:gram]};
             
-            for (int i = 0; i < foodEntity.foodNutri.count; i ++) {
-                float sum = 0.f;
-                NSString *key = foodEntity.foodNutri[i][@"nutr"];
-                
-                if (result.count > i) {
-                    sum = [result[i][key] floatValue];
-                }
-                CGFloat gram = sum + [foodEntity.foodNutri[i][@"quantity"] floatValue] * num;
-                
-                NSDictionary *temp = @{key : [NSNumber numberWithFloat:gram]};
-                
-                if (result.count > i) {
-                    result[i] = temp;
-                } else {
-                    [result addObject:temp];
-                }
+            if (result.count > i) {
+                result[i] = temp;
+            } else {
+                [result addObject:temp];
             }
         }
     }
-    
+
+
 #ifdef DEBUG
     for (NSDictionary *dict in result) {
         XKLog(@"%@ : %@", dict.allKeys[0], dict.allValues[0]);

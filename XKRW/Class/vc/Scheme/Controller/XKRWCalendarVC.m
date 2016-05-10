@@ -84,6 +84,7 @@
     [calendar reloadCalendar];
     [calendarScrollView addSubview:calendar];
 }
+
 - (void)dealWithMonthLabel {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:[NSDate dateFormatString]];
@@ -92,6 +93,7 @@
     NSArray *dateArray = [todayString componentsSeparatedByString:@"-"];
     headView.monthLabel.text = [NSString stringWithFormat:@"%@年%@月",dateArray[0],dateArray[1]];
 }
+
 #pragma mark -XKRWCalendarDelegate
 - (void)calendarSelectedDate:(NSDate *)date {
     NSDate *registerDate = [NSDate dateFromString:[[XKRWUserService sharedService] getREGDate]];
@@ -105,12 +107,17 @@
         [XKRWCui showInformationHudWithText:@"明天还没来，别着急哦~"];
         return;
         
+    } else if ([[NSDate today] compare:originOfDate] == NSOrderedSame ) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        return;
+        
     } else {
         XKRWPlanVC *planVC = [[XKRWPlanVC alloc] init];
         planVC.recordDate = originOfDate;
         [self.navigationController pushViewController:planVC animated:YES];
     }
 }
+
 - (void)calendarScrollToPreMonth {
     todayDate = [todayDate offsetMonth:-1];
     [self dealWithMonthLabel];

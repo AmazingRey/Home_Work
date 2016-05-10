@@ -21,14 +21,12 @@
 #import "XKRWAccountService.h"
 #import "XKRWMyVC.h"
 #import "XKRWNavigationController.h"
-//#import "XKRWDiscoverVC.h"
 #import "XKRW-Swift.h"
 #import "XKRWDBControlService.h"
 #import "Reachability.h"
 #import "XKRWPlanVC.h"
 
 @interface XKRWTabbarVC () <XKRWShareVCDelegate, UIAlertViewDelegate,XKRWCheckMoreRedDotDelegate>
-//XKRWDiscover_5_2
 @property (nonatomic, strong) Reachability *internetReachability;
 @property (nonatomic, strong) XKRWDiscover_5_2 *discoverVC;
 @end
@@ -56,6 +54,7 @@
 
 - (void)createCustomTabBar
 {
+   
     tabbarBG = [[UIImageView alloc] init];
     tabbarBG.backgroundColor = [UIColor whiteColor];
     tabbarBG.userInteractionEnabled = YES;
@@ -279,10 +278,6 @@
     }
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    
-}
 
 - (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication
 {
@@ -369,6 +364,11 @@
     [self selectPerson];
 }
 
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+
+}
+
 #pragma mark 闹钟处理
 
 -(void)receiveAlarmWithNotification:(NSNotification *) notification{
@@ -444,23 +444,15 @@
 }
 
 -(void) selectSecheme{
-    
-//  在发现页时点击发现图标，置顶并刷新
-    if (self.selectedIndex == 1) {
-        
-       // [self.discoverVC toTopAndRefresh];
-    } else {
-        self.selectedIndex = 1; 
-    }
+    self.selectedIndex = 1;
     personBtn.selected = NO;
     schemeBtn.selected = YES;
     shareBtn.selected = NO;
     moreBtn.selected = NO;
     personBtn.userInteractionEnabled = YES;
-    schemeBtn.userInteractionEnabled = YES;
+    schemeBtn.userInteractionEnabled = NO;
     shareBtn.userInteractionEnabled = YES;
     moreBtn.userInteractionEnabled = YES;
-
 }
 
 - (void)shareBtn_Click:(UIButton *)button

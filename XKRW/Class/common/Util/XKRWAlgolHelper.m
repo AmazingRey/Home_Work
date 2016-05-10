@@ -15,6 +15,7 @@
 #import "XKRWWeightService.h"
 #import "XKRWUserService.h"
 #import "XKRWRecordService4_0.h"
+
 //static XKRWUserService *userService;
 
 @implementation XKRWAlgolHelper
@@ -164,6 +165,32 @@
         }
     }
     return energy;
+}
+
+
++(float)dailyTotalRecordEnergyWithDate:(NSDate *)date {
+    float totalCalorie = 0 ;
+//    NSDictionary *todayRecordSchemeFood = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date andType:6];
+//    if (todayRecordSchemeFood) {
+//        XKRWRecordSchemeEntity *recordFoodEntity = [todayRecordSchemeFood objectForKey:@"schemeEntity"];
+//        totalCalorie += recordFoodEntity.calorie;
+//    }
+    XKRWRecordEntity4_0 *recordEntity = [[XKRWRecordService4_0 sharedService] getAllRecordOfDay:date];
+    for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
+        totalCalorie += foodEntity.calorie;
+    }
+    return totalCalorie;
+}
+
+
++(float)dailySchemeRecordEnergrWithDate:(NSDate *)date{
+    float totalCalorie = 0 ;
+    NSDictionary *todayRecordSchemeFood = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date andType:6];
+    if (todayRecordSchemeFood) {
+        XKRWRecordSchemeEntity *recordFoodEntity = [todayRecordSchemeFood objectForKey:@"schemeEntity"];
+        totalCalorie += recordFoodEntity.calorie;
+    }
+    return totalCalorie;
 }
 
 //每日 三钟 营养  比例 计算

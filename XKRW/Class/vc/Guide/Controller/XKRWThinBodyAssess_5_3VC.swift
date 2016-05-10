@@ -32,7 +32,16 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
         self.navigationController!.setNavigationBarHidden(false, animated: animated)
     }
     
+    func makeHeadLabelData() -> String {
+        let weight : NSInteger = XKRWUserService.sharedService().getUserDestiWeight()
+        let target_weight = CGFloat(weight)/1000.0
+        let planFinishDate = NSDate.today().offsetDay(XKRWAlgolHelper.remainDayToAchieveTarget())
+        let headStr = String(format:"预计将于%d年%d月%d日达到%.0fkg",planFinishDate.year,planFinishDate.month,planFinishDate.day,target_weight)
+        return headStr
+    }
+    
     func loadDataAndReload(){
+        headLabel.text = self.makeHeadLabelData()
         self.initHabitData()
         let viewHeight : Int = 450
         let numLines = ceilf(Float(dicData.count)/4)

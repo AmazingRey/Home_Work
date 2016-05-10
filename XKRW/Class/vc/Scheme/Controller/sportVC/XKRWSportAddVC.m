@@ -34,7 +34,6 @@
     
     UISegmentedControl  *unitSegmentCtr;
     
-    NSDate *date;
 }
 
 
@@ -42,7 +41,6 @@
 @property (nonatomic, strong) UIScrollView      *lbTitleBG;  //作为背景
 @property (nonatomic, strong) UILabel           *lbDesc;    //描述
 @property (nonatomic, strong) UIView            *datePart; //日期选择  View
-@property (nonatomic, assign) DayType            dayTemp;   //日期类型  用来注明 今天明天
 @property (nonatomic, strong) XKRWNaviRightBar   *rightBar;
 @end
 
@@ -238,10 +236,18 @@
             textField.text = @"2880";
         }
         
-        if (!date) {
-            date = _recordSportEntity.date ? _recordSportEntity.date : [NSDate date];
+        if (_recordDate && [_recordDate compare:[[NSDate today] offsetDay:-2]] == NSOrderedDescending && [_recordDate compare:[NSDate date]] == NSOrderedAscending) {
+            _recordSportEntity.date = _recordDate;
+            
+        } else if (_recordSportEntity.date && [_recordSportEntity.date compare:[[NSDate today] offsetDay:-2]] == NSOrderedDescending && [_recordSportEntity.date compare:[NSDate date]] == NSOrderedAscending) {
+            _recordDate = _recordSportEntity.date;
+            
+        } else {
+            _recordSportEntity.date = [NSDate date];
+            _recordDate = _recordSportEntity.date;
         }
-        float nearestWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:date];
+        
+        float nearestWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate];
         if (_recordSportEntity) {//修改
             uint32_t cal = [_recordSportEntity consumeCaloriWithMinuts:[componentTextField.text intValue] weight:nearestWeight];
             kcalLabel.text = [NSString stringWithFormat:@"%iKcal",cal];
@@ -316,7 +322,7 @@
     _recordSportEntity.unit = self.unit;
     
     if (_recordSportEntity.serverid == 0) {
-        _recordSportEntity.date = _recordSportEntity.date ? _recordSportEntity.date:[NSDate date] ;
+        _recordSportEntity.date = _recordDate ? _recordDate : (_recordSportEntity.date ? _recordSportEntity.date:[NSDate date]);
         NSInteger recordTimeStamp = [_recordSportEntity.date timeIntervalSince1970];
         NSInteger now = [[NSDate date] timeIntervalSince1970];
         
@@ -338,6 +344,9 @@
         [XKRWRecordService4_0 setNeedUpdate:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectSportCircle];
          [self popView];
+        if ([self.delegate respondsToSelector:@selector(refreshSportData)]) {
+            [self.delegate refreshSportData];
+        }
     }
     
     if ([taskID isEqualToString:@"getSportDetail"]) {

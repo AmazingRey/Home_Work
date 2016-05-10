@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="Roboto-Regular.ttf">
-            <string>Roboto-Regular</string>
-        </mutableArray>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XKRWHPMealAnalysisVC" customModule="XKRW" customModuleProvider="target">
             <connections>
-                <outlet property="calorieLabel" destination="qCN-EI-XGJ" id="GFW-Fw-gxk"/>
                 <outlet property="carbLabel" destination="oXN-lg-sxp" id="T5S-5Q-c3U"/>
                 <outlet property="circleView" destination="A6E-dj-qme" id="YcG-zh-Kgi"/>
                 <outlet property="fatLabel" destination="ffO-Ek-aLJ" id="d7D-mR-RYU"/>
@@ -29,7 +23,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="523"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4J-u5-Hmf">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="523"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="468"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6E-dj-qme" userLabel="CircleView">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
@@ -60,43 +54,8 @@
                                         <constraint firstAttribute="trailing" secondItem="6fm-pX-WnE" secondAttribute="trailing" id="wc9-lA-B6c"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w6S-nt-b6e" userLabel="CalorieView">
-                                    <rect key="frame" x="0.0" y="210" width="320" height="44"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="热量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHp-a4-WXZ">
-                                            <rect key="frame" x="30" y="11" width="34" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1000kcal / 1250kcal" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCN-EI-XGJ">
-                                            <rect key="frame" x="151" y="12" width="154" height="20"/>
-                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Xk-tY-FlK" userLabel="line">
-                                            <rect key="frame" x="0.0" y="43" width="320" height="1"/>
-                                            <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="0.5" id="G2N-qG-mfQ"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="centerY" secondItem="CHp-a4-WXZ" secondAttribute="centerY" id="0Yw-ge-fWT"/>
-                                        <constraint firstAttribute="bottom" secondItem="0Xk-tY-FlK" secondAttribute="bottom" id="1H4-sB-KQz"/>
-                                        <constraint firstItem="0Xk-tY-FlK" firstAttribute="leading" secondItem="w6S-nt-b6e" secondAttribute="leading" id="5Lb-zm-qcG"/>
-                                        <constraint firstAttribute="trailing" secondItem="qCN-EI-XGJ" secondAttribute="trailing" constant="15" id="NxY-tJ-q8b"/>
-                                        <constraint firstItem="CHp-a4-WXZ" firstAttribute="centerY" secondItem="qCN-EI-XGJ" secondAttribute="centerY" id="cW7-IZ-yRJ"/>
-                                        <constraint firstAttribute="height" constant="44" id="ct5-C2-1Uc"/>
-                                        <constraint firstAttribute="trailing" secondItem="0Xk-tY-FlK" secondAttribute="trailing" id="hFX-Yv-UzZ"/>
-                                        <constraint firstItem="CHp-a4-WXZ" firstAttribute="leading" secondItem="w6S-nt-b6e" secondAttribute="leading" constant="30" id="hfo-dO-zkg"/>
-                                    </constraints>
-                                </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2P-K7-XXH" userLabel="NutriView">
-                                    <rect key="frame" x="0.0" y="264" width="320" height="160"/>
+                                    <rect key="frame" x="0.0" y="209" width="320" height="160"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="营养" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfF-wh-hgb">
                                             <rect key="frame" x="30" y="12" width="40" height="17"/>
@@ -243,27 +202,16 @@
                                         <constraint firstItem="LgE-RV-zD3" firstAttribute="centerX" secondItem="XmB-20-uwT" secondAttribute="centerX" id="ybX-5g-MaY"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="饮食分析只统计“吃了别的”的餐次和记录食物。" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0s-bj-1AQ">
-                                    <rect key="frame" x="13" y="434" width="252" height="15"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="e2P-K7-XXH" firstAttribute="leading" secondItem="S4J-u5-Hmf" secondAttribute="leading" id="4xh-Ct-hqp"/>
                                 <constraint firstAttribute="bottom" secondItem="e2P-K7-XXH" secondAttribute="bottom" constant="99" id="DMb-6S-oAq"/>
                                 <constraint firstAttribute="centerX" secondItem="e2P-K7-XXH" secondAttribute="centerX" id="Da7-25-8ba"/>
-                                <constraint firstAttribute="centerX" secondItem="w6S-nt-b6e" secondAttribute="centerX" id="Itb-va-Q1V"/>
-                                <constraint firstItem="w6S-nt-b6e" firstAttribute="leading" secondItem="S4J-u5-Hmf" secondAttribute="leading" id="N0p-Cf-rgS"/>
-                                <constraint firstItem="w6S-nt-b6e" firstAttribute="top" secondItem="A6E-dj-qme" secondAttribute="bottom" constant="10" id="OjW-uQ-J8J"/>
                                 <constraint firstItem="A6E-dj-qme" firstAttribute="leading" secondItem="S4J-u5-Hmf" secondAttribute="leading" id="QIL-Nj-ySF"/>
                                 <constraint firstAttribute="centerX" secondItem="A6E-dj-qme" secondAttribute="centerX" id="bOY-BF-eSP"/>
-                                <constraint firstItem="n0s-bj-1AQ" firstAttribute="top" secondItem="e2P-K7-XXH" secondAttribute="bottom" constant="10" id="ceI-nd-pfU"/>
-                                <constraint firstItem="e2P-K7-XXH" firstAttribute="top" secondItem="w6S-nt-b6e" secondAttribute="bottom" constant="10" id="d0O-Gq-LVi"/>
+                                <constraint firstItem="e2P-K7-XXH" firstAttribute="top" secondItem="A6E-dj-qme" secondAttribute="bottom" constant="9" id="juS-60-gdd"/>
                                 <constraint firstItem="A6E-dj-qme" firstAttribute="top" secondItem="S4J-u5-Hmf" secondAttribute="top" id="tcC-V7-Wwd"/>
-                                <constraint firstItem="n0s-bj-1AQ" firstAttribute="leading" secondItem="S4J-u5-Hmf" secondAttribute="leading" constant="13" id="uR5-5C-19j"/>
                             </constraints>
                         </view>
                     </subviews>

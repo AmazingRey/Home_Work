@@ -222,8 +222,10 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchDisplayCtrl hideSearchResultView];
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:NO];
+    segmentCtl.hidden = NO;
 }
 
 
@@ -239,9 +241,6 @@
     recordSearchBar.frame = frame;
 
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [searchDisplayCtrl hideSearchResultView];
-
-    segmentCtl.hidden = NO;
     return YES;
 }
 
@@ -271,6 +270,7 @@
     if (iFlyControl.hidden){
         iFlyControl.hidden = NO;
         [iFlyControl start];
+        segmentCtl.hidden = YES;
     }else{
         iFlyControl.hidden = YES;
         [iFlyControl cancel];
@@ -322,7 +322,7 @@
             } clickRecord:^(NSIndexPath * recordFoodIndexPath) {
                 XKRWRecordFoodEntity *recordEntity = [XKRWRecordFoodEntity new];
                 XKRWFoodEntity *tempEntity = [[XKRWFoodService shareService] syncQueryFoodWithId:recentRecordFoodEntity.foodId];
-                recordEntity.date = [NSDate date];
+                recordEntity.date = _recordDate;
                 recordEntity.foodId = tempEntity.foodId;
                 recordEntity.foodLogo = tempEntity.foodLogo;
                 recordEntity.foodName = tempEntity.foodName;
@@ -353,6 +353,7 @@
                 XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
                 addVC.sportID = entity.sportId;
                 addVC.sportEntity = entity;
+                addVC.recordDate = _recordDate;
                 addVC.isPresent = YES;
                 XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:addVC];
                 [weakSelf.navigationController presentViewController:nav animated:YES completion:nil];
@@ -382,7 +383,7 @@
                 XKRWSportAddVC *sportAddVC = [[XKRWSportAddVC alloc] init];
                 sportAddVC.sportEntity = sportEntity;
                 sportAddVC.sportID = sportEntity.sportId;
-                
+                sportAddVC.recordDate = _recordDate;
 //                sportAddVC.passMealTypeTemp = eSport;
 //                sportAddVC.needHiddenDate = YES;
                 [weakSelf.navigationController pushViewController:sportAddVC animated:YES];
@@ -403,7 +404,7 @@
                 [recordSearchBar resignFirstResponder];
                 [recordSearchBar setCancelButtonEnable:YES];
                 XKRWRecordFoodEntity *recordFoodEntity = [[XKRWRecordFoodEntity alloc] init];
-                recordFoodEntity.date = [NSDate date];
+                recordFoodEntity.date = _recordDate;
                 recordFoodEntity.foodId = foodEntity.foodId;
                 recordFoodEntity.foodLogo = foodEntity.foodLogo;
                 recordFoodEntity.foodName = foodEntity.foodName;

@@ -81,9 +81,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
         headView.headerArcImageView!.layer.masksToBounds = true
         headView.headerArcImageView!.layer.cornerRadius = 41
 
-        infoTableView.tableHeaderView = headView
         headView.headerButton?.addTarget(self, action: #selector(XKRWUserInfoVC.showBigHeadImageView), forControlEvents: .TouchUpInside)
-        infoTableView.tableHeaderView!.clipsToBounds = true
 
         infoTableView.registerNib(UINib(nibName: "HPPredictCell", bundle: nil), forCellReuseIdentifier: "predictCell")
         infoTableView.registerNib(UINib(nibName: "HPMealCell", bundle: nil), forCellReuseIdentifier: "mealCell")
@@ -123,8 +121,8 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
         headView.menifestoLabel?.text = entity.manifesto
         headView.insistLabel?.text = "已坚持了\((entity.daily))天"
         headView.insistLabel?.textColor = UIColor.whiteColor()
-    
-        
+        infoTableView.tableHeaderView = headView
+        infoTableView.tableHeaderView!.clipsToBounds = true
     }
     
     override func popView() {
@@ -242,8 +240,8 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                 }
                 return contentCell!
             }
-        }else if(indexPath.section == 1){
-            
+        }
+        else if(indexPath.section == 1){
             if self.entity.checkInfoComplete() {
                 predictCell = tableView.dequeueReusableCellWithIdentifier("predictCell") as? HPPredictCell
                 if (self.viewModel != nil) {
@@ -269,7 +267,8 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                 }
                 return cell!
             }
-        }else if(indexPath.section == 2){
+        }
+        else if(indexPath.section == 2){//饮食栏位
             if self.mealCell == nil {
                 self.mealCell = tableView.dequeueReusableCellWithIdentifier("mealCell") as? HPMealCell
             }
@@ -277,7 +276,8 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                 self.mealCell!.setCellContent(self.viewModel!)
             }
             return mealCell!
-        }else if(indexPath.section == 3){
+        }
+        else{   // if(indexPath.section == 3) 运动栏位
             if sportCell == nil {
                 sportCell = tableView.dequeueReusableCellWithIdentifier("sportCell") as?  HPSportCell
             }
@@ -285,15 +285,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                self.sportCell!.setCellContent(self.viewModel!)
             }
             return sportCell!
-        }else {
-           
-            habitCell = tableView.dequeueReusableCellWithIdentifier("habitCell") as? HPHabitCell
-            if(self.viewModel != nil){
-                 self.habitCell!.setContent(self.viewModel!)
-            }
-            return habitCell!
         }
-    
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -308,51 +300,21 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
         if self.entity.checkInfoComplete() {
-            return 5
+            return 4
         } else {
             return 2
         }
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
         if(indexPath.section == 0) {
             if(indexPath.row == 0) {
                 return 64
             } else {
                 return 44
             }
-        } else if(indexPath.section == 1) {
-            if self.entity.checkInfoComplete() {
-                let cell = tableView.dequeueReusableCellWithIdentifier("predictCell") as? HPPredictCell
-                if(cell != nil && viewModel != nil){
-                    cell!.setContent(self.viewModel!)
-                    return cell!.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
-                }
-            } else {
-                return 64
-            }
-        } else if(indexPath.section == 2 ) {
-             let cell = tableView.dequeueReusableCellWithIdentifier("mealCell") as? HPMealCell
-            if(cell != nil && viewModel != nil) {
-                 cell!.setCellContent(self.viewModel!)
-                return cell!.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
-            }
-            
-        } else if(indexPath.section == 3) {
-            let cell = tableView.dequeueReusableCellWithIdentifier("sportCell") as?  HPSportCell
-            if(cell != nil && viewModel != nil) {
-                 cell!.setCellContent(self.viewModel!)
-                return cell!.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
-            }
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("habitCell") as? HPHabitCell
-            if(cell != nil && viewModel != nil) {
-                cell!.setContent(self.viewModel!)
-                return cell!.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height + 1
-            }
         }
-        return 0
+        return 187
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -389,16 +351,4 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
             
         }
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

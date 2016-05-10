@@ -15,8 +15,9 @@
 #import "XKRWStatisAnalysisView.h"
 #import "XKRWCustomPickerView.h"
 #import "XKRWUserService.h"
+#import "XKRWCui.h"
 
-@interface XKRWStatisticAnalysizeVC ()<XKRWStatisticAnalysisPickerViewDelegate,XKRWCustomPickerViewDelegate>
+@interface XKRWStatisticAnalysizeVC ()<XKRWStatisticAnalysisPickerViewDelegate,XKRWCustomPickerViewDelegate,UIScrollViewDelegate>
 @property (strong, nonatomic) UISegmentedControl *segmentControl;
 @property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) XKRWWeekAnalysisView *weekAnalysisView;
@@ -26,26 +27,32 @@
 
 @property (strong, nonatomic) XKRWStatisAnalysisView *statisAnalysisView;
 @property (strong, nonatomic) XKRWStatiscBussiness5_3 *bussiness;
+@property (assign, nonatomic) NSInteger segmentIndex;
 @end
 
 @implementation XKRWStatisticAnalysizeVC
 {
-    NSInteger segmentIndex;
     NSInteger pickerIndex;
     NSDictionary *pickerDic;
     NSInteger _pageTime;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
-    _bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
+    self.title = @"统计分析";
     
     if (![self judgeTotalHasRecordDays]) {
         //不足7天
+    }else{
+        [XKRWCui showProgressHud];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            _bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self addMasonryLayout];
+                [XKRWCui hideProgressHud];
+            });
+        });
     }
-
-    self.title = @"统计分析";
-    [self addMasonryLayout];
 }
 
 -(BOOL)judgeTotalHasRecordDays{
@@ -80,6 +87,11 @@
     return _segmentControl;
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [scrollView setContentOffset: CGPointMake(XKAppWidth * _segmentIndex,scrollView.contentOffset.y)];
+}
+
 - (UIScrollView *)scrollView
 {
     if (!_scrollView) {
@@ -89,11 +101,12 @@
         _scrollView.scrollEnabled = NO;
         
         CGFloat height = _scrollView.frame.size.height;
-        if (XKAppHeight == 480) {
-            height += (568-480);
+        if (XKAppHeight < 600){
+            _scrollView.delegate = self;
+            height += (600 - XKAppHeight);
             _scrollView.scrollEnabled = YES;
-            _scrollView.alwaysBounceVertical = YES;
-            _scrollView.alwaysBounceHorizontal = NO;
+            _scrollView.showsVerticalScrollIndicator = NO;
+            _scrollView.showsHorizontalScrollIndicator = NO;
         }
         _scrollView.contentSize = CGSizeMake(XKAppWidth*2, height);
         [self.view addSubview:_scrollView];
@@ -186,9 +199,9 @@
 
 #pragma mark segementControl Method
 -(void)segmentControlIndexChanged:(UISegmentedControl *)segement{
-    segmentIndex = segement.selectedSegmentIndex;
+    _segmentIndex = segement.selectedSegmentIndex;
     _pageTime = 0;
-    CGRect scrollRect = CGRectMake(XKAppWidth*segmentIndex, 0, XKAppWidth, _scrollView.height);
+    CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
     [self.scrollView scrollRectToVisible:scrollRect animated:YES];
 }
 

@@ -36,7 +36,7 @@
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [XKRWCui hideProgressHud];
-                        XKRWSurfaceView *surfaceView = [[XKRWSurfaceView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight) Destination:@"XKRWSchemeVC_5_0" andUserId:[XKRWUserDefaultService getCurrentUserId] completion:^{
+//                        XKRWSurfaceView *surfaceView = [[XKRWSurfaceView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight) Destination:@"XKRWSchemeVC_5_0" andUserId:[XKRWUserDefaultService getCurrentUserId] completion:^{
                             if ([[XKRWUserService sharedService] isNeedNoticeTheChangeOfInsistDays]) {
                                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"尊敬的瘦瘦老用户，自2015年9月1日起，瘦瘦的“坚持天数”将按照新规则计算。使用v5.0期间，若出现以下情况为正常：\n\n1.首次登录v5.0后，天数比以往增多；\n2.在v5.0重置减肥方案以后，天数比重置前增多；\n\n瘦瘦v5.0新版本以后，“坚持天数”将成为您在瘦瘦的重要数据，累积可用于特权、荣誉和优先体验资格，请加以保护您的帐号和数据。" delegate:vc cancelButtonTitle:@"知道了" otherButtonTitles: nil];
                                 
@@ -50,7 +50,7 @@
                                 [vc.navigationController pushViewController:nickVC animated:YES];
                             }
                             
-                        }];
+//                        }];
                     });
                     return  success ;
                 }

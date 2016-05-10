@@ -30,7 +30,7 @@
 #import "XKRWNavigationController.h"
 #import "XKRWPlanService.h"
 
-@interface XKRWRecordView_5_3 () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate>
+@interface XKRWRecordView_5_3 () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate,XKRWSportAddVCDelegate,XKRWAddFoodVC4_0Delegate>
 {
     UITableView *recordTableView;
     UIImageView *schemePastImageView ;
@@ -68,7 +68,6 @@
 @end
 
 @implementation XKRWRecordView_5_3
-
 -(void)initSubViews {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reflashUIAndData:) name:EnergyCircleDataNotificationName object:nil];
     _scrollView.delegate = self;
@@ -176,7 +175,6 @@
             _habitLabel.hidden = NO;
             _actionView.hidden = YES;
             habitView.hidden = NO;
-            habitView.entity = recordEntity;
             _scrollView.scrollEnabled = NO;
             _scrollviewHeight.constant = 243;
             _activeHeight.constant = 0;
@@ -184,12 +182,10 @@
         default:
             break;
     }
-    
     [self setDataToUI];
 }
 
 - (void) setDataToUI {
-    recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_date];
     switch (_type) {
         case energyTypeEat:
             [self setFoodDataToUI];
@@ -206,6 +202,7 @@
 }
 
 - (void) setFoodDataToUI {
+    recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_date];
     //每日饮食推荐值
     CGFloat totalFoodCalories = [XKRWAlgolHelper dailyIntakeRecomEnergy];
     //获取就餐比例的 百分比
@@ -272,6 +269,7 @@
 
 
 - (void) setSportDataToUI{
+    recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_date];
     //每日运动消耗推荐值
     recordTypeTitleArray = @[@"运动"];
     recordTypeImageArray =@[@"sports5_3"];
@@ -310,6 +308,7 @@
 }
 
 - (void)setHabitDataToUI {
+    recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_date];
     __weak typeof(self) weakSelf = self;
     __block NSInteger currectHabitCount = 0;
     for (XKRWHabbitEntity *habitEntity in recordEntity.habitArray) {
@@ -317,7 +316,7 @@
     }
     
     _habitLabel.text = [NSString stringWithFormat:@"改正了%ld个不良习惯",(long)currectHabitCount];
-    
+    habitView.entity = recordEntity;
     habitView.changeHabit = ^(NSInteger habitIndex,BOOL abool) {
         
         weakSelf.habitLabel.text = [NSString stringWithFormat:@"改正了%ld个不良习惯",(long)(abool ? ++currectHabitCount:--currectHabitCount)];
@@ -514,6 +513,7 @@
         }else if ([temp isKindOfClass:[XKRWRecordFoodEntity class]]){
             XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
             addFoodVC.foodRecordEntity = temp;
+            addFoodVC.delegate = self;
             [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:_vc];
             
         }else{
@@ -522,6 +522,7 @@
             addVC.sportID = ((XKRWRecordSportEntity *)temp).sportId;
             addVC.recordSportEntity = ((XKRWRecordSportEntity *)temp);
             addVC.isPresent = YES;
+            addVC.delegate = self;
             [_vc presentViewController:nav animated:YES completion:nil];
         }
         
@@ -638,6 +639,14 @@
     }
 }
 
+- (void)refreshFoodData{
+    [self setFoodDataToUI];
+}
+
+- (void)refreshSportData{
+    [self setSportDataToUI];
+}
+
 
 - (void)dealCenterButtonShowAndAction
 {
@@ -651,6 +660,8 @@
                 _centerbutton.layer.borderColor = colorSecondary_666666.CGColor;
                 [_centerbutton setTitleColor:colorSecondary_666666 forState:UIControlStateNormal];
                 _centerbutton.enabled = NO;
+                schemePastImageView.hidden = NO;
+            }else if (_revisionType == XKRWCanRevision){
                 schemePastImageView.hidden = NO;
             }
         }
@@ -669,6 +680,7 @@
         }else if (_revisionType == XKRWCanRevision){
             if (_type == energyTypeEat && isRecommended == NO){
                 _centerbutton.hidden = YES;
+            
             }else{
                 [_centerbutton setTitle:@"补记" forState:UIControlStateNormal];
                 schemePastImageView.hidden = NO;

@@ -13,11 +13,17 @@
 
 #import "XKRWRecordService4_0.h"
 
+@protocol XKRWAddFoodVC4_0Delegate <NSObject>
+
+- (void)refreshFoodData;
+
+@end
+
 @interface XKRWAddFoodVC4_0 : XKRWBaseVC<UITextFieldDelegate>
 
 //食物对象
 @property (nonatomic, strong) XKRWRecordFoodEntity *foodRecordEntity;
-
+@property (nonatomic,assign) id <XKRWAddFoodVC4_0Delegate>delegate;
 @property BOOL isPresent;
 
 + (void)presentAddFoodVC:(XKRWAddFoodVC4_0 *)vc onViewController:(UIViewController *)onvc;

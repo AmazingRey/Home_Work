@@ -49,8 +49,11 @@
         _titleClickButton.layer.cornerRadius = 5.0;
         _titleClickButton.clipsToBounds = YES;
         _titleClickButton.center = _remindTextView.center;
-        [_titleClickButton setBackgroundImage:[UIImage createImageWithColor:colorSecondary_000000_02] forState:UIControlStateHighlighted];
+        _titleClickButton.titleLabel.font = XKDefaultFontWithSize(12);
+        [_titleClickButton setTitleColor:colorSecondary_999999 forState:UIControlStateHighlighted];
+        [_titleClickButton setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
         [_titleClickButton addTarget:self action:@selector(titleButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+        _titleClickButton.hidden = YES;
         [self insertSubview:_titleClickButton aboveSubview:_remindTextView];
         
         _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 0, circleWidth, circleWidth) Style: XKRWEnergyCircleStyleNotOpen];
@@ -206,14 +209,16 @@
 - (void)setTitle:(NSString *)title isflashing:(BOOL)isflashing {
     _remindTextView.text = title;
     if (isflashing) {
+        _remindTextView.hidden = NO;
+        _titleClickButton.hidden = YES;
         _remindTextView.backColor = [UIColor colorFromHexString:@"c7c7c7"];
         [_remindTextView startFlash];
-        [_titleClickButton removeFromSuperview];
         
     } else {
-        _remindTextView.backColor = XKMainSchemeColor;
         [_remindTextView endFlash];
-        [self insertSubview:_titleClickButton aboveSubview:_remindTextView];
+        _remindTextView.hidden = YES;
+        _titleClickButton.hidden = NO;
+        [_titleClickButton setTitle:title forState:UIControlStateNormal];
     }
 }
 

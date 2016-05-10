@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -39,16 +40,20 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50g" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogt-5D-sa8">
-                        <rect key="frame" x="105" y="53" width="110" height="77"/>
-                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="65"/>
-                        <color key="textColor" red="0.1843137255" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50g" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogt-5D-sa8">
+                        <rect key="frame" x="60" y="73" width="200" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="ogt-5D-sa8" secondAttribute="height" multiplier="5:1" id="HhG-vd-Q9Y"/>
+                            <constraint firstAttribute="width" constant="200" id="QVX-D9-7Au"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="27"/>
+                        <color key="textColor" red="0.16078431372549018" green="0.80000000000000004" blue="0.69411764705882351" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="152" translatesAutoresizingMaskIntoConstraints="NO" id="jHy-4w-j6d">
-                        <rect key="frame" x="20" y="138" width="280" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ta今天什么都没有做哦" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecS-Im-7ja">
+                        <rect key="frame" x="91" y="85" width="139" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JFh-5M-6b6" userLabel="line">
@@ -58,37 +63,24 @@
                             <constraint firstAttribute="height" constant="0.5" id="t8i-rI-NId"/>
                         </constraints>
                     </view>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ta今天什么都没有做哦" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecS-Im-7ja">
-                        <rect key="frame" x="91" y="83" width="139" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" secondItem="ogt-5D-sa8" secondAttribute="bottom" constant="37" id="4UZ-o3-dML"/>
                     <constraint firstItem="wgn-IS-AgJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="8ia-lP-9p3"/>
-                    <constraint firstAttribute="trailing" secondItem="jHy-4w-j6d" secondAttribute="trailing" constant="20" id="8sJ-3H-33o"/>
-                    <constraint firstItem="jHy-4w-j6d" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="A9Z-05-OWq"/>
                     <constraint firstItem="LJj-Cd-iTt" firstAttribute="centerY" secondItem="wgn-IS-AgJ" secondAttribute="centerY" id="AT6-Ta-zsn"/>
                     <constraint firstAttribute="bottom" secondItem="JFh-5M-6b6" secondAttribute="bottom" id="H8w-cU-MA2"/>
-                    <constraint firstAttribute="centerX" secondItem="ogt-5D-sa8" secondAttribute="centerX" id="Lou-5N-rFa"/>
                     <constraint firstItem="LJj-Cd-iTt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="45" id="OWw-jq-hSV"/>
-                    <constraint firstItem="ogt-5D-sa8" firstAttribute="top" secondItem="LJj-Cd-iTt" secondAttribute="bottom" constant="21" id="PJw-IZ-Z99"/>
                     <constraint firstItem="wgn-IS-AgJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="R9V-gf-hyz"/>
-                    <constraint firstItem="JFh-5M-6b6" firstAttribute="top" secondItem="jHy-4w-j6d" secondAttribute="bottom" constant="30" id="YqX-pp-kDO"/>
+                    <constraint firstItem="ecS-Im-7ja" firstAttribute="centerX" secondItem="ogt-5D-sa8" secondAttribute="centerX" id="RKt-cF-oYM"/>
+                    <constraint firstItem="ecS-Im-7ja" firstAttribute="centerY" secondItem="ogt-5D-sa8" secondAttribute="centerY" id="UEd-NJ-pmW"/>
                     <constraint firstAttribute="bottom" secondItem="ogt-5D-sa8" secondAttribute="bottom" constant="59" id="eko-4J-1Gv"/>
                     <constraint firstAttribute="trailing" secondItem="JFh-5M-6b6" secondAttribute="trailing" id="gW7-xR-aBb"/>
                     <constraint firstItem="LJj-Cd-iTt" firstAttribute="leading" secondItem="wgn-IS-AgJ" secondAttribute="trailing" constant="5" id="gcl-sL-VxY"/>
                     <constraint firstAttribute="bottom" secondItem="ogt-5D-sa8" secondAttribute="bottom" constant="45" id="hla-X2-AsX"/>
-                    <constraint firstItem="ecS-Im-7ja" firstAttribute="centerX" secondItem="ogt-5D-sa8" secondAttribute="centerX" id="i6E-nx-U7D"/>
                     <constraint firstItem="JFh-5M-6b6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="klO-Wr-Odm"/>
-                    <constraint firstItem="jHy-4w-j6d" firstAttribute="top" secondItem="ogt-5D-sa8" secondAttribute="bottom" constant="8" id="lrc-oS-sWN"/>
-                    <constraint firstAttribute="centerX" secondItem="jHy-4w-j6d" secondAttribute="centerX" id="mnQ-DG-7sh"/>
-                    <constraint firstItem="ecS-Im-7ja" firstAttribute="centerY" secondItem="ogt-5D-sa8" secondAttribute="centerY" id="p2M-Ue-Yq1"/>
                     <constraint firstItem="LJj-Cd-iTt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="rdI-kS-N9n"/>
-                    <constraint firstAttribute="bottom" secondItem="jHy-4w-j6d" secondAttribute="bottom" constant="31" id="rn7-hf-4yM"/>
-                    <constraint firstAttribute="bottom" secondItem="jHy-4w-j6d" secondAttribute="bottom" constant="20" id="vIP-6V-h9p"/>
+                    <constraint firstItem="ogt-5D-sa8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="t8V-KT-f6J"/>
+                    <constraint firstItem="ogt-5D-sa8" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="xl0-FN-3De"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -97,16 +89,12 @@
                         <exclude reference="4UZ-o3-dML"/>
                         <exclude reference="eko-4J-1Gv"/>
                         <exclude reference="hla-X2-AsX"/>
-                        <exclude reference="vIP-6V-h9p"/>
-                        <exclude reference="YqX-pp-kDO"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="attentionLabel" destination="jHy-4w-j6d" id="8z5-Ms-aNB"/>
                 <outlet property="loseWeightLabel" destination="ogt-5D-sa8" id="2bF-8o-2nR"/>
                 <outlet property="nonDataLabel" destination="ecS-Im-7ja" id="lxE-6w-4AO"/>
-                <outlet property="title" destination="LJj-Cd-iTt" id="IMc-qJ-6JY"/>
             </connections>
             <point key="canvasLocation" x="222" y="293.5"/>
         </tableViewCell>

@@ -32,6 +32,12 @@
 + (float)dailyIntakeRecomEnergyOfDate:(NSDate *)date;
 + (float)dailyIntakeRecommendEnergyWithBM:(float)BM PAL:(float)PAL sex:(XKSex)sex age:(NSInteger)age;
 
+//获取每日记录饮食摄入量
++(float)dailyTotalRecordEnergyWithDate:(NSDate *)date;
+
+//每日推荐饮食记录的摄入量
++(float)dailySchemeRecordEnergrWithDate:(NSDate *)date;
+
 /*每日运动消耗量*/
 + (float)dailyConsumeSportEnergy;
 + (float)dailyConsumeSportEnergyOfDate:(NSDate *)date;

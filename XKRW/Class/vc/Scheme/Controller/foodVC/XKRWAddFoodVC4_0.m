@@ -418,6 +418,9 @@
         [XKRWRecordService4_0 setNeedUpdate:YES];
         [self popView];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
+        if([self.delegate respondsToSelector:@selector(refreshFoodData)]){
+            [self.delegate refreshFoodData];
+        }
     } else if ([taskID isEqualToString:@"downloadFoodDetail"]) {
         
         [self initView];
@@ -505,7 +508,9 @@
     [XKRWCui showProgressHud:@""];
     
     [MobClick event:@"clk_mark"];
-    _foodRecordEntity.date = [NSDate today];
+    if (!_foodRecordEntity.date || [_foodRecordEntity.date compare:[[NSDate today] offsetDay:-2]] == NSOrderedAscending) {
+        _foodRecordEntity.date = [NSDate today];
+    }
     [self downloadWithTaskID:@"saveFoodRecord" outputTask:^id{
         return @([[XKRWRecordService4_0 sharedService] saveRecord:_foodRecordEntity ofType:XKRWRecordTypeFood]);
     }];

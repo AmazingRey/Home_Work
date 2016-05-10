@@ -758,7 +758,6 @@
         self.currentDate = [[NSDate date] offsetMonth:-1];
 
         [self setSelectedDate:[NSDate date]];
-        
         _isNeedDelegateRespond = YES;
         [_calendarScrollView setContentOffset:CGPointMake(XKAppWidth * 2, 0) animated:YES];
     }
