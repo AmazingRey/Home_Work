@@ -76,6 +76,11 @@
     _shadowImageView.image = [UIImage imageNamed:@"shadow"];
     [self addSubview:_shadowImageView];
     
+    if (XKAppHeight == 480) {
+        _scrollViewConstraint.constant = 134;
+        _scrollView.frame = CGRectMake(0, 0, XKAppWidth, _scrollViewConstraint.constant);
+    }
+    
     _scrollView.contentSize = CGSizeMake( XKAppWidth * 2, _scrollView.height);
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.pagingEnabled = YES;

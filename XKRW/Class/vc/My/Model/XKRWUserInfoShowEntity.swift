@@ -83,4 +83,13 @@ class XKRWUserInfoShowEntity: NSObject {
         }
         return true
     }
+    
+    //预计瘦  克
+    var lossWeight = 0
+    //少吃了  卡路里
+    var lessEatCalories = 0
+    //运动消耗了多少 卡路里
+    var sportCalories = 0
+    //运动详情 初始化
+    var sportArray = []
 }

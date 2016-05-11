@@ -376,7 +376,12 @@ typedef NS_ENUM(NSInteger,TipsShowType) {
     /***  展示文本  并显示详情*/
     TipsShowAndShowDetail,
     /***  展示文本  进入设置页面*/
-    TipsShowAndEnterSet
+    TipsShowAndEnterSet,
+    /***  展示文本  进入瘦身计划页面*/
+    TipsEntryPlan,
+     /***  展示文本  进入方案食物*/
+    TipsShowSchemeFood
+    
 };
 
 typedef NS_ENUM(NSInteger, PlanType) {

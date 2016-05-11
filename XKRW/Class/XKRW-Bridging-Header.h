@@ -172,3 +172,4 @@
 #import "XKRWPlan_5_3View.h"
 #import "XKRWPlan_5_3CollectionView.h"
 #import "XKRWShowEnergy_5_3View.h"
+#import "XKRWDailyAnalysizeCell.h"

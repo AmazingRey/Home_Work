@@ -14,6 +14,7 @@
 #import "XKRWRecordService4_0.h"
 
 @interface XKRWDailyAnalysizeVC ()
+@property (strong, nonatomic) UIScrollView *scrollView;
 @property (strong, nonatomic) UIImageView *topImg;
 @property (strong, nonatomic) UIImageView *ballImg;
 @property (strong, nonatomic) UILabel *labToday;
@@ -36,6 +37,8 @@
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     hasRecord = [[XKRWRecordService4_0 sharedService] getUserRecordStateWithDate:[NSDate date]];
     //每日正常饮食摄入
     _dailyNormal = [XKRWAlgolHelper dailyIntakEnergy];
@@ -44,7 +47,6 @@
     //运动消耗
     _dailySportDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:eSportCalories andDate:[NSDate date]];
     
-    [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     NSInteger day = 1;
     if([XKRWAlgolHelper expectDayOfAchieveTarget] == nil){
@@ -58,11 +60,30 @@
 }
 
 #pragma mark getter Method
+-(UIScrollView *)scrollView{
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight-64)];
+        _scrollView.pagingEnabled = YES;
+        _scrollView.scrollEnabled = NO;
+        CGFloat height = _scrollView.frame.size.height;
+        
+        if (XKAppHeight < 600) {
+            height += (600 - XKAppHeight);
+            _scrollView.scrollEnabled = YES;
+            _scrollView.userInteractionEnabled = YES;
+            _scrollView.showsVerticalScrollIndicator = NO;
+            _scrollView.showsHorizontalScrollIndicator = NO;
+        }
+        _scrollView.contentSize = CGSizeMake(XKAppWidth*2, height);
+        [self.view addSubview:_scrollView];
+    }
+    return _scrollView;
+}
 -(UIImageView *)topImg{
     if (!_topImg) {
         _topImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 200)];
         _topImg.image = [UIImage imageNamed:@"dailyAnalyBack"];
-        [self.view addSubview:_topImg];
+        [self.scrollView addSubview:_topImg];
     }
     return _topImg;
 }
@@ -126,7 +147,7 @@
 -(XKRWDailyAnalysizeView *)eatDecreaseView{
     if (!_eatDecreaseView) {
         _eatDecreaseView = [[XKRWDailyAnalysizeView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, AnalysizeViewHeight) type:analysizeEat];
-        [self.view addSubview:_eatDecreaseView];
+        [self.scrollView addSubview:_eatDecreaseView];
     }
     return _eatDecreaseView;
 }
@@ -134,7 +155,7 @@
 -(XKRWDailyAnalysizeView *)sportDecreaseView{
     if (!_sportDecreaseView) {
         _sportDecreaseView = [[XKRWDailyAnalysizeView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, AnalysizeViewHeight) type:analysizeSport];
-        [self.view addSubview:_sportDecreaseView];
+        [self.scrollView addSubview:_sportDecreaseView];
     }
     return _sportDecreaseView;
 }
@@ -143,7 +164,7 @@
     if (!_noRecordView ) {
         _noRecordView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 408)];
         _noRecordView.image = [UIImage imageNamed:@"dailyNoRecord"];
-        [self.view addSubview:_noRecordView];
+        [self.scrollView addSubview:_noRecordView];
     }
     return _noRecordView;
 }
@@ -162,12 +183,19 @@
 
 #pragma mark Masonry Method
 -(void)addMasonryView{
+    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(XKAppWidth);
+        make.height.mas_equalTo(XKAppHeight-64);
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.centerY.mas_equalTo(self.view.mas_centerY);
+//        make.top.mas_equalTo(0);
+    }];
     [self.topImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(XKAppWidth);
         make.height.mas_equalTo(200);
         make.left.equalTo(@0);
         make.right.equalTo(@0);
-        make.top.equalTo(@0);
+        make.top.mas_equalTo(self.scrollView.mas_top);
     }];
     [self.ballImg mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@108);
@@ -205,6 +233,7 @@
             make.width.mas_equalTo(XKAppWidth);
             make.height.mas_equalTo(AnalysizeViewHeight);
             make.top.mas_equalTo(_eatDecreaseView.mas_bottom).offset(10);
+            make.bottom.mas_equalTo(self.scrollView.mas_bottom);
             make.left.equalTo(@0);
             make.right.equalTo(@0);
         }];
@@ -213,8 +242,8 @@
             make.width.mas_equalTo(XKAppWidth);
 //            make.height.equalTo(@408);
             make.top.mas_equalTo(self.topImg.mas_bottom);
-            make.bottom.mas_equalTo(self.view.mas_bottom);
-            make.centerX.mas_equalTo(self.view.mas_centerX);
+            make.bottom.mas_equalTo(self.scrollView.mas_bottom);
+            make.centerX.mas_equalTo(self.scrollView.mas_centerX);
         }];
         [self.labNorecord mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.mas_equalTo(self.noRecordView.mas_centerX);

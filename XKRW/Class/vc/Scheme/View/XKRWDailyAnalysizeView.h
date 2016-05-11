@@ -19,7 +19,7 @@
 @property (strong, nonatomic) UIImageView *imgView;
 @property (assign, nonatomic) AnalysizeType type;
 @property (strong, nonatomic) NSMutableDictionary *dicData;
-
+@property (strong, nonatomic) NSArray *arrSport;
 //每日正常饮食摄入
 @property (assign, nonatomic) CGFloat dailyNormal;
 //饮食消耗

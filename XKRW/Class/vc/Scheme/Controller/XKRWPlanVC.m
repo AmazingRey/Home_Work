@@ -44,6 +44,7 @@
 #import "XKRWDailyAnalysizeVC.h"
 #import "XKRWUtil.h"
 
+#import "XKRWStatisticAnalysizeVC.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate>
 {
@@ -63,6 +64,7 @@
     
     NSMutableArray *tipsArray;
     XKRWRecordEntity4_0 *recordEntity;
+    NSArray  *recordScheme;
     // 摄入卡路里
     NSInteger intakeCalorie;
     // 消耗卡路里
@@ -77,6 +79,7 @@
     // 是不是今天的方案
     BOOL isTodaysPlan;
     
+    UIView *backgroundView ;
     
     RevisionType revisionType ;
 }
@@ -99,8 +102,10 @@
     [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
     if (recordBackView) {
         [[UIApplication sharedApplication].keyWindow bringSubviewToFront:recordBackView];
+       
     }
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -112,37 +117,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // judge for is today's record or history,is the history record can be changed.
-    NSDate *todayDate = [NSDate today];
-    if (!self.recordDate || [_recordDate compare:todayDate] == NSOrderedSame ) {
-        _recordDate = [NSDate today];
-        isTodaysPlan = YES;
-        revisionType = XKRWNotNeedRevision;
-    } else {
-        isTodaysPlan = NO;
-        if ([_recordDate compare:[todayDate offsetDay:-1]] == NSOrderedSame || [_recordDate compare:[todayDate offsetDay:-2]] == NSOrderedSame) {
-            revisionType = XKRWCanRevision;
-        } else {
-            revisionType = XKRWCanNotRevision;
-        }
-    }
-    
-    [self initView];
-    
-    if (isTodaysPlan) {
-        [self downloadWithTaskID:@"syncData" outputTask:^id{
-            return @([XKRWCommHelper syncTodayRemoteData]);
-        }];
-        [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
-        
-    } else {
-        [self downloadWithTaskID:@"syncRecentData" outputTask:^id{
-            return @([XKRWCommHelper syncRemoteData]);
-        }];
-        [self refreshEnergyCircleView:nil];
-    }
-    
     [self initData];
-    
+    [self initView];
+    [self setPlanEnergyViewTitle];
+    [self refreshEnergyCircleView:nil];
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView:) name:EnergyCircleDataNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTipsData) name:ReLoadTipsData object:nil];
 }
@@ -162,9 +141,33 @@
 #pragma mark - data
 
 - (void)initData {
-    [self setPlanEnergyViewTitle];
+    
+    NSDate *todayDate = [NSDate today];
+    if (!self.recordDate || [_recordDate compare:todayDate] == NSOrderedSame ) {
+        _recordDate = [NSDate today];
+        isTodaysPlan = YES;
+        revisionType = XKRWNotNeedRevision;
+    } else {
+        isTodaysPlan = NO;
+        if ([_recordDate compare:[todayDate offsetDay:-1]] == NSOrderedSame || [_recordDate compare:[todayDate offsetDay:-2]] == NSOrderedSame) {
+            revisionType = XKRWCanRevision;
+        } else {
+            revisionType = XKRWCanNotRevision;
+        }
+    }
+
+    [self syncTodaysData];
     [self getTipsData];
     [self getRecordAndMenuScheme];
+}
+
+- (void)syncTodaysData {
+    if (isTodaysPlan) {
+        [self downloadWithTaskID:@"syncData" outputTask:^id{
+            return @([XKRWCommHelper syncTodayRemoteData]);
+        }];
+        [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
+    }
 }
 
 - (void)getTipsData {
@@ -197,6 +200,8 @@
 - (void)refreshEnergyCircleView:(NSNotification *)notification {
     recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_recordDate];
     
+     recordScheme = [[XKRWRecordService4_0 sharedService]getSchemeRecordWithDate:_recordDate];
+    
     // deal with energyCircle data
     {
         intakeCalorie = 0;
@@ -204,27 +209,27 @@
         currentHabit = 0;
         
         // deal with scheme record
-        NSDictionary *todayRecordSchemeFood = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_recordDate andType:6];
-        NSDictionary *todayRecordSchemeSport = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_recordDate andType:5];
         
         for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
             intakeCalorie += foodEntity.calorie;
         }
         
-        if (todayRecordSchemeFood) {
-            XKRWRecordSchemeEntity *recordFoodEntity = [todayRecordSchemeFood objectForKey:@"schemeEntity"];
-            intakeCalorie += recordFoodEntity.calorie;
-        }
         for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
             expendCalorie += sportEntity.calorie;
         }
-        if (todayRecordSchemeSport) {
-            XKRWRecordSchemeEntity *recordSportEntity = [todayRecordSchemeSport objectForKey:@"schemeEntity"];
-            expendCalorie += recordSportEntity.calorie;
-        }
-        
+    
         for (XKRWHabbitEntity *habitEntity in recordEntity.habitArray) {
             currentHabit += habitEntity.situation;
+        }
+        
+        for (XKRWRecordSchemeEntity *schemeEntity in recordScheme) {
+            if (schemeEntity.type == 0 || schemeEntity.type == 5) {
+                expendCalorie += schemeEntity.calorie;
+            }
+            
+//            if (schemeEntity.type == 1 || schemeEntity.type == 2 |||| schemeEntity.type == 3|| schemeEntity.type == 5|| schemeEntity.type == 6) {
+//                <#statements#>
+//            }
         }
     }
     
@@ -250,6 +255,9 @@
 
 - (void)initView {
     
+    backgroundView = [[UIView alloc]initWithFrame:self.view.bounds];
+    
+    [self.view addSubview:backgroundView];
     planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 120 + 171 * XKAppHeight / 480.0, XKAppWidth, XKAppHeight -(120 + 171 * XKAppHeight / 480.0) -49) style:UITableViewStylePlain];
     planTableView.delegate = self;
     planTableView.dataSource = self;
@@ -257,7 +265,7 @@
     planTableView.backgroundColor = XK_BACKGROUND_COLOR;
     planTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [planTableView registerClass:[XKRWPlanTipsCell class] forCellReuseIdentifier:XKRWPlanTipsCellIdentifier];
-    [self.view addSubview:planTableView];
+    [backgroundView addSubview:planTableView];
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
     [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
@@ -270,9 +278,9 @@
     
     iFlyControl.delegate = self;
     iFlyControl.hidden = YES;
-    [self.view addSubview:iFlyControl];
+    [backgroundView addSubview:iFlyControl];
     
-    [self.view addSubview:[self createPlanHeaderView]];
+    [backgroundView addSubview:[self createPlanHeaderView]];
 }
 
 - (UIView *)createPlanHeaderView
@@ -460,6 +468,33 @@
 }
 
 - (void)dealTipsAction:(UIButton *)button {
+    
+    switch (button.tag) {
+        case 1000:{
+            [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
+            [[XKRWSchemeService_5_0 sharedService] resetUserScheme:self];
+        }
+            break;
+        case 1001:
+        {
+            XKRWStatisticAnalysizeVC *vc =  [[XKRWStatisticAnalysizeVC alloc]init];
+            vc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        case 1002:
+        {
+            NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+            
+            if([[UIApplication sharedApplication] canOpenURL:url]) {
+                NSURL*url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                [[UIApplication sharedApplication] openURL:url];
+            }
+        }
+            break;
+        default:
+            break;
+    }
 
 }
 
@@ -484,17 +519,15 @@
         }];
         
     } else if ([title rangeOfString:@"回到今天"].location != NSNotFound) {
+
         [self.navigationController popToRootViewControllerAnimated:YES];
+
     }
 }
 
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
     CGFloat positionX ;
-    if (XKAppWidth < 375) {
-        [UIView animateWithDuration:0.25 animations:^{
-            self.view.frame = CGRectMake(0, -64, XKAppWidth, XKAppHeight);
-        }];
-    }
+
     
     if (index == 1) {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];
@@ -509,11 +542,22 @@
         positionX = energyCircleView.habitEnergyCircle.center.x;
     }
     
-    [self setPlanEnergyViewTitle];
+//    [self setPlanEnergyViewTitle];
     [self removePullView:nil];
     [self removeMenuView];
     [self addschemeOrRecordView:index andArrowX:positionX];
     
+    if (XKAppWidth < 375) {
+        [UIView animateWithDuration:0.25 animations:^{
+            CGRect backgroundFrame = backgroundView.frame;
+            backgroundFrame.origin.y -= 64;
+            backgroundView.frame = backgroundFrame;
+            CGRect popViewFrame =   recordBackView.frame;
+            popViewFrame.origin.y -= 64;
+            recordBackView.frame = popViewFrame;
+            
+        }];
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
 }
 
@@ -521,7 +565,14 @@
 #pragma mark - XKRWRecordFood5_3View
 -(void)addschemeOrRecordView:(NSInteger)index andArrowX:(CGFloat) postitonX {
     XKRWRecordView_5_3 *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordView_5_3");
-    popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
+    
+    
+    if(XKAppHeight == 480){
+        popView.scrollViewConstraint.constant = 134;
+        popView.frame = CGRectMake(0, 0, XKAppWidth, 252);
+    }else{
+        popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
+    }
     popView.positionX = postitonX;
     popView.type = index;
     popView.vc = self;
@@ -540,8 +591,6 @@
         _recordPopView.schemeArray = [NSArray arrayWithObject:_sportSchemeEntity];
     }
     
-    
-    
     CGRect recordFrame = _recordPopView.frame;
     recordFrame.origin.y -= recordFrame.size.height;
     _recordPopView.frame = recordFrame;
@@ -549,7 +598,7 @@
     
     [UIView animateWithDuration:.6 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:.1 options:0 animations:^{
         if (!recordBackView){
-            CGRect recFrame = CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, XKAppHeight - planHeaderView.frame.size.height);
+            CGRect recFrame = CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, _recordPopView.height);
             recordBackView = [[UIView alloc] initWithFrame:recFrame];
             recordBackView.backgroundColor = [UIColor whiteColor];
             recordBackView.clipsToBounds = YES;
@@ -571,10 +620,20 @@
     if (_recordPopView) {
         XKRWRecordView_5_3 *popView = _recordPopView;
         _recordPopView = nil;
+        
         [UIView animateWithDuration:.7 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:1 options:0 animations:^{
             CGRect frame = popView.frame;
             frame.origin.y -= frame.size.height;
             popView.frame = frame;
+            if (XKAppWidth < 375) {
+                CGRect backgroundFrame = backgroundView.frame;
+                backgroundFrame.origin.y += 64;
+                backgroundView.frame = backgroundFrame;
+      
+                CGRect popViewFrame =   recordBackView.frame;
+                popViewFrame.origin.y += 64;
+                recordBackView.frame = popViewFrame;
+            }
         }completion:^(BOOL finished) {
             [popView removeFromSuperview];
             popView.delegate = nil;
@@ -862,12 +921,8 @@
 #pragma --mark Network
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
     if ([taskID isEqualToString:@"syncData"]) {
-        if ([result boolValue]) {
             [self refreshEnergyCircleView:nil];
             return;
-        } else {
-            
-        }
     }
     
     if ([taskID isEqualToString:@"search"]){
@@ -1001,7 +1056,7 @@
     if(tableView.tag == 1000){
         XKRWPlanTipsCell *tipCell = [tableView dequeueReusableCellWithIdentifier:XKRWPlanTipsCellIdentifier];
         tipCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [tipCell.actionButton addTarget:self action:@selector(dealTipsAction:) forControlEvents:UIControlEventTouchUpInside];
+       
         if (indexPath.row == 0) {
             tipCell.TipLabelColor = colorSecondary_333333;
             tipCell.imageName = @"point_n";
@@ -1009,10 +1064,10 @@
             tipCell.TipLabelColor = colorSecondary_999999;
             tipCell.imageName = @"point_p";
         }
-        
+
         XKRWPlanTipsEntity *entity = [tipsArray objectAtIndex:indexPath.row];
         [tipCell  updateHeightCell:entity];
-        
+        [tipCell.actionButton addTarget:self action:@selector(dealTipsAction:) forControlEvents:UIControlEventTouchUpInside];
         return tipCell;
     }else if (tableView.tag == 201){
         
@@ -1236,7 +1291,7 @@
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     [searchDisplayCtrl showSearchResultView];
-    
+    [self removeMenuView];
     return YES;
 }
 

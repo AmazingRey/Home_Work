@@ -152,7 +152,7 @@
 - (void)changeImageViewAlpha:(CGFloat) tableViewSlideDistance  andHeaderViewHeight:(CGFloat)height AndViewController:(UIViewController *)viewController andnavigationBarTitle:(NSString *)title
 {
     XKLog(@"%f",tableViewSlideDistance);
-    if (tableViewSlideDistance<0) {
+    if (tableViewSlideDistance<64) {
         viewController.title = title;
         [UIView animateWithDuration:.4 animations:^{
             imageView.alpha = 1;

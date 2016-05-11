@@ -188,6 +188,8 @@ extern NSString *const kFirstOpenToday;
 /*第一次打开应用*/
 extern NSString *const kFirstOpenApp;
 
+extern NSString *const kFirstOpenAppWithUser;
+
 /*网络请求参数*/
 extern float  const  requestTimeOut;
 /*

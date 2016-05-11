@@ -8,6 +8,7 @@
 
 #import "XKRWPlanEnergyView.h"
 #import "XKRWFlashingTextView.h"
+#import "XKRWUserService.h"
 
 @interface XKRWPlanEnergyView()
 
@@ -24,6 +25,7 @@
     XKRWFlashingTextView *_remindTextView;
     UILabel *_checkTodayAnalyze;
     UIView *_line;
+    CGFloat leastNum;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -34,6 +36,12 @@
     if (self) {
         
         _exClickedIndex = 0;
+        XKSex sex = [[XKRWUserService sharedService] getSex];
+        if (sex == eSexMale) {
+            leastNum = 1400.f;
+        } else if (sex == eSexFemale) {
+            leastNum = 1200.f;
+        }
         
         _remindTextView = [[XKRWFlashingTextView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 12)];
         _remindTextView.foreColor = [UIColor colorFromHexString:@"000000"];
@@ -117,7 +125,7 @@
     __weak typeof(self) weakSelf = self;
     
     BOOL isBehaveCurrect = NO;
-    if (currentNumber <= goalNumber && currentNumber >= 1200) {
+    if (currentNumber <= goalNumber && currentNumber >= leastNum) {
         isBehaveCurrect = YES;
     } else {
         isBehaveCurrect = NO;
@@ -234,7 +242,7 @@
     _intakeNumber = currentNumber;
     
     BOOL abool;
-    if (_intakeNumber < 1200 || _intakeNumber > _eatEnergyCircle.goalNumber) {
+    if (_intakeNumber < leastNum || _intakeNumber > _eatEnergyCircle.goalNumber) {
         abool = NO;
     } else {
         abool = YES;

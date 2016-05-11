@@ -14,6 +14,8 @@
 
 //判断3.0版本是不是第一次打开
 + (BOOL) isFirstOpenThisApp;
+
++ (BOOL) isFirstOpenThisAppWithUserId:(NSInteger ) userId;
 /*判断是否是今天第一次打开app*/
 + (BOOL) isFirstOpenToday;
 //动画效果是否执行

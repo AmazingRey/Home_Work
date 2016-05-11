@@ -54,7 +54,6 @@
 
 - (void)createCustomTabBar
 {
-   
     tabbarBG = [[UIImageView alloc] init];
     tabbarBG.backgroundColor = [UIColor whiteColor];
     tabbarBG.userInteractionEnabled = YES;
@@ -494,6 +493,8 @@
     moreBtn.userInteractionEnabled = NO;
     self.selectedIndex = button.tag;
 }
+
+
 
 - (void)changeBePraiseNoticeNum
 {

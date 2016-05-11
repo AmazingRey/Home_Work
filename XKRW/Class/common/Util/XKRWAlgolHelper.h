@@ -65,6 +65,9 @@
 /*达成目标体重的 剩余时间*/
 + (NSInteger ) remainDayToAchieveTarget;
 
+/*是否事方案最后一天*/
++ (BOOL) isSchemeLastDay;
+
 /*达成目标体重的新方案开始了多少天*/
 + (NSInteger ) newSchemeStartDayToAchieveTarget;
 

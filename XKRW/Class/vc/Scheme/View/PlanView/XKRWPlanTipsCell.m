@@ -110,10 +110,19 @@
         
         if (entity.showType == TipsShowAndEnactNewPlan) {
             [self.actionButton setTitle:@"制定新计划" forState:UIControlStateNormal];
+            self.actionButton.tag = 1000;
         }else if (entity.showType == TipsShowAndShowDetail){
             [self.actionButton setTitle:@"马上查看" forState:UIControlStateNormal];
-        }else{
+            self.actionButton.tag = 1001;
+        }else if(entity.showType == TipsShowAndEnterSet){
             [self.actionButton setTitle:@"设置" forState:UIControlStateNormal];
+            self.actionButton.tag = 1002;
+        }else if(entity.showType == TipsEntryPlan){
+            [self.actionButton setTitle:@"设置" forState:UIControlStateNormal];
+            self.actionButton.tag = 1003;
+        }else if(entity.showType == TipsShowAndEnterSet){
+            [self.actionButton setTitle:@"设置" forState:UIControlStateNormal];
+            self.actionButton.tag = 1004;
         }
     }
 }
@@ -168,6 +177,7 @@
         _actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_actionButton setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
         [_actionButton.titleLabel setFont:XKDefaultFontWithSize(14)];
+        _backgroundImageView.userInteractionEnabled = YES;
          [_backgroundImageView addSubview:_actionButton];
     }
     return _actionButton;

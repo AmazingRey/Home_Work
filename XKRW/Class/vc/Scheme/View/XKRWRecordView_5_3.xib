@@ -210,6 +210,7 @@
                 <outlet property="recordTypeLabel" destination="Qug-Cf-kNw" id="mLP-TN-LtM"/>
                 <outlet property="rightButton" destination="HQK-ga-FUD" id="GNj-BT-oQG"/>
                 <outlet property="scrollView" destination="MDZ-gd-aNF" id="J4S-AF-Trb"/>
+                <outlet property="scrollViewConstraint" destination="9xF-mK-gag" id="5BU-P0-6ml"/>
                 <outlet property="scrollviewHeight" destination="9xF-mK-gag" id="6dh-Wg-BWE"/>
                 <outlet property="testViewFrame" destination="fpV-2j-Yb7" id="9nh-sX-uY8"/>
             </connections>

@@ -83,6 +83,24 @@ static XKRWBaseService *service;
         return YES;
     }
 }
+
+
++ (BOOL) isFirstOpenThisAppWithUserId:(NSInteger ) userId {
+    NSUserDefaults *defaults =  [NSUserDefaults standardUserDefaults];
+    
+    if ([[defaults objectForKey:kFirstOpenAppWithUser] isEqual:[NSString stringWithFormat:@"IOS_Ver_%@_%ld", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"],userId]]) {
+        return  NO;
+    }
+    else{
+        
+        [defaults setObject:[NSString stringWithFormat:@"IOS_Ver_%@_%ld", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"],userId] forKey:kFirstOpenAppWithUser];
+        [defaults synchronize];
+        
+        return YES;
+    }
+
+}
+
 /**
  *  今天第一次打开
  *

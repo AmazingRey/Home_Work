@@ -1968,6 +1968,60 @@ static BOOL canUpdatePlan = YES;
     }
     entity.oldRecordEntity = oldRecordEntity;
     
+    float BM = [XKRWAlgolHelper BM_with_weight:entity.weight height:entity.height age:entity.age sex:entity.sex];
+    float PAL = [XKRWAlgolHelper PAL_with_sex:entity.sex physicalLabor:entity.labor_level];
+//    //每日正常饮食摄入量
+//    float dailyIntakEnergy =  [XKRWAlgolHelper dailyIntakEnergyWithBM:BM PAL:PAL];
+    //每日正常推荐摄入量
+    float schemeIntakEnergy = [XKRWAlgolHelper dailyIntakeRecommendEnergyWithBM:BM PAL:PAL sex:entity.sex age:entity.age];
+    //真实饮食摄入
+    float realIntakEnergy = 0;
+    //真实运动消耗
+    float realSportEnergy = 0;
+    
+    //记录用户的运动情况
+    NSMutableArray *mutableArray = [NSMutableArray array];
+    
+    for (XKRWRecordSchemeEntity *schemeEntity  in array) {
+        if(schemeEntity.type == RecordTypeBreakfirst || schemeEntity.type == RecordTypeLanch || schemeEntity.type == RecordTypeLanch ||schemeEntity.type == RecordTypeSnack || schemeEntity.type == 6){
+            realIntakEnergy += schemeEntity.calorie;
+        }
+        
+        if (schemeEntity.type == RecordTypeSport || schemeEntity.type  == 5) {
+            realSportEnergy += schemeEntity.calorie;
+            if (schemeEntity.type == RecordTypeSport) {
+                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                [dic setObject:@"完美执行" forKey:@"text"];
+                [dic setObject:[NSNumber numberWithFloat:schemeEntity.calorie] forKey:@"calorie"];
+                [mutableArray addObject:dic];
+            }else{
+                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                [dic setObject:@"完美执行45分钟" forKey:@"text"];
+                [dic setObject:[NSNumber numberWithFloat:schemeEntity.calorie] forKey:@"calorie"];
+                [mutableArray addObject:dic];
+            }
+        }
+    }
+    
+    for (XKRWRecordFoodEntity *foodEntity in oldRecordEntity.FoodArray) {
+        realIntakEnergy += foodEntity.calorie;
+    }
+    
+    for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
+        realSportEnergy += sportEntity.calorie;
+    }
+    entity.lossWeight = (schemeIntakEnergy -  realIntakEnergy + realSportEnergy) /7.7;
+    entity.lessEatCalories = schemeIntakEnergy -  realIntakEnergy;
+    entity.sportCalories = realSportEnergy;
+    
+    for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:[NSString stringWithFormat:@"%@%ld分钟",sportEntity.sportName,(long)sportEntity.number] forKey:@"text"];
+        [dic setObject:[NSNumber numberWithFloat:sportEntity.calorie] forKey:@"calorie"];
+        [mutableArray addObject:dic];
+    }
+    entity.sportArray = mutableArray;
+    
     return entity;
 }
 

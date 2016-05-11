@@ -1038,6 +1038,7 @@
 		CCB5F12F1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.m in Sources */ = {isa = PBXBuildFile; fileRef = CCB5F12E1CDC3D9D000BA06E /* XKRWStatiscEntity5_3.m */; };
 		CCB5F1321CDC4362000BA06E /* XKRWStatiscBussiness5_3.m in Sources */ = {isa = PBXBuildFile; fileRef = CCB5F1311CDC4362000BA06E /* XKRWStatiscBussiness5_3.m */; };
 		CCDEABD61CD99A26006E2D81 /* XKRWCustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCDEABD51CD99A26006E2D81 /* XKRWCustomPickerView.m */; };
+		CCE7BE1B1CE2CB67005DC322 /* XKRWNewHPSportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE7BE1A1CE2CB67005DC322 /* XKRWNewHPSportView.swift */; };
 		CCEBA7241CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA7231CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m */; };
 		CCEBA7271CD84EA500C3DFA8 /* XKRWStatisticDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA7261CD84EA500C3DFA8 /* XKRWStatisticDetailView.m */; };
 		CCEBA72D1CD8973500C3DFA8 /* XKRWStatisAnalysisView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA72C1CD8973500C3DFA8 /* XKRWStatisAnalysisView.m */; };
@@ -2767,6 +2768,7 @@
 		CCB5F1311CDC4362000BA06E /* XKRWStatiscBussiness5_3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWStatiscBussiness5_3.m; sourceTree = "<group>"; };
 		CCDEABD41CD99A26006E2D81 /* XKRWCustomPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWCustomPickerView.h; sourceTree = "<group>"; };
 		CCDEABD51CD99A26006E2D81 /* XKRWCustomPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWCustomPickerView.m; sourceTree = "<group>"; };
+		CCE7BE1A1CE2CB67005DC322 /* XKRWNewHPSportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWNewHPSportView.swift; sourceTree = "<group>"; };
 		CCEBA7221CD83FA800C3DFA8 /* XKRWWeekAnalysisView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeekAnalysisView.h; sourceTree = "<group>"; };
 		CCEBA7231CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeekAnalysisView.m; sourceTree = "<group>"; };
 		CCEBA7251CD84EA500C3DFA8 /* XKRWStatisticDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWStatisticDetailView.h; sourceTree = "<group>"; };
@@ -4764,6 +4766,7 @@
 				BC31B9031C1ACA520045817B /* HPSummaryCell.xib */,
 				BC31B9041C1ACA520045817B /* XKRWCalendarTitleCell.swift */,
 				BC31B9051C1ACA520045817B /* XKRWCalendarTitleCell.xib */,
+				CCE7BE1A1CE2CB67005DC322 /* XKRWNewHPSportView.swift */,
 			);
 			path = HistoryAndProcess;
 			sourceTree = "<group>";
@@ -7922,6 +7925,7 @@
 				BC31B92B1C1ACA520045817B /* HPChangeHabitView.swift in Sources */,
 				BC6F2F851C1A70D3005B54E8 /* XKRWTextFieldCell.swift in Sources */,
 				2E9686D31A04AEE500CB5D77 /* XKUnknownException.m in Sources */,
+				CCE7BE1B1CE2CB67005DC322 /* XKRWNewHPSportView.swift in Sources */,
 				BC769E981C33D3DD00E96B1A /* XKPickerView.m in Sources */,
 				BC6F2EE91C198686005B54E8 /* XKRWForgetPassWordVC.swift in Sources */,
 				BC31B92C1C1ACA520045817B /* HPHabitCell.swift in Sources */,
@@ -8260,8 +8264,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8277,7 +8281,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -8287,8 +8291,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8300,7 +8304,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};

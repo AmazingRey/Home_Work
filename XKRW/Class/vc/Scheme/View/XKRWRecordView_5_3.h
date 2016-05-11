@@ -23,6 +23,7 @@
 
 @interface XKRWRecordView_5_3 : UIView
 @property (assign,nonatomic) id<XKRWRecordFood5_3ViewDelegate> delegate;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewConstraint;
 
 @property (weak, nonatomic) IBOutlet UILabel *recommendedTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *habitLabel;

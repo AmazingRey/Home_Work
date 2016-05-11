@@ -346,7 +346,7 @@
         
         self.selectedLine = (int)(item.frame.origin.y / 30 + 1);
         self.currentLine = self.selectedLine;
-        [item setSelected:YES];
+//        [item setSelected:YES];
         
     } else {
         
@@ -364,7 +364,7 @@
             item = (XKRWCalendarItem *)[self viewWithTag:comps.day + 100];
         }
         self.selectedLine = (int)(item.frame.origin.y / 30 + 1);
-        [item setSelected:YES];
+//        [item setSelected:YES];
     }
 }
 

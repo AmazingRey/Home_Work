@@ -2344,8 +2344,17 @@ static XKRWRecordService4_0 *sharedInstance = nil;
  *  @return dictionary （key：运动   value：kcal）
  */
 - (NSMutableArray *)getSportRecordAndSportSchemeRecordWithDate:(NSDate *)date {
+    XKRWRecordSchemeEntity *sportPerfectSchemeEntity = [self getSchemeRecordWithDate:date type:RecordTypeSport];
     NSDictionary *sportSchemeDic = [self getSchemeRecordWithDate:date andType:5];
-    NSMutableArray *mutableArray = [NSMutableArray mutableCopy];
+    NSMutableArray *mutableArray = [NSMutableArray array];
+    
+    if (sportPerfectSchemeEntity) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:@"完美执行45分钟" forKey:@"text"];
+        [dic setObject:[NSNumber numberWithFloat:sportPerfectSchemeEntity.calorie] forKey:@"calorie"];
+        [mutableArray addObject:dic];
+    }
+    
     if (sportSchemeDic) {
         XKRWRecordSchemeEntity *entity = [sportSchemeDic objectForKey:@"schemeEntity"];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -2356,7 +2365,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
     for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setObject:[NSString stringWithFormat:@"%@%ld分钟",sportEntity.sportName,sportEntity.number] forKey:@"text"];
+        [dic setObject:[NSString stringWithFormat:@"%@%ld分钟",sportEntity.sportName,(long)sportEntity.number] forKey:@"text"];
         [dic setObject:[NSNumber numberWithFloat:sportEntity.calorie] forKey:@"calorie"];
         [mutableArray addObject:dic];
     }

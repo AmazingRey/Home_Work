@@ -157,7 +157,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                     if !contains {
                         srs.append(scheme)
                     } else {
-                        for var i = 0; i < srs.count; i += 1 {
+                        for i in 0 ..< srs.count {
                             let temp = srs[i]
                             
                             if temp.type == scheme.type {
@@ -278,13 +278,24 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
             return mealCell!
         }
         else{   // if(indexPath.section == 3) 运动栏位
-            if sportCell == nil {
-                sportCell = tableView.dequeueReusableCellWithIdentifier("sportCell") as?  HPSportCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("newSportCell")
+            if cell == nil {
+                cell = UITableViewCell(style: .Default, reuseIdentifier: "newSportCell")
             }
-            if(self.viewModel != nil){
-               self.sportCell!.setCellContent(self.viewModel!)
-            }
-            return sportCell!
+            cell?.selectionStyle = .None
+            let sportView = XKRWNewHPSportView()
+            sportView.frame = CGRectMake(0, 0, self.view.frame.size.width, 186)
+            cell?.contentView.addSubview(sportView)
+            sportView.setSportView(self.viewModel!)
+            return cell!
+            
+//            if sportCell == nil {
+//                sportCell = tableView.dequeueReusableCellWithIdentifier("sportCell") as?  HPSportCell
+//            }
+//            if(self.viewModel != nil){
+//               self.sportCell!.setCellContent(self.viewModel!)
+//            }
+//            return sportCell!
         }
     }
     

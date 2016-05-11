@@ -50,6 +50,7 @@ NSString *const kWeightHint      = @"weightHint";
 NSString *const kFirstOpenToday  = @"fristOpenToday";
 NSString *const kUpdateFromV2    = @"kUpdateFromV2";
 NSString *const kFirstOpenApp     = @"firstOpenApp";
+NSString *const kFirstOpenAppWithUser = @"firstOpenAppWithUserID";
 
 NSString *const kUserName = @"XKRWUser";
 

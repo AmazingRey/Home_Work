@@ -18,7 +18,7 @@ class HPPredictCell: UITableViewCell {
         
         if viewModel.isSelf {
             self.loseWeightLabel.text = viewModel.predictLoseWeight
-        } else {
+        }else{
             if viewModel.predictLoseWeight == "??g" {
                 self.loseWeightLabel.hidden = true
                 self.nonDataLabel.hidden = false

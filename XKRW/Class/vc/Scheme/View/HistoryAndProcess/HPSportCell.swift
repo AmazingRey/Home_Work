@@ -8,69 +8,191 @@
 
 import UIKit
 
-class HPSportCell: XKRWUITableViewCellbase,UITableViewDelegate {
+@objc protocol HPSportCellDelegate: NSObjectProtocol {
+    
+    func SportCell(cell: HPSportCell, clickModifyButtonIndex index: Int) -> Void
+    
+    optional func SportCellClickToRecordButton(cell: HPSportCell) -> Void
+}
+
+class HPSportCell: XKRWUITableViewCellbase {
 
     @IBOutlet weak var content: UIView!
-    weak var model : XKRWHistoryAndProcessModel?
+    @IBOutlet weak var recordView: UIView!
+    @IBOutlet weak var recordViewHeight: NSLayoutConstraint!
     
-    lazy var labTitle : UILabel = {
-        var tmpTitle : UILabel = UILabel()
-        tmpTitle.text = "运动消耗"
-        tmpTitle.textAlignment = .Center
-        tmpTitle.textColor = XK_TITLE_COLOR
-        return tmpTitle
-    }()
+    @IBOutlet weak var sealImageView: UIImageView!
     
-    lazy var labCal : UILabel = {
-        var tmpCal :UILabel = UILabel()
-//        tmpCal.text = "\(self.model!.costCalorie)kcal"
-        tmpCal.text = String(format:"%.0f",self.model!.costCalorie)
-        tmpCal.font = UIFont.systemFontOfSize(27)
-        tmpCal.textAlignment = .Center
-        tmpCal.textColor = XK_MAIN_TONE_COLOR
-        return tmpCal
-    }()
-    
-    lazy var tableView : UITableView = {
-        var tmpTable : UITableView = UITableView()
-        tmpTable.delegate = self
-        return tmpTable
-    }()
-    
-    lazy var imgView : UIImageView = {
-        var tmpImg : UIImageView = UIImageView()
-        return tmpImg
-    }()
-    
-    func makeContentView(viewModel:XKRWHistoryAndProcessModel) -> Void {
-        self.model = viewModel
-    }
+    weak var delegate: HPSportCellDelegate?
     
     func setCellContent(viewModel: XKRWHistoryAndProcessModel) -> Void {
-        self.makeContentView(viewModel)
+        
         for view in self.content.subviews {
             view.removeFromSuperview()
         }
+        
         if viewModel.sportState == .Show {
-        }else{
-            let label = UILabel(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 20))
-            label.center = CGRectGetCenter(self.content.bounds)
-            label.setX(0)
             
-            label.textAlignment = .Center
-            label.textColor = XK_TEXT_COLOR
-            label.font = UIFont.systemFontOfSize(14)
+            let barBase = UIImageView(image: UIImage(named: "progress_bar_base"))
+            let bar = UIImageView(image: UIImage(named: "progress_bar_full"))
+            let barTop = UIImageView(image: UIImage(named: "progress_bar_top"))
             
-            label.text = "ta今天没有运动记录哦"
-            self.content.addSubview(label)
+            let barView = UIView(frame: CGRectMake(0, 0, barBase.size.width, barBase.size.height))
+            barView.center = self.content.center
+            barView.setY(20)
+            barView.setX(UI_SCREEN_WIDTH / 2 - barBase.size.width / 2)
+            barView.clipsToBounds = true
+            
+            self.content.addSubview(barView)
+            barView.addSubview(barBase)
+            barView.addSubview(bar)
+            barView.addSubview(barTop)
+            
+            bar.setX(bar.width * CGFloat(viewModel.sportPercentage ?? 0) - bar.width)
+            
+            if viewModel.isSelf {
+                
+                let label = UILabel(frame: CGRectMake(0, barView.bottom + 10, UI_SCREEN_WIDTH, 40))
+                label.textAlignment = .Center
+                label.numberOfLines = 0
+                
+                let normalAttribute = [NSFontAttributeName: UIFont.systemFontOfSize(12), NSForegroundColorAttributeName: XK_TEXT_COLOR]
+                let highlight = [NSFontAttributeName: UIFont.systemFontOfSize(12), NSForegroundColorAttributeName: XKMainSchemeColor]
+                
+                let attributeString = NSMutableAttributedString(string: "效果将持续到明天早上，睡觉时也能消耗热量\n预计消耗")
+                attributeString.addAttributes(normalAttribute, range: NSMakeRange(0, attributeString.length))
+                
+                let number = NSAttributedString(string: "\(viewModel.costCalorie)kcal", attributes: highlight)
+                
+                attributeString.appendAttributedString(number)
+                attributeString.appendAttributedString(NSAttributedString(string: "，大约能瘦", attributes: normalAttribute))
+                
+                let gString = String(format: "%0.1fg", Float(viewModel.costCalorie) / 7.7);
+                
+                attributeString.appendAttributedString(NSAttributedString(string: gString, attributes: highlight))
+                
+                label.attributedText = attributeString
+                self.content.addSubview(label)
+            }
+            
+        } else {
+            
+            if viewModel.isSelf {
+                
+                let label = UILabel(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 20))
+                label.center = self.content.center
+                label.setY(20)
+                
+                label.textAlignment = .Center
+                label.textColor = XK_TEXT_COLOR
+                label.font = UIFont.systemFontOfSize(14)
+                
+                label.text = "小主，你真的有运动吗？"
+                self.content.addSubview(label)
+                
+                let button = UIButton(type: UIButtonType.Custom)
+                 button.backgroundColor = UIColor.clearColor()
+                button.titleLabel?.font = UIFont.systemFontOfSize(14)
+                button.setTitle("去记上", forState: UIControlState.Normal)
+                button.setTitleColor(XKMainSchemeColor, forState: .Normal)
+                button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
+                button.setBackgroundImage(UIImage.createImageWithColor(XKMainSchemeColor), forState: .Highlighted)
+                button.layer.cornerRadius = 3.5
+                button.layer.masksToBounds = true
+                button.layer.borderWidth = 1
+                button.layer.borderColor = XKMainSchemeColor.CGColor
+
+                button.addTarget(self, action: "clickRecordButton", forControlEvents: UIControlEvents.TouchUpInside)
+                button.frame = CGRectMake(0, 0, 70, 26)
+                button.center = self.content.center
+                button.setY(label.bottom + 25)
+                
+                self.content.addSubview(button)
+            }
+            else {
+                let label = UILabel(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 20))
+                label.center = CGRectGetCenter(self.content.bounds)
+                label.setX(0)
+                
+                label.textAlignment = .Center
+                label.textColor = XK_TEXT_COLOR
+                label.font = UIFont.systemFontOfSize(14)
+                
+                label.text = "ta今天没有运动记录哦"
+                self.content.addSubview(label)
+            }
         }
+        
+        if !viewModel.canModified {
+            self.recordViewHeight.constant = 0
+        } else {
+            self.recordViewHeight.constant = 44
+            
+            let selectedTag = viewModel.sport!.record_value
+            
+            for tag in 1...3 {
+                let button = self.recordView.viewWithTag(tag) as! UIButton
+                if tag == selectedTag {
+                    button.selected = true
+                } else {
+                    button.selected = false
+                }
+            }
+        }
+        
+        var image: UIImage?
+        
+        if viewModel.sportTag != nil {
+            
+            switch viewModel.sportTag! {
+            case .Perfect:
+                image = UIImage(named: "progress_emblem_perfect")
+            case .Bad:
+                image = UIImage(named: "progress_emblem_lazy")
+            case .Other:
+                image = UIImage(named: "progress_emblem_myself")
+            default:
+                image = nil
+                break
+            }
+        }
+        self.sealImageView.image = image
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        // Initialization code
     }
-    
+
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    
+    func clickRecordButton() -> Void {
+        if self.delegate != nil {
+            if self.delegate!.respondsToSelector("SportCellClickToRecordButton:") {
+                
+                self.delegate?.SportCellClickToRecordButton!(self)
+            }
+        }
+    }
+    
+    @IBAction func clickButton(sender: AnyObject) {
+        
+        if sender is UIButton {
+            
+            let button = sender as! UIButton
+            if button.selected == true && button.tag != 3 {
+                return
+            }
+            for tag in 1...3 {
+                let button = self.recordView.viewWithTag(tag) as! UIButton
+                button.selected = false
+            }
+            self.delegate?.SportCell(self, clickModifyButtonIndex: button.tag)
+            button.selected = true
+        }
     }
 }

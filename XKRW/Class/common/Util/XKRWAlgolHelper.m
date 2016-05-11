@@ -461,6 +461,13 @@
   
 }
 
++ (BOOL) isSchemeLastDay {
+    if ([self remainDayToAchieveTarget] == -1) {
+        return YES;
+    }
+    return NO;
+}
+
 + (NSInteger ) newSchemeStartDayToAchieveTarget{
     NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
     NSDate *nowDate = [NSDate date];
