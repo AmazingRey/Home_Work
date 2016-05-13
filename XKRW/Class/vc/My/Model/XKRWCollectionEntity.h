@@ -62,12 +62,14 @@
 
 
 #pragma mark - 运动的字段
-///**
-// *  收藏的运动mets
-// */
-//
-//@property (nonatomic, assign) float     sportMets;
-//
+/**
+ *  收藏的运动mets
+ */
+
+@property (nonatomic, assign) float sportMets;
+
+@property (nonatomic, assign) int sportUnit;
+
 
 #pragma mark - 文章的字段
 /**

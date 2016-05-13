@@ -7,8 +7,11 @@
 //
 
 #import "XKRWBaseVC.h"
+#define AnalysizeViewHeight 194
+
 
 @interface XKRWDailyAnalysizeVC : XKRWBaseVC
-#define AnalysizeViewHeight 194
+
+@property (nonatomic,strong) NSDate *recordDate;
 
 @end

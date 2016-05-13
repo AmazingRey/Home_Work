@@ -16,6 +16,6 @@
  *
  *  @return <#return value description#>
  */
-- (NSMutableArray *)TipsInfoWithUseSituationwithRecordDate:(NSDate *)date;
+- (NSArray *)TipsInfoWithUseSituationwithRecordDate:(NSDate *)date;
 
 @end

@@ -12,23 +12,23 @@ class HPMealCell: XKRWUITableViewCellbase {
     @IBOutlet var labCal: UILabel!
     @IBOutlet var labNodata: UILabel!
     @IBOutlet var labEat: UILabel!
-    weak var viewModel: XKRWHistoryAndProcessModel?
+    weak var entity: XKRWUserInfoShowEntity?
     
-    func setCellContent(viewModel: XKRWHistoryAndProcessModel) -> Void {
+    func setCellContent(entity: XKRWUserInfoShowEntity) -> Void {
  
-        self.viewModel = viewModel
-        if !viewModel.haveOtherRecord {
-            labNodata.hidden = false
-            labCal.hidden = true
-            labEat.hidden = true
-            labNodata.text = "ta今天没有饮食记录哦"
-        }else{
+        self.entity = entity
+//        if !entity.isRecordFood {
+//            labNodata.hidden = false
+//            labCal.hidden = true
+//            labEat.hidden = true
+//            labNodata.text = "ta今天没有饮食记录哦"
+//        }else{
             labNodata.hidden = true
             labNodata.text = ""
             labCal.hidden = false
-            labCal.text = "\(viewModel.intakeCalorie)kcal"
+            labCal.text = "\(entity.lessEatCalories)kcal"
             labEat.hidden = false
-        }
+//        }
     }
     override func awakeFromNib() {
         super.awakeFromNib()

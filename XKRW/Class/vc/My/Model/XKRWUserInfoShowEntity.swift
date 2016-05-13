@@ -84,6 +84,10 @@ class XKRWUserInfoShowEntity: NSObject {
         return true
     }
     
+    //是否记录
+    var isRecordFood = false
+    var isRecordSport = false
+    var isRecord = false
     //预计瘦  克
     var lossWeight = 0
     //少吃了  卡路里

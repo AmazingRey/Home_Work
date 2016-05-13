@@ -311,48 +311,40 @@
     if (tableView.tag == 10001) {
         XKRWFoodRecordCell *recentRecordCell = [tableView dequeueReusableCellWithIdentifier:@"recentRecordCell" forIndexPath:indexPath];
         if ([tableName isEqualToString:@"food_record"]) {
-            XKRWFoodEntity *recentRecordFoodEntity = recentRecordOrCollectArray[indexPath.row];
-            [recentRecordCell setTitle:recentRecordFoodEntity.foodName logoURL:recentRecordFoodEntity.foodLogo clickDetail:^(NSIndexPath * recordFoodIndexPath) {
+            XKRWCollectionEntity *recentRecordFoodEntity = recentRecordOrCollectArray[indexPath.row];
+            [recentRecordCell setTitle:recentRecordFoodEntity.collectName logoURL:recentRecordFoodEntity.imageUrl clickDetail:^(NSIndexPath * recordFoodIndexPath) {
                 XKRWFoodDetailVC *foodDetailVC = [[XKRWFoodDetailVC alloc] init];
-                foodDetailVC.foodId = recentRecordFoodEntity.foodId;
-                foodDetailVC.foodName = recentRecordFoodEntity.foodName;
+                foodDetailVC.foodId = recentRecordFoodEntity.originalId;
+                foodDetailVC.foodName = recentRecordFoodEntity.collectName;
                 foodDetailVC.date = [NSDate date];
                 [weakSelf.navigationController pushViewController:foodDetailVC animated:YES];
                 
             } clickRecord:^(NSIndexPath * recordFoodIndexPath) {
-                XKRWRecordFoodEntity *recordEntity = [XKRWRecordFoodEntity new];
-                XKRWFoodEntity *tempEntity = [[XKRWFoodService shareService] syncQueryFoodWithId:recentRecordFoodEntity.foodId];
-                recordEntity.date = _recordDate;
-                recordEntity.foodId = tempEntity.foodId;
-                recordEntity.foodLogo = tempEntity.foodLogo;
-                recordEntity.foodName = tempEntity.foodName;
-                recordEntity.foodNutri = tempEntity.foodNutri;
-                recordEntity.foodEnergy = tempEntity.foodEnergy;
-                recordEntity.foodUnit = tempEntity.foodUnit;
-                recordEntity.recordType = foodRecordType;
-                XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
-                addFoodVC.foodRecordEntity = recordEntity;
-                [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:self];
+                
+                
+                [weakSelf downloadWithTaskID:@"foodDetail" outputTask:^id{
+                    return [[XKRWFoodService shareService] syncQueryFoodWithId:recentRecordFoodEntity.originalId];
+                }];
+               
                 
             }];
 
         } else if ([tableName isEqualToString:@"sport_record"]) {
-            XKRWSportEntity *entity = recentRecordOrCollectArray[indexPath.row];
-            
-            [recentRecordCell setTitle:entity.sportName logoURL:entity.sportActionPic clickDetail:^(NSIndexPath * sportIndexPath) {
+            XKRWCollectionEntity *entity = recentRecordOrCollectArray[indexPath.row];
+            XKRWSportEntity *detailSportEntity = [[XKRWSportService shareService] syncQuerySportWithId:(int)entity.originalId];
+            [recentRecordCell setTitle:entity.collectName logoURL:entity.imageUrl clickDetail:^(NSIndexPath * sportIndexPath) {
                 XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc] init];
-                XKRWSportEntity *detailSportEntity = [[XKRWSportService shareService] syncQuerySportWithId:entity.sportId];
                 vc.sportEntity = detailSportEntity;
-                vc.sportID = entity.sportId;
-                vc.sportName = entity.sportName;
+                vc.sportID = (int)entity.originalId;
+                vc.sportName = entity.collectName;
                 vc.isPresent = NO;
                 vc.hidesBottomBarWhenPushed = YES;
                 [weakSelf.navigationController pushViewController:vc animated:YES];
                 
             } clickRecord:^(NSIndexPath * sportIndexPath) {
                 XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
-                addVC.sportID = entity.sportId;
-                addVC.sportEntity = entity;
+                addVC.sportID = (int)entity.originalId;
+                addVC.sportEntity = detailSportEntity;
                 addVC.recordDate = _recordDate;
                 addVC.isPresent = YES;
                 XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:addVC];
@@ -384,8 +376,6 @@
                 sportAddVC.sportEntity = sportEntity;
                 sportAddVC.sportID = sportEntity.sportId;
                 sportAddVC.recordDate = _recordDate;
-//                sportAddVC.passMealTypeTemp = eSport;
-//                sportAddVC.needHiddenDate = YES;
                 [weakSelf.navigationController pushViewController:sportAddVC animated:YES];
             }];
             
@@ -428,20 +418,20 @@
     
     if (tableView.tag == 10001) {
         if ([tableName isEqualToString:@"food_record"]) {
-            XKRWFoodEntity *recentRecordFoodEntity = recentRecordOrCollectArray[indexPath.row];
+            XKRWCollectionEntity *recentRecordFoodEntity = recentRecordOrCollectArray[indexPath.row];
             XKRWFoodDetailVC *foodDetailVC = [[XKRWFoodDetailVC alloc] init];
-            foodDetailVC.foodId = recentRecordFoodEntity.foodId;
-            foodDetailVC.foodName = recentRecordFoodEntity.foodName;
+            foodDetailVC.foodId = recentRecordFoodEntity.originalId;
+            foodDetailVC.foodName = recentRecordFoodEntity.collectName;
             foodDetailVC.date = [NSDate date];
             [self.navigationController pushViewController:foodDetailVC animated:YES];
             
         } else if ([tableName isEqualToString:@"sport_record"]) {
-            XKRWSportEntity *entity = recentRecordOrCollectArray[indexPath.row];
+            XKRWCollectionEntity *entity = recentRecordOrCollectArray[indexPath.row];
             XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc] init];
-            XKRWSportEntity *detailSportEntity = [[XKRWSportService shareService] syncQuerySportWithId:entity.sportId];
+            XKRWSportEntity *detailSportEntity = [[XKRWSportService shareService] syncQuerySportWithId:(int)entity.originalId];
             vc.sportEntity = detailSportEntity;
-            vc.sportID = entity.sportId;
-            vc.sportName = entity.sportName;
+            vc.sportID = (int)entity.originalId;
+            vc.sportName = entity.collectName;
             vc.isPresent = NO;
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
@@ -484,6 +474,22 @@
         }
         [searchDisplayCtrl reloadSearchResultTableView];
         return ;
+    }
+    
+    if ([taskID isEqualToString:@"foodDetail"]) {
+        XKRWFoodEntity *tempEntity = (XKRWFoodEntity*) result;
+        XKRWRecordFoodEntity *recordEntity = [XKRWRecordFoodEntity new];
+        recordEntity.date = _recordDate;
+        recordEntity.foodId = tempEntity.foodId;
+        recordEntity.foodLogo = tempEntity.foodLogo;
+        recordEntity.foodName = tempEntity.foodName;
+        recordEntity.foodNutri = tempEntity.foodNutri;
+        recordEntity.foodEnergy = tempEntity.foodEnergy;
+        recordEntity.foodUnit = tempEntity.foodUnit;
+        recordEntity.recordType = foodRecordType;
+        XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
+        addFoodVC.foodRecordEntity = recordEntity;
+        [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:self];
     }
 }
 

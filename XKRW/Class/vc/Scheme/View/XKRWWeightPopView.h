@@ -52,7 +52,9 @@
 
 @property (copy, nonatomic) NSString *selectDateStr;
 @property (strong, nonatomic) NSNumber *currentIndex;
+@property (assign, nonatomic) XKRWRecordType recordType;
 
+- (instancetype)initWithFrame:(CGRect)frame withType:(NSInteger)type;
 - (IBAction)pressCancle:(id)sender;
 - (IBAction)pressSure:(id)sender;
 

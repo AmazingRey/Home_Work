@@ -147,13 +147,8 @@
         }
         
         if (isToday) {
-            [_dot removeFromSuperview];
-//            _storangIsToday = [[UIView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 30) / 2, (69-30)/2 - 10 , 30.f, 30.f)];
-//            _storangIsToday.layer.cornerRadius = 15;
-//            _storangIsToday.layer.masksToBounds = YES;
-//            _storangIsToday.layer.borderWidth = 1;
-//            _storangIsToday.layer.borderColor = XKMainSchemeColor.CGColor;
-//            [self insertSubview:_storangIsToday belowSubview:self.titleLabel];
+            [_dot setImage:[UIImage imageNamed:@"circle_date"]];
+            [self insertSubview:_dot belowSubview:self.titleLabel];
             [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
         }
         

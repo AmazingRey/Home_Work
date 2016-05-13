@@ -36,7 +36,7 @@ static XKRWPlanService *planService;
 
 - (void)saveEnergyCircleClickEvent:(ResultType)type {
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
-    NSDate *date = [NSDate date];
+    NSDate *date = [NSDate today];
     NSString *key;
     if (type == eFoodType) {
         key = [NSString stringWithFormat:@"%ld_eFoodType",(long)uid];
@@ -69,7 +69,7 @@ static XKRWPlanService *planService;
     
     if (date) {
         NSDate *today = [NSDate today];
-        if ([today year] == [date year] && [today month] == [date month] && [today day] == [date day]) {
+        if ([date compare:today] == NSOrderedSame) {
             return YES;
         } else {
             return NO;

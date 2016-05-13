@@ -16,10 +16,12 @@
 #import "XKRWCustomPickerView.h"
 #import "XKRWUserService.h"
 #import "XKRWCui.h"
+#import "KMHeaderTips.h"
 
 @interface XKRWStatisticAnalysizeVC ()<XKRWStatisticAnalysisPickerViewDelegate,XKRWCustomPickerViewDelegate,UIScrollViewDelegate>
 @property (strong, nonatomic) UISegmentedControl *segmentControl;
 @property (strong, nonatomic) UIScrollView *scrollView;
+@property (strong, nonatomic) UIView *emptyView;
 @property (strong, nonatomic) XKRWWeekAnalysisView *weekAnalysisView;
 @property (strong, nonatomic) UIButton *btnBack;
 //@property (strong, nonatomic) UIPickerView *pickerView;
@@ -35,6 +37,7 @@
     NSInteger pickerIndex;
     NSDictionary *pickerDic;
     NSInteger _pageTime;
+    BOOL notEnoughOneWeek;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,19 +48,17 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.title = @"统计分析";
-    
-    if (![self judgeTotalHasRecordDays]) {
-        //不足7天
-    }else{
-        [XKRWCui showProgressHud];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    notEnoughOneWeek = ![self judgeTotalHasRecordDays];//不足7天
+
+    [XKRWCui showProgressHud];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             _bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
-            dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
                 [self addMasonryLayout];
                 [XKRWCui hideProgressHud];
+                [self showTip];
             });
         });
-    }
 }
 
 -(BOOL)judgeTotalHasRecordDays{
@@ -68,6 +69,21 @@
         return NO;
     }
     return YES;
+}
+
+- (void)showTip {
+    // 判断用户是否第一次进入此界面（是：显示提示tips 否：不显示tip）
+    NSString *key = [NSString stringWithFormat:@"XKRWStatisticAnalysizeVC_%ld",(long)[XKRWUserDefaultService getCurrentUserId]];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    
+    if (![defaults objectForKey:key]) {
+        [defaults setValue:@YES forKey:key];
+        [defaults synchronize];
+        
+        KMHeaderTips *tips = [[KMHeaderTips alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 64) text:@"纬度曲线转移至主页右上角\n菜单的\"查看曲线\"中" type:KMHeaderTipsTypeDefault];
+        [self.view addSubview:tips];
+        [tips startAnimationWithStartOrigin:CGPointMake(0, -tips.height) endOrigin:CGPointMake(0, 0)];
+    }
 }
 
 #pragma mark getter Method
@@ -119,6 +135,30 @@
     return _scrollView;
 }
 
+-(UIView *)emptyView{
+    if (!_emptyView) {
+        _emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, ScrollViewHeight)];
+        UIImageView *emptyImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 162, 156)];
+        CGPoint point = _emptyView.center;
+        point.y -= 156;
+        emptyImageView.center = point;
+        
+        emptyImageView.image = [UIImage imageNamed:@"empty_monkey"];
+        [_emptyView addSubview:emptyImageView];
+        
+        UILabel *emptyLab = [[UILabel alloc] initWithFrame:CGRectMake(0, emptyImageView.frame.origin.y + emptyImageView.frame.size.height + 10, XKAppWidth, 80)];
+        emptyLab.text = @"啊哦，小主，\n\n你我相遇还不够一周呢。";
+        emptyLab.textColor = colorSecondary_666666;
+        emptyLab.numberOfLines = 0;
+        emptyLab.textAlignment = NSTextAlignmentCenter;
+        emptyLab.font = [UIFont systemFontOfSize:17];
+        [_emptyView addSubview:emptyLab];
+        
+        [self.scrollView addSubview:_emptyView];
+    }
+    return _emptyView;
+}
+
 -(XKRWWeekAnalysisView *)weekAnalysisView{
     if (!_weekAnalysisView) {
         _weekAnalysisView = [[XKRWWeekAnalysisView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, ScrollViewHeight) withBussiness:_bussiness];
@@ -143,31 +183,20 @@
         _btnBack.frame = self.view.bounds;
         _btnBack.backgroundColor = [UIColor lightGrayColor];
         [_btnBack addTarget:self action:@selector(btnBackPressed:) forControlEvents:UIControlEventTouchDown];
+        [self.view addSubview:_btnBack];
     }
     return _btnBack;
 }
 
-//-(UIPickerView *)pickerView{
-//    if (!_pickerView){
-//        CGRect frame = CGRectMake(0, self.view.frame.size.height-200, XKAppWidth, 200);
-//        _pickerView = [[UIPickerView alloc] initWithFrame:frame];
-//        _pickerView.backgroundColor = [UIColor whiteColor];
-//        _pickerView.opaque = YES;
-//        _pickerView.delegate = self;
-//        _pickerView.dataSource = self;
-//    }
-//    return _pickerView;
-//}
-
 -(XKRWCustomPickerView *)pickView{
     if (!_pickView) {
-        CGRect frame = CGRectMake(0, self.view.frame.size.height-200, XKAppWidth, 200);
+        CGRect frame = CGRectMake(0, XKAppHeight-300, XKAppWidth, 300);
         _pickView = [[XKRWCustomPickerView alloc] initWithFrame:frame withindex:pickerIndex withDicData:pickerDic];
         _pickView.backgroundColor = [UIColor whiteColor];
         _pickView.currentStr = [pickerDic objectForKey:[NSNumber numberWithInteger:pickerIndex]];
         _pickView.opaque = YES;
         _pickView.delegate = self;
-        
+        [self.view addSubview:_pickView];
     }
     return _pickView;
 }
@@ -186,20 +215,37 @@
         make.width.mas_equalTo(XKAppWidth);
         make.height.mas_equalTo(ScrollViewHeight);
     }];
-    [self.weekAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
-        make.left.mas_equalTo(_scrollView.left);
-        make.width.mas_equalTo(_scrollView.width);
-        make.height.mas_equalTo(_scrollView.height);
-        make.bottom.mas_equalTo(_scrollView.bottom);
-    }];
-    [self.statisAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@0);
-        make.left.mas_equalTo(_weekAnalysisView.mas_right);
-        make.width.mas_equalTo(_scrollView.width);
-        make.height.mas_equalTo(_scrollView.height);
-        make.bottom.mas_equalTo(_scrollView.bottom);
-    }];
+    if (notEnoughOneWeek) {
+        [self.emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@0);
+            make.left.mas_equalTo(_scrollView.left);
+            make.width.mas_equalTo(_scrollView.width);
+            make.height.mas_equalTo(_scrollView.height);
+            make.bottom.mas_equalTo(_scrollView.bottom);
+        }];
+        [self.statisAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@0);
+            make.left.mas_equalTo(_emptyView.mas_right);
+            make.width.mas_equalTo(_scrollView.width);
+            make.height.mas_equalTo(_scrollView.height);
+            make.bottom.mas_equalTo(_scrollView.bottom);
+        }];
+    }else{
+        [self.weekAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@0);
+            make.left.mas_equalTo(_scrollView.left);
+            make.width.mas_equalTo(_scrollView.width);
+            make.height.mas_equalTo(_scrollView.height);
+            make.bottom.mas_equalTo(_scrollView.bottom);
+        }];
+        [self.statisAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(@0);
+            make.left.mas_equalTo(_weekAnalysisView.mas_right);
+            make.width.mas_equalTo(_scrollView.width);
+            make.height.mas_equalTo(_scrollView.height);
+            make.bottom.mas_equalTo(_scrollView.bottom);
+        }];
+    }
 }
 
 #pragma mark segementControl Method
@@ -215,9 +261,7 @@
     pickerIndex = index;
     pickerDic = dic;
     self.btnBack.alpha = 0;
-    [self.view addSubview:_btnBack];
     self.pickView.alpha = 0;
-    [self.view addSubview:self.pickView];
     
     [UIView animateWithDuration:.5 animations:^{
         _btnBack.alpha = .5;

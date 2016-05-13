@@ -8,7 +8,7 @@
 @protocol XKRWRecordMore5_3ViewDelegate <NSObject>
 @optional
 -(void)pressChangeEatPercent;
--(void)pressSetEatNotify;
+-(void)pressSetNotifyWithIndex:(NSInteger)index;
 
 @end
 #import <UIKit/UIKit.h>

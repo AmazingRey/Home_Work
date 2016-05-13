@@ -88,12 +88,16 @@ static XKRWBaseService *service;
 + (BOOL) isFirstOpenThisAppWithUserId:(NSInteger ) userId {
     NSUserDefaults *defaults =  [NSUserDefaults standardUserDefaults];
     
-    if ([[defaults objectForKey:kFirstOpenAppWithUser] isEqual:[NSString stringWithFormat:@"IOS_Ver_%@_%ld", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"],userId]]) {
+    
+    
+    if ([[defaults objectForKey:kFirstOpenAppWithUser] isEqual:[NSString stringWithFormat:@"IOS_Ver_%@_%ld", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"],(long)userId]]) {
         return  NO;
     }
     else{
         
-        [defaults setObject:[NSString stringWithFormat:@"IOS_Ver_%@_%ld", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"],userId] forKey:kFirstOpenAppWithUser];
+        [defaults setObject:[NSString stringWithFormat:@"IOS_Ver_%@_%ld", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"],(long)userId] forKey:kFirstOpenAppWithUser];
+        
+        [defaults setObject:[NSDate today] forKey:@"EnterDate"];
         [defaults synchronize];
         
         return YES;

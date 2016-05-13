@@ -380,8 +380,7 @@ typedef NS_ENUM(NSInteger,TipsShowType) {
     /***  展示文本  进入瘦身计划页面*/
     TipsEntryPlan,
      /***  展示文本  进入方案食物*/
-    TipsShowSchemeFood
-    
+    TipsShowSchemeFood,    
 };
 
 typedef NS_ENUM(NSInteger, PlanType) {
@@ -402,6 +401,7 @@ typedef NS_ENUM(NSInteger, XKRWRecordType) {
     XKRWRecordTypeCustom,
     XKRWRecordTypeWeight,
     XKRWRecordTypeCircumference,
+    XKRWRecordTypeWeightAndCircumference,
     XKRWRecordTypeHabit,
     XKRWRecordTypeMenstruation,
     XKRWRecordTypeSleep,
@@ -452,4 +452,21 @@ typedef NS_ENUM(NSInteger, LifeStyleType) {
     weight
 };
 
+/**
+ *  首页pullview按钮type
+ */
+typedef NS_ENUM(NSInteger,PullViewBtnType) {
+    /**
+     *  记录体重
+     */
+    recordWeight = 0,
+    /**
+     *  记录纬度
+     */
+    recordContain,
+    /**
+     *  查看曲线
+     */
+    recordGraph
+};
 #endif

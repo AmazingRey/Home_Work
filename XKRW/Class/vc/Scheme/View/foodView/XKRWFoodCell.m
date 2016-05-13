@@ -61,14 +61,12 @@
     layer.shouldRasterize = YES;
 }
 //设置 收藏食物cell 值
-- (void) setCollectCellValue:(NSDictionary *)value
+- (void) setCollectCellValue:(XKRWCollectionEntity *)collectionEntity
 {
-    self.textLabel.text = [value objectForKey:@"collect_name"];
-    uint32_t  energy = [[value objectForKey:@"food_energy"] intValue];
-    NSString *detailText = [NSString stringWithFormat:@"%ikcal/100克",energy];
+    self.textLabel.text = collectionEntity.collectName;
+    NSString *detailText = [NSString stringWithFormat:@"%dkcal/100克",(int)collectionEntity.foodEnergy];
     self.detailTextLabel.text = detailText;
-    NSString *logoImgUrl = [value objectForKey:@"image_url"];
-    [self.imageView setImageWithURL: [NSURL URLWithString:logoImgUrl] placeholderImage:[UIImage imageNamed:@"food_default.png"]options:SDWebImageRetryFailed];
+    [self.imageView setImageWithURL: [NSURL URLWithString:collectionEntity.imageUrl] placeholderImage:[UIImage imageNamed:@"food_default.png"]options:SDWebImageRetryFailed];
     CALayer *layer  = self.imageView.layer;
     [layer setMasksToBounds:YES];
     [layer setCornerRadius:5.f];

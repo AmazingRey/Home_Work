@@ -31,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self initView];
     [self initData];
     
@@ -57,7 +57,7 @@
     schemeInfotableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     schemeInfotableView.separatorColor = XKClearColor;
     [self.view addSubview:schemeInfotableView];
-   
+    
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, 120)];
     footerView.backgroundColor = XK_BACKGROUND_COLOR;
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -912,7 +912,7 @@
         if (month == 0){
             dayBegin = addDay;
         }
-
+        
     }
     
     else if (year+_startYear == _endYear)
@@ -946,7 +946,7 @@
         
         [dayArray addObject:dayStr];
     }
-
+    
     NSMutableArray *array = [[NSMutableArray alloc] initWithObjects:yearArray,monthArray,dayArray, nil];
     return array;
 }
@@ -1115,7 +1115,7 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
     NSString *jsonString = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
     NSDictionary *params = @{@"data":jsonString};
-
+    
     //用户修改身高后，如果用户的修改身高后的体重BMI小于用户目标体重的BMI，那么无法修改体重
     [self uploadWithTask:^{
         [[XKRWUserService sharedService] saveUserInfoToRemoteServer:params];
@@ -1135,16 +1135,16 @@
 {
     if (buttonIndex == 1)  //确定
     {
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:[NSString stringWithFormat:@"needResetScheme_%ld",[[XKRWUserService sharedService] getUserId]]];
-       
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:[NSString stringWithFormat:@"needResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
         
-        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:[NSString stringWithFormat:@"lateToResetScheme_%ld",[[XKRWUserService sharedService] getUserId]]];
         
-         [[NSUserDefaults standardUserDefaults] synchronize];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:[NSString stringWithFormat:@"lateToResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         [XKRWCui showProgressHud:@"重置方案中..."];
         [self downloadWithTaskID:@"restSchene" outputTask:^id{
-           return  [[XKRWUserService sharedService] resetUserAllDataByToken];
+            return  [[XKRWUserService sharedService] resetUserAllDataByToken];
         }];
     }
 }
@@ -1173,7 +1173,7 @@
         if (result != nil) {
             if ([[result objectForKey:@"success"] integerValue] == 1){
                 
-
+                
                 [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"DailyIntakeSize"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
@@ -1185,15 +1185,15 @@
                 }];
                 
                 [XKRWCui hideProgressHud];
-
+                
                 XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc]initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
                 [self.navigationController pushViewController:fatReasonVC animated:YES];
-             }
-             else
-             {
+            }
+            else
+            {
                 [XKRWCui hideProgressHud];
                 [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
-             }
+            }
         }
     }
 }
@@ -1259,30 +1259,11 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
+    
     if (indexPath.section== 0){
-
+        
         switch (indexPath.row) {
-            case 0:{
-                 [self showBottomPicker:101];
-                }
-                break;
                 
-            case 1:{
-                    [self showBottomPicker:102];
-                }
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                [self showBottomPicker:201];
-                break;
-                
-            case 5:
-                [self showBottomPicker:204];
-                break;
             case 6:
             {
                 CityListViewController * vc = [[CityListViewController alloc] init];
@@ -1297,6 +1278,10 @@
             }
                 break;
             default:
+            {
+                [XKRWCui showInformationHudWithText:@"不能修改哦，如需调整请重新制定~"];
+                return;
+            }
                 break;
         }
     }else if (indexPath.section == 1){
@@ -1327,22 +1312,16 @@
     if (cell == nil) {
         cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWSchemeInfoCell");
     }
-//    cell.selectionStyle =  UITableViewCellSelectionStyleNone;
+    [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:YES DownLineHidden:NO];
     
     if (indexPath.section == 0) {
         
-        if (indexPath.row == 7) {
-            
-            [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
-        }else if (indexPath.row == 2 || indexPath.row== 3){
+        if (indexPath.row < 6){
             
             cell.schmeInfoDataLabel.textColor =  colorSecondary_999999;
             cell.arrowCell.hidden = YES;
-            [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:YES];
-        }else{
-            
-            [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:YES];
         }
+        
     }else{
         
         [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];

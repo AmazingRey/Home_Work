@@ -1304,10 +1304,10 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld GROUP BY %@ ORDER BY date DESC LIMIT 20",tableName,(long)uid,@"food_id"];
         NSArray *data = [self query:sql];
         for (NSDictionary *temp in data) {
-            XKRWFoodEntity *entity = [XKRWFoodEntity new];
-            entity.foodId = [temp[@"food_id"] integerValue];
-            entity.foodName = temp[@"food_name"];
-            entity.foodLogo = temp[@"image_url"];
+            XKRWCollectionEntity *entity = [XKRWCollectionEntity new];
+            entity.originalId = [temp[@"food_id"] integerValue];
+            entity.collectName = temp[@"food_name"];
+            entity.imageUrl = temp[@"image_url"];
             entity.foodEnergy = [temp[@"calorie"] integerValue];
             [array addObject:entity];
         }
@@ -1316,14 +1316,14 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld GROUP BY %@ ORDER BY date DESC LIMIT 20",tableName,(long)uid,@"sport_name"];
         NSArray *data = [self query:sql];
         for (NSDictionary *sportTemp in data) {
-            XKRWSportEntity *entity = [XKRWSportEntity new];
-            entity.sportId = [sportTemp[@"sport_id"] intValue];
-            entity.sportName = sportTemp[@"sport_name"];
-            entity.sportPic = sportTemp[@"image_url"];
-            entity.sportMets = [sportTemp[@"sport_METS"] floatValue];
-            entity.sportUnit = [sportTemp[@"unit"] intValue];
-            if (entity.sportId) {
-                [array addObject:entity];
+            XKRWCollectionEntity *collectionEntity = [XKRWCollectionEntity new];
+            collectionEntity.originalId = [sportTemp[@"sport_id"] intValue];
+            collectionEntity.collectName = sportTemp[@"sport_name"];
+            collectionEntity.imageUrl = sportTemp[@"image_url"];
+            collectionEntity.sportMets = [sportTemp[@"sport_METS"] floatValue];
+            collectionEntity.sportUnit = [sportTemp[@"unit"] intValue];
+            if (collectionEntity.originalId) {
+                [array addObject:collectionEntity];
             } else continue;
         }
         
@@ -1794,6 +1794,12 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             case XKRWRecordTypeRemark:
                 isRemoteSuccess = [self saveRemarkToRemote:entity];
                 break;
+            case XKRWRecordTypeWeightAndCircumference:
+                if ([self saveCircumferenceToRemote:entity] && [self saveWeightToRemote:entity]) {
+                    isRemoteSuccess = true;
+                }
+                break;
+                
             default:
                 break;
         }
@@ -3341,36 +3347,40 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 - (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDate:(NSDate *)date {
     
     XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
-    NSDictionary *  schemeDetail;
+    NSArray *  schemeRecordArray = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date];
+
     CGFloat  calorie = 0;
     if (type == efoodCalories) {
         for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
                 calorie += foodEntity.calorie;
         }
-        schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date andType:6];
+        for (XKRWRecordSchemeEntity *schemeEntity in schemeRecordArray) {
+            if (schemeEntity.type == 1 || schemeEntity.type == 2|| schemeEntity.type ==3 || schemeEntity.type == 4 ||schemeEntity.type == 6) {
+                 calorie += schemeEntity.calorie;
+            }
+        }
+        
     }else if (type == eSportCalories){
           for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
               calorie += sportEntity.calorie;
           }
+         for (XKRWRecordSchemeEntity *schemeEntity in schemeRecordArray) {
+            if (schemeEntity.type == 0 || schemeEntity.type == 5) {
+                calorie += schemeEntity.calorie;
+            }
+        }
         
-       schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date andType:5];
-      
+        
     }
-    if (schemeDetail != nil) {
-        XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
-        calorie += entity.calorie;
-    }
-    return calorie ;
+       return calorie ;
 }
-
 
 - (BOOL) getUserRecordStateWithDate:(NSDate *)date {
      XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
-    
-    if (recordEntity.FoodArray.count == 0 && recordEntity.SportArray.count== 0) {
+     NSArray *  schemeRecordArray = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date];
+    if (recordEntity.FoodArray.count == 0 && recordEntity.SportArray.count== 0 && schemeRecordArray.count == 0) {
         return NO;
     }
-    
     return YES;
 }
 

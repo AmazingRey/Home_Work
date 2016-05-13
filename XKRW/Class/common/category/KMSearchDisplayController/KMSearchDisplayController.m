@@ -137,6 +137,9 @@
         }
         superview = superview.superview;
     }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(KMSearchDisplayHideSearchResult)]) {
+        [_delegate KMSearchDisplayHideSearchResult];
+    }
 }
 
 - (void)showSearchResultTableView {

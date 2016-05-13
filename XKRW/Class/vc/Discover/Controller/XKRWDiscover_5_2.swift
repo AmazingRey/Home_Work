@@ -33,11 +33,11 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
     var postDetailVC:XKRWPostDetailVC! = XKRWPostDetailVC()
     var articleWebView:XKRWArticleWebView!
     /// 是否已参加减肥知识
-    var isCompeleteJfzs:Bool!
+    var isCompeleteJfzs = false
     /// 是否已参加运动推荐
-    var isCompeleteYdtj:Bool!
+    var isCompeleteYdtj = false
     /// 是否已参加励志
-    var isCompeleteLizhi:Bool!
+    var isCompeleteLizhi = false
     
     override func viewDidLoad() {
         super.viewDidLoad()

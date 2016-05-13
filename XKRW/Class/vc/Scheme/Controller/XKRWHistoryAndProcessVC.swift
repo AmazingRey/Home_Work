@@ -289,7 +289,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
         if indexPath.section == 0 {
             if indexPath.row == 1 {
                 
-                self.summaryCell?.setContent(self.viewModel)
+//                self.summaryCell?.setContent(self.viewModel)
                 return XKRWUtil.getViewSize(self.summaryCell?.contentView).height + 1
                 
             } else if indexPath.row == 2 {
@@ -300,7 +300,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             
             if self.mealCell != nil && self.viewModel.summaryTitle != nil {
                 
-                self.mealCell.setCellContent(self.viewModel)
+//                self.mealCell.setCellContent(self.viewModel)
                 return XKRWUtil.getViewSize(self.mealCell.contentView).height + 1
             }
             return 198
@@ -308,7 +308,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
             
             if self.sportCell != nil && self.viewModel.summaryTitle != nil {
                 
-                self.sportCell.setCellContent(self.viewModel)
+//                self.sportCell.setCellContent(self.viewModel)
                 return XKRWUtil.getViewSize(self.sportCell.contentView).height + 1
             }
             return 140
@@ -378,8 +378,7 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
                 return self.summaryCell!
                 
             } else if indexPath.row == 2 {
-                
-                self.predictCell?.setContent(self.viewModel)
+//                self.predictCell?.setContent(self.viewModel)
                 return self.predictCell!
             }
         } else if indexPath.section == 1 {

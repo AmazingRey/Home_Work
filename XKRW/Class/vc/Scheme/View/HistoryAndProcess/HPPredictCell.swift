@@ -14,19 +14,10 @@ class HPPredictCell: UITableViewCell {
     @IBOutlet weak var loseWeightLabel: UILabel!
     @IBOutlet weak var nonDataLabel: UILabel!
     
-    func setContent(viewModel: XKRWHistoryAndProcessModel) -> Void {
-        
-        if viewModel.isSelf {
-            self.loseWeightLabel.text = viewModel.predictLoseWeight
-        }else{
-            if viewModel.predictLoseWeight == "??g" {
-                self.loseWeightLabel.hidden = true
-                self.nonDataLabel.hidden = false
-            } else {
-                self.loseWeightLabel.hidden = false
-                self.nonDataLabel.hidden = true
-            }
-        }
+    func setContent(entity: XKRWUserInfoShowEntity) -> Void {
+        self.loseWeightLabel.text = "\(entity.lossWeight)g"
+        self.loseWeightLabel.hidden = false
+        self.nonDataLabel.hidden = true
     }
     
     override func awakeFromNib() {

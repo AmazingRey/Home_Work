@@ -24,7 +24,6 @@
 @property (nonatomic,strong) NSString *curContentUrl;
 //文章类型：减肥知识、灵活运营等七类  1. 减肥知识 2. 运动推荐
 @property (nonatomic,assign) uint32_t curCategory;
-
 //食物
 @property (nonatomic,assign) uint32_t curFoodId;
 @property (nonatomic,strong) NSString *curFoodName;
@@ -42,7 +41,7 @@
     
     [self initView];
     
-   
+    
     
     _collectTableView.delegate = self;
     _collectTableView.dataSource = self;
@@ -76,7 +75,7 @@
         dataArray = [NSMutableArray array];
     }
     dataArray =  [[XKRWCollectionService sharedService] queryCollectionWithType:segmentedSelectIndex];
-
+    
     if (dataArray.count == 0) {
         noCollectionImageView.hidden = NO;
     }
@@ -95,14 +94,14 @@
     [self dealCollectData];
 }
 
-#pragma --mark Network 
+#pragma --mark Network
 
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID
 {
     [XKRWCui hideProgressHud];
     if([taskID isEqualToString:@"deleteCollection"]){
         //数据库删除操作
-        entity.originalId = [[dataArray[deleteIndexPath.row] objectForKey:@"original_id"] intValue];
+        entity.originalId = [dataArray[deleteIndexPath.row] originalId];
         [[XKRWCollectionService sharedService] deleteCollectionInDB:entity];
         [self dealCollectData];
         [_collectTableView reloadData];
@@ -137,8 +136,8 @@
         if (articleCell == nil) {
             articleCell = [[XKRWSportCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifer0];
         }
-        NSDictionary *dict_value = (NSDictionary*)[dataArray objectAtIndex:indexPath.row];
-        articleCell.textLabel.text = [dict_value  objectForKey:@"collect_name"];
+        XKRWCollectionEntity *sportEntity = [dataArray objectAtIndex:indexPath.row];
+        articleCell.textLabel.text = sportEntity.collectName;
         return articleCell;
         
     }else if (segmentedSelectIndex == 1){
@@ -149,8 +148,8 @@
             
         }
         if ([dataArray count] > indexPath.row) {
-            NSDictionary *dict_value = (NSDictionary*)[dataArray objectAtIndex:indexPath.row];
-            [cell setCollectCellValue:dict_value];
+            XKRWCollectionEntity *collectionEntity = [dataArray objectAtIndex:indexPath.row];
+            [cell setCollectCellValue:collectionEntity];
         }
         
         return cell;
@@ -161,13 +160,13 @@
         if (sportCell == nil) {
             sportCell = [[XKRWSportCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:indentifer2];
         }
-        NSDictionary *dict_value = (NSDictionary*)[dataArray objectAtIndex:indexPath.row];
-        sportCell.textLabel.text = [dict_value  objectForKey:@"collect_name"];
+        XKRWCollectionEntity *SportEntity_2 = [dataArray objectAtIndex:indexPath.row];
+        sportCell.textLabel.text = SportEntity_2.collectName;
         return sportCell;
         
     }
     return nil;
-
+    
 }
 
 
@@ -177,22 +176,15 @@
     if (segmentedSelectIndex == 0)
     {
         if ([dataArray count] > indexPath.row) {
-            NSDictionary * dic = [dataArray objectAtIndex:indexPath.row];
-            self.curNid = [[dic objectForKey:@"original_id"] intValue];
-            self.curNavTitle = [dic objectForKey:@"collect_name"];
-            self.curCategory = [[dic objectForKey:@"category_type"] intValue];
-            self.curContentUrl = [dic objectForKey:@"content_url"];
+            XKRWCollectionEntity * articleEntity = [dataArray objectAtIndex:indexPath.row];
+            self.curNid = (int)articleEntity.originalId;
+            self.curNavTitle = articleEntity.collectName;
+            self.curCategory = articleEntity.categoryType;
+            self.curContentUrl = articleEntity.contentUrl;
             if(!self.curCategory)
             {
                 self.curCategory = 7;
             }
-            
-//            XKRWArticleVC *vc = [[XKRWArticleVC alloc] init];
-//            vc.nid = [NSString stringWithFormat:@"%i",self.curNid];
-//            vc.naviTitle = self.curNavTitle;
-//            vc.contentURL = self.curContentUrl;
-//            vc.source = eFromCollection;
-//            [self.navigationController pushViewController:vc animated:YES];
             
             XKRWArticleWebView *vc = [[XKRWArticleWebView alloc] init];
             vc.nid = [NSString stringWithFormat:@"%i",self.curNid];
@@ -208,15 +200,16 @@
     else if (segmentedSelectIndex == 1)
     {
         if ([dataArray count] > indexPath.row) {
-            self.curFoodId = [[[dataArray objectAtIndex:indexPath.row] objectForKey:@"original_id"] intValue];
-            self.curFoodName = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"collect_name"];
+            XKRWCollectionEntity *foodEntity = [dataArray objectAtIndex:indexPath.row];
+            self.curFoodId = (int)foodEntity.originalId;
+            self.curFoodName = foodEntity.collectName;
             
             XKRWFoodDetailVC *vc = [[XKRWFoodDetailVC alloc ]init];
             vc.foodId = self.curFoodId;
             vc.foodName = self.curFoodName;
             
             vc.date = [NSDate date];
-         
+            
             [self.navigationController pushViewController:vc animated:YES];
             
         }
@@ -225,16 +218,15 @@
     else if (segmentedSelectIndex == 2)
     {
         if ([dataArray count] > indexPath.row) {
-            NSDictionary * dic = [dataArray objectAtIndex:indexPath.row];
+            XKRWCollectionEntity * sportEntity = [dataArray objectAtIndex:indexPath.row];
             
-            self.curSportId = [[dic objectForKey:@"original_id"] intValue];
-            self.curSportName = [dic objectForKey:@"collect_name"];
+            self.curSportId = (int)sportEntity.originalId;
+            self.curSportName = sportEntity.collectName;
             XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc]init];
             vc.sportID = self.curSportId;
             vc.sportName = self.curSportName;
             vc.date = [NSDate date];
             vc.needHiddenDate = YES;
-//            vc.isCollect = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
         NSLog(@"跳到运动详情页面");
@@ -261,8 +253,10 @@
             return ;
         }
         entity = [[XKRWCollectionEntity alloc] init];
-        entity.date = [dataArray[indexPath.row] objectForKey:@"date"] ;
-        entity.collectType = [[dataArray[indexPath.row] objectForKey:@"collect_type"] intValue];
+        if (segmentedSelectIndex == 2) {
+            entity.collectType = [dataArray[indexPath.row] collectType];
+        }
+        entity.date = [dataArray[indexPath.row] date] ;
         
         [XKRWCui showProgressHud];
         
@@ -270,13 +264,10 @@
             [[XKRWCollectionService sharedService] deleteFromRemoteWithCollecType:entity.collectType date:entity.date];
         }];
         
-        
         deleteIndexPath = indexPath;
-        
-
+ 
     }
 }
-
 
 
 @end

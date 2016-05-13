@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XKRWCollectionEntity.h"
 
 @interface XKRWFoodCell : UITableViewCell
 
 
 - (void) setCellValue:(NSDictionary *)value;
-- (void) setCollectCellValue:(NSDictionary *)value;
+- (void) setCollectCellValue:(XKRWCollectionEntity *)foodEntity;
 @end

@@ -8,9 +8,7 @@
 
 @protocol XKRWWeightRecordPullViewDelegate <NSObject>
 @optional
--(void)pressWeight;
--(void)pressContain;
--(void)pressGraph;
+-(void)pressPullViewButtonWithType:(PullViewBtnType)type;
 
 @end
 

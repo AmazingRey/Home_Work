@@ -20,7 +20,14 @@
 -(void)awakeFromNib{
     
 }
-- (instancetype)initWithFrame:(CGRect)frame
+/**
+ *  点击不同的按钮类型不同
+ *
+ *  @param type 0:记录体重
+ *              1:记录围度
+ */
+
+- (instancetype)initWithFrame:(CGRect)frame withType:(NSInteger)type
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -43,7 +50,7 @@
         _iCarouselView.scrollToItemBoundary = NO;
         _iCarouselView.decelerationRate = 0.7;
         _iCarouselView.scrollSpeed = .5;
-        _iCarouselView.currentItemIndex = 0;
+        _iCarouselView.currentItemIndex = type;
         
         _recordDates = [[XKRWRecordService4_0 sharedService] getUserRecordDateFromDB];
         
@@ -108,6 +115,11 @@
     if (_currentIndex != currentIndex) {
         _currentIndex = currentIndex;
     }
+    if (_currentIndex.integerValue == 0) {
+        _recordType = XKRWRecordTypeWeight;
+    }else{
+        _recordType = XKRWRecordTypeCircumference;
+    }
     [self showCurrentText];
 }
 
@@ -129,9 +141,6 @@
 }
 
 -(void)setOldRecord:(XKRWRecordEntity4_0 *)oldRecord{
-    if (!_oldRecord) {
-        _oldRecord = [[XKRWRecordEntity4_0 alloc] init];
-    }
     if (_oldRecord != oldRecord) {
         _oldRecord = oldRecord;
     }
@@ -142,13 +151,13 @@
 -(void)makeEntityConvertToDicall{
     NSMutableDictionary *dayDiction = [NSMutableDictionary dictionary];
     
-    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.weight ] forKey:_arrLabels[0]];
-    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.bust ] forKey:_arrLabels[1]];
-    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.arm ] forKey:_arrLabels[2]];
-    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.waistline ] forKey:_arrLabels[3]];
-    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.hipline ] forKey:_arrLabels[4]];
-    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.thigh ] forKey:_arrLabels[5]];
-    [dayDiction setObject:[NSString stringWithFormat:@"%f", _oldRecord.circumference.shank ] forKey:_arrLabels[6]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.weight] forKey:_arrLabels[0]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.bust ] forKey:_arrLabels[1]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.arm ] forKey:_arrLabels[2]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.waistline ] forKey:_arrLabels[3]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.hipline ] forKey:_arrLabels[4]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.thigh ] forKey:_arrLabels[5]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.shank ] forKey:_arrLabels[6]];
 
     [_dicAll setObject:dayDiction forKey:_selectDateStr];
 }
@@ -267,6 +276,7 @@
     [dayDiction setObject:_textField.text forKey:[self getCurrentType:_currentIndex]];
     [_dicAll setObject:dayDiction forKey:_selectDateStr];
 }
+
 //EffectFoodAndSportCircle
 -(void)saveRemote{
     _oldRecord.circumference.uid = (int)[XKRWUserDefaultService getCurrentUserId];
@@ -283,12 +293,18 @@
     _oldRecord.circumference.date = _selectedDate;
     _oldRecord.date = _selectedDate;
     
-//    if ([self.delegate respondsToSelector:@selector(saveSurroundDegreeOrWeightDataToServer:andEntity:)]) {
-//        [self.delegate saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType) andEntity:_oldRecord];
-//    }
+    if (_currentIndex.integerValue == 0) {
+        _recordType = XKRWRecordTypeWeight;
+    }else{
+        _recordType = XKRWRecordTypeCircumference;
+    }
     
-    [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeCircumference];
-    [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeWeight];
+    if ([self.delegate respondsToSelector:@selector(saveSurroundDegreeOrWeightDataToServer:andEntity:)]) {
+        [self.delegate saveSurroundDegreeOrWeightDataToServer:_recordType andEntity:_oldRecord];
+    }
+    
+//    [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeCircumference];
+//    [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeWeight];
 }
 
 - (void)carouselDidScroll:(iCarousel *)carousel{
@@ -418,15 +434,54 @@
 }
 
 - (IBAction)pressSure:(id)sender {
-    [_datePicker removeFromSuperview];
-    _datePicker = nil;
-    [_textField resignFirstResponder];
-    
-    [self saveRemote];
-    
-    if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]) {
-        [self.delegate pressPopViewSure:_dicAll];
+    [self saveTheData];
+    if ([self saveDataislegal]) {
+        [_datePicker removeFromSuperview];
+        _datePicker = nil;
+        [_textField resignFirstResponder];
+        [self saveRemote];
+        
+        if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]){
+            [self.delegate pressPopViewSure:_dicAll];
+        }
+    }else{
+        [self pressCancle:nil];
+        [XKRWCui showInformationHudWithText:@"所输入的数据不在范围内"];
     }
+}
+
+-(BOOL)saveDataislegal{
+    NSDictionary *dic = [[_dicAll allValues] firstObject];
+    NSArray *keys = [dic allKeys];
+    NSMutableDictionary *falseDic = [NSMutableDictionary dictionary];
+    
+    for (NSString *type in keys) {
+        if ([type isEqualToString:@"体重"]) {
+            CGFloat num = [[dic objectForKey:type] floatValue];
+            if (num != 0 && (num < 20 || num > 200)) {
+                [falseDic setObject:[dic objectForKey:type] forKey:type];
+            }
+        }
+        if ([type isEqualToString:@"胸围"] || [type isEqualToString:@"腰围"] || [type isEqualToString:@"臀围"]) {
+            CGFloat num = [[dic objectForKey:type] floatValue];
+            if (num != 0 && (num < 50 || num > 150)) {
+                [falseDic setObject:[dic objectForKey:type] forKey:type];
+            }
+        }
+        if ([type isEqualToString:@"臂围"] || [type isEqualToString:@"小腿围"]) {
+            CGFloat num = [[dic objectForKey:type] floatValue];
+            if (num != 0 && (num < 15 || num > 100)) {
+                [falseDic setObject:[dic objectForKey:type] forKey:type];
+            }
+        }
+        if ([type isEqualToString:@"大腿围"]) {
+            CGFloat num = [[dic objectForKey:type] floatValue];
+            if (num != 0 && (num < 30 || num > 150)) {
+                [falseDic setObject:[dic objectForKey:type] forKey:type];
+            }
+        }
+    }
+    return !(falseDic.count > 0);
 }
 
 @end

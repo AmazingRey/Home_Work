@@ -11,7 +11,7 @@
 @protocol KMSearchDisplayControllerDelegate <NSObject>
 
 @optional
-
+- (void)KMSearchDisplayHideSearchResult;
 @end
 
 @interface KMSearchDisplayController : NSObject

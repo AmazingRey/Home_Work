@@ -39,13 +39,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    hasRecord = [[XKRWRecordService4_0 sharedService] getUserRecordStateWithDate:[NSDate date]];
+    hasRecord = [[XKRWRecordService4_0 sharedService] getUserRecordStateWithDate:_recordDate];
     //每日正常饮食摄入
     _dailyNormal = [XKRWAlgolHelper dailyIntakEnergy];
     //饮食消耗
-    _dailyFoodDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:efoodCalories andDate:[NSDate date]];
+    _dailyFoodDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:efoodCalories andDate:_recordDate];
     //运动消耗
-    _dailySportDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:eSportCalories andDate:[NSDate date]];
+    _dailySportDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:eSportCalories andDate:_recordDate];
     
     self.view.backgroundColor = [UIColor whiteColor];
     NSInteger day = 1;
@@ -164,6 +164,7 @@
     if (!_noRecordView ) {
         _noRecordView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 408)];
         _noRecordView.image = [UIImage imageNamed:@"dailyNoRecord"];
+        _noRecordView.contentMode = UIViewContentModeScaleAspectFill;
         [self.scrollView addSubview:_noRecordView];
     }
     return _noRecordView;
@@ -240,7 +241,6 @@
     }else{
         [self.noRecordView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(XKAppWidth);
-//            make.height.equalTo(@408);
             make.top.mas_equalTo(self.topImg.mas_bottom);
             make.bottom.mas_equalTo(self.scrollView.mas_bottom);
             make.centerX.mas_equalTo(self.scrollView.mas_centerX);

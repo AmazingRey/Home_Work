@@ -87,20 +87,20 @@
 }
 
 - (IBAction)actWeight:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(pressWeight)]) {
-        [self.delegate pressWeight];
-    }
+    [self pressBtnWithType:0];
 }
 
 - (IBAction)actContain:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(pressContain)]) {
-        [self.delegate pressContain];
-    }
+    [self pressBtnWithType:1];
 }
 
 - (IBAction)actGraph:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(pressGraph)]) {
-        [self.delegate pressGraph];
+    [self pressBtnWithType:2];
+}
+
+-(void)pressBtnWithType:(PullViewBtnType)type{
+    if ([self.delegate respondsToSelector:@selector(pressPullViewButtonWithType:)]) {
+        [self.delegate pressPullViewButtonWithType:type];
     }
 }
 @end

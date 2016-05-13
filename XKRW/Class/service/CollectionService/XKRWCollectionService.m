@@ -62,30 +62,22 @@ static XKRWCollectionService *sharedInstance = nil;
 #pragma - mark QUERY
 
 - (NSMutableArray *)queryCollectionWithType:(NSInteger)type{
-
+    
     NSString *sql = [NSString stringWithFormat:@"SELECT * FROM CollectionTable_5 WHERE collect_type=%li and uid=%ld ORDER BY date DESC",(long)type,(long)[[XKRWUserService sharedService] getUserId]];
     NSArray *data =[self query:sql];
     NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:data.count];
-    
-    if (type == 1) {
-        for (int i = 0 ; i < data.count; i++) {
-            NSDictionary *temp = [data objectAtIndex:i];
-            XKRWFoodEntity *entity = [XKRWFoodEntity new];
-            entity.foodId = [temp[@"original_id"] integerValue];
-            entity.foodName = temp[@"collect_name"];
-            entity.foodLogo = temp[@"image_url"];
-            entity.foodEnergy = [temp[@"food_energy"] integerValue];
-            [mutableArray addObject:entity];
-        }
-    }else{
-         for (int i = 0 ; i < data.count; i++) {
-            NSDictionary *temp = [data objectAtIndex:i];
-             XKRWSportEntity *entity = [XKRWSportEntity new];
-             entity.sportId = [temp[@"original_id"] intValue];
-             entity.sportName = temp[@"collect_name"];
-             entity.sportPic = temp[@"image_url"];
-             [mutableArray addObject:entity];
-         }
+    for (NSDictionary *temp in data) {
+        XKRWCollectionEntity *entity = [XKRWCollectionEntity new];
+        entity.categoryType = [temp[@"category_type"] intValue];
+        entity.collectName = temp[@"collect_name"];
+        entity.collectType = [temp[@"collect_type"] integerValue];
+        entity.contentUrl = temp[@"content_url"];
+        entity.date = temp[@"date"];
+        entity.foodEnergy = [temp[@"food_energy"] integerValue];
+        entity.imageUrl = temp[@"image_url"];
+        entity.originalId = [temp[@"original_id"] integerValue];
+        entity.uid = [temp[@"uid"] integerValue];
+        [mutableArray addObject:entity];
     }
     return mutableArray;
 }
@@ -125,7 +117,7 @@ static XKRWCollectionService *sharedInstance = nil;
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
     
     [param setObject:type forKey:@"type"]; //这里的type Key
-   
+    
     NSError *error = nil;
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&error];
@@ -146,11 +138,11 @@ static XKRWCollectionService *sharedInstance = nil;
         NSLog(@"收藏错误: 收藏内容时间戳为空");
         return nil;
     }
-   
+    
     NSDictionary *response = [self syncBatchDataWith:url andPostForm:param];
     if ([[response objectForKey:@"success"] intValue]) {
-            [XKRWUserDefaultService setSynTimeOfCollection:[[NSDate date] timeIntervalSince1970]];
-            return [response objectForKey:@"success"];
+        [XKRWUserDefaultService setSynTimeOfCollection:[[NSDate date] timeIntervalSince1970]];
+        return [response objectForKey:@"success"];
     } else {
         return nil;
     }
@@ -307,9 +299,9 @@ static XKRWCollectionService *sharedInstance = nil;
 #pragma --mark  将远程现在的数据保存到本地数据库
 - (void)saveDownloadDataToDB:(NSDictionary *)dictionary
 {
-   
+    
     NSInteger uid = [[XKRWUserService sharedService] getUserId];
-
+    
     NSString *type = [[NSString alloc]init];
     
     if([dictionary objectForKey:@"article"]!=nil)
@@ -327,14 +319,14 @@ static XKRWCollectionService *sharedInstance = nil;
                 temp_entity.uid          = uid;
                 if (![self collectToDB:temp_entity]) {
                     NSLog(@"同步所有数据时保存文章失败");
-                   
+                    
                 }
             }
         }
         
     }
     
-     if ([dictionary objectForKey:@"food"] != nil)
+    if ([dictionary objectForKey:@"food"] != nil)
     {
         type = @"food";
         if ([dictionary[type] isKindOfClass:[NSArray class]]) {
@@ -351,7 +343,7 @@ static XKRWCollectionService *sharedInstance = nil;
                 temp_entity.uid         = uid;
                 if (![self collectToDB:temp_entity]) {
                     NSLog(@"同步所有数据时保存食物失败");
-                                   }
+                }
             }
         }
     }
@@ -372,7 +364,7 @@ static XKRWCollectionService *sharedInstance = nil;
                 temp_entity.uid         = uid;
                 if (![self collectToDB:temp_entity]) {
                     NSLog(@"同步所有数据时保存运动失败");
-                  
+                    
                 }
             }
         }

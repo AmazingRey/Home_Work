@@ -241,7 +241,6 @@
             
         } else if (_recordSportEntity.date && [_recordSportEntity.date compare:[[NSDate today] offsetDay:-2]] == NSOrderedDescending && [_recordSportEntity.date compare:[NSDate date]] == NSOrderedAscending) {
             _recordDate = _recordSportEntity.date;
-            
         } else {
             _recordSportEntity.date = [NSDate date];
             _recordDate = _recordSportEntity.date;
@@ -359,9 +358,9 @@
 - (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID
 {
     [XKRWCui hideProgressHud];
+    [super handleDownloadProblem:problem withTaskID:taskID];
     if ([taskID isEqualToString:@"saveSportRecord"]) {
-        XKLog(@"保存运动记录失败 exception at SportAddVC");;
-       // [self popView];
+        XKLog(@"保存运动记录失败 exception at SportAddVC");
     }
 }
 

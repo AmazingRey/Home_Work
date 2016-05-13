@@ -77,6 +77,15 @@ class XKRWHistoryAndProcessModel: NSObject {
     lazy var sex: XKSex             = eSexFemale
     lazy var age: Int               = 0
     lazy var labor: XKPhysicalLabor = eLight
+
+    //预计瘦  克
+    var lossWeight                  = 0
+    //少吃了  卡路里
+    var lessEatCalories             = 0
+    //运动消耗了多少 卡路里
+    var sportCalories               = 0
+    //运动详情 初始化
+    var sportArray                  = []
     
     func dealWithSchemeRecords(inout schemeRecords: [XKRWRecordSchemeEntity],inout oldRecord: XKRWRecordEntity4_0) -> Void {
         

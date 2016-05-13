@@ -294,21 +294,9 @@ const int FixedDisplayCount = 4;   //固定显示的个数
 - (void) loadFoodDetail
 {
     [XKRWCui showProgressHud:@"数据加载中..." InView:self.view];
-    
-    @try {
-        XKDispatcherOutputTask block = ^(){
-            XKLog(@"%ld",(long)self.foodId);
-            return [[XKRWFoodService shareService] syncQueryFoodWithId:(uint32_t)self.foodId];
-        };
-        [self downloadWithTaskID:@"getFoodDetail" outputTask:block];
-    }
-    @catch (NSException *exception) {
-        [XKRWCui showInformationHudWithText:@"请求失败，请重试！"];
-    }
-    @finally {
-        
-    }
-    
+    [self downloadWithTaskID:@"getFoodDetail" outputTask:^id{
+        return [[XKRWFoodService shareService] syncQueryFoodWithId:(uint32_t)self.foodId];
+    }];
 }
 
 

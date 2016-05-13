@@ -21,7 +21,8 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
     var contentCell:XKRWUserInfoContentCell?
     var dataNumCell:XKRWUserInfoDataCell?
     var headView:XKRWHeaderView!
-    var viewModel:XKRWHistoryAndProcessModel?
+    var sportView = XKRWNewHPSportView()
+//    var viewModel:XKRWHistoryAndProcessModel?
     
     
     var entity:XKRWUserInfoShowEntity = XKRWUserInfoShowEntity()
@@ -139,7 +140,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
             self.entity = result as! XKRWUserInfoShowEntity
             self.setHeaderViewData(entity)
             
-            if self.entity.checkInfoComplete() {
+            if self.entity.checkInfoComplete() && self.entity.isRecord{
                 
                 self.schemeReocrds = self.entity.schemeReocrds
                 self.oldRecord = self.entity.oldRecordEntity
@@ -173,23 +174,28 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                 }
                 self.schemeReocrds = srs
                 
-                if(self.viewModel == nil){
-                    self.viewModel = XKRWHistoryAndProcessModel()
-                    
-                    // set view model to other's info
-                    self.viewModel!.isSelf = false
-                    self.viewModel!.BM = XKRWAlgolHelper.BM_with_weight(self.entity.weight, height: Float(self.entity.height), age: self.entity.age, sex: self.entity.sex)
-                    self.viewModel!.PAL = XKRWAlgolHelper.PAL_with_sex(self.entity.sex, physicalLabor: self.entity.labor_level)
-                    self.viewModel!.sex = self.entity.sex
-                    self.viewModel!.age = self.entity.age
-                    self.viewModel!.labor = self.entity.labor_level
-                    
-                    self.viewModel!.dealWithSchemeRecords(&self.schemeReocrds, oldRecord: &self.oldRecord)
-                    self.viewModel!.isShowPredictView = true
-                    self.viewModel!.isToday = false
-                    self.viewModel!.isShowMealAnalysis = false
-                    self.viewModel!.canModified = false
-                }
+//                if(self.viewModel == nil){
+//                    self.viewModel = XKRWHistoryAndProcessModel()
+//                    
+//                    // set view model to other's info
+//                    self.viewModel!.isSelf = false
+//                    self.viewModel!.BM = XKRWAlgolHelper.BM_with_weight(self.entity.weight, height: Float(self.entity.height), age: self.entity.age, sex: self.entity.sex)
+//                    self.viewModel!.PAL = XKRWAlgolHelper.PAL_with_sex(self.entity.sex, physicalLabor: self.entity.labor_level)
+//                    self.viewModel!.sex = self.entity.sex
+//                    self.viewModel!.age = self.entity.age
+//                    self.viewModel!.labor = self.entity.labor_level
+//                    
+//                    self.viewModel!.dealWithSchemeRecords(&self.schemeReocrds, oldRecord: &self.oldRecord)
+//                    self.viewModel!.isShowPredictView = true
+//                    self.viewModel!.isToday = false
+//                    self.viewModel!.isShowMealAnalysis = false
+//                    self.viewModel!.canModified = false
+//                    
+//                    self.viewModel!.lossWeight = self.entity.lossWeight
+//                    self.viewModel!.lessEatCalories = self.entity.lessEatCalories
+//                    self.viewModel!.sportCalories = self.entity.sportCalories
+//                    self.viewModel!.sportArray = self.entity.sportArray
+//                }
             }
             infoTableView.reloadData()
         }
@@ -242,26 +248,46 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
             }
         }
         else if(indexPath.section == 1){
-            if self.entity.checkInfoComplete() {
-                predictCell = tableView.dequeueReusableCellWithIdentifier("predictCell") as? HPPredictCell
-                if (self.viewModel != nil) {
-                    self.predictCell!.setContent(self.viewModel!)
+            if self.entity.isRecord{
+                if self.entity.checkInfoComplete() {
+                    predictCell = tableView.dequeueReusableCellWithIdentifier("predictCell") as? HPPredictCell
+                    self.predictCell!.setContent(self.entity)
+                    return predictCell!
                 }
-                return predictCell!
-            }
-            else {
+                else {
+                    
+                    var cell = tableView.dequeueReusableCellWithIdentifier("noDataCell")
+                    if cell == nil {
+                        cell = UITableViewCell(style: .Default, reuseIdentifier: "noDataCell")
+                        
+                        let label = UILabel(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 64))
+                        label.text = "ta的方案数据暂未生成...\n请稍后查看"
+                        label.numberOfLines = 2
+                        label.textAlignment = .Center
+                        
+                        label.textColor = XK_ASSIST_TEXT_COLOR
+                        label.font = XKDefaultFontWithSize(14)
+                        label.backgroundColor = UIColor.whiteColor()
+                        cell?.selectionStyle = .None
+                        
+                        cell!.contentView.addSubview(label)
+                    }
+                    return cell!
+                }
+            }else{
                 var cell = tableView.dequeueReusableCellWithIdentifier("noDataCell")
                 if cell == nil {
                     cell = UITableViewCell(style: .Default, reuseIdentifier: "noDataCell")
                     
                     let label = UILabel(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 64))
-                    label.text = "ta的方案数据暂未生成...\n请稍后查看"
-                    label.numberOfLines = 2
+                    label.text = "TA很懒，什么都没记录！"
+                    label.numberOfLines = 0
                     label.textAlignment = .Center
-                    
+                    label.center = cell!.contentView.center
                     label.textColor = XK_ASSIST_TEXT_COLOR
                     label.font = XKDefaultFontWithSize(14)
                     label.backgroundColor = UIColor.whiteColor()
+                    cell!.selectionStyle = .None
                     
                     cell!.contentView.addSubview(label)
                 }
@@ -272,9 +298,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
             if self.mealCell == nil {
                 self.mealCell = tableView.dequeueReusableCellWithIdentifier("mealCell") as? HPMealCell
             }
-            if(self.viewModel != nil){
-                self.mealCell!.setCellContent(self.viewModel!)
-            }
+            self.mealCell!.setCellContent(self.entity)
             return mealCell!
         }
         else{   // if(indexPath.section == 3) 运动栏位
@@ -283,10 +307,9 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                 cell = UITableViewCell(style: .Default, reuseIdentifier: "newSportCell")
             }
             cell?.selectionStyle = .None
-            let sportView = XKRWNewHPSportView()
             sportView.frame = CGRectMake(0, 0, self.view.frame.size.width, 186)
-            cell?.contentView.addSubview(sportView)
-            sportView.setSportView(self.viewModel!)
+            cell?.contentView.addSubview(self.sportView)
+            sportView.setSportView(self.entity)
             return cell!
             
 //            if sportCell == nil {
@@ -309,12 +332,10 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
 
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
-        if self.entity.checkInfoComplete() {
+        if self.entity.checkInfoComplete() && self.entity.isRecord {
             return 4
-        } else {
-            return 2
         }
+        return 2
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

@@ -1971,13 +1971,16 @@ static BOOL canUpdatePlan = YES;
     float BM = [XKRWAlgolHelper BM_with_weight:entity.weight height:entity.height age:entity.age sex:entity.sex];
     float PAL = [XKRWAlgolHelper PAL_with_sex:entity.sex physicalLabor:entity.labor_level];
 //    //每日正常饮食摄入量
-//    float dailyIntakEnergy =  [XKRWAlgolHelper dailyIntakEnergyWithBM:BM PAL:PAL];
+    float dailyIntakEnergy =  [XKRWAlgolHelper dailyIntakEnergyWithBM:BM PAL:PAL];
     //每日正常推荐摄入量
-    float schemeIntakEnergy = [XKRWAlgolHelper dailyIntakeRecommendEnergyWithBM:BM PAL:PAL sex:entity.sex age:entity.age];
+//    float schemeIntakEnergy = [XKRWAlgolHelper dailyIntakeRecommendEnergyWithBM:BM PAL:PAL sex:entity.sex age:entity.age];
     //真实饮食摄入
     float realIntakEnergy = 0;
     //真实运动消耗
     float realSportEnergy = 0;
+    
+    
+     BOOL isrecord;
     
     //记录用户的运动情况
     NSMutableArray *mutableArray = [NSMutableArray array];
@@ -2003,15 +2006,19 @@ static BOOL canUpdatePlan = YES;
         }
     }
     
+   
+    
     for (XKRWRecordFoodEntity *foodEntity in oldRecordEntity.FoodArray) {
         realIntakEnergy += foodEntity.calorie;
+        isrecord = YES;
     }
     
     for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
         realSportEnergy += sportEntity.calorie;
+         isrecord = YES;
     }
-    entity.lossWeight = (schemeIntakEnergy -  realIntakEnergy + realSportEnergy) /7.7;
-    entity.lessEatCalories = schemeIntakEnergy -  realIntakEnergy;
+    entity.lossWeight = (dailyIntakEnergy -  realIntakEnergy + realSportEnergy) /7.7;
+    entity.lessEatCalories = dailyIntakEnergy -  realIntakEnergy;
     entity.sportCalories = realSportEnergy;
     
     for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
@@ -2021,6 +2028,18 @@ static BOOL canUpdatePlan = YES;
         [mutableArray addObject:dic];
     }
     entity.sportArray = mutableArray;
+    
+    if ( realIntakEnergy + realSportEnergy > 0) {
+        entity.isRecord = YES;
+    }
+    
+    if (realIntakEnergy > 0) {
+        entity.isRecordFood = YES;
+    }
+    
+    if (realSportEnergy > 0) {
+        entity.isRecordSport = YES;
+    }
     
     return entity;
 }
