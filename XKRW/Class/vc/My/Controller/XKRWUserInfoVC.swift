@@ -283,7 +283,6 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                     label.text = "TA很懒，什么都没记录！"
                     label.numberOfLines = 0
                     label.textAlignment = .Center
-                    label.center = cell!.contentView.center
                     label.textColor = XK_ASSIST_TEXT_COLOR
                     label.font = XKDefaultFontWithSize(14)
                     label.backgroundColor = UIColor.whiteColor()

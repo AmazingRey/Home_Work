@@ -9,11 +9,11 @@
 import UIKit
 
 class XKRWFoundFatReasonVC: XKRWBaseVC {
-
+    
     @IBOutlet weak var nextButton: UIButton!
     
     @IBOutlet weak var contentView: UIView!
-
+    
     @IBOutlet weak var spaceRightConstraint: NSLayoutConstraint!
     @IBOutlet weak var spaceConstraint: NSLayoutConstraint!
     var fromWhichVC:FromWhichVC?
@@ -24,24 +24,23 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
     var fatReason:NSMutableArray = NSMutableArray()
     
     
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(animated)
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//    }
+    //    override func viewWillAppear(animated: Bool) {
+    //        super.viewWillAppear(animated)
+    //        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    //    }
     
     override func viewDidLoad() {
         MobClick.event("in_WhyFat")
         
         self.forbidAutoAddPopButton = true
         super.viewDidLoad()
-   
+        
         // hide back button
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: UIView())
         
         if(fromWhichVC == FromWhichVC.SchemeInfoChangeVC)
         {
             self.addNaviBarBackButton()
-//            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightNaviButton)
             self.addNaviBarRightButtonWithText("保存", action: #selector(XKRWFoundFatReasonVC.rightNaviBarButtonClicked))
             nextButton.hidden = true
         }else if(fromWhichVC == FromWhichVC.ThinBodyAssesssVC){
@@ -80,7 +79,7 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
         }
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -101,7 +100,7 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
         
         if(XKRWUtil.isNetWorkAvailable()){
             XKRWCui.showProgressHud()
-          
+            
             self.downloadWithTaskID("saveFatReason", task: { () -> Void in
                 XKRWFatReasonService .sharedService().saveFatReasonToDB(self.fatReason as [AnyObject], andUserId: XKRWUserService.sharedService().getUserId(), andSync: 0);
                 XKRWFatReasonService .sharedService().saveFatReasonToRemoteServer()
@@ -111,10 +110,10 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
             XKRWCui.showInformationHudWithText("网络错误，请稍后再试")
         }
     }
-
+    
     //选择与取消肥胖原因
     @IBAction func selectFatReason(sender: UIButton) {
-       
+        
         switch sender.tag{
         case 1001:
             self.setButtonSelectStateAndSetFatReason("7_9_1")
@@ -159,7 +158,7 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
             }
         }
         
-//        println(fatReason)
+        //        println(fatReason)
     }
     
     func setButtonSelectStateAndSetFatReason(fat:NSString){
@@ -181,78 +180,78 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
         for  var i = 0 ; i < contentView.subviews.count ;i++  {
             let view: AnyObject = contentView.subviews[i]
             
-        
-                if let btn = view as? UIButton {
-                    
-                    switch btn.tag{
-                    case 1001:
-                        if(fatReasonArray.containsObject("7_9_1")||fatReasonArray.containsObject("1_1_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1002:
-                        if(fatReasonArray.containsObject("7_11_1")||fatReasonArray.containsObject("1_2_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1003:
-                        if(fatReasonArray.containsObject("2_5_0")||fatReasonArray.containsObject("1_4_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1004:
-                        if(fatReasonArray.containsObject("6_4_0")||fatReasonArray.containsObject("1_3_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1007:
-                        if(fatReasonArray.containsObject("7_10_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1008:
-                        if(fatReasonArray.containsObject("7_12_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1009:
-                        if(fatReasonArray.containsObject("8_14_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1010:
-                        if(fatReasonArray.containsObject("8_15_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1011:
-                        if(fatReasonArray.containsObject("8_16_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1012:
-                        if(fatReasonArray.containsObject("8_17_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1013:
-                        if(fatReasonArray.containsObject("9_19_1")){
-                            
-                            self.selectFatReason(btn)
-                        }
-                    case 1014:
-                        if(fatReasonArray.containsObject("9_20_1")){
-                            self.selectFatReason(btn)
-                        }
+            
+            if let btn = view as? UIButton {
+                
+                switch btn.tag{
+                case 1001:
+                    if(fatReasonArray.containsObject("7_9_1")||fatReasonArray.containsObject("1_1_1")){
                         
-                    default:
-                        break
+                        self.selectFatReason(btn)
+                    }
+                case 1002:
+                    if(fatReasonArray.containsObject("7_11_1")||fatReasonArray.containsObject("1_2_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1003:
+                    if(fatReasonArray.containsObject("2_5_0")||fatReasonArray.containsObject("1_4_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1004:
+                    if(fatReasonArray.containsObject("6_4_0")||fatReasonArray.containsObject("1_3_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1007:
+                    if(fatReasonArray.containsObject("7_10_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1008:
+                    if(fatReasonArray.containsObject("7_12_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1009:
+                    if(fatReasonArray.containsObject("8_14_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1010:
+                    if(fatReasonArray.containsObject("8_15_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1011:
+                    if(fatReasonArray.containsObject("8_16_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1012:
+                    if(fatReasonArray.containsObject("8_17_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1013:
+                    if(fatReasonArray.containsObject("9_19_1")){
+                        
+                        self.selectFatReason(btn)
+                    }
+                case 1014:
+                    if(fatReasonArray.containsObject("9_20_1")){
+                        self.selectFatReason(btn)
                     }
                     
+                default:
+                    break
                 }
                 
+            }
             
-        
+            
+            
         }
     }
     
@@ -284,10 +283,11 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
         {
             XKRWFatReasonService .sharedService().saveFatReasonToDB(fatReason as [AnyObject], andUserId: XKRWUserService.sharedService().getUserId(), andSync: 1);
             
-              XKRWRecordService4_0.sharedService().resetUserRecords()
+            XKRWRecordService4_0.sharedService().resetUserRecords()
+            
             if((!userfatReasonNoSet)){
                 NSNotificationCenter.defaultCenter().postNotificationName(EnergyCircleDataNotificationName, object: nil)
-            
+                
             }
             
             if(fromWhichVC == FromWhichVC.SchemeInfoChangeVC)

@@ -108,8 +108,7 @@
         return;
         
     } else if ([[NSDate today] compare:originOfDate] == NSOrderedSame ) {
-        [self.navigationController.tabBarController.navigationController popToRootViewControllerAnimated:YES];
-//        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
         return;
         
     } else {

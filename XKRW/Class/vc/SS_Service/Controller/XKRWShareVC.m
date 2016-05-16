@@ -159,9 +159,7 @@
         weChatNum =[result objectForKey:@"AttentionTotal"];
         [_serviceTableView reloadData];
     } else if ([taskID isEqualToString:@"requestState"]) {
-        
         _isShowiSlim = [result boolValue];
-        
         if (_isShowiSlim) {
             [self reloadData];
             [_serviceTableView reloadData];

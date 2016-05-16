@@ -209,9 +209,10 @@
 - (void)pressButton:(UIButton *)button
 {
     _clickBlock(self);
-    if (!self.isSelected) {
-        [self setSelected:!self.isSelected];
-    }
+//    设置不能重复选中同一天
+//    if (!self.isSelected) {
+//        [self setSelected:!self.isSelected];
+//    }
 }
 
 - (void)setSelected:(BOOL)selected

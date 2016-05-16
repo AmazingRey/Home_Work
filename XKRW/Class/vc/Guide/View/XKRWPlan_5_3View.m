@@ -10,6 +10,7 @@
 #import "XKRWAlgolHelper.h"
 #import "XKRWUtil.h"
 #import "XKRWShowEnergy_5_3View.h"
+#import "XKRWUserService.h"
 
 @implementation XKRWPlan_5_3View
 @synthesize type = _type;
@@ -43,13 +44,25 @@
         case Sport:
             [_numImg setImage:[UIImage imageNamed:@"num2"]];
             _titleLab.text = @"运动消耗";
-            int cal = [XKRWAlgolHelper dailyConsumeSportEnergy];
             
-            _calTypeLab.text = cal != 0?[NSString stringWithFormat:@"每日运动消耗热量:%dkcal",cal]:@"无需额外运动";
-         
-            _detailLab.attributedText = [XKRWUtil createAttributeStringWithString:@"今天开始，\n通过记录来控制自己每日消耗热量。\n或者，你可以通过【推荐方案】\n来学习合理的运动方法。" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:4 alignment:NSTextAlignmentCenter];
-            [_detailLab setFontColor:XKMainToneColor_29ccb1 string:@"【推荐方案】"];
-            _tipsLab.text = @"Tips:瘦瘦会按照你的体力活动水平，为你量身推荐运动计划。稍后，可以在\"运动-推荐方案\"中查看。";
+            XKPhysicalLabor labor = [[XKRWUserService sharedService]getUserLabor];
+            BOOL heavyType = labor == eHeavy ? true : false;
+            if (heavyType) {
+                [_fuseView removeFromSuperview];
+                [_tipsLab removeFromSuperview];
+                [_tipsImg removeFromSuperview];
+                _labDetailConstant.constant = 20;
+                _calTypeLab.text = @"无需额外运动";
+                _detailLab.attributedText = [XKRWUtil createAttributeStringWithString:@"由于你的日常活动水平是重体力，\n无需额外做运动。\n你可以通过【推荐方案】\n推荐的运动来轻微活动即可。" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:4 alignment:NSTextAlignmentCenter];
+                 [_detailLab setFontColor:XKMainToneColor_29ccb1 string:@"【推荐方案】"];
+            }else{
+                int cal = [XKRWAlgolHelper dailyConsumeSportEnergy];
+                _calTypeLab.text = [NSString stringWithFormat:@"每日运动消耗热量:%dkcal",cal];
+                
+                _detailLab.attributedText = [XKRWUtil createAttributeStringWithString:@"今天开始，\n通过记录来控制自己每日消耗热量。\n或者，你可以通过【推荐方案】\n来学习合理的运动方法。" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:4 alignment:NSTextAlignmentCenter];
+                [_detailLab setFontColor:XKMainToneColor_29ccb1 string:@"【推荐方案】"];
+                _tipsLab.text = @"Tips:瘦瘦会按照你的体力活动水平，为你量身推荐运动计划。稍后，可以在\"运动-推荐方案\"中查看。";
+            }
             break;
         case Habit:
             [_numImg setImage:[UIImage imageNamed:@"num3"]];
@@ -68,9 +81,9 @@
             CGFloat side = 80;
             layout.itemSize = CGSizeMake(side, side);
             layout.minimumInteritemSpacing = 0;
-            layout.minimumLineSpacing = 30;
+            layout.minimumLineSpacing = 20;
             
-            XKRWPlan_5_3CollectionView *habitCollectionView = [[XKRWPlan_5_3CollectionView alloc] initWithFrame:CGRectMake(15, 70, XKAppWidth-30, 180*numLines) collectionViewLayout:layout];
+            XKRWPlan_5_3CollectionView *habitCollectionView = [[XKRWPlan_5_3CollectionView alloc] initWithFrame:CGRectMake(15, 70, XKAppWidth-30, 100*numLines) collectionViewLayout:layout];
             
             habitCollectionView.dicData = _dicCollection;
             habitCollectionView.arrText = [_dicCollection allKeys];

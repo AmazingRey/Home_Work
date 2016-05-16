@@ -124,7 +124,7 @@ class XKRWGetUserCityVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDelegate 
             
             XKRWAlgolHelper.setExpectDayOfAchieveTarget(XKRWUserService.sharedService().getUserOrigWeight(), andStartTime: time)
             
-            let  thinAssesssVC:XKRWThinBodyAssessVC = XKRWThinBodyAssessVC(nibName: "XKRWThinBodyAssessVC", bundle: nil)
+            let  thinAssesssVC:XKRWThinBodyAssess_5_3VC = XKRWThinBodyAssess_5_3VC(nibName: "XKRWThinBodyAssess_5_3VC", bundle: nil)
             self.navigationController?.pushViewController(thinAssesssVC, animated: true)
         }
         

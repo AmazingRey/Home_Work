@@ -54,17 +54,8 @@
     if (_currentIndex != currentIndex) {
         _currentIndex = currentIndex;
         _currentEntity = nil;
-        [self refreshControls];
+        [self makeViewAutoLayout];
     }
-}
-
--(void)refreshControls{
-    [self makeViewAutoLayout];
-//    [self.labCal setNeedsDisplay];
-//    [self.labTarget setNeedsDisplay];
-//    [self.labEatRight1 setNeedsDisplay];
-//    [self.labEatRight2 setNeedsDisplay];
-//    [self.labSportRight setNeedsDisplay];
 }
 
 -(void)makeViewAutoLayout{

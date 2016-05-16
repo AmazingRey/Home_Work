@@ -10,6 +10,11 @@
 #import "XKRWBMIEntity.h"
 
 @interface XKRWAlgolHelper : NSObject
+
+//最低推荐饮食值
++ (float)minRecommendedValueWith:(XKSex)sex;
+
+
 /*BM*/
 + (float)BM;
 + (float)BM_of_date:(NSDate *)date;

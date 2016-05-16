@@ -18,5 +18,4 @@
 @property (strong, nonatomic) XKRWStatiscBussiness5_3 *bussiness;
 
 - (instancetype)initWithFrame:(CGRect)frame withBussiness:(XKRWStatiscBussiness5_3 *)bussiness;
--(void)refreshViews;
 @end

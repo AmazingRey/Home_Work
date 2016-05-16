@@ -8040,8 +8040,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
@@ -8069,7 +8069,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
-				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s armv64";
 			};
@@ -8091,8 +8091,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				COPY_PHASE_STRIP = YES;
 				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -8112,7 +8112,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
-				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s armv64";
@@ -8176,7 +8176,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0513;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0516;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -8247,7 +8247,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0513;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0516;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
 				PROVISIONING_PROFILE = "";

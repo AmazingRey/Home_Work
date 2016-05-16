@@ -43,7 +43,7 @@
 #import "XKRWHomePagePretreatmentManage.h"
 #import "XKRWDailyAnalysizeVC.h"
 #import "XKRWUtil.h"
-
+#import "XKRWAlgolHelper.h"
 #import "XKRWStatisticAnalysizeVC.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate>
@@ -62,7 +62,7 @@
     UIView *planHeaderView;
     UIView *recordBackView;
     
-    NSMutableArray *tipsArray;
+    NSArray *tipsArray;
     XKRWRecordEntity4_0 *recordEntity;
     NSArray  *recordScheme;
     // 摄入卡路里
@@ -155,19 +155,22 @@
         }
     }
     
-    [self syncTodaysData];
+//    [self syncTodaysData];
+
     [self getTipsData];
     [self getRecordAndMenuScheme];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTodayDataToUI) name:@"loginAgainSuccess" object:nil];
 }
 
-- (void)syncTodaysData {
-    if (isTodaysPlan) {
-        [self downloadWithTaskID:@"syncData" outputTask:^id{
-            return @([XKRWCommHelper syncTodayRemoteData]);
-        }];
-        [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
-    }
-}
+//- (void)syncTodaysData {
+//    if (isTodaysPlan) {
+//        [self downloadWithTaskID:@"syncData" outputTask:^id{
+//            return @([XKRWCommHelper syncTodayRemoteData]);
+//        }];
+//        [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
+//    }
+//}
 
 - (void)getTipsData {
     tipsArray = [[XKRWTipsManage shareInstance ] TipsInfoWithUseSituationwithRecordDate:_recordDate];
@@ -196,12 +199,18 @@
     [_planEnergyView setTitle:title isflashing:isflash];
 }
 
+
+- (void)refreshTodayDataToUI {
+    [self refreshEnergyCircleView:nil];
+    _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
+}
+
 - (void)refreshEnergyCircleView:(NSNotification *)notification {
     recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_recordDate];
-    
+
     recordScheme = [[XKRWRecordService4_0 sharedService]getSchemeRecordWithDate:_recordDate];
-    
-    // deal with energyCircle data
+    _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
+
     {
         intakeCalorie = 0;
         expendCalorie = 0;
@@ -415,7 +424,7 @@
     
     btnBackBounds = [UIButton buttonWithType:UIButtonTypeCustom];
     btnBackBounds.frame = self.view.bounds;
-    [btnBackBounds addTarget:self action:@selector(removePullView:) forControlEvents:UIControlEventTouchDown];
+    [btnBackBounds addTarget:self action:@selector(removeBtnBackBounds) forControlEvents:UIControlEventTouchDown];
     
     if (_pullView == nil) {
         CGFloat pullWidth = 138*XKAppWidth/375;
@@ -431,10 +440,20 @@
         _pullView.delegate = self;
         [self.view addSubview:btnBackBounds];
     }
-    [self removePullView:btnBackBounds];
+    [self removePullView];
 }
 
--(void)removePullView:(UIButton *)button{
+-(void)removeBtnBackBounds{
+    if (_popView) {
+        [self cancelPopView];
+    }else{
+        [self removePullView];
+        [btnBackBounds removeFromSuperview];
+        btnBackBounds = nil;
+    }
+}
+
+-(void)removePullView{
     if (_pullView.alpha == 0) {
         [UIView animateWithDuration:.3 animations:^{
             _pullView.alpha = 1;
@@ -443,7 +462,6 @@
         [UIView animateWithDuration:.3 animations:^{
             _pullView.alpha = 0;
         }completion:^(BOOL finished) {
-            [btnBackBounds removeFromSuperview];
             [_pullView removeFromSuperview];
             _pullView = nil;
         }];
@@ -469,28 +487,51 @@
 - (void)dealTipsAction:(UIButton *)button {
     
     switch (button.tag) {
-        case 1000:{
+       
+        case 1001:
+        {
             [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:self];
         }
             break;
-        case 1001:
+        case 1002:
         {
             XKRWStatisticAnalysizeVC *vc =  [[XKRWStatisticAnalysizeVC alloc]init];
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
-        case 1002:
+        case 1003:
         {
             NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-            
             if([[UIApplication sharedApplication] canOpenURL:url]) {
                 NSURL*url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
                 [[UIApplication sharedApplication] openURL:url];
             }
+
         }
             break;
+            
+        case 1004:
+        {
+            [self addschemeOrRecordView:1 andArrowX:_planEnergyView.eatEnergyCircle.center.x];
+            _recordPopView.scrollView .contentOffset = CGPointMake(XKAppWidth, 0);
+            if (XKAppWidth < 375) {
+                [UIView animateWithDuration:0.25 animations:^{
+                    CGRect backgroundFrame = backgroundView.frame;
+                    backgroundFrame.origin.y -= 64;
+                    backgroundView.frame = backgroundFrame;
+                    CGRect popViewFrame =   recordBackView.frame;
+                    popViewFrame.origin.y -= 64;
+                    recordBackView.frame = popViewFrame;
+                    
+                }];
+            }
+
+        }
+            break;
+       
+        
         default:
             break;
     }
@@ -544,7 +585,7 @@
     }
     
     //    [self setPlanEnergyViewTitle];
-    [self removePullView:nil];
+    [self removePullView];
     [self removeMenuView];
     [self addschemeOrRecordView:index andArrowX:positionX];
     
@@ -565,32 +606,39 @@
 
 #pragma mark - XKRWRecordFood5_3View
 -(void)addschemeOrRecordView:(NSInteger)index andArrowX:(CGFloat) postitonX {
-    XKRWRecordView_5_3 *popView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordView_5_3");
+    _recordPopView = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordView_5_3");
     
-    if(XKAppHeight == 480){
-        popView.scrollViewConstraint.constant = 134;
-        popView.frame = CGRectMake(0, 0, XKAppWidth, 252);
+    if(XKAppWidth == 320){
+        _recordPopView.frame = CGRectMake(0, 0, XKAppWidth, XKAppHeight - planHeaderView.height + 64);
     }else{
-        popView.frame = CGRectMake(0, 0, XKAppWidth, 302);
+        _recordPopView.frame = CGRectMake(0, 0, XKAppWidth, XKAppHeight - planHeaderView.height);
     }
 
-    popView.positionX = postitonX;
-    popView.type = index;
-    popView.vc = self;
-    popView.revisionType = revisionType;
+    _recordPopView.positionX = postitonX;
+    _recordPopView.type = index;
+    _recordPopView.vc = self;
+    _recordPopView.revisionType = revisionType;
+
     if (_recordDate == nil) {
-        popView.date = [NSDate today];
+        _recordPopView.date = [NSDate today];
     }else{
-        popView.date = _recordDate;
+        _recordPopView.date = _recordDate;
     }
-    [popView initSubViews];
-    [popView setsubViewUI];
-    _recordPopView = popView;
+ 
+  
     if (index == 1) {
         _recordPopView.schemeArray = _mealSchemeArray;
     }else if(index == 2){
-        _recordPopView.schemeArray = [NSArray arrayWithObject:_sportSchemeEntity];
+        if([XKRWAlgolHelper dailyConsumeSportEnergyOfDate:_recordDate] > 0){
+            _recordPopView.schemeArray = [NSArray arrayWithObject:_sportSchemeEntity];
+        }else{
+            _recordPopView.schemeArray = nil;
+        }
     }
+    
+    [_recordPopView initSubViews];
+    [_recordPopView setsubViewUI];
+   
     
     CGRect recordFrame = _recordPopView.frame;
     recordFrame.origin.y -= recordFrame.size.height;
@@ -610,12 +658,8 @@
         _recordPopView.frame = frame;
         _recordPopView.delegate = self;
         [[UIApplication sharedApplication].keyWindow addSubview:recordBackView];
-    } completion:^(BOOL finished) {
-        
-    }];
+    } completion:nil];
 }
-
-
 
 -(void)removeMenuView{
     if (_recordPopView) {
@@ -775,12 +819,21 @@
 }
 
 //调整四餐比例
--(void)pressChangeEatPercent{
+-(void)pressTip_1WithIndex:(NSInteger)index{
     [self removeMoreView];
-    XKRWChangeMealPercentVC *changeMealVC = [[XKRWChangeMealPercentVC alloc] init];
-    changeMealVC.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:changeMealVC animated:YES];
-    [changeMealVC.navigationController setNavigationBarHidden:NO];
+    if (index == 1) {
+        XKRWChangeMealPercentVC *changeMealVC = [[XKRWChangeMealPercentVC alloc] init];
+        changeMealVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeMealVC animated:YES];
+        [changeMealVC.navigationController setNavigationBarHidden:NO];
+        
+    } else {
+        XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc]initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
+        [fatReasonVC setFromWhichVC:SchemeInfoChangeVC];
+        [self.navigationController pushViewController:fatReasonVC animated:YES];
+        [fatReasonVC.navigationController setNavigationBarHidden:NO];
+    }
+   
 }
 
 //设置饮食提醒
@@ -822,18 +875,23 @@
  */
 -(void)pressPullViewButtonWithType:(PullViewBtnType)type{
     if (type == 2) {
-        [self removePullView:btnBackBounds];
+        [self removeBtnBackBounds];
         XKRWSurroundDegreeVC_5_3 *vc = [[XKRWSurroundDegreeVC_5_3 alloc]init];
         vc.dataType = 1;
         [self presentViewController:vc animated:YES completion:nil];
     }else{
-        [self removePullView:btnBackBounds];
+        [self removePullView];
         _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - 100, 240) withType:type];
-        _popView.delegate = self;
-        CGPoint center = self.view.center;
-        center.y -= 0;
-        _popView.center = center;
         _popView.alpha = 0;
+        
+        _popView.delegate = self;
+        if (!btnBackBounds) {
+            btnBackBounds = [UIButton buttonWithType:UIButtonTypeCustom];
+            btnBackBounds.frame = self.view.bounds;
+            [btnBackBounds addTarget:self action:@selector(removeBtnBackBounds) forControlEvents:UIControlEventTouchDown];
+            [self.view addSubview:btnBackBounds];
+        }
+        _popView.center = btnBackBounds.center;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasShown:)
@@ -844,16 +902,14 @@
                                                      name:UIKeyboardDidHideNotification
                                                    object:nil];
         
-        [UIView animateWithDuration:.3 delay:.1 options:0 animations:^{
+        [UIView animateWithDuration:.35 delay:.1 options:0 animations:^{
             [_popView.textField becomeFirstResponder];
-            [[UIApplication sharedApplication].keyWindow addSubview:_popView];
-            
-            _popView.center = self.view.center;
-            _pullView.alpha = 0;
-            self.view.alpha = .5;
+            [btnBackBounds addSubview:_popView];
+            btnBackBounds.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
             _popView.alpha = 1;
-            self.view.userInteractionEnabled = NO;
-            self.tabBarController.tabBar.hidden = YES;
+//            self.view.userInteractionEnabled = NO;
+          //  self.tabBarController.tabBar.hidden = YES;
+
         } completion:nil];
     }
 }
@@ -881,34 +937,27 @@
 }
 
 -(void)cancelPopView{
-    if (_popView) {
-        CGPoint center = _popView.center;
-        center.y -= 0;
-        [_popView.textField resignFirstResponder];
-        [UIView animateWithDuration:.5 delay:0 options:0 animations:^{
-            _popView.center = center;
-            _popView.alpha = 0;
-            self.view.alpha = 1;
-        } completion:^(BOOL finished) {
-            [_popView removeFromSuperview];
-            _popView = nil;
-            self.view.userInteractionEnabled = YES;
-            self.tabBarController.tabBar.hidden = NO;
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
-        }];
-    }else{
-        [self setUserDataAction:nil];
-    }
+    [_popView.textField resignFirstResponder];
+    [UIView animateWithDuration:.6 delay:0 options:0 animations:^{
+        _popView.alpha = 0;
+        btnBackBounds.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0];
+    } completion:^(BOOL finished) {
+        [_popView removeFromSuperview];
+        _popView = nil;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+        [btnBackBounds removeFromSuperview];
+        btnBackBounds = nil;
+    }];
 }
 
-#pragma XKRWWeightPopViewDelegate
+#pragma mark XKRWWeightPopViewDelegate
 -(void)pressPopViewSure:(NSDictionary *)dic{
-    [self cancelPopView];
+    [self removeBtnBackBounds];
 }
 
 -(void)pressPopViewCancle{
-    [self cancelPopView];
+    [self removeBtnBackBounds];
 }
 
 - (void)saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType)recordType andEntity:(XKRWRecordEntity4_0 *)entity
@@ -917,7 +966,7 @@
         [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
         return;
     }
-    
+    [XKRWCui showProgressHud];
     [self downloadWithTaskID:@"recordWeightAndDegree" outputTask:^id{
         return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:XKRWRecordTypeWeightAndCircumference]);
     }];
@@ -925,10 +974,7 @@
 
 #pragma --mark Network
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
-    if ([taskID isEqualToString:@"syncData"]) {
-        [self refreshEnergyCircleView:nil];
-        return;
-    }
+
     
     if ([taskID isEqualToString:@"search"]){
         [XKRWCui hideProgressHud];
@@ -1023,8 +1069,12 @@
     
     //保存体重围度成功
     if ([taskID isEqualToString:@"recordWeightAndDegree"]) {
+        [XKRWCui hideProgressHud];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
-        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
+        CGFloat weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]];
+        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",weight];
+        [_recordAndTargetView updateConstraints];
+        [_recordAndTargetView.currentWeightLabel setNeedsDisplay];
         return;
     }
 }

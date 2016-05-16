@@ -110,18 +110,16 @@
         
         if (entity.showType == TipsShowAndEnactNewPlan) {
             [self.actionButton setTitle:@"制定新计划" forState:UIControlStateNormal];
-            self.actionButton.tag = 1000;
+            self.actionButton.tag = 1001;
         }else if (entity.showType == TipsShowAndShowDetail){
             [self.actionButton setTitle:@"马上查看" forState:UIControlStateNormal];
-            self.actionButton.tag = 1001;
-        }else if(entity.showType == TipsShowAndEnterSet){
-            [self.actionButton setTitle:@"设置" forState:UIControlStateNormal];
             self.actionButton.tag = 1002;
-        }else if(entity.showType == TipsEntryPlan){
+        
+        }else if(entity.showType == TipsShowAndEnterSet){
             [self.actionButton setTitle:@"设置" forState:UIControlStateNormal];
             self.actionButton.tag = 1003;
-        }else if(entity.showType == TipsShowAndEnterSet){
-            [self.actionButton setTitle:@"设置" forState:UIControlStateNormal];
+        }else if (entity.showType == TipsShowSchemeFood){
+            [self.actionButton setTitle:@"查看食谱" forState:UIControlStateNormal];
             self.actionButton.tag = 1004;
         }
     }

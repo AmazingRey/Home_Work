@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipsLab;
 @property (strong, nonatomic) IBOutlet UILabel *calTypeLab;
 @property (strong, nonatomic) IBOutlet XKRWShowEnergy_5_3View *fuseView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *labDetailConstant;
 
 
 @property (assign, nonatomic) enum PlanType type;

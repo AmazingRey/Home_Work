@@ -16,13 +16,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="186"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_ic_eat.png" translatesAutoresizingMaskIntoConstraints="NO" id="4nN-2V-Nko">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="progress_ic_eat.png" translatesAutoresizingMaskIntoConstraints="NO" id="4nN-2V-Nko">
                         <rect key="frame" x="10" y="6" width="31" height="31"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="4nN-2V-Nko" secondAttribute="height" multiplier="1:1" id="da8-CP-n0J"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日饮食" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xq7-sa-nPm">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="今日饮食" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xq7-sa-nPm">
                         <rect key="frame" x="46" y="11" width="70" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="4YQ-u2-2dJ"/>

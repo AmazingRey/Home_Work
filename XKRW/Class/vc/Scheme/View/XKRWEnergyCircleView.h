@@ -11,6 +11,7 @@
 
 typedef void(^startButtonClickBlock)(NSInteger index);
 @interface XKRWEnergyCircleView : UIView
+@property (nonatomic, assign, readonly) BOOL isSelected;
 /**
  *  circle goal number
  */

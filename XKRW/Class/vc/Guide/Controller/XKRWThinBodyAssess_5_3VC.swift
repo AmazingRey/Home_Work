@@ -17,10 +17,13 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
     
     var fromWhichVC: FromWhichVC?
     var dicData = NSMutableDictionary()
+    var isHeavyType : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "我的瘦身计划"
+        let labor : XKPhysicalLabor = XKRWUserService.sharedService().getUserLabor()
+        isHeavyType = labor == eHeavy ? true : false;
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -44,13 +47,19 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
         headLabel.text = self.makeHeadLabelData()
         self.initHabitData()
         let viewHeight : Int = 450
+        let heavyHeight : Int = 200
         let numLines = ceilf(Float(dicData.count)/4)
         var nonHabitHeight : CGFloat = 30
         if numLines == 0 {
-            nonHabitHeight = 100;
+            nonHabitHeight = 100
         }
+        var btnStartHeight : CGFloat = 0
+        if(fromWhichVC != FromWhichVC.MyVC)
+        {
+            btnStartHeight = 80
+        }
+        var scrollContentSize = CGSizeMake(UI_SCREEN_WIDTH, headView.frame.size.height+nonHabitHeight + btnStartHeight)
         
-        scrollView.contentSize = CGSizeMake(UI_SCREEN_WIDTH, headView.frame.size.height+CGFloat(viewHeight)*2+CGFloat(numLines*180)+nonHabitHeight)
         var frame = CGRectZero
         
         for view in scrollView.subviews {
@@ -68,13 +77,22 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
                 break
             case 1:
                 view.type = .Sport
-                frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(viewHeight))
+                
+                if isHeavyType {
+                    frame =  CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(heavyHeight))
+                }else{
+                    frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(viewHeight))
+                }
                 break
             case 2:
                 view.dicCollection = dicData
                 view.type = .Habit
                 view.delegate = self
-                frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*180))
+                if isHeavyType{
+                    frame = CGRectMake(0, CGFloat(viewHeight + heavyHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*100) + 70)
+                }else{
+                    frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*100) + 70)
+                }
                 break
             default:
                 break
@@ -83,6 +101,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
             view.frame = frame
             //            view.layoutIfNeeded()
             scrollView.addSubview(view)
+            scrollContentSize.height += frame.size.height
         }
         if(fromWhichVC == FromWhichVC.MyVC)
         {
@@ -90,14 +109,14 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
         }else{
             let myFirstButton = UIButton(type:UIButtonType.Custom)
             myFirstButton.setTitle("开始瘦身", forState: .Normal)
-            myFirstButton.backgroundColor = UIColor.greenColor()
+            myFirstButton.backgroundColor = XKMainSchemeColor
             myFirstButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            myFirstButton.frame = CGRectMake(15, scrollView.contentSize.height-80, UI_SCREEN_WIDTH-30, 40)
+            myFirstButton.frame = CGRectMake(15, scrollContentSize.height-80, UI_SCREEN_WIDTH-30, 40)
             myFirstButton.addTarget(self, action: #selector(XKRWThinBodyAssess_5_3VC.pressed(_:)), forControlEvents:UIControlEvents.TouchUpInside)
             
             scrollView.addSubview(myFirstButton)
         }
-        
+        scrollView.contentSize = scrollContentSize
     }
     func setFromWhichVC(type:FromWhichVC){
         fromWhichVC = type
@@ -118,11 +137,13 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
     }
     
     func pressed(sender: UIButton!) {
-        let alertView = UIAlertView();
-        alertView.addButtonWithTitle("Ok");
-        alertView.title = "title";
-        alertView.message = "message";
-        alertView.show();
+        MobClick.event("clk_Start")
+        if (self.navigationController?.tabBarController != nil){
+            XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
+            self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
+        }else{
+            self.navigationController?.popToRootViewControllerAnimated(false);
+        }
     }
     
     func initHabitData(){

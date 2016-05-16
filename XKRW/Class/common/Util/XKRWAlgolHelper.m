@@ -19,6 +19,12 @@
 //static XKRWUserService *userService;
 
 @implementation XKRWAlgolHelper
+
++ (float)minRecommendedValueWith:(XKSex)sex
+{
+    return sex == eSexMale ? 1800:1400 ;
+}
+
 /*获取用户的BM*/
 + (float)BM
 {

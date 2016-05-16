@@ -7,7 +7,7 @@
 //
 @protocol XKRWRecordMore5_3ViewDelegate <NSObject>
 @optional
--(void)pressChangeEatPercent;
+-(void)pressTip_1WithIndex:(NSInteger)index;
 -(void)pressSetNotifyWithIndex:(NSInteger)index;
 
 @end

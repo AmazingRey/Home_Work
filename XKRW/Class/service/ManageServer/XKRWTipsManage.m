@@ -13,6 +13,7 @@
 #import "XKRWPlanTipsEntity.h"
 #import "NSDate+XKRWCalendar.h"
 #import "XKRWCommHelper.h"
+#import "XKRWUserService.h"
 
 static XKRWTipsManage *shareInstance;
 
@@ -74,7 +75,7 @@ static XKRWTipsManage *shareInstance;
             if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType]) {
                 XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
                 entity.showType = 0;
-                entity.tipsText = [NSString stringWithFormat:@"今日建议摄入热量%@，记录饮食或执行推荐食谱可以帮助你合理的控制摄入热量",[XKRWAlgolHelper getDailyIntakeSize]];
+                entity.tipsText = [NSString stringWithFormat:@"今日建议摄入热量%.0f~%.0fKcal，记录饮食或执行推荐食谱可以帮助你合理的控制摄入热量",[XKRWAlgolHelper minRecommendedValueWith:[[XKRWUserService sharedService] getSex]],[XKRWAlgolHelper dailyIntakeRecomEnergyOfDate:date]];
                 [tipsEntityArray addObject:entity];
             }
             
@@ -115,7 +116,7 @@ static XKRWTipsManage *shareInstance;
             
             //随机Tips 数据处理
             NSArray *tipsTextArray = @[@"按照推荐食谱吃可以直接达成饮食目标哦！",@"瘦身计划执行到一周时，瘦瘦会为你进行一周分析哦！",@"你的瘦身计划会根据体重变化调整，快去记录你的最新体重吧！",@"左上角是你的瘦身日历，可以查看记录过的饮食和运动。"];
-            NSArray *tipsTypeArray = @[@5,@0,@0,@0];
+            NSArray *tipsTypeArray = @[@4,@0,@0,@0];
             NSInteger i =  arc4random() % 4 ;
             XKRWPlanTipsEntity *randomEntity = [[XKRWPlanTipsEntity alloc] init];
             randomEntity.showType = [[tipsTypeArray objectAtIndex:i] integerValue];

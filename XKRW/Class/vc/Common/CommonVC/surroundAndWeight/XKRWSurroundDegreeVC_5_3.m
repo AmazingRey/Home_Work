@@ -316,7 +316,7 @@
     imageView.image = [UIImage imageNamed:@"girth_btn_point_mark_640"];
     
     if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
-        currentPoint = CGPointMake((CELLWIDTH)/2 ,(XKAppHeight -12)/2);
+        currentPoint = CGPointMake((CELLWIDTH)/2 ,LABELHEIGHT + 6 + (XKAppHeight - 2*LABELHEIGHT)/2 );
     }else {
         currentPoint = CGPointMake((CELLWIDTH)/2, (LABELHEIGHT +10) + ((XKAppHeight - 2*(LABELHEIGHT +10)) -((currentValue.floatValue - minValue.floatValue) *(XKAppHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
     }

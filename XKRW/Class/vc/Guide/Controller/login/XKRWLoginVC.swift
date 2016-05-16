@@ -147,15 +147,17 @@ class XKRWLoginVC: XKRWBaseVC {
         NSUserDefaults.standardUserDefaults().synchronize()
         
         XKRWUserDefaultService.setCurrentUserId(XKRWUserService.sharedService().getUserId());
-         
+        XKRWCommHelper.syncTodayRemoteData()
+        self.downloadWithTaskID("syncData", task: {
+            XKRWCommHelper.syncRemoteData()
+        })
         // 返回
         if !self.isPresent {
             if XKRWAlgolHelper.expectDayOfAchieveTarget() != nil {
                 XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
             }
-            self.downloadWithTaskID("syncData", task: {
-                XKRWCommHelper.syncRemoteData()
-            })
+            
+         
             if (self.navigationController?.tabBarController != nil) {
                 self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
             } else {
@@ -167,6 +169,8 @@ class XKRWLoginVC: XKRWBaseVC {
                 //暂时 未处理   当当前账号被挤下来  在登录一个数据不全的帐号的时候 会出现问题
                  self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
             }else{
+                //重新登录成功
+                NSNotificationCenter .defaultCenter().postNotificationName("loginAgainSuccess", object: nil)
                 self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
             }
         }
@@ -241,9 +245,9 @@ class XKRWLoginVC: XKRWBaseVC {
                 if XKRWAlgolHelper.expectDayOfAchieveTarget() != nil {
                     XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
                 }
-                self.downloadWithTaskID("syncData", task: { 
-                    XKRWCommHelper.syncRemoteData()
-                })
+//                self.downloadWithTaskID("syncData", task: { 
+//                    XKRWCommHelper.syncRemoteData()
+//                })
                 
                 if (self.navigationController?.tabBarController != nil){
                     self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)

@@ -43,17 +43,6 @@
     return self;
 }
 
-#pragma mark refresh Controls
--(void)refreshControls{
-    [self updateConstraints];
-//    [self.lab1 setNeedsDisplay];
-//    [self.lab2 setNeedsDisplay];
-//    [self.subLab3 setNeedsDisplay];
-//    [self.subLab4 setNeedsDisplay];
-//    [self.subLab5 setNeedsDisplay];
-//    [self.subLab6 setNeedsDisplay];
-}
-
 #pragma mark setter Method
 -(void)setCurrentIndex:(NSInteger)currentIndex{
     if (_currentIndex != currentIndex) {
@@ -62,7 +51,7 @@
     if (_dataArray && _statisType == 1) {
         _currentEntity = [_dataArray objectAtIndex:_currentIndex];
     }
-    [self refreshControls];
+    [self updateConstraints];
 }
 
 #pragma getter Method

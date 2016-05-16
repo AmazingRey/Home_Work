@@ -80,7 +80,7 @@
         [defaults setValue:@YES forKey:key];
         [defaults synchronize];
         
-        KMHeaderTips *tips = [[KMHeaderTips alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 64) text:@"纬度曲线转移至主页右上角\n菜单的\"查看曲线\"中" type:KMHeaderTipsTypeDefault];
+        KMHeaderTips *tips = [[KMHeaderTips alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 64) text:@"围度曲线转移至主页右上角\n菜单的\"查看曲线\"中" type:KMHeaderTipsTypeDefault];
         [self.view addSubview:tips];
         [tips startAnimationWithStartOrigin:CGPointMake(0, -tips.height) endOrigin:CGPointMake(0, 0)];
     }
@@ -288,8 +288,6 @@
     self.weekAnalysisView.headView.currentIndex = currentIndex;
     self.weekAnalysisView.eatDecreaseView.currentIndex = currentIndex;
     self.weekAnalysisView.sportDecreaseView.currentIndex = currentIndex;
-    [self.weekAnalysisView refreshViews];
-    [self.statisAnalysisView refreshViews];
 }
 
 -(void)pickerViewPressedCancle{

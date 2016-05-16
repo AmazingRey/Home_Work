@@ -23,7 +23,7 @@
 {
     XKRWFoodTopView  *topView;
     UIScrollView *scrollView;
-
+    
     UISegmentedControl  *unitSegmentCtr;
     UISegmentedControl  *unitSecondSegmentCtr;//第二个
     UISegmentedControl  *unitThirdSegmentCtr;//第三个
@@ -51,6 +51,9 @@
     UIView *unitView;
     //餐次View
     UIView *mealView;
+    
+    NSArray *unitArrays;
+    
 }
 
 
@@ -109,6 +112,7 @@
 //初始化视图
 - (void)initView
 {
+    unitArrays = @[@"克",@"kcal",@"千焦"];
     self.forbidAutoAddCloseButton = YES;
     [self addNaviBarBackButton];
     
@@ -153,7 +157,7 @@
     mealSecondSegmentCtr.tintColor = XKMainToneColor_29ccb1;
     [mealSecondSegmentCtr addTarget:self action:@selector(mealSegmentAction:) forControlEvents:UIControlEventValueChanged];
     [mealView addSubview:mealSecondSegmentCtr];
- 
+    
     isRecord = YES;
     switch (_foodRecordEntity.recordType) {
         case RecordTypeBreakfirst:
@@ -174,7 +178,7 @@
             isRecord = NO;
             break;
     }
-
+    
     //传入 额外单位
     NSMutableArray *keys = [NSMutableArray arrayWithArray:[_foodRecordEntity.foodUnit allKeys]];
     
@@ -187,7 +191,7 @@
     //单位
     unitView = [[UIView alloc] init];
     unitView.frame = CGRectMake(0.f, mealView.bottom, XKAppWidth, 44*(i+1));
-
+    
     unitView.backgroundColor = [UIColor whiteColor];
     
     UILabel *unitLable = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, 44)];
@@ -243,14 +247,8 @@
     componentTextField.font = XKDefaultFontWithSize(14.f);
     componentTextField.textAlignment = NSTextAlignmentRight;
     [componentTextField addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
-   
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
-    if (!_foodRecordEntity.unit_new || _foodRecordEntity.unit_new.length == 0) {
-        
-    } else {
-        
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
     [editView addSubview:componentTextField];
     
@@ -321,7 +319,11 @@
         }else{
             componentTextField.placeholder =@"";
         }
-        selectUnitLabel.text = _foodRecordEntity.unit_new;
+        if (_foodRecordEntity.unit_new && _foodRecordEntity.unit_new.length) {
+            selectUnitLabel.text = _foodRecordEntity.unit_new;
+        } else if (_foodRecordEntity.unit) {
+            selectUnitLabel.text = unitArrays[unitSegmentCtr.selectedSegmentIndex];
+        }
         
         NSUInteger unitWeight = [[_foodRecordEntity.foodUnit objectForKey:selectUnitLabel.text] integerValue];
         
@@ -345,8 +347,7 @@
 }
 
 - (void)loadUnitSegment {
-        
-    NSArray *unitArrays = @[@"克",@"kcal",@"千焦"];
+    
     
     unitSegmentCtr = [[UISegmentedControl alloc]initWithItems:unitArrays];
     unitSegmentCtr.frame = CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth, 30);
@@ -648,7 +649,7 @@
         
         selectUnitLabel.text = unitOthersArray[1];
     }else{
-
+        
         selectUnitLabel.text = unitOthersArray[2];
     }
     unitType = 0;
@@ -661,7 +662,7 @@
 }
 
 -(void)unitThirdSegmentAction:(UISegmentedControl *)segment{
-
+    
     if ([componentTextField isFirstResponder]) {
         [componentTextField resignFirstResponder];
     }
@@ -713,9 +714,9 @@
     } else {
         
         [super popView];
-//        if (self.isNeedHideNaviBarWhenPoped) {
-//            [self.navigationController setNavigationBarHidden:YES animated:NO];
-//        }
+        //        if (self.isNeedHideNaviBarWhenPoped) {
+        //            [self.navigationController setNavigationBarHidden:YES animated:NO];
+        //        }
     }
 }
 
@@ -802,7 +803,7 @@
 
 
 + (void)presentAddFoodVC:(XKRWAddFoodVC4_0 *)vc onViewController:(UIViewController *)onvc {
-
+    
     XKRWNavigationController *nav = [[XKRWNavigationController alloc] initWithRootViewController:vc];
     vc.isPresent = YES;
     [onvc presentViewController:nav animated:YES completion:nil];

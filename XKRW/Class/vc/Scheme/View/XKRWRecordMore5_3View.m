@@ -36,7 +36,6 @@
         case 1:
             _btnChange.titleLabel.text = @"调整四餐比例";
             _btnSet.titleLabel.text = @"设置饮食提醒";
-            _btnSet.tag = type;
             break;
         case 2:
             break;
@@ -45,7 +44,6 @@
             [_btnSet setTitle:@"设置习惯提醒" forState:UIControlStateNormal];
             _btnChange.titleLabel.text = @"重新测评习惯";
             _btnSet.titleLabel.text = @"设置习惯提醒";
-            _btnSet.tag = type;
             break;
         default:
             break;
@@ -55,19 +53,16 @@
 //按钮一
 - (IBAction)actChange:(id)sender {
     //调整四餐比例
-    if (_type == 1) {
-        if ([self.delegate respondsToSelector:@selector(pressChangeEatPercent)]) {
-            [self.delegate pressChangeEatPercent];
-        }
+    if ([self.delegate respondsToSelector:@selector(pressTip_1WithIndex:)]) {
+        [self.delegate pressTip_1WithIndex:_type];
     }
 }
 
 //按钮二
 - (IBAction)actSet:(id)sender {
-    NSInteger index = [(UIButton *)sender tag];
     //设置饮食提醒
     if ([self.delegate respondsToSelector:@selector(pressSetNotifyWithIndex:)]) {
-        [self.delegate pressSetNotifyWithIndex:index];
+        [self.delegate pressSetNotifyWithIndex:_type];
     }
 }
 @end

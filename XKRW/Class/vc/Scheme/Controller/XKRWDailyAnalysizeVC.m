@@ -114,7 +114,7 @@
         _labTodayPredict = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 70)];
         CGFloat predictValue = 0.0;
         if (_dailyFoodDecrease + _dailySportDecrease != 0 && hasRecord) {
-            predictValue = (_dailyNormal - _dailyFoodDecrease + _dailySportDecrease)/7.7;
+            predictValue = (_dailyNormal - _dailyFoodDecrease + _dailySportDecrease)/7.7 >=0 ? (_dailyNormal - _dailyFoodDecrease + _dailySportDecrease)/7.7 : 0 ;
         }
         if (!hasRecord) {
             NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];

@@ -360,4 +360,7 @@
 #define EffectHabit @"habit"
 // 能量环接收数据变化通知中心 object 传值 影响饮食和运动能量环
 #define EffectFoodAndSportCircle @"foodAndSport"
+
+#define XKRWScaleWidth ([[UIScreen mainScreen] bounds].size.width/375.0)
+#define XKRWScaleHeight ([[UIScreen mainScreen] bounds].size.height/667.0)
 #endif

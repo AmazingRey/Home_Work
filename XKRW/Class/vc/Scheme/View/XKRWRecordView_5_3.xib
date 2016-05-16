@@ -180,7 +180,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1005" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MDZ-gd-aNF">
                     <rect key="frame" x="0.0" y="59" width="375" height="184"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="184" id="9xF-mK-gag"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="134" id="9xF-mK-gag"/>
                     </constraints>
                 </scrollView>
             </subviews>

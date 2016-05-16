@@ -190,6 +190,7 @@
 
 - (void)startButtonClicked:(UIButton *)sender {
     
+    _isSelected = YES;
     [UIView animateWithDuration:0.2 animations:^{
         sender.transform = CGAffineTransformMakeScale(1.1, 1.1);
         
@@ -225,7 +226,7 @@
     _currentNumLabel.text = currentNumber;
     _goalLabel.text = [NSString stringWithFormat:@"%ld%@",(long)goalNumber,unit];
     _goalNumber = goalNumber;
-    
+    _progressCircle.percentage = [currentNumber intValue]/(CGFloat)goalNumber;
     [self setColorWithAbool:isBehaveCurrect];
 }
 
@@ -277,6 +278,7 @@
     if (_style != XKRWEnergyCircleStyleNotOpen) {
         _shadowView.image = _shadowImage;
     }
+    _stateImageView.image = _stateImage;
 
 }
 

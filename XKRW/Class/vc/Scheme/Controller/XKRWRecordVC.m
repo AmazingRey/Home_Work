@@ -205,7 +205,9 @@
 
 
 #pragma --mark UISearchBar Delegate
-
+- (void)KMSearchDisplayHideSearchResult{
+    segmentCtl.hidden = NO;
+}
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     CGRect frame = recordSearchBar.frame;
     frame.origin.y = 20;

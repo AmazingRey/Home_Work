@@ -23,16 +23,6 @@
     return self;
 }
 
--(void)refreshViews{
-//    [self.headView refreshControls];
-//    [self.eatDecreaseView refreshControls];
-//    [self.sportDecreaseView refreshControls];
-//    [self addMasonryLayOut];
-//    [self.headView setNeedsDisplay];
-//    [self.eatDecreaseView setNeedsDisplay];
-//    [self.sportDecreaseView setNeedsDisplay];
-}
-
 -(XKRWStatiscHeadView *)headView{
     if (!_headView) {
         CGRect frame = CGRectMake(0, 0, XKAppWidth, HeadViewHeight);
