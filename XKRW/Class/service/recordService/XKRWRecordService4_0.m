@@ -2005,7 +2005,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     
     NSMutableArray *returnValue = [[NSMutableArray alloc] init];
     
-    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM record_scheme WHERE uid = %ld AND create_time > %ld AND create_time < %ld AND sync != -1 AND type = %ld ORDER BY create_time", (long)uid, (long)begin, (long)end, (long)type];
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM record_scheme WHERE uid = %ld AND create_time >= %ld AND create_time <= %ld AND sync != -1 AND type = %ld ORDER BY create_time", (long)uid, (long)begin, (long)end, (long)type];
     
     NSArray *rst = [self query:sql];
     if (rst.count > 2) {

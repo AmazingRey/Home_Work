@@ -10,6 +10,7 @@
 @implementation XKRWWeightPopView{
     BOOL isInit;
 }
+
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
@@ -35,6 +36,7 @@
         self = LOAD_VIEW_FROM_BUNDLE(@"XKRWWeightPopView");
         _textField.keyboardType = UIKeyboardTypeDecimalPad;
         _arrLabels = @[@"体重",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
+        _dicIllegal = [NSMutableDictionary dictionary];
         isInit = YES;
         
         _iCarouselView.type = 0;
@@ -418,70 +420,213 @@
 }
 
 #pragma -mark textfiled delegate
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@""]) {
+        return true;
+    }
+    
+    if ([self isTopest:[_arrLabels objectAtIndex:_currentIndex.integerValue] withText:textField.text]){
+        return false;
+    }
+    
+    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if ([newString isEqualToString:@"00"] && [string isEqualToString:@"0"]) {
+        return false;
+    }
+    
+    BOOL res = true;
+    if (![self judgeTypeTopLegal:[_arrLabels objectAtIndex:_currentIndex.integerValue] withText:newString]) {
+        [self showInfoText:_currentIndex.integerValue];
+        res = false;
+    }
+    return res;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    BOOL res = true;
+    if (![self judgeTypeLowLegal:[_arrLabels objectAtIndex:_currentIndex.integerValue] withText:textField.text]) {
+        [self showInfoText:_currentIndex.integerValue];
+        res = false;
+    }
+    return res;
+}
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     [self saveTheData];
 }
 
-
 #pragma -mark sure btn & cancle btn
 - (IBAction)pressCancle:(id)sender {
     [_datePicker removeFromSuperview];
     _datePicker = nil;
+    [_textField resignFirstResponder];
+    
     if ([self.delegate respondsToSelector:@selector(pressPopViewCancle)]) {
         [self.delegate pressPopViewCancle];
+    }
+}
+/*** 用户达到目标体重*/
+- (void)userReachTargetWeight{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"已达成目标体重" message:@"已达成目标体重，是否重新制定方案？" delegate:self cancelButtonTitle:@"没有，记录错了"  otherButtonTitles:@"是的，去重置方案", nil];
+    
+    alertView.tag = 10001;
+    [alertView show];
+}
+
+#pragma --mark UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 10001){
+        if (buttonIndex == 1) {
+            if(![XKUtil isNetWorkAvailable])
+            {
+                [XKRWCui showInformationHudWithText:@"网络未连接,请检查网络"];
+                
+                return;
+            }
+            [MobClick event:@"clk_reset"];
+            
+            if ([self.delegate respondsToSelector:@selector(resetWeightPlan)]) {
+                [self.delegate resetWeightPlan];
+            }
+        }else{
+            [MobClick event:@"clk_NoRest"];
+        }
     }
 }
 
 - (IBAction)pressSure:(id)sender {
     [self saveTheData];
     if ([self saveDataislegal]) {
-        [_datePicker removeFromSuperview];
-        _datePicker = nil;
-        [_textField resignFirstResponder];
-        [self saveRemote];
-        
-        if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]){
-            [self.delegate pressPopViewSure:_dicAll];
+        float target_weight = [[XKRWUserService sharedService] getUserDestiWeight]/1000.0;
+        if ([[[_dicAll objectForKey:_selectDateStr] objectForKey:@"体重"] floatValue] <= target_weight) {
+            [self userReachTargetWeight];
+        }else{
+            [_datePicker removeFromSuperview];
+            _datePicker = nil;
+            [_textField resignFirstResponder];
+            [self saveRemote];
+            
+            if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]){
+                [self.delegate pressPopViewSure:_dicAll];
+            }
         }
     }else{
-        [self pressCancle:nil];
-        [XKRWCui showInformationHudWithText:@"所输入的数据不在范围内"];
+        NSArray *keys = [_dicIllegal allKeys];
+        NSNumber *index = [keys firstObject];
+        _iCarouselView.currentItemIndex = index.integerValue;
+        _currentIndex = index;
+        [self showInfoText:index.integerValue];
     }
 }
 
 -(BOOL)saveDataislegal{
-    NSDictionary *dic = [[_dicAll allValues] firstObject];
-    NSArray *keys = [dic allKeys];
-    NSMutableDictionary *falseDic = [NSMutableDictionary dictionary];
+    int j = 0;
+    [_dicIllegal removeAllObjects];
+    NSDictionary *dic = [_dicAll objectForKey:_selectDateStr] ;
     
-    for (NSString *type in keys) {
-        if ([type isEqualToString:@"体重"]) {
-            CGFloat num = [[dic objectForKey:type] floatValue];
-            if (num != 0 && (num < 20 || num > 200)) {
-                [falseDic setObject:[dic objectForKey:type] forKey:type];
-            }
-        }
-        if ([type isEqualToString:@"胸围"] || [type isEqualToString:@"腰围"] || [type isEqualToString:@"臀围"]) {
-            CGFloat num = [[dic objectForKey:type] floatValue];
-            if (num != 0 && (num < 50 || num > 150)) {
-                [falseDic setObject:[dic objectForKey:type] forKey:type];
-            }
-        }
-        if ([type isEqualToString:@"臂围"] || [type isEqualToString:@"小腿围"]) {
-            CGFloat num = [[dic objectForKey:type] floatValue];
-            if (num != 0 && (num < 15 || num > 100)) {
-                [falseDic setObject:[dic objectForKey:type] forKey:type];
-            }
-        }
-        if ([type isEqualToString:@"大腿围"]) {
-            CGFloat num = [[dic objectForKey:type] floatValue];
-            if (num != 0 && (num < 30 || num > 150)) {
-                [falseDic setObject:[dic objectForKey:type] forKey:type];
-            }
+    
+    for (NSString *type in _arrLabels) {
+        if (![self judgeTypeTopLegal:type withText:[dic objectForKey:type]] || ![self judgeTypeLowLegal:type withText:[dic objectForKey:type]]) {
+            j++;
         }
     }
-    return !(falseDic.count > 0);
+    return !(j > 0);
 }
 
+-(BOOL)judgeTypeTopLegal:(NSString *)type withText:(NSString *)text{
+    BOOL res = true;
+    CGFloat num = [text floatValue];
+    int limit;
+    if ([type isEqualToString:@"体重"]) {
+        if (num > 200) {
+            limit = 200;
+            res = false;
+        }
+    }
+    if ([type isEqualToString:@"胸围"] || [type isEqualToString:@"腰围"] || [type isEqualToString:@"臀围"] || [type isEqualToString:@"大腿围"]) {
+        if (num > 150) {
+            limit = 150;
+            res = false;
+        }
+    }
+    if ([type isEqualToString:@"臂围"] || [type isEqualToString:@"小腿围"]) {
+        if (num > 100) {
+            limit = 100;
+            res = false;
+        }
+    }
+    if (!res) {
+        [_dicIllegal removeObjectForKey:[NSNumber numberWithInteger:[_arrLabels indexOfObject:type]]];
+        [_dicIllegal setObject:[NSString stringWithFormat:@"%@值最大不能大于%d",type,limit] forKey:[NSNumber numberWithInteger:[_arrLabels indexOfObject:type]]];
+    }
+    return res;
+}
+
+-(BOOL)judgeTypeLowLegal:(NSString *)type withText:(NSString *)text{
+    BOOL res = true;
+    CGFloat num = [text floatValue];
+    int limit;
+    
+    if ([type isEqualToString:@"体重"]) {
+        if (num != 0 && num < 20) {
+            limit = 20;
+            res = false;
+        }
+    }
+    if ([type isEqualToString:@"胸围"] || [type isEqualToString:@"腰围"] || [type isEqualToString:@"臀围"]) {
+        if (num != 0 && num < 50) {
+            limit = 50;
+            res = false;
+        }
+    }
+    if ([type isEqualToString:@"臂围"] || [type isEqualToString:@"小腿围"]) {
+        if (num != 0 && num < 15) {
+            limit = 15;
+            res = false;
+        }
+    }
+    if ([type isEqualToString:@"大腿围"]) {
+        if (num != 0 && num < 30) {
+            limit = 30;
+            res = false;
+        }
+    }
+    if (!res) {
+        [_dicIllegal setObject:[NSString stringWithFormat:@"%@值最小不能小于%d",type,limit] forKey:[NSNumber numberWithInteger:[_arrLabels indexOfObject:type]]];
+    }
+    return res;
+}
+
+-(void)showInfoText:(NSInteger)index{
+    [XKRWCui showInformationHudWithText:[_dicIllegal objectForKey:[NSNumber numberWithInteger:index]]];
+}
+
+-(BOOL)isTopest:(NSString *)type withText:(NSString *)text{
+    BOOL res = false;
+    int limit;
+    CGFloat num = [text floatValue];
+    if ([type isEqualToString:@"体重"]) {
+        if (num == 200) {
+            limit = 200;
+            res = true;
+        }
+    }
+    if ([type isEqualToString:@"胸围"] || [type isEqualToString:@"腰围"] || [type isEqualToString:@"臀围"] || [type isEqualToString:@"大腿围"]) {
+        if (num == 150) {
+            limit = 150;
+            res = true;
+        }
+    }
+    if ([type isEqualToString:@"臂围"] || [type isEqualToString:@"小腿围"]) {
+        if (num == 100) {
+            limit = 100;
+            res = true;
+        }
+    }
+    if (res) {
+        [XKRWCui showInformationHudWithText:[NSString stringWithFormat:@"%@值最大不能大于%d",type,limit]];
+    }
+    return  res;
+}
 @end

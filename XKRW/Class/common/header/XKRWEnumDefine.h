@@ -298,6 +298,15 @@ typedef NS_ENUM(NSInteger, RecordType) {
      */
     RecordTypeSnack,
     /**
+     *  运动方案
+     */
+    RecordTypeSportScheme,
+    /**
+     *  食物方案
+     */
+    RecordTypeFoodScheme,
+    
+    /**
      *  方案
      */
     RecordTypeScheme = 100
@@ -315,7 +324,8 @@ typedef  NS_ENUM(NSInteger,FromWhichVC) {
     MyVC,
     SchemeInfoChangeVC,
     Appdelegate,
-    ThinBodyAssesssVC
+    ThinBodyAssesssVC,
+    PlanVC
 };
 
 typedef NS_ENUM(NSInteger, NavigationBarType) {
@@ -434,11 +444,11 @@ typedef NS_ENUM(NSInteger, AnalysizeType) {
  */
 typedef NS_ENUM(NSInteger, StatisticType) {
     /**
-     *  饮食摄入
+     *  周分析
      */
     statisticWeek = 1,
     /**
-     *  运动消耗
+     *  计划统计
      */
     statisticTotal
 };

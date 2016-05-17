@@ -13,6 +13,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
     // MARK: - Properties
     
     var tableView: UITableView!
+    var recordDate:NSDate  = NSDate()
     
     weak var schemeEntity: XKRWSchemeEntity_5_0?
     weak var record: XKRWRecordSchemeEntity?
@@ -23,6 +24,8 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
     var mealDescriptionHeader: SDDescriptionHeaderView = SDDescriptionHeaderView.instanceView()
     
     var selectionView: KMPopSelectionView?
+    
+   
     
     // MARK: - System's function
     
@@ -247,7 +250,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         if self.schemeEntity != nil {
             
             self.downloadWithTaskID("changeScheme", outputTask: { () -> AnyObject! in
-                return XKRWSchemeService_5_0.sharedService.changeSchemeWithType(self.schemeEntity!.schemeType,size: self.schemeEntity!.size, dropID: self.schemeEntity!.schemeID, otherInfo:["is_m":self.is_m])
+              return  XKRWSchemeService_5_0.sharedService.changeSchemeWithType(self.schemeEntity!.schemeType, date: self.recordDate, size: self.schemeEntity!.size, dropID: self.schemeEntity!.schemeID, otherInfo: ["is_m":self.is_m])
             })
         }
     }
@@ -301,8 +304,14 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
                     self.downloadWithTaskID("downloadSport", outputTask: { () -> AnyObject! in
                         return XKRWSportService.shareService().batchDownloadSportWithIDs(newEntity.content)
                     })
+                    dispatch_async(dispatch_get_main_queue(), { 
+                         NSNotificationCenter.defaultCenter().postNotificationName("energyCircleDataChanged", object: "sport")
+                    });
+
                 } else {
-                    
+                    dispatch_async(dispatch_get_main_queue(), { 
+                         NSNotificationCenter.defaultCenter().postNotificationName("energyCircleDataChanged", object: "food")
+                    });
                     self.mealDescriptionHeader.setContentWithEntity(self.schemeEntity)
                     XKRWCui.hideProgressHud()
                     self.tableView.reloadData()
@@ -335,7 +344,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         XKRWCui.showProgressHud("")
         
         self.downloadWithTaskID("changeScheme", outputTask: { () -> AnyObject! in
-            return XKRWSchemeService_5_0.sharedService.changeSchemeWithType(self.schemeEntity!.schemeType, size: sizeNum, dropID: self.schemeEntity!.schemeID, otherInfo:["is_m":self.is_m])
+            return XKRWSchemeService_5_0.sharedService.changeSchemeWithType(self.schemeEntity!.schemeType, date: self.recordDate,size: sizeNum, dropID: self.schemeEntity!.schemeID, otherInfo:["is_m":self.is_m])
         })
     }
     

@@ -46,7 +46,7 @@
 #import "XKRWAlgolHelper.h"
 #import "XKRWStatisticAnalysizeVC.h"
 
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate>
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate,UIAlertViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
     KMSearchBar *foodAndSportSearchBar;
@@ -481,6 +481,7 @@
 - (void)entryTHinPlayButton:(UIButton *)button {
     XKRWThinBodyAssess_5_3VC *thinBodyVC = [[XKRWThinBodyAssess_5_3VC alloc] initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
     thinBodyVC.hidesBottomBarWhenPushed = YES;
+    [thinBodyVC setFromWhichVC:PlanVC];
     [self.navigationController pushViewController:thinBodyVC animated:YES];
 }
 
@@ -757,17 +758,24 @@
     }
     if (entryRype == energyTypeEat && recordtype == XKRWRecordTypeScheme) {
         [self downloadWithTaskID:@"deleteFoodScheme" outputTask:^{
-            if ([[XKRWRecordService4_0 sharedService] deleteRecord:entity]) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
+            BOOL isDelete = [[XKRWRecordService4_0 sharedService] deleteRecord:entity];
+            if (isDelete) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
+                });
             }
-            return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
+            return [NSNumber numberWithBool:isDelete];
         }];
     }else if(entryRype == energyTypeSport && recordtype == XKRWRecordTypeScheme){
         [self downloadWithTaskID:@"deleteSportScheme" outputTask:^{
-            if ([[XKRWRecordService4_0 sharedService] deleteRecord:entity]) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectSportCircle];
+             BOOL isDelete = [[XKRWRecordService4_0 sharedService] deleteRecord:entity];
+            if (isDelete) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectSportCircle];
+                });
+                
             }
-            return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
+            return [NSNumber numberWithBool:isDelete];
         }];
     }else if (recordtype == XKRWRecordTypeFood){
         [self downloadWithTaskID:@"deleteRecordFood" outputTask:^{
@@ -777,6 +785,44 @@
         [self downloadWithTaskID:@"deleteRecordSport" outputTask:^{
             return [NSNumber numberWithBool:[[XKRWRecordService4_0 sharedService] deleteRecord:entity]];
         }];
+    }
+}
+
+- (void)menstruationIsOn:(BOOL)on {
+    if (on) {
+        
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"大姨妈来了" message:@"适量运动有助调节情绪，缓解生理期不适，瘦瘦为你准备了适合姨妈期的运动方案，快去看看吧！" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"去换方案", nil];
+        alertView.tag = 10010;
+        
+        [alertView show];
+        [MobClick event:@"tips_mc_on"];
+
+    }else{
+        
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"大姨妈走了！" message:@"适恭喜你进入减肥黄金周，新陈代谢加速，减肥事半功倍，开启燃脂模式，努力运动吧 ！" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        alertView.tag = 10010;
+        
+        [alertView show];
+        
+        [MobClick event:@"tips_mc_off"];
+    }
+}
+
+#pragma --mark UIalertViewdelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 10010){
+        if (buttonIndex == alertView.cancelButtonIndex) {
+            [MobClick event:@"tips_mc_on_ok"];
+        }
+        else {
+            [MobClick event:@"tips_mc_on_reload"];
+            XKRWSchemeDetailVC *schemeDetailVC = [[XKRWSchemeDetailVC alloc] init];
+            schemeDetailVC.schemeEntity = _sportSchemeEntity;
+//            schemeDetailVC.recordDate = _recordDate;
+            schemeDetailVC.is_m = 1;
+            schemeDetailVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:schemeDetailVC animated:YES];
+        }
     }
 }
 
@@ -960,6 +1006,37 @@
     [self removeBtnBackBounds];
 }
 
+-(void)resetWeightPlan{
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:[NSString stringWithFormat:@"needResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+    
+    
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:[NSString stringWithFormat:@"lateToResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [XKRWCui showProgressHud:@"重置方案中..."];
+    [self downloadWithTaskID:@"restSchene" outputTask:^id{
+        return  [[XKRWUserService sharedService] resetUserAllDataByToken];
+    }];
+}
+
+/**
+ *  方案网络请求失败后 处理数据
+ *
+ *  @param problem
+ *  @param taskID
+ */
+- (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID
+{
+    [XKRWCui hideProgressHud];
+    [super handleDownloadProblem:problem withTaskID:taskID];
+    if ([taskID isEqualToString:@"restSchene"]) {
+        [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
+        return;
+    }
+}
+
+
 - (void)saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType)recordType andEntity:(XKRWRecordEntity4_0 *)entity
 {
     if (![XKRWUtil isNetWorkAvailable]) {
@@ -974,8 +1051,6 @@
 
 #pragma --mark Network
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
-
-    
     if ([taskID isEqualToString:@"search"]){
         [XKRWCui hideProgressHud];
         foodsArray = [result objectForKey:@"food"];
@@ -1077,26 +1152,6 @@
         [_recordAndTargetView.currentWeightLabel setNeedsDisplay];
         return;
     }
-}
-
-- (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID {
-    [super handleDownloadProblem:problem withTaskID:taskID];
-    
-    if ([taskID isEqualToString:@"restSchene"]) {
-        [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
-        return;
-    }
-    
-    if ([taskID isEqualToString:@"getSportSchemeAndRecord"]) {
-        [XKRWCui showInformationHudWithText:@"获取记录体重失败，请稍后尝试"];
-        return;
-    }
-    
-    if ([taskID isEqualToString:@"saveFoodScheme"] ||[taskID isEqualToString:@"saveSportScheme"]||[taskID isEqualToString:@"deleteFoodScheme"]||[taskID isEqualToString:@"deleteSportScheme"]||[taskID isEqualToString:@"saveHabit"]) {
-        [XKRWCui showInformationHudWithText:@"保存失败，请稍后尝试"];
-        return;
-    }
-    
 }
 
 - (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication {

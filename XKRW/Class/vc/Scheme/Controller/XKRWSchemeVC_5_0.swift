@@ -709,17 +709,17 @@ class XKRWSchemeVC_5_0: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, 
     func reloadSportSchemeAndRecord() -> Void {
         
         
-        self.downloadWithTaskID("reloadSportScheme", outputTask: { () -> AnyObject! in
-            
-            let newScheme = XKRWSchemeService_5_0.sharedService.changeSchemeWithType(XKRWSchemeType.Sport, size: nil, dropID: self.sportScheme.schemeID, otherInfo:["is_m" : self.is_M] )
-            
-            self.sportRecord.record_value = 0
-            self.sportRecord.sid = newScheme.schemeID
-            
-            self.sportScheme = newScheme
-            
-            return true
-        })
+//        self.downloadWithTaskID("reloadSportScheme", outputTask: { () -> AnyObject! in
+//            
+//            let newScheme = XKRWSchemeService_5_0.sharedService.changeSchemeWithType(XKRWSchemeType.Sport,date:da , size: nil, dropID: self.sportScheme.schemeID, otherInfo:["is_m" : self.is_M] )
+//            
+//            self.sportRecord.record_value = 0
+//            self.sportRecord.sid = newScheme.schemeID
+//            
+//            self.sportScheme = newScheme
+//            
+//            return true
+//        })
     }
     
     func reloadNoticeCell() -> Void {

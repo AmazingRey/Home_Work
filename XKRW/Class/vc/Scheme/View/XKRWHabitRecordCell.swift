@@ -57,6 +57,7 @@ class XKRWHabitRecordCell: UITableViewCell {
             label.textAlignment = .Center
             label.font = UIFont.systemFontOfSize(14)
             label.textColor = XKMainSchemeColor
+            label.textAlignment = .Center
             label.text = "你的习惯很好，请保持！"
             
             self.habitsView.addSubview(label)

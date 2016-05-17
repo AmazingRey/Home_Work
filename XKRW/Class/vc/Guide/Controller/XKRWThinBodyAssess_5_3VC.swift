@@ -54,7 +54,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
             nonHabitHeight = 100
         }
         var btnStartHeight : CGFloat = 0
-        if(fromWhichVC != FromWhichVC.MyVC)
+        if(fromWhichVC != FromWhichVC.MyVC && fromWhichVC != FromWhichVC.PlanVC)
         {
             btnStartHeight = 80
         }
@@ -103,7 +103,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
             scrollView.addSubview(view)
             scrollContentSize.height += frame.size.height
         }
-        if(fromWhichVC == FromWhichVC.MyVC)
+        if(fromWhichVC == FromWhichVC.MyVC || fromWhichVC == FromWhichVC.PlanVC)
         {
             self.addNaviBarRightButtonWithText("修改方案", action: #selector(XKRWThinBodyAssess_5_3VC.doClickNaviBarRightButton as (XKRWThinBodyAssess_5_3VC) -> () -> ()))
         }else{

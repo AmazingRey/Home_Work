@@ -524,7 +524,6 @@
             [MobClick event:@"clk_NoRest"];
         }
     }
-
 }
 
 

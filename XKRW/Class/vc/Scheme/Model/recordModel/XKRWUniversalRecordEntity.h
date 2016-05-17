@@ -26,7 +26,7 @@
 
 @property (nonatomic) int sync;
 
-- (void)setSchemeSituationValue:(NSInteger)situation withType:(RecordType)type;
+//- (void)setSchemeSituationValue:(NSInteger)situation withType:(RecordType)type;
 
 - (NSDictionary *)dictionaryInDatabase;
 

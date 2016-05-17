@@ -47,11 +47,12 @@
             entity.recommondIntake = [NSNumber numberWithFloat:[self getRecommondIntake:entity.arrDaysDate]];
             entity.decreaseIntake = [NSNumber numberWithFloat:(entity.normalIntake.floatValue - entity.actualIntake.floatValue)];
             entity.targetIntake = [NSNumber numberWithFloat:(entity.normalIntake.floatValue - entity.recommondIntake.floatValue)];
+            entity.isAchieveIntakeTarget = entity.decreaseIntake.floatValue - entity.targetIntake.floatValue >= 0 ? YES : NO;
             
             entity.decreaseSport = [NSNumber numberWithFloat:[self getActualRangeSport:entity.arrDaysDate]];
             entity.targetSport = [NSNumber numberWithFloat:[self getRecommondSport:entity.arrDaysDate]];
             entity.timeSport = [NSNumber numberWithInteger:[self getSportTotalTime:entity.arrDaysDate]];
-            
+            entity.isAchieveSportTarget = entity.decreaseSport.floatValue >= entity.targetSport.floatValue *.9 ? YES : NO;
             [_array addObject:entity];
         }
     }
@@ -81,7 +82,6 @@
         _statiscEntity.decreaseSport = [NSNumber numberWithFloat:[self getActualRangeSport:_statiscEntity.arrDaysDate]];
         _statiscEntity.targetSport = [NSNumber numberWithFloat:[self getRecommondSport:_statiscEntity.arrDaysDate]];
         _statiscEntity.timeSport = [NSNumber numberWithInteger:[self getSportTotalTime:_statiscEntity.arrDaysDate]];
-        
     }
     return _statiscEntity;
 }
@@ -267,6 +267,9 @@
 }
 
 -(CGFloat)getTotalWeightChange{
+    if (_statiscEntity.arrDaysDate.count == 1) {
+        return 0;
+    }
     CGFloat currentWeight = [[XKRWUserService sharedService] getCurrentWeight]/1000.f;
     NSDate *earlyDate = [[NSDate date] dateByAddingTimeInterval:-DateInterval];
     CGFloat earlyWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:earlyDate];

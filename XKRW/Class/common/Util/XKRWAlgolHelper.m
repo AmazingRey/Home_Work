@@ -15,6 +15,7 @@
 #import "XKRWWeightService.h"
 #import "XKRWUserService.h"
 #import "XKRWRecordService4_0.h"
+#import "XKRWUserService.h"
 
 //static XKRWUserService *userService;
 
@@ -22,7 +23,7 @@
 
 + (float)minRecommendedValueWith:(XKSex)sex
 {
-    return sex == eSexMale ? 1800:1400 ;
+    return sex == eSexMale ? 1400:1200 ;
 }
 
 /*获取用户的BM*/
@@ -831,29 +832,22 @@
 }
 
 + (NSString *)getDailyIntakeSize {
-    
-    CGFloat intake = [self dailyIntakeRecomEnergy];
-    
-    if (intake <= 1400) {
-        return @"1200~1400kcal";
-    } else if (intake > 1400 && intake <= 1800) {
-        return @"1400~1800kcal";
-    } else {
-        return @"1800~2200kcal";
+    NSInteger intake = [self dailyIntakeRecomEnergy];
+    NSString * intakeSize = @"";
+    if ([[XKRWUserService sharedService] getSex] == 0) {
+        intakeSize = [NSString stringWithFormat:@"1400~%ld",(long)intake];
+    }else{
+        intakeSize = [NSString stringWithFormat:@"1200~%ld",(long)intake];
     }
+    return intakeSize;
 }
 
 + (NSRange)getDailyIntakeRange{
-    
-    CGFloat intake = [self dailyIntakeRecomEnergy];
-    
-    if (intake <= 1400) {
-        
-        return NSMakeRange(1200, 200);
-    } else if (intake > 1400 && intake <= 1800) {
-        return NSMakeRange(1400, 400);
-    } else {
-        return NSMakeRange(1800, 400);
+    NSInteger intake = [self dailyIntakeRecomEnergy];
+    if ([[XKRWUserService sharedService] getSex] == 0) {
+        return NSMakeRange(1400, intake - 1400);
+    }else{
+        return NSMakeRange(1200, intake - 1200);
     }
 }
 
@@ -872,9 +866,6 @@
 
 + (NSString *)getDailyIntakeTipsContent
 {
-    CGFloat  intake =   [self  dailyIntakeRecomEnergy];
-    
-    
     return [NSString stringWithFormat:@"热量摄入：%@\n三餐比例：3:5:2，早餐适量、午餐正常、晚餐少吃 \n食谱构成：接地气的家常菜，包含谷薯类、肉类及豆制品、果蔬类、奶制品 \n温馨提示：少盐少油、保证饮水、睡眠充足",[self getDailyIntakeSize]];
     
 //    if (intake<=1400 ){

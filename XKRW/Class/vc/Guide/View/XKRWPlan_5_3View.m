@@ -67,7 +67,13 @@
         case Habit:
             [_numImg setImage:[UIImage imageNamed:@"num3"]];
             _titleLab.text = @"不良习惯";
-            _calTypeLab.text = _dicCollection.count == 0?@"你的习惯很好，请保持。": @"为了达到减重目标，请改掉以下不良习惯:";
+            if (_dicCollection.count == 0) {
+                _calTypeLab.text = @"你的习惯很好，请保持。";
+                _calTypeLab.textAlignment = NSTextAlignmentCenter;
+            }else{
+                _calTypeLab.text = @"为了达到减重目标，请改掉以下不良习惯:";
+                _calTypeLab.textAlignment = NSTextAlignmentLeft;
+            }
             _calTypeLab.preferredMaxLayoutWidth = XKAppWidth- 30;
             
             _detailLab.hidden = YES;

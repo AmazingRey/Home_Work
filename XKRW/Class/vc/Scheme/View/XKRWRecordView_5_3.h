@@ -18,6 +18,10 @@
 - (void)saveSchemeRecord:(id )entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
 - (void)deleteSchemeRecord:(id )entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
 -(void)fixHabitAt:(NSInteger)index isCurrect:(BOOL)abool;
+
+//大姨妈开关是否打开
+- (void)menstruationIsOn:(BOOL) on ;
+
 @end
 
 

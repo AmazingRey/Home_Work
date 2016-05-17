@@ -193,15 +193,16 @@ class XKRWSchemeService_5_0: XKRWBaseService {
     
     - returns: 新方案
     */
-    func changeSchemeWithType(type: XKRWSchemeType, size: Int?, dropID: Int, otherInfo: [String: AnyObject]?) -> XKRWSchemeEntity_5_0 {
+    func changeSchemeWithType(type: XKRWSchemeType, date: NSDate ,size: Int?, dropID: Int, otherInfo: [String: AnyObject]?) -> XKRWSchemeEntity_5_0 {
         
         if type == .Sport {
-            
+          
             let newScheme = self.getSportSchemeFromRemote(dropID, is_m: otherInfo?["is_m"] as? Int)
  
             self.sportIdentifier = "\(newScheme.schemeID)"
-            
-            if let entity = XKRWRecordService4_0.sharedService().getSchemeRecordWithDate(NSDate(), type: RecordType.Sport) {
+//            Date(date, type: RecordType.RecordSportScheme)
+            if let entity = XKRWRecordService4_0.sharedService().getSchemeRecordWithDate(date, type: .SportScheme)
+            {
                 XKRWRecordService4_0.sharedService().deleteRecord(entity)
             }
             return newScheme
@@ -224,7 +225,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
                 self.identifier = (array as NSArray).componentsJoinedByString(",") + "+\(time)"
             }
             // delete scheme records if exist
-            if let entity = XKRWRecordService4_0.sharedService().getSchemeRecordWithDate(NSDate(), type: RecordType(rawValue: type.rawValue)!) {
+            if let entity = XKRWRecordService4_0.sharedService().getSchemeRecordWithDate(date, type: .FoodScheme) {
                 XKRWRecordService4_0.sharedService().deleteRecord(entity)
             }
             return newScheme

@@ -29,6 +29,7 @@
 #import "XKRWRecordSchemeEntity.h"
 #import "XKRWNavigationController.h"
 #import "XKRWPlanService.h"
+#import "XKRW-Swift.h"
 
 @interface XKRWRecordView_5_3 () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate,XKRWSportAddVCDelegate,XKRWAddFoodVC4_0Delegate>
 {
@@ -92,6 +93,7 @@
     recommendedTableView.dataSource = self;
     recommendedTableView.backgroundColor = XK_BACKGROUND_COLOR;
     [recommendedTableView registerNib:[UINib nibWithNibName:@"XKRWRecommandedCell_5_3" bundle:nil] forCellReuseIdentifier:@"recommendedCell"];
+    [recommendedTableView registerNib:[UINib nibWithNibName:@"KMSwitchCell" bundle:nil] forCellReuseIdentifier:@"KMSwitchCell"];
     [_scrollView addSubview:recordTableView];
     [_scrollView addSubview:recommendedTableView];
     
@@ -314,6 +316,7 @@
         _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐食谱\n%ldKcal",(long)entity.calorie];
     }else{
         _recommendedTypeLabel.text = @"推荐食谱";
+      
     }
     
     [self dealCenterButtonShowAndAction];
@@ -326,6 +329,7 @@
     }else{
         _recordTypeLabel.text = @"记录饮食";
     }
+    
     [recordTableView reloadData];
     [recommendedTableView reloadData];
 
@@ -366,7 +370,7 @@
     if (schemeDetail != nil) {
         XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
         _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐运动\n%ldKcal",(long)entity.calorie];
-    }else{
+    }else {
         _recommendedTypeLabel.text = @"推荐运动";
     }
     
@@ -406,7 +410,7 @@
 }
 
 
--(void)setType:(energyType)type{
+-(void)setType:(energyType)type {
     if (_type != type) {
         _type = type;
     }
@@ -441,7 +445,12 @@
         }
         
     }else if (tableView.tag == 5032){
-        return _schemeArray.count;
+        if ([[XKRWUserService sharedService] getSex] == eSexFemale && _schemeArray != nil ) {
+            return _schemeArray.count + 1;
+        }else{
+            return _schemeArray.count;
+        }
+        
     }
     return 0;
 }
@@ -528,32 +537,49 @@
         [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
         return cell;
     }else if (tableView.tag == 5032){
-        XKRWSchemeEntity_5_0 *entity = [_schemeArray objectAtIndex:indexPath.row];
-        XKRWRecommandedCell_5_3 *cell = [tableView dequeueReusableCellWithIdentifier:@"recommendedCell"];
-        cell.frame = CGRectMake(0, 0, self.width, 59);
-        cell.mealImageView.image = [UIImage imageNamed:[self getImageNameWithType:entity.schemeType]];
-        NSMutableString *schemeDetailStr =[NSMutableString string];
-        if (_type == energyTypeEat) {
-            for (XKRWFoodCategoryEntity *foodEntity in entity.foodCategories ) {
-                if (schemeDetailStr.length == 0) {
-                    [schemeDetailStr appendString:foodEntity.categoryName];
-                }else{
-                    [schemeDetailStr appendString:[NSString stringWithFormat:@"+%@",foodEntity.categoryName]];
+        
+        if ([[XKRWUserService sharedService] getSex] == eSexFemale && indexPath.row == _schemeArray.count  ) {
+            
+            __weak XKRWRecordView_5_3 *weakSelf = self;
+            
+            KMSwitchCell *switchCell = [tableView dequeueReusableCellWithIdentifier:@"KMSwitchCell"];
+            switchCell.contentView.backgroundColor = [UIColor colorWithRed:244 green:244 blue:244 alpha:1];
+            [switchCell setTitle:@"大姨妈" clickSwitchAction:^(BOOL on) {
+                if( [weakSelf.delegate respondsToSelector:@selector(menstruationIsOn:)]){
+                    [weakSelf.delegate menstruationIsOn:on];
+                }
+            }];
+            
+            return switchCell;
+        }else{
+        
+            XKRWSchemeEntity_5_0 *entity = [_schemeArray objectAtIndex:indexPath.row];
+            XKRWRecommandedCell_5_3 *cell = [tableView dequeueReusableCellWithIdentifier:@"recommendedCell"];
+            cell.frame = CGRectMake(0, 0, self.width, 59);
+            cell.mealImageView.image = [UIImage imageNamed:[self getImageNameWithType:entity.schemeType]];
+            NSMutableString *schemeDetailStr =[NSMutableString string];
+            if (_type == energyTypeEat) {
+                for (XKRWFoodCategoryEntity *foodEntity in entity.foodCategories ) {
+                    if (schemeDetailStr.length == 0) {
+                        [schemeDetailStr appendString:foodEntity.categoryName];
+                    }else{
+                        [schemeDetailStr appendString:[NSString stringWithFormat:@"+%@",foodEntity.categoryName]];
+                    }
+                }
+            }else if (_type == energyTypeSport){
+                for (XKRWSportEntity *sportEntity in [[XKRWSchemeService_5_0 sharedService] getCurrentSchemeSportEntities]) {
+                    if (schemeDetailStr.length == 0) {
+                        [schemeDetailStr appendString:sportEntity.sportName];
+                    }else{
+                        [schemeDetailStr appendString:[NSString stringWithFormat:@"+%@",sportEntity.sportName]];
+                    }
                 }
             }
-        }else if (_type == energyTypeSport){
-            for (XKRWSportEntity *sportEntity in [[XKRWSchemeService_5_0 sharedService] getCurrentSchemeSportEntities]) {
-                if (schemeDetailStr.length == 0) {
-                    [schemeDetailStr appendString:sportEntity.sportName];
-                }else{
-                    [schemeDetailStr appendString:[NSString stringWithFormat:@"+%@",sportEntity.sportName]];
-                }
-            }
+            cell.mealLabel.text = entity.schemeName;
+            cell.mealDetailLabel.text = schemeDetailStr;
+            [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
+            return  cell;
         }
-        cell.mealLabel.text = entity.schemeName;
-        cell.mealDetailLabel.text = schemeDetailStr;
-        [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
-        return  cell;
     }
     return [UITableViewCell new];
 }
@@ -608,6 +634,7 @@
         XKRWSchemeEntity_5_0 *entity = [_schemeArray objectAtIndex:indexPath.row];
         XKRWSchemeDetailVC *schemeDetailVC = [[XKRWSchemeDetailVC alloc] init];
         schemeDetailVC.schemeEntity = entity;
+        schemeDetailVC.recordDate = _date;
         schemeDetailVC.hidesBottomBarWhenPushed = YES;
         [_vc.navigationController pushViewController:schemeDetailVC animated:YES];
     }

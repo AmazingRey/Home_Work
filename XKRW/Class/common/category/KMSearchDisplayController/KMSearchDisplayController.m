@@ -42,7 +42,7 @@
         }
         
         self.backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, XKAppWidth, XKAppHeight - 64)];
-        self.backgroundView.backgroundColor = [UIColor clearColor];
+        self.backgroundView.backgroundColor = [UIColor whiteColor];
         
         self.backgroundContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.backgroundView.frame.size.width, self.backgroundView.frame.size.height)];
         self.backgroundContentView.backgroundColor = [UIColor clearColor];

@@ -17,12 +17,15 @@
 
 static XKRWTipsManage *shareInstance;
 
+static BOOL isFirstOpenApp ;
+
 @implementation XKRWTipsManage
 
 +(instancetype)shareInstance {
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         shareInstance = [[XKRWTipsManage alloc]init];
+        isFirstOpenApp = [XKRWCommHelper isFirstOpenThisAppWithUserId:[[XKRWUserService sharedService] getUserId]];
     });
     return shareInstance;
 }
@@ -40,7 +43,7 @@ static XKRWTipsManage *shareInstance;
         [tipsEntityArray addObject:entity];
     }else{
         //新用户  第一次进入  未开启
-        BOOL isFirstOpenApp = [XKRWCommHelper isFirstOpenThisAppWithUserId:[[XKRWUserService sharedService] getUserId]];
+    
         
         NSString *today = [NSDate stringFromDate:[NSDate today] withFormat:@"yyyy-MM-dd"];
         BOOL isTodayRegister = [today isEqualToString:[[XKRWUserService sharedService] getREGDate]];
@@ -64,36 +67,10 @@ static XKRWTipsManage *shareInstance;
                 entity.tipsText = [tipsTextArray objectAtIndex:i];
                 [tipsEntityArray addObject:entity];
             }
-            
         }
                 
         //3.上述条件同时触发时，先显示第1条，再按照第2条显示。(是否要调整entity的add顺序)
 
-        //4.用户点击“开启”以后（只在第一天进入v5.3时有效）
-        if ([(NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:@"EnterDate"] compare: [NSDate today]] == NSOrderedSame ) {
-            
-            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType]) {
-                XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
-                entity.showType = 0;
-                entity.tipsText = [NSString stringWithFormat:@"今日建议摄入热量%.0f~%.0fKcal，记录饮食或执行推荐食谱可以帮助你合理的控制摄入热量",[XKRWAlgolHelper minRecommendedValueWith:[[XKRWUserService sharedService] getSex]],[XKRWAlgolHelper dailyIntakeRecomEnergyOfDate:date]];
-                [tipsEntityArray addObject:entity];
-            }
-            
-            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType]) {
-                XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
-                entity.showType = 0;
-                entity.tipsText = [NSString stringWithFormat:@"今日建议运动消耗%.1fcal，记录运动或执行运动方案可以帮助你完成运动目标。",[XKRWAlgolHelper dailyConsumeSportEnergy]];
-                [tipsEntityArray addObject:entity];
-            }
-            
-            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType]) {
-                XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
-                entity.showType = 0;
-                entity.tipsText = [NSString stringWithFormat:@"每一天都要提醒自己改掉导致发胖的不良习惯。"];
-                [tipsEntityArray addObject:entity];
-            }
-            
-        }
         
         //5.用户重新开始新计划时显示：
         if ([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] == 1 && !isTodayRegister){
@@ -110,7 +87,7 @@ static XKRWTipsManage *shareInstance;
             
             XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
             entity.showType = 0;
-            entity.tipsText = [NSString stringWithFormat:@"今天是瘦身计划第%ld天，距离计划结束剩%ld天，，距离目标体重还需减重%.1fkg",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget],(long)[XKRWAlgolHelper remainDayToAchieveTarget],([[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]*1000 - [[XKRWUserService sharedService]getUserDestiWeight])/1000.f ];
+            entity.tipsText = [NSString stringWithFormat:@"今天是瘦身计划第%ld天，距离计划结束剩%ld天，距离目标体重还需减重%.1fkg",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget],(long)[XKRWAlgolHelper remainDayToAchieveTarget],([[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]*1000 - [[XKRWUserService sharedService]getUserDestiWeight])/1000.f ];
             [tipsEntityArray addObject:entity];
             
             
@@ -125,7 +102,7 @@ static XKRWTipsManage *shareInstance;
         }
         
         //9.方案天数到达：
-        if([XKRWAlgolHelper remainDayToAchieveTarget] == -1){
+        if([XKRWAlgolHelper remainDayToAchieveTarget] == -1 && [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]] != nil){
             XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
             entity.showType = 1;
             entity.tipsText =@"已到达计划预期的天数，计划已结束";
@@ -151,10 +128,34 @@ static XKRWTipsManage *shareInstance;
             entity.tipsText =@"刚开始的五天为适应阶段，不要求必须运动，如一直有运动，请保持原有的运动习惯即可。从第6天开始，恢复运动计划。";
             [tipsEntityArray addObject:entity];
         }
-        
+    
+        //4.用户点击“开启”以后（只在第一天进入v5.3时有效）
+        if ([(NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:@"EnterDate"] compare: [NSDate today]] == NSOrderedSame ) {
+            
+            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType]) {
+                XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
+                entity.showType = 0;
+                entity.tipsText = [NSString stringWithFormat:@"今日建议摄入热量%.0f~%.0fKcal，记录饮食或执行推荐食谱可以帮助你合理的控制摄入热量",[XKRWAlgolHelper minRecommendedValueWith:[[XKRWUserService sharedService] getSex]],[XKRWAlgolHelper dailyIntakeRecomEnergyOfDate:date]];
+                [tipsEntityArray addObject:entity];
+                
+            }
+            
+            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType]) {
+                XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
+                entity.showType = 0;
+                entity.tipsText = [NSString stringWithFormat:@"今日建议运动消耗%.0fcal，记录运动或执行运动方案可以帮助你完成运动目标。",[XKRWAlgolHelper dailyConsumeSportEnergy]];
+                 [tipsEntityArray addObject:entity];
+                
+            }
+            
+            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType]) {
+                XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
+                entity.showType = 0;
+                entity.tipsText = [NSString stringWithFormat:@"每一天都要提醒自己改掉导致发胖的不良习惯。"];
+                 [tipsEntityArray addObject:entity];
+            }
+        }
     }
-    
-    
     return [[tipsEntityArray reverseObjectEnumerator] allObjects];
 }
 

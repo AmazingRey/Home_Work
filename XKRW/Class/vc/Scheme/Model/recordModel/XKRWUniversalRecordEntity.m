@@ -10,15 +10,15 @@
 
 @implementation XKRWUniversalRecordEntity
 
-- (void)setSchemeSituationValue:(NSInteger)situation withType:(RecordType)type {
-
-    if (self.type != RecordTypeScheme) {
-        return;
-    }
-    [self.value removeAllObjects];
-    [self.value setObject:@(situation) forKey:@"value"];
-    [self.value setObject:@(type) forKey:@"type"];
-}
+//- (void)setSchemeSituationValue:(NSInteger)situation withType:(RecordType)type {
+//
+//    if (self.type != RecordTypeScheme) {
+//        return;
+//    }
+//    [self.value removeAllObjects];
+//    [self.value setObject:@(situation) forKey:@"value"];
+//    [self.value setObject:@(type) forKey:@"type"];
+//}
 
 - (NSDictionary *)dictionaryInDatabase {
     return @{@"rid": @(self.rid),

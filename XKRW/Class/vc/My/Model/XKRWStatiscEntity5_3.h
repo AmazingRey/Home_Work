@@ -85,6 +85,11 @@
  */
 @property (strong, nonatomic) NSNumber *targetIntake;
 
+/**
+ *  日期区间是否完成饮食摄入的kcal目标
+ */
+@property (assign, nonatomic) BOOL isAchieveIntakeTarget;
+
 /******************************运动**********************************/
 /**
  *  日期区间内运动时长总计
@@ -100,5 +105,10 @@
  *  日期区间内运动减少的kcal目标
  */
 @property (strong, nonatomic) NSNumber *targetSport;
+
+/**
+ *  日期区间是否完成运动减少的kcal目标
+ */
+@property (assign, nonatomic) BOOL isAchieveSportTarget;
 
 @end

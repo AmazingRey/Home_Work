@@ -163,11 +163,11 @@
     if (!_subLab3) {
         _subLab3 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
         _subLab3.textAlignment = NSTextAlignmentCenter;
-        _subLab3.textColor = colorSecondary_333333;
+        _subLab3.textColor = XKMainToneColor_29ccb1;
         _subLab3.font = [UIFont systemFontOfSize:12];
         [self addSubview:_subLab3];
     }
-    _subLab3.text = [NSString stringWithFormat:@"%.1f",self.currentEntity.weight];
+    _subLab3.text = [NSString stringWithFormat:@"%.1fkg",self.currentEntity.weight];
     return _subLab3;
 }
 
@@ -204,9 +204,9 @@
     
     NSString *txt = @"";
     if (self.currentEntity.weightChange > 0) {
-        txt = [NSString stringWithFormat:@"增重%.1f",self.currentEntity.weightChange];
+        txt = [NSString stringWithFormat:@"增重%.1fkg",self.currentEntity.weightChange];
     }else{
-        txt = [NSString stringWithFormat:@"减重%.1f",self.currentEntity.weightChange];
+        txt = [NSString stringWithFormat:@"减重%.1fkg",self.currentEntity.weightChange];
     }
     _subLab4.text = txt;
     return _subLab4;
@@ -239,10 +239,10 @@
         _subLab5 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
         _subLab5.textAlignment = NSTextAlignmentCenter;
         _subLab5.font = [UIFont systemFontOfSize:12];
-        _subLab5.textColor = XKWarningColor;
+        _subLab5.textColor = XKMainToneColor_29ccb1;
         [self addSubview:_subLab5];
     }
-     _subLab5.text = [NSString stringWithFormat:@"%d",self.currentEntity.dayRecord.intValue];
+     _subLab5.text = [NSString stringWithFormat:@"%d天",self.currentEntity.dayRecord.intValue];
     return _subLab5;
 }
 
@@ -272,11 +272,11 @@
     if (!_subLab6) {
         _subLab6 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth/4, 25)];
         _subLab6.textAlignment = NSTextAlignmentCenter;
-        _subLab6.textColor = XKWarningColor;
+        _subLab6.textColor = XKMainToneColor_29ccb1;
         _subLab6.font = [UIFont systemFontOfSize:12];
         [self addSubview:_subLab6];
     }
-    _subLab6.text = [NSString stringWithFormat:@"%d",self.currentEntity.dayAchieve.intValue];
+    _subLab6.text = [NSString stringWithFormat:@"%d天",self.currentEntity.dayAchieve.intValue];
     return _subLab6;
 }
 

@@ -138,6 +138,13 @@
         [self addSubview:_labCal];
     }
     _labCal.text = _type == 1? [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.decreaseIntake.floatValue]: [NSString stringWithFormat:@"%.0fkcal",self.currentEntity.decreaseSport.floatValue];
+    if (_statisticType == 1) {
+        if (_type == 1) {
+            _labCal.textColor = self.currentEntity.isAchieveIntakeTarget?XKMainToneColor_29ccb1:XKWarningColor;
+        }else{
+            _labCal.textColor = self.currentEntity.isAchieveSportTarget?XKMainToneColor_29ccb1:XKWarningColor;
+        }
+    }
     return _labCal;
 }
 

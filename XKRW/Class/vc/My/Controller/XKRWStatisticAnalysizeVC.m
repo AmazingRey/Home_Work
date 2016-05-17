@@ -147,7 +147,7 @@
         [_emptyView addSubview:emptyImageView];
         
         UILabel *emptyLab = [[UILabel alloc] initWithFrame:CGRectMake(0, emptyImageView.frame.origin.y + emptyImageView.frame.size.height + 10, XKAppWidth, 80)];
-        emptyLab.text = @"啊哦，小主，\n\n你我相遇还不够一周呢。";
+        emptyLab.text = @"计划进行一周才能查看!";
         emptyLab.textColor = colorSecondary_666666;
         emptyLab.numberOfLines = 0;
         emptyLab.textAlignment = NSTextAlignmentCenter;

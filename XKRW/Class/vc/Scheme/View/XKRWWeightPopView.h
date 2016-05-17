@@ -17,6 +17,7 @@
 @optional
 -(void)pressPopViewSure:(NSDictionary *)dic;
 -(void)pressPopViewCancle;
+-(void)resetWeightPlan;
 
 - (void)saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType) recordType andEntity:(XKRWRecordEntity4_0 *)entity;
 
@@ -53,6 +54,7 @@
 @property (copy, nonatomic) NSString *selectDateStr;
 @property (strong, nonatomic) NSNumber *currentIndex;
 @property (assign, nonatomic) XKRWRecordType recordType;
+@property (strong, nonatomic) NSMutableDictionary *dicIllegal;
 
 - (instancetype)initWithFrame:(CGRect)frame withType:(NSInteger)type;
 - (IBAction)pressCancle:(id)sender;
