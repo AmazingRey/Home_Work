@@ -82,7 +82,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     [MobClick event:@"in_nickname"];
     
 }

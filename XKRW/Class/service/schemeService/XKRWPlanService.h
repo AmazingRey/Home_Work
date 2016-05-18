@@ -59,4 +59,23 @@
  *  @return float (kg)
  */
 - (CGFloat)getHistoryWeightWithDate:(NSDate *)date;
+
+
+/**
+ *  获取今天是否有更新体重
+ *
+ *  @param date 日历
+ *
+ *  @return YES  NO
+ */
+- (BOOL)isRecordWeightWithDate:(NSDate *)date;
+
+/**
+ *  是否有记录
+ *
+ *  @param date <#date description#>
+ *
+ *  @return <#return value description#>
+ */
+- (BOOL)isRecordWithDate:(NSDate *)date;
 @end

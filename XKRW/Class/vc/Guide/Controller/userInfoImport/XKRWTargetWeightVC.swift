@@ -97,7 +97,6 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         }
         
         
-        
         highestKilogram = XKRWUserService.sharedService().getUserOrigWeight()/1000
         highestdecimals = XKRWUserService.sharedService().getUserOrigWeight()/100 - highestKilogram!*10
         
@@ -137,8 +136,9 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         }
         
      
+       let alert = UIAlertView(title: "设置阶段减重目标", message: "开启分阶段减重目标，请选择当前阶段的减重目标", delegate: nil, cancelButtonTitle: "知道了")
         
-        
+        alert .show()
         
         // Do any additional setup after loading the view.
     }

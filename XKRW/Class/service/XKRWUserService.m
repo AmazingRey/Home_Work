@@ -1909,7 +1909,7 @@ static BOOL canUpdatePlan = YES;
     entity.daily = [userInfoDic[@"daily"] integerValue];
     entity.sex  =  (XKSex)[userInfoDic[@"gender"] integerValue];
 
-    entity.weight = [userInfoDic[@"weight"] floatValue];
+    entity.weight = [recordDic[@"weight"] floatValue];
     entity.slim_qa = userInfoDic[@"slim_qa"];
     entity.disease_type = userInfoDic[@"disease_type"];
     

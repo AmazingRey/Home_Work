@@ -91,4 +91,56 @@ static XKRWPlanService *planService;
     
     return 0.f;
 }
+
+- (BOOL)isRecordWeightWithDate:(NSDate *)date {
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    int dateFormat = [[date stringWithFormat:@"yyyyMMdd"] intValue];
+    NSString *sql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date = %d ORDER BY date DESC LIMIT 1",(long)uid,dateFormat];
+    NSArray *result = [self query:sql];
+    
+    if (result!= nil || result.count > 0) {
+        return YES;
+        
+    }
+    return NO;
+}
+
+// deal with scheme record
+- (BOOL)isRecordWithDate:(NSDate *)date{
+    XKRWRecordEntity4_0 *recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:date];
+    NSArray * recordScheme = [[XKRWRecordService4_0 sharedService]getSchemeRecordWithDate:date];
+    NSInteger   intakeCalorie = 0;
+    NSInteger  expendCalorie = 0;
+    NSInteger  currentHabit = 0;
+    for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
+        intakeCalorie += foodEntity.calorie;
+    }
+    
+    for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
+        expendCalorie += sportEntity.calorie;
+    }
+    
+    for (XKRWHabbitEntity *habitEntity in recordEntity.habitArray) {
+        currentHabit += habitEntity.situation;
+    }
+    
+    for (XKRWRecordSchemeEntity *schemeEntity in recordScheme) {
+        if (schemeEntity.type == 0 || schemeEntity.type == 5) {
+            expendCalorie += schemeEntity.calorie;
+        }
+        
+        if (schemeEntity.type == 1 || schemeEntity.type == 2 || schemeEntity.type == 3|| schemeEntity.type == 4|| schemeEntity.type == 6) {
+            intakeCalorie += schemeEntity.calorie;
+        }
+    }
+    
+    if (intakeCalorie + expendCalorie + currentHabit == 0) {
+        return NO;
+    }else{
+        return YES;
+    }
+    
+}
+
+
 @end

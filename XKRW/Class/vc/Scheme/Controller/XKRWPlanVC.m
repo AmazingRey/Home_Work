@@ -45,6 +45,7 @@
 #import "XKRWUtil.h"
 #import "XKRWAlgolHelper.h"
 #import "XKRWStatisticAnalysizeVC.h"
+#import "XKRWModifyNickNameVC.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate,UIAlertViewDelegate>
 {
@@ -104,6 +105,7 @@
         [[[UIApplication sharedApplication].delegate window] bringSubviewToFront:recordBackView];
         
     }
+
 }
 
 
@@ -125,6 +127,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView:) name:EnergyCircleDataNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTipsData) name:ReLoadTipsData object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadSchemeData:) name:RecordSchemeData object:nil];
+
+    
+    if (![[XKRWUserService sharedService] getUserNickNameIsEnable]) {
+        XKRWModifyNickNameVC * nicknameSetVC = [[XKRWModifyNickNameVC alloc]init];
+        nicknameSetVC.hidesBottomBarWhenPushed = YES;
+        nicknameSetVC.notShowBackButton = YES;
+        [self.navigationController  pushViewController:nicknameSetVC animated:YES];
+    }
 
 }
 
@@ -203,6 +213,32 @@
 }
 
 
+- (void)refreshWeightLabelColor {
+    if ([[XKRWPlanService shareService] isRecordWeightWithDate:_recordDate]) {
+        _recordAndTargetView.weightLabel.textColor = XKMainSchemeColor;
+        _recordAndTargetView.currentWeightLabel.textColor = XKMainSchemeColor;
+        _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainSchemeColor.CGColor;
+    }else{
+        _recordAndTargetView.weightLabel.textColor = colorSecondary_999999;
+        _recordAndTargetView.currentWeightLabel.textColor = colorSecondary_999999;
+        _recordAndTargetView.currentWeightLabel.layer.borderColor = colorSecondary_999999.CGColor;
+
+    }
+}
+
+- (void)refreshCalendarLabelColor {
+    if ([[XKRWPlanService shareService] isRecordWithDate:_recordDate]) {
+        _recordAndTargetView.monthLabel.textColor = XKMainSchemeColor;
+        _recordAndTargetView.dayLabel.textColor = XKMainSchemeColor;
+        _recordAndTargetView.dayLabel.layer.borderColor =XKMainSchemeColor.CGColor;
+    }else{
+        _recordAndTargetView.monthLabel.textColor = colorSecondary_999999;
+        _recordAndTargetView.dayLabel.textColor = colorSecondary_999999;
+        _recordAndTargetView.dayLabel.layer.borderColor =colorSecondary_999999.CGColor;
+    }
+}
+
+
 - (void)refreshTodayDataToUI {
     [self refreshEnergyCircleView:nil];
     _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
@@ -213,6 +249,9 @@
 
     recordScheme = [[XKRWRecordService4_0 sharedService]getSchemeRecordWithDate:_recordDate];
     _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
+    
+    [self refreshWeightLabelColor];
+    [self refreshCalendarLabelColor];
 
     {
         intakeCalorie = 0;
@@ -292,6 +331,9 @@
     [backgroundView addSubview:iFlyControl];
     
     [backgroundView addSubview:[self createPlanHeaderView]];
+    
+    [self refreshCalendarLabelColor];
+    [self refreshWeightLabelColor];
 }
 
 - (UIView *)createPlanHeaderView
@@ -1059,7 +1101,7 @@
     }
     [XKRWCui showProgressHud];
     [self downloadWithTaskID:@"recordWeightAndDegree" outputTask:^id{
-        return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:XKRWRecordTypeWeightAndCircumference]);
+        return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
     }];
 }
 
@@ -1250,7 +1292,7 @@
                     XKRWSearchResultCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCategoryCell"];
                     cell.title.text = @"运动";
                     return cell;
-                }else if (indexPath.row == foodsCount +1){
+                }else if (indexPath.row == sportsCount +1){
                     XKRWMoreSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"moreSearchResultCell"];
                     cell.title.text = @"查看更多运动";
                     return cell;
@@ -1259,7 +1301,8 @@
                     
                     XKRWSportEntity *sportEntity =[sportsArray objectAtIndex:indexPath.row - 1];
                     cell.title.text = sportEntity.sportName;
-                    cell.subtitle.text = [NSString stringWithFormat:@"%fkcal/60分钟",sportEntity.sportMets];
+                    
+                    cell.subtitle.text = [NSString stringWithFormat:@"%ldkcal/60分钟",(long)[XKRWAlgolHelper sportConsumeWithTime:60 mets:sportEntity.sportMets]];
                     [cell.logoImageView setImageWithURL:[NSURL URLWithString:sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
                     return cell;
                 }
@@ -1270,7 +1313,7 @@
                 XKRWSearchResultCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCategoryCell"];
                 cell.title.text = @"运动";
                 return cell;
-            }else if (indexPath.row == foodsCount +1){
+            }else if (indexPath.row == sportsCount +1){
                 XKRWMoreSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:@"moreSearchResultCell"];
                 cell.title.text = @"查看更多运动";
                 return cell;
@@ -1279,7 +1322,7 @@
                 
                 XKRWSportEntity *sportEntity =[sportsArray objectAtIndex:indexPath.row - 1];
                 cell.title.text = sportEntity.sportName;
-                cell.subtitle.text = [NSString stringWithFormat:@"%fkcal/60分钟",sportEntity.sportMets];
+                cell.subtitle.text = [NSString stringWithFormat:@"%ldkcal/60分钟",(long)[XKRWAlgolHelper sportConsumeWithTime:60 mets:sportEntity.sportMets]];
                 [cell.logoImageView setImageWithURL:[NSURL URLWithString:sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"food_default"] options:SDWebImageRetryFailed];
                 return cell;
             }

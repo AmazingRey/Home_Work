@@ -223,7 +223,11 @@ static XKRWThinBodyDayManage * shareInstance;
         return [NSString stringWithFormat:@"已坚持%ld天",(long)[[XKRWUserService sharedService] getInsisted]];
     }else{
         if([XKRWAlgolHelper remainDayToAchieveTarget] > -1){
-            return [NSString stringWithFormat:@"第%ld天-剩%ld天",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget],(long)[XKRWAlgolHelper remainDayToAchieveTarget]];
+            if ([XKRWAlgolHelper remainDayToAchieveTarget] == 0) {
+                 return [NSString stringWithFormat:@"第%ld天-最后一天",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]];
+            }else{
+                return [NSString stringWithFormat:@"第%ld天-剩%ld天",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget],(long)[XKRWAlgolHelper remainDayToAchieveTarget]];
+            }
         }else if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1){
             return @"当前计划已结束";
         }
@@ -253,7 +257,7 @@ static XKRWThinBodyDayManage * shareInstance;
 
 - (NSString *)TipsTextWithDayAndWhetherOpen {
     
-    if([XKRWAlgolHelper remainDayToAchieveTarget] == -1 || [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"needResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]]){
+    if(([XKRWAlgolHelper remainDayToAchieveTarget] == -1 || [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"needResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]])&& ([[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]] != nil )){
         return @"当前计划已结束，点击制定新计划";
     }else{
 

@@ -202,6 +202,7 @@
                 <outlet property="planTimeLabel" destination="NST-yd-u8z" id="zYa-qE-qEk"/>
                 <outlet property="targetWeightLabel" destination="4PW-2M-oai" id="8ru-zZ-xRd"/>
                 <outlet property="weightButton" destination="Q7H-0h-QdX" id="4Sf-d8-k7h"/>
+                <outlet property="weightLabel" destination="VUv-i9-wZc" id="4Jv-lb-dbT"/>
             </connections>
             <point key="canvasLocation" x="474.5" y="278"/>
         </view>
