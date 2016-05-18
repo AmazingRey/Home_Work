@@ -27,22 +27,11 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsK-SP-Z6q" userLabel="line">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="0.5" id="uLz-PG-Uln"/>
-                        </constraints>
-                    </view>
                 </subviews>
-                <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="deviceRGB"/>
                 <constraints>
                     <constraint firstAttribute="centerY" secondItem="QIr-CK-Win" secondAttribute="centerY" id="8MH-uy-X5T"/>
-                    <constraint firstItem="bsK-SP-Z6q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="OTl-ws-46y"/>
-                    <constraint firstAttribute="trailing" secondItem="bsK-SP-Z6q" secondAttribute="trailing" id="SLB-ZP-5qb"/>
                     <constraint firstAttribute="trailing" secondItem="QIr-CK-Win" secondAttribute="trailing" constant="15" id="V6y-Bv-ojJ"/>
                     <constraint firstAttribute="centerY" secondItem="n3y-BS-ukV" secondAttribute="centerY" id="b1G-gi-y1c"/>
-                    <constraint firstItem="bsK-SP-Z6q" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="hoU-a7-thm"/>
                     <constraint firstItem="n3y-BS-ukV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="vfJ-OE-6tC"/>
                 </constraints>
             </tableViewCellContentView>

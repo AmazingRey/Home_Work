@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void(^lookPlanBlock)();
 @interface XKRWPlanCalendarView : UIView
+@property (copy, nonatomic) lookPlanBlock lookPlanBlock;
 @property (weak, nonatomic) IBOutlet UILabel *weightDescriptionLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *planFinishLabel;

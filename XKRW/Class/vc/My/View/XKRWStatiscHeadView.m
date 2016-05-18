@@ -24,20 +24,11 @@
     if (self) {
         _statisType = type;
         _bussiness = bussiness;
-        
-//        XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
         if (_statisType == 1) {
             _currentIndex = 0;
-            _dataArray = _bussiness.array;
-            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:bussiness.array.count];
-            
-            for (XKRWStatiscEntity5_3 *entity in _bussiness.array){
-                [dic setObject:[NSString stringWithFormat:@"第%ld周 %@",(long)entity.num,entity.dateRange] forKey:[NSNumber numberWithInteger:entity.index]];
-            }
-            _pickerDic = dic;
-            _currentEntity = [_dataArray objectAtIndex:_currentIndex];
-        }else{
-            
+            self.dataDic = _bussiness.dicEntities;
+            self.pickerDic = bussiness.dicPicker;
+            _currentEntity = [_dataDic objectForKey:[NSNumber numberWithInteger:_currentIndex]];
         }
     }
     return self;
@@ -48,8 +39,8 @@
     if (_currentIndex != currentIndex) {
         _currentIndex = currentIndex;
     }
-    if (_dataArray && _statisType == 1) {
-        _currentEntity = [_dataArray objectAtIndex:_currentIndex];
+    if (_dataDic && _statisType == 1) {
+        _currentEntity = [_dataDic objectForKey:[NSNumber numberWithInteger:_currentIndex]];
     }
     [self updateConstraints];
 }
@@ -59,7 +50,7 @@
 -(XKRWStatiscEntity5_3 *)currentEntity{
     if (!_currentEntity) {
         if (_statisType == 1) {
-             _currentEntity = [_dataArray objectAtIndex:_currentIndex];
+            _currentEntity = [_dataDic objectForKey:[NSNumber numberWithInteger:_currentIndex]];
         }else{
             _currentEntity = _bussiness.statiscEntity;
         }
@@ -83,7 +74,9 @@
 }
 
 -(void)lab1ReloadText{
-    NSString *week = [[_pickerDic objectForKey:[NSNumber numberWithInteger:_currentIndex]] substringToIndex:3];
+    NSInteger num = _pickerDic.count - _currentIndex;
+    NSString *week = [NSString stringWithFormat:@"第%ld周",(long)num];
+    
     float weight = [[XKRWUserService sharedService] getUserDestiWeight] / 1000.0;
     NSString *weightTarget =[NSString stringWithFormat:@"%.1fkg",weight];
     

@@ -36,7 +36,6 @@
 {
     NSInteger pickerIndex;
     NSDictionary *pickerDic;
-    NSInteger _pageTime;
     BOOL notEnoughOneWeek;
 }
 
@@ -49,16 +48,23 @@
     [super viewDidLoad];
     self.title = @"统计分析";
     notEnoughOneWeek = ![self judgeTotalHasRecordDays];//不足7天
+    [self loadData:0];
+}
 
+-(void)loadData:(NSInteger)weekIndex{
     [XKRWCui showProgressHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (!_bussiness) {
             _bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
+        }
+        _bussiness.weekIndex = weekIndex;
         dispatch_async(dispatch_get_main_queue(), ^{
-                [self addMasonryLayout];
-                [XKRWCui hideProgressHud];
-                [self showTip];
-            });
+            [self addMasonryLayout];
+            [XKRWCui hideProgressHud];
+            [self showTip];
         });
+    });
+
 }
 
 -(BOOL)judgeTotalHasRecordDays{
@@ -171,7 +177,7 @@
 -(XKRWStatisAnalysisView *)statisAnalysisView{
     if (!_statisAnalysisView) {
         _statisAnalysisView = [[XKRWStatisAnalysisView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, ScrollViewHeight) withBussiness:_bussiness];
-        _statisAnalysisView.headView.delegate = self;
+//        _statisAnalysisView.headView.delegate = self;
         [self.scrollView addSubview:_statisAnalysisView];
     }
     return _statisAnalysisView;
@@ -251,9 +257,11 @@
 #pragma mark segementControl Method
 -(void)segmentControlIndexChanged:(UISegmentedControl *)segement{
     _segmentIndex = segement.selectedSegmentIndex;
-    _pageTime = 0;
     CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
     [self.scrollView scrollRectToVisible:scrollRect animated:YES];
+    if (_segmentIndex == 1 && !_statisAnalysisView.isShowStatis) {
+        _statisAnalysisView.isShowStatis = true;
+    }
 }
 
 #pragma mark XKRWStatisticAnalysisPickerViewDelegate Method
@@ -285,6 +293,7 @@
 #pragma mark XKRWCustomPickerViewDelegate
 -(void)pickerViewPressedDone:(NSInteger)currentIndex{
     [self btnBackPressed:nil];
+    _bussiness.weekIndex = currentIndex;
     self.weekAnalysisView.headView.currentIndex = currentIndex;
     self.weekAnalysisView.eatDecreaseView.currentIndex = currentIndex;
     self.weekAnalysisView.sportDecreaseView.currentIndex = currentIndex;

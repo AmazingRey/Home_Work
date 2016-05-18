@@ -282,12 +282,12 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 }
             }
             
-//            for (NSString *string in dateArray) {
-//                NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND date = '%@' AND sync = 1", foodRecordTable, uid, string];
-//                [self executeSql:sql];
-//                sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND date = '%@' AND sync = 1", sportRecordTable, uid, string];
-//                [self executeSql:sql];
-//            }
+            //            for (NSString *string in dateArray) {
+            //                NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND date = '%@' AND sync = 1", foodRecordTable, uid, string];
+            //                [self executeSql:sql];
+            //                sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND date = '%@' AND sync = 1", sportRecordTable, uid, string];
+            //                [self executeSql:sql];
+            //            }
             
             NSMutableString *deleteFood = [NSMutableString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND sync = 1 AND date in (", foodRecordTable, uid];
             NSMutableString *deleteSport = [NSMutableString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND sync = 1 AND date in (", sportRecordTable, uid];
@@ -311,8 +311,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             [self executeSql:deleteFood];
             [self executeSql:deleteSport];
             
-//            NSMutableArray *undownloadFood = [[NSMutableArray alloc] init];
-//            NSMutableArray *undownloadSport = [[NSMutableArray alloc] init];
+            //            NSMutableArray *undownloadFood = [[NSMutableArray alloc] init];
+            //            NSMutableArray *undownloadSport = [[NSMutableArray alloc] init];
             
             NSMutableArray *foodRecords = [[NSMutableArray alloc] init];
             NSMutableArray *sportRecords = [[NSMutableArray alloc] init];
@@ -363,7 +363,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                         sportEntity.uid        = uid;
                         
                         [sportRecords addObject:sportEntity];
-
+                        
                     }
                 }
             }
@@ -511,13 +511,13 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 //- (NSArray *)getUserRecordDate
 //{
 //    NSMutableArray *result = [NSMutableArray array];
-//    
+//
 //    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kServer, kGetRecordDay]];
-//    
+//
 //    NSDictionary *response = [self syncBatchDataWith:url andPostForm:nil];
 //    if (response[@"success"]) {
 //        result = response[@"data"];
-//        
+//
 //        return result;
 //    }
 //    return nil;
@@ -536,7 +536,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         if (isImport) {
             [param setObject:@"yes" forKey:@"import"];
         }
-    
+        
         NSMutableArray *data = [NSMutableArray array];
         
         if ([type isEqualToString:@"scheme"]) {
@@ -597,8 +597,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         XKLog(@"记录页错误: 记录内容时间戳为空");
         return nil;
     }
-//    [param setObject:[NSNumber numberWithInt:[date timeIntervalSince1970]] forKey:@"date"];
-
+    //    [param setObject:[NSNumber numberWithInt:[date timeIntervalSince1970]] forKey:@"date"];
+    
     //***************************************************
     // TODO: - Whether must be closure by try/catch, under the situation of failed and offline operation
     // if wants to call the super.handleDownloadProblem, remove the try/catch closure or throw the exception again.
@@ -1630,7 +1630,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 
 #pragma mark - Public Interface 公共接口
 
-#pragma mark - 5.0.1 new 
+#pragma mark - 5.0.1 new
 
 - (void)saveMenstruation:(BOOL)comeOrNot {
     
@@ -1654,7 +1654,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return NO;
 }
 
-#pragma mark - 5.0 NEW 
+#pragma mark - 5.0 NEW
 
 //  (因新接口结构调整，5.0以后版本尽量使用以下接口，结构转换和校验都在此步进行。)   tag:保存..记录
 
@@ -1853,7 +1853,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 }
 
 - (BOOL)deleteRecord:(id)recordEntity {
-  
+    
     // delete food
     if ([recordEntity isMemberOfClass:[XKRWRecordFoodEntity class]]) {
         
@@ -2013,7 +2013,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         // TODO: do something with wrong number
     }
     for (NSDictionary *temp in rst) {
-            
+        
         XKRWRecordSchemeEntity *entity = [[XKRWRecordSchemeEntity alloc] init];
         [temp setPropertiesToObject:entity];
         entity.date = [NSDate dateFromString:temp[@"date"] withFormat:@"yyyy-MM-dd"];
@@ -2048,7 +2048,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     if (!currentdate) {
         currentdate = [NSDate date];
     }
-   
+    
     NSMutableArray *returnValue = [NSMutableArray array];
     
     for (NSInteger i = 1; i <= num; i++) {
@@ -2261,7 +2261,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }else{
         schemeSql = [NSString stringWithFormat:@"SELECT record_value , calorie FROM record_scheme  WHERE date = '%@' AND uid = %ld and type = 4 ",dateString,(long)uid];
         sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE date = '%@' AND uid = %ld AND sync != -1 and record_type = 4 ", foodRecordTable, dateString, (long)uid];
-    
+        
     }
     
     NSMutableDictionary *dic =[NSMutableDictionary dictionary];
@@ -2337,7 +2337,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [dic setObject:entity forKey:@"schemeEntity"];
         return dic;
     }else{
-         return nil;
+        return nil;
     }
 }
 
@@ -2622,7 +2622,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         if (dataType == eWeightType) {
             value = [dic objectForKey:@"weight"];
         }else if (dataType == eBustType){
-             value = [dic objectForKey:@"bust"];
+            value = [dic objectForKey:@"bust"];
         }else if (dataType == eArmType){
             value = [dic objectForKey:@"arm"];
         }else if (dataType == eWaistType){
@@ -2687,13 +2687,13 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     
     NSMutableArray *weightArray = [NSMutableArray arrayWithCapacity:days];
     for (NSInteger i = 1; i <= days; i++) {
-
+        
         NSInteger timeInterval = [[now offsetDay:-i+1] timeIntervalSince1970];
         
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
         
         [weightArray addObject:[NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService]getNearestWeightRecordOfDate:date]]];
-        }
+    }
     
     return [[weightArray reverseObjectEnumerator] allObjects];
 }
@@ -2763,6 +2763,23 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }
     return result;
 }
+
+- (NSMutableArray *)getUserAllRecordDateFromDB {
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    NSMutableArray *resultArr = [NSMutableArray array];
+    
+    NSString *sql = [NSString stringWithFormat:@"SELECT date FROM record_scheme WHERE record_scheme.uid = %ld AND sync != -1 UNION SELECT date FROM food_record WHERE food_record.uid = %ld AND sync != -1 UNION SELECT date FROM sport_record WHERE sport_record.uid = %ld AND sync != -1 UNION SELECT date FROM record_4_0 WHERE uid = %ld AND habit IS NOT NULL AND habit != '' AND sync != -1 ORDER BY date DESC", (long)uid,(long)uid,(long)uid,(long)uid];
+    NSArray *rst = [self query:sql];
+    for (NSDictionary *temp in rst) {
+        NSString *dateString = temp[@"date"];
+        NSDate *date = [NSDate dateFromString:dateString withFormat:@"yyyy-MM-dd"];
+        if (date) {
+            [resultArr addObject:date];
+        }
+        
+    }
+    return resultArr;
+}
 /**
  *  我要的，标记下
  *
@@ -2784,7 +2801,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         }
     }
     
-//     add habit
+    //     add habit
     sql = [NSString stringWithFormat:@"SELECT DISTINCT date FROM record_4_0 WHERE uid = %ld AND habit IS NOT NULL AND habit != '' AND sync != -1", (long)uid];
     rst = [self query:sql];
     
@@ -2798,7 +2815,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         if (date) {
             [resultArr addObject:date];
         }
-
+        
     }
     return resultArr;
 }
@@ -2845,8 +2862,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             }
         }
     }
-
-
+    
+    
 #ifdef DEBUG
     for (NSDictionary *dict in result) {
         XKLog(@"%@ : %@", dict.allKeys[0], dict.allValues[0]);
@@ -3081,7 +3098,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 [self deleteSportRecordInDB:entity];
             }
         } else {
-
+            
             if ([self saveSportRecordToRemote:entity]) {
                 
                 [self recordSportToDB:entity];
@@ -3103,7 +3120,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 }
             }
         } else {
-
+            
             if ([self saveCustomFoodOrSportToRemote:entity]) {
                 
                 if (entity.recordType) {
@@ -3132,7 +3149,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     array = [self queryUnSyncInformaiotnRecord];
     
     for (XKRWRecordEntity4_0 *entity in array) {
-       
+        
         if (entity.circumference.bust && entity.circumference.arm && entity.circumference.waistline && entity.circumference.hipline && entity.circumference.thigh && entity.circumference.shank) {
             
             [self saveCircumferenceToRemote:entity];
@@ -3212,7 +3229,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 }
 
 - (BOOL)downloadAllRecords {
-
+    
     NSDate *fromDate = [NSDate dateWithTimeIntervalSince1970:1000000000];
     
     if ([[self syncOfflineRecordToRemote] boolValue]) {
@@ -3348,23 +3365,23 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     
     XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
     NSArray *  schemeRecordArray = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date];
-
+    
     CGFloat  calorie = 0;
     if (type == efoodCalories) {
         for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
-                calorie += foodEntity.calorie;
+            calorie += foodEntity.calorie;
         }
         for (XKRWRecordSchemeEntity *schemeEntity in schemeRecordArray) {
             if (schemeEntity.type == 1 || schemeEntity.type == 2|| schemeEntity.type ==3 || schemeEntity.type == 4 ||schemeEntity.type == 6) {
-                 calorie += schemeEntity.calorie;
+                calorie += schemeEntity.calorie;
             }
         }
         
     }else if (type == eSportCalories){
-          for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
-              calorie += sportEntity.calorie;
-          }
-         for (XKRWRecordSchemeEntity *schemeEntity in schemeRecordArray) {
+        for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
+            calorie += sportEntity.calorie;
+        }
+        for (XKRWRecordSchemeEntity *schemeEntity in schemeRecordArray) {
             if (schemeEntity.type == 0 || schemeEntity.type == 5) {
                 calorie += schemeEntity.calorie;
             }
@@ -3372,12 +3389,12 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         
         
     }
-       return calorie ;
+    return calorie ;
 }
 
 - (BOOL) getUserRecordStateWithDate:(NSDate *)date {
-     XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
-     NSArray *  schemeRecordArray = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date];
+    XKRWRecordEntity4_0 *recordEntity = [self getAllRecordOfDay:date];
+    NSArray *  schemeRecordArray = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:date];
     if (recordEntity.FoodArray.count == 0 && recordEntity.SportArray.count== 0 && schemeRecordArray.count == 0) {
         return NO;
     }
@@ -3389,9 +3406,9 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 //- (BOOL)isShowDataCenterRedDot
 //{
 //    NSInteger uid = [[XKRWUserService sharedService] getUserId];
-//    
+//
 //    id obj =  [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"IS_DATACENTER_SHOW_RED_DOT_%ld", (long)uid]];
-//    
+//
 //    if (obj == nil) {
 //        return YES;
 //    }
@@ -3461,26 +3478,26 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             andSucessCallBack:(void (^)())success
               andFailCallBack:(void (^)(BOOL userCancel))fail
 {
-//    XKRWLoginVC *vc = nil;
-//    
-//    if(((UIViewController *)target).storyboard == nil) {
-//        
-//        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        vc = (XKRWLoginVC *)[storyboard instantiateViewControllerWithIdentifier:@"XKRWLoginVC"];
-//        
-//    } else {
-//        vc = (XKRWLoginVC *)[((UIViewController *)target).storyboard instantiateViewControllerWithIdentifier:@"XKRWLoginVC"];
-//    }
-//    if (!vc) {
-//        XKLog(@"未找到 LoginVC 于 StoryBoard 中");
-//        return;
-//    }
-//    vc.loginSucess  = success;
-//    vc.needBackButton = needBackButton;
-//    vc.loginFail = fail;
-//    vc.needBack = back;
-//    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:vc];
-//    [target presentViewController:navi animated:YES completion:nil];
+    //    XKRWLoginVC *vc = nil;
+    //
+    //    if(((UIViewController *)target).storyboard == nil) {
+    //
+    //        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    //        vc = (XKRWLoginVC *)[storyboard instantiateViewControllerWithIdentifier:@"XKRWLoginVC"];
+    //
+    //    } else {
+    //        vc = (XKRWLoginVC *)[((UIViewController *)target).storyboard instantiateViewControllerWithIdentifier:@"XKRWLoginVC"];
+    //    }
+    //    if (!vc) {
+    //        XKLog(@"未找到 LoginVC 于 StoryBoard 中");
+    //        return;
+    //    }
+    //    vc.loginSucess  = success;
+    //    vc.needBackButton = needBackButton;
+    //    vc.loginFail = fail;
+    //    vc.needBack = back;
+    //    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:vc];
+    //    [target presentViewController:navi animated:YES completion:nil];
 }
 
 - (void)deleteHabitRecord:(XKRWRecordEntity4_0 *)entity
@@ -3514,7 +3531,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         } else {
             sql = [NSString stringWithFormat:@"SELECT * FROM record_scheme WHERE uid = %ld AND date = '%@' AND type != 0 AND sync != -1", (long)uid, date];
         }
-
+        
         NSArray *rst = [self query:sql];
         
         if (rst == nil || rst.count == 0) {

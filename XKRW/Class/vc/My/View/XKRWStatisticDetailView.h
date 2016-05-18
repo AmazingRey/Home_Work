@@ -27,7 +27,7 @@
 
 @property (strong, nonatomic) XKRWStatiscBussiness5_3 *bussiness;
 @property (assign, nonatomic) NSInteger currentIndex;
-@property (strong, nonatomic) NSArray *dataArray;
+@property (strong, nonatomic) NSDictionary *dataDic;
 @property (strong, nonatomic) XKRWStatiscEntity5_3 *currentEntity;
 //每日正常饮食摄入
 @property (assign, nonatomic) CGFloat dailyNormal;

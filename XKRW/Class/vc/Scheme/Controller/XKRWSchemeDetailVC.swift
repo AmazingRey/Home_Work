@@ -282,7 +282,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
             if result is XKRWSchemeEntity_5_0 {
                 
                 let newEntity = result as! XKRWSchemeEntity_5_0
-                
+                print(newEntity)
                 self.schemeEntity?.schemeID = newEntity.schemeID
                 self.schemeEntity?.schemeName = newEntity.schemeName
                 self.schemeEntity?.schemeType = newEntity.schemeType
@@ -306,11 +306,13 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
                     })
                     dispatch_async(dispatch_get_main_queue(), { 
                          NSNotificationCenter.defaultCenter().postNotificationName("energyCircleDataChanged", object: "sport")
+                        NSNotificationCenter.defaultCenter().postNotificationName("RecordSchemeData", object: "sport")
                     });
 
                 } else {
                     dispatch_async(dispatch_get_main_queue(), { 
                          NSNotificationCenter.defaultCenter().postNotificationName("energyCircleDataChanged", object: "food")
+                        NSNotificationCenter.defaultCenter().postNotificationName("RecordSchemeData", object: "food")
                     });
                     self.mealDescriptionHeader.setContentWithEntity(self.schemeEntity)
                     XKRWCui.hideProgressHud()

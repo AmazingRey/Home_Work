@@ -12,6 +12,7 @@
 #import "Masonry.h"
 #import "XKRWDailyAnalysizeView.h"
 #import "XKRWRecordService4_0.h"
+#import "XKRWStatisticAnalysizeVC.h"
 
 @interface XKRWDailyAnalysizeVC ()
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -55,8 +56,15 @@
         day = [XKRWAlgolHelper newSchemeStartDayToAchieveTarget];
     }
     self.title = [NSString stringWithFormat:@"计划第%ld天", (long)(day == 0 ? 1 : day)];
+    [self addNaviBarRightButtonWithText:@"统计分析" action:@selector(pressedRightAction)];
     [self addNaviBarBackButton];
     [self addMasonryView];
+}
+
+-(void)pressedRightAction{
+    XKRWStatisticAnalysizeVC *vc =  [[XKRWStatisticAnalysizeVC alloc]init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark getter Method
@@ -164,7 +172,7 @@
     if (!_noRecordView ) {
         _noRecordView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 408)];
         _noRecordView.image = [UIImage imageNamed:@"dailyNoRecord"];
-        _noRecordView.contentMode = UIViewContentModeScaleAspectFill;
+//        _noRecordView.contentMode = UIViewContentModeScaleAspectFill;
         [self.scrollView addSubview:_noRecordView];
     }
     return _noRecordView;
@@ -172,7 +180,8 @@
 
 -(UILabel *)labNorecord{
     if (!_labNorecord) {
-        _labNorecord = [[UILabel alloc] initWithFrame:CGRectMake(15, 200, XKAppWidth-30, 30)];
+        _labNorecord = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth-30, 30)];
+        _labNorecord.center = _noRecordView.center;
         _labNorecord.text = @"记录之后，才能查看分析哦~";
         _labNorecord.textAlignment = NSTextAlignmentCenter;
         _labNorecord.textColor = colorSecondary_333333;
@@ -243,7 +252,8 @@
             make.width.mas_equalTo(XKAppWidth);
             make.top.mas_equalTo(self.topImg.mas_bottom);
             make.bottom.mas_equalTo(self.scrollView.mas_bottom);
-            make.centerX.mas_equalTo(self.scrollView.mas_centerX);
+            make.left.mas_equalTo(self.scrollView.mas_left);
+//            make.centerX.mas_equalTo(self.scrollView.mas_centerX);
         }];
         [self.labNorecord mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.mas_equalTo(self.noRecordView.mas_centerX);

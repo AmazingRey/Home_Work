@@ -54,9 +54,9 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p9G-Wr-AvC">
-                    <rect key="frame" x="20" y="310" width="280" height="35"/>
+                    <rect key="frame" x="20" y="310" width="280" height="50"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="35" id="arR-3N-wgq"/>
+                        <constraint firstAttribute="height" constant="50" id="arR-3N-wgq"/>
                         <constraint firstAttribute="width" constant="280" id="hE3-p6-kNt"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>

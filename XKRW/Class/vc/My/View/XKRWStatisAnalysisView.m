@@ -18,9 +18,18 @@
     self = [super initWithFrame:frame];
     if (self) {
         _bussiness = bussiness;
-        [self addMasonryLayOut];
+        self.isShowStatis = false;
     }
     return self;
+}
+
+-(void)setIsShowStatis:(BOOL)isShowStatis{
+    if (_isShowStatis != isShowStatis) {
+        _isShowStatis = isShowStatis;
+        if (_isShowStatis) {
+            [self addMasonryLayOut];
+        }
+    }
 }
 
 -(XKRWStatiscHeadView *)headView{

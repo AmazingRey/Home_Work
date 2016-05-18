@@ -33,6 +33,13 @@
     return comps.month;
 }
 
+- (NSInteger)hour
+{
+    NSCalendar *calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *comps = [calendar components:NSCalendarUnitHour fromDate:self];
+    return comps.hour;
+}
+
 - (int)returnWeekday
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];

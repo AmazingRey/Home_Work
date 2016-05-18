@@ -47,8 +47,8 @@
 @property (assign, nonatomic) NSInteger currentIndex;
 
 @property (strong, nonatomic) XKRWStatiscBussiness5_3 *bussiness;
-@property (strong, nonatomic) NSMutableDictionary *pickerDic;
-@property (strong, nonatomic) NSArray *dataArray;
+@property (strong, nonatomic) NSDictionary *pickerDic;
+@property (strong, nonatomic) NSDictionary *dataDic;
 @property (strong, nonatomic) XKRWStatiscEntity5_3 *statiscEntity;
 @property (strong, nonatomic) XKRWStatiscEntity5_3 *currentEntity;
 - (instancetype)initWithFrame:(CGRect)frame type:(StatisticType)type withBussiness:(XKRWStatiscBussiness5_3 *)bussiness;

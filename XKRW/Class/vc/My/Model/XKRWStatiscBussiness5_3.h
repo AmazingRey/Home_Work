@@ -22,13 +22,24 @@
 @property (strong, nonatomic) XKRWStatiscEntity5_3 *statiscEntity;
 
 /**
- *  周计划各周entity构成的数组
+ *  周计划各周entity构成的dic
  */
-@property (strong, nonatomic) NSMutableArray *array;
+@property (strong, nonatomic) NSMutableDictionary *dicEntities;
 
 
 /**
  *  可传日期，默认当天
  */
 @property (strong, nonatomic) NSDate *date;
+
+
+/**
+ *  第几周
+ */
+@property (assign, nonatomic) NSInteger weekIndex;
+
+/**
+ *  所有周数组组成的dic，供picker初始化
+ */
+@property (strong, nonatomic) NSDictionary *dicPicker;
 @end

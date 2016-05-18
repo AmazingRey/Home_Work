@@ -19,6 +19,8 @@
 */
 
 - (IBAction)lookPlanAction:(UIButton *)sender {
-    
+    if (self.lookPlanBlock) {
+        _lookPlanBlock();
+    }
 }
 @end

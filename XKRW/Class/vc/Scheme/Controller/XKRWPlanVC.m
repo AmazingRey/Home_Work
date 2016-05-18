@@ -101,7 +101,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:animated];
     [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
     if (recordBackView) {
-        [[UIApplication sharedApplication].keyWindow bringSubviewToFront:recordBackView];
+        [[[UIApplication sharedApplication].delegate window] bringSubviewToFront:recordBackView];
         
     }
 }
@@ -110,7 +110,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     if (recordBackView) {
-        [[UIApplication sharedApplication].keyWindow sendSubviewToBack:recordBackView];
+        [[[UIApplication sharedApplication].delegate window] sendSubviewToBack:recordBackView];
     }
 }
 
@@ -124,6 +124,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView:) name:EnergyCircleDataNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTipsData) name:ReLoadTipsData object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadSchemeData:) name:RecordSchemeData object:nil];
+
 }
 
 
@@ -163,14 +165,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTodayDataToUI) name:@"loginAgainSuccess" object:nil];
 }
 
-//- (void)syncTodaysData {
-//    if (isTodaysPlan) {
-//        [self downloadWithTaskID:@"syncData" outputTask:^id{
-//            return @([XKRWCommHelper syncTodayRemoteData]);
-//        }];
-//        [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
-//    }
-//}
+- (void)reloadSchemeData:(NSNotification *)notification
+{
+    if ([[notification object] isEqualToString:EffectFoodCircle]) {
+        [self getMealScheme:@"reloadGetMealSchemeAndRecord"];
+    }else{
+        [self getSportScheme:@"reloadGetSportSchemeAndRecord"];
+    }
+}
+
 
 - (void)getTipsData {
     tipsArray = [[XKRWTipsManage shareInstance ] TipsInfoWithUseSituationwithRecordDate:_recordDate];
@@ -251,8 +254,8 @@
         [_planEnergyView runSportEnergyCircleWithNewCurrentNumber:expendCalorie];
         
     } else {
-        [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergy] currentNumber:intakeCalorie];
-        [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergy] currentNumber:expendCalorie];
+        [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergyOfDate:_recordDate] currentNumber:intakeCalorie];
+        [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergyOfDate:_recordDate] currentNumber:expendCalorie];
         [_planEnergyView setHabitEnergyCircleGoalNumber:recordEntity.habitArray.count currentNumber:currentHabit];
     }
     
@@ -351,8 +354,6 @@
     [searchDisplayCtrl.backgroundContentView addSubview:sport];
     [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWSearchResultCategoryCell" bundle:nil] forCellReuseIdentifier:@"searchResultCategoryCell"];
     [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWMoreSearchResultCell" bundle:nil] forCellReuseIdentifier:@"moreSearchResultCell"];
-    
-    
     searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
     [planHeaderView addSubview:foodAndSportSearchBar];
     
@@ -570,8 +571,6 @@
 
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
     CGFloat positionX ;
-    
-    [self setPlanEnergyViewTitle];
     if (index == 1) {
         [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];
         positionX = energyCircleView.eatEnergyCircle.center.x;
@@ -585,7 +584,7 @@
         positionX = energyCircleView.habitEnergyCircle.center.x;
     }
     
-    //    [self setPlanEnergyViewTitle];
+    [self setPlanEnergyViewTitle];
     [self removePullView];
     [self removeMenuView];
     [self addschemeOrRecordView:index andArrowX:positionX];
@@ -658,7 +657,7 @@
         frame.origin.y = 0;
         _recordPopView.frame = frame;
         _recordPopView.delegate = self;
-        [[UIApplication sharedApplication].keyWindow addSubview:recordBackView];
+        [[[UIApplication sharedApplication].delegate window] addSubview:recordBackView];
     } completion:nil];
 }
 
@@ -707,23 +706,38 @@
 }
 
 -(void)getRecordAndMenuScheme{
-    [self getMealScheme];
-    [self getSportScheme];
+    [self getMealScheme:nil];
+    [self getSportScheme:nil];
 }
 
--(void)getMealScheme{
-    [self downloadWithTaskID:@"getMealSchemeAndRecord" outputTask:^id{
-        return   [[XKRWSchemeService_5_0 sharedService] getMealScheme];
-        
-    }];
-}
-
--(void)getSportScheme{
+-(void)getMealScheme:(NSString *)taskID{
+    if (taskID == nil) {
+        [self downloadWithTaskID:@"getMealSchemeAndRecord" outputTask:^id{
+            return   [[XKRWSchemeService_5_0 sharedService] getMealScheme];
+            
+        }];
+    }else{
+        [self downloadWithTaskID:taskID outputTask:^id{
+            return   [[XKRWSchemeService_5_0 sharedService] getMealScheme];
+            
+        }];
+    }
     
-    [self downloadWithTaskID:@"getSportSchemeAndRecord" outputTask:^id{
-        NSInteger i =[[XKRWRecordService4_0 sharedService]getMenstruationSituation]?1:0;
-        return [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
-    }];
+}
+
+-(void)getSportScheme:(NSString *)taskID{
+    if (taskID == nil) {
+        [self downloadWithTaskID:@"getSportSchemeAndRecord" outputTask:^id{
+            NSInteger i =[[XKRWRecordService4_0 sharedService]getMenstruationSituation]?1:0;
+            return [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
+        }];
+    }else{
+        [self downloadWithTaskID:taskID outputTask:^id{
+            NSInteger i =[[XKRWRecordService4_0 sharedService]getMenstruationSituation]?1:0;
+            return [[XKRWSchemeService_5_0 sharedService] getSportScheme:i];
+        }];
+    }
+    
 }
 
 -(void)RecordFoodViewpressCancle{
@@ -1096,10 +1110,40 @@
         if (result != nil) {
             _sportSchemeEntity = result;
         } else {
-            [XKRWCui showInformationHudWithText:@"获取记录体重失败，请稍后尝试"];
+            [XKRWCui showInformationHudWithText:@"获取推荐运动失败"];
         }
         return;
     }
+    
+    if ([taskID isEqualToString:@"reloadGetMealSchemeAndRecord"]) {
+        [XKRWCui hideProgressHud];
+        if (result != nil) {
+            _mealSchemeArray = (NSArray *)result;
+            
+            _recordPopView.schemeArray = _mealSchemeArray;
+            [_recordPopView.recommendedTableView reloadData];
+        }else {
+            [XKRWCui showInformationHudWithText:@"获取推荐食谱失败"];
+        }
+        return;
+    }
+    
+    
+    if ([taskID isEqualToString:@"reloadGetSportSchemeAndRecord"]) {
+        [XKRWCui hideProgressHud];
+        if (result != nil) {
+            _sportSchemeEntity = result;
+            _recordPopView.schemeArray = [NSArray arrayWithObject:_sportSchemeEntity];
+            [_recordPopView.recommendedTableView reloadData];
+        } else {
+            [XKRWCui showInformationHudWithText:@"获取推荐运动失败"];
+        }
+        return;
+    }
+
+    
+    
+    
     
     if ([taskID isEqualToString:@"saveFoodScheme"]) {
         [XKRWCui showInformationHudWithText:@"保存成功"];

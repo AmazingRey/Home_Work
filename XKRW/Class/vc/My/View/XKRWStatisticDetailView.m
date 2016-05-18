@@ -19,11 +19,9 @@
         _type = type;
         _statisticType = statisType;
         _bussiness = bussiness;
-        
-//        XKRWStatiscBussiness5_3 *bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
         if (_statisticType == 1) {
-            _dataArray = _bussiness.array;
-            _currentEntity = [_dataArray objectAtIndex:_currentIndex];
+            _dataDic = _bussiness.dicEntities;
+            _currentEntity = [_dataDic objectForKey:[NSNumber numberWithInteger:_currentIndex]];
         }else {
             _currentEntity = _bussiness.statiscEntity;
         }
@@ -42,7 +40,7 @@
 -(XKRWStatiscEntity5_3 *)currentEntity{
     if (!_currentEntity) {
         if (_statisticType == 1) {
-            _currentEntity = [_dataArray objectAtIndex:_currentIndex];
+            _currentEntity = [_dataDic objectForKey:[NSNumber numberWithInteger:_currentIndex]];
         }else{
             _currentEntity = _bussiness.statiscEntity;
         }
@@ -74,45 +72,81 @@
         make.centerX.mas_equalTo(self.mas_centerX);
         make.top.mas_equalTo(self.labCal.mas_bottom);
     }];
-    
-    [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(@32);
-        make.width.mas_equalTo(XKAppWidth - 64);
-        make.height.mas_greaterThanOrEqualTo(_imgView.mas_height);
-        make.centerX.mas_equalTo(self.mas_centerX);
-        make.top.mas_equalTo(self.labTarget.mas_bottom).offset(14);
-        make.bottom.mas_equalTo(self.mas_bottom).offset(-23);
-    }];
-    
-    if (_type == 1) {
-        [self.labEatLeft1 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_imgView.mas_left).offset(21);
-            make.centerY.mas_equalTo(_imgView.mas_centerY).offset(-8);
+    if (_statisticType == 2) {
+        [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            //        make.left.equalTo(@32);
+            make.width.mas_equalTo(XKAppWidth - 64);
+            make.height.mas_greaterThanOrEqualTo(_imgView.mas_height);
+            make.centerX.mas_equalTo(self.mas_centerX);
+            make.top.mas_equalTo(self.labCal.mas_bottom);
+            make.bottom.mas_equalTo(self.mas_bottom).offset(-37);
         }];
-        [self.labEatLeft2 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_imgView.mas_left).offset(21);
-            make.centerY.mas_equalTo(_imgView.mas_centerY).offset(15);
-        }];
-        [self.labEatRight1 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(_imgView.mas_right).offset(-21);
-            make.centerY.mas_equalTo(_imgView.mas_centerY).offset(-8);
-        }];
-        [self.labEatRight2 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(_imgView.mas_right).offset(-21);
-            make.centerY.mas_equalTo(_imgView.mas_centerY).offset(15);
-        }];
+        
+        if (_type == 1) {
+            [self.labEatLeft1 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(_imgView.mas_left).offset(21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(-8);
+            }];
+            [self.labEatLeft2 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(_imgView.mas_left).offset(21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(15);
+            }];
+            [self.labEatRight1 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(_imgView.mas_right).offset(-21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(-8);
+            }];
+            [self.labEatRight2 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(_imgView.mas_right).offset(-21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(15);
+            }];
+        }else{
+            [self.labSportLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(_imgView.mas_left).offset(21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(3);
+            }];
+            [self.labSportRight mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(_imgView.mas_right).offset(-21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(3);
+            }];
+        }
     }else{
-        [self.labSportLeft mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_imgView.mas_left).offset(21);
-            make.centerY.mas_equalTo(_imgView.mas_centerY).offset(3);
+        [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            //        make.left.equalTo(@32);
+            make.width.mas_equalTo(XKAppWidth - 64);
+            make.height.mas_greaterThanOrEqualTo(_imgView.mas_height);
+            make.centerX.mas_equalTo(self.mas_centerX);
+            make.top.mas_equalTo(self.labTarget.mas_bottom).offset(14);
+            make.bottom.mas_equalTo(self.mas_bottom).offset(-23);
         }];
-        [self.labSportRight mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(_imgView.mas_right).offset(-21);
-            make.centerY.mas_equalTo(_imgView.mas_centerY).offset(3);
-        }];
+        
+        if (_type == 1) {
+            [self.labEatLeft1 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(_imgView.mas_left).offset(21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(-8);
+            }];
+            [self.labEatLeft2 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(_imgView.mas_left).offset(21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(15);
+            }];
+            [self.labEatRight1 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(_imgView.mas_right).offset(-21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(-8);
+            }];
+            [self.labEatRight2 mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(_imgView.mas_right).offset(-21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(15);
+            }];
+        }else{
+            [self.labSportLeft mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(_imgView.mas_left).offset(21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(3);
+            }];
+            [self.labSportRight mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(_imgView.mas_right).offset(-21);
+                make.centerY.mas_equalTo(_imgView.mas_centerY).offset(3);
+            }];
+        }
     }
-//    if (_dailySportDecrease != 0 || _type == analysizeEat) {
-//    }
 }
 
 #pragma mark getter Method
@@ -158,7 +192,7 @@
     }
     _labTarget.text = _type == 1? [NSString stringWithFormat:@"目标%.0fkcal",self.currentEntity.targetIntake.floatValue]: [NSString stringWithFormat:@"目标%.0fkcal",self.currentEntity.targetSport.floatValue];
     
-    if (_statisticType == 2 && _type == 1) {
+    if (_statisticType == 2) {
         _labTarget.text = @"";
     }
     return _labTarget;

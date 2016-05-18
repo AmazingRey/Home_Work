@@ -321,6 +321,11 @@
  */
 - (NSArray *)getRecordHistoryWithType:(int)type;
 /**
+ *  从数据库中查询用户记录的日期，包括饮食、运动和习惯
+ *  自定义记录及方案记录
+ */
+- (NSMutableArray *)getUserAllRecordDateFromDB;
+/**
  *  从数据库中查询用户记录的日期
  */
 - (NSMutableArray *)getUserRecordDateFromDB;

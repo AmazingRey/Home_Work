@@ -159,24 +159,45 @@
     [mealView addSubview:mealSecondSegmentCtr];
     
     isRecord = YES;
-    switch (_foodRecordEntity.recordType) {
-        case RecordTypeBreakfirst:
+    if (_foodRecordEntity.recordType) {
+        switch (_foodRecordEntity.recordType) {
+            case RecordTypeBreakfirst:
+                mealSegmentCtr.selectedSegmentIndex = 0;
+                break;
+            case RecordTypeLanch:
+                mealSegmentCtr.selectedSegmentIndex = 1;
+                break;
+            case RecordTypeDinner:
+                mealSegmentCtr.selectedSegmentIndex = 2;
+                break;
+            case RecordTypeSnack:
+                mealSecondSegmentCtr.selectedSegmentIndex = 0;
+                break;
+            default:
+                break;
+        }
+ 
+    } else {
+        isRecord = NO;
+        NSInteger currentTime = [[NSDate date] hour];
+        
+        if (currentTime < 10) {
             mealSegmentCtr.selectedSegmentIndex = 0;
-            break;
-        case RecordTypeLanch:
+            _foodRecordEntity.recordType = RecordTypeBreakfirst;
+            
+        } else if (currentTime < 14) {
             mealSegmentCtr.selectedSegmentIndex = 1;
-            break;
-        case RecordTypeDinner:
-            mealSegmentCtr.selectedSegmentIndex = 2;
-            break;
-        case RecordTypeSnack:
-            mealSecondSegmentCtr.selectedSegmentIndex = 0;
-            break;
-        default:
+            _foodRecordEntity.recordType = RecordTypeLanch;
+            
+        } else if (currentTime < 17 || currentTime >= 19) {
             mealSecondSegmentCtr.selectedSegmentIndex = 0;
             _foodRecordEntity.recordType = RecordTypeSnack;
-            isRecord = NO;
-            break;
+            
+        } else {
+            mealSegmentCtr.selectedSegmentIndex = 2;
+            _foodRecordEntity.recordType = RecordTypeDinner;
+        }
+        
     }
     
     //传入 额外单位

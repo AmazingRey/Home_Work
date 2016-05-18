@@ -102,6 +102,8 @@
     UILabel *myView = nil;
     myView = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, self.frame.size.width, 30)];
     myView.textAlignment = NSTextAlignmentCenter;
+    
+    
     NSString *str = [_dicData objectForKey:[NSNumber numberWithInteger:row]];
     myView.text = str;
     myView.font = [UIFont systemFontOfSize:14];         //用label来设置字体大小

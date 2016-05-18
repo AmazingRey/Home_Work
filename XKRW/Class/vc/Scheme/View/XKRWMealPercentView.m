@@ -54,7 +54,7 @@
     _btnLock.frame = CGRectMake(0, 0, 30, 30);
     [_btnLock addTarget:self action:@selector(actBtnLock) forControlEvents:UIControlEventTouchUpInside];
     [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
-    [_btnLock setImage:[UIImage imageNamed:@"lock2"] forState:UIControlStateSelected];
+    [_btnLock setImage:[UIImage imageNamed:@"lock"] forState:UIControlStateSelected];
     [self addSubview:_btnLock];
     
     _imgHead = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -101,7 +101,7 @@
             [self.delegate lockpercentView:self.slider.tag withPercent:ceilf(_startValue*100)lock:YES];
         }
     }else{
-        [_btnLock setImage:[UIImage imageNamed:@"lock2"] forState:UIControlStateNormal];
+        [_btnLock setImage:[UIImage imageNamed:@"lock"] forState:UIControlStateNormal];
         if ([self.delegate respondsToSelector:@selector(lockpercentView:withPercent:lock:)]) {
             [self.delegate lockpercentView:self.slider.tag withPercent:_currentPerCent.integerValue lock:_lock];
         }

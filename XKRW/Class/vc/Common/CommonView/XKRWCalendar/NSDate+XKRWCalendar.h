@@ -13,6 +13,7 @@
 @property (nonatomic, readonly) NSInteger year;
 @property (nonatomic, readonly) NSInteger month;
 @property (nonatomic, readonly) NSInteger day;
+@property (nonatomic, readonly) NSInteger hour;
 
 - (NSDate *)offsetMonth:(NSInteger)offset;
 - (NSDate *)offsetWeekOfYear:(NSInteger)offset;

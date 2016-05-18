@@ -65,7 +65,7 @@
 @property (assign) NSInteger positionX;
 @property (assign ,nonatomic) NSInteger pageIndex;
 @property (strong ,nonatomic) NSArray *schemeArray;
-
+@property (strong ,nonatomic) UITableView *recommendedTableView;
 @property (assign ,nonatomic) energyType type;
 @property (strong ,nonatomic) NSMutableDictionary *dicCollection;
 @property (strong ,nonatomic) UIImageView *shadowImageView;

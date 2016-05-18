@@ -37,7 +37,7 @@
     UIImageView *schemePastImageView ;
     XKRWRecordEntity4_0 *recordEntity;
     NSArray     *schemeRecordArray;
-    UITableView *recommendedTableView;
+   
     XKRWHabitListView *habitView;
     NSArray  *recordTypeTitleArray;
     NSArray  *recordTypeImageArray;
@@ -86,16 +86,16 @@
     recordTableView.dataSource = self;
     [recordTableView registerNib:[UINib nibWithNibName:@"XKRWRecordCell_5_3" bundle:nil] forCellReuseIdentifier:@"recordCell"];
     
-    recommendedTableView = [[UITableView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, _scrollView.height) style:UITableViewStylePlain];
-    recommendedTableView.tag = 5032;
-    recommendedTableView.delegate = self;
-    recommendedTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    recommendedTableView.dataSource = self;
-    recommendedTableView.backgroundColor = XK_BACKGROUND_COLOR;
-    [recommendedTableView registerNib:[UINib nibWithNibName:@"XKRWRecommandedCell_5_3" bundle:nil] forCellReuseIdentifier:@"recommendedCell"];
-    [recommendedTableView registerNib:[UINib nibWithNibName:@"KMSwitchCell" bundle:nil] forCellReuseIdentifier:@"KMSwitchCell"];
+    _recommendedTableView = [[UITableView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, _scrollView.height) style:UITableViewStylePlain];
+    _recommendedTableView.tag = 5032;
+    _recommendedTableView.delegate = self;
+    _recommendedTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _recommendedTableView.dataSource = self;
+    _recommendedTableView.backgroundColor = XK_BACKGROUND_COLOR;
+    [_recommendedTableView registerNib:[UINib nibWithNibName:@"XKRWRecommandedCell_5_3" bundle:nil] forCellReuseIdentifier:@"recommendedCell"];
+    [_recommendedTableView registerNib:[UINib nibWithNibName:@"KMSwitchCell" bundle:nil] forCellReuseIdentifier:@"KMSwitchCell"];
     [_scrollView addSubview:recordTableView];
-    [_scrollView addSubview:recommendedTableView];
+    [_scrollView addSubview:_recommendedTableView];
     
     
     habitView = [[XKRWHabitListView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, _scrollView.height)];
@@ -150,7 +150,7 @@
         notNeedSportLabel.textColor = colorSecondary_666666;
         notNeedSportLabel.backgroundColor = [UIColor clearColor];
         notNeedSportLabel.textAlignment = NSTextAlignmentCenter;
-        [notNeedSportLabel setText:@"无须额外运动"];
+        [notNeedSportLabel setText:@"无需额外运动"];
         [_scrollView addSubview:notNeedSportLabel];
     }
     
@@ -331,7 +331,7 @@
     }
     
     [recordTableView reloadData];
-    [recommendedTableView reloadData];
+    [_recommendedTableView reloadData];
 
 }
 
@@ -386,7 +386,7 @@
         _recordTypeLabel.text = @"记录运动";
     }
     [recordTableView reloadData];
-    [recommendedTableView reloadData];
+    [_recommendedTableView reloadData];
 }
 
 - (void)setHabitDataToUI {
@@ -459,6 +459,9 @@
     if(tableView.tag == 5031){
         return 44;
     }else if (tableView.tag == 5032){
+        if ([[XKRWUserService sharedService] getSex] == eSexFemale && indexPath.row == _schemeArray.count) {
+            return 44;
+        }
         return 59;
     }
     return 0;
@@ -543,7 +546,8 @@
             __weak XKRWRecordView_5_3 *weakSelf = self;
             
             KMSwitchCell *switchCell = [tableView dequeueReusableCellWithIdentifier:@"KMSwitchCell"];
-            switchCell.contentView.backgroundColor = [UIColor colorWithRed:244 green:244 blue:244 alpha:1];
+            switchCell.backgroundColor = XK_BACKGROUND_COLOR;
+            [XKRWUtil addViewUpLineAndDownLine:switchCell andUpLineHidden:YES DownLineHidden:NO];
             [switchCell setTitle:@"大姨妈" clickSwitchAction:^(BOOL on) {
                 if( [weakSelf.delegate respondsToSelector:@selector(menstruationIsOn:)]){
                     [weakSelf.delegate menstruationIsOn:on];
@@ -631,12 +635,14 @@
         }
         
     }else if (tableView.tag == 5032){
-        XKRWSchemeEntity_5_0 *entity = [_schemeArray objectAtIndex:indexPath.row];
-        XKRWSchemeDetailVC *schemeDetailVC = [[XKRWSchemeDetailVC alloc] init];
-        schemeDetailVC.schemeEntity = entity;
-        schemeDetailVC.recordDate = _date;
-        schemeDetailVC.hidesBottomBarWhenPushed = YES;
-        [_vc.navigationController pushViewController:schemeDetailVC animated:YES];
+        if (!([[XKRWUserService sharedService] getSex] == eSexFemale && indexPath.row == _schemeArray.count)  ){
+            XKRWSchemeEntity_5_0 *entity = [_schemeArray objectAtIndex:indexPath.row];
+            XKRWSchemeDetailVC *schemeDetailVC = [[XKRWSchemeDetailVC alloc] init];
+            schemeDetailVC.schemeEntity = entity;
+            schemeDetailVC.recordDate = _date;
+            schemeDetailVC.hidesBottomBarWhenPushed = YES;
+            [_vc.navigationController pushViewController:schemeDetailVC animated:YES];
+        }
     }
 }
 

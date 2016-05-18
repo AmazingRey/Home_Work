@@ -793,23 +793,23 @@
 
 - (void)addBackToTodayButtonInFooterView {
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.footerView.width - 75 - 20, 7, 75, 26)];
-    button.backgroundColor = [UIColor whiteColor];
-    button.layer.borderColor = XKMainSchemeColor.CGColor;
-    button.layer.borderWidth = 1;
-    
-    button.layer.cornerRadius = 4;
-    button.layer.masksToBounds = YES;
-    
-    [button setTitle:@"回今天" forState:UIControlStateNormal];
-    [button setBackgroundImage:[UIImage createImageWithColor:XKMainSchemeColor] forState:UIControlStateHighlighted];
-    [button setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    button.titleLabel.font = [UIFont systemFontOfSize:14];
-    
-    [button addTarget:self action:@selector(backToToday) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.footerView addSubview:button];
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.footerView.width - 75 - 20, 7, 75, 26)];
+//    button.backgroundColor = [UIColor whiteColor];
+//    button.layer.borderColor = XKMainSchemeColor.CGColor;
+//    button.layer.borderWidth = 1;
+//    
+//    button.layer.cornerRadius = 4;
+//    button.layer.masksToBounds = YES;
+//    
+//    [button setTitle:@"回今天" forState:UIControlStateNormal];
+//    [button setBackgroundImage:[UIImage createImageWithColor:XKMainSchemeColor] forState:UIControlStateHighlighted];
+//    [button setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
+//    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+//    button.titleLabel.font = [UIFont systemFontOfSize:14];
+//    
+//    [button addTarget:self action:@selector(backToToday) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.footerView addSubview:button];
 }
 
 /*

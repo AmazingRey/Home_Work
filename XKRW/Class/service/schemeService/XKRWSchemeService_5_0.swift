@@ -294,7 +294,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
             }
         }
         let rst = self.syncBatchDataWith(url, andPostForm: ["ids": idsString]) as NSDictionary
-        
+        print(rst)
         var returnValue = [XKRWSchemeEntity_5_0]()
         
         for dic in rst["data"] as! NSArray {
@@ -414,6 +414,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
     */
     func dealMealSchemeData(data: NSDictionary) -> XKRWSchemeEntity_5_0 {
     
+        print(data)
         let scheme = XKRWSchemeEntity_5_0()
         let timeStamp = Int(NSDate().timeIntervalSince1970)
         

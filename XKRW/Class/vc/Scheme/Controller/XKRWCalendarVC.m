@@ -14,6 +14,7 @@
 #import "XKRWRecordService4_0.h"
 #import "XKRWThinBodyDayManage.h"
 #import "XKRWAlgolHelper.h"
+#import "XKRW-Swift.h"
 
 @interface XKRWCalendarVC ()<XKRWCalendarDelegate> {
     UIScrollView *calendarScrollView;
@@ -30,12 +31,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController  setNavigationBarHidden:YES animated:YES];
+    [self initView];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initView];
     // Do any additional setup after loading the view.
 }
 
@@ -46,6 +47,13 @@
     [self.view addSubview:calendarScrollView];
     
     headView = [[NSBundle mainBundle] loadNibNamed:@"XKRWPlanCalendarView" owner:self options:nil][0];
+    __weak typeof(self) weakSelf = self;
+    headView.lookPlanBlock = ^(){
+        XKRWThinBodyAssess_5_3VC *bodyAssesssVC = [[XKRWThinBodyAssess_5_3VC alloc]initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
+        bodyAssesssVC.hidesBottomBarWhenPushed = YES;
+        [bodyAssesssVC setFromWhichVC:MyVC];
+        [weakSelf.navigationController pushViewController:bodyAssesssVC animated:YES];
+    };
     headView.frame = CGRectMake(0, 0, XKAppWidth, 130);
     [calendarScrollView addSubview:headView];
 
@@ -74,7 +82,7 @@
     [self.view addSubview:popButton];
     
     
-    recordDates = [[XKRWRecordService4_0 sharedService] getUserRecordDateFromDB];
+    recordDates = [[XKRWRecordService4_0 sharedService] getUserAllRecordDateFromDB];
     
     calendar =[[XKRWCalendar alloc] initWithOrigin:CGPointMake(0, 130) recordDateArray:recordDates headerType:XKRWCalendarHeaderTypeCustom andResizeBlock:^{
         

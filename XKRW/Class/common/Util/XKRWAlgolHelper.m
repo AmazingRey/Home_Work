@@ -835,9 +835,9 @@
     NSInteger intake = [self dailyIntakeRecomEnergy];
     NSString * intakeSize = @"";
     if ([[XKRWUserService sharedService] getSex] == 0) {
-        intakeSize = [NSString stringWithFormat:@"1400~%ld",(long)intake];
+        intakeSize = [NSString stringWithFormat:@"1400kcal~%ldkcal",(long)intake];
     }else{
-        intakeSize = [NSString stringWithFormat:@"1200~%ld",(long)intake];
+        intakeSize = [NSString stringWithFormat:@"1200kcal~%ldkcal",(long)intake];
     }
     return intakeSize;
 }

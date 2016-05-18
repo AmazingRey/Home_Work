@@ -83,6 +83,7 @@ static BOOL isFirstOpenApp ;
         }
         
         //6.每天（非计划第1天和最后一天时显示）：
+        NSLog(@"%ld",[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]);
         if([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] != 1 && [[XKRWUserService sharedService ]getInsisted] != 1 && ![ XKRWAlgolHelper isSchemeLastDay ]) {
             
             XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
@@ -143,7 +144,7 @@ static BOOL isFirstOpenApp ;
             if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType]) {
                 XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
                 entity.showType = 0;
-                entity.tipsText = [NSString stringWithFormat:@"今日建议运动消耗%.0fcal，记录运动或执行运动方案可以帮助你完成运动目标。",[XKRWAlgolHelper dailyConsumeSportEnergy]];
+                entity.tipsText = [NSString stringWithFormat:@"今日建议运动消耗%.0fKcal，记录运动或执行运动方案可以帮助你完成运动目标。",[XKRWAlgolHelper dailyConsumeSportEnergy]];
                  [tipsEntityArray addObject:entity];
                 
             }
