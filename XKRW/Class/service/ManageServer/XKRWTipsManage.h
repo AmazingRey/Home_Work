@@ -18,4 +18,6 @@
  */
 - (NSArray *)TipsInfoWithUseSituationwithRecordDate:(NSDate *)date;
 
+
+- (void)isFirstOpenApp ;
 @end

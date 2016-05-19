@@ -44,9 +44,18 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
     }
     
     func loadDataAndReload(){
+        //判断是否在5.2重置过
         let date = NSUserDefaults.standardUserDefaults().objectForKey(String(format:"StartTime_%ld",XKRWUserService.sharedService().getUserId()))
         if (date != nil){
+            //重置过
             headLabel.text = self.makeHeadLabelData()
+        }else{
+            if(XKRWAlgolHelper.expectDayOfAchieveTarget() == nil) {
+                headLabel.text = ""
+                var frame = headView.frame
+                frame.size.height -= 50
+                headView.frame = frame
+            }
         }
         
         self.initHabitData()

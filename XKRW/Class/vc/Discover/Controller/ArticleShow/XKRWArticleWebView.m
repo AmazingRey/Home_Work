@@ -344,7 +344,9 @@ NSString * const completeKey = @"THeAcountIsComplete";
         
         if (canOpen) {
             [XKRWCui showInformationHudWithText:@"复制成功"];
-            [[UIApplication sharedApplication]openURL:url];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication]openURL:url];   
+            });
         }else{
             [[XKHudHelper instance] showInformationHudWithText:@"未安装微信客户端"];
         }

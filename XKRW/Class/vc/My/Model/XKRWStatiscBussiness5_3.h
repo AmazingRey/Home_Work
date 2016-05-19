@@ -39,6 +39,11 @@
 @property (assign, nonatomic) NSInteger weekIndex;
 
 /**
+ *  周数
+ */
+@property (assign, nonatomic) NSInteger totalNum;
+
+/**
  *  所有周数组组成的dic，供picker初始化
  */
 @property (strong, nonatomic) NSDictionary *dicPicker;

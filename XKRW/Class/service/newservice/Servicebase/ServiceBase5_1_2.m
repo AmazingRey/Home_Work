@@ -65,6 +65,7 @@ _Pragma("clang diagnostic pop") \
     manager.requestSerializer.timeoutInterval = 30;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
     NSString *token = [[XKRWUserService sharedService] getToken];
     
     
@@ -116,6 +117,7 @@ _Pragma("clang diagnostic pop") \
     
     [manager.requestSerializer setValue:@"YES" forHTTPHeaderField:@"X-RNCache"];
     manager.requestSerializer.timeoutInterval = 30;
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
     NSString *token = [[XKRWUserService sharedService] getToken];
     NSMutableDictionary *postValue = [NSMutableDictionary dictionaryWithDictionary:paramers];
     BOOL hasToken = NO;
@@ -158,6 +160,7 @@ _Pragma("clang diagnostic pop") \
     
     [manager.requestSerializer setValue:@"YES" forHTTPHeaderField:@"X-RNCache"];
     manager.requestSerializer.timeoutInterval = 30;
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
     NSString *token = [[XKRWUserService sharedService] getToken];
     NSMutableDictionary *postValue = [NSMutableDictionary dictionaryWithDictionary:paramers];
     BOOL hasToken = NO;

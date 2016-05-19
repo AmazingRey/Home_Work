@@ -46,6 +46,7 @@
 #import "XKRWAlgolHelper.h"
 #import "XKRWStatisticAnalysizeVC.h"
 #import "XKRWModifyNickNameVC.h"
+#import "XKRWNoticeService.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate,UIAlertViewDelegate>
 {
@@ -106,6 +107,7 @@
         
     }
 
+    [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
 }
 
 
@@ -124,18 +126,15 @@
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView:nil];
     
+    [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView:) name:EnergyCircleDataNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTipsData) name:ReLoadTipsData object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadSchemeData:) name:RecordSchemeData object:nil];
-
     
-    if (![[XKRWUserService sharedService] getUserNickNameIsEnable]) {
-        XKRWModifyNickNameVC * nicknameSetVC = [[XKRWModifyNickNameVC alloc]init];
-        nicknameSetVC.hidesBottomBarWhenPushed = YES;
-        nicknameSetVC.notShowBackButton = YES;
-        [self.navigationController  pushViewController:nicknameSetVC animated:YES];
-    }
-
+    [[XKRWNoticeService sharedService ] addNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
+    
+   
 }
 
 
@@ -167,8 +166,7 @@
         }
     }
     
-//    [self syncTodaysData];
-
+    [[XKRWTipsManage shareInstance ] isFirstOpenApp];
     [self getTipsData];
     [self getRecordAndMenuScheme];
     
@@ -294,7 +292,7 @@
         
     } else {
         [_planEnergyView setEatEnergyCircleGoalNumber:[XKRWAlgolHelper dailyIntakeRecomEnergyOfDate:_recordDate] currentNumber:intakeCalorie];
-        [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergyOfDate:_recordDate] currentNumber:expendCalorie];
+        [_planEnergyView setSportEnergyCircleGoalNumber:[XKRWAlgolHelper dailyConsumeSportEnergyV5_3OfDate:_recordDate] currentNumber:expendCalorie];
         [_planEnergyView setHabitEnergyCircleGoalNumber:recordEntity.habitArray.count currentNumber:currentHabit];
     }
     
@@ -983,7 +981,7 @@
         [self presentViewController:vc animated:YES completion:nil];
     }else{
         [self removePullView];
-        _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - 100, 240) withType:type];
+        _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - 100, 240) withType:type withDate:_recordDate];
         _popView.alpha = 0;
         
         _popView.delegate = self;
@@ -1232,7 +1230,7 @@
     if ([taskID isEqualToString:@"recordWeightAndDegree"]) {
         [XKRWCui hideProgressHud];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
-        CGFloat weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]];
+        CGFloat weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate];
         _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",weight];
         [_recordAndTargetView updateConstraints];
         [_recordAndTargetView.currentWeightLabel setNeedsDisplay];

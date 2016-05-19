@@ -28,7 +28,7 @@
  *              1:记录围度
  */
 
-- (instancetype)initWithFrame:(CGRect)frame withType:(NSInteger)type
+- (instancetype)initWithFrame:(CGRect)frame withType:(NSInteger)type withDate:(NSDate *)date
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -86,19 +86,15 @@
         _dateLabel.userInteractionEnabled = YES;
         [_dateLabel addGestureRecognizer:tapgesture];
         
-        _selectedDate = [NSDate date];
-        _datePicker.date = _selectedDate;
+        _datePicker.date = date;
         [[UIApplication sharedApplication].keyWindow addSubview:_datePicker];
         _datePicker.alpha = 0;
-        
-        _selectDateStr =[_selectedDate stringWithFormat:@"YYYY-MM-dd"];
-        _dateLabel.text = [_selectedDate stringWithFormat:@"MM月dd日"];
         
         NSMutableDictionary *tmpDic = [NSMutableDictionary dictionary];
         _dicAll = tmpDic;
         
         _textField.delegate = self;
-        [self reloadReocrdOfDay:_selectedDate];
+        [self reloadReocrdOfDay:date];
         _currentIndex = [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
     }
     return self;

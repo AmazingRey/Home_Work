@@ -37,6 +37,7 @@
     NSInteger pickerIndex;
     NSDictionary *pickerDic;
     BOOL notEnoughOneWeek;
+    BOOL hasReset;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -47,34 +48,50 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     self.title = @"统计分析";
-    notEnoughOneWeek = ![self judgeTotalHasRecordDays];//不足7天
-    [self loadData:0];
+    
+    //判断是否在5.2重置过
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[XKRWUserService sharedService].getUserId]];
+    if (date == nil){
+        //未重置过
+        hasReset = NO;
+        notEnoughOneWeek = YES;
+        [self addMasonryLayout];
+    }else{
+        hasReset = YES;
+        [self loadData:0];
+    }
+    
 }
 
--(void)loadData:(NSInteger)weekIndex{
+-(void)loadData:(NSInteger)i{
     [XKRWCui showProgressHud];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (!_bussiness) {
             _bussiness = [[XKRWStatiscBussiness5_3 alloc] init];
         }
-        _bussiness.weekIndex = weekIndex;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self addMasonryLayout];
-            [XKRWCui hideProgressHud];
-            [self showTip];
-        });
+        if (_bussiness.totalNum == 0) {
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 notEnoughOneWeek = YES;
+                 [self addMasonryLayout];
+                 [XKRWCui hideProgressHud];
+                 [self showTip];
+            });
+        }else{
+            _bussiness.weekIndex = _bussiness.totalNum - i - 1;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_bussiness.dicEntities.count == 1) {
+                    XKRWStatiscEntity5_3 *entity = [[_bussiness.dicEntities allValues] firstObject];
+                    if (entity.arrDaysDate.count < 7) {
+                        notEnoughOneWeek = YES;
+                    }
+                }
+                [self addMasonryLayout];
+                [XKRWCui hideProgressHud];
+                [self showTip];
+            });
+        }
     });
 
-}
-
--(BOOL)judgeTotalHasRecordDays{
-    NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
-    NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
-    NSInteger days = [NSDate daysBetweenDate:crearDate andDate:[NSDate date]];
-    if (days < 7) {
-        return NO;
-    }
-    return YES;
 }
 
 - (void)showTip {
@@ -153,7 +170,7 @@
         [_emptyView addSubview:emptyImageView];
         
         UILabel *emptyLab = [[UILabel alloc] initWithFrame:CGRectMake(0, emptyImageView.frame.origin.y + emptyImageView.frame.size.height + 10, XKAppWidth, 80)];
-        emptyLab.text = @"计划进行一周才能查看!";
+        emptyLab.text = hasReset? @"计划进行一周才能查看!":@"此功能需要重新制定计划才能使用";
         emptyLab.textColor = colorSecondary_666666;
         emptyLab.numberOfLines = 0;
         emptyLab.textAlignment = NSTextAlignmentCenter;
@@ -256,6 +273,9 @@
 
 #pragma mark segementControl Method
 -(void)segmentControlIndexChanged:(UISegmentedControl *)segement{
+    if (!hasReset) {
+        return;
+    }
     _segmentIndex = segement.selectedSegmentIndex;
     CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
     [self.scrollView scrollRectToVisible:scrollRect animated:YES];

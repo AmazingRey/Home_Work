@@ -74,7 +74,7 @@
 
 - (void)doneClicked {
     if ([self.delegate respondsToSelector:@selector(pickerViewPressedDone:)]) {
-        [self.delegate pickerViewPressedDone:_currentIndex];
+        [self.delegate pickerViewPressedDone: _currentIndex];
     }
 }
 

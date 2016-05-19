@@ -13,18 +13,23 @@
 #import "XKRWWeightService.h"
 #import "XKRWAlgolHelper.h"
 
-@implementation XKRWStatiscBussiness5_3{
-    NSInteger num;
-}
+@implementation XKRWStatiscBussiness5_3
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         _date = [NSDate date];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self statiscEntity];
-        });
+        NSNumber *days = [self getTotalHasRecordDays];
+        if (days != 0) {
+            _totalNum = days.integerValue / 7.0;
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [self statiscEntity];
+            });
+        }else{
+            _totalNum = 0;
+        }
     }
     return self;
 }
@@ -32,9 +37,7 @@
 //周计划
 -(NSMutableDictionary *)dicEntities{
     if (!_dicEntities) {
-        NSNumber *days = [self getTotalHasRecordDays];
-        num = ceilf(days.integerValue / 7.0);
-        _dicEntities = [NSMutableDictionary dictionaryWithCapacity:num];
+        _dicEntities = [NSMutableDictionary dictionaryWithCapacity:_totalNum];
     }
     return _dicEntities;
 }
@@ -42,8 +45,8 @@
 //日期dic
 -(NSDictionary *)dicPicker{
     if (!_dicPicker) {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:num];
-        for (NSInteger i = 0; i<num; i++) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:_totalNum];
+        for (NSInteger i = 0; i < _totalNum; i++) {
             [dic setObject:[self getDateRange:i] forKey:[NSNumber numberWithInteger:i]];
         }
         _dicPicker = dic;
@@ -99,7 +102,7 @@
     XKRWStatiscEntity5_3 *entity = [[XKRWStatiscEntity5_3 alloc] init];
     entity.type = 1;
     entity.index = i;
-    entity.num = num - i;
+    entity.num = _totalNum;
     entity.dateRange = [self getDateRange:i];
     entity.arrDaysDate = [self getWeekDaysInIndex:i];
     entity.weight = [self getWeightSpecific:i];
@@ -157,15 +160,15 @@
         if (timestamp < resetTime)
         {
             NSArray *arr = [self getWeekDaysInIndex:index];
-            dateStart = [df stringFromDate:[arr firstObject]];
-            dateEnd = [df stringFromDate:[arr lastObject]];
+            dateStart = [df stringFromDate:[arr lastObject]];
+            dateEnd = [df stringFromDate:[arr firstObject]];
         }
     }
      NSString *dateRange = @"";
     if ([dateStart isEqualToString:dateEnd]) {
         dateRange = dateStart;
     }else{
-        dateRange = [NSString stringWithFormat:@"%@-%@",dateStart,dateEnd];
+        dateRange = [NSString stringWithFormat:@"第%ld周 %@-%@",(long)(index+1),dateStart,dateEnd];
     }
     return dateRange;
 }
@@ -232,18 +235,19 @@
  */
 -(NSArray *)getWeekDaysInIndex:(NSInteger)index{
 //    NSDate *endDate = [self getDateRangeEnd:index];
-    NSDate *endDate = [[NSDate date] offsetDay:-Days*index];
+    NSDate *endDate = [NSDate date];
     NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
-    NSDate *createDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
+    NSDate *createDate  = [[NSDate dateWithTimeIntervalSince1970:resetTime] offsetDay:Days*index];
     
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:Days];
     for (int i = 0 ; i < Days; i++) {
-        NSDate *date = [endDate offsetDay:-i];
+        NSDate *date = [createDate offsetDay:i];
         [arr addObject:date];
-        if ([date isDayEqualToDate:createDate]) {
+        if ([date isDayEqualToDate:endDate]) {
             break;
         }
     }
+    
     [arr sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         NSDate *p1 = (NSDate*)obj1;
         NSDate *p2 = (NSDate*)obj2;
@@ -288,7 +292,7 @@
 }
 
 -(CGFloat)getCurrentWeight{
-    CGFloat currentWeight = [[XKRWUserService sharedService] getCurrentWeight]/1000.f;
+    CGFloat currentWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]];
     return currentWeight;
 }
 
@@ -311,17 +315,13 @@
     if (_statiscEntity.arrDaysDate.count == 1) {
         return 0;
     }
-    CGFloat currentWeight = [[XKRWUserService sharedService] getCurrentWeight]/1000.f;
+    CGFloat currentWeight = [self getCurrentWeight];
     NSDate *earlyDate = [[NSDate date] dateByAddingTimeInterval:-DateInterval];
     CGFloat earlyWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:earlyDate];
+    if (earlyWeight == 0) {
+        earlyWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:earlyDate];
+    }
     return (currentWeight - earlyWeight);
-//    NSString *txt = @"";
-//    if (currentWeight > earlyWeight) {
-//        txt = [NSString stringWithFormat:@"增重%.1f",currentWeight - earlyWeight];
-//    }else{
-//        txt = [NSString stringWithFormat:@"减重%.1f",earlyWeight - currentWeight];
-//    }
-//    return txt;
 }
 
 
@@ -476,11 +476,21 @@
  *  @return 方案开始执行的总天数
  */
 -(NSNumber *)getTotalHasRecordDays{
-    NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
-    NSDate *createDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
-    NSInteger daysHasRecord = [NSDate daysBetweenDate:createDate andDate:_date];
+    NSString *dateRegister = [[XKRWUserService sharedService] getREGDate]; //带-的 2014-12-11
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    df.dateFormat = @"yyyy年MM月dd日";
+    NSInteger timestamp =(long) [[df dateFromString:dateRegister] timeIntervalSince1970];
     
-    return [NSNumber numberWithInteger:daysHasRecord + 1];
+    if ([[XKRWUserService sharedService]getResetTime]) {
+        NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
+        if (timestamp < resetTime) {
+            NSDate *createDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
+            NSInteger daysHasRecord = [NSDate daysBetweenDate:createDate andDate:_date];
+            return [NSNumber numberWithInteger:daysHasRecord + 1];
+        }
+    }
+    return 0;
 }
 
 @end

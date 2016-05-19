@@ -166,7 +166,7 @@ typedef NS_ENUM(NSInteger, XKRWExpType) {
 //设置当前用户体重(g)
 -(void)setCurrentWeight:(NSInteger)weight;
 //获得当前用户体重(g)
--(NSInteger)getCurrentWeight;
+//-(NSInteger)getCurrentWeight;
 //设置用户类别
 -(void)setUserGroup:(XKGroup)group;
 //获得用户类别

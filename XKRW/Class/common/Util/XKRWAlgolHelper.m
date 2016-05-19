@@ -312,7 +312,27 @@
                                                               sex:sex];
 }
 
++ (float)dailyConsumeSportEnergyV5_3OfDate:(NSDate *)date {
+    NSDate *today = [NSDate today];
+    NSDate *registerDate_offset_4 = [[NSDate dateFromString:[[XKRWUserService sharedService] getRegisterTime]]  offsetDay:4];
+    
+    if ([registerDate_offset_4 compare:today] == NSOrderedDescending || [registerDate_offset_4 compare:today] == NSOrderedSame) {
+        return 0.f;//v5.3添加逻辑：新用户注册前五天推荐运动量为0
+        
+    } else {
+        XKPhysicalLabor physicalLevel = [[XKRWUserService sharedService] getUserLabor];
+        XKSex sex = [[XKRWUserService sharedService] getSex];
+        
+        return [[self class] dailyConsumeSportEnergyWithPhysicalLabor:physicalLevel
+                                                                   BM:[[self class] BM_of_date:date]
+                                                                  PAL:[[self class] PAL]
+                                                                  sex:sex];
+    }
+  
+}
+
 + (float)dailyConsumeSportEnergyOfDate:(NSDate *)date {
+    
     XKPhysicalLabor physicalLevel = [[XKRWUserService sharedService] getUserLabor];
     XKSex sex = [[XKRWUserService sharedService] getSex];
     
@@ -320,7 +340,7 @@
                                                                BM:[[self class] BM_of_date:date]
                                                               PAL:[[self class] PAL]
                                                               sex:sex];
-
+    
 }
 
 + (float)dailyConsumeSportEnergyWithPhysicalLabor:(XKPhysicalLabor)labor BM:(float)BM PAL:(float)PAL sex:(XKSex)sex {
@@ -560,13 +580,13 @@
     }
     return limitEnergy;
 }
-/*成功减肥*/
-+ (float) didReduceWeight
-{
-    float originWeight = 0.0;
-    float currentWeight = [[XKRWUserService sharedService] getCurrentWeight];
-    return originWeight - currentWeight;
-}
+///*成功减肥*/
+//+ (float) didReduceWeight
+//{
+//    float originWeight = 0.0;
+//    float currentWeight = [[XKRWUserService sharedService] getCurrentWeight];
+//    return originWeight - currentWeight;
+//}
 
 /*将卡路里转换成脂肪*/
 + (NSInteger) fatWithCalorie:(NSInteger)calorie

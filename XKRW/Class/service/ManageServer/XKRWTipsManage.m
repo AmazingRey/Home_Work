@@ -17,17 +17,24 @@
 
 static XKRWTipsManage *shareInstance;
 
-static BOOL isFirstOpenApp ;
+
 
 @implementation XKRWTipsManage
+{
+    BOOL isFirstOpenApp;
+}
 
 +(instancetype)shareInstance {
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         shareInstance = [[XKRWTipsManage alloc]init];
-        isFirstOpenApp = [XKRWCommHelper isFirstOpenThisAppWithUserId:[[XKRWUserService sharedService] getUserId]];
-    });
+            });
     return shareInstance;
+}
+
+
+- (void)isFirstOpenApp {
+    isFirstOpenApp = [XKRWCommHelper isFirstOpenThisAppWithUserId:[[XKRWUserService sharedService] getUserId]];
 }
 
 
@@ -43,8 +50,6 @@ static BOOL isFirstOpenApp ;
         [tipsEntityArray addObject:entity];
     }else{
         //新用户  第一次进入  未开启
-    
-        
         NSString *today = [NSDate stringFromDate:[NSDate today] withFormat:@"yyyy-MM-dd"];
         BOOL isTodayRegister = [today isEqualToString:[[XKRWUserService sharedService] getREGDate]];
         
@@ -83,8 +88,8 @@ static BOOL isFirstOpenApp ;
         }
         
         //6.每天（非计划第1天和最后一天时显示）：
-        NSLog(@"%ld",[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]);
-        if([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] != 1 && [[XKRWUserService sharedService ]getInsisted] != 1 && ![ XKRWAlgolHelper isSchemeLastDay ]) {
+        NSLog(@"%ld",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]);
+        if([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] != 1 && [[XKRWUserService sharedService ]getInsisted] != 1 && [XKRWAlgolHelper remainDayToAchieveTarget] != 0) {
             
             XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
             entity.showType = 0;
@@ -111,7 +116,8 @@ static BOOL isFirstOpenApp ;
         }
         
         //7.方案进行第X个七天：
-        if ([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] % 7 == 0) {
+        
+        if (([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] % 7 == 0) && ([[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]] != nil)) {
             XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
             entity.showType = 2; //点击进入统计分析界面
             entity.tipsText = [NSString stringWithFormat:@"瘦身计划已进行%ld周，来看看瘦瘦的分析吧！",(long)([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] / 7)];

@@ -112,6 +112,12 @@ class XKRWGetUserCityVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDelegate 
             
             XKRWUserService.sharedService().saveUserInfo()
             
+            let meal_ratio:NSDictionary = ["meal_ratio":["breakfast":30,"lunch":40,"supper":10,"snack":20]];
+            
+            NSUserDefaults.standardUserDefaults().setObject(meal_ratio.objectForKey("meal_ratio"), forKey: NSString(format: "meal_ratio_%ld",XKRWUserService.sharedService().getUserId()) as String)
+            NSUserDefaults.standardUserDefaults().synchronize()
+
+            
             self.setSchemeStartData()
             
         }
@@ -173,7 +179,7 @@ class XKRWGetUserCityVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDelegate 
         let slimPart = "1,2,3,4,5,6"
         
 
-        let slim_plan:NSDictionary = ["meal_ratio":["breakfast":30,"lunch":50,"supper":20,"snack":0],
+        let slim_plan:NSDictionary = ["meal_ratio":["breakfast":30,"lunch":40,"supper":10,"snack":20],
             "degree":NSNumber(unsignedInt: solutionDifficulty.rawValue),
             "target_weight":userTargetWeight,
             "part":slimPart]

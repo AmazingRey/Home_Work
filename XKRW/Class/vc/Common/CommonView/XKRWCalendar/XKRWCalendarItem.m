@@ -15,7 +15,7 @@
     UIImageView *_dot;
     UIImageView *_selectedView;
     UIImageView *_changPlanView;
-   
+    
     XKRWCalendarMonthType _CalendarMonthType;
     void (^_clickBlock)(XKRWCalendarItem *item);
     
@@ -49,7 +49,7 @@
             self.frame = CGRectMake(origin.x, origin.y, ITEM_WIDTH, 69);
             [self.titleLabel setFont:XKDefaultNumEnFontWithSize(15.f)];
             _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 30) / 2, (69-30)/2 -10, 30.f, 30.f)];
-          
+            
             _dot.contentMode = UIViewContentModeScaleAspectFit;
         }else{
             self.frame = CGRectMake(origin.x, origin.y, ITEM_WIDTH, 30);
@@ -74,9 +74,9 @@
         _changPlanView.center = CGPointMake(CGRectGetMidX(_weightLabel.frame), _weightLabel.bottom + 2 + changPlanImage.size.height / 2.0);
         
         [self setBackgroundColor:[UIColor whiteColor]];
-
+        
         [self setDay:title outOfMonth:yesOrNo isToday:isToday isRecord:yesOrNo];
-
+        
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         
         [self addTarget:self action:@selector(pressButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -123,7 +123,7 @@
         NSDate *currentDate = [cal dateFromComponents:comps];
         
         BOOL isInPlan = [[XKRWThinBodyDayManage shareInstance ] calendarDateInPlanTimeWithDate:currentDate];
-//        BOOL isEndDay = [[XKRWThinBodyDayManage shareInstance ] calendarDateIsEndDayWithDate:currentDate];
+        //        BOOL isEndDay = [[XKRWThinBodyDayManage shareInstance ] calendarDateIsEndDayWithDate:currentDate];
         BOOL isStartDay =  [[XKRWThinBodyDayManage shareInstance] calendarDateIsStartDayWithDate:currentDate];
         
         CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:currentDate];
@@ -140,36 +140,44 @@
             [_changPlanView removeFromSuperview];
         }
         
-        if (isInPlan) {
+        if (isToday) {
+            
+            if (!isInPlan ) {
+                [_dot setImage:[UIImage imageNamed:@"circle_date"]];
+                [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
+            } else if (!isRecord) {
+                [_dot setImage:[UIImage imageNamed:@"circle_date_w"]];
+                 [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            } else {
+                [_dot setImage:[UIImage imageNamed:@"circle_date_y"]];
+                [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            }
+            
+            [self insertSubview:_dot belowSubview:self.titleLabel];
+           
+            
+        } else if (isInPlan) {
             [_dot setImage:[UIImage imageNamed:@"circleGray"]];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             
-        }
-        
-        if (isToday) {
-            [_dot setImage:[UIImage imageNamed:@"circle_date"]];
-            [self insertSubview:_dot belowSubview:self.titleLabel];
-            [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
-        }
-        
-        if (isRecord || weight) {
+        } else if (isRecord || weight) {
             [_dot setImage:[UIImage imageNamed:@"circleGreen"]];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }else{
-        
+            
         }
         
         
     }else{
         if (isRecord) {
-             [self addSubview:_dot];
+            [self addSubview:_dot];
         }else{
             [_dot removeFromSuperview];
         }
         
         if (isToday) {
-             [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
+            [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
         }
     }
     
@@ -209,10 +217,10 @@
 - (void)pressButton:(UIButton *)button
 {
     _clickBlock(self);
-//    设置不能重复选中同一天
-//    if (!self.isSelected) {
-//        [self setSelected:!self.isSelected];
-//    }
+    //    设置不能重复选中同一天
+    //    if (!self.isSelected) {
+    //        [self setSelected:!self.isSelected];
+    //    }
 }
 
 - (void)setSelected:(BOOL)selected

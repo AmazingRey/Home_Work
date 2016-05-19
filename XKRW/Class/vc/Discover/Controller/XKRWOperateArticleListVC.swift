@@ -108,7 +108,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
     func addStarView() {
         starLabel.frame = CGRectMake(21, 0, 26, 22)
         starLabel.text = "0";
-        starLabel.textColor = UIColor.whiteColor();
+        starLabel.textColor = UIColor.blackColor();
         starLabel.font = XKDefaultFontWithSize(16);
         starLabel.textAlignment = .Left;
         starLabel.width = (starLabel.text! as NSString).boundingRectWithSize(CGSizeMake(100, 22), options: .UsesLineFragmentOrigin, attributes: [NSFontAttributeName:XKDefaultFontWithSize(16)], context: nil).size.width;
@@ -120,7 +120,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         rightItemButton.frame = CGRectMake(0, 0, 48, 22);
         rightItemButton.width = starLabel.origin.x+starLabel.width;
         
-        rightItemButton.addTarget(self, action: "pushToStarVC", forControlEvents: .TouchUpInside)
+        rightItemButton.addTarget(self, action: #selector(XKRWOperateArticleListVC.pushToStarVC), forControlEvents: .TouchUpInside)
         
         rightItemButton.addSubview(star);
         rightItemButton.addSubview(starLabel);

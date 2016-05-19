@@ -223,6 +223,7 @@ static XKRWThinBodyDayManage * shareInstance;
         return [NSString stringWithFormat:@"已坚持%ld天",(long)[[XKRWUserService sharedService] getInsisted]];
     }else{
         if([XKRWAlgolHelper remainDayToAchieveTarget] > -1){
+            XKLog(@"%ld",[XKRWAlgolHelper remainDayToAchieveTarget]);
             if ([XKRWAlgolHelper remainDayToAchieveTarget] == 0) {
                  return [NSString stringWithFormat:@"第%ld天-最后一天",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]];
             }else{

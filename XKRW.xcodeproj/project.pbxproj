@@ -978,8 +978,6 @@
 		BCEF381A1C1E901B00740ACC /* XKRWCourseDietAndSportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCEF37D01C1E901B00740ACC /* XKRWCourseDietAndSportCell.xib */; };
 		BCEF381B1C1E901B00740ACC /* XKRWCourseWeightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37D21C1E901B00740ACC /* XKRWCourseWeightCell.m */; };
 		BCEF381C1C1E901B00740ACC /* XKRWCourseWeightCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCEF37D31C1E901B00740ACC /* XKRWCourseWeightCell.xib */; };
-		BCEF381D1C1E901B00740ACC /* XKRWDataCenterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37D51C1E901B00740ACC /* XKRWDataCenterVC.m */; };
-		BCEF381E1C1E901B00740ACC /* XKRWDataCenterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCEF37D61C1E901B00740ACC /* XKRWDataCenterVC.xib */; };
 		BCEF381F1C1E901B00740ACC /* XKRWHabitChangeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37D81C1E901B00740ACC /* XKRWHabitChangeCell.m */; };
 		BCEF38201C1E901B00740ACC /* XKRWHabitChangeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCEF37D91C1E901B00740ACC /* XKRWHabitChangeCell.xib */; };
 		BCEF38211C1E901B00740ACC /* XKRWHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37DB1C1E901B00740ACC /* XKRWHeaderView.m */; };
@@ -2676,9 +2674,6 @@
 		BCEF37D11C1E901B00740ACC /* XKRWCourseWeightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWCourseWeightCell.h; sourceTree = "<group>"; };
 		BCEF37D21C1E901B00740ACC /* XKRWCourseWeightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWCourseWeightCell.m; sourceTree = "<group>"; };
 		BCEF37D31C1E901B00740ACC /* XKRWCourseWeightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWCourseWeightCell.xib; sourceTree = "<group>"; };
-		BCEF37D41C1E901B00740ACC /* XKRWDataCenterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWDataCenterVC.h; sourceTree = "<group>"; };
-		BCEF37D51C1E901B00740ACC /* XKRWDataCenterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWDataCenterVC.m; sourceTree = "<group>"; };
-		BCEF37D61C1E901B00740ACC /* XKRWDataCenterVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWDataCenterVC.xib; sourceTree = "<group>"; };
 		BCEF37D71C1E901B00740ACC /* XKRWHabitChangeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWHabitChangeCell.h; sourceTree = "<group>"; };
 		BCEF37D81C1E901B00740ACC /* XKRWHabitChangeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWHabitChangeCell.m; sourceTree = "<group>"; };
 		BCEF37D91C1E901B00740ACC /* XKRWHabitChangeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWHabitChangeCell.xib; sourceTree = "<group>"; };
@@ -6553,9 +6548,6 @@
 				BCEF37D11C1E901B00740ACC /* XKRWCourseWeightCell.h */,
 				BCEF37D21C1E901B00740ACC /* XKRWCourseWeightCell.m */,
 				BCEF37D31C1E901B00740ACC /* XKRWCourseWeightCell.xib */,
-				BCEF37D41C1E901B00740ACC /* XKRWDataCenterVC.h */,
-				BCEF37D51C1E901B00740ACC /* XKRWDataCenterVC.m */,
-				BCEF37D61C1E901B00740ACC /* XKRWDataCenterVC.xib */,
 				BCEF37D71C1E901B00740ACC /* XKRWHabitChangeCell.h */,
 				BCEF37D81C1E901B00740ACC /* XKRWHabitChangeCell.m */,
 				BCEF37D91C1E901B00740ACC /* XKRWHabitChangeCell.xib */,
@@ -6862,7 +6854,6 @@
 			files = (
 				A7E5A30D1B8B31D300CEE450 /* habbit_button_ringtone.m4a in Resources */,
 				BC93504B1B89B353008D204C /* deault.m4a in Resources */,
-				BCEF381E1C1E901B00740ACC /* XKRWDataCenterVC.xib in Resources */,
 				BC81EAC61BF43A9900317D1A /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				BC6F2F861C1A70D3005B54E8 /* XKRWTextFieldCell.xib in Resources */,
 				2F653D961C44ED05007BB03B /* XKRWIntelligentListHeader.xib in Resources */,
@@ -7386,7 +7377,6 @@
 				A7C867AE1BC8E503009A94B1 /* QNUploadManager.m in Sources */,
 				BCEF36451C1E63B700740ACC /* XKRWCheckButtonView.m in Sources */,
 				2FDEC6311AF9B25900C33EB8 /* XKRWCollectionService.m in Sources */,
-				BCEF381D1C1E901B00740ACC /* XKRWDataCenterVC.m in Sources */,
 				2E9686B01A04AEE500CB5D77 /* XKTimePicker.m in Sources */,
 				CCB5F1321CDC4362000BA06E /* XKRWStatiscBussiness5_3.m in Sources */,
 				BC769DB01C33D0EC00E96B1A /* XKRWCollectionEntity.m in Sources */,
@@ -8127,8 +8117,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8179,7 +8169,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0516;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -8198,8 +8188,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8250,7 +8240,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0516;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";

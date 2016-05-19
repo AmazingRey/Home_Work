@@ -447,10 +447,10 @@ class XKRWHistoryAndProcessVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataS
         } else if indexPath.section == 4 {
             tableView.deselectRowAtIndexPath(indexPath, animated: false)
             MobClick.event("in_data2")
-            let vc = XKRWDataCenterVC()
-            vc.selectedIndex = 1
-            vc.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(vc, animated: true)
+//            let vc = XKRWDataCenterVC()
+//            vc.selectedIndex = 1
+//            vc.hidesBottomBarWhenPushed = true
+//            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

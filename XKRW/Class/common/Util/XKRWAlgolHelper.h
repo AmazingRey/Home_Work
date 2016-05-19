@@ -45,6 +45,8 @@
 
 /*每日运动消耗量*/
 + (float)dailyConsumeSportEnergy;
+/*添加v5.3新逻辑新用户注册前五天推荐运动量为0*/
++ (float)dailyConsumeSportEnergyV5_3OfDate:(NSDate *)date;
 + (float)dailyConsumeSportEnergyOfDate:(NSDate *)date;
 + (float)dailyConsumeSportEnergyWithPhysicalLabor:(XKPhysicalLabor)labor BM:(float)BM PAL:(float)PAL sex:(XKSex)sex;
 

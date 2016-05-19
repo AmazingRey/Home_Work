@@ -60,13 +60,13 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
         self.carbLabel.textColor = XKMainSchemeColor
         
         if fat == 0 && protein == 0 && carbohydrate == 0 {  //处理的意思是  除了没有操作、以及没吃  其他的没有实际的食物都显示推荐比例
-            self.proteinLabel.text = "15%"
-            self.fatLabel.text = "25%"
-            self.carbLabel.text = "60%"
+            self.proteinLabel.text = "0"
+            self.fatLabel.text = "0"
+            self.carbLabel.text = "0"
             calorieValue = 60
             proteinValue = 15
             fatValue = 25
-            self.needShowPie = true
+            self.needShowPie = false
         } else {
             let fatPersent = fat * 2.25 / (fat * 2.25 + protein + carbohydrate)
             let carPersent = carbohydrate / (fat * 2.25 + protein + carbohydrate)
@@ -101,6 +101,8 @@ class XKRWHPMealAnalysisVC: XKRWBaseVC {
         if self.needShowPie == true
         {
             circleView.addSubview(pieChart)
+        } else {
+            pieChart.removeFromSuperview()
         }
         
         pieChart.strokeChart()

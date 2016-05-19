@@ -14,7 +14,6 @@
 #import "XKRWAlgolHelper.h"
 #import "XKRW-Swift.h"
 #import "XKRWMoreView.h"
-#import "XKRWDataCenterVC.h"
 
 #define kDaySeconds 86400
 #define HEIGHT    250
@@ -122,13 +121,13 @@
         dataCenterView.pushLabel.text = @"围度数据";
         dataCenterView.userInteractionEnabled = YES;
         
-        __weak typeof(self) weakSelf = self;
-        dataCenterView.viewClicked = ^(){
-            [MobClick event:@"in_data3"];
-            XKRWDataCenterVC *dataCenterVC =  [[XKRWDataCenterVC alloc]init];
-            dataCenterVC.hidesBottomBarWhenPushed = YES;
-            [weakSelf.navigationController pushViewController:dataCenterVC animated:YES];
-        };
+//        __weak typeof(self) weakSelf = self;
+//        dataCenterView.viewClicked = ^(){
+//            [MobClick event:@"in_data3"];
+//            XKRWDataCenterVC *dataCenterVC =  [[XKRWDataCenterVC alloc]init];
+//            dataCenterVC.hidesBottomBarWhenPushed = YES;
+//            [weakSelf.navigationController pushViewController:dataCenterVC animated:YES];
+//        };
         
         [self.view addSubview:dataCenterView];
         

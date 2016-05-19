@@ -21,7 +21,6 @@
 #import "XKRWCollectVC.h"
 #import "XKRWTableViewHeader.h"
 #import "XKRW-Swift.h"
-#import "XKRWDataCenterVC.h"
 #import "XKRWLikeVC.h"
 #import "RSKImageCropper.h"
 #import "XKRWStatisticAnalysizeVC.h"

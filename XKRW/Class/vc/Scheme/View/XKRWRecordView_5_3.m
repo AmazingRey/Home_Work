@@ -30,7 +30,7 @@
 #import "XKRWNavigationController.h"
 #import "XKRWPlanService.h"
 #import "XKRW-Swift.h"
-
+#import "XKRWCui.h"
 @interface XKRWRecordView_5_3 () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate,XKRWSportAddVCDelegate,XKRWAddFoodVC4_0Delegate>
 {
     UITableView *recordTableView;
@@ -363,7 +363,7 @@
         }
     }
     
-    CGFloat totalSportCalories = [XKRWAlgolHelper dailyConsumeSportEnergy];
+    CGFloat totalSportCalories = [XKRWAlgolHelper dailyConsumeSportEnergyV5_3OfDate:_date];
     recordArray = @[[NSNumber numberWithFloat:totalSportCalories]];
     intakeArray = @[[NSNumber numberWithFloat:intakeSportCalories]];
     schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_date andType:5];
@@ -470,6 +470,11 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 5031) {
+        
+        if(_revisionType == XKRWCanNotRevision){
+            [XKRWCui showInformationHudWithText:@"两天以前的记录不能删除哦"];
+            return;
+        }
         id temp;
         
         if (_type == energyTypeSport) {
@@ -616,6 +621,11 @@
             }
         }
         
+        if(_revisionType == XKRWCanNotRevision){
+            [XKRWCui showInformationHudWithText:@"两天以前的记录不能修改哦"];
+            return;
+        }
+        
         if (![temp isKindOfClass:[XKRWRecordFoodEntity class]] && ![temp isKindOfClass:[XKRWRecordSportEntity class]]) {
             return;
         }else if ([temp isKindOfClass:[XKRWRecordFoodEntity class]]){
@@ -671,28 +681,39 @@
         }
         [headerView addSubview:arrowImageView];
         
-        UILabel *calorieLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth-150-15-15, 0, 150, 44)];
-        calorieLabel.font = XKDefaultFontWithSize(15.f);
-       
-        calorieLabel.textAlignment = NSTextAlignmentRight;
-        [headerView addSubview:calorieLabel];
-        
         //推荐卡路里
+        //[XKRWAlgolHelper dailyConsumeSportEnergyV5_3OfDate:_recordDate]
         CGFloat recommendedCalorie = [[recordArray objectAtIndex:section] floatValue];
         //当前已经记录的卡路里
         CGFloat sumCalorie = [intakeArray[section] floatValue];
+        NSString *caloriesTitle = [NSString stringWithFormat:@"%.0f/%.0f",sumCalorie,recommendedCalorie];
+        CGFloat width =  [caloriesTitle boundingRectWithSize:CGSizeMake(XKAppWidth, CGFLOAT_MAX)
+                                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                                  attributes:@{NSFontAttributeName: XKDefaultFontWithSize(15)}
+                                                     context:nil].size.width;
+        width =  width < 60 ?60 : width;
+        UIButton *calorieButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        
+        [calorieButton.titleLabel setFont:XKDefaultFontWithSize(15.f)];
+        calorieButton.tag = 100 + section;
+        [calorieButton setTitle:caloriesTitle forState:UIControlStateNormal];
+        calorieButton.frame = CGRectMake(XKAppWidth- width - 15 -8, 0, width, 44);
+       
+        calorieButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight ;
+        
+        [headerView addSubview:calorieButton];
         
         if (_type == energyTypeEat && recommendedCalorie < sumCalorie) {
-            calorieLabel.textColor = XKWarningColorDeep;
+            [calorieButton setTitleColor:XKWarningColorDeep forState:UIControlStateNormal];
+
         }else{
-             calorieLabel.textColor = colorSecondary_333333;
+             [calorieButton setTitleColor:colorSecondary_333333 forState:UIControlStateNormal];
         }
+        [calorieButton addTarget:self action:@selector(showDetail:) forControlEvents:UIControlEventTouchUpInside];
         
-        calorieLabel.text =[NSString stringWithFormat:@"%.0f/%.0f",sumCalorie,recommendedCalorie];
-        
-        UIButton *showDetailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 44)];
-        showDetailButton.tag = 100 + section;
-        [showDetailButton addTarget:self action:@selector(showDetail:) forControlEvents:UIControlEventTouchUpInside];
+        UIButton *showDetailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - width-15-8 , 44)];
+        [showDetailButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:showDetailButton];
         
         [XKRWUtil addViewUpLineAndDownLine:headerView andUpLineHidden:YES DownLineHidden:NO];
@@ -949,6 +970,10 @@
     }
     //用来处理记录自定义运动
     if (isRecommended == NO && _type == energyTypeSport) {
+        if(_revisionType == XKRWCanNotRevision){
+            [XKRWCui showInformationHudWithText:@"不能补记"];
+            return;
+        }
         if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
             [self.delegate entryRecordVCWith:eSchemeSport];
         }
@@ -978,6 +1003,12 @@
 
 // 用来处理记录自定义饮食
 - (IBAction)rightButtonAction:(UIButton *)sender {
+    
+    if(_revisionType == XKRWCanNotRevision){
+        [XKRWCui showInformationHudWithText:@"不能补记"];
+        return;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
         [self.delegate entryRecordVCWith:eSchemeFood];
     }

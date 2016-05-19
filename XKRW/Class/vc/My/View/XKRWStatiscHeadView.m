@@ -25,9 +25,9 @@
         _statisType = type;
         _bussiness = bussiness;
         if (_statisType == 1) {
-            _currentIndex = 0;
             self.dataDic = _bussiness.dicEntities;
-            self.pickerDic = bussiness.dicPicker;
+            self.pickerDic = _bussiness.dicPicker;
+            _currentIndex = _bussiness.totalNum - _currentIndex - 1;
             _currentEntity = [_dataDic objectForKey:[NSNumber numberWithInteger:_currentIndex]];
         }
     }
@@ -74,9 +74,7 @@
 }
 
 -(void)lab1ReloadText{
-    NSInteger num = _pickerDic.count - _currentIndex;
-    NSString *week = [NSString stringWithFormat:@"第%ld周",(long)num];
-    
+    NSString *week = [NSString stringWithFormat:@"第%ld周",(long)_currentIndex + 1];
     float weight = [[XKRWUserService sharedService] getUserDestiWeight] / 1000.0;
     NSString *weightTarget =[NSString stringWithFormat:@"%.1fkg",weight];
     
@@ -125,7 +123,7 @@
         [self addSubview:_lab2];
     }
     if (_statisType == 1) {
-        _lab2.text = self.currentEntity.dateRange;
+        _lab2.text = [self.currentEntity.dateRange substringFromIndex:3];
     }
     return _lab2;
 }
@@ -198,8 +196,10 @@
     NSString *txt = @"";
     if (self.currentEntity.weightChange > 0) {
         txt = [NSString stringWithFormat:@"增重%.1fkg",self.currentEntity.weightChange];
-    }else{
+    }else if (self.currentEntity.weightChange < 0){
         txt = [NSString stringWithFormat:@"减重%.1fkg",self.currentEntity.weightChange];
+    }else{
+         txt = @"减重0kg";
     }
     _subLab4.text = txt;
     return _subLab4;

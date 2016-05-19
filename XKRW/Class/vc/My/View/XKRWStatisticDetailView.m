@@ -21,6 +21,8 @@
         _bussiness = bussiness;
         if (_statisticType == 1) {
             _dataDic = _bussiness.dicEntities;
+            _currentIndex = _bussiness.totalNum - 1;
+            
             _currentEntity = [_dataDic objectForKey:[NSNumber numberWithInteger:_currentIndex]];
         }else {
             _currentEntity = _bussiness.statiscEntity;
