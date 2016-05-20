@@ -47,8 +47,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title = @"评论";
-    
+    self.title = @"评论";
+  
     _dataSource = [NSMutableArray array];
     replyEntity = [XKRWReplyEntity new];
     [self addNaviBarBackButton];

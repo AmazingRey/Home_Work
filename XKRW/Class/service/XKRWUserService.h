@@ -101,8 +101,6 @@ typedef NS_ENUM(NSInteger, XKRWExpType) {
 - (NSString *) getREGDate;
 //签到上线时间
 - (NSString *) getPlanDate;
-//获取用户注册时间
-- (NSString *)getRegisterTime;
 
 //重置 方案时间
 - (NSNumber*)getResetTime;

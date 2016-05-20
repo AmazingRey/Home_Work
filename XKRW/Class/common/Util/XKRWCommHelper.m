@@ -861,10 +861,7 @@ static XKRWBaseService *service;
             k = @"习惯改善"; break;
         case eAlarmRecord:
             k = @"查看每日分析"; break;
-            //        case eAlarmSleep:
-            //            k=@"alarmSleepMsg";break;
-        case eAlarmDrinkWater:
-            k=@"喝水";break;
+
         case eAlarmSnack:
             k = @"加餐"; break;
             //        case eAlarmAddFood:
@@ -895,8 +892,6 @@ static XKRWBaseService *service;
             k = @"alarmHabitMsg"; break;
         case eAlarmRecord:
             k = @"alarmRecordMsg"; break;
-        case eAlarmDrinkWater:
-            k=@"alarmDrinkWaterMsg";break;
         case eAlarmSnack:
             k = @"alarmSnackMsg"; break;
         default:

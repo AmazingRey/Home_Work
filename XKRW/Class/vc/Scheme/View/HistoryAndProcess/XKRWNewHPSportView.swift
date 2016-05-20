@@ -156,8 +156,8 @@ class XKRWNewHPSportView: UIView,UITableViewDelegate,UITableViewDataSource {
                 cell.labRight.text = ""
             }else{
                 if let dic : NSDictionary = self.model!.sportArray.objectAtIndex(indexPath.row) as? NSDictionary{
-                    cell.labLeft.text = "\(dic.allKeys.first)"
-                    cell.labRight.text = "\(dic.allValues.first)"
+                    cell.labLeft.text =   dic.objectForKey("text") as? String
+                    cell.labRight.text =  NSString(format: "%ldkal",(dic.objectForKey("calorie")?.integerValue)!) as String
                 }
             }
             return cell

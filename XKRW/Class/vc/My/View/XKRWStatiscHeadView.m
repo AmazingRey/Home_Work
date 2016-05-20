@@ -63,8 +63,12 @@
         _lab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 30)];
         _lab1.textAlignment = NSTextAlignmentCenter;
         _lab1.font = [UIFont systemFontOfSize:15];
+        _lab1.userInteractionEnabled = YES;
+        UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnDownPressed:)];
+        [_lab1 addGestureRecognizer:ges];
         [self addSubview:_lab1];
     }
+    
     if (_statisType == 1) {
         [self lab1ReloadText];
     }else{
@@ -195,9 +199,9 @@
     
     NSString *txt = @"";
     if (self.currentEntity.weightChange > 0) {
-        txt = [NSString stringWithFormat:@"增重%.1fkg",self.currentEntity.weightChange];
+        txt = [NSString stringWithFormat:@"增重%.1fkg",fabs(self.currentEntity.weightChange)];
     }else if (self.currentEntity.weightChange < 0){
-        txt = [NSString stringWithFormat:@"减重%.1fkg",self.currentEntity.weightChange];
+        txt = [NSString stringWithFormat:@"减重%.1fkg",fabs(self.currentEntity.weightChange)];
     }else{
          txt = @"减重0kg";
     }

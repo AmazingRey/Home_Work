@@ -104,10 +104,15 @@
     [[XKRWThinBodyDayManage shareInstance]viewWillApperShowFlower:self];
     if (recordBackView) {
         [[[UIApplication sharedApplication].delegate window] bringSubviewToFront:recordBackView];
-        
     }
+}
 
-    [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
+
+- (void)viewDidAppear:(BOOL)animated {
+
+    [super viewDidAppear:animated];
+    
+     [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
 }
 
 
@@ -612,15 +617,20 @@
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
     CGFloat positionX ;
     if (index == 1) {
-        [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];
+        if (![[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType]) {
+            [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];}
         positionX = energyCircleView.eatEnergyCircle.center.x;
         
     } else if (index == 2) {
-        [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eSportType];
+        if (![[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType]) {
+            [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eSportType];
+        }
         positionX = energyCircleView.sportEnergyCircle.center.x;
         
     } else {
-        [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eHabitType];
+        if (![[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType]) {
+            [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eHabitType];
+        }
         positionX = energyCircleView.habitEnergyCircle.center.x;
     }
     

@@ -8,6 +8,7 @@
 
 #import "XKRWPlanService.h"
 #import "XKRWUserService.h"
+#import "XKRWLocalNotificationService.h"
 
 static XKRWPlanService *planService;
 @implementation XKRWPlanService
@@ -48,6 +49,7 @@ static XKRWPlanService *planService;
         key = [NSString stringWithFormat:@"%ld_eHabitType",(long)uid];
 
     }
+    [[XKRWLocalNotificationService shareInstance] setOpenPlanNotification];
     [[NSUserDefaults standardUserDefaults] setObject:date forKey:key];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

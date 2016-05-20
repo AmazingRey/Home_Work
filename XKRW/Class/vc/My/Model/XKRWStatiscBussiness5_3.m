@@ -105,8 +105,8 @@
     entity.num = _totalNum;
     entity.dateRange = [self getDateRange:i];
     entity.arrDaysDate = [self getWeekDaysInIndex:i];
-    entity.weight = [self getWeightSpecific:i];
-    entity.weightChange = entity.weight - [[XKRWWeightService shareService] getWeightRecordWithDate:[self getDateRangeStart:i]];
+    entity.weight = [self getWeightSpecific:entity.arrDaysDate];
+    entity.weightChange = [self getWeekWeightChange:entity.arrDaysDate];
     entity.dayRecord = [NSNumber numberWithInteger:[self getHasRecordDays:Days curDate:[self getDateRangeEnd:i]]];
     entity.dayAchieve = [NSNumber numberWithInteger:[self getPerfectDays:Days curDate:[self getDateRangeEnd:i]]];
     
@@ -131,8 +131,11 @@
  *  @return 开始日期的nsstring
  */
 -(NSString *)getPlanStartDate{
-    NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
-    NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
+    NSDate *crearDate = [NSDate date];
+    NSInteger resetTime = [[XKRWUserService sharedService]getResetTime].integerValue;
+    if (resetTime != 0) {
+        crearDate = [NSDate dateWithTimeIntervalSince1970:resetTime];
+    }
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
     df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
     df.dateFormat = @"yyyy年MM月dd日";
@@ -303,14 +306,26 @@
  *
  *  @return 体重
  */
--(CGFloat)getWeightSpecific:(NSInteger)i{
-    CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:[self getDateRangeEnd:i]];
+-(CGFloat)getWeightSpecific:(NSArray *)arrDate{
+    NSDate *date = [arrDate firstObject];
+    CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:date];
     if (weight == 0) {
-        weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:[self getDateRangeEnd:i]];
+        for (int i =0 ; i < arrDate.count ; i++) {
+            weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:[date offsetDay:i]];
+            if (weight != 0) {
+                break;
+            }
+        }
     }
     return weight;
 }
 
+
+/**
+ *  获取总体体重记录变化
+ *
+ *  @return 变化值
+ */
 -(CGFloat)getTotalWeightChange{
     if (_statiscEntity.arrDaysDate.count == 1) {
         return 0;
@@ -324,6 +339,31 @@
     return (currentWeight - earlyWeight);
 }
 
+/**
+ *  获取周体重的变化值
+ *
+ *  @param arrDate 传入的该周的日期数组
+ *
+ *  @return 该周的变化值
+ */
+-(CGFloat)getWeekWeightChange:(NSArray *)arrDate{
+    if (arrDate.count == 1) {
+        return 0;
+    }
+    NSDate *earlyDate = [arrDate lastObject];
+    CGFloat earlyWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:earlyDate];
+    if (earlyWeight == 0) {
+        earlyWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:earlyDate];
+    }
+    
+    NSDate *laterDate = [arrDate firstObject];
+    CGFloat laterWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:laterDate];
+    if (laterWeight == 0) {
+        laterWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:earlyDate];
+    }
+    
+    return (laterWeight - earlyWeight);
+}
 
 /**
  *  获取记录过的天数

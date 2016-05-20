@@ -215,16 +215,6 @@ static BOOL canUpdatePlan = YES;
 }
 
 
-- (NSString *)getRegisterTime
-{
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.currentUser.date];
-
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    
-    return [formatter stringFromDate:date];
-}
 
 //- (void )setREG
 
@@ -1930,6 +1920,7 @@ static BOOL canUpdatePlan = YES;
     
     NSArray *schemeArray = [recordDic objectForKey:@"scheme"];
     
+    NSArray *recordArray = [recordDic objectForKey:@"record"];
     
     NSMutableArray *array = [[NSMutableArray alloc]init];
     
@@ -2007,26 +1998,41 @@ static BOOL canUpdatePlan = YES;
     }
     
    
-    
-    for (XKRWRecordFoodEntity *foodEntity in oldRecordEntity.FoodArray) {
-        realIntakEnergy += foodEntity.calorie;
+    for (NSDictionary *recordDic in recordArray) {
+        if ([[recordDic objectForKey:@"type"] integerValue] == 0) {
+            realSportEnergy += [[recordDic objectForKey:@"calorie"] floatValue];
+            
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setObject:[NSString stringWithFormat:@"%@%ld分钟",[recordDic objectForKey:@"itemName"],[[recordDic objectForKey:@"number"] integerValue]] forKey:@"text"];
+            [dic setObject:[NSNumber numberWithFloat:[[recordDic objectForKey:@"calorie"] floatValue]] forKey:@"calorie"];
+            [mutableArray addObject:dic];
+            
+        }else{
+            realIntakEnergy += [[recordDic objectForKey:@"calorie"] floatValue];
+        }
+        
         isrecord = YES;
     }
     
-    for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
-        realSportEnergy += sportEntity.calorie;
-         isrecord = YES;
-    }
+    
+    
+    
+//    for (XKRWRecordFoodEntity *foodEntity in oldRecordEntity.FoodArray) {
+//        realIntakEnergy += foodEntity.calorie;
+//        isrecord = YES;
+//    }
+//    
+//    for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
+//        realSportEnergy += sportEntity.calorie;
+//         isrecord = YES;
+//    }
     entity.lossWeight = (dailyIntakEnergy -  realIntakEnergy + realSportEnergy) /7.7;
     entity.lessEatCalories = dailyIntakEnergy -  realIntakEnergy;
     entity.sportCalories = realSportEnergy;
     
-    for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setObject:[NSString stringWithFormat:@"%@%ld分钟",sportEntity.sportName,(long)sportEntity.number] forKey:@"text"];
-        [dic setObject:[NSNumber numberWithFloat:sportEntity.calorie] forKey:@"calorie"];
-        [mutableArray addObject:dic];
-    }
+//    for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
+//       
+//    }
     entity.sportArray = mutableArray;
     
     if ( realIntakEnergy + realSportEnergy > 0) {

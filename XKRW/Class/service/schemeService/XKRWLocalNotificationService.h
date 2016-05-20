@@ -13,7 +13,12 @@
 + (instancetype)shareInstance;
 +(void)cancelLocalNotification:(NSString *)key value:(NSString *)value;
 + (void)cancelAllLocalNotificationExcept:(NSString *)key value:(NSString *)value;
-
+/**
+ *  今天是否重设过蜕变之旅的本地推送
+ *
+ *  @return <#return value description#>
+ */
+- (BOOL)isResetMetamorphosisTourAlarmsToday;
 /**
  *  设置默认闹钟
  */
@@ -23,6 +28,16 @@
  *  注册蜕变之旅本地提醒
  */
 - (void)registerMetamorphosisTourAlarms;
+/**
+ *  v5.3七天未记录体重提醒
+ */
+- (void)setRecordWeightNotification;
+// v5.3设置未开起计划的提醒
+- (void)setOpenPlanNotification;
+/**
+ *  周分析提醒（18:00提醒)
+ */
+- (void)setWeekAnalyzeNotification;
 /**
  *  批量设置闹钟
  *

@@ -138,7 +138,7 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/My/Controller/XKRWShowHeadIamgeVC.swift"
-                  timestampString = "485339204.104435"
+                  timestampString = "485409336.14754"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "42"
@@ -153,7 +153,7 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/My/Controller/XKRWShowHeadIamgeVC.swift"
-                  timestampString = "485339204.104625"
+                  timestampString = "485409336.147794"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "43"
@@ -522,54 +522,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XKRW/Class/vc/Scheme/Controller/XKRWRecordVC.m"
-            timestampString = "485245849.192416"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
-            landmarkName = "-searchBarSearchButtonClicked:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[XKRWRecordVC searchBarSearchButtonClicked:]"
-                  moduleName = "XKRW"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Scheme/Controller/XKRWRecordVC.m"
-                  timestampString = "485339204.115211"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "254"
-                  endingLineNumber = "254"
-                  offsetFromSymbolStart = "197">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__45-[XKRWRecordVC searchBarSearchButtonClicked:]_block_invoke"
-                  moduleName = "XKRW"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/leng/Desktop/5_3_0/XKRW/XKRW/Class/vc/Scheme/Controller/XKRWRecordVC.m"
-                  timestampString = "485339204.115384"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "256"
-                  endingLineNumber = "256"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWRecordVC.m"
             timestampString = "485246043.354258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -672,70 +624,6 @@
             startingLineNumber = "44"
             endingLineNumber = "44"
             landmarkName = "-viewDidLoad"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/XKRWUserService.m"
-            timestampString = "485255882.531933"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2020"
-            endingLineNumber = "2020"
-            landmarkName = "-getOtherUserInfoFromUserNickname:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/XKRWUserService.m"
-            timestampString = "485255959.92239"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1974"
-            endingLineNumber = "1974"
-            landmarkName = "-getOtherUserInfoFromUserNickname:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/XKRWUserService.m"
-            timestampString = "485256111.639811"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1971"
-            endingLineNumber = "1971"
-            landmarkName = "-getOtherUserInfoFromUserNickname:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/XKRWUserService.m"
-            timestampString = "485256112.903546"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1972"
-            endingLineNumber = "1972"
-            landmarkName = "-getOtherUserInfoFromUserNickname:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -864,6 +752,22 @@
             startingLineNumber = "126"
             endingLineNumber = "126"
             landmarkName = "-getGroupRes:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/vc/My/Controller/XKRWUserInfoVC.swift"
+            timestampString = "485405059.144107"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

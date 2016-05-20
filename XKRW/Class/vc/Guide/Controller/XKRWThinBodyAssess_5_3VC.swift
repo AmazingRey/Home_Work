@@ -46,16 +46,18 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
     func loadDataAndReload(){
         //判断是否在5.2重置过
         let date = NSUserDefaults.standardUserDefaults().objectForKey(String(format:"StartTime_%ld",XKRWUserService.sharedService().getUserId()))
-        if (date != nil){
-            //重置过
-            headLabel.text = self.makeHeadLabelData()
+        let needResetScheme = NSUserDefaults.standardUserDefaults().boolForKey(String(format:"needResetScheme_%ld",XKRWUserService.sharedService().getUserId()))
+        let remainDayAchieve :Bool = XKRWAlgolHelper.remainDayToAchieveTarget() == -1 ? true : false
+        
+        if ((needResetScheme || remainDayAchieve) && date != nil)
+        {
+            //未重置过
+            headLabel.text = ""
+            var frame = headView.frame
+            frame.size.height -= 50
+            headView.frame = frame
         }else{
-            if(XKRWAlgolHelper.expectDayOfAchieveTarget() == nil) {
-                headLabel.text = ""
-                var frame = headView.frame
-                frame.size.height -= 50
-                headView.frame = frame
-            }
+            headLabel.text = self.makeHeadLabelData()
         }
         
         self.initHabitData()
@@ -153,6 +155,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
         MobClick.event("clk_Start")
         if (self.navigationController?.tabBarController != nil){
             XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
+            XKRWLocalNotificationService.shareInstance().setWeekAnalyzeNotification()
             self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
         }else{
             self.navigationController?.popToRootViewControllerAnimated(false);

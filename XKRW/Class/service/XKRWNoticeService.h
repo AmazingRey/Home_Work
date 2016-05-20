@@ -17,12 +17,12 @@
  */
 +(instancetype)sharedService;
 
-/**
- *  app关闭状态下接收到远程通知处理
- *
- *  @param notificationInfo 通知消息
- */
-- (void)appCloseStateDealNotificationWithInfo:(NSDictionary *)notificationInfo;
+///**
+// *  app关闭状态下接收到远程通知处理
+// *
+// *  @param notificationInfo 通知消息
+// */
+//- (void)appCloseStateDealNotificationWithInfo:(NSDictionary *)notificationInfo;
 
 /**
  *  app打开状态下接收到远程通知处理

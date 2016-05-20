@@ -258,7 +258,9 @@ static XKRWThinBodyDayManage * shareInstance;
 
 - (NSString *)TipsTextWithDayAndWhetherOpen {
     
-    if(([XKRWAlgolHelper remainDayToAchieveTarget] == -1 || [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"needResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]])&& ([[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]] != nil )){
+    if(([XKRWAlgolHelper remainDayToAchieveTarget] == -1 ||
+        [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"needResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]])&&
+       ([[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]] != nil )){
         return @"当前计划已结束，点击制定新计划";
     }else{
 

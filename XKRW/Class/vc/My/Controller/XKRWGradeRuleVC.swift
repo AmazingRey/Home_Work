@@ -39,9 +39,9 @@ class XKRWGradeRuleVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource {
     }
     
     func initData(){
-        handleArray = ["操作项目","登录","记录","分享每日分析","连续M天登录","获得星星","发布瘦身分享","发布帖子","喜欢","被喜欢","评论","评论求助帖","沙发评论","被评论"];
-        addExperienceArray = ["增加经验值","+20点","+5点","+5点","+(M-1)*5点","+5点","+50点","+20点","+5点","+10点","+5点","+10点/贴","双倍评论经验","+5点"];
-        experienceLimitArray = ["每日上限","20点","5点","20点","一次","无上限","100点","100点","100点","无上限","20点","50点","无","100点"];
+        handleArray = ["操作项目","登录","连续M天登录","获得星星","发布瘦身分享","发布帖子","喜欢","被喜欢","评论","评论求助帖","沙发评论","被评论"];
+        addExperienceArray = ["增加经验值","+20点","+(M-1)*5点","+5点","+50点","+20点","+5点","+10点","+5点","+10点/贴","双倍评论经验","+5点"];
+        experienceLimitArray = ["每日上限","20点","一次","无上限","100点","100点","100点","无上限","20点","50点","无","100点"];
         gradeArray = ["等级"];
         gradeImageArray = ["称号"];
         gradeExperienceArray = ["所需经验值"];
@@ -69,7 +69,7 @@ class XKRWGradeRuleVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource {
             self.hiddenRequestArticleNetworkFailedWarningShow()
             let  dataArray:NSArray =  result.objectForKey("data") as! NSArray
             print(result)
-            for var i = 0 ;i < dataArray.count ;i++ {
+            for i in 0  ..< dataArray.count  {
                 let dic:NSDictionary =  dataArray.objectAtIndex(i) as! NSDictionary
                  gradeArray.addObject("\(i+1)")
                 gradeImageArray.addObject(dic.objectForKey("url")!)

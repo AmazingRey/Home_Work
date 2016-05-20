@@ -60,7 +60,7 @@
 
 -(void)initTimerData{
     if (!_timer && _type == Food) {
-        NSRange rangeEat = [XKRWAlgolHelper getDailyIntakeRange];
+        NSRange rangeEat = [XKRWAlgolHelper getOriginDailyIntakeRange];
         eatNum1 = [NSNumber numberWithInteger:rangeEat.location - 1];
         eatNum2 = [NSNumber numberWithInteger:rangeEat.location+rangeEat.length - 1];
         eatNum3 = [NSNumber numberWithInteger:rangeEat.location+rangeEat.length + 1];
@@ -181,7 +181,11 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     } else {
         isBehaveCurrect = NO;
     }
-    [_firstCircleView setOpenedViewTiltle:@"已摄入" currentNumber:@"0" goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
+    if (_type == Food) {
+        [_firstCircleView setOpenedViewTiltle:@"已摄入" currentNumber:@"0" goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
+    }else if (_type == Sport){
+        [_firstCircleView setOpenedViewTiltle:@"已消耗" currentNumber:@"0" goalNumber:goalNumber unit:@"kcal" isBehaveCurrect:isBehaveCurrect];
+    }
 }
 
 //- (void)runEatEnergyCircleWithNewCurrentNumber:(NSInteger)currentNumber {

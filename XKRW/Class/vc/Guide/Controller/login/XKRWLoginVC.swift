@@ -155,8 +155,9 @@ class XKRWLoginVC: XKRWBaseVC {
         if !self.isPresent {
             if XKRWAlgolHelper.expectDayOfAchieveTarget() != nil {
                 XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
+                XKRWLocalNotificationService.shareInstance().setWeekAnalyzeNotification()
             }
-            
+            XKRWLocalNotificationService.shareInstance().setRecordWeightNotification()
          
             if (self.navigationController?.tabBarController != nil) {
                 self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
@@ -244,10 +245,9 @@ class XKRWLoginVC: XKRWBaseVC {
                 
                 if XKRWAlgolHelper.expectDayOfAchieveTarget() != nil {
                     XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
+                    XKRWLocalNotificationService.shareInstance().setWeekAnalyzeNotification()
                 }
-//                self.downloadWithTaskID("syncData", task: { 
-//                    XKRWCommHelper.syncRemoteData()
-//                })
+                XKRWLocalNotificationService.shareInstance().setRecordWeightNotification()
                 
                 if (self.navigationController?.tabBarController != nil){
                     self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)

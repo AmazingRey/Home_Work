@@ -127,9 +127,13 @@ typedef enum _AlarmType{
     eAlarmExercise,
     eAlarmWalk,
     eAlarmHabit,
-    eAlarmDrinkWater,
-    eAlarmInsistDays
-    
+    eAlarmInsistDays,
+    eAlarmNoStartPlanOneDay,
+    eAlarmNoStartPlanThreeDay,
+    eAlarmNoStartPlanAWeek,
+    eAlarmNoStartPlanAMonth,
+    eAlarmNoRecordWeightAWeek,
+    eAlarmSeeWeeklyAnalyze
 } AlarmType;
 
 //提醒类型定义

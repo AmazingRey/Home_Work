@@ -49,7 +49,7 @@
     if (!self.initialTitle) {
         self.title = self.initialTitle;
     } else {
-        self.navigationItem.title = @"文章";
+        self.title = @"文章";
     }
     //缓存网页
     [NSURLProtocol registerClass:[RNCachingURLProtocol class]];

@@ -123,7 +123,7 @@
         NSDate *currentDate = [cal dateFromComponents:comps];
         
         BOOL isInPlan = [[XKRWThinBodyDayManage shareInstance ] calendarDateInPlanTimeWithDate:currentDate];
-        //        BOOL isEndDay = [[XKRWThinBodyDayManage shareInstance ] calendarDateIsEndDayWithDate:currentDate];
+    
         BOOL isStartDay =  [[XKRWThinBodyDayManage shareInstance] calendarDateIsStartDayWithDate:currentDate];
         
         CGFloat weight = [[XKRWWeightService shareService] getWeightRecordWithDate:currentDate];
@@ -145,10 +145,12 @@
             if (!isInPlan ) {
                 [_dot setImage:[UIImage imageNamed:@"circle_date"]];
                 [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
-            } else if (!isRecord) {
+            }
+            if (!isRecord && isInPlan) {
                 [_dot setImage:[UIImage imageNamed:@"circle_date_w"]];
                  [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            } else {
+            }
+            if (weight || isRecord) {
                 [_dot setImage:[UIImage imageNamed:@"circle_date_y"]];
                 [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             }
@@ -156,16 +158,16 @@
             [self insertSubview:_dot belowSubview:self.titleLabel];
            
             
-        } else if (isInPlan) {
+        }
+        if (isInPlan && !isToday) {
             [_dot setImage:[UIImage imageNamed:@"circleGray"]];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             
-        } else if (isRecord || weight) {
+        }
+        if (!isToday && (isRecord || weight)) {
             [_dot setImage:[UIImage imageNamed:@"circleGreen"]];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        }else{
-            
         }
         
         

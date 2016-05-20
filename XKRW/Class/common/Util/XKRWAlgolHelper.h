@@ -17,6 +17,7 @@
 
 /*BM*/
 + (float)BM;
++ (float)BM_of_origin;
 + (float)BM_of_date:(NSDate *)date;
 + (float)BM_with_weight:(float)weight height:(float)height age:(NSInteger)age sex:(XKSex)sex;
 /*PAL*/
@@ -32,6 +33,8 @@
 + (float) dailyIntakEnergyOfDate:(NSDate *)date;
 + (float) dailyIntakEnergyWithBM:(float)BM PAL:(float)PAL;
 
+/*初始体重下的摄入能量*/
++ (float)originIntakeRecomEnergy;
 /*每日推荐饮食摄入量*/
 + (float)dailyIntakeRecomEnergy;
 + (float)dailyIntakeRecomEnergyOfDate:(NSDate *)date;
@@ -127,7 +130,7 @@
 
 /// 获取当前用户（当前体重）的方案建议值所对应推荐方案份量大小
 +(NSString *)getDailyIntakeSize;
-+(NSRange)getDailyIntakeRange;//获取范围
++(NSRange)getOriginDailyIntakeRange;//初始体重获取范围
 /// 获取当前用户（当前体重）的方案建议值所对应推荐方案份量大小， 1 大， 2 中， 3小
 + (NSInteger)getDailyIntakeSizeNumber;
 

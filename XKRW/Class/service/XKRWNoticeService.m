@@ -89,23 +89,8 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:RemoteNotificationContent] != nil) {
-        
-    
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNormalInformation) name:RemoteNormalNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showImprotantNoticewindow:) name:RemoteImportantNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealThumpUpInfoAndAppOpen:) name:RemoteThumpUpNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealCommentInfoAndAppOpen:) name:RemoteCommentNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealsystemInfoAndAppOpen:) name:RemoteSystemNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealPKInfoAndAppOpen:) name:RemotePKNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealShouShouServerAndAppOpen:) name:RemoteServicerNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealPostCommentAndAppOpen:) name:RemotePostCommentNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealPostThumpUpInfoAndAppOpen:) name:RemotePostThumpUpNotification object:nil];
-        
-    }
-    else {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:RemoteNotificationContent] == nil) {
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAlertView:) name:RemoteNormalNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showImprotantNoticewindow:) name:RemoteImportantNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealThumpUpInfo:) name:RemoteThumpUpNotification object:nil];
@@ -121,16 +106,38 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
 
 - (void)addAppCloseStateNotificationInViewController:(UIViewController *) viewController andKeyWindow:(UIWindow *)window
 {
+
     if ([[NSUserDefaults standardUserDefaults] objectForKey:RemoteNotificationContent]!= nil) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:AppInterfaceHadShow object:nil];
+        NSDictionary  *noticeInfo = [[NSUserDefaults standardUserDefaults] objectForKey:RemoteNotificationContent];
+        
+        if ([[noticeInfo objectForKey:@"type"] integerValue] == 0) {
+            [self showNormalInformation];
+        }
+        else if ([[noticeInfo objectForKey:@"type"] integerValue] == 1){
+            [self showImprotantNoticewindow:noticeInfo];
+        }else if ([[noticeInfo objectForKey:@"type"] integerValue] == 2){
+            [self dealCommentInfoAndAppOpen:noticeInfo];
+        }else if ([[noticeInfo objectForKey:@"type"] integerValue] == 3){
+            [self dealThumpUpInfoAndAppOpen:noticeInfo];
+        }else if ([[noticeInfo objectForKey:@"type"] integerValue] == 4){
+            [self dealsystemInfoAndAppOpen:noticeInfo];
+        }else if ([[noticeInfo objectForKey:@"type"] integerValue] == 5){
+            [self dealPKInfoAndAppOpen:noticeInfo];
+        }else if ([[noticeInfo objectForKey:@"type"] integerValue] == 6){
+            [self dealShouShouServerAndAppOpen:noticeInfo];
+        }else if ([[noticeInfo objectForKey:@"type"] integerValue] == 7){
+            [self dealPostCommentAndAppOpen:noticeInfo];
+        }else if ([[noticeInfo objectForKey:@"type"] integerValue] == 8){
+            [self dealPostThumpUpInfoAndAppOpen:noticeInfo];
+        }
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:RemoteNotificationContent];
         [self addNotificationInViewController:vc andKeyWindow:window];
     }
 }
 
-- (void) showImprotantNoticewindow:(NSNotification *)notification
+- (void) showImprotantNoticewindow:(NSDictionary *)notification
 {
-    [self showInfomationToWindow:[[notification.object objectForKey:@"aps"]objectForKey:@"alert"] content:[notification.object objectForKey:@"content"] ];
+    [self showInfomationToWindow:[[notification objectForKey:@"aps"]objectForKey:@"alert"] content:[notification objectForKey:@"content"] ];
 }
 
 - (void)showInfomationToWindow:(NSString *)title content:(NSString *)content
@@ -601,8 +608,8 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
     [[NSNotificationCenter defaultCenter] postNotificationName:BePraiseNoticeChanged object:nil];
 }
 
-- (void)dealPostThumpUpInfoAndAppOpen:(NSNotification *)notification {
-    [self insertNoticeListToDatabase:notification.object andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:0 andIspush:YES];
+- (void)dealPostThumpUpInfoAndAppOpen:(NSDictionary *)notification {
+    [self insertNoticeListToDatabase:notification andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:0 andIspush:YES];
     
     XKRWBePraisedVC *praisedVC = [[XKRWBePraisedVC alloc]initWithNibName:@"XKRWBePraisedVC" bundle:nil];
     praisedVC.dataType = bePraiseDataTypeFromDataBase;
@@ -621,9 +628,9 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
     [[NSNotificationCenter defaultCenter] postNotificationName:BePraiseNoticeChanged object:nil];
 }
 
-- (void)dealThumpUpInfoAndAppOpen:(NSNotification *)notification
+- (void)dealThumpUpInfoAndAppOpen:(NSDictionary *)notification
 {
-     [self insertNoticeListToDatabase:notification.object andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:0 andIspush:YES];
+     [self insertNoticeListToDatabase:notification andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:0 andIspush:YES];
     
     XKRWBePraisedVC *praisedVC = [[XKRWBePraisedVC alloc]initWithNibName:@"XKRWBePraisedVC" bundle:nil];
     praisedVC.dataType = bePraiseDataTypeFromDataBase;
@@ -631,21 +638,21 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
     [vc presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:praisedVC withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
     }];}
 
-- (void)dealCommentInfoAndAppOpen:(NSNotification *)notification
+- (void)dealCommentInfoAndAppOpen:(NSDictionary *)notification
 {
-    [self insertNoticeListToDatabase:notification.object andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:1 andIspush:YES];
+    [self insertNoticeListToDatabase:notification andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:1 andIspush:YES];
     
-    NSDictionary *  noticeDic = notification.object;
+//    NSDictionary *  noticeDic = notification.object;
     XKRWPraiseAndCommitNoticeEntity *entity = [[XKRWPraiseAndCommitNoticeEntity alloc]init];
-    entity.avater = [noticeDic objectForKey:@"avatar"];
-    entity.blogId = [noticeDic objectForKey:@"blog_id"];
-    entity.comment_id = [[noticeDic objectForKey:@"comment_id"] integerValue];
-    entity.userDegreeUrl = [noticeDic objectForKey:@"honor"];
-    entity.nickName = [noticeDic objectForKey:@"nickname"];
+    entity.avater = [notification objectForKey:@"avatar"];
+    entity.blogId = [notification objectForKey:@"blog_id"];
+    entity.comment_id = [[notification objectForKey:@"comment_id"] integerValue];
+    entity.userDegreeUrl = [notification objectForKey:@"honor"];
+    entity.nickName = [notification objectForKey:@"nickname"];
     entity.read = 1;
-    entity.content = [noticeDic objectForKey:@"text"];
-    entity.type = [[noticeDic objectForKey:@"type"] integerValue];
-    entity.time = [XKRWUtil dateFormatWithTime:[[noticeDic objectForKey:@"time"] integerValue]];
+    entity.content = [notification objectForKey:@"text"];
+    entity.type = [[notification objectForKey:@"type"] integerValue];
+    entity.time = [XKRWUtil dateFormatWithTime:[[notification objectForKey:@"time"] integerValue]];
     XKRWMyNoticeDetailVC *noticeDetailVC = [[XKRWMyNoticeDetailVC alloc] initWithNibName:@"XKRWMyNoticeDetailVC" bundle:nil];
     noticeDetailVC.headEntity = entity;
     noticeDetailVC.isPresent = YES;
@@ -654,19 +661,19 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
 }
 
 //处理系统消息
-- (void)dealsystemInfoAndAppOpen:(NSNotification *)notification
+- (void)dealsystemInfoAndAppOpen:(NSDictionary *)notification
 {
-    [self insertSystemNoticeToDatabase:notification.object andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:1 andIspush:YES];
+    [self insertSystemNoticeToDatabase:notification andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:1 andIspush:YES];
     
-    NSDictionary *  noticeDic = notification.object;
+   
     XKRWPraiseAndCommitNoticeEntity *entity = [[XKRWPraiseAndCommitNoticeEntity alloc]init];
-    entity.avater = [noticeDic objectForKey:@"avater"];
-    entity.blogId = [noticeDic objectForKey:@"blog_id"];
-    entity.nickName = [noticeDic objectForKey:@"nickname"];
+    entity.avater = [notification objectForKey:@"avater"];
+    entity.blogId = [notification objectForKey:@"blog_id"];
+    entity.nickName = [notification objectForKey:@"nickname"];
     entity.read = 1;
-    entity.content = [noticeDic objectForKey:@"text"];
-    entity.type = [[noticeDic objectForKey:@"type"] integerValue];
-    entity.time = [XKRWUtil dateFormatWithTime:[[noticeDic objectForKey:@"time"] integerValue]];
+    entity.content = [notification objectForKey:@"text"];
+    entity.type = [[notification objectForKey:@"type"] integerValue];
+    entity.time = [XKRWUtil dateFormatWithTime:[[notification objectForKey:@"time"] integerValue]];
     
     XKRWNoticeCenterVC *centerVC =  [[XKRWNoticeCenterVC alloc]initWithNibName:@"XKRWNoticeCenterVC" bundle:nil];
     centerVC.isPresent = YES;
@@ -678,9 +685,9 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
 }
 
 // APP 关闭状态下 处理PK
-- (void)dealPKInfoAndAppOpen:(NSNotification *)notification
+- (void)dealPKInfoAndAppOpen:(NSDictionary *)notification
 {
-    noticeInfomation = notification.object;
+    noticeInfomation = notification;
     NSString *nid =  [noticeInfomation objectForKey:@"pk_id"];
     XKRWPKVC *pkVC = [[XKRWPKVC alloc]initWithNibName:@"XKRWPKVC" bundle:nil];
     pkVC.nid = nid;
@@ -707,8 +714,15 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
  *
  *  @param notification <#notification description#>
  */
-- (void)dealShouShouServerAndAppOpen:(NSNotification *)notification {
-    [self dealShouShouServerOpenToChatVC:notification];
+- (void)dealShouShouServerAndAppOpen:(NSDictionary *)notification {
+    [self insertShouShouServicerNoticeToDatabase:notification andUserId:[[XKRWUserService sharedService] getUserId] andIsRead:0 andIspush:YES];
+    
+    XKRWNoticeCenterVC *centerVC =  [[XKRWNoticeCenterVC alloc]initWithNibName:@"XKRWNoticeCenterVC" bundle:nil];
+    centerVC.isPresent = YES;
+    [vc presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:centerVC withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
+        
+    }];
+
 }
 
 /**
@@ -728,7 +742,7 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
  *
  *  @param notification <#notification description#>
  */
-- (void)dealPostCommentAndAppOpen:(NSNotification *)notification {
+- (void)dealPostCommentAndAppOpen:(NSDictionary *)notification {
     [self dealCommentInfoAndAppOpen:notification];
 }
 

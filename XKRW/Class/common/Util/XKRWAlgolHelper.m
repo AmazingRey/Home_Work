@@ -32,6 +32,17 @@
     return [[self class] BM_of_date:[NSDate date]];
 }
 
++ (float)BM_of_origin{
+    //体重
+    float weight = [XKRWUserService sharedService].getUserOrigWeight/1000.0;
+    //身高
+    float height = [[XKRWUserService sharedService] getUserHeight];
+    NSInteger age = [[XKRWUserService sharedService] getAge];
+    XKSex sex = [[XKRWUserService sharedService] getSex];
+    
+    return [[self class] BM_with_weight:weight height:height age:age sex:sex];
+}
+
 + (float)BM_of_date:(NSDate *)date {
     
     //体重
@@ -110,12 +121,22 @@
     
     return BM * PAL;
 }
+
+
 /*每日摄入能量*/
 + (float)dailyIntakeRecomEnergy
 {
     float dailyIntakeRecomEnergy = [[self class] dailyIntakeRecomEnergyOfDate:[NSDate date]];
     return  dailyIntakeRecomEnergy;
 }
+
+/*初始体重下的摄入能量*/
++ (float)originIntakeRecomEnergy
+{
+    float dailyIntakeRecomEnergy = [[self class] dailyIntakeRecomEnergyOfOrigin];
+    return  dailyIntakeRecomEnergy;
+}
+
 /**
  *  date 当天的方案建议值
  */
@@ -125,6 +146,17 @@
     NSInteger age = [[XKRWUserService sharedService] getAge];
     
     return [[self class] dailyIntakeRecommendEnergyWithBM:[[self class] BM_of_date:date] PAL:[[self class] PAL] sex:sex age:age];
+}
+
+/**
+ *  初始体重的方案建议值
+ */
++ (float)dailyIntakeRecomEnergyOfOrigin{
+    
+    XKSex sex = [[XKRWUserService sharedService] getSex];
+    NSInteger age = [[XKRWUserService sharedService] getAge];
+    
+    return [[self class] dailyIntakeRecommendEnergyWithBM:[[self class] BM_of_origin] PAL:[[self class] PAL] sex:sex age:age];
 }
 
 + (float)dailyIntakeRecommendEnergyWithBM:(float)BM PAL:(float)PAL sex:(XKSex)sex age:(NSInteger)age {
@@ -314,9 +346,9 @@
 
 + (float)dailyConsumeSportEnergyV5_3OfDate:(NSDate *)date {
     NSDate *today = [NSDate today];
-    NSDate *registerDate_offset_4 = [[NSDate dateFromString:[[XKRWUserService sharedService] getRegisterTime]]  offsetDay:4];
+    NSDate *registerDate_offset_4 = [[NSDate dateFromString:[[XKRWUserService sharedService] getREGDate]]  offsetDay:5];
     
-    if ([registerDate_offset_4 compare:today] == NSOrderedDescending || [registerDate_offset_4 compare:today] == NSOrderedSame) {
+    if ([registerDate_offset_4 compare:today] == NSOrderedDescending) {
         return 0.f;//v5.3添加逻辑：新用户注册前五天推荐运动量为0
         
     } else {
@@ -405,24 +437,11 @@
         return 0;
     }
     
-    float reduce = 480;
+    float reduce = [[self class] dailyIntakEnergy] - [[self class] dailyIntakeRecomEnergy] + [[self class] dailyConsumeSportEnergy];
     
     // 5.0 Modified: Normal intake - Scheme recomand + Sport scheme
     
-    switch ([[self class] getDailyIntakeSizeNumber]) {
-        case 1:
-            reduce = [[self class] dailyIntakEnergy] - 2200 + [[self class] dailyConsumeSportEnergy];
-            break;
-        case 2:
-            reduce = [[self class] dailyIntakEnergy] - 1800 + [[self class] dailyConsumeSportEnergy];
-            break;
-        case 3:
-            reduce = [[self class] dailyIntakEnergy] - 1400 + [[self class] dailyConsumeSportEnergy];
-            break;
-        default:
-            break;
-    }
-    int32_t days = ceil((cur_weight-target_weight) * 7.7 / reduce);
+       int32_t days = ceil((cur_weight-target_weight) * 7.7 / reduce);
     XKLog(@"达成目标天数为%d,当前体重%f,目标体重%f",days,cur_weight,target_weight);
     return days > 0 ? days : 0;
 }
@@ -436,22 +455,9 @@
         XKLog(@"这里有没有执行呢");
         return ;
     }
-    
-    float reduce = 480;
-    
-    switch ([[self class] getDailyIntakeSizeNumber]) {
-        case 1:
-            reduce = [[self class] dailyIntakEnergy] - 2200 + [[self class] dailyConsumeSportEnergy];
-            break;
-        case 2:
-            reduce = [[self class] dailyIntakEnergy] - 1800 + [[self class] dailyConsumeSportEnergy];
-            break;
-        case 3:
-            reduce = [[self class] dailyIntakEnergy] - 1400 + [[self class] dailyConsumeSportEnergy];
-            break;
-        default:
-            break;
-    }
+
+    float reduce = [[self class] dailyIntakEnergy] - [[self class] dailyIntakeRecomEnergy] + [[self class] dailyConsumeSportEnergy];
+  
     int32_t days = ceil((cur_weight-target_weight) * 7.7 / reduce);
     XKLog(@"达成目标天数为%d,当前体重%ld,目标体重%f",days,(long)cur_weight,target_weight);
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:days > 0 ? days : 0] forKey:[NSString stringWithFormat:@"ExpectDay_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
@@ -852,7 +858,7 @@
 }
 
 + (NSString *)getDailyIntakeSize {
-    NSInteger intake = [self dailyIntakeRecomEnergy];
+    NSInteger intake = [self originIntakeRecomEnergy];
     NSString * intakeSize = @"";
     if ([[XKRWUserService sharedService] getSex] == 0) {
         intakeSize = [NSString stringWithFormat:@"1400kcal~%ldkcal",(long)intake];
@@ -862,8 +868,8 @@
     return intakeSize;
 }
 
-+ (NSRange)getDailyIntakeRange{
-    NSInteger intake = [self dailyIntakeRecomEnergy];
++ (NSRange)getOriginDailyIntakeRange{
+    NSInteger intake = [self originIntakeRecomEnergy];
     if ([[XKRWUserService sharedService] getSex] == 0) {
         return NSMakeRange(1400, intake - 1400);
     }else{

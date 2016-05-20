@@ -27,6 +27,10 @@
         [vc.navigationController pushViewController:nickVC animated:YES];
     }
     
+    if (![[XKRWLocalNotificationService shareInstance] isResetMetamorphosisTourAlarmsToday]) {
+        [[XKRWLocalNotificationService shareInstance] registerMetamorphosisTourAlarms];
+    }
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [[XKRWVersionService shareService]doSomeFixWithInfo:^BOOL(NSString *currentVersion, BOOL currentUserNeedExecute) {
             if (currentUserNeedExecute) {

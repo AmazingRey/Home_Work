@@ -59,8 +59,10 @@ class XKRWArticleEditVC: XKRWBaseVC {
         
         self.addNaviBarBackButton()
         
-        self.saveButton = UIBarButtonItem(title: "发布", style: UIBarButtonItemStyle.Plain, target: self, action: "saveAction")
-        let preview = UIBarButtonItem(title: "预览", style: UIBarButtonItemStyle.Plain, target: self, action: "previewAction")
+        self.saveButton = UIBarButtonItem(title: "发布", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(XKRWArticleEditVC.saveAction))
+        self.saveButton.tintColor = XKMainSchemeColor
+        let preview = UIBarButtonItem(title: "预览", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(XKRWArticleEditVC.previewAction))
+        preview.tintColor = XKMainSchemeColor
         let fixed = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         fixed.width = 20.0
         
@@ -340,7 +342,7 @@ extension XKRWArticleEditVC: UITableViewDelegate, UITableViewDataSource {
                     cell.textField.delegate = self
                     cell.textField.clearButtonMode = .WhileEditing
 
-                    cell.textField.addTarget(self, action: "changeTextField:", forControlEvents: .EditingChanged)
+                    cell.textField.addTarget(self, action: #selector(XKRWArticleEditVC.changeTextField(_:)), forControlEvents: .EditingChanged)
                     cell.topLine.hidden = true
                     
                     return cell

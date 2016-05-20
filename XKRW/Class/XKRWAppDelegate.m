@@ -150,34 +150,8 @@
 #pragma --mark 处理APP关闭状态下远程通知
     dicInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if (dicInfo) {
-        
         [[NSUserDefaults standardUserDefaults] setObject:dicInfo forKey:RemoteNotificationContent];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        if ([[dicInfo objectForKey:@"type"] integerValue] == 0)
-        {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendNormalNotificationNotification) name:AppInterfaceHadShow object:dicInfo];
-            
-        }else if([[dicInfo objectForKey:@"type"] integerValue] == 1)
-        {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendImportantNotificationNotification) name:AppInterfaceHadShow object:nil];
-        }else if ([[dicInfo objectForKey:@"type"] integerValue] == 2){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveCommentNoticeNotification) name:AppInterfaceHadShow object:nil];
-        }else if ([[dicInfo objectForKey:@"type"] integerValue] == 3){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveBePraiseNoticeNotification) name:AppInterfaceHadShow object:nil];
-        }else if ([[dicInfo objectForKey:@"type"] integerValue] == 4){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveSystemNoticeNotification) name:AppInterfaceHadShow object:nil];
-            
-        }else if ([[dicInfo objectForKey:@"type"] integerValue] == 5){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivePKNoticeNotification) name:AppInterfaceHadShow object:nil];
-        }else if ([[dicInfo objectForKey:@"type"] integerValue] == 6){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveShouShouServerNoticeNotification) name:AppInterfaceHadShow object:nil];
-        }else if ([[dicInfo objectForKey:@"type"] integerValue] == 7){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivePostCommentNoticeNotification) name:AppInterfaceHadShow object:nil];
-        }else if ([[dicInfo objectForKey:@"type"] integerValue] == 8){
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivePostBePraiseNoticeNotification) name:AppInterfaceHadShow object:nil];
-        }
-
     }
     [Fabric with:@[[Crashlytics class]]];
 
@@ -566,59 +540,6 @@ void UncaughtExceptionHandler(NSException *exception) {
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     return _managedObjectContext;
 }
-
-
-- (void)sendImportantNotificationNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemoteImportantNotification object:dicInfo];
-}
-
-- (void)sendNormalNotificationNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemoteNormalNotification object:dicInfo];
-}
-//接收到 评论
-- (void)receiveCommentNoticeNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemoteCommentNotification object:dicInfo];
-}
-//接收到 被赞
-- (void)receiveBePraiseNoticeNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemoteThumpUpNotification object:dicInfo];
-}
-
-- (void)receivePostBePraiseNoticeNotification
-{
-//    UIAlertView *alertView = [[UIAlertView alloc] init];
-//    [alertView show];
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemotePostThumpUpNotification object:dicInfo];
-}
-
-//接收到 系统消息
-- (void)receiveSystemNoticeNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemoteSystemNotification object:dicInfo];
-}
-
-
-- (void)receivePKNoticeNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemotePKNotification object:dicInfo];
-}
-
-- (void)receiveShouShouServerNoticeNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemoteServicerNotification object:dicInfo];
-}
-
-- (void)receivePostCommentNoticeNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:RemotePostCommentNotification object:
-     dicInfo];
-}
-
-
 
 #pragma mark - Core Data Saving support
 

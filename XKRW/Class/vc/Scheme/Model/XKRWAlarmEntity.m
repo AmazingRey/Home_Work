@@ -35,13 +35,6 @@
 {
     _type = alarmType;
     
-//    NSArray *noticeName = NoticeTitles ;
-//    if (alarmType > 0) {
-//        NSString *title = [noticeName objectAtIndex:(alarmType - 1)];
-//        if (title) {
-//            _label = title;
-//        }
-//    }
 }
 - (NSString *)description{
     return [NSString stringWithFormat:@"闹钟打印 -----------闹钟名 : %@  时间 : %d:%d 铃声 : %@ -----------------\n内容  :-: %@ ",_label,_hour,_minutes,_alert,_message];

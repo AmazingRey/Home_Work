@@ -8117,8 +8117,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8188,8 +8188,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;

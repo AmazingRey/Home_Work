@@ -1772,6 +1772,9 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         switch (type) {
             case XKRWRecordTypeWeight:
                 isRemoteSuccess = [self saveWeightToRemote:entity];
+                if (isRemoteSuccess) {
+                    [[XKRWLocalNotificationService shareInstance] setRecordWeightNotification];
+                }
                 break;
             case XKRWRecordTypeCircumference:
                 isRemoteSuccess = [self saveCircumferenceToRemote:entity];
