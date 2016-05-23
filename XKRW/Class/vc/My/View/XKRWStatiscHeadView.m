@@ -94,7 +94,7 @@
     //        NSAttributedString *imgString = [NSAttributedString attributedStringWithAttachment:textAttachment];
     //        [attributeStr replaceCharactersInRange:[string rangeOfString:@"*"] withAttributedString:imgString];
     _lab1.attributedText = attributeStr;
-    [_lab1 sizeToFit];
+//    [_lab1 sizeToFit];
 }
 
 -(UIButton *)btnDown{
@@ -285,14 +285,14 @@
 - (void)updateConstraints {
     if (_statisType == 1){
         [self.lab1 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(130);
+            make.width.mas_equalTo(140);
             make.centerX.mas_equalTo(self.mas_centerX);
             make.top.mas_equalTo(self.mas_top).offset(11);
         }];
         [self.btnDown mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_lab1.mas_right).offset(0);
-            make.width.mas_equalTo(24);
-            make.height.mas_equalTo(18);
+            make.left.mas_equalTo(self.lab1.mas_right);
+            make.width.mas_equalTo(12);
+            make.height.mas_equalTo(9);
             make.centerY.mas_equalTo(self.lab1.mas_centerY);
         }];
         [self.lab2 mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -322,7 +322,7 @@
         make.width.equalTo(@.5);
         make.height.equalTo(@11);
         make.centerX.mas_equalTo(self.mas_centerX);
-        make.top.mas_equalTo(self.view1.mas_bottom).offset(30);
+        make.centerY.mas_equalTo(self.view1.mas_centerY).offset(self.frame.size.height/4);
     }];
     
     [self.lab5 mas_makeConstraints:^(MASConstraintMaker *make) {

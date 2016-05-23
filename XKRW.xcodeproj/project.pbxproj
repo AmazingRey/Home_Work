@@ -8117,8 +8117,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8166,10 +8166,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0516;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWlrp;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -8188,8 +8188,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8237,10 +8237,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW0516;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWlrp;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";

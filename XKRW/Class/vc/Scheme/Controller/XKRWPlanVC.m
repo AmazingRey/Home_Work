@@ -537,6 +537,7 @@
        
         case 1001:
         {
+            [self RecordFoodViewpressCancle];
             [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:self];
         }
@@ -602,6 +603,7 @@
         
     } else if ([title rangeOfString:@"计划已结束"].location != NSNotFound) {
         [XKRWCui showConfirmWithMessage:@"确定要重置方案吗？" okButtonTitle:@"确定" cancelButtonTitle:@"取消" onOKBlock:^{
+            [self RecordFoodViewpressCancle];
             [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:self];
         }];

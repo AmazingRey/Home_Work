@@ -15,11 +15,6 @@
 @property (assign, nonatomic) StatisticType type;
 
 /**
- *  统计分析中开始日期
- */
-@property (strong, nonatomic) NSString *startDateStr;
-
-/**
  *  所选周数显示的num
  */
 @property (assign, nonatomic) NSInteger num;

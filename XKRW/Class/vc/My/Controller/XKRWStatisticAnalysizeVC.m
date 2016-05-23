@@ -6,6 +6,9 @@
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
+#define SegementLeading 13
+#define SegementHeight 30
+
 #define ScrollViewHeight XKAppHeight-56
 
 #import "XKRWStatisticAnalysizeVC.h"
@@ -227,46 +230,42 @@
 #pragma mark masonry Subviews
 -(void)addMasonryLayout{
     [self.segmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.view.mas_top).offset(13);
-        make.centerX.mas_equalTo(self.view.mas_centerX);
         make.width.mas_equalTo(XKAppWidth - 30);
-        make.height.mas_equalTo(30);
+        make.height.mas_equalTo(SegementHeight);
+        make.centerX.mas_equalTo(self.view.mas_centerX);
+        make.top.mas_equalTo(self.view.mas_top).offset(SegementLeading);
     }];
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.leading.and.right.mas_equalTo(0);
-        make.top.mas_equalTo(self.segmentControl.mas_bottom).offset(13);
         make.width.mas_equalTo(XKAppWidth);
         make.height.mas_equalTo(ScrollViewHeight);
+        make.leading.and.right.mas_equalTo(0);
+        make.top.mas_equalTo(self.segmentControl.mas_bottom).offset(SegementLeading);
     }];
     if (notEnoughOneWeek) {
         [self.emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(@0);
-            make.left.mas_equalTo(_scrollView.left);
-            make.width.mas_equalTo(_scrollView.width);
-            make.height.mas_equalTo(_scrollView.height);
-            make.bottom.mas_equalTo(_scrollView.bottom);
+            make.width.mas_equalTo(self.scrollView.mas_width);
+            make.height.mas_equalTo(self.scrollView.mas_height);
+            make.top.mas_equalTo(self.scrollView.mas_top);
+            make.left.mas_equalTo(self.scrollView.mas_left);
         }];
         [self.statisAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(@0);
-            make.left.mas_equalTo(_emptyView.mas_right);
-            make.width.mas_equalTo(_scrollView.width);
-            make.height.mas_equalTo(_scrollView.height);
-            make.bottom.mas_equalTo(_scrollView.bottom);
+            make.width.mas_equalTo(self.scrollView.mas_width);
+            make.height.mas_equalTo(self.scrollView.mas_height);
+            make.top.mas_equalTo(self.scrollView.mas_top);
+            make.left.mas_equalTo(self.emptyView.mas_right);
         }];
     }else{
         [self.weekAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(@0);
-            make.left.mas_equalTo(_scrollView.left);
-            make.width.mas_equalTo(_scrollView.width);
-            make.height.mas_equalTo(_scrollView.height);
-            make.bottom.mas_equalTo(_scrollView.bottom);
+            make.width.mas_equalTo(self.scrollView.mas_width);
+            make.height.mas_equalTo(self.scrollView.mas_height);
+            make.top.mas_equalTo(self.scrollView.mas_top);
+            make.left.mas_equalTo(self.scrollView.mas_left);
         }];
         [self.statisAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(@0);
-            make.left.mas_equalTo(_weekAnalysisView.mas_right);
-            make.width.mas_equalTo(_scrollView.width);
-            make.height.mas_equalTo(_scrollView.height);
-            make.bottom.mas_equalTo(_scrollView.bottom);
+            make.width.mas_equalTo(self.scrollView.mas_width);
+            make.height.mas_equalTo(self.scrollView.mas_height);
+            make.top.mas_equalTo(self.scrollView.mas_top);
+            make.left.mas_equalTo(self.weekAnalysisView.mas_right);
         }];
     }
 }

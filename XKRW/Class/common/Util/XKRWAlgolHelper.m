@@ -46,7 +46,10 @@
 + (float)BM_of_date:(NSDate *)date {
     
     //体重
-    float weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:date];
+    float weight = [[XKRWWeightService shareService] getWeightRecordWithDate:date];
+    if (weight == 0) {
+        weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:date];
+    }
     //身高
     float height = [[XKRWUserService sharedService] getUserHeight];
     NSInteger age = [[XKRWUserService sharedService] getAge];

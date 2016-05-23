@@ -47,4 +47,15 @@
  *  所有周数组组成的dic，供picker初始化
  */
 @property (strong, nonatomic) NSDictionary *dicPicker;
+
+
+/**
+ *  内部用量
+ */
+
+@property (strong, nonatomic) NSString *dateRegisterStr;
+@property (strong, nonatomic) NSNumber *resetTime;
+@property (strong, nonatomic) NSDateFormatter *dateFormat;
+@property (strong, nonatomic) NSNumber *totalDays;
+
 @end

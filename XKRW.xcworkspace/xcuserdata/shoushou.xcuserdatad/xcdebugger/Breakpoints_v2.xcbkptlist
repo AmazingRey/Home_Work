@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -467,22 +467,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/View/XKRWRecordMore5_3View.m"
-            timestampString = "485255016.978832"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "-setType:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "XKRW/Class/vc/Scheme/View/XKRWRecordSingleMore5_3View.m"
             timestampString = "485255054.466759"
             startingColumnNumber = "9223372036854775807"
@@ -532,11 +516,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XKRW/Class/common/Util/XKRWAlgolHelper.m"
-            timestampString = "485426265.047761"
+            timestampString = "485675877.11815"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "511"
-            endingLineNumber = "511"
+            startingLineNumber = "514"
+            endingLineNumber = "514"
             landmarkName = "@implementation XKRWAlgolHelper"
             landmarkType = "3">
          </BreakpointContent>
@@ -554,22 +538,6 @@
             startingLineNumber = "327"
             endingLineNumber = "327"
             landmarkName = "viewWillAppear(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/XKRWAppDelegate.m"
-            timestampString = "485400395.216088"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -612,12 +580,12 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/xikangmac/Documents/Home-Work/5_3_0(0503)/XKRW/XKRW/Class/vc/Base/XKRWBaseVC.m"
-                  timestampString = "485428126.618026"
+                  timestampString = "485690121.276103"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "579"
                   endingLineNumber = "579"
-                  offsetFromSymbolStart = "290">
+                  offsetFromSymbolStart = "452">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -627,12 +595,12 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/xikangmac/Documents/Home-Work/5_3_0(0503)/XKRW/XKRW/Class/vc/Base/XKRWBaseVC.m"
-                  timestampString = "485428126.618161"
+                  timestampString = "485690121.27624"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "579"
                   endingLineNumber = "579"
-                  offsetFromSymbolStart = "20">
+                  offsetFromSymbolStart = "10">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -660,12 +628,12 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/xikangmac/Documents/Home-Work/5_3_0(0503)/XKRW/XKRW/Class/vc/Base/XKRWBaseVC.m"
-                  timestampString = "485428126.618986"
+                  timestampString = "485690121.27719"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "629"
                   endingLineNumber = "629"
-                  offsetFromSymbolStart = "338">
+                  offsetFromSymbolStart = "504">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -675,12 +643,12 @@
                   moduleName = "XKRW"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/xikangmac/Documents/Home-Work/5_3_0(0503)/XKRW/XKRW/Class/vc/Base/XKRWBaseVC.m"
-                  timestampString = "485428126.619122"
+                  timestampString = "485690121.277333"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "629"
                   endingLineNumber = "629"
-                  offsetFromSymbolStart = "20">
+                  offsetFromSymbolStart = "10">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -720,96 +688,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/ManageServer/XKRWThinBodyDayManage.m"
-            timestampString = "485418260.96144"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
-            landmarkName = "-TipsTextWithDayAndWhetherOpen"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XKRW/Class/common/Util/XKRWAlgolHelper.m"
-            timestampString = "485426265.047761"
+            timestampString = "485675877.11815"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "+dailyIntakEnergy"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Common/vc/XKRWNavigationController.m"
-            timestampString = "485421410.774479"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "-setCustomNavigationbarStyleWithType:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[XKRWNavigationController setCustomNavigationbarStyleWithType:]"
-                  moduleName = "XKRW"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/xikangmac/Documents/Home-Work/5_3_0(0503)/XKRW/Common/vc/XKRWNavigationController.m"
-                  timestampString = "485428126.622457"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "61"
-                  endingLineNumber = "61"
-                  offsetFromSymbolStart = "65">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__64-[XKRWNavigationController setCustomNavigationbarStyleWithType:]_block_invoke"
-                  moduleName = "XKRW"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/xikangmac/Documents/Home-Work/5_3_0(0503)/XKRW/Common/vc/XKRWNavigationController.m"
-                  timestampString = "485428126.622592"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "61"
-                  endingLineNumber = "61"
-                  offsetFromSymbolStart = "12">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Common/vc/XKRWNavigationController.m"
-            timestampString = "485421463.747139"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
-            landmarkName = "-navigationBarChangeFromDefaultNavigationBarToTransparencyNavigationBar"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -848,22 +736,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/My/Controller/XKRWMyVC.m"
-            timestampString = "485422042.396688"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "-viewWillAppear:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -896,15 +768,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XKRW/Class/common/Util/XKRWAlgolHelper.m"
-            timestampString = "485426265.047761"
+            timestampString = "485675877.11815"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "+dailyIntakeRecommendEnergyWithBM:PAL:sex:age:"
             landmarkType = "5">
          </BreakpointContent>
@@ -928,16 +800,224 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XKRW/Class/vc/My/Model/XKRWStatiscBussiness5_3.m"
-            timestampString = "485428013.55959"
+            timestampString = "485666025.360485"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "-getPlanStartDate"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
+            landmarkName = "-getNormalIntake:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/service/recordService/XKRWRecordService4_0.m"
+            timestampString = "485674888.863057"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1336"
+            endingLineNumber = "1336"
+            landmarkName = "-queryRecordWithDate:table:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/service/recordService/XKRWRecordService4_0.m"
+            timestampString = "485675012.850733"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1379"
+            endingLineNumber = "1379"
+            landmarkName = "-queryCustomRecord:withType:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/service/recordService/XKRWRecordService4_0.m"
+            timestampString = "485675018.514855"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2665"
+            endingLineNumber = "2665"
+            landmarkName = "-getAllRecordOfDay:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/service/recordService/XKRWRecordService4_0.m"
+            timestampString = "485676584.774917"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1988"
+            endingLineNumber = "1988"
+            landmarkName = "-getSchemeRecordWithDate:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/common/Util/XKRWAlgolHelper.m"
+            timestampString = "485676635.309651"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "+BM_of_date:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/service/recordService/XKRWRecordService4_0.m"
+            timestampString = "485676794.536615"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1348"
+            endingLineNumber = "1348"
+            landmarkName = "-queryFoodRecord:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
+            timestampString = "485678125.830492"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "607"
+            endingLineNumber = "607"
+            landmarkName = "-energyCircleViewTitleClicked:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
+            timestampString = "485678125.830492"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "541"
+            endingLineNumber = "541"
+            landmarkName = "-dealTipsAction:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
+            timestampString = "485677982.015451"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "796"
+            endingLineNumber = "796"
+            landmarkName = "-RecordFoodViewpressCancle"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/vc/My/View/XKRWStatiscHeadView.m"
+            timestampString = "485689582.078127"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
+            landmarkName = "-updateConstraints"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/vc/My/View/XKRWStatiscHeadView.m"
+            timestampString = "485689775.104828"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-lab1"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/common/Util/XKRWAlgolHelper.m"
+            timestampString = "485689792.745166"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "+dailyIntakEnergyOfDate:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/vc/My/View/XKRWStatiscHeadView.m"
+            timestampString = "485690036.190447"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "-lab1"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

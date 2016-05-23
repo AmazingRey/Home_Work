@@ -15,15 +15,64 @@
 
 @implementation XKRWStatiscBussiness5_3
 
+/**
+ *  注册日期
+ *
+ *  @return 注册日期str 2014-12-12
+ */
+-(NSString *)dateRegisterStr{
+    if (!_dateRegisterStr) {
+        _dateRegisterStr = [[XKRWUserService sharedService] getREGDate];
+    }
+    return _dateRegisterStr;
+}
+
+/**
+ *  重置方案时间
+ *
+ *  @return 方案重置的time interval
+ */
+-(NSNumber *)resetTime{
+    if (_resetTime == 0) {
+        _resetTime = [[XKRWUserService sharedService]getResetTime];
+    }
+    return _resetTime;
+}
+
+/**
+ *  日期格式
+ *
+ *  @return 标准日期格式
+ */
+-(NSDateFormatter *)dateFormat{
+    if (!_dateFormat) {
+        _dateFormat = [[NSDateFormatter alloc]init];
+        _dateFormat.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+        _dateFormat.dateFormat = @"yyyy年MM月dd日";
+    }
+    return _dateFormat;
+}
+
+/**
+ *  方案总开始天数
+ *
+ *  @return 天数 NSNumber
+ */
+-(NSNumber *)totalDays{
+    if (!_totalDays) {
+        _totalDays = [self getTotalHasRecordDays];
+    }
+    return _totalDays;
+}
+
+
 - (instancetype)init
 {
     self = [super init];
     if (self) {
         _date = [NSDate date];
-        NSNumber *days = [self getTotalHasRecordDays];
-        if (days != 0) {
-            _totalNum = days.integerValue / 7.0;
-            
+        if (self.totalDays != 0) {
+            _totalNum = self.totalDays.integerValue / 7.0;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self statiscEntity];
             });
@@ -59,12 +108,12 @@
     if (!_statiscEntity) {
         XKRWStatiscEntity5_3 *entity = [[XKRWStatiscEntity5_3 alloc] init];
         entity.type = 2;
-        entity.startDateStr = [self getPlanStartDate];
-        entity.dateRange = [NSString stringWithFormat:@"%@-至今",[self getPlanStartDate]];
+        entity.dateRange = [self getStatiscDateStr];
         entity.arrDaysDate = [self getAllDaysInIndex];
+        
         entity.weight = [self getCurrentWeight];
         entity.weightChange = [self getTotalWeightChange];
-        entity.dayRecord = [NSNumber numberWithInteger:[self getHasRecordDays:[[self getTotalHasRecordDays] integerValue] curDate:[NSDate date]]];
+        entity.dayRecord = [NSNumber numberWithInteger:[self getHasRecordDays:[self.totalDays integerValue] curDate:[NSDate date]]];
         ;
         entity.dayAchieve = [NSNumber numberWithInteger:[self getPerfectDays:entity.dayRecord.integerValue curDate:nil]];
         
@@ -130,16 +179,12 @@
  *
  *  @return 开始日期的nsstring
  */
--(NSString *)getPlanStartDate{
-    NSDate *crearDate = [NSDate date];
-    NSInteger resetTime = [[XKRWUserService sharedService]getResetTime].integerValue;
-    if (resetTime != 0) {
-        crearDate = [NSDate dateWithTimeIntervalSince1970:resetTime];
+-(NSString *)getStatiscDateStr{
+    NSDate *createDate = [NSDate date];
+    if (self.resetTime.integerValue != 0) {
+        createDate = [NSDate dateWithTimeIntervalSince1970:self.resetTime.integerValue];
     }
-    NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    df.dateFormat = @"yyyy年MM月dd日";
-    return [df stringFromDate:crearDate];
+    return [NSString stringWithFormat:@"%@-至今",[self.dateFormat stringFromDate:createDate]];
 }
 
 /**
@@ -152,19 +197,14 @@
 -(NSString *)getDateRange:(NSInteger)index{
     NSString *dateStart = @"2016年5月12日";
     NSString *dateEnd = @"2016年5月18日";
-    NSString *dateRegister = [[XKRWUserService sharedService] getREGDate]; //带-的 2014-12-11
-    NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    df.dateFormat = @"yyyy年MM月dd日";
-    NSInteger timestamp =(long) [[df dateFromString:dateRegister] timeIntervalSince1970];
+    NSInteger timestamp =(long) [[self.dateFormat dateFromString:self.dateRegisterStr] timeIntervalSince1970];
 
-    if ([[XKRWUserService sharedService] getResetTime]) {
-        NSInteger resetTime = [[[XKRWUserService sharedService] getResetTime] integerValue];
-        if (timestamp < resetTime)
+    if (self.resetTime) {
+        if (timestamp < self.resetTime.integerValue)
         {
             NSArray *arr = [self getWeekDaysInIndex:index];
-            dateStart = [df stringFromDate:[arr lastObject]];
-            dateEnd = [df stringFromDate:[arr firstObject]];
+            dateStart = [self.dateFormat stringFromDate:[arr lastObject]];
+            dateEnd = [self.dateFormat stringFromDate:[arr firstObject]];
         }
     }
      NSString *dateRange = @"";
@@ -184,16 +224,11 @@
  *  @return 该周内第一天日期
  */
 -(NSDate *)getDateRangeStart:(NSInteger)index{
-    NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    df.dateFormat = @"yyyy年MM月dd日";
-    NSString *dateRegister = [[XKRWUserService sharedService] getREGDate];
-    NSInteger timestamp =(long) [[df dateFromString:dateRegister] timeIntervalSince1970];
-    if ([[XKRWUserService sharedService] getResetTime]) {
-        NSInteger resetTime = [[[XKRWUserService sharedService] getResetTime] integerValue];
-        if (timestamp < resetTime)
+    NSInteger timestamp =(long) [[self.dateFormat dateFromString:self.dateRegisterStr] timeIntervalSince1970];
+    if (self.resetTime) {
+        if (timestamp < self.resetTime.integerValue)
         {
-            return [NSDate dateWithTimeIntervalSince1970:resetTime-DrecreaseDateInterval*index];
+            return [NSDate dateWithTimeIntervalSince1970:self.resetTime.integerValue-DrecreaseDateInterval*index];
         }else{
             return [NSDate dateWithTimeIntervalSince1970:timestamp];
         }
@@ -210,16 +245,11 @@
  *  @return 该周内最后日期
  */
 -(NSDate *)getDateRangeEnd:(NSInteger)index{
-    NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    df.dateFormat = @"yyyy年MM月dd日";
-    NSString *dateRegister = [[XKRWUserService sharedService] getREGDate];
-    NSInteger timestamp =(long) [[df dateFromString:dateRegister] timeIntervalSince1970];
-    if ([[XKRWUserService sharedService] getResetTime]) {
-        NSInteger resetTime = [[[XKRWUserService sharedService] getResetTime] integerValue];
-        if (timestamp < resetTime)
+    NSInteger timestamp =(long) [[self.dateFormat dateFromString:self.dateRegisterStr] timeIntervalSince1970];
+    if (self.resetTime) {
+        if (timestamp < self.resetTime.integerValue)
         {
-            NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:resetTime-DrecreaseDateInterval*index];
+            NSDate *crearDate  = [NSDate dateWithTimeIntervalSince1970:self.resetTime.integerValue-DrecreaseDateInterval*index];
             return [crearDate dateByAddingTimeInterval:DateInterval];
             
         }else{
@@ -239,8 +269,7 @@
 -(NSArray *)getWeekDaysInIndex:(NSInteger)index{
 //    NSDate *endDate = [self getDateRangeEnd:index];
     NSDate *endDate = [NSDate date];
-    NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
-    NSDate *createDate  = [[NSDate dateWithTimeIntervalSince1970:resetTime] offsetDay:Days*index];
+    NSDate *createDate  = [[NSDate dateWithTimeIntervalSince1970:self.resetTime.integerValue] offsetDay:Days*index];
     
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:Days];
     for (int i = 0 ; i < Days; i++) {
@@ -273,7 +302,7 @@
  *  @return 所有计划内日期数组
  */
 -(NSArray *)getAllDaysInIndex{
-    NSInteger daysRecord = [[self getTotalHasRecordDays] integerValue];
+    NSInteger daysRecord = [self.totalDays integerValue];
     NSMutableArray *arr = [NSMutableArray arrayWithCapacity:daysRecord];
     for (int i = 0 ; i < daysRecord; i++) {
         NSDate *date = [[NSDate date] offsetDay:-i];
@@ -516,16 +545,11 @@
  *  @return 方案开始执行的总天数
  */
 -(NSNumber *)getTotalHasRecordDays{
-    NSString *dateRegister = [[XKRWUserService sharedService] getREGDate]; //带-的 2014-12-11
-    NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    df.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    df.dateFormat = @"yyyy年MM月dd日";
-    NSInteger timestamp =(long) [[df dateFromString:dateRegister] timeIntervalSince1970];
+    NSInteger timestamp =(long) [[self.dateFormat dateFromString:self.dateRegisterStr] timeIntervalSince1970];
     
-    if ([[XKRWUserService sharedService]getResetTime]) {
-        NSInteger resetTime = [[[XKRWUserService sharedService]getResetTime] integerValue];
-        if (timestamp < resetTime) {
-            NSDate *createDate  = [NSDate dateWithTimeIntervalSince1970:resetTime];
+    if (self.resetTime.integerValue != 0) {
+        if (timestamp < self.resetTime.integerValue) {
+            NSDate *createDate  = [NSDate dateWithTimeIntervalSince1970:self.resetTime.integerValue];
             NSInteger daysHasRecord = [NSDate daysBetweenDate:createDate andDate:_date];
             return [NSNumber numberWithInteger:daysHasRecord + 1];
         }
