@@ -638,7 +638,6 @@ static XKRWManagementService5_0 *shareInstance;
         entity.content = responseDic[@"data"];
         entity.zfps = voteDic[@"data"][@"zfps"];
         entity.ffps = voteDic[@"data"][@"ffps"];
-        
     }
     return entity;
 }

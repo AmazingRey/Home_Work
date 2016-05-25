@@ -33,6 +33,7 @@
 @property (strong, nonatomic) XKRWStatisAnalysisView *statisAnalysisView;
 @property (strong, nonatomic) XKRWStatiscBussiness5_3 *bussiness;
 @property (assign, nonatomic) NSInteger segmentIndex;
+
 @end
 
 @implementation XKRWStatisticAnalysizeVC
@@ -75,9 +76,18 @@
         if (_bussiness.totalNum == 0) {
              dispatch_async(dispatch_get_main_queue(), ^{
                  notEnoughOneWeek = YES;
+                 _statisAnalysisView.isShowStatis = true;
                  [self addMasonryLayout];
                  [XKRWCui hideProgressHud];
                  [self showTip];
+                 
+                 if (_fromVC == DailyAnalysisVC) {
+                     CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
+                     [self.scrollView scrollRectToVisible:scrollRect animated:NO];
+                     if (!_statisAnalysisView.isShowStatis) {
+                         _statisAnalysisView.isShowStatis = true;
+                     }
+                 }
             });
         }else{
             _bussiness.weekIndex = _bussiness.totalNum - i - 1;
@@ -88,9 +98,18 @@
                         notEnoughOneWeek = YES;
                     }
                 }
+                _statisAnalysisView.isShowStatis = true;
                 [self addMasonryLayout];
                 [XKRWCui hideProgressHud];
                 [self showTip];
+                
+                if (_fromVC == DailyAnalysisVC) {
+                    CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
+                    [self.scrollView scrollRectToVisible:scrollRect animated:NO];
+                    if (!_statisAnalysisView.isShowStatis) {
+                        _statisAnalysisView.isShowStatis = true;
+                    }
+                }
             });
         }
     });
@@ -126,8 +145,13 @@
                                                                forKey:NSFontAttributeName];
         [_segmentControl setTitleTextAttributes:attributes
                                         forState:UIControlStateNormal];
+        if (_fromVC == DailyAnalysisVC) {
+            _segmentControl.selectedSegmentIndex = 1;
+            _segmentIndex = 1;
+        }else{
+            _segmentControl.selectedSegmentIndex = 0;
+        }
         
-        _segmentControl.selectedSegmentIndex = 0;
         [_segmentControl addTarget:self action:@selector(segmentControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
         [self.view addSubview:_segmentControl];
     }
@@ -179,7 +203,6 @@
         emptyLab.textAlignment = NSTextAlignmentCenter;
         emptyLab.font = [UIFont systemFontOfSize:17];
         [_emptyView addSubview:emptyLab];
-        
         [self.scrollView addSubview:_emptyView];
     }
     return _emptyView;

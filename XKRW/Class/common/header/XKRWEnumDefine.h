@@ -102,14 +102,14 @@ typedef enum  _SchemeType
 } SchemeType;
 
 //方案餐次定义
-typedef enum _MealType{
+typedef NS_ENUM(NSInteger,MealType){
     eSport         = 0,      //运动
     eMealBreakfast ,     //早餐
     eMealLunch,             //午餐
     eMealDinner,             //晚餐
     eMealSnack,              //加餐
     
-} MealType;
+} ;
 
 /*运动单位*/
 typedef enum _SportUnit{
@@ -329,7 +329,8 @@ typedef  NS_ENUM(NSInteger,FromWhichVC) {
     SchemeInfoChangeVC,
     Appdelegate,
     ThinBodyAssesssVC,
-    PlanVC
+    PlanVC,
+    DailyAnalysisVC
 };
 
 typedef NS_ENUM(NSInteger, NavigationBarType) {

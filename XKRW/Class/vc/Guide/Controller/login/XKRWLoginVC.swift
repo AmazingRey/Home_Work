@@ -66,9 +66,7 @@ class XKRWLoginVC: XKRWBaseVC {
         
         if (fromWhichVC == FromWhichVC.RegisterVC) {
             self.addNaviBarBackButton()
-        }
-        else {
-            
+        }else {
             self.navigationItem.hidesBackButton = true
             let rightNaviBarButton:UIButton = UIButton(type: UIButtonType.Custom)
             rightNaviBarButton.setTitle("注册", forState: UIControlState.Normal)
@@ -145,7 +143,7 @@ class XKRWLoginVC: XKRWBaseVC {
         
         NSUserDefaults.standardUserDefaults().setObject(userAcount.text, forKey: kXKUserAccount)
         NSUserDefaults.standardUserDefaults().synchronize()
-        
+        XKRWTipsManage.shareInstance().isFirstOpenApp()
         XKRWUserDefaultService.setCurrentUserId(XKRWUserService.sharedService().getUserId());
         XKRWCommHelper.syncTodayRemoteData()
         self.downloadWithTaskID("syncData", task: {
@@ -157,8 +155,10 @@ class XKRWLoginVC: XKRWBaseVC {
                 XKRWLocalNotificationService.shareInstance().registerMetamorphosisTourAlarms()
                 XKRWLocalNotificationService.shareInstance().setWeekAnalyzeNotification()
             }
+            XKRWLocalNotificationService.shareInstance().setOpenPlanNotification()
             XKRWLocalNotificationService.shareInstance().setRecordWeightNotification()
-         
+            XKRWLocalNotificationService.shareInstance().defaultAlarmSetting()
+    
             if (self.navigationController?.tabBarController != nil) {
                 self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
             } else {
@@ -248,7 +248,8 @@ class XKRWLoginVC: XKRWBaseVC {
                     XKRWLocalNotificationService.shareInstance().setWeekAnalyzeNotification()
                 }
                 XKRWLocalNotificationService.shareInstance().setRecordWeightNotification()
-                
+                XKRWLocalNotificationService.shareInstance().setOpenPlanNotification()
+                XKRWLocalNotificationService.shareInstance().defaultAlarmSetting()
                 if (self.navigationController?.tabBarController != nil){
                     self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
                 }else{

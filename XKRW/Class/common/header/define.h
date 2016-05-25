@@ -150,6 +150,7 @@
 #define  colorSecondary_ebebeb [UIColor colorFromHexString:@"#ebebeb"]
 #define  colorSecondary_f6f6f6 [UIColor colorFromHexString:@"#f6f6f6"]
 #define  colorSecondary_fafafa [UIColor colorFromHexString:@"#fafafa"]
+#define  colorSecondary_c7c7c7 [UIColor colorFromHexString:@"#c7c7c7"]
 
 //---------------------------4.0版本添加辅助色-------------------------
 #define  colorSecondary_c7c7cc [UIColor colorFromHexString:@"#c7c7cc"] //线性图标

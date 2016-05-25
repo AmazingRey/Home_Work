@@ -14,11 +14,11 @@
 //最低推荐饮食值
 + (float)minRecommendedValueWith:(XKSex)sex;
 
-
 /*BM*/
 + (float)BM;
 + (float)BM_of_origin;
 + (float)BM_of_date:(NSDate *)date;
++ (NSArray *)BMs_of_dates:(NSArray *)dateArray;
 + (float)BM_with_weight:(float)weight height:(float)height age:(NSInteger)age sex:(XKSex)sex;
 /*PAL*/
 + (float)PAL;
@@ -30,15 +30,18 @@
 
 /*每日正常饮食摄入量*/
 + (float) dailyIntakEnergy;
-+ (float) dailyIntakEnergyOfDate:(NSDate *)date;
++ (float) dailyIntakEnergyOfDates:(NSArray *)dateArray;
 + (float) dailyIntakEnergyWithBM:(float)BM PAL:(float)PAL;
-
++ (float) dailyIntakEnergyOfOrigin;
 /*初始体重下的摄入能量*/
 + (float)originIntakeRecomEnergy;
 /*每日推荐饮食摄入量*/
 + (float)dailyIntakeRecomEnergy;
 + (float)dailyIntakeRecomEnergyOfDate:(NSDate *)date;
++ (float)dailyIntakeRecomEnergyOfDates:(NSArray *)dateArray;
 + (float)dailyIntakeRecommendEnergyWithBM:(float)BM PAL:(float)PAL sex:(XKSex)sex age:(NSInteger)age;
+
++ (float)dailyIntakeRecomEnergyOfOrigin;
 
 //获取每日记录饮食摄入量
 +(float)dailyTotalRecordEnergyWithDate:(NSDate *)date;
@@ -48,9 +51,12 @@
 
 /*每日运动消耗量*/
 + (float)dailyConsumeSportEnergy;
+
++ (float)dailyConsumeSportEnergyOfOrigin;
 /*添加v5.3新逻辑新用户注册前五天推荐运动量为0*/
 + (float)dailyConsumeSportEnergyV5_3OfDate:(NSDate *)date;
 + (float)dailyConsumeSportEnergyOfDate:(NSDate *)date;
++ (float)dailyConsumeSportEnergyOfDates:(NSArray *)dateArray;
 + (float)dailyConsumeSportEnergyWithPhysicalLabor:(XKPhysicalLabor)labor BM:(float)BM PAL:(float)PAL sex:(XKSex)sex;
 
 //至少需要的热量

@@ -122,7 +122,7 @@ class XKRWSetAgeVC: XKRWBaseVC {
             let time:NSInteger  = NSInteger(date.timeIntervalSince1970)
             
             XKRWUserService.sharedService().setBirthday(time)
-            
+            XKRWUserService.sharedService().setAge()
             let setHeightVC:XKRWSetHeightVC =  XKRWSetHeightVC(nibName: "XKRWSetHeightVC", bundle: nil)
             setHeightVC.sexImage = sexImageView.image
             self.navigationController?.pushViewController(setHeightVC, animated: true)

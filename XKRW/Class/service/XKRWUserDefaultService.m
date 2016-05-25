@@ -241,6 +241,7 @@
     }
     return scale;
 }
+
 /*根据餐次类型，获取比例*/
 + (uint32_t)getDiectScaleWithType:(MealType) type
 {

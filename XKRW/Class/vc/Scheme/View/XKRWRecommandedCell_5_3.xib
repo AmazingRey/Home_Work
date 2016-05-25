@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="早餐" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcS-Vu-dFa">
-                        <rect key="frame" x="59" y="8" width="115" height="21"/>
+                        <rect key="frame" x="50" y="8" width="115" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="115" id="5rD-pK-xNB"/>
                             <constraint firstAttribute="height" constant="21" id="x89-eb-AQt"/>
@@ -26,7 +26,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="包子＋馒头" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsT-bn-9Nj">
-                        <rect key="frame" x="59" y="32" width="155" height="21"/>
+                        <rect key="frame" x="50" y="32" width="155" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="155" id="aWF-2k-lRE"/>
                             <constraint firstAttribute="height" constant="21" id="wbr-B8-S2d"/>
@@ -52,12 +52,8 @@
                             <constraint firstAttribute="height" constant="44" id="dio-yG-ADp"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xA3-zK-I25">
-                        <rect key="frame" x="15" y="16" width="29" height="29"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="29" id="Tdk-ZY-6Ee"/>
-                            <constraint firstAttribute="width" constant="29" id="pm3-Xv-Pb5"/>
-                        </constraints>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addmeal5_3" translatesAutoresizingMaskIntoConstraints="NO" id="xA3-zK-I25">
+                        <rect key="frame" x="15" y="21" width="20" height="20"/>
                     </imageView>
                 </subviews>
                 <constraints>
@@ -84,6 +80,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="addmeal5_3" width="20" height="20"/>
         <image name="enter" width="36" height="44"/>
     </resources>
 </document>

@@ -15,6 +15,7 @@
 
 @property (nonatomic,assign) MealType mealType;
 
+
 @property (nonatomic,strong) NSDate *recordDate;
 
 @end

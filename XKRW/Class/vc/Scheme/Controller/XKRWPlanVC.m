@@ -63,7 +63,7 @@
     UILabel  *dayLabel;
     UIView *planHeaderView;
     UIView *recordBackView;
-    
+    UIView *tapView;
     NSArray *tipsArray;
     XKRWRecordEntity4_0 *recordEntity;
     NSArray  *recordScheme;
@@ -73,16 +73,13 @@
     NSInteger expendCalorie;
     // 改正习惯
     NSInteger currentHabit;
-    
     UIButton  *btnBackBounds;
     XKRWRecordMore5_3View *recordMoreView;
     XKRWRecordSingleMore5_3View *recordSingleMoreView;
-    
+    CGFloat energyViewHeight;
     // 是不是今天的方案
     BOOL isTodaysPlan;
-    
     UIView *backgroundView ;
-    
     RevisionType revisionType ;
 }
 
@@ -105,13 +102,19 @@
     if (recordBackView) {
         [[[UIApplication sharedApplication].delegate window] bringSubviewToFront:recordBackView];
     }
+    if(self.navigationController.tabBarController.tabBar.hidden == YES) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.view.height += 49;
+        });
+    }
+
 }
 
 
 - (void)viewDidAppear:(BOOL)animated {
 
     [super viewDidAppear:animated];
-    
+   
      [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
 }
 
@@ -126,12 +129,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // judge for is today's record or history,is the history record can be changed.
+    energyViewHeight = XKAppHeight == 480 ? 170 : (210 * XKRWScaleHeight);
     [self initData];
     [self initView];
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView:nil];
+    [[XKRWLocalNotificationService shareInstance] setOpenPlanNotification];
     
-    [XKRWHomePagePretreatmentManage enterHomepageDealDataAndUIWithHomepage:self];
+    if (![[XKRWUserService sharedService] getUserNickNameIsEnable]) {
+        XKRWModifyNickNameVC *nickVC = [[XKRWModifyNickNameVC alloc] init];
+        nickVC.hidesBottomBarWhenPushed = YES;
+        nickVC.notShowBackButton = YES;
+        [self.navigationController pushViewController:nickVC animated:YES];
+    }
+    
+    if (![[XKRWLocalNotificationService shareInstance] isResetMetamorphosisTourAlarmsToday]) {
+        [[XKRWLocalNotificationService shareInstance] registerMetamorphosisTourAlarms];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshEnergyCircleView:) name:EnergyCircleDataNotificationName object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTipsData) name:ReLoadTipsData object:nil];
@@ -141,7 +155,6 @@
     
    
 }
-
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -156,7 +169,9 @@
 #pragma mark - data
 
 - (void)initData {
-    
+    [self downloadWithTaskID:@"syncRemoteData" task:^{
+        [XKRWCommHelper syncRemoteData];
+    }];
     NSDate *todayDate = [NSDate today];
     if (!self.recordDate || [_recordDate compare:todayDate] == NSOrderedSame ) {
         _recordDate = [NSDate today];
@@ -170,8 +185,6 @@
             revisionType = XKRWCanNotRevision;
         }
     }
-    
-    [[XKRWTipsManage shareInstance ] isFirstOpenApp];
     [self getTipsData];
     [self getRecordAndMenuScheme];
     
@@ -222,9 +235,9 @@
         _recordAndTargetView.currentWeightLabel.textColor = XKMainSchemeColor;
         _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainSchemeColor.CGColor;
     }else{
-        _recordAndTargetView.weightLabel.textColor = colorSecondary_999999;
-        _recordAndTargetView.currentWeightLabel.textColor = colorSecondary_999999;
-        _recordAndTargetView.currentWeightLabel.layer.borderColor = colorSecondary_999999.CGColor;
+        _recordAndTargetView.weightLabel.textColor = colorSecondary_c7c7c7;
+        _recordAndTargetView.currentWeightLabel.textColor = colorSecondary_c7c7c7;
+        _recordAndTargetView.currentWeightLabel.layer.borderColor = colorSecondary_c7c7c7.CGColor;
 
     }
 }
@@ -235,23 +248,23 @@
         _recordAndTargetView.dayLabel.textColor = XKMainSchemeColor;
         _recordAndTargetView.dayLabel.layer.borderColor =XKMainSchemeColor.CGColor;
     }else{
-        _recordAndTargetView.monthLabel.textColor = colorSecondary_999999;
-        _recordAndTargetView.dayLabel.textColor = colorSecondary_999999;
-        _recordAndTargetView.dayLabel.layer.borderColor =colorSecondary_999999.CGColor;
+        _recordAndTargetView.monthLabel.textColor = colorSecondary_c7c7c7;
+        _recordAndTargetView.dayLabel.textColor = colorSecondary_c7c7c7;
+        _recordAndTargetView.dayLabel.layer.borderColor =colorSecondary_c7c7c7.CGColor;
     }
 }
 
 
 - (void)refreshTodayDataToUI {
     [self refreshEnergyCircleView:nil];
-    _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
+    _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate]];
 }
 
 - (void)refreshEnergyCircleView:(NSNotification *)notification {
     recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:_recordDate];
 
     recordScheme = [[XKRWRecordService4_0 sharedService]getSchemeRecordWithDate:_recordDate];
-    _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
+    _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate]];
     
     [self refreshWeightLabelColor];
     [self refreshCalendarLabelColor];
@@ -311,7 +324,7 @@
     backgroundView = [[UIView alloc]initWithFrame:self.view.bounds];
     
     [self.view addSubview:backgroundView];
-    planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 120 + 171 * XKAppHeight / 480.0, XKAppWidth, XKAppHeight -(120 + 171 * XKAppHeight / 480.0) -49) style:UITableViewStylePlain];
+    planTableView = [[XKRWUITableViewBase alloc]initWithFrame:CGRectMake(0, 120 + energyViewHeight, XKAppWidth, XKAppHeight -(120 + energyViewHeight) -49) style:UITableViewStylePlain];
     planTableView.delegate = self;
     planTableView.dataSource = self;
     planTableView.tag = 1000;
@@ -319,6 +332,10 @@
     planTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [planTableView registerClass:[XKRWPlanTipsCell class] forCellReuseIdentifier:XKRWPlanTipsCellIdentifier];
     [backgroundView addSubview:planTableView];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(23, - 100, 0.5, planTableView.height + 200)];
+    line.backgroundColor = XK_ASSIST_LINE_COLOR;
+    [planTableView insertSubview:line atIndex:0];
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
     [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
@@ -334,14 +351,18 @@
     [backgroundView addSubview:iFlyControl];
     
     [backgroundView addSubview:[self createPlanHeaderView]];
-    
+    tapView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, planHeaderView.height + 20)];
+    tapView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(RecordFoodViewpressCancle)];
+    [tapView addGestureRecognizer:tap];
     [self refreshCalendarLabelColor];
     [self refreshWeightLabelColor];
 }
 
 - (UIView *)createPlanHeaderView
 {
-    planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 120 + 171 * XKAppHeight / 480.0)];
+    
+    planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 120 + energyViewHeight)];
     planHeaderView.backgroundColor = [UIColor whiteColor];
     foodAndSportSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
     
@@ -408,24 +429,27 @@
     _recordAndTargetView.backgroundColor = [UIColor whiteColor];
     _recordAndTargetView.dayLabel.layer.masksToBounds = YES;
     _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
-    _recordAndTargetView.dayLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    _recordAndTargetView.dayLabel.layer.borderColor = colorSecondary_c7c7c7.CGColor;
     _recordAndTargetView.dayLabel.layer.borderWidth = 1;
     _recordAndTargetView.currentWeightLabel.layer.masksToBounds = YES;
     _recordAndTargetView.currentWeightLabel.layer.cornerRadius = 16;
-    _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    _recordAndTargetView.currentWeightLabel.layer.borderColor = colorSecondary_c7c7c7.CGColor;
     _recordAndTargetView.currentWeightLabel.layer.borderWidth = 1;
     _recordAndTargetView.dayLabel.text = [NSString stringWithFormat:@"%ld",(long)_recordDate.day];
     _recordAndTargetView.monthLabel.text = [NSString stringWithFormat:@"%ld月",(long)_recordDate.month];
-    [_recordAndTargetView.entryThinPlanButton addTarget:self action:@selector(entryTHinPlayButton:) forControlEvents:UIControlEventTouchUpInside];
+    [_recordAndTargetView.entryThinPlanButton addTarget:self action:@selector(entryStatisticAnalysize:) forControlEvents:UIControlEventTouchUpInside];
     if (isTodaysPlan) {
         _recordAndTargetView.targetWeightLabel.text = [NSString stringWithFormat:@"目标%.1fkg",[[XKRWUserService sharedService] getUserDestiWeight] /1000.f];
         _recordAndTargetView.planTimeLabel.text = [[XKRWThinBodyDayManage shareInstance] PlanDayText];
-        _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
+        _recordAndTargetView.currentWeightLabel.text =  [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate]];
+        _recordAndTargetView.entryThinPlanButton.hidden = NO;
         
     } else {
+        
+        _recordAndTargetView.entryThinPlanButton.hidden = YES;
         _recordAndTargetView.targetWeightLabel.text = @"";
         _recordAndTargetView.planTimeLabel.text = @"";
-        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]];
+        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",[[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate]];
     }
     
     [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -438,7 +462,7 @@
     [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
     [planHeaderView addSubview:_recordAndTargetView];
     
-    _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, 171 * XKAppHeight / 480.0)];
+    _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, energyViewHeight)];
     [_planEnergyView.eatEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] || !isTodaysPlan) ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     [_planEnergyView.sportEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] || !isTodaysPlan)? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
     [_planEnergyView.habitEnergyCircle setStyle:(([[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType] || !isTodaysPlan) ? XKRWEnergyCircleStyleOpened : XKRWEnergyCircleStyleNotOpen)];
@@ -524,12 +548,13 @@
     }
 }
 
-- (void)entryTHinPlayButton:(UIButton *)button {
-    XKRWThinBodyAssess_5_3VC *thinBodyVC = [[XKRWThinBodyAssess_5_3VC alloc] initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
-    thinBodyVC.hidesBottomBarWhenPushed = YES;
-    [thinBodyVC setFromWhichVC:PlanVC];
-    [self.navigationController pushViewController:thinBodyVC animated:YES];
+- (void)entryStatisticAnalysize:(UIButton *)button {
+    XKRWStatisticAnalysizeVC *VC = [[XKRWStatisticAnalysizeVC alloc] init];
+    VC.hidesBottomBarWhenPushed = YES;
+
+    [self.navigationController pushViewController:VC animated:YES];
 }
+
 
 - (void)dealTipsAction:(UIButton *)button {
     
@@ -562,6 +587,7 @@
             
         case 1004:
         {
+            [planHeaderView addSubview:tapView];
             [self addschemeOrRecordView:1 andArrowX:_planEnergyView.eatEnergyCircle.center.x];
             _recordPopView.scrollView .contentOffset = CGPointMake(XKAppWidth, 0);
             if (XKAppWidth < 375) {
@@ -593,7 +619,6 @@
 }
 
 - (void)energyCircleViewTitleClicked:(NSString *)title {
-    
     if ([title rangeOfString:@"查看今日分析"].location != NSNotFound) {
         XKRWDailyAnalysizeVC *vc = [[XKRWDailyAnalysizeVC alloc] init];
         vc.recordDate = _recordDate;
@@ -618,6 +643,7 @@
 
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
     CGFloat positionX ;
+    [planHeaderView addSubview:tapView];
     if (index == 1) {
         if (![[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType]) {
             [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];}
@@ -676,8 +702,7 @@
     }else{
         _recordPopView.date = _recordDate;
     }
- 
-  
+
     if (index == 1) {
         _recordPopView.schemeArray = _mealSchemeArray;
     }else if(index == 2){
@@ -690,7 +715,6 @@
     
     [_recordPopView initSubViews];
     [_recordPopView setsubViewUI];
-   
     
     CGRect recordFrame = _recordPopView.frame;
     recordFrame.origin.y -= recordFrame.size.height;
@@ -701,12 +725,13 @@
         if (!recordBackView){
             CGRect recFrame = CGRectMake(0, planHeaderView.frame.size.height, XKAppWidth, _recordPopView.height);
             recordBackView = [[UIView alloc] initWithFrame:recFrame];
-            recordBackView.backgroundColor = [UIColor whiteColor];
+            recordBackView.backgroundColor = [UIColor clearColor];
             recordBackView.clipsToBounds = YES;
         }
         [recordBackView addSubview:_recordPopView];
         CGRect frame = _recordPopView.frame;
         frame.origin.y = 0;
+        _recordPopView.backgroundColor = [UIColor whiteColor];
         _recordPopView.frame = frame;
         _recordPopView.delegate = self;
         [[[UIApplication sharedApplication].delegate window] addSubview:recordBackView];
@@ -793,6 +818,7 @@
 }
 
 -(void)RecordFoodViewpressCancle{
+    [tapView removeFromSuperview];
     [_planEnergyView noneSelectedCircleStyle];
     [self removeMenuView];
     [recordBackView removeFromSuperview];
@@ -893,10 +919,11 @@
 }
 
 #pragma mark XKRWRecordMore5_3View & XKRWRecordMore5_3ViewDelegate
-- (void)entryRecordVCWith:(SchemeType)schemeType {
+- (void)entryRecordVCWith:(SchemeType)schemeType andMealType:(MealType)type{
     XKRWRecordVC *recordvc = [[XKRWRecordVC alloc] init];
     recordvc.recordDate = _recordDate;
     recordvc.schemeType = schemeType;
+    recordvc.mealType = type;
     recordvc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:recordvc animated:YES];
 }
@@ -931,7 +958,7 @@
 }
 
 //调整四餐比例
--(void)pressTip_1WithIndex:(NSInteger)index{
+-(void)pressTip_1WithIndex:(NSInteger)index {
     [self removeMoreView];
     if (index == 1) {
         XKRWChangeMealPercentVC *changeMealVC = [[XKRWChangeMealPercentVC alloc] init];
@@ -941,6 +968,7 @@
         
     } else {
         XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc]initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
+        fatReasonVC.hidesBottomBarWhenPushed = YES;
         [fatReasonVC setFromWhichVC:SchemeInfoChangeVC];
         [self.navigationController pushViewController:fatReasonVC animated:YES];
         [fatReasonVC.navigationController setNavigationBarHidden:NO];
@@ -1086,6 +1114,34 @@
     }];
 }
 
+
+
+
+
+- (void)saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType)recordType andEntity:(XKRWRecordEntity4_0 *)entity
+{
+    if (![XKRWUtil isNetWorkAvailable]) {
+        [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
+        return;
+    }
+    [XKRWCui showProgressHud];
+    
+    if (recordType == XKRWRecordTypeWeight) {
+        [self downloadWithTaskID:@"recordWeight" outputTask:^id{
+            return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
+        }];
+    }else{
+        [self downloadWithTaskID:@"recordDegree" outputTask:^id{
+            return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
+        }];
+    }
+    
+    
+}
+
+#pragma --mark Network
+
+
 /**
  *  方案网络请求失败后 处理数据
  *
@@ -1100,22 +1156,19 @@
         [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
         return;
     }
-}
 
-
-- (void)saveSurroundDegreeOrWeightDataToServer:(XKRWRecordType)recordType andEntity:(XKRWRecordEntity4_0 *)entity
-{
-    if (![XKRWUtil isNetWorkAvailable]) {
-        [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
+    if ([taskID isEqualToString:@"saveHabit"]) {
+        [XKRWCui showInformationHudWithText:@"保存失败"];
         return;
     }
-    [XKRWCui showProgressHud];
-    [self downloadWithTaskID:@"recordWeightAndDegree" outputTask:^id{
-        return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
-    }];
+    if ([taskID isEqualToString:@"syncRemoteData"]) {
+        KMHeaderTips *tipView = [[KMHeaderTips alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 64) text:@"网络不稳定，历史数据加载失败，将于下次启动导入。" type:KMHeaderTipsTypeDefault];
+        [self.view addSubview:tipView];
+        [tipView startAnimationWithStartOrigin:CGPointMake(0, -tipView.height + 64) endOrigin:CGPointMake(0, 120)];
+    }
 }
 
-#pragma --mark Network
+
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
     if ([taskID isEqualToString:@"search"]){
         [XKRWCui hideProgressHud];
@@ -1220,7 +1273,6 @@
     }
     
     if ([taskID isEqualToString:@"saveHabit"]) {
-        [XKRWCui showInformationHudWithText:@"保存成功"];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectHabit];
         return;
         
@@ -1239,15 +1291,23 @@
     }
     
     //保存体重围度成功
-    if ([taskID isEqualToString:@"recordWeightAndDegree"]) {
+    if ([taskID isEqualToString:@"recordDegree"]) {
+        [XKRWCui hideProgressHud];
+        return;
+    }
+    
+    if ([taskID isEqualToString:@"recordWeight"]) {
         [XKRWCui hideProgressHud];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
         CGFloat weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate];
         _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",weight];
         [_recordAndTargetView updateConstraints];
         [_recordAndTargetView.currentWeightLabel setNeedsDisplay];
-        return;
+        [[XKRWLocalNotificationService shareInstance] setRecordWeightNotification];
+
     }
+    
 }
 
 - (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication {

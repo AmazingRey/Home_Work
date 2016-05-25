@@ -17,7 +17,7 @@
                         <constraint firstAttribute="height" constant="21" id="b7t-zH-c2T"/>
                         <constraint firstAttribute="width" constant="127" id="kMQ-aO-HzC"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -37,7 +37,7 @@
                                 <constraint firstAttribute="width" constant="10" id="6Qz-43-Xa5"/>
                                 <constraint firstAttribute="height" constant="36" id="RBD-tG-jJa"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
                             <color key="textColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -99,7 +99,7 @@
                                 <constraint firstAttribute="width" constant="10" id="qhj-il-gCq"/>
                                 <constraint firstAttribute="height" constant="36" id="uuy-k3-hLc"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="8"/>
                             <color key="textColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -158,11 +158,19 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="94L-BL-St4">
-                    <rect key="frame" x="0.0" y="55" width="375" height="1"/>
+                    <rect key="frame" x="0.0" y="55" width="375" height="0.0"/>
                     <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="height" id="7mz-57-spi"/>
                         <constraint firstAttribute="height" constant="1" id="Xth-RJ-l26"/>
+                        <constraint firstAttribute="height" constant="0.5" id="rdf-hI-Dx1"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="7mz-57-spi"/>
+                            <exclude reference="Xth-RJ-l26"/>
+                        </mask>
+                    </variation>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="365-Yb-eMG">
                     <rect key="frame" x="78" y="0.0" width="219" height="56"/>

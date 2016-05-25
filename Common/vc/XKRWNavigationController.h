@@ -11,7 +11,7 @@
 @interface XKRWNavigationController : UINavigationController
 {
     BOOL changeAlpha;
-    UIImageView *imageView;
+//    UIImageView *imageView;
 }
 
 

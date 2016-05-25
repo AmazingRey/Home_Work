@@ -137,7 +137,7 @@
     [segmentCtl addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:segmentCtl];
     
-    recentRecordOrCollectTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, segmentCtl.bottom+10, XKAppWidth, XKAppHeight - 50) style:UITableViewStylePlain];
+    recentRecordOrCollectTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, segmentCtl.bottom+10, XKAppWidth, XKAppHeight - segmentCtl.bottom - 10 - 49) style:UITableViewStylePlain];
     recentRecordOrCollectTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     recentRecordOrCollectTableView.delegate = self;
     recentRecordOrCollectTableView.dataSource = self;
@@ -333,10 +333,9 @@
 
         } else if ([tableName isEqualToString:@"sport_record"]) {
             XKRWCollectionEntity *entity = recentRecordOrCollectArray[indexPath.row];
-            XKRWSportEntity *detailSportEntity = [[XKRWSportService shareService] syncQuerySportWithId:(int)entity.originalId];
+
             [recentRecordCell setTitle:entity.collectName logoURL:entity.imageUrl clickDetail:^(NSIndexPath * sportIndexPath) {
                 XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc] init];
-                vc.sportEntity = detailSportEntity;
                 vc.sportID = (int)entity.originalId;
                 vc.sportName = entity.collectName;
                 vc.isPresent = NO;
@@ -346,7 +345,6 @@
             } clickRecord:^(NSIndexPath * sportIndexPath) {
                 XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
                 addVC.sportID = (int)entity.originalId;
-                addVC.sportEntity = detailSportEntity;
                 addVC.recordDate = _recordDate;
                 addVC.isPresent = YES;
                 XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:addVC];

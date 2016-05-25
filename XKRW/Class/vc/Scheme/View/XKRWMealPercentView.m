@@ -12,10 +12,11 @@
 #import "XKRWAlgolHelper.h"
 
 @implementation XKRWMealPercentView
-- (instancetype)initWithFrame:(CGRect)frame currentValue:(NSNumber *)value
+- (instancetype)initWithFrame:(CGRect)frame currentValue:(NSNumber *)value totalKcal:(NSInteger)totalKcal
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _totalKcal = totalKcal;
         _startValue = [value floatValue]/100;
         _currentPerCent = value;
          [self addMySlider];
@@ -53,8 +54,8 @@
     _btnLock = [UIButton buttonWithType:UIButtonTypeCustom];
     _btnLock.frame = CGRectMake(0, 0, 30, 30);
     [_btnLock addTarget:self action:@selector(actBtnLock) forControlEvents:UIControlEventTouchUpInside];
-    [_btnLock setImage:[UIImage imageNamed:@"lock"] forState:UIControlStateNormal];
-    [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateSelected];
+    [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
+    [_btnLock setImage:[UIImage imageNamed:@"lock"] forState:UIControlStateSelected];
     [self addSubview:_btnLock];
     
     _imgHead = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -70,8 +71,9 @@
     _labNum.textAlignment = NSTextAlignmentCenter;
     _labNum.textColor = colorSecondary_999999;
     _labNum.font = [UIFont systemFontOfSize:15];
-    float value = _currentPerCent.integerValue / 100.0f;
-    _labNum.text = [NSString stringWithFormat:@"%.0fkcal",ceilf(value * [XKRWAlgolHelper dailyIntakeRecomEnergy]) ];
+    float num = _totalKcal *_currentPerCent.integerValue/100.f + .5;
+    NSString *str = [NSString stringWithFormat:@"%.0fkcal",floorf(num)];
+    _labNum.text = str;
     [self addSubview:_labNum];
     
     _labSeperate = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 1)];
@@ -94,14 +96,14 @@
 
 -(void)actBtnLock{
     if (_lock) {
-        [_btnLock setImage:[UIImage imageNamed:@"lock"] forState:UIControlStateNormal];
+        [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
         _lock = NO;
         self.slider.userInteractionEnabled = !_lock;
         if ([self.delegate respondsToSelector:@selector(lockpercentView:withPercent:lock:)]) {
             [self.delegate lockpercentView:self.slider.tag withPercent:ceilf(_startValue*100)lock:YES];
         }
     }else{
-        [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
+        [_btnLock setImage:[UIImage imageNamed:@"lock"] forState:UIControlStateNormal];
         if ([self.delegate respondsToSelector:@selector(lockpercentView:withPercent:lock:)]) {
             [self.delegate lockpercentView:self.slider.tag withPercent:_currentPerCent.integerValue lock:_lock];
         }
@@ -111,7 +113,7 @@
 }
 
 -(void)cancleBtnLock{
-    [_btnLock setImage:[UIImage imageNamed:@"lock"] forState:UIControlStateNormal];
+    [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
     
     if ([self.delegate respondsToSelector:@selector(unlockPercentView:)]) {
         [self.delegate unlockPercentView:self.slider.tag];
@@ -121,7 +123,7 @@
 }
 
 -(void)cancleBtnLockWithoutDelegate{
-    [_btnLock setImage:[UIImage imageNamed:@"lock"] forState:UIControlStateNormal];
+    [_btnLock setImage:[UIImage imageNamed:@"lock1"] forState:UIControlStateNormal];
     _lock = NO;
     self.slider.userInteractionEnabled = !_lock;
 }

@@ -421,20 +421,23 @@ static BOOL canUpdatePlan = YES;
 -(NSInteger)getBirthday {
     return _currentUser.birthDay;
 }
-//获得当前用户年龄
--(NSInteger)getAge {
+
+//设置年龄
+-(void)setAge {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
     [formatter setDateFormat:@"yyyy"];
-    NSTimeInterval birthday = [self getBirthday] -86400;
-    int32_t age = [formatter stringFromDate:[NSDate date]].intValue - [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:birthday]].intValue - 1;
-    [formatter setDateFormat:@"MMdd"];
-    BOOL isPassBirthday = [formatter stringFromDate:[NSDate date]].intValue > [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:birthday]].intValue;
-    if (isPassBirthday) {
-        age += 1;
-    }
-    return age;
+    NSTimeInterval birthday = [self getBirthday];
+    int32_t userage = [formatter stringFromDate:[NSDate date]].intValue - [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:birthday]].intValue ;
+    _currentUser.age = userage;
+
 }
+
+//获得当前用户年龄
+-(NSInteger)getAge {
+    return _currentUser.age;
+}
+
 //设置当前用户身高
 -(void)setStature:(NSInteger)stature {
     _currentUser.height = stature;
@@ -1120,7 +1123,7 @@ static BOOL canUpdatePlan = YES;
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *birthday = [formatter dateFromString:dic[@"birthday"]];
     [self setBirthday:[birthday timeIntervalSince1970]];
-    
+    [self setAge];
     
     //设置体力活动水平
     [self setUserLabor:[[dic objectForKey:@"labor_level"] intValue]];
@@ -1344,6 +1347,7 @@ static BOOL canUpdatePlan = YES;
 }
 
 - (BOOL)checkUserInfoIsComplete{
+    [self setAge];
     NSInteger age = [self getAge];
     NSInteger height = [self getUserHeight];
     NSInteger labor =   [self getUserLabor];

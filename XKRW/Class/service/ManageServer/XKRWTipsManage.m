@@ -63,8 +63,8 @@ static XKRWTipsManage *shareInstance;
         
         // 2.所有用户初次进入v5.3主页，依次显示下列Tips：
         if (isFirstOpenApp) {
-            NSArray *tipsTextArray = @[@"右上角是你的体重中心，点击可以更新体重、围度，可以查看体重曲线。PS.长按可以快捷记录体重哦！",@"遇到使用问题或者需要帮助，可长按左下角的“计划”按钮哦！"];
-            NSArray *tipsTypeArray = @[@0,@0];
+            NSArray *tipsTextArray = @[@"点击右上角，可以记录体重、围度和查看体重曲线。PS.长按右上角，可以快捷记录体重哦！",@"遇到使用问题或者需要帮助，可长按左下角的“计划”按钮哦！"];
+            NSArray *tipsTypeArray = @[@0];
             
             for (int i = 0; i < [tipsTypeArray count]; i++) {
                 XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
@@ -88,15 +88,16 @@ static XKRWTipsManage *shareInstance;
         }
         
         //6.每天（非计划第1天和最后一天时显示）：
-        NSLog(@"%ld",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]);
-        if([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] != 1 && [[XKRWUserService sharedService ]getInsisted] != 1 && [XKRWAlgolHelper remainDayToAchieveTarget] != 0) {
+    
+        if([XKRWAlgolHelper newSchemeStartDayToAchieveTarget] != 1 && [[XKRWUserService sharedService ]getInsisted] != 1 && [XKRWAlgolHelper remainDayToAchieveTarget] > 0 && ([[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]] != nil)) {
             
             XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
             entity.showType = 0;
             entity.tipsText = [NSString stringWithFormat:@"今天是瘦身计划第%ld天，距离计划结束剩%ld天，距离目标体重还需减重%.1fkg",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget],(long)[XKRWAlgolHelper remainDayToAchieveTarget],([[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]]*1000 - [[XKRWUserService sharedService]getUserDestiWeight])/1000.f ];
             [tipsEntityArray addObject:entity];
-            
-            
+        }
+        
+        if(([[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]] != nil)){
             //随机Tips 数据处理
             NSArray *tipsTextArray = @[@"按照推荐食谱吃可以直接达成饮食目标哦！",@"瘦身计划执行到一周时，瘦瘦会为你进行一周分析哦！",@"你的瘦身计划会根据体重变化调整，快去记录你的最新体重吧！",@"左上角是你的瘦身日历，可以查看记录过的饮食和运动。"];
             NSArray *tipsTypeArray = @[@4,@0,@0,@0];
@@ -142,7 +143,7 @@ static XKRWTipsManage *shareInstance;
             if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType]) {
                 XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
                 entity.showType = 0;
-                entity.tipsText = [NSString stringWithFormat:@"今日建议摄入热量%.0f~%.0fKcal，记录饮食或执行推荐食谱可以帮助你合理的控制摄入热量",[XKRWAlgolHelper minRecommendedValueWith:[[XKRWUserService sharedService] getSex]],[XKRWAlgolHelper dailyIntakeRecomEnergyOfDate:date]];
+                entity.tipsText = [NSString stringWithFormat:@"今日建议摄入热量%.0f~%dKcal，记录饮食或执行推荐食谱可以帮助你合理的控制摄入热量",[XKRWAlgolHelper minRecommendedValueWith:[[XKRWUserService sharedService] getSex]],(int)[XKRWAlgolHelper dailyIntakeRecomEnergyOfDate:date]];
                 [tipsEntityArray addObject:entity];
                 
             }

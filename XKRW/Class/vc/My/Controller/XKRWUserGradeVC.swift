@@ -34,6 +34,10 @@ class XKRWUserGradeVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
     }
     
     func initData(){
+        if !XKRWUtil.isNetWorkAvailable() {
+            XKRWCui.showAlertWithMessage("当前网络不可用")
+            return;
+        }
         if(entity == nil){
             entity = XKRWUserHonorEnity()
             self.downloadWithTaskID("getHonorData", outputTask: { () -> AnyObject! in
@@ -45,7 +49,6 @@ class XKRWUserGradeVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
     //MARK:  Network Deal
     
     override func didDownloadWithResult(result: AnyObject!, taskID: String!) {
-      print(result)
         if(taskID == "getHonorData"){
             let data:NSDictionary = result.objectForKey("data") as! NSDictionary
             entity?.nowDegree = data.objectForKey("now") as! String

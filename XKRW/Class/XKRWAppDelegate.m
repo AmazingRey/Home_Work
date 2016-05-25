@@ -50,7 +50,6 @@
 #import <SMS_SDK/SMSSDK.h>
 
 @implementation XKRWAppDelegate
-
 #pragma mark - 推送
 #pragma mark -
 
@@ -59,10 +58,10 @@
     //清理图标 数字
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 
-    NSInteger keyValue = [notification.userInfo[@"type"] integerValue];
+    NSString *keyValue = notification.userInfo[@"alertName"];
     NSDictionary * dicTemp  = notification.userInfo;
-    
-      if (!keyValue) {
+    NSInteger type = [[dicTemp valueForKey:@"type"] integerValue];
+      if (keyValue.length || !type) {
         return;
     }
     
@@ -77,15 +76,15 @@
 
     }
     
-    if (keyValue != 111) {// type = 111 蜕变天数推送
+    if (keyValue == nil || keyValue.length == 0) {// type = 111 蜕变天数推送
         [XKCuiUtil showAlertWithTitle:[dicTemp objectForKey:@"label"] message:[dicTemp objectForKey:@"message"] okButtonTitle:@"OK" onOKBlock:^{
             AudioServicesDisposeSystemSoundID(soundID);
-            if (keyValue == 0 || (keyValue == eAlarmWalk) || (keyValue == eAlarmHabit)) {
-                return;
-            }
-            else{
-               
-            }
+//            if ( (type == eAlarmWalk) || (type == eAlarmHabit)) {
+//                return;
+//            }
+//            else{
+//               
+//            }
         }];
         
     } else {
@@ -144,6 +143,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.timeFormatterOne = [[NSDateFormatter alloc] init];
+    self.timeFormatterOne.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    [self.timeFormatterOne setDateFormat:@"yyyy-MM-dd"];
+    
+    self.timeFormatterTwo = [[NSDateFormatter alloc] init];
+    self.timeFormatterTwo.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    [self.timeFormatterTwo setDateFormat:@"yyyyMMdd"];
+    
     // 用来打印数据库路径
     XKLog(@"+++++%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]);
     

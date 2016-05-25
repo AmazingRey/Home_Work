@@ -64,6 +64,7 @@
 -(void)pressedRightAction{
     XKRWStatisticAnalysizeVC *vc =  [[XKRWStatisticAnalysizeVC alloc]init];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.fromVC = DailyAnalysisVC;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

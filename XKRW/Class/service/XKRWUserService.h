@@ -182,6 +182,9 @@ typedef NS_ENUM(NSInteger, XKRWExpType) {
 -(NSInteger)getUserHipline;
 //设置用户头像
 -(void)setUserAvatar:(UIImage *)avator;
+
+//设置年龄
+-(void)setAge;
 /**
  *  设置用户背景图片
  *

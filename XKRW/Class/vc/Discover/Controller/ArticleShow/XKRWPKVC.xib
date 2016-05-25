@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="XKRWPKVC">
@@ -111,22 +111,6 @@
                                         <constraint firstAttribute="width" constant="20" id="fPi-a6-k0t"/>
                                     </constraints>
                                 </imageView>
-                                <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DC1-PI-bHq">
-                                    <rect key="frame" x="196" y="393" width="80" height="25"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="25" id="B6Y-UD-9wh"/>
-                                        <constraint firstAttribute="width" constant="80" id="mAC-5v-aig"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <state key="normal" title="支持反方">
-                                        <color key="titleColor" red="1" green="0.40830984999999997" blue="0.33684335679999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="pkAction:" destination="-1" eventType="touchUpInside" id="a1J-cH-ITZ"/>
-                                    </connections>
-                                </button>
                                 <button opaque="NO" tag="1000" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFs-iA-MxZ">
                                     <rect key="frame" x="41" y="393" width="80" height="25"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -197,6 +181,22 @@ Cg
                                     <color key="textColor" red="0.20392156862745098" green="0.20392156862745098" blue="0.20392156862745098" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DC1-PI-bHq">
+                                    <rect key="frame" x="196" y="393" width="80" height="25"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="25" id="B6Y-UD-9wh"/>
+                                        <constraint firstAttribute="width" constant="80" id="mAC-5v-aig"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <state key="normal" title="支持反方">
+                                        <color key="titleColor" red="1" green="0.40830984999999997" blue="0.33684335679999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="pkAction:" destination="-1" eventType="touchUpInside" id="a1J-cH-ITZ"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -210,7 +210,6 @@ Cg
                                 <constraint firstAttribute="trailing" secondItem="4wh-e5-bdx" secondAttribute="trailing" constant="15" id="DJy-vt-1NA"/>
                                 <constraint firstAttribute="centerX" secondItem="7dm-bw-f1B" secondAttribute="centerX" constant="0.5" id="FLD-Fr-m7r"/>
                                 <constraint firstItem="pZt-W6-GJg" firstAttribute="top" secondItem="9QJ-9x-G0G" secondAttribute="bottom" constant="3" id="M5o-ch-6hh"/>
-                                <constraint firstItem="uFs-iA-MxZ" firstAttribute="top" secondItem="7dm-bw-f1B" secondAttribute="bottom" constant="5" id="NOw-tv-L0d"/>
                                 <constraint firstItem="4wh-e5-bdx" firstAttribute="top" secondItem="lNk-2T-BeD" secondAttribute="bottom" constant="3" id="OfE-iU-Su9"/>
                                 <constraint firstAttribute="trailing" secondItem="Whh-dY-vqi" secondAttribute="trailing" constant="15" id="PhJ-AF-U2x"/>
                                 <constraint firstItem="7dm-bw-f1B" firstAttribute="leading" secondItem="pZt-W6-GJg" secondAttribute="trailing" constant="16" id="SoN-0v-K3I"/>
@@ -219,6 +218,7 @@ Cg
                                 <constraint firstItem="vHV-wF-mks" firstAttribute="leading" secondItem="2wb-cH-Vpa" secondAttribute="leading" constant="15" id="Wsb-qD-j7C"/>
                                 <constraint firstItem="SWr-jd-Ecb" firstAttribute="leading" secondItem="KDx-LB-Gyc" secondAttribute="trailing" constant="-225" id="ZKS-ai-PQ2"/>
                                 <constraint firstAttribute="trailing" secondItem="SWr-jd-Ecb" secondAttribute="trailing" constant="15" id="Zgd-tC-BFc"/>
+                                <constraint firstItem="uFs-iA-MxZ" firstAttribute="top" secondItem="7dm-bw-f1B" secondAttribute="bottom" constant="5" id="beo-Ae-VIS"/>
                                 <constraint firstAttribute="height" constant="568" id="bje-P3-JSg"/>
                                 <constraint firstAttribute="bottom" secondItem="vHV-wF-mks" secondAttribute="bottom" constant="17" id="e7t-4E-hHC"/>
                                 <constraint firstAttribute="trailing" secondItem="iYR-pW-Z9Q" secondAttribute="trailing" constant="15" id="eux-di-ZyC"/>

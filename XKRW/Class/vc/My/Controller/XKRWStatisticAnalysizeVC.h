@@ -10,5 +10,5 @@
 
 @interface XKRWStatisticAnalysizeVC : XKRWBaseVC
 
-
+@property (assign, nonatomic) FromWhichVC fromVC;
 @end

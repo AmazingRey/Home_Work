@@ -209,6 +209,7 @@
  *  @return 方案记录实体对象数组
  */
 - (NSArray *)getSchemeRecordWithDate:(NSDate *)date;
+- (NSArray *)getSchemeRecordWithDates:(NSArray *)dateArray;
 /**
  *  Get scheme record, use Scheme ids to search; If search result is null, will create a new scheme record for return
  *
@@ -303,6 +304,7 @@
  *  获取当天所有记录
  */
 - (XKRWRecordEntity4_0 *)getAllRecordOfDay:(NSDate *)date;
+- (NSArray *)getAllRecordOfDays:(NSArray *)dateArray;
 /**
  *  获取当天体重记录
  */
@@ -316,6 +318,7 @@
  *  获取当天其他记录（除去饮食和运动记录）
  */
 - (XKRWRecordEntity4_0 *)getOtherInfoOfDay:(NSDate *)date;
+- (NSArray *)getOtherInfoOfDays:(NSArray *)dateArray;
 /**
  *  获取记录历史（无重复）
  */
@@ -430,7 +433,7 @@
  *  @return 卡路里
  */
 - (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDate:(NSDate *)date;
-
+- (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDates:(NSArray *)dateArray;
 /**
  *  获取某一天 用户运动以及运动推荐信息
  *

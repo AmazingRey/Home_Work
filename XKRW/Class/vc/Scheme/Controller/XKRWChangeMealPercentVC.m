@@ -35,7 +35,7 @@
     XKRWMealPercentView *autoLockView;
     //自动解锁XKRWMealPercentView
     XKRWMealPercentView *autoUnLockView;
-    CGFloat dailyMax;
+    NSInteger dailyMax;
 }
 
 - (void)viewDidLoad {
@@ -120,7 +120,7 @@
 
 -(XKRWMealPercentView *)breakFastView{
     if (_breakFastView == nil) {
-        _breakFastView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, 0, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3001]]];
+        _breakFastView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, 0, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3001]] totalKcal:dailyMax];
         _breakFastView.slider.tag = 3001;
         _breakFastView.imgHead.image = [UIImage imageNamed:@"breakfast5_3"];
         _breakFastView.labTitle.text = @"早餐";
@@ -133,7 +133,7 @@
 
 -(XKRWMealPercentView *)lunchView{
     if (_lunchView == nil) {
-        _lunchView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3002]]];
+        _lunchView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3002]] totalKcal:dailyMax];
         _lunchView.slider.tag = 3002;
         _lunchView.imgHead.image = [UIImage imageNamed:@"lunch5_3"];
         _lunchView.labTitle.text = @"午餐";
@@ -146,7 +146,7 @@
 
 -(XKRWMealPercentView *)dinnerView{
     if (_dinnerView == nil) {
-        _dinnerView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight*2, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3003]]];
+        _dinnerView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight*2, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3003]] totalKcal:dailyMax];
         _dinnerView.slider.tag = 3003;
         _dinnerView.imgHead.image = [UIImage imageNamed:@"dinner5_3"];
         _dinnerView.labTitle.text = @"晚餐";
@@ -160,7 +160,7 @@
 
 -(XKRWMealPercentView *)addmealView{
     if (_addmealView == nil) {
-        _addmealView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight*3, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3004]]];
+        _addmealView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, SlideViewHeight*3, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3004]] totalKcal:dailyMax];
         _addmealView.slider.tag = 3004;
         _addmealView.imgHead.image = [UIImage imageNamed:@"addmeal5_3"];
         _addmealView.labTitle.text = @"加餐";
@@ -429,7 +429,7 @@
     if (!view.lock) {
         view.currentPerCent = [NSNumber numberWithInteger:percent];
         view.labPercent.text = [NSString stringWithFormat:@"%ld%%",(long)percent];
-        view.labNum.text = [NSString stringWithFormat:@"%.0fkcal",ceilf(value * dailyMax) ];
+        view.labNum.text = [NSString stringWithFormat:@"%.0fkcal",ceilf(dailyMax *percent/100)];
         [view.slider setValue:value animated:YES];
     }
 }

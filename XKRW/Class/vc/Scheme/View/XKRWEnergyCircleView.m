@@ -43,7 +43,7 @@
         _shadowView = [[UIImageView alloc] initWithFrame:self.bounds];
         [self addSubview:_shadowView];
         
-        _backgroundCircle = [[XKRWAnimationCircle alloc] initWithFrame:CGRectMake(_shadowView.left + 6* scale, _shadowView.top + 6 * scale, _shadowView.width - 12 * scale, _shadowView.height - 12 * scale)];
+        _backgroundCircle = [[XKRWAnimationCircle alloc] initWithFrame:CGRectMake(_shadowView.left + 8* scale, _shadowView.top + 8 * scale, _shadowView.width - 16 * scale, _shadowView.height - 16 * scale)];
         _backgroundCircle.circleWidth = 4.f * scale;
         _backgroundCircle.circleProgressColor = colorSecondary_c7c7cc;
         [_backgroundCircle setPathStartAngle:(- 3 * M_PI_2 + M_PI_2 / 2) endAngle:M_PI_2/2];
@@ -251,10 +251,10 @@
     
     if (_style == XKRWEnergyCircleStyleSelected) {
         _stateImageView.image = _stateImage;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [_stateImageView startAnimating];
             
-        });
+//        });
 
     } else {
         _stateImageView.hidden = YES;

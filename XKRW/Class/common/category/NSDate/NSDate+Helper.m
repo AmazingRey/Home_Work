@@ -29,6 +29,7 @@
 //
 
 #import "NSDate+Helper.h"
+#import "XKRWAppDelegate.h"
 
 @implementation NSDate (Helper)
 
@@ -188,11 +189,23 @@
 }
 
 - (NSString *)stringWithFormat:(NSString *)format {
+    
+    if ([format isEqualToString:@"yyyy-MM-dd"]) {
+        XKRWAppDelegate *appdel = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
+        NSString *timeStr1 = [appdel.timeFormatterOne stringFromDate:self];
+        return timeStr1;
+    }else if ([format isEqualToString:@"yyyyMMdd"]){
+        XKRWAppDelegate *appdel = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
+        NSString *timeStr2 = [appdel.timeFormatterTwo stringFromDate:self];
+        return timeStr2;
+    }
+    
 	NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     outputFormatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
 	[outputFormatter setDateFormat:format];
-	NSString *timestamp_str = [outputFormatter stringFromDate:self];
-	return timestamp_str;
+    NSString *timestamp_str = [outputFormatter stringFromDate:self];
+    return timestamp_str;
+
 }
 
 - (NSString *)string {

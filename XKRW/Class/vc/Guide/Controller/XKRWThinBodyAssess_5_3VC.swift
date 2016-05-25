@@ -32,7 +32,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
         self.loadDataAndReload()
         scrollView.contentOffset = CGPointZero
         
-        self.navigationController!.setNavigationBarHidden(false, animated: animated)
+//        self.navigationController!.setNavigationBarHidden(false, animated: animated)
     }
     
     func makeHeadLabelData() -> String {
@@ -131,6 +131,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
             
             scrollView.addSubview(myFirstButton)
         }
+        self.addNaviBarBackButton()
         scrollView.contentSize = scrollContentSize
     }
     func setFromWhichVC(type:FromWhichVC){
@@ -144,11 +145,11 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
     func doClickNaviBarRightButton(){
         if (XKUtil.isNetWorkAvailable() == false) {
             XKRWCui.showInformationHudWithText("没有网络，请检查网络设置")
-            return;
+        }else{
+            let schemeInfoVC:XKRWChangeSchemeInfoVC = XKRWChangeSchemeInfoVC()
+            self.navigationController?.pushViewController(schemeInfoVC, animated: true);
         }
         
-        let schemeInfoVC:XKRWChangeSchemeInfoVC = XKRWChangeSchemeInfoVC()
-        self.navigationController?.pushViewController(schemeInfoVC, animated: true);
     }
     
     func pressed(sender: UIButton!) {

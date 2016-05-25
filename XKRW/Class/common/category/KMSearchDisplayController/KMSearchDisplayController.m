@@ -88,6 +88,8 @@
         if (!self.navigationController.tabBarController.tabBar.isHidden) {
             self.needHideTabbar = YES;
             self.navigationController.tabBarController.tabBar.hidden = YES;
+                        
+            self.contentsController.view.height += 49;
         }
     }
     
@@ -123,6 +125,7 @@
         if (self.needHideTabbar) {
             self.navigationController.tabBarController.tabBar.hidden = NO;
             self.needHideTabbar = NO;
+            self.contentsController.view.height -= 49;
         }
         
     }

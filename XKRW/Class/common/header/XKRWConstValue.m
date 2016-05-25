@@ -164,10 +164,10 @@ NSString *const kSearchURL = @"/content/mixSearch/";
 
 #if DEBUG
 
-NSString *const kNewServer = @"http://115.29.175.210:8009/"; //测试服务器地址
+//NSString *const kNewServer = @"http://115.29.175.210:8009/"; //测试服务器地址
 
 //NSString *const kNewServer = @"http://112.124.53.222/";
-//NSString *const kNewServer = @"http://115.29.205.235/";
+NSString *const kNewServer = @"http://115.29.205.235/";
 
 #else
 

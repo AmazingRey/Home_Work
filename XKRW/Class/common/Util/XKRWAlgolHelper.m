@@ -44,18 +44,28 @@
 }
 
 + (float)BM_of_date:(NSDate *)date {
-    
     //体重
-    float weight = [[XKRWWeightService shareService] getWeightRecordWithDate:date];
-    if (weight == 0) {
-        weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:date];
-    }
+    float weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:date];
     //身高
     float height = [[XKRWUserService sharedService] getUserHeight];
     NSInteger age = [[XKRWUserService sharedService] getAge];
     XKSex sex = [[XKRWUserService sharedService] getSex];
     
     return [[self class] BM_with_weight:weight height:height age:age sex:sex];
+}
+
++ (NSArray *)BMs_of_dates:(NSArray *)dateArray{
+    //身高
+    float height = [[XKRWUserService sharedService] getUserHeight];
+    NSInteger age = [[XKRWUserService sharedService] getAge];
+    XKSex sex = [[XKRWUserService sharedService] getSex];
+    NSMutableArray *arrRes = [NSMutableArray array];
+    //体重
+    for (NSDate *date in dateArray) {
+        float weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:date];
+        [arrRes addObject:[NSNumber numberWithFloat:[[self class] BM_with_weight:weight height:height age:age sex:sex]]];
+    }
+    return arrRes;
 }
 
 + (float)BM_with_weight:(float)weight height:(float)height age:(NSInteger)age sex:(XKSex)sex {
@@ -114,9 +124,13 @@
     return  dailyIntakEnergy;
 }
 
-+ (float) dailyIntakEnergyOfDate:(NSDate *)date
++ (float)dailyIntakEnergyOfDates:(NSArray *)dateArray
 {
-    float dailyIntakEnergy  = [self dailyIntakEnergyWithBM:[self BM_of_date:date] PAL:[self PAL]];
+    float dailyIntakEnergy  = 0;
+    NSArray *bmArray = [self BMs_of_dates:dateArray];
+    for (NSNumber *bm in bmArray) {
+       dailyIntakEnergy += [self dailyIntakEnergyWithBM:bm.floatValue PAL:[self PAL]];
+    }
     return dailyIntakEnergy;
 }
 
@@ -150,7 +164,27 @@
     
     return [[self class] dailyIntakeRecommendEnergyWithBM:[[self class] BM_of_date:date] PAL:[[self class] PAL] sex:sex age:age];
 }
+/**
+ *  初始体重的方案建议值
+ */
++ (float)dailyIntakEnergyOfOrigin {
+    float dailyIntakEnergy = [[self class] dailyIntakEnergyWithBM:[[self class] BM_of_origin] PAL:[[self class] PAL]];
+    return  dailyIntakEnergy;
+}
 
+/**
+ *  date 区间的方案建议值
+ */
++ (float)dailyIntakeRecomEnergyOfDates:(NSArray *)dateArray {
+    XKSex sex = [[XKRWUserService sharedService] getSex];
+    NSInteger age = [[XKRWUserService sharedService] getAge];
+    float res = 0;
+    NSArray *bmArray = [self BMs_of_dates:dateArray];
+    for (NSNumber *bm in bmArray) {
+        res += [[self class] dailyIntakeRecommendEnergyWithBM:bm.floatValue PAL:[[self class] PAL] sex:sex age:age];
+    }
+    return res;
+}
 /**
  *  初始体重的方案建议值
  */
@@ -347,6 +381,16 @@
                                                               sex:sex];
 }
 
++ (float)dailyConsumeSportEnergyOfOrigin{
+    XKPhysicalLabor physicalLevel = [[XKRWUserService sharedService] getUserLabor];
+    XKSex sex = [[XKRWUserService sharedService] getSex];
+    
+    return [[self class] dailyConsumeSportEnergyWithPhysicalLabor:physicalLevel
+                                                               BM:[[self class] BM_of_origin]
+                                                              PAL:[[self class] PAL]
+                                                              sex:sex];
+}
+
 + (float)dailyConsumeSportEnergyV5_3OfDate:(NSDate *)date {
     NSDate *today = [NSDate today];
     NSDate *registerDate_offset_4 = [[NSDate dateFromString:[[XKRWUserService sharedService] getREGDate]]  offsetDay:5];
@@ -376,6 +420,22 @@
                                                               PAL:[[self class] PAL]
                                                               sex:sex];
     
+}
+
++ (float)dailyConsumeSportEnergyOfDates:(NSArray *)dateArray {
+    
+    XKPhysicalLabor physicalLevel = [[XKRWUserService sharedService] getUserLabor];
+    XKSex sex = [[XKRWUserService sharedService] getSex];
+    
+    float res = 0;
+    NSArray *bmArray = [self BMs_of_dates:dateArray];
+    for (NSNumber *bm in bmArray) {
+        res += [[self class] dailyConsumeSportEnergyWithPhysicalLabor:physicalLevel
+                                                                   BM:bm.floatValue
+                                                                  PAL:[[self class] PAL]
+                                                                  sex:sex];
+    }
+    return res;
 }
 
 + (float)dailyConsumeSportEnergyWithPhysicalLabor:(XKPhysicalLabor)labor BM:(float)BM PAL:(float)PAL sex:(XKSex)sex {

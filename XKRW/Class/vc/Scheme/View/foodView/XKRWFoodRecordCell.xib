@@ -46,7 +46,7 @@
                             <constraint firstAttribute="height" constant="60" id="r7f-2n-ONO"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search_btn_fooddetails.png" translatesAutoresizingMaskIntoConstraints="NO" id="rz8-aT-7g8">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="search_btn_fooddetails.png" translatesAutoresizingMaskIntoConstraints="NO" id="rz8-aT-7g8">
                         <rect key="frame" x="85" y="50" width="64" height="11"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AZI-RW-msF">

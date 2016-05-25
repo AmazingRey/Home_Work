@@ -86,7 +86,8 @@
             label.font = XKDefaultFontWithSize(14);
             label.text = titles[i];
             [label sizeToFit];
-            label.center = CGPointMake(separateWidth *(i + 1) + circleWidth*(i*2 + 1)/2.0, self.height * 7 / 8.0);
+            label.center = CGPointMake(separateWidth *(i + 1) + circleWidth*(i*2 + 1)/2.0,0);
+            label.top = _eatEnergyCircle.bottom + 15 * XKRWScaleHeight;
             [self addSubview:label];
         }
         

@@ -17,6 +17,8 @@
 {
     BOOL      _canShowDetail;       /**<能否显示全部内容*/
     float     _viewHeight;          /**<动态页面内容的高度*/
+    
+    CGFloat   _xbdhLabelHeight ;
 }
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pkImageViewHeight;
@@ -54,8 +56,6 @@
         _ffButton.layer.borderColor = [UIColor colorFromHexString:@"#c6c7cb"].CGColor;
         [_zfButton setTitleColor:[UIColor colorFromHexString:@"#c6c7cb"] forState:UIControlStateNormal];
         [_ffButton setTitleColor:[UIColor colorFromHexString:@"#c6c7cb"] forState:UIControlStateNormal];
-//        _zfButton.backgroundColor = [UIColor colorFromHexString:@"#c6c7cb"];
-//        _ffButton.backgroundColor = [UIColor colorFromHexString:@"#c6c7cb"];
     }
     [self addNaviBarBackButton];
     _canShowDetail = NO;
@@ -90,9 +90,9 @@
         [self hiddenRequestArticleNetworkFailedWarningShow];
         XKRWArticleDetailEntity *entity = (XKRWArticleDetailEntity *)result;
         NSString *time = entity.content[@"jzrq"];
-        NSTimeInterval pkTime =  [[NSDate dateFromString:time withFormat:@"yyyy-MM-dd HH:mm"] timeIntervalSince1970];
-        NSTimeInterval nowTime = [[NSDate date]timeIntervalSince1970];
-        if (nowTime > pkTime) {
+        NSDate *pkTime =  [NSDate dateFromString:time withFormat:@"yyyy-mm-dd HH:mm"];
+        NSDate *nowDate = [NSDate date];
+        if ([pkTime compare:nowDate] == NSOrderedAscending) {
             _ffButton.hidden = YES;
             _zfButton.hidden = YES;
             _pkStateLabel.text = @"PK结束";
@@ -148,7 +148,12 @@
         
         CGRect rect   =[attributedString  boundingRectWithSize:CGSizeMake(XKAppWidth/2-15-16, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
         
-        _lineHeightConstraint.constant = rect.size.height + 40;
+        if (!_canShowDetail) {
+            _lineHeightConstraint.constant = rect.size.height + 70;
+
+        }else{
+            _lineHeightConstraint.constant = rect.size.height + 30;
+        }
         
         NSMutableAttributedString *xbdhAttributedString = [XKRWUtil createAttributeStringWithString:xbdh font:XKDefaultFontWithSize(15.f) color:colorSecondary_666666 lineSpacing:3 alignment:NSTextAlignmentLeft];
         
@@ -162,17 +167,14 @@
                                              options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
                                           attributes:attributes
                                              context:nil];
-
-        _viewHeight = CGRectGetMaxY(self.xkdhTitleLabel.frame) + xbdhRect.size.height + (self.view.height == XKAppHeight?0:64) + (self.view.height - CGRectGetMaxY(self.xbTipsLabel.frame));//284 + rect.size.height + 40+50 +17+ _xbdhRect.size.height + 20;
         
-        if ((_viewHeight > XKAppHeight)&&_canShowDetail) {
-            _viewHeightConstraint.constant = _viewHeight;
-        }else{
-            _viewHeightConstraint.constant = self.view.height;
-        }
+        
+        _xbdhLabelHeight = xbdhRect.size.height;
+       
         _xbTipsLabel.attributedText = xbdhAttributedString;
         
         [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
+        
     }
     
     if ([taskID isEqualToString:@"upLoadPKNum"]) {
@@ -183,23 +185,19 @@
         
         [[XKRWManagementService5_0 sharedService] setHadPKNum:_nid];
         
-        _zfButton.enabled = NO;
-        _ffButton.enabled = NO;
         _zfButton.layer.borderColor = [UIColor colorFromHexString:@"#c6c7cb"].CGColor;
         _ffButton.layer.borderColor = [UIColor colorFromHexString:@"#c6c7cb"].CGColor;
         [_zfButton setTitleColor:[UIColor colorFromHexString:@"#c6c7cb"] forState:UIControlStateNormal];
         [_ffButton setTitleColor:[UIColor colorFromHexString:@"#c6c7cb"] forState:UIControlStateNormal];
-//        _zfButton.backgroundColor = [UIColor colorFromHexString:@"#c6c7cb"];
-//        _ffButton.backgroundColor = [UIColor colorFromHexString:@"#c6c7cb"];
 
         _xbTipsLabel.hidden = NO;
         _xkdhTitleLabel.hidden = NO;
         _canShowDetail = YES;
         
-        _zfButton.hidden = YES;
-        _ffButton.hidden = YES;
+  
+        
     }
-    [self layoutViews];
+    [self resetViewHeight];
 }
 
 
@@ -217,30 +215,20 @@
 }
 
 
-- (void)layoutViews
+- (void)resetViewHeight
 {
-    if (!_zfButton.hidden) {
-        
-        if (!_xkdhTitleLabel.hidden) {
-            
-//            [_xkdhTitleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-//                make.bottom.equalTo(_ffButton.mas_bottom).offset(30);
-//            }];
-            
-        }
-        
+    if (!_canShowDetail) {
+        _viewHeight = 280 + _lineHeightConstraint.constant + 40;
     }else{
-        
-//        [_xkdhTitleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-//            make.top.equalTo(_ffButton.mas_bottom).with.offset(5); //with is an optional semantic filler
-//        }];
-        
+        _zfButton.hidden = YES;
+        _ffButton.hidden = YES;
+        _viewHeight = 280 + _lineHeightConstraint.constant + 40 + _xbdhLabelHeight ;
     }
     
-    if ((_viewHeight > XKAppHeight)&&_canShowDetail) {
+    if (_viewHeight > XKAppHeight) {
         _viewHeightConstraint.constant = _viewHeight;
     }else{
-        _viewHeightConstraint.constant = self.view.height;
+        _viewHeightConstraint.constant = XKAppHeight;
     }
 }
 

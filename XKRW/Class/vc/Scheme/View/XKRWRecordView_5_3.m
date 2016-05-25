@@ -61,6 +61,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIView *testViewFrame;
+@property (strong ,nonatomic) UIView *bgBlackView;
 @property (strong ,nonatomic) XKRWRecordMore5_3View *moreView;
 
 @end
@@ -73,6 +74,10 @@
     _shadowImageView =[[UIImageView alloc]initWithFrame:CGRectMake((XKAppWidth - 800) /2 + (_positionX - XKAppWidth /2) , 0, 800, 10)];
     _shadowImageView.image = [UIImage imageNamed:@"shadow"];
     [self addSubview:_shadowImageView];
+    
+    _bgBlackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 10)];
+    _bgBlackView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+    [self insertSubview:_bgBlackView belowSubview:_shadowImageView];
     
     _scrollView.contentSize = CGSizeMake( XKAppWidth * 2, _scrollView.height);
     _scrollView.showsHorizontalScrollIndicator = NO;
@@ -660,10 +665,10 @@
     if(tableView.tag == 5031){
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 44)];
         headerView.backgroundColor = XK_BACKGROUND_COLOR;
-        
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, (44-29)/2, 29, 29)];
-        
-        imageView.image = [UIImage imageNamed:[recordTypeImageArray objectAtIndex:section]];
+        UIImage *image = [UIImage imageNamed:[recordTypeImageArray objectAtIndex:section]];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, image.size.width, image.size.height)];
+        imageView.top = 22 - image.size.height/2.0;
+        imageView.image = image;
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(imageView.right + 10, 0, 100, 44)];
         label.text = [recordTypeTitleArray objectAtIndex:section];
@@ -714,6 +719,7 @@
         
         UIButton *showDetailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - width-15-8 , 44)];
         [showDetailButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        showDetailButton.tag = 1000 + section;
         [headerView addSubview:showDetailButton];
         
         [XKRWUtil addViewUpLineAndDownLine:headerView andUpLineHidden:YES DownLineHidden:NO];
@@ -961,7 +967,7 @@
             entity.sid = 0;
             entity.type = 5;
             entity.uid =[[XKRWUserService sharedService] getUserId];
-            entity.calorie = [XKRWAlgolHelper dailyConsumeSportEnergy];
+            entity.calorie = [XKRWAlgolHelper dailyConsumeSportEnergyOfDate:_date];
             if ([self.delegate respondsToSelector:@selector(saveSchemeRecord:andType:andEntryType:)]) {
                 [self.delegate saveSchemeRecord:entity andType:XKRWRecordTypeScheme andEntryType:energyTypeSport];
             }
@@ -974,8 +980,8 @@
             [XKRWCui showInformationHudWithText:@"不能补记"];
             return;
         }
-        if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
-            [self.delegate entryRecordVCWith:eSchemeSport];
+        if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:andMealType:)]) {
+            [self.delegate entryRecordVCWith:eSchemeSport andMealType:0];
         }
         return;
     }
@@ -991,7 +997,7 @@
             entity.record_value = 2;
             entity.sid = 0;
             entity.type = 6;
-            entity.calorie = [XKRWAlgolHelper dailyIntakeRecomEnergy];
+            entity.calorie = [XKRWAlgolHelper dailyIntakeRecomEnergyOfDate:_date];
             entity.uid =[[XKRWUserService sharedService] getUserId];
             if ([self.delegate respondsToSelector:@selector(saveSchemeRecord:andType:andEntryType:)]) {
                 [self.delegate saveSchemeRecord:entity andType:XKRWRecordTypeScheme andEntryType:energyTypeEat];
@@ -1008,9 +1014,14 @@
         [XKRWCui showInformationHudWithText:@"不能补记"];
         return;
     }
-    
-    if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:)]) {
-        [self.delegate entryRecordVCWith:eSchemeFood];
+    if(_type == energyTypeEat){
+        if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:andMealType:)]) {
+            [self.delegate entryRecordVCWith:eSchemeFood andMealType:sender.tag -1000 + 1];
+        }
+    }else{
+        if ([self.delegate respondsToSelector:@selector(entryRecordVCWith:andMealType:)]) {
+            [self.delegate entryRecordVCWith:eSchemeSport andMealType:0];
+        }
     }
 }
 

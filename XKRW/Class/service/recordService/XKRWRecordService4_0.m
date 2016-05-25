@@ -746,8 +746,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     
     if (isSuccess) {
         entity.sync = 1;
-        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
     }
     return isSuccess;
 }
@@ -1331,11 +1329,22 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     
     return array;
 }
+
 - (NSArray *)queryRecordWithDate:(NSDate *)date table:(NSString *)tableName
 {
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
     NSString *dateString = [date stringWithFormat:@"yyyy-MM-dd"];
     NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld AND date = '%@' AND sync != -1", tableName, (long)uid, dateString];
+    return [self query:sql];
+}
+
+- (NSArray *)queryRecordWithDates:(NSArray *)dateArray table:(NSString *)tableName
+{
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    NSString *dateStart= [[dateArray lastObject] stringWithFormat:@"yyyy-MM-dd"];
+    NSString *dateEnd= [[dateArray firstObject] stringWithFormat:@"yyyy-MM-dd"];
+    
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld AND date <= '%@' AND date >= '%@'AND sync != -1 order by date desc limit %lu", tableName, (long)uid, dateEnd, dateStart,(unsigned long)dateArray.count];
     return [self query:sql];
 }
 
@@ -1402,6 +1411,22 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     NSMutableArray *array = [NSMutableArray array];
     
     NSArray *result = [self queryRecordWithDate:date table:recordTable];
+    
+    if (result.count) {
+        for (NSDictionary *dict in result) {
+            XKRWRecordEntity4_0 *entity = [[XKRWRecordEntity4_0 alloc] initWithDictionary:dict];
+            [array addObject:entity];
+        }
+        return array;
+    }
+    return nil;
+}
+
+- (NSArray *)queryOtherRecordWithDays:(NSArray *)dateArray
+{
+    NSMutableArray *array = [NSMutableArray array];
+    
+    NSArray *result = [self queryRecordWithDates:dateArray table:recordTable];
     
     if (result.count) {
         for (NSDictionary *dict in result) {
@@ -1772,9 +1797,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         switch (type) {
             case XKRWRecordTypeWeight:
                 isRemoteSuccess = [self saveWeightToRemote:entity];
-                if (isRemoteSuccess) {
-                    [[XKRWLocalNotificationService shareInstance] setRecordWeightNotification];
-                }
                 break;
             case XKRWRecordTypeCircumference:
                 isRemoteSuccess = [self saveCircumferenceToRemote:entity];
@@ -2000,6 +2022,31 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return returnValue;
 }
 
+- (NSArray *)getSchemeRecordWithDates:(NSArray *)dateArray {
+    
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    
+    NSMutableArray *returnValue = [[NSMutableArray alloc] init];
+    NSString *dateStart = [[dateArray lastObject] stringWithFormat:@"yyyy-MM-dd"];
+    NSString *dateEnd = [[dateArray firstObject] stringWithFormat:@"yyyy-MM-dd"];
+    
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM record_scheme WHERE uid = %ld AND date >= '%@' AND date <= '%@' AND sync != -1 ORDER BY type desc LIMIT %lu", (long)uid, dateStart, dateEnd, (unsigned long)dateArray.count];
+    
+    NSArray *rst = [self query:sql];
+    if (rst.count > 4) {
+        [self reportBug];
+        // TODO: do something with wrong number
+    }
+    for (NSDictionary *temp in rst) {
+        XKRWRecordSchemeEntity *entity = [[XKRWRecordSchemeEntity alloc] init];
+        
+        [temp setPropertiesToObject:entity];
+        entity.date = [NSDate dateFromString:temp[@"date"] withFormat:@"yyyy-MM-dd"];
+        [returnValue addObject:entity];
+    }
+    return returnValue;
+}
+
 - (XKRWRecordSchemeEntity *)getSchemeRecordWithDate:(NSDate *)date type:(RecordType)type {
     
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
@@ -2182,9 +2229,10 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 
 - (void)resetUserRecords {
     
-    XKRWRecordEntity4_0 *entity = [self getOtherInfoOfDay:[NSDate date]];
-    if(entity != nil){
-        [self deleteHabitRecord:entity];
+    NSArray *array  = [self getSchemeRecordWithDate:[NSDate date]];
+    
+    for (XKRWRecordSchemeEntity *recordEntity in array) {
+        [self deleteSchemeRecordInDB:recordEntity];
     }
 }
 
@@ -2668,6 +2716,12 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return entity;
 }
 
+- (NSArray *)getAllRecordOfDays:(NSArray *)dateArray
+{
+    NSArray *arr = [self getOtherInfoOfDays:dateArray];
+    return arr;
+}
+
 - (float)getWeightRecordOfDay:(NSDate *)date
 {
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
@@ -2704,6 +2758,11 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 - (XKRWRecordEntity4_0 *)getOtherInfoOfDay:(NSDate *)date
 {
     return [self queryOtherRecord:date][0];
+}
+
+- (NSArray *)getOtherInfoOfDays:(NSArray *)dateArray
+{
+    return [self queryOtherRecordWithDays:dateArray];
 }
 
 - (NSArray *)getRecordHistoryWithType:(int)type
@@ -2771,7 +2830,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
     NSMutableArray *resultArr = [NSMutableArray array];
     
-    NSString *sql = [NSString stringWithFormat:@"SELECT date FROM record_scheme WHERE record_scheme.uid = %ld AND sync != -1 UNION SELECT date FROM food_record WHERE food_record.uid = %ld AND sync != -1 UNION SELECT date FROM sport_record WHERE sport_record.uid = %ld AND sync != -1 UNION SELECT date FROM record_4_0 WHERE uid = %ld AND habit IS NOT NULL AND habit != '' AND sync != -1 ORDER BY date DESC", (long)uid,(long)uid,(long)uid,(long)uid];
+    NSString *sql = [NSString stringWithFormat:@"SELECT date FROM record_scheme WHERE record_scheme.uid = %ld AND sync != -1 UNION SELECT date FROM food_record WHERE food_record.uid = %ld AND sync != -1 UNION SELECT date FROM sport_record WHERE sport_record.uid = %ld AND sync != -1 UNION SELECT DISTINCT date FROM record_4_0 WHERE uid = %ld AND habit Like %@ AND sync != -1 ORDER BY date DESC", (long)uid,(long)uid,(long)uid,(long)uid,@"'%_1'"];
     NSArray *rst = [self query:sql];
     for (NSDictionary *temp in rst) {
         NSString *dateString = temp[@"date"];
@@ -2781,6 +2840,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         }
         
     }
+    
     return resultArr;
 }
 /**
@@ -3389,8 +3449,38 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 calorie += schemeEntity.calorie;
             }
         }
+    }
+    return calorie ;
+}
+
+- (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDates:(NSArray *)dateArray{
+    NSArray *arr = [self getAllRecordOfDays:dateArray];
+    NSArray *  schemeRecordArray = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDates:dateArray];
+    
+    CGFloat  calorie = 0;
+    if (type == efoodCalories) {
+        for (XKRWRecordEntity4_0 *recordEntity in arr) {
+            for (XKRWRecordFoodEntity *foodEntity in recordEntity.FoodArray) {
+                calorie += foodEntity.calorie;
+            }
+            for (XKRWRecordSchemeEntity *schemeEntity in schemeRecordArray) {
+                if (schemeEntity.type == 1 || schemeEntity.type == 2|| schemeEntity.type ==3 || schemeEntity.type == 4 ||schemeEntity.type == 6) {
+                    calorie += schemeEntity.calorie;
+                }
+            }
+        }
         
-        
+    }else if (type == eSportCalories){
+        for (XKRWRecordEntity4_0 *recordEntity in arr) {
+            for (XKRWRecordSportEntity *sportEntity in recordEntity.SportArray) {
+                calorie += sportEntity.calorie;
+            }
+            for (XKRWRecordSchemeEntity *schemeEntity in schemeRecordArray) {
+                if (schemeEntity.type == 0 || schemeEntity.type == 5) {
+                    calorie += schemeEntity.calorie;
+                }
+            }
+        }
     }
     return calorie ;
 }

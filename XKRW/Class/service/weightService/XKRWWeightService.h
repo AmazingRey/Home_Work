@@ -73,7 +73,6 @@
 //searching before
 - (float)getNearestWeightRecordOfDate:(NSDate *)date;
 
-
 - (NSString*)getOldWeightFromACCount;
 
 //获取最初的时间  

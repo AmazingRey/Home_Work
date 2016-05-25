@@ -32,16 +32,23 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
     var decimalsArray = NSMutableArray()  //小数数组
     var bmiEnity:XKRWBMIEntity?
     
+    
+    var minStageKilogram:Int?  //阶段体重最低值 整数
+    
+    
     var healthKilogram:Int?   //健康体重最低值的整数
     var overKilogram:Int?  //健康体重最高值的整数
     var highestKilogram:Int? //目标体重最高值的整数
     
+     var minStagedecimals:Int?  //阶段体重最低值 小数
     var healthdecimals:Int?   //健康体重最低值的小数
     var overdecimals:Int?     //健康体重最高值的小数
     var highestdecimals:Int?  //目标体重最高值的小数
     
     var overWeight:Int?     //健康体重的最高值
     var healthWeigth:Int?   //健康体重的最低值
+    
+    var stateWightMin:Int?  //阶段体重最少值
     
     var sex:XKSex! = XKRWUserService.sharedService().getSex()
     var age:NSInteger! = XKRWUserService.sharedService().getAge()
@@ -54,15 +61,7 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         
         self.view.backgroundColor = UIColor.whiteColor()
         self.addNaviBarBackButton()
-        
-//        let topLine:UIView = UIView.init(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 0.5))
-//        topLine.backgroundColor = XK_ASSIST_LINE_COLOR
-//        let bottomLine:UIView = UIView.init(frame: CGRectMake(0, 50.5, UI_SCREEN_WIDTH, 0.5))
-//        bottomLine.backgroundColor = XK_ASSIST_LINE_COLOR
-//        nextButton!.setTitleColor(XKMainSchemeColor, forState: UIControlState.Normal)
-//        nextButton!.addSubview(topLine)
-//        nextButton!.addSubview(bottomLine)
-//        nextButton!.titleLabel?.font = XKDEFAULFONT
+
         
         if(UI_SCREEN_HEIGHT == 480){
             weightLineConstraint.constant = 120
@@ -73,6 +72,11 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         bmiEnity = XKRWAlgolHelper.calcBMIInfoWithSex(sex, age: age, andHeight: height)
         overWeight = bmiEnity?.overWeight   //健康体重最高值
         healthWeigth = bmiEnity?.healthyWeight  //健康体重最低值
+
+        let statewight = XKRWUserService.sharedService().getUserOrigWeight() - (Int)(((98 * (XKRWAlgolHelper.dailyIntakEnergyOfOrigin() - XKRWAlgolHelper.dailyIntakeRecomEnergyOfOrigin() + XKRWAlgolHelper.dailyConsumeSportEnergyOfOrigin())/7700.0))*1000)
+        
+        stateWightMin = statewight <= healthWeigth ? healthWeigth :statewight
+        
         
         if(XKRWUserService.sharedService().getUserOrigWeight() >= healthWeigth)
         {
@@ -113,13 +117,20 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
             healthdecimals = overWeight!/100 - healthKilogram!*10
         }
         
-        if(highestKilogram != nil && healthKilogram != nil){
-            for  var i = 0; i<=highestKilogram!-healthKilogram!;i++ {
-                kilogramArray.addObject(NSString(format: "%d",i+healthKilogram!))
+        
+        if (stateWightMin != nil){
+            minStageKilogram = stateWightMin!/1000
+            minStagedecimals = stateWightMin!/100 - stateWightMin!*10
+        }
+        
+        if(highestKilogram != nil && minStageKilogram != nil){
+            
+            for i in 0 ... highestKilogram!-minStageKilogram! {
+                kilogramArray.addObject(NSString(format: "%d",i+minStageKilogram!))
             }
         }
         
-        for var i=0 ;i<10;i++ {
+        for i in 0  ..< 10 {
             decimalsArray.addObject(NSString(format: "%d", i))
         }
         
@@ -127,7 +138,7 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         highestLocationConstraint.constant = (UI_SCREEN_WIDTH-60)/4*2+30-25
         
         if(XKRWUserService.sharedService().getUserOrigWeight() > self.getWeightFromBMI(XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eStandard), userHeight: XKRWUserService.sharedService().getUserHeight())){
-            self.setTargetWeightlocation(XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eStandard))
+            self.setTargetWeightlocation(self.getWeightBMI(stateWightMin!))
             self.setDefaultLocationAndDefaultTargetweight()
         }else{
             let BMI =  self.getWeightBMI(XKRWUserService.sharedService().getUserOrigWeight())
@@ -153,9 +164,9 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         if(XKRWUserService.sharedService().getUserOrigWeight() >= healthWeigth)
         {
             
-            if(self.getWeight() < healthWeigth ){
-                if((healthWeigth) != nil){
-                    XKRWUserService.sharedService().setUserDestiWeight(healthWeigth!)
+            if(self.getWeight() < stateWightMin ){
+                if((stateWightMin) != nil){
+                    XKRWUserService.sharedService().setUserDestiWeight(stateWightMin!)
                 }
             }else if(self.getWeight() > XKRWUserService.sharedService().getUserOrigWeight()){
                 
@@ -189,11 +200,11 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if(self.getWeight() < healthWeigth){
-            XKRWCui.showInformationHudWithText("再瘦就不健康了哦")
+        if(self.getWeight() < stateWightMin){
+            XKRWCui.showInformationHudWithText("不能低于阶段体重最低值")
             let BMI:CGFloat =   self.getWeightBMI(self.getWeight())
             self.setTargetWeightlocation(BMI)
-            targetWeightLabel.text = NSString(format: "%.1fKg", Double(healthWeigth!)/1000) as String
+            targetWeightLabel.text = NSString(format: "%.1fKg", Double(stateWightMin!)/1000) as String
         }else if (self.getWeight() > XKRWUserService.sharedService().getUserOrigWeight() ){
             XKRWCui.showInformationHudWithText("不能增肥哦")
             targetWeightLabel.text = NSString(format: "%.1fKg", Double(XKRWUserService.sharedService().getUserOrigWeight())/1000) as String
@@ -244,8 +255,6 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
             
             let lowestBMI =  XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eLowest)
             
-//            let standardBMI = XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eStandard)
-            
             let highestBMI = XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eHighest)
             
             if(bmi <= lowestBMI)
@@ -261,7 +270,6 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         }
     }
     
-    
     //获取目标体重时的BMI
     func getWeightBMI(Weight:NSInteger)->CGFloat{
         let weight:CGFloat = CGFloat(Weight)/1000
@@ -275,40 +283,20 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
     }
     
     
-    
-    
-    
     //设置默认的目标体重位置与默认的目标体重
     func setDefaultLocationAndDefaultTargetweight(){
-        let defaultWeight = self.getWeightFromBMI(XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eStandard), userHeight: XKRWUserService.sharedService().getUserHeight())
-        
-        let defaultWeightRow1 = defaultWeight/1000 - healthKilogram!
-        let defaultWeightRow2 = defaultWeight/100 - defaultWeight/1000*10
+//        let defaultWeight = self.getWeightFromBMI(XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eStandard), userHeight: XKRWUserService.sharedService().getUserHeight())
+//
+        let defaultWeightRow1 = stateWightMin!/1000 - minStageKilogram!
+        let defaultWeightRow2 = stateWightMin!/100 - stateWightMin!/1000*10
         
         pickerView.selectRow(defaultWeightRow1, inComponent: 0, animated: true)
         pickerView.selectRow(defaultWeightRow2, inComponent: 1, animated: true)
         
-        targetWeightLabel.text = NSString(format: "%d.%dKg",defaultWeight/1000, defaultWeight/100-defaultWeight/1000*10) as String
+        targetWeightLabel.text = NSString(format: "%d.%dKg",stateWightMin!/1000, stateWightMin!/100-stateWightMin!/1000*10) as String
     }
     
   
-//    func override popView() {
-//        if(XKRWUserService.sharedService().getUserOrigWeight() < healthWeigth){
-//             MobClick.event("clk_NoNeedBack")
-//        }
-//        super.popView()
-//    }
-    
-    
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
+
     
 }

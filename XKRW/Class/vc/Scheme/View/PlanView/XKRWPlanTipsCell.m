@@ -44,7 +44,7 @@
     
     [self.upLineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
-        make.width.mas_equalTo(1);
+        make.width.mas_equalTo(0.5);
         make.centerX.equalTo(self.circleImageView.mas_centerX);
         make.bottom.equalTo(self.circleImageView.mas_top);
     }];

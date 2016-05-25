@@ -14,7 +14,7 @@
 @optional
 - (void)RecordFoodViewpressCancle;
 - (void)addMoreView;
-- (void)entryRecordVCWith:(SchemeType)schemeType;
+- (void)entryRecordVCWith:(SchemeType)schemeType andMealType:(MealType)type;
 - (void)saveSchemeRecord:(id )entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
 - (void)deleteSchemeRecord:(id )entity andType:( XKRWRecordType ) recordtype andEntryType:(energyType)entryRype;
 -(void)fixHabitAt:(NSInteger)index isCurrect:(BOOL)abool;

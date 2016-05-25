@@ -28,10 +28,11 @@
 @property (assign, nonatomic) CGFloat startValue;
 @property (strong, nonatomic) NSNumber *currentPerCent;
 @property (assign, nonatomic) BOOL lock;
+@property (assign, nonatomic) NSInteger totalKcal;
 @property (strong, nonatomic) UIButton *btnLock;
 @property (strong, nonatomic) UIImageView *imgHead;
 @property (strong, nonatomic) UILabel *labSeperate;
-- (instancetype)initWithFrame:(CGRect)frame currentValue:(NSNumber *)value;
+- (instancetype)initWithFrame:(CGRect)frame currentValue:(NSNumber *)value totalKcal:(NSInteger)totalKcal;
 -(void)actBtnLock;
 -(void)cancleBtnLock;
 -(void)cancleBtnLockWithoutDelegate;

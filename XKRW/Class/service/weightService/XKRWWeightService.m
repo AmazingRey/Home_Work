@@ -312,22 +312,15 @@ static XKRWWeightService *shareInstance;
     NSString *wDate = [weightDate convertToStringWithFormat:@"yyyyMMdd"];
     NSString * sql = [NSString stringWithFormat:@"select timestamp from weightrecord where date = %@ and userid = %ld",wDate,(long)[XKRWUserDefaultService getCurrentUserId]];
     time_t timestamp =  [[[self fetchRow:sql] objectForKey:@"timestamp"] doubleValue] ;
-    
-    
-    if (unixTime >= timestamp) {
 
+    if (unixTime >= timestamp) {
         [self writeDefaultDBWithTask:^(FMDatabase *db, BOOL *rollback) {
-            
             NSString *userid = [NSString stringWithFormat:@"%li",(long)[[XKRWUserService sharedService] getUserId]];
-            
             NSString *year = [weightDate convertToStringWithFormat:@"yyyy"];
             NSString *month = [weightDate convertToStringWithFormat:@"MM"];
             NSString *day = [weightDate convertToStringWithFormat:@"dd"];
-            
             NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:userid,@"userid",weight,@"weight",wDate,@"date",year,@"year",month,@"month",day,@"day",sync,@"sync",[NSNumber numberWithLong:unixTime],@"timestamp",nil];
-            
             [db executeUpdate:@"REPLACE INTO weightrecord VALUES(:userid,:weight,:date,:year,:month,:day,:sync,:timestamp)" withParameterDictionary:dictionary];
-            
         }];
     }else{
         
@@ -834,6 +827,7 @@ static XKRWWeightService *shareInstance;
     }
     return [result[0][@"weight"] floatValue] / 1000.f;
 }
+
 - (float)getWeightRecordWithDate:(NSDate *)date {
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
     int dateFormat = [[date stringWithFormat:@"yyyyMMdd"] intValue];

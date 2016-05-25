@@ -48,7 +48,8 @@
         if (_CalendarMonthType == XKRWCalendarTypeStrongMonth) {
             self.frame = CGRectMake(origin.x, origin.y, ITEM_WIDTH, 69);
             [self.titleLabel setFont:XKDefaultNumEnFontWithSize(15.f)];
-            _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - 30) / 2, (69-30)/2 -10, 30.f, 30.f)];
+            UIImage *image = [UIImage imageNamed:@"circle_date"];
+            _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - image.size.width) / 2, (69-image.size.height)/2 -10, image.size.width, image.size.height)];
             
             _dot.contentMode = UIViewContentModeScaleAspectFit;
         }else{
@@ -141,30 +142,27 @@
         }
         
         if (isToday) {
-            
-            if (!isInPlan ) {
+            if (!isInPlan) {
                 [_dot setImage:[UIImage imageNamed:@"circle_date"]];
                 [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
             }
             if (!isRecord && isInPlan) {
                 [_dot setImage:[UIImage imageNamed:@"circle_date_w"]];
-                 [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             }
-            if (weight || isRecord) {
+            if (isRecord) {
                 [_dot setImage:[UIImage imageNamed:@"circle_date_y"]];
                 [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             }
             
             [self insertSubview:_dot belowSubview:self.titleLabel];
-           
-            
         }
         if (isInPlan && !isToday) {
             [_dot setImage:[UIImage imageNamed:@"circleGray"]];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             
         }
-        if (!isToday && (isRecord || weight)) {
+        if (!isToday && isRecord) {
             [_dot setImage:[UIImage imageNamed:@"circleGreen"]];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

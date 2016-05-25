@@ -29,4 +29,6 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
+@property (strong, nonatomic) NSDateFormatter *timeFormatterOne;
+@property (strong, nonatomic) NSDateFormatter *timeFormatterTwo;
 @end

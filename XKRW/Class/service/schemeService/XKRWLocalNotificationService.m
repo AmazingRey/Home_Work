@@ -133,17 +133,20 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
     }
     NSMutableArray *mutArray = [NSMutableArray array];
    
-    if (remainPlanDays < (2 + offsetDay)) {
+    if (remainPlanDays >= (1 + offsetDay)) {
        [mutArray addObject:[self setNotificationDicWithAlertName:@"openPlanNotification" alertBody:@"昨天没有执行计划。现在补记还来得及哦！" hour:20 minute:0 second:0 offsetDay:(1 + offsetDay) type:@(eAlarmNoStartPlanOneDay) repeatInterval:NSCalendarUnitEra]];
-    } else if (remainPlanDays < (6 + offsetDay)) {
+    }
+    if (remainPlanDays >= (2 + offsetDay)) {
        [mutArray addObject:[self setNotificationDicWithAlertName:@"openPlanNotification" alertBody:@"有3天没执行计划，不要偏离计划哦！" hour:20 minute:0 second:0 offsetDay:(2 + offsetDay) type:@(eAlarmNoStartPlanThreeDay) repeatInterval:NSCalendarUnitEra]];
-    } else if (remainPlanDays < (29 + offsetDay)) {
+    }
+    if (remainPlanDays >= (6 + offsetDay)) {
        [mutArray addObject:[self setNotificationDicWithAlertName:@"openPlanNotification" alertBody:@"有7天没执行计划，建议重制新计划！" hour:20 minute:0 second:0 offsetDay:(6 + offsetDay) type:@(eAlarmNoStartPlanAWeek) repeatInterval:NSCalendarUnitEra]];
-    } else {
-        [mutArray addObject:[self setNotificationDicWithAlertName:@"openPlanNotification" alertBody:[NSString stringWithFormat:@"还记得要瘦到%ldkg吗？",(long)[[XKRWUserService sharedService] getUserDestiWeight] ] hour:20 minute:0 second:0 offsetDay:(29 + offsetDay) type:@(eAlarmNoStartPlanAMonth) repeatInterval:NSCalendarUnitEra]];
+    }
+    if (remainPlanDays >= (29 + offsetDay)) {
+        [mutArray addObject:[self setNotificationDicWithAlertName:@"openPlanNotification" alertBody:[NSString stringWithFormat:@"还记得要瘦到%.1fkg吗？",[[XKRWUserService sharedService] getUserDestiWeight]/1000.f ] hour:20 minute:0 second:0 offsetDay:(29 + offsetDay) type:@(eAlarmNoStartPlanAMonth) repeatInterval:NSCalendarUnitEra]];
     }
     for (NSDictionary *dic in mutArray) {
-        [self addAlarmWithFireDate:[dic valueForKey:@"fireDate"] repeatInterval:NSCalendarUnitEra alartBody:[dic valueForKey:@"message"] andUserInfo:dic];
+        [self addAlarmWithFireDate:[dic valueForKey:@"fireDate"] repeatInterval:NSCalendarUnitEra alartBody:[dic valueForKey:@"alertBody"] andUserInfo:dic];
     }
 }
 
@@ -152,8 +155,13 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
  */
 - (void)setRecordWeightNotification {
     [XKRWLocalNotificationService cancelLocalNotification:@"alertName" value:@"notRecordWeightAWeek"];
-     NSDictionary *dic = [self setNotificationDicWithAlertName:@"notRecordWeightAWeek" alertBody:@"已经一个周没记体重了！" hour:12 minute:0 second:0 offsetDay:7 type:@(eAlarmNoRecordWeightAWeek) repeatInterval:NSCalendarUnitEra];
-    [self addAlarmWithFireDate:[dic valueForKey:@"fireDate"] repeatInterval:NSCalendarUnitEra alartBody:[dic valueForKey:@"message"] andUserInfo:dic];
+    NSInteger weight = [[XKRWRecordService4_0 sharedService] getWeightRecordOfDay:[NSDate today]];
+    NSInteger offsetDay = 0;
+    if (weight) {
+        offsetDay = 1;
+    }
+     NSDictionary *dic = [self setNotificationDicWithAlertName:@"notRecordWeightAWeek" alertBody:@"已经一个周没记体重了！" hour:12 minute:0 second:0 offsetDay:(6 + offsetDay) type:@(eAlarmNoRecordWeightAWeek) repeatInterval:NSCalendarUnitEra];
+    [self addAlarmWithFireDate:[dic valueForKey:@"fireDate"] repeatInterval:NSCalendarUnitEra alartBody:[dic valueForKey:@"alertBody"] andUserInfo:dic];
 }
 
 /**
@@ -168,29 +176,24 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
     }
     NSMutableArray *mutArr = [NSMutableArray array];
     NSInteger times = (remainDays - offsetDay)/7 + 1;
-
-    for (int i = 0; i< times; i++) {
-        [mutArr addObject:[self setNotificationDicWithAlertName:@"seeWeeklyAnalyze" alertBody:@"上周的分析已准备好啦，过来看看吧！" hour:18 minute:0 second:0 offsetDay:(offsetDay + i * 7) type:@(eAlarmSeeWeeklyAnalyze) repeatInterval:NSCalendarUnitEra]];
+    NSInteger timesOffset = (remainDays - offsetDay)%7 ? 1 : 0;
+    for (int i = 0; i< times + timesOffset; i++) {
+        [mutArr addObject:[self setNotificationDicWithAlertName:@"seeWeeklyAnalyze" alertBody:@"上周的分析已准备好啦，过来看看吧！" hour:18 minute:0 second:0 offsetDay:(1 +offsetDay + i * 7) type:@(eAlarmSeeWeeklyAnalyze) repeatInterval:NSCalendarUnitEra]];
         
     }
     for (NSDictionary *dic in mutArr) {
-        [self addAlarmWithFireDate:[dic valueForKey:@"fireDate"] repeatInterval:NSCalendarUnitEra alartBody:[dic valueForKey:@"message"] andUserInfo:dic];
+        [self addAlarmWithFireDate:[dic valueForKey:@"fireDate"] repeatInterval:NSCalendarUnitEra alartBody:[dic valueForKey:@"alertBody"] andUserInfo:dic];
     }
 
 
 }
-
 /**
- *  监测删除5.0版本没有的提醒
+ *  更新所有闹钟
+ *
+ *  @param entityArray <#entityArray description#>
+ *
+ *  @return <#return value description#>
  */
-- (void)deleteNoticeV5_0 {
-    
-    NSString *sql = [NSString stringWithFormat: @"delete from alarm_4_0 where uid = %li and type not in (2,3,4,6,8)",(long)[XKRWUserDefaultService getCurrentUserId] ];
-    
-    [self executeSql:sql];
-    
-}
-
 - (BOOL)updateNotice:(NSArray *)entityArray
 {
     BOOL isSuccess = NO;
@@ -226,6 +229,18 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
     
     return isSuccess;
 }
+/**
+ *  监测删除5.0版本没有的提醒
+ */
+- (void)deleteNoticeV5_0 {
+    
+    NSString *sql = [NSString stringWithFormat: @"delete from alarm_4_0 where uid = %li and type not in (2,3,4,6,8)",(long)[XKRWUserDefaultService getCurrentUserId] ];
+    
+    [self executeSql:sql];
+    
+}
+
+
 
 - (void)resetAllAlarm
 {
@@ -430,7 +445,7 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
    
     for (NSInteger i = schemeStartDay; i <= schemeDay; i++) {
         NSString *alertBody = [NSString stringWithFormat:@"蜕变之旅第%ld天，要努力完成哦！",(long)i];
-         [mutArray addObject:[self setNotificationDicWithAlertName:alertName alertBody:alertBody hour:8 minute:0 second:0 offsetDay:(i - schemeStartDay) type:@(111) repeatInterval:NSCalendarUnitEra]];
+         [mutArray addObject:[self setNotificationDicWithAlertName:alertName alertBody:alertBody hour:8 minute:30 second:0 offsetDay:(i - schemeStartDay) type:@(111) repeatInterval:NSCalendarUnitEra]];
     }
     return mutArray;
 }
@@ -450,7 +465,7 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
     }
     
     for (NSDictionary *dic in [self setNotificationArray:schemeStartDay andSchemeDay:achieveTargetDay]) {
-        [self addAlarmWithFireDate:[dic valueForKey:@"fireDate"] repeatInterval:NSCalendarUnitEra alartBody:[dic valueForKey:@"message"] andUserInfo:dic];
+        [self addAlarmWithFireDate:[dic valueForKey:@"fireDate"] repeatInterval:NSCalendarUnitEra alartBody:[dic valueForKey:@"alertBody"] andUserInfo:dic];
     }
     [self saveMetamorphosisTourAlarmsResetTime];
 }
