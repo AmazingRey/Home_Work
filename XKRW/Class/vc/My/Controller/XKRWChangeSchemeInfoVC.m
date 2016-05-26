@@ -48,7 +48,7 @@
 
 - (void)initView
 {
-    self.title = @"修改方案数据";
+    self.title = @"修改计划";
     [self addNaviBarBackButton];
     schemeInfotableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight-64)];
     schemeInfotableView.delegate = self;
@@ -66,7 +66,7 @@
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake((XKAppWidth-280)/2, 10, 280, 60)];
     label.numberOfLines = 0;
-    NSMutableAttributedString *attributedString = [XKRWUtil createAttributeStringWithString:@"重置后，仅会清空以上显示的方案数据。不会清空头像、昵称、宣言、天数、历程、记录等数据。" font:XKDefaultFontWithSize(14) color:XK_TEXT_COLOR lineSpacing:3.5 alignment:NSTextAlignmentCenter];
+    NSMutableAttributedString *attributedString = [XKRWUtil createAttributeStringWithString:@"重新制定，仅会清空以上显示的方案数据。不会清空头像、昵称、宣言、天数、历程、记录等数据。" font:XKDefaultFontWithSize(14) color:XK_TEXT_COLOR lineSpacing:3.5 alignment:NSTextAlignmentCenter];
     label.attributedText =  attributedString;
     
     [footerView addSubview:label];
@@ -1160,7 +1160,7 @@
     }
     [MobClick event:@"clk_reset"];
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确定要重置方案吗？" message:nil delegate:self cancelButtonTitle:@"再想想" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确定要重新制定吗？" message:nil delegate:self cancelButtonTitle:@"再想想" otherButtonTitles:@"确定", nil];
     [alert show];
 }
 
@@ -1333,7 +1333,7 @@
         tittleLable.textAlignment = NSTextAlignmentCenter;
         tittleLable.textColor = [UIColor redColor];
         tittleLable.font = cell.schemeInfotitleLabel.font;
-        tittleLable.text = @"重置瘦身方案";
+        tittleLable.text = @"重新制定计划";
         [cell addSubview:tittleLable];
     }
     

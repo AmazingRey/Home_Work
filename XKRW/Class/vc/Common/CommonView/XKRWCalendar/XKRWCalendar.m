@@ -23,7 +23,6 @@
     
     CGFloat _calendarViewHeight;
     
-    UIView *_footerLine;
     UIScrollView *_calendarScrollView;
     
     XKRWCalendarView *_preMonth;
@@ -284,10 +283,10 @@
     grayDotLabel.origin = CGPointMake(grayDotImageView.right + 5 * XKRWScaleWidth, declareLabel.top);
     [grayBgView addSubview:grayDotLabel];
     
-    _footerLine = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, XKAppWidth, 0.5f)];
-    [_footerLine setY:self.height - 0.5f];
-    _footerLine.backgroundColor = XK_ASSIST_LINE_COLOR;
-    [self addSubview:_footerLine];
+//    _footerLine = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, XKAppWidth, 0.5f)];
+//    [_footerLine setY:self.height - 0.5f];
+//    _footerLine.backgroundColor = XK_ASSIST_LINE_COLOR;
+//    [self addSubview:_footerLine];
 }
 
 - (void)setSelectedDate:(NSDate *)date
@@ -357,7 +356,7 @@
     newRect.size.height = _openedHeight + offset;
     self.frame = newRect;
     
-    [_footerLine setY:self.height - 0.5f];
+//    [_footerLine setY:self.height - 0.5f];
 }
 
 - (void)scrollingAnimationWithOffset:(CGFloat)yOffset
@@ -532,7 +531,7 @@
             _heightOfCurrentType = SELF_HEIGHT;
             self.frame = rect;
             
-            [_footerLine setY:self.height - 0.5f];
+//            [_footerLine setY:self.height - 0.5f];
             _resizeBlock();
             
         } completion:^(BOOL finished) {
@@ -553,7 +552,7 @@
         _heightOfCurrentType = SELF_HEIGHT;
         self.frame = rect;
         
-        [_footerLine setY:self.height - 0.5f];
+//        [_footerLine setY:self.height - 0.5f];
     }
 }
 

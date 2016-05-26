@@ -11,15 +11,15 @@
             <rect key="frame" x="0.0" y="0.0" width="138" height="105"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="triangle5_3" translatesAutoresizingMaskIntoConstraints="NO" id="Ca8-fb-o7l">
-                    <rect key="frame" x="100" y="0.0" width="16" height="12"/>
-                </imageView>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mas-Fk-043">
-                    <rect key="frame" x="1" y="12" width="136" height="93"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mas-Fk-043">
+                    <rect key="frame" x="1" y="4" width="136" height="101"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Fy-t3-vnM">
-                            <rect key="frame" x="2" y="2" width="132" height="43"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Fy-t3-vnM">
+                            <rect key="frame" x="0.0" y="0.0" width="136" height="50"/>
                             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="l5K-9D-nHP"/>
+                            </constraints>
                             <inset key="imageEdgeInsets" minX="-10" minY="-10" maxX="-10" maxY="-10"/>
                             <state key="normal" title="调整四餐比例">
                                 <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -28,9 +28,12 @@
                                 <action selector="actChange:" destination="hX0-zl-TEs" eventType="touchUpInside" id="HwD-jU-TeN"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Riu-BJ-sNU">
-                            <rect key="frame" x="2" y="46" width="132" height="46"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Riu-BJ-sNU">
+                            <rect key="frame" x="0.0" y="51" width="136" height="50"/>
                             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="IW7-cO-MPt"/>
+                            </constraints>
                             <state key="normal" title="设置饮食提醒">
                                 <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
@@ -38,25 +41,48 @@
                                 <action selector="actSet:" destination="hX0-zl-TEs" eventType="touchUpInside" id="OEb-hN-U2T"/>
                             </connections>
                         </button>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwz-NN-a5I">
-                            <rect key="frame" x="12" y="45" width="112" height="1"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ki-wp-TKH">
+                            <rect key="frame" x="0.0" y="50" width="136" height="1"/>
                             <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="highlightedColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        </label>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="0.5" id="7Rx-vx-CNh"/>
+                            </constraints>
+                        </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="5Fy-t3-vnM" firstAttribute="top" secondItem="mas-Fk-043" secondAttribute="top" id="1Tv-Kl-tZp"/>
+                        <constraint firstAttribute="trailing" secondItem="4ki-wp-TKH" secondAttribute="trailing" id="45i-s4-H1m"/>
+                        <constraint firstAttribute="width" constant="136" id="Eev-gL-IM5"/>
+                        <constraint firstAttribute="bottom" secondItem="Riu-BJ-sNU" secondAttribute="bottom" id="GLY-dT-QPi"/>
+                        <constraint firstAttribute="trailing" secondItem="5Fy-t3-vnM" secondAttribute="trailing" id="Kq3-4a-d3J"/>
+                        <constraint firstItem="4ki-wp-TKH" firstAttribute="leading" secondItem="mas-Fk-043" secondAttribute="leading" id="Rca-1R-vrO"/>
+                        <constraint firstAttribute="trailing" secondItem="Riu-BJ-sNU" secondAttribute="trailing" id="Tde-4B-U33"/>
+                        <constraint firstItem="4ki-wp-TKH" firstAttribute="top" secondItem="5Fy-t3-vnM" secondAttribute="bottom" id="YEs-pV-J8Y"/>
+                        <constraint firstItem="Riu-BJ-sNU" firstAttribute="leading" secondItem="mas-Fk-043" secondAttribute="leading" id="faA-bq-61R"/>
+                        <constraint firstItem="5Fy-t3-vnM" firstAttribute="leading" secondItem="mas-Fk-043" secondAttribute="leading" id="tSm-rG-SJC"/>
+                    </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
-                        <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="20"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="0.5"/>
                         <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
                             <color key="value" red="0.0" green="0.070588235289999995" blue="0.62745098040000002" alpha="1" colorSpace="calibratedRGB"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="triangle5_3" translatesAutoresizingMaskIntoConstraints="NO" id="Ca8-fb-o7l">
+                    <rect key="frame" x="107" y="0.0" width="10" height="5"/>
+                </imageView>
             </subviews>
+            <constraints>
+                <constraint firstItem="mas-Fk-043" firstAttribute="leading" secondItem="hX0-zl-TEs" secondAttribute="leading" constant="1" id="3Nf-JJ-eu2"/>
+                <constraint firstAttribute="trailing" secondItem="Ca8-fb-o7l" secondAttribute="trailing" constant="21" id="BY0-r2-WBv"/>
+                <constraint firstAttribute="bottom" secondItem="mas-Fk-043" secondAttribute="bottom" id="PcS-mc-tLP"/>
+                <constraint firstAttribute="trailing" secondItem="mas-Fk-043" secondAttribute="trailing" constant="1" id="Re7-ut-7cb"/>
+                <constraint firstItem="mas-Fk-043" firstAttribute="top" secondItem="Ca8-fb-o7l" secondAttribute="bottom" constant="-1" id="Tb3-sS-9YP"/>
+                <constraint firstItem="Ca8-fb-o7l" firstAttribute="top" secondItem="hX0-zl-TEs" secondAttribute="top" id="cHJ-Pp-gd5"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <userDefinedRuntimeAttributes>
@@ -64,6 +90,7 @@
                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="backgroundView" destination="mas-Fk-043" id="h1D-Ad-BZh"/>
                 <outlet property="btnChange" destination="5Fy-t3-vnM" id="qC2-Zs-HLG"/>
                 <outlet property="btnSet" destination="Riu-BJ-sNU" id="NsI-US-BxM"/>
             </connections>

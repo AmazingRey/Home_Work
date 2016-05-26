@@ -9,7 +9,7 @@
 #import "XKRWCalendarHeaderView.h"
 
 #define LABEL_WIDTH ([UIScreen mainScreen].bounds.size.width - 30.f) / 7
-#define LABEL_HEIGHT 20.f
+#define LABEL_HEIGHT 25.f
 
 @implementation XKRWCalendarHeaderView
 {

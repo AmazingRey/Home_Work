@@ -70,41 +70,10 @@
     
     NSData *result = operation.responseData;
     
-//     NSMutableString *cacheName = [[NSMutableString alloc] init];
-//    for (NSString *key in dictionary) {
-//        if (((NSString *)dictionary[key]).length != 0) {
-//            [cacheName appendFormat:@"%@",dictionary[key]];
-//        }
-//    }
-//    [cacheName appendFormat:@"%@",url.absoluteString];
-//    
-//    float totalSize = allCacheSize();
+
     if (!result) {
         @throw [XKRWNetWorkException exceptionWithDetail:@"网络连接有问题,请稍后再试"];
-        //取缓存
-//        SCCache *getCache = [SCCacheHandler getCacheDataFromKey:cacheName];
-//        result = getCache.data;
-//        if (result) {
-//            [XKDispatcher syncExecuteTask:^{
-//                [XKRWCui showInformationHudWithText:@"缓存读取成功"];
-//            }];
-        }
-//    }else
-//    {
-//        BOOL abool = NO;
-//        //存缓存
-//        SCCache * cache = [SCCache new];
-//        cache.date = [NSDate date].string;
-//        cache.data = result;
-//        cache.name = url.absoluteString;
-//        abool =[SCCacheHandler cache:cache withkey:cacheName];
-//        if (abool) {
-//            [XKDispatcher syncExecuteTask:^{
-//               // [XKRWCui showInformationHudWithText:@"缓存存取成功"];
-//            }];
-//        }
-//    }
-
+    }
     
     NSError *error = nil;
     NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:result options:NSJSONReadingMutableContainers error:&error];

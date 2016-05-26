@@ -463,7 +463,7 @@
 }
 /*** 用户达到目标体重*/
 - (void)userReachTargetWeight{
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"已达成目标体重" message:@"已达成目标体重，是否重新制定方案？" delegate:self cancelButtonTitle:@"没有，记录错了"  otherButtonTitles:@"是的，去重置方案", nil];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"已达成目标体重" message:@"已达成目标体重，是否重新制定计划？" delegate:self cancelButtonTitle:@"没有，记录错了"  otherButtonTitles:@"是的，去重新制定", nil];
     
     alertView.tag = 10001;
     [alertView show];

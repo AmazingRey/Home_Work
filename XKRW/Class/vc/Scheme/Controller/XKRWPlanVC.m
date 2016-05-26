@@ -81,6 +81,7 @@
     BOOL isTodaysPlan;
     UIView *backgroundView ;
     RevisionType revisionType ;
+    UIView *planTableViewLine;
 }
 
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
@@ -136,13 +137,6 @@
     [self refreshEnergyCircleView:nil];
     [[XKRWLocalNotificationService shareInstance] setOpenPlanNotification];
     
-    if (![[XKRWUserService sharedService] getUserNickNameIsEnable]) {
-        XKRWModifyNickNameVC *nickVC = [[XKRWModifyNickNameVC alloc] init];
-        nickVC.hidesBottomBarWhenPushed = YES;
-        nickVC.notShowBackButton = YES;
-        [self.navigationController pushViewController:nickVC animated:YES];
-    }
-    
     if (![[XKRWLocalNotificationService shareInstance] isResetMetamorphosisTourAlarmsToday]) {
         [[XKRWLocalNotificationService shareInstance] registerMetamorphosisTourAlarms];
     }
@@ -153,12 +147,11 @@
     
     [[XKRWNoticeService sharedService ] addNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(entryFeedBackVC) name:ENTRYFEEDBACK object:nil];
    
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+
 
 -(void)addTouchWindowEvent{
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];
@@ -177,8 +170,11 @@
         _recordDate = [NSDate today];
         isTodaysPlan = YES;
         revisionType = XKRWNotNeedRevision;
+        
+        [MobClick event:@"pg_main" attributes:@{@"from":@"today"}];
     } else {
         isTodaysPlan = NO;
+        [MobClick event:@"pg_main" attributes:@{@"from":@"ago"}];
         if ([_recordDate compare:[todayDate offsetDay:-1]] == NSOrderedSame || [_recordDate compare:[todayDate offsetDay:-2]] == NSOrderedSame) {
             revisionType = XKRWCanRevision;
         } else {
@@ -203,7 +199,11 @@
 
 - (void)getTipsData {
     tipsArray = [[XKRWTipsManage shareInstance ] TipsInfoWithUseSituationwithRecordDate:_recordDate];
-    
+    if (tipsArray.count == 0) {
+        planTableViewLine.hidden = YES;
+    } else {
+        planTableViewLine.hidden = NO;
+    }
     [planTableView reloadData];
 }
 
@@ -234,11 +234,14 @@
         _recordAndTargetView.weightLabel.textColor = XKMainSchemeColor;
         _recordAndTargetView.currentWeightLabel.textColor = XKMainSchemeColor;
         _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainSchemeColor.CGColor;
+        [_recordAndTargetView.weightButton setBackgroundImage:[UIImage imageNamed:@"home_weight_n"] forState:UIControlStateHighlighted];
+        [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_n"] forState:UIControlStateHighlighted];
     }else{
         _recordAndTargetView.weightLabel.textColor = colorSecondary_c7c7c7;
         _recordAndTargetView.currentWeightLabel.textColor = colorSecondary_c7c7c7;
         _recordAndTargetView.currentWeightLabel.layer.borderColor = colorSecondary_c7c7c7.CGColor;
-
+        [_recordAndTargetView.weightButton setBackgroundImage:[UIImage imageNamed:@"home_weight_p"] forState:UIControlStateHighlighted];
+        [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_p"] forState:UIControlStateHighlighted];
     }
 }
 
@@ -333,17 +336,22 @@
     [planTableView registerClass:[XKRWPlanTipsCell class] forCellReuseIdentifier:XKRWPlanTipsCellIdentifier];
     [backgroundView addSubview:planTableView];
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(23, - 100, 0.5, planTableView.height + 200)];
-    line.backgroundColor = XK_ASSIST_LINE_COLOR;
-    [planTableView insertSubview:line atIndex:0];
+    UIImage *shadowImage = [UIImage imageNamed:@"shadow_top"];
+    UIImageView *shadowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, planTableView.top, XKAppWidth, shadowImage.size.height)];
+    shadowImageView.image = shadowImage;
+    [backgroundView insertSubview:shadowImageView aboveSubview:planTableView];
+    
+    planTableViewLine = [[UIView alloc] initWithFrame:CGRectMake(23, - 100, 0.5, planTableView.height + 200)];
+    planTableViewLine.backgroundColor = XK_ASSIST_LINE_COLOR;
+    [planTableView insertSubview:planTableViewLine atIndex:0];
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
-    [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
-    [iFlyControl setParameter:@"srview.pcm" forKey:[IFlySpeechConstant ASR_AUDIO_PATH] ];
-    [iFlyControl setParameter:@"20000" forKey:[IFlySpeechConstant NET_TIMEOUT] ];
-    [iFlyControl setParameter:@"16000" forKey:[IFlySpeechConstant SAMPLE_RATE] ];
-    [iFlyControl setParameter:@"plain" forKey:[IFlySpeechConstant RESULT_TYPE] ];
-    [iFlyControl setParameter:@"0" forKey:[IFlySpeechConstant ASR_PTT] ];
+    [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN]];
+    [iFlyControl setParameter:@"srview.pcm" forKey:[IFlySpeechConstant ASR_AUDIO_PATH]];
+    [iFlyControl setParameter:@"20000" forKey:[IFlySpeechConstant NET_TIMEOUT]];
+    [iFlyControl setParameter:@"16000" forKey:[IFlySpeechConstant SAMPLE_RATE]];
+    [iFlyControl setParameter:@"plain" forKey:[IFlySpeechConstant RESULT_TYPE]];
+    [iFlyControl setParameter:@"0" forKey:[IFlySpeechConstant ASR_PTT]];
     [iFlyControl setParameter:IFLY_AUDIO_SOURCE_MIC forKey:@"audio_source" ];
     
     iFlyControl.delegate = self;
@@ -427,6 +435,7 @@
     = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordAndTargetView");
     _recordAndTargetView.frame = CGRectMake(0, 64, planHeaderView.width, 59);
     _recordAndTargetView.backgroundColor = [UIColor whiteColor];
+    _recordAndTargetView.dayLabel.backgroundColor = [UIColor clearColor];
     _recordAndTargetView.dayLabel.layer.masksToBounds = YES;
     _recordAndTargetView.dayLabel.layer.cornerRadius = 16;
     _recordAndTargetView.dayLabel.layer.borderColor = colorSecondary_c7c7c7.CGColor;
@@ -445,7 +454,6 @@
         _recordAndTargetView.entryThinPlanButton.hidden = NO;
         
     } else {
-        
         _recordAndTargetView.entryThinPlanButton.hidden = YES;
         _recordAndTargetView.targetWeightLabel.text = @"";
         _recordAndTargetView.planTimeLabel.text = @"";
@@ -453,13 +461,13 @@
     }
     
     [_recordAndTargetView.weightButton addTarget:self action:@selector(setUserDataAction:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [_recordAndTargetView.weightButton setBackgroundImage:[UIImage imageNamed:@"home_weight_p"] forState:UIControlStateHighlighted];
     UILongPressGestureRecognizer *gesLongPressed = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressRecognizer:)];
     gesLongPressed.minimumPressDuration = 1.0f;
     gesLongPressed.numberOfTouchesRequired=1;
     [_recordAndTargetView.weightButton addGestureRecognizer:gesLongPressed];
-    
     [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_p"] forState:UIControlStateHighlighted];
     [planHeaderView addSubview:_recordAndTargetView];
     
     _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, energyViewHeight)];
@@ -489,6 +497,7 @@
 }
 
 - (void)setUserDataAction:(UIButton *)button {
+    [MobClick event:@"btn_markmenu"];
     [self removeMenuView];
     [recordBackView removeFromSuperview];
     
@@ -539,9 +548,11 @@
 }
 
 - (void)entryCalendarAction:(UIButton *)button{
+
     if (self.navigationController.viewControllers.count >1) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{
+        [MobClick event:@"pg_cal"];
         XKRWCalendarVC *calendar = [[XKRWCalendarVC alloc] init];
         calendar.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:calendar animated:YES];
@@ -549,9 +560,10 @@
 }
 
 - (void)entryStatisticAnalysize:(UIButton *)button {
-    XKRWStatisticAnalysizeVC *VC = [[XKRWStatisticAnalysizeVC alloc] init];
+    [MobClick event:@"btn_main_plan"];
+    XKRWThinBodyAssess_5_3VC *VC = [[XKRWThinBodyAssess_5_3VC alloc] initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
     VC.hidesBottomBarWhenPushed = YES;
-
+    [VC setFromWhichVC:PlanVC];
     [self.navigationController pushViewController:VC animated:YES];
 }
 
@@ -563,7 +575,7 @@
         case 1001:
         {
             [self RecordFoodViewpressCancle];
-            [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
+            [XKRWCui showProgressHud:@"数据重置中，请稍后..."];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:self];
         }
             break;
@@ -612,11 +624,13 @@
     
 }
 
-#pragma mark - XKRWPlanEnergyViewDelegate
-
-- (void)energyCircleViewBackgroundClicked {
-    [self RecordFoodViewpressCancle];
+- (void)entryFeedBackVC {
+    XKRWUserFeedbackVC *feedBackVC = [[XKRWUserFeedbackVC alloc] initWithNibName:@"XKRWUserFeedbackVC" bundle:nil];
+    feedBackVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:feedBackVC animated:YES];
 }
+
+#pragma mark - XKRWPlanEnergyViewDelegate
 
 - (void)energyCircleViewTitleClicked:(NSString *)title {
     if ([title rangeOfString:@"查看今日分析"].location != NSNotFound) {
@@ -627,9 +641,9 @@
         [vc.navigationController setNavigationBarHidden:NO];
         
     } else if ([title rangeOfString:@"计划已结束"].location != NSNotFound) {
-        [XKRWCui showConfirmWithMessage:@"确定要重置方案吗？" okButtonTitle:@"确定" cancelButtonTitle:@"取消" onOKBlock:^{
+        [XKRWCui showConfirmWithMessage:@"确定要重新制定吗？" okButtonTitle:@"确定" cancelButtonTitle:@"取消" onOKBlock:^{
             [self RecordFoodViewpressCancle];
-            [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
+            [XKRWCui showProgressHud:@"数据重置中，请稍后..."];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:self];
         }];
         
@@ -643,6 +657,10 @@
 
 - (void)energyCircleView:(XKRWPlanEnergyView *)energyCircleView clickedAtIndex:(NSInteger)index {
     CGFloat positionX ;
+    if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1 && [XKRWAlgolHelper expectDayOfAchieveTarget] != nil) {
+        [XKRWCui showInformationHudWithText:@"计划已结束，请制定新计划"];
+        return;
+    }
     [planHeaderView addSubview:tapView];
     if (index == 1) {
         if (![[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType]) {
@@ -775,9 +793,7 @@
         [self downloadWithTaskID:@"saveHabit" task:^{
             [[XKRWPlanService shareService] saveRecord:recordEntity ofType:XKRWRecordTypeHabit];
         }];
-        
         return;
-        
     }
     
 }
@@ -1015,14 +1031,24 @@
  */
 -(void)pressPullViewButtonWithType:(PullViewBtnType)type{
     if (type == 2) {
+        [MobClick event:@"btn_markdata"];
         [self removeBtnBackBounds];
         XKRWSurroundDegreeVC_5_3 *vc = [[XKRWSurroundDegreeVC_5_3 alloc]init];
         vc.dataType = 1;
         [self presentViewController:vc animated:YES completion:nil];
     }else{
         [self removePullView];
+        
+        if (type == recordWeight) {
+            [MobClick event:@"btn_wtmark"];
+        }else{
+            [MobClick event:@"btn_girthmark"];
+        }
+        
         _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - 100, 240) withType:type withDate:_recordDate];
         _popView.alpha = 0;
+        
+        
         
         _popView.delegate = self;
         if (!btnBackBounds) {
@@ -1108,7 +1134,7 @@
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [XKRWCui showProgressHud:@"重置方案中..."];
+    [XKRWCui showProgressHud:@"数据重置中，请稍后..."];
     [self downloadWithTaskID:@"restSchene" outputTask:^id{
         return  [[XKRWUserService sharedService] resetUserAllDataByToken];
     }];
@@ -1127,10 +1153,13 @@
     [XKRWCui showProgressHud];
     
     if (recordType == XKRWRecordTypeWeight) {
+        [MobClick event:@"btn_wtmark_save" attributes:@{@"type":@"体重"}];
         [self downloadWithTaskID:@"recordWeight" outputTask:^id{
+            
             return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
         }];
     }else{
+        
         [self downloadWithTaskID:@"recordDegree" outputTask:^id{
             return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
         }];
@@ -1153,7 +1182,7 @@
     [XKRWCui hideProgressHud];
     [super handleDownloadProblem:problem withTaskID:taskID];
     if ([taskID isEqualToString:@"restSchene"]) {
-        [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
+        [XKRWCui showInformationHudWithText:@"重置失败，请稍后尝试"];
         return;
     }
 
@@ -1195,7 +1224,7 @@
                 [fatReasonVC.navigationController setNavigationBarHidden:NO];
             }
         }else {
-            [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
+            [XKRWCui showInformationHudWithText:@"重置失败，请稍后尝试"];
         }
         return;
     }
@@ -1642,6 +1671,10 @@
     }
     
     
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

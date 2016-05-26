@@ -19,7 +19,7 @@ class XKRWGetUserCityVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDelegate 
     @IBOutlet weak var nextButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        MobClick.event("in_city")
+        MobClick.event("pg_region")
         self.title = "所在城市"
         self.view.backgroundColor = UIColor.whiteColor()
         self.addNaviBarBackButton()
@@ -90,17 +90,10 @@ class XKRWGetUserCityVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDelegate 
     
 
     @IBAction func nextAction(sender: UIButton) {
-        
-//        print(NSString(format: "%d,%d,0", pid,cid) as String)
-        
         XKRWUserService.sharedService().setUserCity(NSString(format: "%d,%d,0", pid,cid) as String)
-        
-        
         XKRWUserService.sharedService().saveUserInfo()
         XKRWCui.showProgressHud()
         self.saveUserInfoToRemoteServer()
-        
-    
     }
     
     
@@ -108,28 +101,17 @@ class XKRWGetUserCityVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDelegate 
         XKRWCui.hideProgressHud()
         if(taskID == "saveUserInfoToRemoteServer")
         {
-//             println("保存用户信息成功")
-            
             XKRWUserService.sharedService().saveUserInfo()
-            
             let meal_ratio:NSDictionary = ["meal_ratio":["breakfast":30,"lunch":40,"supper":10,"snack":20]];
-            
             NSUserDefaults.standardUserDefaults().setObject(meal_ratio.objectForKey("meal_ratio"), forKey: NSString(format: "meal_ratio_%ld",XKRWUserService.sharedService().getUserId()) as String)
             NSUserDefaults.standardUserDefaults().synchronize()
-
-            
             self.setSchemeStartData()
-            
         }
         
         if(taskID == "saveSchemeStartData"){
-            print(result)
             /**设置预期天数*/
-            
             let time = result["data"]
-            
             XKRWAlgolHelper.setExpectDayOfAchieveTarget(XKRWUserService.sharedService().getUserOrigWeight(), andStartTime: time)
-            
             let  thinAssesssVC:XKRWThinBodyAssess_5_3VC = XKRWThinBodyAssess_5_3VC(nibName: "XKRWThinBodyAssess_5_3VC", bundle: nil)
             self.navigationController?.pushViewController(thinAssesssVC, animated: true)
         }

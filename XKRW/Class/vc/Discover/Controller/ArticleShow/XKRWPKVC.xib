@@ -19,6 +19,7 @@
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewHeightConstraint" destination="bje-P3-JSg" id="OIf-fu-DCN"/>
                 <outlet property="xbTipsLabel" destination="vHV-wF-mks" id="eyM-2o-lJV"/>
+                <outlet property="xbdhHeight" destination="uwU-xj-2EB" id="9B4-av-UAy"/>
                 <outlet property="xkdhTitleLabel" destination="pKH-JR-h44" id="6At-aa-rea"/>
                 <outlet property="zfButton" destination="uFs-iA-MxZ" id="rTQ-ym-OE0"/>
                 <outlet property="zfDetailLabel" destination="pZt-W6-GJg" id="X53-nc-G7I"/>
@@ -127,38 +128,13 @@
                                         <action selector="pkAction:" destination="-1" eventType="touchUpInside" id="qhy-Ux-OoJ"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHV-wF-mks">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="                    " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHV-wF-mks">
                                     <rect key="frame" x="15" y="455" width="290" height="96"/>
-                                    <attributedString key="attributedText">
-                                        <fragment>
-                                            <string key="content">                      看来瘦腿袜的瘦腿作用主要集中在肌肉层，而不是脂肪层。除此之外，瘦腿袜所施加的压力还会促进血液循环。因此双腿容易水肿的女生可以穿瘦腿袜缓解水肿。长期站立或者就做的人，下半身血液循环减慢，瘦腿袜在这个时候也派上用场。</string>
-                                            <attributes>
-                                                <color key="NSColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="15" name="STHeitiSC-Light"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment>
-                                            <string key="content" base64-UTF8="YES">
-Cg
-</string>
-                                            <attributes>
-                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineSpacing="3"/>
-                                            </attributes>
-                                        </fragment>
-                                        <fragment>
-                                            <string key="content" base64-UTF8="YES">
-Cg
-</string>
-                                            <attributes>
-                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <font key="NSFont" size="15" name="HelveticaNeue"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="96" id="uwU-xj-2EB"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正方观点：0票" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QJ-9x-G0G">
@@ -220,7 +196,6 @@ Cg
                                 <constraint firstAttribute="trailing" secondItem="SWr-jd-Ecb" secondAttribute="trailing" constant="15" id="Zgd-tC-BFc"/>
                                 <constraint firstItem="uFs-iA-MxZ" firstAttribute="top" secondItem="7dm-bw-f1B" secondAttribute="bottom" constant="5" id="beo-Ae-VIS"/>
                                 <constraint firstAttribute="height" constant="568" id="bje-P3-JSg"/>
-                                <constraint firstAttribute="bottom" secondItem="vHV-wF-mks" secondAttribute="bottom" constant="17" id="e7t-4E-hHC"/>
                                 <constraint firstAttribute="trailing" secondItem="iYR-pW-Z9Q" secondAttribute="trailing" constant="15" id="eux-di-ZyC"/>
                                 <constraint firstItem="4wh-e5-bdx" firstAttribute="leading" secondItem="7dm-bw-f1B" secondAttribute="trailing" constant="16" id="ews-ms-vI4"/>
                                 <constraint firstItem="Whh-dY-vqi" firstAttribute="top" secondItem="2wb-cH-Vpa" secondAttribute="top" constant="10" id="g86-5F-fvI"/>

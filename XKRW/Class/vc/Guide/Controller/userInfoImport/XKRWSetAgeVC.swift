@@ -32,7 +32,7 @@ class XKRWSetAgeVC: XKRWBaseVC {
 //        nextButton!.addSubview(bottomLine)
         nextButton!.titleLabel?.font = XKDEFAULFONT
         
-        MobClick.event("in_RgstBirth")
+        MobClick.event("pg_birth")
          self.view.backgroundColor = UIColor.whiteColor()
         self.addNaviBarBackButton()
         if XKRWUserService.sharedService().getSex().rawValue == eSexMale.rawValue{

@@ -85,4 +85,6 @@
  *  @return 有则返回数值，无则返回0
  */
 - (float)getWeightRecordWithDate:(NSDate *)date;
+
+- (NSInteger) getCreateTimeOfDate:(NSDate *)date ;
 @end

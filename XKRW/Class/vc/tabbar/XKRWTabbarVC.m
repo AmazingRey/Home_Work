@@ -87,6 +87,10 @@
     personBtn.selected = YES;
     [tabbarBG addSubview:personBtn];
     
+    UILongPressGestureRecognizer *longPressTap =[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(entryFeedBackVC:)];
+    longPressTap.minimumPressDuration = 1 ;
+    [personBtn addGestureRecognizer:longPressTap];
+    
     schemeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     schemeBtn.tag = 1;
     if (XKAppWidth == 320) {
@@ -105,6 +109,9 @@
     }
 
     [schemeBtn addTarget:self action:@selector(schemeBtn_Click:) forControlEvents:UIControlEventTouchDown];
+    
+
+    
     [tabbarBG addSubview:schemeBtn];
     
     shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -369,6 +376,13 @@
 
 }
 
+//长按进入 反馈
+- (void)entryFeedBackVC:(UILongPressGestureRecognizer *)longPress {
+    if (longPress.state == UIGestureRecognizerStateBegan) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:ENTRYFEEDBACK object:nil];
+    }
+}
+
 #pragma mark 闹钟处理
 
 -(void)receiveAlarmWithNotification:(NSNotification *) notification{
@@ -426,7 +440,7 @@
     schemeBtn.selected = NO;
     shareBtn.selected = NO;
     moreBtn.selected = NO;
-    personBtn.userInteractionEnabled = NO;
+//    personBtn.userInteractionEnabled = NO;
     schemeBtn.userInteractionEnabled = YES;
     shareBtn.userInteractionEnabled = YES;
     moreBtn.userInteractionEnabled = YES;

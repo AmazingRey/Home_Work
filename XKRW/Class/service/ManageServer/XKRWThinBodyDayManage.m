@@ -96,7 +96,7 @@ static XKRWThinBodyDayManage * shareInstance;
 
 
 - (void)endOfTheUserScheme {
-    UIAlertView * alertView =  [[UIAlertView alloc ] initWithTitle:@"方案的预期天数已结束" message:@"是否达到目标体重？" delegate:self cancelButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:@"完成目标%.1f啦",[[XKRWUserService sharedService] getUserDestiWeight]/1000.f], @"没有完成，重新制定方案", nil];
+    UIAlertView * alertView =  [[UIAlertView alloc ] initWithTitle:@"计划已结束" message:@"已完成目标体重？" delegate:self cancelButtonTitle:nil otherButtonTitles:[NSString stringWithFormat:@"完成目标%.1f啦",[[XKRWUserService sharedService] getUserDestiWeight]/1000.f], @"没有完成，重新制定", nil];
     alertView.tag = 10001 ;
     [alertView show];
 }
@@ -114,7 +114,7 @@ static XKRWThinBodyDayManage * shareInstance;
             [MobClick event:@"clk_finish"];
             [self showFlowerInWindow];
         }else if (buttonIndex == 1){
-            [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
+            [XKRWCui showProgressHud:@"数据重置中，请稍后..."];
             [MobClick event:@"clk_unfinished"];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:viewController];
         }
@@ -123,7 +123,7 @@ static XKRWThinBodyDayManage * shareInstance;
     
     if (alertView.tag == 10002){
         if (buttonIndex == 0){
-            [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
+            [XKRWCui showProgressHud:@"数据重置中，请稍后..."];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:viewController];
         }
     }
@@ -133,7 +133,7 @@ static XKRWThinBodyDayManage * shareInstance;
             
         }else if (buttonIndex == 1){
             [MobClick event:@"clk_Rest1"];
-            [XKRWCui showProgressHud:@"重置用户减肥方案中..."];
+            [XKRWCui showProgressHud:@"数据重置中，请稍后..."];
             [[XKRWSchemeService_5_0 sharedService] resetUserScheme:viewController];
         }
         
@@ -178,7 +178,7 @@ static XKRWThinBodyDayManage * shareInstance;
     resetSchemeButton.backgroundColor = XKMainToneColor_29ccb1;
     resetSchemeButton.layer.masksToBounds = YES;
     resetSchemeButton.layer.cornerRadius = 5;
-    [resetSchemeButton setTitle:@"去定制新的方案" forState:UIControlStateNormal];
+    [resetSchemeButton setTitle:@"去定制新的计划" forState:UIControlStateNormal];
     resetSchemeButton.titleLabel.font = XKDefaultFontWithSize(16);
   
     [resetSchemeButton addTarget:self action:@selector(toResetScheme:) forControlEvents:UIControlEventTouchUpInside];
@@ -212,7 +212,7 @@ static XKRWThinBodyDayManage * shareInstance;
 }
 
 - (void) showToResetScheme {
-    UIAlertView * alertView =  [[UIAlertView alloc] initWithTitle:@"确定要重置方案吗？" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView * alertView =  [[UIAlertView alloc] initWithTitle:@"确定要重新制定吗？" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
 
     alertView.tag = 10003;
     [alertView show];

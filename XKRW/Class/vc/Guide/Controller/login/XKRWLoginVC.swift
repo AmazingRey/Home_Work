@@ -61,7 +61,7 @@ class XKRWLoginVC: XKRWBaseVC {
         if(account != nil && account?.length != 0){
             userAcount.text = account as? String
         }
-        
+        MobClick.event("pg_log")
         self.title = "登录"
         
         if (fromWhichVC == FromWhichVC.RegisterVC) {
@@ -190,6 +190,7 @@ class XKRWLoginVC: XKRWBaseVC {
     
     //忘记密码
     @IBAction func forgetPasswordAction(sender: UIButton) {
+        MobClick.event("btn_forgetpswd")
         let forgetPasswordVC: XKRWForgetPassWordVC = XKRWForgetPassWordVC(nibName:"XKRWForgetPassWordVC", bundle: nil)
         self.navigationController?.pushViewController(forgetPasswordVC, animated: true)
     }

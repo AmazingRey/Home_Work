@@ -63,11 +63,14 @@
 @property (weak, nonatomic) IBOutlet UIView *testViewFrame;
 @property (strong ,nonatomic) UIView *bgBlackView;
 @property (strong ,nonatomic) XKRWRecordMore5_3View *moreView;
+@property (strong, nonatomic) IBOutlet UIButton *cancleBtn;
 
 @end
 
 @implementation XKRWRecordView_5_3
 -(void)initSubViews {
+    [_cancleBtn setBackgroundImage:[UIImage imageNamed:@"off_p"] forState:UIControlStateHighlighted];
+    [_moreButton setBackgroundImage:[UIImage imageNamed:@"more_p1"] forState:UIControlStateHighlighted];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reflashUIAndData:) name:EnergyCircleDataNotificationName object:nil];
     _scrollView.delegate = self;
     showDetailSection = -1;
@@ -79,11 +82,13 @@
     _bgBlackView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
     [self insertSubview:_bgBlackView belowSubview:_shadowImageView];
     
-    _scrollView.contentSize = CGSizeMake( XKAppWidth * 2, _scrollView.height);
+    _scrollViewConstraint.constant = self.height - 118;
+    XKLog(@"++%f  ++%f",self.height - 118,_scrollView.height);
+    _scrollView.contentSize = CGSizeMake( XKAppWidth * 2, self.height - 118);
     _scrollView.showsHorizontalScrollIndicator = NO;
     _scrollView.pagingEnabled = YES;
     _scrollView.backgroundColor = XK_BACKGROUND_COLOR ;
-    recordTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, _scrollView.height) style:UITableViewStylePlain];
+    recordTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, self.height - 118) style:UITableViewStylePlain];
     recordTableView.tag = 5031;
     recordTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     recordTableView.delegate = self;
@@ -91,7 +96,7 @@
     recordTableView.dataSource = self;
     [recordTableView registerNib:[UINib nibWithNibName:@"XKRWRecordCell_5_3" bundle:nil] forCellReuseIdentifier:@"recordCell"];
     
-    _recommendedTableView = [[UITableView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, _scrollView.height) style:UITableViewStylePlain];
+    _recommendedTableView = [[UITableView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, self.height - 118) style:UITableViewStylePlain];
     _recommendedTableView.tag = 5032;
     _recommendedTableView.delegate = self;
     _recommendedTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -103,7 +108,7 @@
     [_scrollView addSubview:_recommendedTableView];
     
     
-    habitView = [[XKRWHabitListView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, _scrollView.height)];
+    habitView = [[XKRWHabitListView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, self.height - 118)];
     
     [_scrollView addSubview:habitView];
     
@@ -129,9 +134,9 @@
         _rightButton.enabled = NO;
     }
     
-    schemePastImageView = [[UIImageView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, _scrollView.width, _scrollView.height)];
+    schemePastImageView = [[UIImageView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, _scrollView.width, self.height - 118)];
     
-    UILabel *schemePastLabel = [[UILabel alloc]initWithFrame:CGRectMake((XKAppWidth - 200)/2 , (_scrollView.height - 30)/2, 200, 30)];
+    UILabel *schemePastLabel = [[UILabel alloc]initWithFrame:CGRectMake((XKAppWidth - 200)/2 , (self.height - 118 - 30)/2, 200, 30)];
     schemePastLabel.font = XKDefaultFontWithSize(14);
     schemePastLabel.textColor = colorSecondary_666666;
     schemePastLabel.textAlignment = NSTextAlignmentCenter;
@@ -150,7 +155,7 @@
     
     
     if (_schemeArray == nil) {
-        UILabel *notNeedSportLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth + (XKAppWidth - 200)/2 , (_scrollView.height - 30)/2, 200, 30)];
+        UILabel *notNeedSportLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth + (XKAppWidth - 200)/2 , (self.height - 118 - 30)/2, 200, 30)];
         notNeedSportLabel.font = XKDefaultFontWithSize(14);
         notNeedSportLabel.textColor = colorSecondary_666666;
         notNeedSportLabel.backgroundColor = [UIColor clearColor];
@@ -190,7 +195,6 @@
             _actionView.hidden = YES;
             habitView.hidden = NO;
             _scrollView.scrollEnabled = NO;
-            _scrollviewHeight.constant = 243;
             _activeHeight.constant = 0;
             break;
         default:
@@ -318,9 +322,13 @@
     
     if (schemeDetail != nil) {
         XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
-        _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐食谱\n%ldKcal",(long)entity.calorie];
+        NSMutableAttributedString *attributString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"推荐食谱\n%ldKcal",(long)entity.calorie]];
+        [attributString addAttributes:@{NSFontAttributeName:XKDefaultFontWithSize(15)} range:NSMakeRange(0, 5)];
+        [attributString addAttributes:@{NSFontAttributeName:XKDefaultFontWithSize(12)} range:NSMakeRange(5, [NSString stringWithFormat:@"%ldKcal",(long)entity.calorie].length)];
+        _recommendedTypeLabel.attributedText = attributString;
+//        _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐食谱\n%ldKcal",(long)entity.calorie];
     }else{
-        _recommendedTypeLabel.text = @"推荐食谱";
+        _recommendedTypeLabel.attributedText = [[NSMutableAttributedString alloc] initWithString:@"推荐食谱" attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15)}];
       
     }
     
@@ -330,9 +338,13 @@
     intakeArray = @[@(breakfirstIntake),@(lunchIntake),@(dinnerIntake),@(snackIntake)];
     
     if (recordFoodColories > 0) {
-        _recordTypeLabel.text = [NSString stringWithFormat:@"记录饮食\n%.0fKcal",recordFoodColories];
+        NSMutableAttributedString *attributString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"记录饮食\n%.0fKcal",recordFoodColories]];
+        [attributString addAttributes:@{NSFontAttributeName:XKDefaultFontWithSize(15)} range:NSMakeRange(0, 5)];
+        [attributString addAttributes:@{NSFontAttributeName:XKDefaultFontWithSize(12)} range:NSMakeRange(5, [NSString stringWithFormat:@"%.0fKcal",recordFoodColories].length)];
+        _recordTypeLabel.attributedText = attributString;
+//        _recordTypeLabel.text = [NSString stringWithFormat:@"记录饮食\n%.0fKcal",recordFoodColories];
     }else{
-        _recordTypeLabel.text = @"记录饮食";
+        _recordTypeLabel.attributedText = [[NSMutableAttributedString alloc] initWithString:@"记录饮食" attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15)}];
     }
     
     [recordTableView reloadData];
@@ -374,9 +386,14 @@
     schemeDetail =[[XKRWRecordService4_0 sharedService] getSchemeRecordWithDate:_date andType:5];
     if (schemeDetail != nil) {
         XKRWRecordSchemeEntity *entity = [schemeDetail objectForKey:@"schemeEntity"];
-        _recommendedTypeLabel.text = [NSString stringWithFormat:@"推荐运动\n%ldKcal",(long)entity.calorie];
+        NSMutableAttributedString *attributString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"推荐运动\n%ldKcal",(long)entity.calorie]];
+        [attributString addAttributes:@{NSFontAttributeName:XKDefaultFontWithSize(15)} range:NSMakeRange(0, 5)];
+        [attributString addAttributes:@{NSFontAttributeName:XKDefaultFontWithSize(12)} range:NSMakeRange(5, [NSString stringWithFormat:@"%ldKcal",(long)entity.calorie].length)];
+        _recommendedTypeLabel.attributedText = attributString;
+
     }else {
-        _recommendedTypeLabel.text = @"推荐运动";
+        
+        _recommendedTypeLabel.attributedText = [[NSMutableAttributedString alloc] initWithString:@"推荐运动" attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15)}];
     }
     
     [self dealCenterButtonShowAndAction];
@@ -386,9 +403,14 @@
         recordSportColories += sportEntity.calorie;
     }
     if (recordSportColories > 0) {
-        _recordTypeLabel.text = [NSString stringWithFormat:@"记录运动\n%.0fKcal",recordSportColories];
+       
+        NSMutableAttributedString *attributString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"记录运动\n%.0fKcal",recordSportColories]];
+        [attributString addAttributes:@{NSFontAttributeName:XKDefaultFontWithSize(15)} range:NSMakeRange(0, 5)];
+        [attributString addAttributes:@{NSFontAttributeName:XKDefaultFontWithSize(12)} range:NSMakeRange(5, [NSString stringWithFormat:@"%.0fKcal",recordSportColories].length)];
+        _recordTypeLabel.attributedText = attributString;
+        
     }else{
-        _recordTypeLabel.text = @"记录运动";
+        _recordTypeLabel.attributedText = [[NSMutableAttributedString alloc] initWithString:@"记录运动" attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15)}];
     }
     [recordTableView reloadData];
     [_recommendedTableView reloadData];
@@ -450,7 +472,7 @@
         }
         
     }else if (tableView.tag == 5032){
-        if ([[XKRWUserService sharedService] getSex] == eSexFemale && _schemeArray != nil ) {
+        if ([[XKRWUserService sharedService] getSex] == eSexFemale && _schemeArray != nil && _type == energyTypeSport ) {
             return _schemeArray.count + 1;
         }else{
             return _schemeArray.count;
@@ -591,6 +613,12 @@
             }
             cell.mealLabel.text = entity.schemeName;
             cell.mealDetailLabel.text = schemeDetailStr;
+            
+            if (_type == energyTypeEat) {
+                cell.schemeTypeDescriptionLabel.text = @"查看饮食";
+            }else{
+                cell.schemeTypeDescriptionLabel.text = @"查看运动";
+            }
             [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
             return  cell;
         }

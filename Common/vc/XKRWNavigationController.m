@@ -57,28 +57,28 @@
 
 
 - (void)setCustomNavigationbarStyleWithType:(NavigationBarType) type {
-//    if (type == NavigationBarTypeTransparency) {
-//        [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
-////            [self.navigationBar setBarTintColor:[UIColor clearColor]];
-////            [self.navigationBar setTintColor:[UIColor whiteColor]];
-//        }];
-//        
-////        CGRect frame = self.navigationBar.frame;
-////        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height+20)];
-////        imageView.backgroundColor = [UIColor whiteColor];
-////        imageView.alpha = 0;
-//        
-////        [self.view insertSubview:imageView belowSubview:self.navigationBar];
-////        self.navigationBar.translucent = NO;
-////        [self.navigationBar setShadowImage:[UIImage new]];
-//        
-//       
-//    }else
-//    {
+    
+    [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
+        [self.navigationBar setBarTintColor:[UIColor lightGrayColor]];
+        [self.navigationBar setTintColor:[UIColor whiteColor]];
+    }];
+    
+    if (type == NavigationBarTypeTransparency) {
+        CGRect frame = self.navigationBar.frame;
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height+20)];
+        imageView.image = [UIImage imageNamed:@"navigationBar"];
+        imageView.alpha = 0;
+        [self.view insertSubview:imageView belowSubview:self.navigationBar];
+        [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"bigShadow"] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationBar setShadowImage:[UIImage new]];
+        
+       
+    }else
+    {
         [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
-            [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationBar"] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationBar"] forBarMetrics:UIBarMetricsDefault];
         }];
-//    }
+    }
     
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowColor = [UIColor clearColor];
@@ -95,55 +95,55 @@
 //  从默认的navigationBar设置为透明的navigationbar
 - (void)navigationBarChangeFromDefaultNavigationBarToTransparencyNavigationBar
 {
-//    if (imageView == nil) {
-//        CGRect frame = self.navigationBar.frame;
-//        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height+20)];
-//        imageView.image = [UIImage imageNamed:@"navigationBar"];
-//        [UIView animateWithDuration:0.2 animations:^{
-//            imageView.alpha = 0;
-//        } completion:^(BOOL finished) {
-//        }];
-//        [self.view insertSubview:imageView belowSubview:self.navigationBar];
-//        [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"bigShadow"] forBarMetrics:UIBarMetricsDefault];
-//        [self.navigationBar setShadowImage:[UIImage new]];
-//        self.navigationBar.layer.masksToBounds = NO;
-//    }
+    if (imageView == nil) {
+        CGRect frame = self.navigationBar.frame;
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height+20)];
+        imageView.image = [UIImage imageNamed:@"navigationBar"];
+        [UIView animateWithDuration:0.2 animations:^{
+            imageView.alpha = 0;
+        } completion:^(BOOL finished) {
+        }];
+        [self.view insertSubview:imageView belowSubview:self.navigationBar];
+        [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"bigShadow"] forBarMetrics:UIBarMetricsDefault];
+        [self.navigationBar setShadowImage:[UIImage new]];
+        self.navigationBar.layer.masksToBounds = YES;
+    }
 }
 // 从黑色半透明的navigationBar设置为透明的navigationBar
 - (void)navigationBarChangeFromBlackHalfTransNavigationBarToTransparencyNavigationBar {
-//    if (imageView == nil) {
-//        CGRect frame = self.navigationBar.frame;
-//        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height+20)];
-//        imageView.image = [UIImage imageNamed:@"userArticle_navigationBar"];
-//        [UIView animateWithDuration:0.2 animations:^{
-//            imageView.alpha = 0;
-//        } completion:^(BOOL finished) {
-//        }];
-//        [self.view insertSubview:imageView belowSubview:self.navigationBar];
+    if (imageView == nil) {
+        CGRect frame = self.navigationBar.frame;
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height+20)];
+        imageView.image = [UIImage imageNamed:@"userArticle_navigationBar"];
+        [UIView animateWithDuration:0.2 animations:^{
+            imageView.alpha = 0;
+        } completion:^(BOOL finished) {
+        }];
+        [self.view insertSubview:imageView belowSubview:self.navigationBar];
         [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"bigShadow"] forBarMetrics:UIBarMetricsDefault];
-//        [self.navigationBar setShadowImage:[UIImage new]];
         self.navigationBar.layer.masksToBounds = YES;
-//    }
+        [self.navigationBar setShadowImage:[UIImage new]];
+    }
 
 }
 
 //  从透明的navigationBar设置为默认的navigationbar
 - (void)navigationBarChangeFromTransparencyNavigationBarToDefaultNavigationBar
 {
-//    if (imageView != nil) {
-//        [imageView removeFromSuperview];
-//        imageView = nil;
-//    }
+    if (imageView != nil) {
+        [imageView removeFromSuperview];
+        imageView = nil;
+    }
     [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationBar"] forBarMetrics:UIBarMetricsDefault];
     self.navigationBar.layer.masksToBounds = NO;
 }
 
 // 从透明的navigationBar设置为黑色半透明的navigationbar
 - (void)navigationBarChangeFromDefaultNavigationBarToBlackHarfTransNavigationBar {
-//    if (imageView != nil) {
-//        [imageView removeFromSuperview];
-//        imageView = nil;
-//    }
+    if (imageView != nil) {
+        [imageView removeFromSuperview];
+        imageView = nil;
+    }
     [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"userArticle_navigationBar"] forBarMetrics:UIBarMetricsDefault];
     self.navigationBar.layer.masksToBounds = NO;
     
@@ -151,16 +151,16 @@
 
 - (void)changeImageViewAlpha:(CGFloat) tableViewSlideDistance  andHeaderViewHeight:(CGFloat)height AndViewController:(UIViewController *)viewController andnavigationBarTitle:(NSString *)title
 {
-    XKLog(@"%f😁",tableViewSlideDistance);
+    XKLog(@"%f",tableViewSlideDistance);
     if (tableViewSlideDistance<64) {
         viewController.title = title;
         [UIView animateWithDuration:.4 animations:^{
-//            imageView.alpha = 1;
+            imageView.alpha = 1;
         }];
     }else
     {
         viewController.title = @"";
-//        imageView.alpha = 0;
+        imageView.alpha = 0;
     }
 }
 

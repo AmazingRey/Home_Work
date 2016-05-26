@@ -133,8 +133,18 @@
     [[XKRWUserService sharedService] setUserNickName:nickNameTemp];
     [[XKRWUserService sharedService] setUserNickNameIsEnable:YES];
     [[XKRWUserService sharedService] saveUserInfo];
-    [self.navigationController popViewControllerAnimated:YES];
+    if(_notShowBackButton){
+        [self.navigationController popViewControllerAnimated:NO];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
+
+
+- (void)handleUploadProblem:(id)problem withTaskID:(NSString *)taskID {
+    [super handleUploadProblem:problem withTaskID:taskID];
+}
+
 
 -(void)finallyJobWhenUploadFail {
     [[XKRWUserService sharedService] setUserNickName:oldNicekNameTemp];

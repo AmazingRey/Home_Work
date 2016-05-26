@@ -90,7 +90,7 @@
         [self hiddenRequestArticleNetworkFailedWarningShow];
         XKRWArticleDetailEntity *entity = (XKRWArticleDetailEntity *)result;
         NSString *time = entity.content[@"jzrq"];
-        NSDate *pkTime =  [NSDate dateFromString:time withFormat:@"yyyy-mm-dd HH:mm"];
+        NSDate *pkTime =  [NSDate dateFromString:time withFormat:@"yyyy-MM-dd HH:mm"];
         NSDate *nowDate = [NSDate date];
         if ([pkTime compare:nowDate] == NSOrderedAscending) {
             _ffButton.hidden = YES;
@@ -129,7 +129,7 @@
         NSString *ffgd = entity.content[@"ffgd"];
         NSString *zfgd = entity.content[@"zfgd"];
         NSString *xbdh = entity.content[@"xbdh"];
-        xbdh = [xbdh stringByReplacingOccurrencesOfString:@"\\n" withString:@"\\r\n"];
+    //    xbdh = [xbdh stringByReplacingOccurrencesOfString:@"\\n" withString:@"\\r\n"];
         NSString *longStr;
         
         if (ffgd.length > zfgd.length) {
@@ -157,24 +157,12 @@
         
         NSMutableAttributedString *xbdhAttributedString = [XKRWUtil createAttributeStringWithString:xbdh font:XKDefaultFontWithSize(15.f) color:colorSecondary_666666 lineSpacing:3 alignment:NSTextAlignmentLeft];
         
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
-        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-        [paragraphStyle setLineSpacing:3];
-        [paragraphStyle setParagraphSpacing:5];
-        NSDictionary *attributes = @{NSFontAttributeName:XKDefaultFontWithSize(15.f), NSParagraphStyleAttributeName:paragraphStyle.copy};
-        
-        CGRect xbdhRect = [xbdh boundingRectWithSize:CGSizeMake(XKAppWidth -30, CGFLOAT_MAX)
-                                             options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
-                                          attributes:attributes
-                                             context:nil];
-        
-        
+        CGRect xbdhRect = [xbdhAttributedString boundingRectWithSize:CGSizeMake(XKAppWidth - 30, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
         _xbdhLabelHeight = xbdhRect.size.height;
-       
         _xbTipsLabel.attributedText = xbdhAttributedString;
-        
+//        _xbTipsLabel.backgroundColor = [UIColor redColor];
+        _xbdhHeight.constant = _xbdhLabelHeight + 10;
         [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
-        
     }
     
     if ([taskID isEqualToString:@"upLoadPKNum"]) {
@@ -194,7 +182,7 @@
         _xkdhTitleLabel.hidden = NO;
         _canShowDetail = YES;
         
-  
+        
         
     }
     [self resetViewHeight];
@@ -222,13 +210,13 @@
     }else{
         _zfButton.hidden = YES;
         _ffButton.hidden = YES;
-        _viewHeight = 280 + _lineHeightConstraint.constant + 40 + _xbdhLabelHeight ;
+        _viewHeight = 280 + _lineHeightConstraint.constant + 60 + _xbdhLabelHeight ;
     }
     
     if (_viewHeight > XKAppHeight) {
-        _viewHeightConstraint.constant = _viewHeight;
+        _viewHeightConstraint.constant = _viewHeight + 64;
     }else{
-        _viewHeightConstraint.constant = XKAppHeight;
+        _viewHeightConstraint.constant = XKAppHeight + 64;
     }
 }
 

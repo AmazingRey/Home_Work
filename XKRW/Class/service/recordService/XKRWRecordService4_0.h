@@ -15,6 +15,7 @@
 
 #import "XKRWUniversalRecordEntity.h"
 #import "XKRWRecordSchemeEntity.h"
+#import "XKRWStatiscEntity5_3.h"
 
 #define SUCCESS @"success"
 #define ERROR @"error"
@@ -209,7 +210,7 @@
  *  @return 方案记录实体对象数组
  */
 - (NSArray *)getSchemeRecordWithDate:(NSDate *)date;
-- (NSArray *)getSchemeRecordWithDates:(NSArray *)dateArray;
+- (NSDictionary *)getSchemeRecordWithDates:(NSArray *)dateArray;
 /**
  *  Get scheme record, use Scheme ids to search; If search result is null, will create a new scheme record for return
  *
@@ -304,7 +305,7 @@
  *  获取当天所有记录
  */
 - (XKRWRecordEntity4_0 *)getAllRecordOfDay:(NSDate *)date;
-- (NSArray *)getAllRecordOfDays:(NSArray *)dateArray;
+- (NSDictionary *)getAllRecordOfDays:(NSArray *)dateArray;
 /**
  *  获取当天体重记录
  */
@@ -423,6 +424,8 @@
  */
 - (BOOL)deleteTrialUserData;
 
+//删除体重记录
+- (BOOL)deleteRecordWeightWithCreateTime :(NSInteger) createTime ;
 
 /**
  *  获取当天运动消耗的卡路里 以及记录食物摄入的卡路里
@@ -433,7 +436,7 @@
  *  @return 卡路里
  */
 - (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDate:(NSDate *)date;
-- (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDates:(NSArray *)dateArray;
+- (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDates:(XKRWStatiscEntity5_3 *)dateArray;
 /**
  *  获取某一天 用户运动以及运动推荐信息
  *

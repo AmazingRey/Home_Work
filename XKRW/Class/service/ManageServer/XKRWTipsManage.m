@@ -148,7 +148,7 @@ static XKRWTipsManage *shareInstance;
                 
             }
             
-            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType]) {
+            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] && [XKRWAlgolHelper dailyConsumeSportEnergyOfDate:date] > 0) {
                 XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
                 entity.showType = 0;
                 entity.tipsText = [NSString stringWithFormat:@"今日建议运动消耗%.0fKcal，记录运动或执行运动方案可以帮助你完成运动目标。",[XKRWAlgolHelper dailyConsumeSportEnergy]];

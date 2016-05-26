@@ -12,7 +12,7 @@ class XKRWChooseSexVC: XKRWBaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        MobClick.event("in_RgstSex")
+        MobClick.event("pg_sex")
         self.addNaviBarBackButton()
         self.title = "选择性别"
          self.view.backgroundColor = UIColor.whiteColor()

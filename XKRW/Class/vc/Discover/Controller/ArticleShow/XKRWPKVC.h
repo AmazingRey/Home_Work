@@ -10,6 +10,8 @@
 
 @interface XKRWPKVC : XKRWBaseVC
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *xbdhHeight;
+
 @property (weak, nonatomic) IBOutlet UILabel *xkdhTitleLabel;
 @property (nonatomic,strong) NSString* nid;
 @property (weak, nonatomic) IBOutlet UIButton *zfButton;

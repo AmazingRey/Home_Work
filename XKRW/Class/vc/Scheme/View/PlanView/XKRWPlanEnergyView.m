@@ -24,7 +24,6 @@
     NSInteger _exClickedIndex;
     XKRWFlashingTextView *_remindTextView;
     UILabel *_checkTodayAnalyze;
-    UIView *_line;
     CGFloat leastNum;
 }
 
@@ -91,20 +90,9 @@
             [self addSubview:label];
         }
         
-        _line = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 0.5, XKAppWidth, 0.5)];
-        _line.backgroundColor = colorSecondary_e0e0e0;
-        [self addSubview:_line];
         
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backgroundTapAction)];
-        [self addGestureRecognizer:tap];
     }
     return self;
-}
-
-- (void)backgroundTapAction {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(energyCircleViewBackgroundClicked)]) {
-        [_delegate energyCircleViewBackgroundClicked];
-    }
 }
 
 #pragma mark -- set meals、sports and habits' original state data
@@ -116,9 +104,6 @@
     
     if (exCircle.style != XKRWEnergyCircleStylePerfect && exCircle) [exCircle setStyle:XKRWEnergyCircleStyleOpened];
     
-    if (_line.hidden == YES) {
-        _line.hidden = NO;
-    } else return;
 }
 
 - (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber {
@@ -284,9 +269,6 @@
 
 - (void)resetCirclesStyle:(NSInteger)currentIndex {
     
-    if (_line.hidden == NO) {
-        _line.hidden = YES;
-    }
     
     if ((_exClickedIndex != 1 && _exClickedIndex != 2 && _exClickedIndex != 3) || _exClickedIndex == currentIndex) {
         _exClickedIndex = currentIndex;

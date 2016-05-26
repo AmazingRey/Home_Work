@@ -20,7 +20,7 @@ class XKRWSetCurrentWeightVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "当前体重"
-        MobClick.event("in_RgstWeight")
+        MobClick.event("pg_wt")
         
 //        let topLine:UIView = UIView.init(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 0.5))
 //        topLine.backgroundColor = XK_ASSIST_LINE_COLOR

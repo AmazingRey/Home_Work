@@ -366,4 +366,7 @@
 
 #define XKRWScaleWidth ([[UIScreen mainScreen] bounds].size.width/375.0)
 #define XKRWScaleHeight ([[UIScreen mainScreen] bounds].size.height/667.0)
+
+#define ENTRYFEEDBACK @"entryFeedback"
+
 #endif

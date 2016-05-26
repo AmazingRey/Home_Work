@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *mealImageView;
 @property (weak, nonatomic) IBOutlet UILabel *mealLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mealDetailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *schemeTypeDescriptionLabel;
 
 @end

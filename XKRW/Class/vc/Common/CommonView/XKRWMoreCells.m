@@ -314,9 +314,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-//        self.headerBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-//        self.headerBtn.frame=CGRectMake(15, (44-23)/2, 23, 23);
-//        [self.contentView addSubview:self.headerBtn];
+
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(25, 5, 85, 30)];
         [label setBackgroundColor:[UIColor clearColor]];

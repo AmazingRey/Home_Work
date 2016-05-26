@@ -49,9 +49,9 @@
             self.frame = CGRectMake(origin.x, origin.y, ITEM_WIDTH, 69);
             [self.titleLabel setFont:XKDefaultNumEnFontWithSize(15.f)];
             UIImage *image = [UIImage imageNamed:@"circle_date"];
-            _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - image.size.width) / 2, (69-image.size.height)/2 -10, image.size.width, image.size.height)];
+            _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - image.size.width) / 2, (62-image.size.height)/2 -10, image.size.width, image.size.height)];
             
-            _dot.contentMode = UIViewContentModeScaleAspectFit;
+//            _dot.contentMode = UIViewContentModeScaleAspectFit;
         }else{
             self.frame = CGRectMake(origin.x, origin.y, ITEM_WIDTH, 30);
             [self.titleLabel setFont:XKDefaultNumEnFontWithSize(13.f)];
@@ -63,7 +63,7 @@
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         }
         self.outOfMonth = outOfMonth;
-        _weightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _dot.bottom + 2, self.width, 14)];
+        _weightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _dot.bottom + 1.5, self.width, 14)];
         _weightLabel.textAlignment = NSTextAlignmentCenter;
         _weightLabel.font = XKDefaultFontWithSize(12);
         _weightLabel.textColor = XKMainSchemeColor;
@@ -72,7 +72,7 @@
         UIImage *changPlanImage = [UIImage imageNamed:@"cz"];
         _changPlanView.image = changPlanImage;
         _changPlanView.size = changPlanImage.size;
-        _changPlanView.center = CGPointMake(CGRectGetMidX(_weightLabel.frame), _weightLabel.bottom + 2 + changPlanImage.size.height / 2.0);
+        _changPlanView.center = CGPointMake(CGRectGetMidX(_weightLabel.frame), _weightLabel.bottom + 1.5 + changPlanImage.size.height / 2.0);
         
         [self setBackgroundColor:[UIColor whiteColor]];
         
@@ -141,34 +141,38 @@
             [_changPlanView removeFromSuperview];
         }
         
+        UIImage *dotImage;
         if (isToday) {
             if (!isInPlan) {
-                [_dot setImage:[UIImage imageNamed:@"circle_date"]];
+                dotImage = [UIImage imageNamed:@"circle_date"];
                 [self setTitleColor:XKMainSchemeColor forState:UIControlStateNormal];
             }
             if (!isRecord && isInPlan) {
-                [_dot setImage:[UIImage imageNamed:@"circle_date_w"]];
+                dotImage = [UIImage imageNamed:@"circle_date_n"];
                 [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             }
             if (isRecord) {
-                [_dot setImage:[UIImage imageNamed:@"circle_date_y"]];
+                
+                dotImage = [UIImage imageNamed:@"circle_date_y"];
                 [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             }
             
-            [self insertSubview:_dot belowSubview:self.titleLabel];
         }
         if (isInPlan && !isToday) {
-            [_dot setImage:[UIImage imageNamed:@"circleGray"]];
+            dotImage = [UIImage imageNamed:@"circleGray"];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             
         }
         if (!isToday && isRecord) {
-            [_dot setImage:[UIImage imageNamed:@"circleGreen"]];
+            dotImage = [UIImage imageNamed:@"circleGreen"];
             [self insertSubview:_dot belowSubview:self.titleLabel];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
         
-        
+        _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - dotImage.size.width) / 2, (62-dotImage.size.height)/2 - 10, dotImage.size.width, dotImage.size.height)];
+        _dot.image = dotImage;
+        [self insertSubview:_dot belowSubview:self.titleLabel];
+
     }else{
         if (isRecord) {
             [self addSubview:_dot];
@@ -182,7 +186,7 @@
     }
     
     if (_CalendarMonthType == XKRWCalendarTypeStrongMonth) {
-        self.titleEdgeInsets = UIEdgeInsetsMake(-20,0,0,0);
+        self.titleEdgeInsets = UIEdgeInsetsMake(-28,0,0,0);
     }
 }
 

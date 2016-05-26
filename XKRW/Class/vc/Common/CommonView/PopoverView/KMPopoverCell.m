@@ -44,7 +44,7 @@
             self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.headImageView.right, 0, self.width - self.headImageView.width - 15.f, 44.f)];
             self.titleLabel.textAlignment = NSTextAlignmentCenter;
             self.titleLabel.font = XKDefaultFontWithSize(16.f);
-            self.titleLabel.textColor = XKMainSchemeColor;
+            self.titleLabel.textColor = [UIColor whiteColor];;
             self.titleLabel.backgroundColor = [UIColor clearColor];
             
             [self.contentView addSubview:self.titleLabel];

@@ -30,7 +30,7 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
     //    }
     
     override func viewDidLoad() {
-        MobClick.event("in_WhyFat")
+        MobClick.event("pg_scanwhyfat")
         
         self.forbidAutoAddPopButton = true
         super.viewDidLoad()

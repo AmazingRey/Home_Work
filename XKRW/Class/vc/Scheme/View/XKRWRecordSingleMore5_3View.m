@@ -9,12 +9,18 @@
 #import "XKRWRecordSingleMore5_3View.h"
 
 @implementation XKRWRecordSingleMore5_3View
+{
+    
+    IBOutlet UIView *backgroundView;
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         self = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordSingleMore5_3View");
         self.frame = frame;
+        backgroundView.layer.borderColor = [UIColor colorFromHexString:@"#c8c8c8"].CGColor;
+        backgroundView.backgroundColor = [UIColor colorFromHexString:@"#e4e4e4"];
     }
     return self;
 }

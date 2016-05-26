@@ -195,8 +195,8 @@
     CGFloat _xPoint = 15.f, _yPoint = 0.f;
     
     if (_monthType == XKRWCalendarTypeStrongMonth) {
-        UIView  *lineView  =[[UIView alloc]initWithFrame:CGRectMake(0, 69, XKAppWidth, 1)];
-        lineView.backgroundColor = XK_ASSIST_LINE_COLOR;
+        UIView  *lineView  =[[UIView alloc]initWithFrame:CGRectMake(0, 69, XKAppWidth, 0.5)];
+        lineView.backgroundColor = colorSecondary_f4f4f4;
         [self addSubview:lineView];
     }
     
@@ -213,8 +213,8 @@
             if(_monthType == XKRWCalendarTypeStrongMonth){
                 _yPoint += 70.f;
                 UIView  *lineView  = [[UIView alloc] init];
-                lineView.backgroundColor = XK_ASSIST_LINE_COLOR;
-                lineView.frame = CGRectMake(0, 69 + _yPoint, XKAppWidth, 1);
+                lineView.backgroundColor = colorSecondary_f4f4f4;
+                lineView.frame = CGRectMake(0, 69 + _yPoint, XKAppWidth, 0.5);
                 [self addSubview:lineView];
             }else{
                 _yPoint += 30.f;

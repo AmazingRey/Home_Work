@@ -24,7 +24,7 @@ class XKRWFatReasonReviewVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        MobClick.event("in_FatReason")
+        MobClick.event("pg_whyfat")
         
         self.addNaviBarBackButton();
 
@@ -71,9 +71,9 @@ class XKRWFatReasonReviewVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSourc
         else{
         
             if(titleArray.count == 0){
-                nextButton!.setTitle("去制定减肥方案吧", forState: UIControlState.Normal)
+                nextButton!.setTitle("去制定瘦身计划", forState: UIControlState.Normal)
             }else{
-                nextButton!.setTitle("记住了,为我制定方案吧", forState: UIControlState.Normal)
+                nextButton!.setTitle("记住了,为我制定瘦身计划吧", forState: UIControlState.Normal)
             }
         }
         nextButton!.addTarget(self, action: #selector(XKRWFatReasonReviewVC.nextAction(_:)), forControlEvents: UIControlEvents.TouchUpInside);

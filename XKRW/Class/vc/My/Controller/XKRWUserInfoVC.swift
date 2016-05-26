@@ -66,7 +66,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
         self.automaticallyAdjustsScrollViewInsets = false
         XKUtil.executeCodeWhenSystemVersionAbove(7.0, blow: 0) { () -> Void in
             self.edgesForExtendedLayout = .All
-            self.navigationController?.navigationBar.translucent = true
+//            self.navigationController?.navigationBar.translucent = true
             self.navigationController?.edgesForExtendedLayout = .All
         }
         infoTableView.delegate = self
@@ -261,7 +261,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                         cell = UITableViewCell(style: .Default, reuseIdentifier: "noDataCell")
                         
                         let label = UILabel(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 64))
-                        label.text = "ta的方案数据暂未生成...\n请稍后查看"
+                        label.text = "ta的计划数据暂未生成...\n请稍后查看"
                         label.numberOfLines = 2
                         label.textAlignment = .Center
                         

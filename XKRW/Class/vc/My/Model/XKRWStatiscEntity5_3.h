@@ -61,14 +61,29 @@
 @property (strong, nonatomic) NSNumber *normalIntake;
 
 /**
+ *  日期区间内的正常摄入量和日期对应的字典
+ */
+@property (strong, nonatomic) NSDictionary *dicNormalIntake;
+
+/**
  *  日期区间内推荐摄入kcal
  */
 @property (strong, nonatomic) NSNumber *recommondIntake;
 
 /**
+ *  日期区间内的正常摄入量和日期对应的字典
+ */
+@property (strong, nonatomic) NSDictionary *dicRecommondIntake;
+
+/**
  *  日期区间内实际摄入kcal
  */
 @property (strong, nonatomic) NSNumber *actualIntake;
+
+/**
+ *  日期区间内的实际摄入量和日期对应的字典
+ */
+@property (strong, nonatomic) NSDictionary *dicActualIntake;
 
 /**
  *  日期区间内减少摄入的kcal总计 （normalIntake - actualIntake）
@@ -95,6 +110,16 @@
  *  日期区间内运动减少的kcal总计
  */
 @property (strong, nonatomic) NSNumber *decreaseSport;
+
+/**
+ *  日期区间内的运动量和日期对应的字典
+ */
+@property (strong, nonatomic) NSDictionary *dicSportActual;
+
+/**
+ *  日期区间内的运动量和日期对应的字典
+ */
+@property (strong, nonatomic) NSDictionary *dicSportRecommond;
 
 /**
  *  日期区间内运动减少的kcal目标

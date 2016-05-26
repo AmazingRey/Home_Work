@@ -41,7 +41,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *centerbutton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
 @property (weak, nonatomic) IBOutlet UIView *actionView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollviewHeight;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *activeHeight;
 
 // 点击的是记录饮食圆环  进入营养分析

@@ -80,7 +80,7 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         
         if(XKRWUserService.sharedService().getUserOrigWeight() >= healthWeigth)
         {
-            MobClick.event("in_RgstGoal")
+            MobClick.event("pg_goalwt")
             self.title = "目标体重"
             weightDescriptionLabel.text = "目标体重"
             showLabel.hidden = true
@@ -89,7 +89,7 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
                 pickerViewVerticalConstraint.constant = 35
             }
         }else{
-            MobClick.event("in_NoNeed")
+            MobClick.event("pg_thin")
             self.title = "偏瘦"
             pickerView.hidden = true
             weightDescriptionLabel.text = "当前体重"
@@ -160,10 +160,8 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
     }
     
     @IBAction func nextAction(sender: UIButton) {
-        
         if(XKRWUserService.sharedService().getUserOrigWeight() >= healthWeigth)
         {
-            
             if(self.getWeight() < stateWightMin ){
                 if((stateWightMin) != nil){
                     XKRWUserService.sharedService().setUserDestiWeight(stateWightMin!)
@@ -181,7 +179,7 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
             let  cityVC:XKRWGetUserCityVC = XKRWGetUserCityVC(nibName: "XKRWGetUserCityVC", bundle: nil)
             self.navigationController?.pushViewController(cityVC, animated: true)
         }else{
-            MobClick.event("clk_NoNeedBack")
+            MobClick.event("btn_thinback")
             self.navigationController?.popViewControllerAnimated(true)
         }
         

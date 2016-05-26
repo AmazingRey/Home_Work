@@ -16,6 +16,7 @@
 #import "XKRWUserService.h"
 #import "XKRWRecordService4_0.h"
 #import "XKRWUserService.h"
+#import "XKRWStatiscEntity5_3.h"
 
 //static XKRWUserService *userService;
 
@@ -54,18 +55,18 @@
     return [[self class] BM_with_weight:weight height:height age:age sex:sex];
 }
 
-+ (NSArray *)BMs_of_dates:(NSArray *)dateArray{
++ (NSDictionary *)BMs_of_dates:(NSArray *)dateArray{
     //身高
     float height = [[XKRWUserService sharedService] getUserHeight];
     NSInteger age = [[XKRWUserService sharedService] getAge];
     XKSex sex = [[XKRWUserService sharedService] getSex];
-    NSMutableArray *arrRes = [NSMutableArray array];
+    NSMutableDictionary *dicRes = [NSMutableDictionary dictionary];
     //体重
     for (NSDate *date in dateArray) {
         float weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:date];
-        [arrRes addObject:[NSNumber numberWithFloat:[[self class] BM_with_weight:weight height:height age:age sex:sex]]];
+        [dicRes setObject:[NSNumber numberWithFloat:[[self class] BM_with_weight:weight height:height age:age sex:sex]] forKey:date];
     }
-    return arrRes;
+    return dicRes;
 }
 
 + (float)BM_with_weight:(float)weight height:(float)height age:(NSInteger)age sex:(XKSex)sex {
@@ -124,13 +125,18 @@
     return  dailyIntakEnergy;
 }
 
-+ (float)dailyIntakEnergyOfDates:(NSArray *)dateArray
++ (float)dailyIntakEnergyOfDates:(XKRWStatiscEntity5_3 *)entity
 {
     float dailyIntakEnergy  = 0;
-    NSArray *bmArray = [self BMs_of_dates:dateArray];
-    for (NSNumber *bm in bmArray) {
-       dailyIntakEnergy += [self dailyIntakEnergyWithBM:bm.floatValue PAL:[self PAL]];
+    NSDictionary *bmDic = [self BMs_of_dates:entity.arrDaysDate];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    
+    for (NSDate *date in [bmDic allKeys]) {
+        float kcal = [self dailyIntakEnergyWithBM:[[bmDic objectForKey:date] floatValue] PAL:[self PAL]];
+        dailyIntakEnergy += kcal;
+        [dic setObject:[NSNumber numberWithFloat:kcal] forKey:[date stringWithFormat:@"yyyy-MM-dd"]];
     }
+    entity.dicNormalIntake = dic;
     return dailyIntakEnergy;
 }
 
@@ -175,14 +181,20 @@
 /**
  *  date 区间的方案建议值
  */
-+ (float)dailyIntakeRecomEnergyOfDates:(NSArray *)dateArray {
++ (float)dailyIntakeRecomEnergyOfDates:(XKRWStatiscEntity5_3 *)entity {
     XKSex sex = [[XKRWUserService sharedService] getSex];
     NSInteger age = [[XKRWUserService sharedService] getAge];
     float res = 0;
-    NSArray *bmArray = [self BMs_of_dates:dateArray];
-    for (NSNumber *bm in bmArray) {
-        res += [[self class] dailyIntakeRecommendEnergyWithBM:bm.floatValue PAL:[[self class] PAL] sex:sex age:age];
+    float kcal = 0;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+    NSDictionary *bmDic = [self BMs_of_dates:entity.arrDaysDate];
+    for (NSDate *date in [bmDic allKeys]) {
+        kcal = [[self class] dailyIntakeRecommendEnergyWithBM:[[bmDic objectForKey:date] floatValue] PAL:[[self class] PAL] sex:sex age:age];
+        [dic setObject:[NSNumber numberWithFloat:kcal] forKey:[date stringWithFormat:@"yyyy-MM-dd"]];
+        res += kcal;
     }
+    entity.dicRecommondIntake = dic;
     return res;
 }
 /**
@@ -422,19 +434,25 @@
     
 }
 
-+ (float)dailyConsumeSportEnergyOfDates:(NSArray *)dateArray {
++ (float)dailyConsumeSportEnergyOfDates:(XKRWStatiscEntity5_3 *)entity {
     
     XKPhysicalLabor physicalLevel = [[XKRWUserService sharedService] getUserLabor];
     XKSex sex = [[XKRWUserService sharedService] getSex];
     
     float res = 0;
-    NSArray *bmArray = [self BMs_of_dates:dateArray];
-    for (NSNumber *bm in bmArray) {
-        res += [[self class] dailyConsumeSportEnergyWithPhysicalLabor:physicalLevel
-                                                                   BM:bm.floatValue
+    float kcal = 0;
+    NSDictionary *bmDic = [self BMs_of_dates:entity.arrDaysDate];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    
+    for (NSDate *date in [bmDic allKeys]) {
+        kcal = [[self class] dailyConsumeSportEnergyWithPhysicalLabor:physicalLevel
+                                                                   BM:[[bmDic objectForKey:date] floatValue]
                                                                   PAL:[[self class] PAL]
                                                                   sex:sex];
+        [dic setObject:[NSNumber numberWithFloat:kcal] forKey:[date stringWithFormat:@"yyyy-MM-dd"]];
+        res += kcal;
     }
+    entity.dicSportRecommond = dic;
     return res;
 }
 

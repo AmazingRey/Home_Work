@@ -13,7 +13,7 @@ class XKRWLaborVC: XKRWBaseVC {
     @IBOutlet weak var backgoundView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        MobClick.event("in_RgstActLv")
+        MobClick.event("pg_pal")
         self.title = "选择体力活动水平"
          self.view.backgroundColor = UIColor.whiteColor()
         self.addNaviBarBackButton()

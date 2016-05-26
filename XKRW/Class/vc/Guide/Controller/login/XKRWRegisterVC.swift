@@ -32,7 +32,7 @@ class XKRWRegisterVC: XKRWBaseVC {
         self.forbidAutoAddPopButton = true
         super.viewDidLoad()
         self.title = "注册"
-        
+        MobClick.event("pg_reg")
         self.navigationItem.hidesBackButton = true
         
         if(fromWhichVC == FromWhichVC.LoginVC){
@@ -100,6 +100,7 @@ class XKRWRegisterVC: XKRWBaseVC {
     
     //获取验证码
     @IBAction func getAuthCodeAction(sender: UIButton) {
+        MobClick.event("btn_getcode")
         if(!self.checkStringIsPhoneNum(phonoTextField.text!)) {
 //            println(self.checkStringIsPhoneNum(phonoTextField.text))
             XKRWCui.showInformationHudWithText("电话号码错误")
@@ -143,7 +144,7 @@ class XKRWRegisterVC: XKRWBaseVC {
     //注册账号
     @IBAction func registerAccount(sender: UIButton) {
         
-        MobClick.event("clk_Rgst")
+        MobClick.event("btn_regsuccess")
         if(!self.checkStringIsPhoneNum(phonoTextField.text!)){
 //            println(self.checkStringIsPhoneNum(phonoTextField.text))
             XKRWCui.showInformationHudWithText("电话号码错误")

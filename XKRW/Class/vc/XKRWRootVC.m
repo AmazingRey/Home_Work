@@ -9,7 +9,6 @@
 #import "XKRWRootVC.h"
 #import "XKRWAccountService.h"
 #import "XKRWUserDefaultService.h"
-
 #import "XKRWAlgolHelper.h"
 #import "XKRWManagementService.h"
 #import <CommonCrypto/CommonDigest.h>
@@ -25,7 +24,6 @@
 #import "OpenUDID.h"
 #import "UIImageView+WebCache.h"
 #import "XKRWAdService.h"
-
 #pragma --mark  5.0版本 
 #import "XKRW-Swift.h"
 #import "XKRWTabbarVC.h"
@@ -78,7 +76,6 @@
 }
 
 - (BOOL)shouldRespondForDefaultNotificationForDetailName:(NSString *)detailName {
-    
     return YES;
 }
 
@@ -173,64 +170,58 @@
      *******/
     //如果已经打开过  并且slim.db数据库不存在  执行  进入一分钟减肥
     if ([XKRWCommHelper isFirstOpenThisApp]) {
+        NSArray *imageArrays  = @[@"guide1@2x.jpg",@"guide2@2x.jpg",@"guide3@2x.jpg",@"guide4@2x.jpg"];
+
         // 添加引导页
         guidanceScrollView  = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight)];
-        guidanceScrollView.contentSize = CGSizeMake(XKAppWidth*5, XKAppHeight);
+        guidanceScrollView.contentSize = CGSizeMake(XKAppWidth*imageArrays.count, XKAppHeight);
         guidanceScrollView.showsHorizontalScrollIndicator = NO;
         guidanceScrollView.showsVerticalScrollIndicator = NO;
         guidanceScrollView.pagingEnabled = YES;
         guidanceScrollView.delegate = self;
         
-        NSArray *imageArrays;
-        
-        XKLog(@"%f",XKAppHeight);
-        
         pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(0, XKAppHeight-80, XKAppWidth, 30)];
-        pageControl.numberOfPages  = 5;
+        pageControl.numberOfPages  = imageArrays.count;
         pageControl.pageIndicatorTintColor = XK_ASSIST_LINE_COLOR;
         pageControl.currentPageIndicatorTintColor = XKMainToneColor_29ccb1;
         pageControl.enabled = NO;
-        
-        if (XKAppHeight == 480) {
+                if (XKAppHeight == 480) {
             pageControl.frame = CGRectMake(0, XKAppHeight-50, XKAppWidth, 30);
-            imageArrays = @[@"guidance_1",@"guidance_2",@"guidance_3",@"guidance_4",@"guidance_5"];
-        }else if(XKAppHeight == 667)
-        {
+            imageArrays  = @[@"guide1_4s@2x.jpg",@"guide2_4s@2x.jpg",@"guide3_4s@2x.jpg",@"guide4_4s@2x.jpg"];
+        }else if(XKAppHeight == 667){
             pageControl.frame = CGRectMake(0, XKAppHeight-80, XKAppWidth, 30);
-            imageArrays = @[@"guide_670_01",@"guide_670_02",@"guide_670_03",@"guide_670_04",@"guide_670_05"];
-        }else if (XKAppHeight == 568)
-        {
+            imageArrays  = @[@"guide1@2x.jpg",@"guide2@2x.jpg",@"guide3@2x.jpg",@"guide4@2x.jpg"];
+        }else if (XKAppHeight == 568){
             pageControl.frame = CGRectMake(0, XKAppHeight-60, XKAppWidth, 30);
-            imageArrays = @[@"guide01",@"guide02",@"guide03",@"guide04",@"guide05"];
-        }
-        else
-        {
+             imageArrays  = @[@"guide1_5s@2x.jpg",@"guide2_5s@2x.jpg",@"guide3_5s@2x.jpg",@"guide4_5s@2x.jpg"];
+        }else{
             pageControl.frame = CGRectMake(0, XKAppHeight-90, XKAppWidth, 30);
-            imageArrays = @[@"guide01",@"guide02",@"guide03",@"guide04",@"guide05"];
+              imageArrays = @[@"guide1@3x.jpg",@"guide2@3x.jpg",@"guide3@3x.jpg",@"guide4@3x.jpg"];
         }
-
+        
         for (int i =0 ; i <[imageArrays count]; i++) {
             UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(XKAppWidth*i, 0, XKAppWidth, XKAppHeight)];
-            if (i == 4) {
+            if (i == imageArrays.count - 1) {
                 imageView.userInteractionEnabled = YES;
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
                 //之前是480为分界
                 if ([UIScreen mainScreen].bounds.size.height == 736){
-                    button.frame = CGRectMake(15, XKAppHeight- 72, XKAppWidth-30, 42);
-                }else if ([UIScreen mainScreen].bounds.size.height == 667)
-                {
-                    button.frame = CGRectMake(15, XKAppHeight- 72, XKAppWidth-30, 42);
-                }
-                else
-                {
-                    button.frame = CGRectMake(15, XKAppHeight- 72, XKAppWidth-30, 42);
+                    button.frame = CGRectMake((XKAppWidth - 150)/2, XKAppHeight- 72, 150, 42);
+                }else if ([UIScreen mainScreen].bounds.size.height == 667){
+                    button.frame = CGRectMake((XKAppWidth - 150)/2, XKAppHeight- 72, 150, 42);
+                }else{
+                    button.frame = CGRectMake((XKAppWidth - 150)/2, XKAppHeight- 72, 150, 42);
                 }
                 
-                [button setBackgroundImage:[UIImage imageNamed:@"buttonGreen"] forState:UIControlStateNormal];
-                [button setBackgroundImage:[UIImage imageNamed:@"buttonGreen_p"] forState:UIControlStateHighlighted];
+                button.layer.borderColor =  XKMainToneColor_29ccb1.CGColor;
+                button.layer.borderWidth = 1;
+                button.layer.masksToBounds = YES;
+                button.layer.cornerRadius = 5;
                 [button addTarget:self action:@selector(entryOneMinVC:) forControlEvents:UIControlEventTouchUpInside];
-                [button setTitle:@"我要月瘦八斤" forState:UIControlStateNormal];
-                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [button setTitle:@"开启瘦身之旅" forState:UIControlStateNormal];
+                [button setTitleColor:XKMainToneColor_29ccb1 forState:UIControlStateNormal];
+                [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+                [button setBackgroundImage:[UIImage createImageWithColor:XKMainToneColor_29ccb1] forState:UIControlStateHighlighted];
                 button.titleLabel.font = XKDefaultFontWithSize(16.f);
                 [imageView addSubview:button];
             }
@@ -244,15 +235,21 @@
     }
     else if([XKRWUserDefaultService isLogin]) {
         if ([[XKRWUserService sharedService] checkUserInfoIsComplete]) {
-            XKRWTabbarVC *tabbarVC = [[XKRWTabbarVC alloc] init];
             
-            if (IOS_8_OR_LATER) {
-                [self.navigationController pushViewController:tabbarVC animated:NO];
-            } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
+            if (![[XKRWUserService sharedService] getUserNickNameIsEnable]) {
+                XKRWModifyNickNameVC *nickVC = [[XKRWModifyNickNameVC alloc] init];
+                nickVC.notShowBackButton = YES;
+                [self.navigationController pushViewController:nickVC animated:YES];
+              
+            }else{
+                XKRWTabbarVC *tabbarVC = [[XKRWTabbarVC alloc] init];
+                if (IOS_8_OR_LATER) {
                     [self.navigationController pushViewController:tabbarVC animated:NO];
-                    
-                });
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.navigationController pushViewController:tabbarVC animated:NO];
+                    });
+                }
             }
         }
         else {
@@ -377,7 +374,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSInteger currentPage = scrollView.contentOffset.x/XKAppWidth;
-    if ( scrollView.contentOffset.x/XKAppWidth >3 ) {
+    if ( scrollView.contentOffset.x/XKAppWidth >2 ) {
         pageControl.hidden = YES;
     }else{
         pageControl.hidden = NO;

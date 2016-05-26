@@ -201,6 +201,7 @@
             <connections>
                 <outlet property="actionView" destination="eTd-3I-sWi" id="pGw-KB-kFy"/>
                 <outlet property="activeHeight" destination="nfy-FA-Ftz" id="I9a-XN-rhN"/>
+                <outlet property="cancleBtn" destination="1Tg-tV-OQC" id="r95-Kg-MY0"/>
                 <outlet property="centerbutton" destination="5id-Ej-dY7" id="10k-QV-ZKh"/>
                 <outlet property="habitLabel" destination="vve-JI-KGx" id="tNR-ft-kYT"/>
                 <outlet property="labSeperate" destination="YJU-qp-bL4" id="R7N-Ky-bNu"/>
@@ -211,8 +212,6 @@
                 <outlet property="rightButton" destination="HQK-ga-FUD" id="GNj-BT-oQG"/>
                 <outlet property="scrollView" destination="MDZ-gd-aNF" id="J4S-AF-Trb"/>
                 <outlet property="scrollViewConstraint" destination="9xF-mK-gag" id="5BU-P0-6ml"/>
-                <outlet property="scrollviewHeight" destination="9xF-mK-gag" id="6dh-Wg-BWE"/>
-                <outlet property="testViewFrame" destination="fpV-2j-Yb7" id="9nh-sX-uY8"/>
             </connections>
             <point key="canvasLocation" x="286.5" y="228"/>
         </view>

@@ -36,16 +36,12 @@
     XKRWUserHonorEnity *honorEntity;
     
     BOOL  isShowAPPRecommend;
-    UIImage *defaultImage;
-    BOOL isDragging;
 }
 
 @end
 
 @implementation XKRWMyVC
-{
-    XKRWNavigationController *navigationController;
-}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -66,14 +62,17 @@
 {
     self.forbidAutoAddCloseButton = YES;
     [super viewDidLoad];
-    navigationController = (XKRWNavigationController *)self.navigationController;
-    navigationController.delegate = self;
+    [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+//        self.navigationController.navigationBar.translucent = YES;
+        self.navigationController.edgesForExtendedLayout = UIRectEdgeNone;
+    }];
+    self.navigationController.delegate = self;
     [self initView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    headerView.hidden = NO;
     
     [MobClick event:@"in_Wo"];
     
@@ -85,11 +84,20 @@
     } else {
         isShowAPPRecommend = YES;
     }
+    
+    
+    XKRWNavigationController *nav = (XKRWNavigationController *)self.navigationController;
+    [nav navigationBarChangeFromDefaultNavigationBarToTransparencyNavigationBar];
+    
     headerView.nickNamelabel.text = [[XKRWUserService sharedService]getUserNickName].length==0?@"设置昵称":[[XKRWUserService sharedService]getUserNickName];
     headerView.menifestoLabel.text = [[XKRWUserService sharedService]getUserManifesto].length==0?@"设置宣言":[[XKRWUserService sharedService]getUserManifesto];
     headerView.sexImageView.image = [[XKRWUserService sharedService]getSex] ? [UIImage imageNamed:@"me_ic_female"] :[UIImage imageNamed:@"me_ic_male"];
     
     [_tableView reloadData];
+    
+    [self setNavifationItemWithLeftItemTitle:nil AndRightItemTitle:nil AndItemColor:[UIColor whiteColor] andShowLeftRedDot:NO AndShowRightRedDot:YES AndLeftRedDotShowNum:NO AndRightRedDotShowNum:NO AndLeftItemIcon:nil AndRightItemIcon:@"icon_setting"];
+    
+   
     
     //获取用户点赞与被赞数据
     [self getUserPraiseNum];
@@ -98,19 +106,7 @@
     [self getUserHonorData];
     [self checkMoreRed];
     
-    XKRWNavigationController *nav = (XKRWNavigationController *)navigationController;
-//    [nav navigationBarChangeFromDefaultNavigationBarToTransparencyNavigationBar];
-    nav.navigationBar.layer.masksToBounds = YES;
-    
-    [self setNavifationItemWithLeftItemTitle:nil AndRightItemTitle:nil AndItemColor:[UIColor greenColor] andShowLeftRedDot:NO AndShowRightRedDot:YES AndLeftRedDotShowNum:NO AndRightRedDotShowNum:NO AndLeftItemIcon:nil AndRightItemIcon:@"setting"];
     [self hideNavigationLeftItemRedDot:YES andRightItemRedDotNeedHide:![XKRWUserDefaultService isShowMoreredDot]];
-     defaultImage = [navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault];
-    [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"bigShadow"] forBarMetrics:UIBarMetricsDefault];
-    [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
-        //        self.edgesForExtendedLayout = UIRectEdgeAll;
-        navigationController.navigationBar.translucent = YES;
-        //        navigationController.edgesForExtendedLayout = UIRectEdgeNone;
-    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -122,17 +118,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    isDragging = NO;
-    headerView.hidden = YES;
-   
-//    [nav navigationBarChangeFromTransparencyNavigationBarToDefaultNavigationBar];
-    [navigationController.navigationBar setBackgroundImage:defaultImage forBarMetrics:UIBarMetricsDefault];
-    navigationController.navigationBar.layer.masksToBounds = NO;
-    [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
-        //        self.edgesForExtendedLayout = UIRectEdgeAll;
-        navigationController.navigationBar.translucent = NO;
-        //        navigationController.edgesForExtendedLayout = UIRectEdgeNone;
-    }];
+    XKRWNavigationController *nav = (XKRWNavigationController *)self.navigationController;
+    [nav navigationBarChangeFromTransparencyNavigationBarToDefaultNavigationBar];
 }
 
 
@@ -260,7 +247,7 @@
         switch (indexPath.row) {
             case 0:
                 collectCell.titleLabel.text = @"瘦身计划";
-                collectCell.descriptionLabel.text = @"查看、修改和重置方案";
+                collectCell.descriptionLabel.text = @"查看、修改和重新制定";
                 [collectCell.upLineView setHidden:NO];
                 [collectCell.headerBtn setBackgroundImage:[UIImage imageNamed:@"me_ic_evaluate"] forState:UIControlStateNormal];
                 break;
@@ -326,8 +313,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    isDragging = NO;
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
     if(indexPath.section == 0)
     {
         
@@ -341,17 +328,17 @@
                 XKRWThinBodyAssess_5_3VC *bodyAssesssVC = [[XKRWThinBodyAssess_5_3VC alloc]initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
                 bodyAssesssVC.hidesBottomBarWhenPushed = YES;
                 [bodyAssesssVC setFromWhichVC:MyVC];
-                [navigationController pushViewController:bodyAssesssVC animated:YES];
+                [self.navigationController pushViewController:bodyAssesssVC animated:YES];
             }
                 break;
             case 1:
             {
 //                XKRWDataCenterVC *dataCenterVC =  [[XKRWDataCenterVC alloc]init];
 //                dataCenterVC.hidesBottomBarWhenPushed = YES;
-//                [navigationController pushViewController:dataCenterVC animated:YES];
+//                [self.navigationController pushViewController:dataCenterVC animated:YES];
                 XKRWStatisticAnalysizeVC *vc =  [[XKRWStatisticAnalysizeVC alloc]init];
                 vc.hidesBottomBarWhenPushed = YES;
-                [navigationController pushViewController:vc animated:YES];
+                [self.navigationController pushViewController:vc animated:YES];
                 
             }
                 break;
@@ -359,14 +346,14 @@
             {
                 XKRWCollectVC *collectVC = [[XKRWCollectVC alloc]init];
                 collectVC.hidesBottomBarWhenPushed = YES;
-                [navigationController pushViewController:collectVC animated:YES];
+                [self.navigationController pushViewController:collectVC animated:YES];
             }
                 break;
             case 3:
             {
                 XKRWAppRecommendVC *appRecommendVC = [[XKRWAppRecommendVC alloc]init];
                 appRecommendVC.hidesBottomBarWhenPushed = YES;
-                [navigationController pushViewController:appRecommendVC animated:YES];
+                [self.navigationController pushViewController:appRecommendVC animated:YES];
             }
                 break;
             default:
@@ -377,7 +364,7 @@
 //    {
 //        UIStoryboard *internalTest = [UIStoryboard storyboardWithName:@"InternalTestStoryBoard" bundle:nil];
 //        ITMainVC *vc = [internalTest instantiateViewControllerWithIdentifier:@"ITMainVC"];
-//        [navigationController pushViewController:vc animated:YES];
+//        [self.navigationController pushViewController:vc animated:YES];
 //        
 //    }
     
@@ -397,12 +384,12 @@
         praisedVC.dataType = bePraiseDataTypeFromDataBase;
     }
     
-    [navigationController pushViewController:praisedVC animated:YES];
+    [self.navigationController pushViewController:praisedVC animated:YES];
 //    }else{
 //        XKRWNoticeCenterVC *noticeVC = [[XKRWNoticeCenterVC alloc]initWithNibName:@"XKRWNoticeCenterVC" bundle:nil];
 //        noticeVC.hidesBottomBarWhenPushed = YES;
 //        noticeVC.noticeType = 3;
-//        [navigationController pushViewController:noticeVC animated:YES];
+//        [self.navigationController pushViewController:noticeVC animated:YES];
 //    }
     [MobClick event:@"clk_LikeMe"];
 }
@@ -411,7 +398,7 @@
 {
     XKRWLikeVC *likeVC = [[XKRWLikeVC alloc] init];
     likeVC.hidesBottomBarWhenPushed = YES;
-    [navigationController pushViewController:likeVC animated:YES];
+    [self.navigationController pushViewController:likeVC animated:YES];
     
     [MobClick event:@"clk_MeLike"];
 }
@@ -432,7 +419,7 @@
 {
     XKRWSetVC *setVC = [[XKRWSetVC alloc]initWithNibName:@"XKRWSetVC" bundle:nil];
     setVC.hidesBottomBarWhenPushed = YES;
-    [navigationController pushViewController:setVC animated:YES];
+    [self.navigationController pushViewController:setVC animated:YES];
 }
 
 
@@ -467,7 +454,7 @@
     XKRWChangeUserInfoVC *personInfoVC = [[XKRWChangeUserInfoVC alloc] init];
     personInfoVC.entity =  honorEntity;
     personInfoVC.hidesBottomBarWhenPushed = YES;
-    [navigationController pushViewController:personInfoVC animated:YES];
+    [self.navigationController pushViewController:personInfoVC animated:YES];
 }
 
 #pragma --mark UIActionSheetDelegate
@@ -655,20 +642,14 @@
     return YES;
 }
 
-#pragma --mark UIScrollViewDelegate
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    isDragging = YES;
-}
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    isDragging = NO;
-}
+
+#pragma --mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (isDragging) {
-        [navigationController changeImageViewAlpha:0-scrollView.contentOffset.y andHeaderViewHeight:120 AndViewController:self andnavigationBarTitle:@"我"];
-    }
+    XKRWNavigationController *nav = (XKRWNavigationController *)self.navigationController;
+    [nav changeImageViewAlpha:0-scrollView.contentOffset.y andHeaderViewHeight:120 AndViewController:self andnavigationBarTitle:@"我"];
 }
 
 #pragma --mark NavigationControllerDelegate

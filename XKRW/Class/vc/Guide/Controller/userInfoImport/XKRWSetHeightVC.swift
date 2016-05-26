@@ -22,7 +22,7 @@ class XKRWSetHeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initData()
-        MobClick.event("in_RgstHeight")
+        MobClick.event("pg_height")
         self.title = "选择身高"
          self.view.backgroundColor = UIColor.whiteColor()
         self.addNaviBarBackButton()

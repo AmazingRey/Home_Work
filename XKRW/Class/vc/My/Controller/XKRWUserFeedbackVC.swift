@@ -48,6 +48,10 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
         {
             redDotImageView.hidden = true;
         }
+        
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        
     }
 
     @IBAction func feedbackAction(sender: UIButton) {

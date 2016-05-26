@@ -31,12 +31,21 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController  setNavigationBarHidden:YES animated:YES];
-    [self initView];
+    [calendar removeFromSuperview];
+    recordDates = [[XKRWRecordService4_0 sharedService] getUserAllRecordDateFromDB];
+    calendar =[[XKRWCalendar alloc] initWithOrigin:CGPointMake(0, 135) recordDateArray:recordDates headerType:XKRWCalendarHeaderTypeCustom andResizeBlock:^{
+        
+    } andMonthType:XKRWCalendarTypeStrongMonth];
+    calendar.delegate = self;
+    [calendar addBackToTodayButtonInFooterView];
+    [calendar reloadCalendar];
+    [calendarScrollView addSubview:calendar];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self initView];
+
     // Do any additional setup after loading the view.
 }
 
@@ -49,12 +58,13 @@
     headView = [[NSBundle mainBundle] loadNibNamed:@"XKRWPlanCalendarView" owner:self options:nil][0];
     __weak typeof(self) weakSelf = self;
     headView.lookPlanBlock = ^(){
+        [MobClick event:@"btn_cal_plan"];
         XKRWThinBodyAssess_5_3VC *bodyAssesssVC = [[XKRWThinBodyAssess_5_3VC alloc]initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
         bodyAssesssVC.hidesBottomBarWhenPushed = YES;
         [bodyAssesssVC setFromWhichVC:MyVC];
         [weakSelf.navigationController pushViewController:bodyAssesssVC animated:YES];
     };
-    headView.frame = CGRectMake(0, 0, XKAppWidth, 130);
+    headView.frame = CGRectMake(0, 0, XKAppWidth, 135);
     [calendarScrollView addSubview:headView];
 
     headView.progressLabel.attributedText = [[XKRWThinBodyDayManage shareInstance] calenderPlanDayText];
@@ -81,16 +91,7 @@
     [popButton addTarget:self action:@selector(popAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:popButton];
     
-    
-    recordDates = [[XKRWRecordService4_0 sharedService] getUserAllRecordDateFromDB];
-    
-    calendar =[[XKRWCalendar alloc] initWithOrigin:CGPointMake(0, 130) recordDateArray:recordDates headerType:XKRWCalendarHeaderTypeCustom andResizeBlock:^{
-        
-    } andMonthType:XKRWCalendarTypeStrongMonth];
-    calendar.delegate = self;
-    [calendar addBackToTodayButtonInFooterView];
-    [calendar reloadCalendar];
-    [calendarScrollView addSubview:calendar];
+   
 }
 
 - (void)dealWithMonthLabel {
@@ -104,6 +105,7 @@
 
 #pragma mark -XKRWCalendarDelegate
 - (void)calendarSelectedDate:(NSDate *)date {
+    [MobClick event:@"btn_cal"];
     NSDate *registerDate = [NSDate dateFromString:[[XKRWUserService sharedService] getREGDate]];
     NSDate *originOfDate = [NSDate dateWithTimeIntervalSince1970:[date originTimeOfADay]];
     NSComparisonResult result = [originOfDate compare:registerDate];

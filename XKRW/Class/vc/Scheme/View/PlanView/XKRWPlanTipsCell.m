@@ -45,14 +45,14 @@
     [self.upLineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@0);
         make.width.mas_equalTo(0.5);
-        make.centerX.equalTo(self.circleImageView.mas_centerX);
+        make.left.equalTo(@23);
         make.bottom.equalTo(self.circleImageView.mas_top);
     }];
     
     [self.downLineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(@0);
-        make.width.mas_equalTo(1);
-        make.centerX.equalTo(self.circleImageView.mas_centerX);
+        make.width.mas_equalTo(0.5);
+        make.left.equalTo(@23);
         make.top.equalTo(self.circleImageView.mas_bottom);
     }];
     
@@ -60,14 +60,16 @@
         make.top.equalTo(@10);
         make.left.equalTo(self.circleImageView.mas_right).offset(5);
         make.right.equalTo(@(-10));
-        make.bottom.equalTo(@(-10));
+        make.bottom.equalTo(@(0));
     }];
     
+   CGFloat twoLinesHeight = [XKRWUtil createAttributeStringWithString:@" \n" font:XKDefaultFontWithSize(15) color:XK_ASSIST_TEXT_COLOR lineSpacing:3.5 alignment:NSTextAlignmentLeft].size.height;
     [self.TipLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(@10);
-        make.top.equalTo(@5);
-        make.bottom.equalTo(@(-5));
-        make.right.equalTo(@(-5));
+        make.left.equalTo(@15);
+        make.top.equalTo(@10);
+        make.height.mas_greaterThanOrEqualTo(@(twoLinesHeight));
+        make.bottom.equalTo(@(-10));
+        make.right.equalTo(@(-10));
     }];
 }
 
@@ -93,11 +95,12 @@
         
         self.lineView.hidden = NO;
         self.actionButton.hidden = NO;
+        CGFloat blankHeight = ([XKRWUtil createAttributeStringWithString:entity.tipsText font:XKDefaultFontWithSize(15) color:XK_ASSIST_TEXT_COLOR lineSpacing:3.5 alignment:NSTextAlignmentLeft].size.height + 20) / 4.0;
         [self.lineView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(@(0));
-            make.top.equalTo(@(0));
+            make.bottom.equalTo(@(- blankHeight));
+            make.top.equalTo(@(blankHeight));
             make.right.equalTo(@(-90));
-            make.width.equalTo(@1);
+            make.width.equalTo(@0.5);
         }];
         
         
@@ -109,7 +112,7 @@
         }];
         
         if (entity.showType == TipsShowAndEnactNewPlan) {
-            [self.actionButton setTitle:@"制定新计划" forState:UIControlStateNormal];
+            [self.actionButton setTitle:@"制定计划" forState:UIControlStateNormal];
             self.actionButton.tag = 1001;
         }else if (entity.showType == TipsShowAndShowDetail){
             [self.actionButton setTitle:@"马上查看" forState:UIControlStateNormal];

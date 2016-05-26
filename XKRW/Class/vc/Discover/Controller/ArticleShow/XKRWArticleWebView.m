@@ -119,7 +119,6 @@ NSString * const completeKey = @"THeAcountIsComplete";
 
 - (void)setupSomethings
 {
-//    self.title = self.navTitle;
     self.view.backgroundColor = [UIColor blackColor];
     self.contentComeFrom = [[NSBundle mainBundle]loadNibNamed:@"XKRWArticleWebViewTip" owner:nil options:nil].lastObject;
     self.contentComeFrom.top = 0;
@@ -286,24 +285,19 @@ NSString * const completeKey = @"THeAcountIsComplete";
 
 #pragma mark - reponse & aciton
 //添加...右按钮
--(void)addRightNavigationBarItem{
-    
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more_option_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(clickRightNavigationBarItem:)];
-    
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    item.tintColor = [UIColor whiteColor];
-    
+-(void)addRightNavigationBarItem {
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more_n5_3"] style:UIBarButtonItemStylePlain target:self action:@selector(clickRightNavigationBarItem:)];
+    self.navigationController.navigationBar.tintColor = XKMainSchemeColor;
+    item.tintColor = XKMainSchemeColor;
     if (_source == eFromCollection || _source == eFromMoreRecomandInWebView || _category == eOperationOthers) {
         item.tag = 1;
     }else{
         item.tag = 2;
     }
-    
     self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)clickRightNavigationBarItem:(UIBarButtonItem *)sender {
-    
     NSArray *images = nil;
     NSArray *titles = nil;
     if (sender.tag == 1) {
