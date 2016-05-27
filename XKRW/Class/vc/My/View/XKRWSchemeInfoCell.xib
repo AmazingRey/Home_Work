@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccm-5X-IQR">
-                        <rect key="frame" x="169" y="0.0" width="115" height="43"/>
+                        <rect key="frame" x="165" y="0.0" width="115" height="43"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="115" id="cMB-9O-pvx"/>
                         </constraints>
@@ -23,11 +24,8 @@
                         <color key="textColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pqp-sv-WnF">
-                        <rect key="frame" x="284" y="0.0" width="36" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="36" id="xGs-1y-AAG"/>
-                        </constraints>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="Pqp-sv-WnF">
+                        <rect key="frame" x="290" y="16" width="7" height="12"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8d7-Ro-WfY">
                         <rect key="frame" x="15" y="0.0" width="113" height="43"/>
@@ -41,15 +39,20 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Ccm-5X-IQR" secondAttribute="trailing" constant="36" id="7ga-8E-TNK"/>
-                    <constraint firstAttribute="trailing" secondItem="Pqp-sv-WnF" secondAttribute="trailing" id="HlR-m3-ZtJ"/>
+                    <constraint firstItem="Pqp-sv-WnF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AUp-Mu-WPE"/>
                     <constraint firstItem="8d7-Ro-WfY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="J4a-Hn-IBq"/>
-                    <constraint firstItem="Pqp-sv-WnF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="TdY-pE-FpW"/>
-                    <constraint firstAttribute="bottom" secondItem="Pqp-sv-WnF" secondAttribute="bottom" constant="-1" id="Vru-Hy-eBc"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Pqp-sv-WnF" secondAttribute="trailing" constant="15" id="QdL-mF-tsY"/>
                     <constraint firstAttribute="bottom" secondItem="8d7-Ro-WfY" secondAttribute="bottom" id="dpD-Im-bBU"/>
                     <constraint firstAttribute="bottom" secondItem="Ccm-5X-IQR" secondAttribute="bottom" id="f0c-WE-cRS"/>
+                    <constraint firstItem="Pqp-sv-WnF" firstAttribute="leading" secondItem="Ccm-5X-IQR" secondAttribute="trailing" constant="10" id="gYi-XB-zPV"/>
                     <constraint firstItem="Ccm-5X-IQR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="orR-mb-bX9"/>
                     <constraint firstItem="8d7-Ro-WfY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="wf8-Gw-Cvp"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="7ga-8E-TNK"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="arrowCell" destination="Pqp-sv-WnF" id="nH3-7j-M8J"/>
@@ -59,6 +62,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="enter.png" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
     </resources>
 </document>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Roboto-Regular.ttf">
@@ -124,11 +125,11 @@
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="bvh-0m-0gB">
-                                <rect key="frame" x="284" y="0.0" width="36" height="44"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="bvh-0m-0gB">
+                                <rect key="frame" x="290" y="16" width="7" height="12"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="油条等5种" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Un6-lZ-erp">
-                                <rect key="frame" x="184" y="13" width="100" height="17"/>
+                                <rect key="frame" x="180" y="13" width="100" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="KKz-in-mOJ"/>
                                 </constraints>
@@ -152,17 +153,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="yyR-S0-I9Y" secondAttribute="centerX" id="05m-6r-hGX"/>
+                            <constraint firstItem="bvh-0m-0gB" firstAttribute="leading" secondItem="Un6-lZ-erp" secondAttribute="trailing" constant="10" id="0Kn-dN-oUZ"/>
                             <constraint firstItem="oWZ-nC-Qf3" firstAttribute="leading" secondItem="eEU-bc-pKP" secondAttribute="leading" id="5jE-c8-K2W"/>
+                            <constraint firstItem="bvh-0m-0gB" firstAttribute="centerY" secondItem="Un6-lZ-erp" secondAttribute="centerY" id="8zu-Hc-VJ4"/>
                             <constraint firstItem="oWZ-nC-Qf3" firstAttribute="top" secondItem="eEU-bc-pKP" secondAttribute="top" id="9c5-x8-t3i"/>
-                            <constraint firstAttribute="trailing" secondItem="bvh-0m-0gB" secondAttribute="trailing" id="Es1-Ec-DiK"/>
-                            <constraint firstAttribute="centerY" secondItem="bvh-0m-0gB" secondAttribute="centerY" id="Im7-IF-ZIx"/>
                             <constraint firstItem="Un6-lZ-erp" firstAttribute="centerY" secondItem="lE4-HL-rcf" secondAttribute="centerY" id="Kba-iG-ELe"/>
                             <constraint firstAttribute="trailing" secondItem="oWZ-nC-Qf3" secondAttribute="trailing" id="KrM-gX-58c"/>
                             <constraint firstItem="yyR-S0-I9Y" firstAttribute="leading" secondItem="eEU-bc-pKP" secondAttribute="leading" id="Tlu-Oa-o1p"/>
                             <constraint firstAttribute="height" constant="44" id="cNR-n7-pyA"/>
                             <constraint firstItem="yyR-S0-I9Y" firstAttribute="top" secondItem="eEU-bc-pKP" secondAttribute="top" id="f6V-ZV-imB"/>
                             <constraint firstItem="lE4-HL-rcf" firstAttribute="leading" secondItem="eEU-bc-pKP" secondAttribute="leading" constant="15" id="fI9-9u-fe6"/>
-                            <constraint firstItem="bvh-0m-0gB" firstAttribute="leading" secondItem="Un6-lZ-erp" secondAttribute="trailing" id="qJc-U8-q8y"/>
                             <constraint firstAttribute="centerY" secondItem="lE4-HL-rcf" secondAttribute="centerY" constant="0.5" id="zJm-7H-531"/>
                         </constraints>
                     </view>
@@ -189,6 +189,7 @@
                     <constraint firstItem="06d-Jm-wcT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="s9d-QW-4l1"/>
                     <constraint firstAttribute="bottom" secondItem="eEU-bc-pKP" secondAttribute="bottom" constant="10" id="sBL-ln-l0p"/>
                     <constraint firstItem="6Bj-j5-yFE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="tLv-xi-jNs"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="bvh-0m-0gB" secondAttribute="trailing" constant="15" id="xcA-ck-v3A"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -204,7 +205,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="enter.png" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
         <image name="fooddetails_info.png" width="20" height="20"/>
     </resources>
 </document>

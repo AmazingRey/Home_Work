@@ -208,11 +208,16 @@
 }
 
 -(void)initData{
+
+    if (_sportEntity != nil && _sportEntity.sportId != 0) {
+        _sportID = _sportEntity.sportId;
+    }
+    
     if (_recordSportEntity == nil && _sportEntity.sportMets == 0) {
         if([XKRWUtil isNetWorkAvailable]){
             [XKRWCui showProgressHud:@"加载中..."];
             [self downloadWithTaskID:@"getSportDetail" outputTask:^(){
-                return [[XKRWSportService shareService] syncQuerySportWithId:_sportEntity.sportId];
+                return [[XKRWSportService shareService] syncQuerySportWithId:_sportID];
             }];
         }else{
             [XKRWCui showInformationHudWithText:@"获取运动信息失败，请稍后尝试"];

@@ -15,7 +15,7 @@
 }
 
 - (void)awakeFromNib {
-    [moreViewButton setBackgroundImage:[UIImage createImageWithColor:colorSecondary_000000_02] forState:UIControlStateHighlighted];
+    [moreViewButton setBackgroundImage:[UIImage createImageWithColor:colorSecondary_f0f0f0] forState:UIControlStateHighlighted];
 }
 /*
 // Only override drawRect: if you perform custom drawing.

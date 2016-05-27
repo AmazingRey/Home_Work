@@ -282,9 +282,8 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
         if(taskID == "saveFatReason")
         {
             XKRWFatReasonService .sharedService().saveFatReasonToDB(fatReason as [AnyObject], andUserId: XKRWUserService.sharedService().getUserId(), andSync: 1);
-            
-            XKRWRecordService4_0.sharedService().resetUserRecords()
-            
+            XKRWRecordService4_0.sharedService().deleteTodaysRecord_4_0FatReseans()
+    
             if((!userfatReasonNoSet)){
                 NSNotificationCenter.defaultCenter().postNotificationName(EnergyCircleDataNotificationName, object: nil)
                 

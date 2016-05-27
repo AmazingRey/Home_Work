@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -36,7 +36,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="方案详情" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nlj-Mj-03D">
-                        <rect key="frame" x="222" y="20" width="54" height="21"/>
+                        <rect key="frame" x="234" y="20" width="54" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="SpN-1l-qe8"/>
                             <constraint firstAttribute="width" constant="54" id="zHV-vU-vsu"/>
@@ -45,12 +45,8 @@
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter" translatesAutoresizingMaskIntoConstraints="NO" id="56f-J2-oZz">
-                        <rect key="frame" x="284" y="8" width="36" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="36" id="Gwr-F3-1CD"/>
-                            <constraint firstAttribute="height" constant="44" id="dio-yG-ADp"/>
-                        </constraints>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="56f-J2-oZz">
+                        <rect key="frame" x="298" y="25" width="7" height="12"/>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addmeal5_3" translatesAutoresizingMaskIntoConstraints="NO" id="xA3-zK-I25">
                         <rect key="frame" x="15" y="21" width="20" height="20"/>
@@ -60,17 +56,24 @@
                     <constraint firstItem="xA3-zK-I25" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0Rx-kH-KsW"/>
                     <constraint firstItem="xA3-zK-I25" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="6TQ-mf-cUq"/>
                     <constraint firstItem="Nlj-Mj-03D" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Am5-LE-w9g"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="56f-J2-oZz" secondAttribute="trailing" constant="-8" id="JhN-xc-1JP"/>
-                    <constraint firstItem="56f-J2-oZz" firstAttribute="leading" secondItem="Nlj-Mj-03D" secondAttribute="trailing" constant="8" id="PdJ-YL-iX4"/>
+                    <constraint firstItem="56f-J2-oZz" firstAttribute="leading" secondItem="Nlj-Mj-03D" secondAttribute="trailing" constant="10" id="KGu-eQ-ei7"/>
                     <constraint firstItem="wsT-bn-9Nj" firstAttribute="top" secondItem="xcS-Vu-dFa" secondAttribute="bottom" constant="3" id="SoC-9d-MXm"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="56f-J2-oZz" secondAttribute="bottom" constant="1" id="gje-ST-8vN"/>
                     <constraint firstItem="xcS-Vu-dFa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="hg6-bK-1RJ"/>
+                    <constraint firstItem="Nlj-Mj-03D" firstAttribute="leading" secondItem="wsT-bn-9Nj" secondAttribute="trailing" constant="29" id="mtC-2o-tYt"/>
                     <constraint firstItem="wsT-bn-9Nj" firstAttribute="leading" secondItem="xA3-zK-I25" secondAttribute="trailing" constant="15" id="q6e-wK-wqx"/>
-                    <constraint firstItem="56f-J2-oZz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="vjS-Nq-ZsH"/>
                     <constraint firstItem="xcS-Vu-dFa" firstAttribute="leading" secondItem="xA3-zK-I25" secondAttribute="trailing" constant="15" id="vk1-vr-4oi"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="mtC-2o-tYt"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="56f-J2-oZz" firstAttribute="centerY" secondItem="KGk-i7-Jjw" secondAttribute="centerY" id="TkS-Ia-MXI"/>
+                <constraint firstAttribute="trailing" secondItem="56f-J2-oZz" secondAttribute="trailing" constant="15" id="p50-nn-Aue"/>
+            </constraints>
             <connections>
                 <outlet property="mealDetailLabel" destination="wsT-bn-9Nj" id="kBi-AQ-9sH"/>
                 <outlet property="mealImageView" destination="xA3-zK-I25" id="CrH-8b-B5q"/>
@@ -82,6 +85,6 @@
     </objects>
     <resources>
         <image name="addmeal5_3" width="20" height="20"/>
-        <image name="enter" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
     </resources>
 </document>

@@ -157,7 +157,6 @@ class XKRWLoginVC: XKRWBaseVC {
             }
             XKRWLocalNotificationService.shareInstance().setOpenPlanNotification()
             XKRWLocalNotificationService.shareInstance().setRecordWeightNotification()
-            XKRWLocalNotificationService.shareInstance().defaultAlarmSetting()
     
             if (self.navigationController?.tabBarController != nil) {
                 self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
@@ -250,7 +249,6 @@ class XKRWLoginVC: XKRWBaseVC {
                 }
                 XKRWLocalNotificationService.shareInstance().setRecordWeightNotification()
                 XKRWLocalNotificationService.shareInstance().setOpenPlanNotification()
-                XKRWLocalNotificationService.shareInstance().defaultAlarmSetting()
                 if (self.navigationController?.tabBarController != nil){
                     self.navigationController?.tabBarController?.navigationController?.popToRootViewControllerAnimated(false)
                 }else{

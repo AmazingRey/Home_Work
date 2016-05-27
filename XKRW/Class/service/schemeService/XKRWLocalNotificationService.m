@@ -65,8 +65,16 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
 #pragma mark - alarm
 // 新用户默认闹钟设置v5.3以后改为默认关闭
 - (void)defaultAlarmSetting {
-    
     uint32_t uid = (int)[XKRWUserDefaultService getCurrentUserId];
+
+    NSString *key = [NSString stringWithFormat:@"defaultAlarmSetting_%i",uid];
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:key]) {
+        return;
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     NSString *sql = [NSString stringWithFormat:@"SELECT * FROM alarm_4_0 WHERE uid = %i",uid];
     if (![self query:sql]) {
         NSMutableArray *alarmEntityArr = [NSMutableArray array];

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -20,8 +21,8 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="zn5-wZ-K8B">
-                        <rect key="frame" x="284" y="0.0" width="36" height="44"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="zn5-wZ-K8B">
+                        <rect key="frame" x="290" y="16" width="7" height="12"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e60-J2-8zI" userLabel="line">
                         <rect key="frame" x="15" y="0.0" width="305" height="1"/>
@@ -34,20 +35,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6l-cz-2us">
-                        <rect key="frame" x="249" y="13" width="36" height="17"/>
+                        <rect key="frame" x="244" y="13" width="36" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="zn5-wZ-K8B" secondAttribute="trailing" id="DNR-Ro-r0A"/>
+                    <constraint firstItem="zn5-wZ-K8B" firstAttribute="leading" secondItem="P6l-cz-2us" secondAttribute="trailing" constant="10" id="BXh-TC-Xh3"/>
                     <constraint firstItem="0sF-CV-PLC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Ic9-CD-qeB"/>
                     <constraint firstItem="e60-J2-8zI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ImL-P8-qff"/>
-                    <constraint firstItem="zn5-wZ-K8B" firstAttribute="leading" secondItem="P6l-cz-2us" secondAttribute="trailing" constant="-1" id="NjG-FY-un6"/>
                     <constraint firstAttribute="centerY" secondItem="P6l-cz-2us" secondAttribute="centerY" id="Pwg-ds-HWB"/>
+                    <constraint firstItem="zn5-wZ-K8B" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="XxH-1D-GWR"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="zn5-wZ-K8B" secondAttribute="trailing" constant="15" id="egn-zL-LLM"/>
                     <constraint firstAttribute="trailing" secondItem="e60-J2-8zI" secondAttribute="trailing" id="g1Y-e2-2Z3"/>
-                    <constraint firstAttribute="centerY" secondItem="zn5-wZ-K8B" secondAttribute="centerY" constant="-0.5" id="hkD-yy-ufB"/>
                     <constraint firstAttribute="centerY" secondItem="0sF-CV-PLC" secondAttribute="centerY" id="kXS-ze-piW"/>
                     <constraint firstItem="e60-J2-8zI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="l0b-Zw-l8V"/>
                 </constraints>
@@ -60,6 +61,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="enter.png" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
     </resources>
 </document>

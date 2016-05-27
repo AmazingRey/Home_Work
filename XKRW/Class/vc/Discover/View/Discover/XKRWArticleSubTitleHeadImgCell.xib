@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -115,7 +115,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更多" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ug3-M2-dD1">
-                                <rect key="frame" x="260" y="0.0" width="26" height="35"/>
+                                <rect key="frame" x="262" y="0.0" width="26" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="26" id="8D4-ht-zzi"/>
                                     <constraint firstAttribute="height" constant="35" id="xQx-EZ-2Jf"/>
@@ -124,28 +124,23 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter" translatesAutoresizingMaskIntoConstraints="NO" id="JYe-Zn-mld">
-                                <rect key="frame" x="284" y="-4" width="36" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Inu-Pm-Ohk"/>
-                                    <constraint firstAttribute="width" constant="36" id="h6I-0v-0hB"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="JYe-Zn-mld">
+                                <rect key="frame" x="298" y="12" width="7" height="12"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="JYe-Zn-mld" secondAttribute="trailing" id="8XE-Eo-mnq"/>
                             <constraint firstAttribute="height" constant="35" id="8Y4-Hb-cJg"/>
                             <constraint firstAttribute="trailing" secondItem="sft-eU-vsd" secondAttribute="trailing" id="GEp-R3-RlZ"/>
-                            <constraint firstItem="JYe-Zn-mld" firstAttribute="leading" secondItem="Ug3-M2-dD1" secondAttribute="trailing" constant="-2" id="H6I-Cq-ph9"/>
-                            <constraint firstItem="JYe-Zn-mld" firstAttribute="leading" secondItem="Ug3-M2-dD1" secondAttribute="trailing" constant="-2" id="HHX-jt-SWc"/>
+                            <constraint firstAttribute="trailing" secondItem="JYe-Zn-mld" secondAttribute="trailing" constant="15" id="MZb-F4-LEM"/>
                             <constraint firstAttribute="bottom" secondItem="sft-eU-vsd" secondAttribute="bottom" id="MjF-8n-uF3"/>
                             <constraint firstItem="q3z-Yf-qbh" firstAttribute="leading" secondItem="hvc-pp-w7u" secondAttribute="leading" constant="15" id="SUX-XZ-Fqm"/>
                             <constraint firstItem="sft-eU-vsd" firstAttribute="leading" secondItem="hvc-pp-w7u" secondAttribute="leading" id="U7h-6W-CLq"/>
+                            <constraint firstItem="JYe-Zn-mld" firstAttribute="leading" secondItem="Ug3-M2-dD1" secondAttribute="trailing" constant="10" id="VHg-4g-sMi"/>
+                            <constraint firstItem="JYe-Zn-mld" firstAttribute="centerY" secondItem="hvc-pp-w7u" secondAttribute="centerY" id="Vsd-cX-YTC"/>
                             <constraint firstItem="Ug3-M2-dD1" firstAttribute="top" secondItem="hvc-pp-w7u" secondAttribute="top" id="XcC-TY-nSa"/>
                             <constraint firstItem="q3z-Yf-qbh" firstAttribute="top" secondItem="hvc-pp-w7u" secondAttribute="top" id="gY9-1d-xmO"/>
                             <constraint firstItem="sft-eU-vsd" firstAttribute="top" secondItem="hvc-pp-w7u" secondAttribute="top" id="saJ-gL-WW7"/>
-                            <constraint firstItem="JYe-Zn-mld" firstAttribute="top" secondItem="hvc-pp-w7u" secondAttribute="top" constant="-4" id="uqK-g4-biY"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Shc-Fs-7YU">
@@ -185,9 +180,9 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="arrow_right5_3" width="7" height="12"/>
         <image name="discover_eye.png" width="9" height="9"/>
         <image name="discover_star_hightlighted.png" width="10" height="10"/>
-        <image name="enter" width="36" height="44"/>
         <image name="image0.png" width="9" height="9"/>
     </resources>
 </document>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -21,8 +21,8 @@
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="O2H-ZI-x31">
-                    <rect key="frame" x="284" y="0.0" width="36" height="44"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="O2H-ZI-x31">
+                    <rect key="frame" x="298" y="16" width="7" height="12"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hHw-I9-g9B">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -63,18 +63,18 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="O2H-ZI-x31" secondAttribute="trailing" constant="15" id="0Rx-WX-fnG"/>
                 <constraint firstAttribute="bottom" secondItem="hHw-I9-g9B" secondAttribute="bottom" id="0VP-xs-58M"/>
                 <constraint firstItem="EHD-lE-iNd" firstAttribute="leading" secondItem="7mc-hR-uXf" secondAttribute="leading" id="4yC-yd-bS5"/>
                 <constraint firstItem="7Qh-c8-Fls" firstAttribute="leading" secondItem="7mc-hR-uXf" secondAttribute="leading" constant="15" id="D7s-JD-sHc"/>
                 <constraint firstAttribute="bottom" secondItem="EHD-lE-iNd" secondAttribute="bottom" id="DbD-AX-C1S"/>
                 <constraint firstItem="hHw-I9-g9B" firstAttribute="leading" secondItem="7mc-hR-uXf" secondAttribute="leading" id="Kcg-kf-TIb"/>
-                <constraint firstAttribute="trailing" secondItem="O2H-ZI-x31" secondAttribute="trailing" id="Ryn-Ka-O1T"/>
                 <constraint firstAttribute="trailing" secondItem="EHD-lE-iNd" secondAttribute="trailing" id="SQa-VI-yPd"/>
                 <constraint firstItem="btO-ZY-Jp3" firstAttribute="leading" secondItem="7mc-hR-uXf" secondAttribute="leading" id="b6q-5v-ecP"/>
                 <constraint firstItem="hHw-I9-g9B" firstAttribute="top" secondItem="7mc-hR-uXf" secondAttribute="top" id="eyD-MR-5Ds"/>
                 <constraint firstItem="7Qh-c8-Fls" firstAttribute="top" secondItem="btO-ZY-Jp3" secondAttribute="bottom" constant="11.5" id="gmb-ZF-e6g"/>
+                <constraint firstItem="O2H-ZI-x31" firstAttribute="centerY" secondItem="7mc-hR-uXf" secondAttribute="centerY" id="iEg-zv-0fu"/>
                 <constraint firstAttribute="trailing" secondItem="hHw-I9-g9B" secondAttribute="trailing" id="nfU-O3-Csf"/>
-                <constraint firstItem="O2H-ZI-x31" firstAttribute="centerY" secondItem="7mc-hR-uXf" secondAttribute="centerY" id="pYr-j6-xgd"/>
                 <constraint firstAttribute="trailing" secondItem="btO-ZY-Jp3" secondAttribute="trailing" id="r7T-E2-L0B"/>
                 <constraint firstItem="7Qh-c8-Fls" firstAttribute="centerY" secondItem="7mc-hR-uXf" secondAttribute="centerY" id="w66-bL-6q4"/>
             </constraints>
@@ -88,6 +88,6 @@
         </view>
     </objects>
     <resources>
-        <image name="enter.png" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
     </resources>
 </document>

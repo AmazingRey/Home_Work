@@ -259,6 +259,8 @@
 	return [calendar dateFromComponents:components];
 }
 
+
+
 - (NSDate *)endOfWeek {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     // Get the weekday component of the current date

@@ -210,7 +210,7 @@
  *  @return 方案记录实体对象数组
  */
 - (NSArray *)getSchemeRecordWithDate:(NSDate *)date;
-- (NSDictionary *)getSchemeRecordWithDates:(NSArray *)dateArray;
+- (NSArray *)getSchemeRecordWithDates:(NSArray *)dateArray;
 /**
  *  Get scheme record, use Scheme ids to search; If search result is null, will create a new scheme record for return
  *
@@ -480,4 +480,5 @@
 - (void)deleteHabitRecord:(XKRWRecordEntity4_0 *)entity;
 
 - (NSMutableDictionary *)getSchemeStatesOfDays:(NSInteger)num withType:(RecordType)type withDate:(NSDate *)curDate;
+- (BOOL)deleteTodaysRecord_4_0FatReseans;
 @end

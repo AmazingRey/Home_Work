@@ -1114,6 +1114,7 @@ static BOOL canUpdatePlan = YES;
     
     [self setUserId:userid*strlen(accountName)];
     
+    [XKRWUserDefaultService setCurrentUserId:[[XKRWUserService sharedService] getUserId]];
     
     [self setUserHeight:[[dic objectForKey:@"height"] integerValue]];
     [self setSex:[[dic objectForKey:@"gender"] intValue]];

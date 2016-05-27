@@ -71,7 +71,7 @@
 @property (strong, nonatomic) NSNumber *recommondIntake;
 
 /**
- *  日期区间内的正常摄入量和日期对应的字典
+ *  日期区间内的推荐摄入量和日期对应的字典
  */
 @property (strong, nonatomic) NSDictionary *dicRecommondIntake;
 

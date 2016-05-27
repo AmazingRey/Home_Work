@@ -51,7 +51,6 @@
             UIImage *image = [UIImage imageNamed:@"circle_date"];
             _dot = [[UIImageView alloc] initWithFrame:CGRectMake((ITEM_WIDTH - image.size.width) / 2, (62-image.size.height)/2 -10, image.size.width, image.size.height)];
             
-//            _dot.contentMode = UIViewContentModeScaleAspectFit;
         }else{
             self.frame = CGRectMake(origin.x, origin.y, ITEM_WIDTH, 30);
             [self.titleLabel setFont:XKDefaultNumEnFontWithSize(13.f)];
@@ -105,7 +104,6 @@
     
     if (_CalendarMonthType == XKRWCalendarTypeStrongMonth) {
         [_storangIsToday removeFromSuperview];
-        [_dot removeFromSuperview];
         NSCalendar *cal = [NSCalendar currentCalendar];
         NSDateComponents *comps = [cal components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitTimeZone fromDate:self.date];
         
@@ -142,6 +140,7 @@
         }
         
         UIImage *dotImage;
+        [_dot removeFromSuperview];
         if (isToday) {
             if (!isInPlan) {
                 dotImage = [UIImage imageNamed:@"circle_date"];
@@ -149,10 +148,8 @@
             }
             if (!isRecord && isInPlan) {
                 dotImage = [UIImage imageNamed:@"circle_date_n"];
-                [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             }
             if (isRecord) {
-                
                 dotImage = [UIImage imageNamed:@"circle_date_y"];
                 [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             }
@@ -160,12 +157,10 @@
         }
         if (isInPlan && !isToday) {
             dotImage = [UIImage imageNamed:@"circleGray"];
-            [self insertSubview:_dot belowSubview:self.titleLabel];
-            
         }
+        
         if (!isToday && isRecord) {
             dotImage = [UIImage imageNamed:@"circleGreen"];
-            [self insertSubview:_dot belowSubview:self.titleLabel];
             [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
         

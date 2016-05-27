@@ -115,13 +115,22 @@
     _leftButton.layer.cornerRadius = 5;
     _leftButton.layer.borderWidth = 1;
     _leftButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    _leftButton.clipsToBounds = YES;
+    [_leftButton setBackgroundImage:[UIImage createImageWithColor:XKMainToneColor_29ccb1] forState:UIControlStateHighlighted];
+    [_leftButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
     _centerbutton.layer.cornerRadius = 5;
     _centerbutton.layer.borderWidth = 1;
+     _centerbutton.clipsToBounds = YES;
     _centerbutton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    [_centerbutton setBackgroundImage:[UIImage createImageWithColor:XKMainToneColor_29ccb1] forState:UIControlStateHighlighted];
+    [_centerbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
     _rightButton.layer.cornerRadius = 5;
     _rightButton.layer.borderWidth = 1;
+    _rightButton.clipsToBounds = YES;
+    [_rightButton setBackgroundImage:[UIImage createImageWithColor:XKMainToneColor_29ccb1] forState:UIControlStateHighlighted];
+    [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     if (_revisionType == XKRWNotNeedRevision) {
         _rightButton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
     }else if (_revisionType == XKRWCanRevision){
@@ -693,6 +702,13 @@
     if(tableView.tag == 5031){
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 44)];
         headerView.backgroundColor = XK_BACKGROUND_COLOR;
+        
+        UIButton *showDetailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth  , 44)];
+        [showDetailButton setBackgroundImage:[UIImage createImageWithColor:[UIColor colorFromHexString:@"#D9D9D9"]] forState:UIControlStateHighlighted];
+        [showDetailButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        showDetailButton.tag = 1000 + section;
+        [headerView addSubview:showDetailButton];
+        
         UIImage *image = [UIImage imageNamed:[recordTypeImageArray objectAtIndex:section]];
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, image.size.width, image.size.height)];
         imageView.top = 22 - image.size.height/2.0;
@@ -705,14 +721,17 @@
         [headerView addSubview:imageView];
         [headerView addSubview:label];
         
-        UIImageView *arrowImageView = [[UIImageView alloc]init];
-        arrowImageView.frame = CGRectMake(XKAppWidth-15-8, (44-6)/2, 8, 6);
+        UIImage *arrowImage;
         if(showDetailSection == section){
-            arrowImageView.image = [UIImage imageNamed:@"upmenu"];
+            arrowImage = [UIImage imageNamed:@"arrow_up5_3"];
         }else{
-            arrowImageView.image = [UIImage imageNamed:@"dropdown menu"];
+            arrowImage = [UIImage imageNamed:@"arrow_down5_3"];
         }
+
+        UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(XKAppWidth - 15 - arrowImage.size.width, (44 - arrowImage.size.height)/ 2.0, arrowImage.size.width, arrowImage.size.height)];
+        arrowImageView.image = arrowImage;
         [headerView addSubview:arrowImageView];
+        
         
         //推荐卡路里
         //[XKRWAlgolHelper dailyConsumeSportEnergyV5_3OfDate:_recordDate]
@@ -731,7 +750,8 @@
         [calorieButton.titleLabel setFont:XKDefaultFontWithSize(15.f)];
         calorieButton.tag = 100 + section;
         [calorieButton setTitle:caloriesTitle forState:UIControlStateNormal];
-        calorieButton.frame = CGRectMake(XKAppWidth- width - 15 -8, 0, width, 44);
+        calorieButton.frame = CGRectMake(0, 0, width, 44);
+        calorieButton.right = arrowImageView.left - 10;
        
         calorieButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight ;
         
@@ -745,10 +765,7 @@
         }
         [calorieButton addTarget:self action:@selector(showDetail:) forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *showDetailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - width-15-8 , 44)];
-        [showDetailButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        showDetailButton.tag = 1000 + section;
-        [headerView addSubview:showDetailButton];
+        
         
         [XKRWUtil addViewUpLineAndDownLine:headerView andUpLineHidden:YES DownLineHidden:NO];
         return headerView;

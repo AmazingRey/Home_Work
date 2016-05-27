@@ -135,7 +135,7 @@
 -(UIView *)view1{
     if (!_view1) {
         _view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, .5)];
-        _view1.backgroundColor = colorSecondary_999999;
+        _view1.backgroundColor = colorSecondary_e0e0e0;
         [self addSubview:_view1];
     }
     return _view1;
@@ -169,7 +169,7 @@
 -(UIView *)view2{
     if (!_view2) {
         _view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, .5,11)];
-        _view2.backgroundColor = colorSecondary_999999;
+        _view2.backgroundColor = colorSecondary_e0e0e0;
         [self addSubview:_view2];
     }
     return _view2;
@@ -212,7 +212,7 @@
 -(UIView *)view3{
     if (!_view3) {
         _view3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, .5,11)];
-        _view3.backgroundColor = colorSecondary_999999;
+        _view3.backgroundColor = colorSecondary_e0e0e0;
         [self addSubview:_view3];
     }
     return _view3;
@@ -246,7 +246,7 @@
 -(UIView *)view4{
     if (!_view4) {
         _view4 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, .5,11)];
-        _view4.backgroundColor = colorSecondary_999999;
+        _view4.backgroundColor = colorSecondary_e0e0e0;
         [self addSubview:_view4];
     }
     return _view4;
@@ -394,7 +394,7 @@
     [self.btnQuestion mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(@40);
         make.height.equalTo(@40);
-        make.left.mas_equalTo(self.subLab6.mas_right).offset(-40);
+        make.left.mas_equalTo(self.subLab6.mas_right).offset(-30);
         make.centerY.mas_equalTo(self.subLab6.mas_centerY);
     }];
 

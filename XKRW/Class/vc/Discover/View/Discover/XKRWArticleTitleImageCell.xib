@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -121,12 +121,8 @@
                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter" translatesAutoresizingMaskIntoConstraints="NO" id="kfG-IV-Dgp">
-                                <rect key="frame" x="284" y="-4" width="36" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="6e1-pn-Q3S"/>
-                                    <constraint firstAttribute="width" constant="36" id="CJ1-im-CnO"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="kfG-IV-Dgp">
+                                <rect key="frame" x="298" y="12" width="7" height="12"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更多" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sqs-c4-aWB">
                                 <rect key="frame" x="262" y="0.0" width="26" height="35"/>
@@ -143,15 +139,15 @@
                         <constraints>
                             <constraint firstItem="RPU-W7-nte" firstAttribute="leading" secondItem="7Lb-d4-0Ux" secondAttribute="leading" constant="15" id="69a-7p-Jbu"/>
                             <constraint firstItem="v9A-c0-nUZ" firstAttribute="top" secondItem="7Lb-d4-0Ux" secondAttribute="top" id="Jgq-hX-mnJ"/>
-                            <constraint firstItem="kfG-IV-Dgp" firstAttribute="leading" secondItem="Sqs-c4-aWB" secondAttribute="trailing" constant="-4" id="LOJ-hT-bGe"/>
                             <constraint firstAttribute="trailing" secondItem="v9A-c0-nUZ" secondAttribute="trailing" id="Mtv-D9-jE1"/>
-                            <constraint firstItem="kfG-IV-Dgp" firstAttribute="top" secondItem="7Lb-d4-0Ux" secondAttribute="top" constant="-4" id="Q1v-RT-e9b"/>
                             <constraint firstAttribute="height" constant="35" id="Vwk-sW-jH8"/>
                             <constraint firstAttribute="bottom" secondItem="v9A-c0-nUZ" secondAttribute="bottom" id="ZyX-Mg-yab"/>
-                            <constraint firstAttribute="trailing" secondItem="kfG-IV-Dgp" secondAttribute="trailing" id="arY-SP-IEX"/>
+                            <constraint firstItem="kfG-IV-Dgp" firstAttribute="leading" secondItem="Sqs-c4-aWB" secondAttribute="trailing" constant="10" id="dUs-QA-h6H"/>
                             <constraint firstItem="Sqs-c4-aWB" firstAttribute="top" secondItem="7Lb-d4-0Ux" secondAttribute="top" id="gSi-OQ-Cvf"/>
                             <constraint firstItem="v9A-c0-nUZ" firstAttribute="leading" secondItem="7Lb-d4-0Ux" secondAttribute="leading" id="hyl-AB-6NE"/>
                             <constraint firstItem="RPU-W7-nte" firstAttribute="top" secondItem="7Lb-d4-0Ux" secondAttribute="top" id="p2p-R0-lGZ"/>
+                            <constraint firstItem="kfG-IV-Dgp" firstAttribute="centerY" secondItem="7Lb-d4-0Ux" secondAttribute="centerY" id="sye-KF-KIk"/>
+                            <constraint firstAttribute="trailing" secondItem="kfG-IV-Dgp" secondAttribute="trailing" constant="15" id="wg7-7Z-a7F"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -181,8 +177,8 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="arrow_right5_3" width="7" height="12"/>
         <image name="discover_eye.png" width="9" height="9"/>
         <image name="discover_star_hightlighted.png" width="10" height="10"/>
-        <image name="enter" width="36" height="44"/>
     </resources>
 </document>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -24,15 +24,11 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="details" translatesAutoresizingMaskIntoConstraints="NO" id="L44-XE-pbi">
-                        <rect key="frame" x="299" y="18" width="6" height="8"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="6" id="Q4V-Wc-kyd"/>
-                            <constraint firstAttribute="height" constant="8" id="qdc-an-vQv"/>
-                        </constraints>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="L44-XE-pbi">
+                        <rect key="frame" x="298" y="16" width="7" height="12"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1200Kcal" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvy-3N-Uvx">
-                        <rect key="frame" x="225" y="0.0" width="65" height="43"/>
+                        <rect key="frame" x="223" y="0.0" width="65" height="43"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="43" id="E2R-fz-vtF"/>
                             <constraint firstAttribute="width" constant="65" id="q0n-uq-FJw"/>
@@ -44,16 +40,19 @@
                 </subviews>
                 <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="L44-XE-pbi" secondAttribute="trailing" constant="7" id="0du-Wh-YzZ"/>
                     <constraint firstAttribute="bottomMargin" secondItem="W9v-Zp-BRh" secondAttribute="bottom" constant="-8" id="2tG-K9-txU"/>
-                    <constraint firstItem="L44-XE-pbi" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="DAF-a3-2CH"/>
+                    <constraint firstItem="gvy-3N-Uvx" firstAttribute="leading" secondItem="W9v-Zp-BRh" secondAttribute="trailing" constant="42" id="2wI-E4-DnM"/>
                     <constraint firstItem="gvy-3N-Uvx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="KfD-nu-S7n"/>
                     <constraint firstItem="W9v-Zp-BRh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="46" id="UND-Yp-Y0Z"/>
-                    <constraint firstItem="L44-XE-pbi" firstAttribute="leading" secondItem="gvy-3N-Uvx" secondAttribute="trailing" constant="9" id="V1F-hx-NFy"/>
+                    <constraint firstItem="L44-XE-pbi" firstAttribute="leading" secondItem="gvy-3N-Uvx" secondAttribute="trailing" constant="10" id="ZVL-2Q-QM4"/>
                     <constraint firstItem="W9v-Zp-BRh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="kbC-O4-Obs"/>
                     <constraint firstAttribute="bottomMargin" secondItem="gvy-3N-Uvx" secondAttribute="bottom" constant="-8" id="rxF-Sg-tgL"/>
                 </constraints>
             </tableViewCellContentView>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="L44-XE-pbi" secondAttribute="trailing" constant="15" id="IcE-w9-mvF"/>
+                <constraint firstItem="L44-XE-pbi" firstAttribute="centerY" secondItem="KGk-i7-Jjw" secondAttribute="centerY" id="o1i-Iq-1bU"/>
+            </constraints>
             <connections>
                 <outlet property="recordArrowImageView" destination="L44-XE-pbi" id="5z4-sB-vIB"/>
                 <outlet property="recordDetailCalories" destination="gvy-3N-Uvx" id="2Ib-Pa-dg3"/>
@@ -62,6 +61,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="details" width="6" height="8"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
     </resources>
 </document>

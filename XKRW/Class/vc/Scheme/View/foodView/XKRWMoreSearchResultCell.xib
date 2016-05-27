@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -34,11 +35,12 @@
                             <constraint firstAttribute="height" constant="0.5" id="Ont-8H-Cp4"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="9P5-zW-dJX">
-                        <rect key="frame" x="284" y="0.0" width="36" height="44"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="9P5-zW-dJX">
+                        <rect key="frame" x="290" y="16" width="7" height="12"/>
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="9P5-zW-dJX" secondAttribute="trailing" constant="15" id="0dS-7j-cbn"/>
                     <constraint firstItem="S67-ip-ag1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="6dn-wf-jv9"/>
                     <constraint firstAttribute="bottom" secondItem="S67-ip-ag1" secondAttribute="bottom" id="6vZ-9D-7MX"/>
                     <constraint firstItem="LJT-xW-zho" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="8As-dN-RCQ"/>
@@ -47,9 +49,8 @@
                     <constraint firstAttribute="trailing" secondItem="yIX-5F-ark" secondAttribute="trailing" id="IDJ-bY-alL"/>
                     <constraint firstItem="yIX-5F-ark" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Xd0-bN-5MV"/>
                     <constraint firstAttribute="bottom" secondItem="S67-ip-ag1" secondAttribute="bottom" constant="-1" id="XeW-OU-XIN"/>
-                    <constraint firstAttribute="trailing" secondItem="9P5-zW-dJX" secondAttribute="trailing" id="eX9-Uy-4MC"/>
+                    <constraint firstItem="9P5-zW-dJX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hH2-uG-ITV"/>
                     <constraint firstAttribute="centerY" secondItem="LJT-xW-zho" secondAttribute="centerY" id="nkd-H5-xZ3"/>
-                    <constraint firstAttribute="centerY" secondItem="9P5-zW-dJX" secondAttribute="centerY" constant="-0.5" id="xq6-ME-EhT"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
@@ -64,6 +65,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="enter.png" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
     </resources>
 </document>

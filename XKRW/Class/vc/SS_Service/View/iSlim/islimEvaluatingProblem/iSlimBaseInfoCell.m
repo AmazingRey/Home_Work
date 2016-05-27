@@ -140,7 +140,7 @@
     titleLabel.text = _titleArray[indexPath.row];
     [cell.contentView addSubview:titleLabel];
     
-        UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"enter"]];
+        UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
         arrow.topRight = CGPointMake(XKAppWidth, 0.f);
         
         [cell.contentView addSubview:arrow];

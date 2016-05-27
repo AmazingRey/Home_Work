@@ -17,10 +17,7 @@
 #define kTimeoutTime 13
 
 static XKRWWeightService *shareInstance;
-
-
 @implementation XKRWWeightService
-
 //单例
 +(id)shareService {
     static dispatch_once_t predicate;
@@ -38,225 +35,6 @@ static XKRWWeightService *shareInstance;
     return self;
 }
 
-//
-////上传体重记录
-//- (void)uploadWeightRecord:(NSString *)weight weightDate:(NSDate *)weightDate
-//{
-//
-//    [self saveWeightRecord:weight date:weightDate sync:@"0" andTimeRecord:nil];
-// 
-//
-//     NSString *token = [[XKRWUserService sharedService] getToken];
-//    if (token)
-//    {
-//
-//        NSURL *weightRecordRequestURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kServer,kUploadUserWeightRecord]];
-//        double weightDouble = [weight intValue]/1000.0;
-//        NSString *dateStr = [weightDate convertToStringWithFormat:@"yyyyMMdd"];
-//        NSDictionary *weightRecordParaDic = @{@"token": token,
-//                                              @"day":dateStr,
-//                                              @"value":[NSString stringWithFormat:@"%.1f",weightDouble]};
-//        [self syncBatchDataWith:weightRecordRequestURL andPostForm:weightRecordParaDic withLongTime:YES];
-//
-//        [self saveWeightRecord:weight date:weightDate sync:@"1" andTimeRecord:nil];
-//    }
-//    else
-//    {
-//       [self saveWeightRecord:weight date:weightDate sync:@"0" andTimeRecord:nil];
-//        
-//        if (![[self getOldWeight] isEqualToString:@""] && ![[self getMaxWeight] isEqualToString:@""] && ![[self getMinWeight] isEqualToString:@""] && ![[self getCurrentWeightString] isEqualToString:@""])
-//        {
-//            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:[self getOldWeight],@"oldWeight",[self getMaxWeight],@"maxWeight",[self getMinWeight],@"minWeight",[self getCurrentWeightString],@"youngWeight", nil];
-//            [[XKRWUserService sharedService] setUserWeightCurve:dic];
-//            [[XKRWUserService sharedService] saveUserWeightCurveData];
-//        }
-//    }
-//    
-//}
-//
-//
-//- (void)deleteWeightRecord:(NSDate *)weightDate
-//{
-////删除本地
-//    [self deleteDataFromDB:weightDate];
-//
-////删除远程
-//    NSString *token = [[XKRWUserService sharedService] getToken];
-//    if (token)
-//    {
-//      NSURL *weightRecordRequestURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kServer,kDeleteUserWeightRecord]];
-//        
-//      NSString *dateStr = [weightDate convertToStringWithFormat:@"yyyyMMdd"];
-//      NSDictionary *weightRecordParaDic = @{@"token": token,
-//                                              @"day":dateStr};
-//     [self syncBatchDataWith:weightRecordRequestURL andPostForm:weightRecordParaDic];
-//        
-//    }
-//}
-
-
-////批量获取体重记录
-//-(void)batchDownloadWeightRecord {
-//    //获取体重记录
-//   
-//     NSString *token = [[XKRWUserService sharedService] getToken];
-//    
-//    if (token && token.length)
-//    {
-//         NSURL *weightRecordRequestURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kServer,kGetUserWeightRecord]];
-//        NSDate * date = [NSDate date];
-//        NSDate * dateHelfPassYear = [NSDate dateWithTimeIntervalSinceNow:-6*30*24*60*60];
-//        
-//        NSDictionary *weightRecordParaDic = @{@"token": token,
-//                                              @"month": [NSNumber numberWithInt:0],
-//                                              @"start_date":[NSDate stringFromDate:dateHelfPassYear withFormat:@"yyyyMMdd"],
-//                                              @"end_date":[NSDate stringFromDate:date withFormat:@"yyyyMMdd"]
-//                                              };
-//        @try {
-//            NSDictionary *weightRecordDic = [self syncBatchDataWith:weightRecordRequestURL andPostForm:weightRecordParaDic withLongTime:YES];
-//            NSArray *array = weightRecordDic[@"data"];
-//            for (NSDictionary *dic in array) {
-//                if (dic && ![dic isMemberOfClass:[NSNull class]])
-//                {
-//                    uint32_t systime = [[dic objectForKey:@"systime"] unsignedIntValue];
-//                    [XKRWUserDefaultService setWeightSynTime:systime];
-//                    int weight = [[dic objectForKey:@"value"] floatValue] * 1000;
-//                    
-//                    NSDate *create_date = [NSDate dateFromString:[NSString stringWithFormat:@"%@",[dic objectForKey:@"create_date"]] withFormat:@"yyyyMMdd"];
-//                    NSDate  *date = [NSDate dateWithTimeIntervalSince1970:[[dic objectForKey:@"update_time"] floatValue]];
-//                    [self saveWeightRecord:[NSString stringWithFormat:@"%d",weight] date:create_date sync:@"1" andTimeRecord:date];
-//                    
-////       old             [self batchInsertWeightRecord:dic[@"weights"]];
-//                }
-//
-//            }
-//        }
-//        @catch (NSException *exception) {
-//            XKLog(@"获取体重记录失败:%@",[exception reason] );
-//        }
-//    }
-//}
-
-//
-
-
-
-
-/*
-
- *老接口可用的
- 
- weights
- saveweights
- 
- 
- 
-//-(void)batchDownloadWeightRecord {
-//    //获取体重记录
-//    
-//    NSString *token = [[XKRWUserService sharedService] getToken];
-//    int32_t weightSyn = [XKRWUserDefaultService getWeightSynTime];
-//    if (token && token.length)
-//    {
-//        NSURL *weightRecordRequestURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kServer,kGetUserWeightRecord]];
-//        NSDictionary *weightRecordParaDic = @{@"token": token,
-//                                              @"create_date":[NSNumber numberWithInt:weightSyn]};
-//        @try {
-//            NSDictionary *weightRecordDic = [self syncBatchDataWith:weightRecordRequestURL andPostForm:weightRecordParaDic];
-//            NSDictionary *dic = weightRecordDic[@"data"];
-//            if (dic && ![dic isMemberOfClass:[NSNull class]])
-//            {
-//                uint32_t systime = [[dic objectForKey:@"systime"] integerValue];
-//                [XKRWUserDefaultService setWeightSynTime:systime];
-//                [self batchInsertWeightRecord:dic[@"weights"]];
-//            }
-//        }
-//        @catch (NSException *exception) {
-//            XKLog(@"获取体重记录失败:%@",[exception reason] );
-//        }
-//    }
-//}
-
--(void)batchInsertWeightRecord:(NSArray *)recordArray {
-    
-    XKLog(@"体重记录  写本地   %@",recordArray);
-    [self writeDefaultDBWithTask:^(FMDatabase *db, BOOL *rollback) {
-        
-        
-        NSString *userid = [NSString stringWithFormat:@"%i",[[XKRWUserService sharedService] getUserId]];
-        for (NSDictionary *dic in recordArray) {
-            NSString *weight = dic[@"value"];
-            double weightDouble = [weight doubleValue];
-            int32_t weightInt = weightDouble*1000;
-            NSString *weightStr = [dic[@"create_date"] stringValue];
-            NSString *year = [weightStr substringToIndex:4];
-            NSString *month = [weightStr substringWithRange:NSMakeRange(4, 2)];
-            NSString *day = [weightStr substringWithRange:NSMakeRange(6, 2)];
-            
-            NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:userid,@"userid",[NSString stringWithFormat:@"%i",weightInt],@"weight",weightStr,@"date",year,@"year",month,@"month",day,@"day",@"1",@"sync",[dic objectForKey:@"update_time"],@"timestamp",nil];
-            
-            [db executeUpdate:@"REPLACE INTO weightrecord VALUES(:userid,:weight,:date,:year,:month,:day,:sync,:timestamp)" withParameterDictionary:dictionary];
-        }
-    }];
-}
-*/
-
-
-
-
-//-(NSDictionary *)syncBatchDataWith:(NSURL *)url andPostForm:(NSDictionary *)dictionary
-//{
-//    
-//    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-//    [request addRequestHeader:@"X-RNCache" value:@"YES"];
-//    [request setTimeOutSeconds:kTimeoutTime];
-//    request.username = kUserName;
-//    request.password = kPassword;
-//    if (dictionary) {
-//        for (NSString *k in [dictionary allKeys]) {
-//            [request setPostValue:[dictionary objectForKey:k] forKey:k];
-//        }
-//    }
-//
-//    [request startSynchronous];
-//    NSData *result = request.responseData;
-//    if (!result) {
-//        @throw [XKRWBusinessException exceptionWithName:@"网络异常" reason:@"网络连接有问题,请稍后再试" userInfo:nil];
-//    }
-//    NSDictionary *resultDic =[result objectFromJSONData];
-//    if ([resultDic[@"success"] intValue] == 0) {
-//        NSString *day = [dictionary objectForKey:@"day"];
-//        if (day && ![day isMemberOfClass:[NSNull class]])
-//        {
-//            if (resultDic[@"error"]) {
-//                @throw [XKRWBusinessException exceptionWithName:@"请求异常" reason:resultDic[@"error"][@"msg"] userInfo:nil];
-//            }
-//            else {
-//                @throw [XKRWBusinessException exceptionWithName:@"服务器错误" reason:@"网络有问题,请稍后再试" userInfo:nil];
-//            }
-//        }
-//        
-//    }
-//
-//    return resultDic;
-//    
-//    
-//}
-
-//批量插入体重记录(用于登陆阶段，未来考虑去掉)
-//-(void)batchInsertWeightRecord:(NSArray *)recordArray {
-//    [self writeDefaultDBWithTask:^(FMDatabase *db, BOOL *rollback) {
-//        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-//        [formatter setDateFormat:@"yyyyMMdd"];
-//        NSString *userid = [NSString stringWithFormat:@"%i",[[XKRWUserService sharedService] getUserId]];
-//        for (NSDictionary *dic in recordArray) {
-//            NSString *date = dic[@"create_time"];
-//            NSDate *weightDate = [NSDate dateWithTimeIntervalSince1970:date.intValue];
-//            int32_t day = [formatter stringFromDate:weightDate].intValue;
-//            [db executeUpdate:@"REPLACE INTO weightrecord VALUES(:userid,:value,:create_time,:day,:sync)" withParameterObject:dic parameterValuesAndNames:userid,@"userid",[NSNumber numberWithInt:day],@"day",@YES,@"sync",nil];
-//        }
-//    }];
-//}
 
 #pragma mark 体重记录
 - (float) weeklyLoseWeight{
@@ -758,74 +536,96 @@ static XKRWWeightService *shareInstance;
         
     }];
     return weight;
-
-    
 }
 
-//- (BOOL)batchUploadWeightToRemoteNeedLong:(BOOL)need
-//{
-//    BOOL isOK = YES;
-//    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
-//    if (uid > 0) {
-//        NSString *sql = [NSString stringWithFormat:@"SELECT weight,date FROM weightrecord WHERE userid=%li AND sync=0 ",(long)uid ];
-//        NSArray *needUpLists = [self query:sql];
-//        if (needUpLists && [needUpLists count] > 0) {
-//            NSMutableArray *param = [[NSMutableArray alloc] init] ;
-//            for (NSDictionary *dict_value in needUpLists) {
-//                NSString *str = [NSString stringWithFormat:@"%.1f_%f",[[dict_value objectForKey:@"weight"] integerValue]/1000.0, [[NSDate dateFromString:[dict_value objectForKey:@"date"]withFormat:@"yyyyMMdd"] timeIntervalSince1970]];
-//                [param addObject:str];
-//            }
-//            NSDictionary *args = @{@"param":[param componentsJoinedByString:@"-"],@"token": [[XKRWUserService sharedService] getToken] };
-//            NSURL *requestURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",kServer,kSaveWeightsUrl ]];
-//            @try {
-//                NSDictionary *response = [self syncBatchDataWith:requestURL andPostForm:args withLongTime:need];
-//                long timestamp = [[response objectForKey:@"data"] longValue] ;
-//                if (timestamp > 0) {
-//                    NSString *sql = [NSString stringWithFormat:@"UPDATE weightrecord SET sync = 1 WHERE userid = %li ",(long)uid];
-//                    [self executeSql:sql];
-//                }
-//            }
-//            @catch (NSException *exception) {
-//                isOK = NO;
-//
-//                XKLog(@"上传失败! 原因：%@",[exception reason] );
-//
-//                @throw exception;
-//            }
-//        }
-//        
-//        [[XKRWUserService sharedService] setUserDestiWeight:[[XKRWUserService sharedService] getUserDestiWeight]];
-//        [[XKRWUserService sharedService] updatePlanCount];
-//    }
-//    
-//    return isOK;
-//}
+
 /**
  *  获取离date最近日期的体重记录，4.0之前版本getUserCurrentWeight有时会有数据错误，可以改用此接口获取当前体重
  */
 - (float)getNearestWeightRecordOfDate:(NSDate *)date
 {
-    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    NSInteger uid = [[XKRWUserService sharedService] getUserId];
+//    NSDate *resetTime = [NSDate dateWithTimeIntervalSince1970:[[[XKRWUserService sharedService] getResetTime] integerValue]];
+//    int dateFormat = [[date stringWithFormat:@"yyyyMMdd"] intValue];
     
-    NSDate *resetTime = [NSDate dateWithTimeIntervalSince1970:[[[XKRWUserService sharedService] getResetTime] integerValue]];
+    {
+        NSString *dateStr = [NSDate stringFromDate:date withFormat:@"yyyyMMdd"];
+        NSString *searchWeightRecordSql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date <= %@ ORDER BY date DESC LIMIT 1",(long)uid, dateStr];
+        NSArray *weightRecordRecord = [self query:searchWeightRecordSql];
     
-    int dateFormat = [[date stringWithFormat:@"yyyyMMdd"] intValue];
-    
-    NSString *sql = nil;
-    
-    if ([date timeIntervalSince1970] < [resetTime timeIntervalSince1970]) {
-        sql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date <= %d ORDER BY date DESC LIMIT 1", (long)uid, dateFormat];
-    } else {
+        NSString *origWeightSql = [NSString stringWithFormat:@"SELECT date, origweight FROM account WHERE userid = %ld", (long)uid];
+        NSArray *result = [self query:origWeightSql];
         
-        int resetDateFormat = [[resetTime stringWithFormat:@"yyyyMMdd"] intValue];
-        sql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date <= %d AND date >= %d ORDER BY date DESC LIMIT 1", (long)uid, dateFormat, resetDateFormat];
+
+        
+        NSDate *origRecordDate = [NSDate dateWithTimeIntervalSince1970:[[[XKRWUserService sharedService] getResetTime] integerValue]];
+        NSDate *weightRecordDate = [NSDate dateFromString:weightRecordRecord.firstObject[@"date"] withFormat:@"yyyyMMdd"];
+        
+        if ([origRecordDate isDayEqualToDate:date]) {
+            searchWeightRecordSql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date = %@ ORDER BY date DESC LIMIT 1",(long)uid, dateStr];
+            weightRecordRecord = [self query:searchWeightRecordSql];
+            if (weightRecordRecord) {
+                return [weightRecordRecord.firstObject[@"weight"] floatValue]/1000.f ;
+            }else{
+                return [result.firstObject[@"origweight"] floatValue]/1000.f ;
+            }
+        }else if ([date compare:origRecordDate] == NSOrderedDescending) {
+            if ( [weightRecordDate compare:origRecordDate] == NSOrderedAscending || weightRecordRecord ==nil ||weightRecordRecord.count ==0 ) {
+                return [result.firstObject[@"origweight"] floatValue]/1000.f ;
+            }else{
+                return [weightRecordRecord.firstObject[@"weight"] floatValue]/1000.f ;
+            }
+        } else {
+            if (weightRecordRecord!=nil && weightRecordRecord.count > 0) {
+                return [weightRecordRecord.firstObject[@"weight"] floatValue]/1000.f ;
+            }
+            return [result.firstObject[@"origweight"] floatValue]/1000.f ;
+        }
+
     }
-    NSArray *result = [self query:sql];
-    
-    if (!result || !result.count) {
-        return [[XKRWUserService sharedService] getUserOrigWeight] / 1000.f;
-    }
-    return [result[0][@"weight"] floatValue] / 1000.f;
+
+//
+//
+//    NSString *sql = nil;
+//    if ([date timeIntervalSince1970] < [resetTime timeIntervalSince1970]) {
+//        sql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date <= %d ORDER BY date DESC LIMIT 1", (long)uid, dateFormat];
+//        
+//        NSArray *result = [self query:sql];
+//        
+//        if (!result || !result.count) {
+//            return [[XKRWUserService sharedService] getUserOrigWeight] / 1000.f;
+//        }
+//        return [result[0][@"weight"] floatValue] / 1000.f;
+//    } else {
+//        int resetDateFormat = [[resetTime stringWithFormat:@"yyyyMMdd"] intValue];
+//        
+//        float todayWeight =   [self getWeightRecordWithDate:date];
+//        
+//        if (todayWeight != 0) {
+//            return todayWeight;
+//        }else{
+//            sql = [NSString stringWithFormat:@"SELECT date, origweight FROM account WHERE userid = %ld", (long)uid];
+//            NSArray *result = [self query:sql];
+//            if (result) {
+//                NSTimeInterval timeDate = [result[0][@"date"] integerValue];
+//                NSDate *todayDate = [NSDate today];
+//                if (timeDate >= [todayDate timeIntervalSince1970] && timeDate < [todayDate timeIntervalSince1970] + 60 * 60 *24) {
+//                    NSInteger  origweight = [result[0][@"origweight"] integerValue];
+//                    return origweight /1000.f;
+//                }else{
+//                    sql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date < %d AND date >= %d ORDER BY date DESC LIMIT 1", (long)uid, dateFormat, resetDateFormat];
+//                    NSArray *result = [self query:sql];
+//                    if (!result || !result.count) {
+//                        return [[XKRWUserService sharedService] getUserOrigWeight] / 1000.f;
+//                    }
+//                    return [result[0][@"weight"] floatValue] / 1000.f;
+//                }
+//            }else{
+//                XKLog(@"获取初始体重失败...");
+//                return 0;
+//            }
+//        }
+//    }
 }
 
 - (NSInteger) getCreateTimeOfDate:(NSDate *)date {

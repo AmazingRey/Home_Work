@@ -125,17 +125,21 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         let myPostButton =  UIButton(type: .Custom)
         myPostButton.frame = CGRectMake(UI_SCREEN_WIDTH-36-60, 0, 96, 44)
         myPostButton.enabled = false
+        
+        
+        let imageView = UIImageView(image: UIImage(named: "arrow_right5_3"))
+        imageView.contentMode = .ScaleAspectFit;
+        imageView.right = myPostButton.frame.size.width - 15;
+        imageView.top = (myPostButton.frame.size.height - imageView.frame.size.height)/2;
+        myPostButton.addSubview(imageView)
+        
         let myPostLabel = UILabel(frame: CGRectMake(0,0,60,44))
         myPostLabel.text = "我的帖子"
-
         myPostLabel.font = XKDefaultFontWithSize(14)
         myPostLabel.textAlignment = .Right
+        myPostLabel.right = imageView.left - 10
         myPostLabel.textColor = XK_ASSIST_TEXT_COLOR
         myPostButton.addSubview(myPostLabel)
-        
-        let imageView = UIImageView(frame: CGRectMake(60,0,36,44))
-        imageView.image = UIImage(named: "enter")
-        myPostButton.addSubview(imageView)
         
         subView.addSubview(myPostButton)
         
@@ -264,9 +268,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
     
     func topicCellFormDequeueReusableCell(tableView:UITableView)->XKRWBlogEnterCell{
         topicCell = tableView.dequeueReusableCellWithIdentifier("topicCell") as? XKRWBlogEnterCell
-
         topicCell!.setContentWithEntity(articleEntity)
-       
         return topicCell!;
     }
     

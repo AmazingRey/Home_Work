@@ -113,9 +113,9 @@
 
 
 - (void)viewDidAppear:(BOOL)animated {
-
     [super viewDidAppear:animated];
-   
+    
+    [[XKRWLocalNotificationService shareInstance] defaultAlarmSetting];
      [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
 }
 
@@ -230,18 +230,19 @@
 
 
 - (void)refreshWeightLabelColor {
+    
     if ([[XKRWPlanService shareService] isRecordWeightWithDate:_recordDate]) {
         _recordAndTargetView.weightLabel.textColor = XKMainSchemeColor;
         _recordAndTargetView.currentWeightLabel.textColor = XKMainSchemeColor;
         _recordAndTargetView.currentWeightLabel.layer.borderColor = XKMainSchemeColor.CGColor;
-        [_recordAndTargetView.weightButton setBackgroundImage:[UIImage imageNamed:@"home_weight_n"] forState:UIControlStateHighlighted];
-        [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_n"] forState:UIControlStateHighlighted];
+        [_recordAndTargetView.weightButton setBackgroundImage:[UIImage imageNamed:@"home_date_right_p"] forState:UIControlStateHighlighted];
+        
     }else{
         _recordAndTargetView.weightLabel.textColor = colorSecondary_c7c7c7;
         _recordAndTargetView.currentWeightLabel.textColor = colorSecondary_c7c7c7;
         _recordAndTargetView.currentWeightLabel.layer.borderColor = colorSecondary_c7c7c7.CGColor;
-        [_recordAndTargetView.weightButton setBackgroundImage:[UIImage imageNamed:@"home_weight_p"] forState:UIControlStateHighlighted];
-        [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_p"] forState:UIControlStateHighlighted];
+        [_recordAndTargetView.weightButton setBackgroundImage:[UIImage imageNamed:@"home_date_right"] forState:UIControlStateHighlighted];
+        
     }
 }
 
@@ -250,10 +251,12 @@
         _recordAndTargetView.monthLabel.textColor = XKMainSchemeColor;
         _recordAndTargetView.dayLabel.textColor = XKMainSchemeColor;
         _recordAndTargetView.dayLabel.layer.borderColor =XKMainSchemeColor.CGColor;
+        [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_left_p"] forState:UIControlStateHighlighted];
     }else{
         _recordAndTargetView.monthLabel.textColor = colorSecondary_c7c7c7;
         _recordAndTargetView.dayLabel.textColor = colorSecondary_c7c7c7;
         _recordAndTargetView.dayLabel.layer.borderColor =colorSecondary_c7c7c7.CGColor;
+        [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_left"] forState:UIControlStateHighlighted];
     }
 }
 
@@ -467,7 +470,7 @@
     gesLongPressed.numberOfTouchesRequired=1;
     [_recordAndTargetView.weightButton addGestureRecognizer:gesLongPressed];
     [_recordAndTargetView.calendarButton addTarget:self action:@selector(entryCalendarAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_p"] forState:UIControlStateHighlighted];
+    [_recordAndTargetView.calendarButton setBackgroundImage:[UIImage imageNamed:@"home_date_left"] forState:UIControlStateHighlighted];
     [planHeaderView addSubview:_recordAndTargetView];
     
     _planEnergyView = [[XKRWPlanEnergyView alloc] initWithFrame:CGRectMake(0, 120, XKAppWidth, energyViewHeight)];
@@ -946,8 +949,9 @@
 
 -(void)addMoreView{
     if (!recordMoreView && !recordSingleMoreView) {
-        CGRect frame = CGRectMake(recordBackView.frame.size.width - 140, _recordPopView.moreButton.frame.origin.y + _recordPopView.moreButton.frame.size.height+15, 138, 105);
-        if (_recordPopView.type == 2) {
+        CGRect frame = CGRectMake(recordBackView.frame.size.width - 150, _recordPopView.moreButton.frame.origin.y - 20 + _recordPopView.moreButton.frame.size.height+15, 138, 91);
+
+        if (_recordPopView.type == 2 || (!isTodaysPlan && _recordPopView.type == energyTypeHabit)) {
             frame.size.height = 59;
             
             recordSingleMoreView = [[XKRWRecordSingleMore5_3View alloc] initWithFrame:frame];
@@ -1012,12 +1016,16 @@
     [vc.navigationController setNavigationBarHidden:NO];
 }
 
--(void)pressSetSportNotify{
+-(void)pressSetSportNotifyWithType:(energyType)type {
     
     [self removeMoreView];
     XKRWAlarmVC *vc = [[XKRWAlarmVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.type = eAlarmExercise;
+    if (type == energyTypeSport) {
+        vc.type = eAlarmExercise;
+    } else if (type == energyTypeHabit) {
+        vc.type = eAlarmHabit;
+    }
     [self.navigationController pushViewController:vc animated:YES];
     [vc.navigationController setNavigationBarHidden:NO];
 }
@@ -1217,6 +1225,10 @@
         [XKRWCui hideProgressHud];
         if (result != nil) {
             if ([[result objectForKey:@"success"] integerValue] == 1){
+                
+                NSDate *date = [NSDate dateFromString:[result objectForKey:@"data"] withFormat:@"yyyy-MM-dd hh:mm:ss"];
+                [[XKRWUserService sharedService] setResetTime:[NSNumber numberWithLong:[date timeIntervalSince1970]]];
+                
                 [[XKRWSchemeService_5_0 sharedService] dealResetUserScheme:self];
                 XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc] initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
                 fatReasonVC.hidesBottomBarWhenPushed = YES;

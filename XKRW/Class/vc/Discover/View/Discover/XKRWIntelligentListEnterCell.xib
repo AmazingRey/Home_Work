@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -24,8 +24,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="enter" translatesAutoresizingMaskIntoConstraints="NO" id="AHN-9o-4XX">
-                        <rect key="frame" x="284" y="8" width="36" height="44"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="AHN-9o-4XX">
+                        <rect key="frame" x="298" y="24" width="7" height="12"/>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lead_nor" translatesAutoresizingMaskIntoConstraints="NO" id="fjg-nY-Y51" userLabel="icon3">
                         <rect key="frame" x="240" y="10" width="40" height="40"/>
@@ -86,12 +86,14 @@
                     <constraint firstAttribute="trailing" secondItem="lXZ-5U-fuP" secondAttribute="trailing" constant="106" id="XON-Vd-zhj"/>
                     <constraint firstAttribute="trailing" secondItem="fjg-nY-Y51" secondAttribute="trailing" constant="40" id="Xmk-Og-D1N"/>
                     <constraint firstItem="fjg-nY-Y51" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="kCz-bj-TWC"/>
-                    <constraint firstAttribute="trailing" secondItem="AHN-9o-4XX" secondAttribute="trailing" id="ke6-Id-EVL"/>
                     <constraint firstItem="ZCS-aE-zF5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="lHg-EX-yp8"/>
-                    <constraint firstItem="AHN-9o-4XX" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mbg-uU-84h"/>
                     <constraint firstAttribute="trailing" secondItem="ZCS-aE-zF5" secondAttribute="trailing" id="msg-ir-Vs6"/>
                 </constraints>
             </tableViewCellContentView>
+            <constraints>
+                <constraint firstItem="AHN-9o-4XX" firstAttribute="centerY" secondItem="KGk-i7-Jjw" secondAttribute="centerY" id="Nj8-LQ-pgK"/>
+                <constraint firstAttribute="trailing" secondItem="AHN-9o-4XX" secondAttribute="trailing" constant="15" id="w3g-Nw-Bwz"/>
+            </constraints>
             <connections>
                 <outlet property="_icon1" destination="lXZ-5U-fuP" id="hrK-FC-6OR"/>
                 <outlet property="_icon2" destination="mU7-tt-Mge" id="CBk-Fb-DUC"/>
@@ -102,8 +104,8 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="arrow_right5_3" width="7" height="12"/>
         <image name="discover_new" width="19" height="12"/>
-        <image name="enter" width="36" height="44"/>
         <image name="lead_nor" width="80" height="80"/>
     </resources>
 </document>

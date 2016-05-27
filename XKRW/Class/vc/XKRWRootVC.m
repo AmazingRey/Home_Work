@@ -173,7 +173,7 @@
         NSArray *imageArrays  = @[@"guide1@2x.jpg",@"guide2@2x.jpg",@"guide3@2x.jpg",@"guide4@2x.jpg"];
 
         // 添加引导页
-        guidanceScrollView  = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight)];
+        guidanceScrollView  = [[XKRWUIScrollViewBase alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight)];
         guidanceScrollView.contentSize = CGSizeMake(XKAppWidth*imageArrays.count, XKAppHeight);
         guidanceScrollView.showsHorizontalScrollIndicator = NO;
         guidanceScrollView.showsVerticalScrollIndicator = NO;
@@ -185,17 +185,18 @@
         pageControl.pageIndicatorTintColor = XK_ASSIST_LINE_COLOR;
         pageControl.currentPageIndicatorTintColor = XKMainToneColor_29ccb1;
         pageControl.enabled = NO;
-                if (XKAppHeight == 480) {
-            pageControl.frame = CGRectMake(0, XKAppHeight-50, XKAppWidth, 30);
+        pageControl.frame = CGRectMake(0, XKAppHeight-50, XKAppWidth, 30);
+        if (XKAppHeight == 480) {
+           
             imageArrays  = @[@"guide1_4s@2x.jpg",@"guide2_4s@2x.jpg",@"guide3_4s@2x.jpg",@"guide4_4s@2x.jpg"];
         }else if(XKAppHeight == 667){
-            pageControl.frame = CGRectMake(0, XKAppHeight-80, XKAppWidth, 30);
+   
             imageArrays  = @[@"guide1@2x.jpg",@"guide2@2x.jpg",@"guide3@2x.jpg",@"guide4@2x.jpg"];
         }else if (XKAppHeight == 568){
-            pageControl.frame = CGRectMake(0, XKAppHeight-60, XKAppWidth, 30);
+  
              imageArrays  = @[@"guide1_5s@2x.jpg",@"guide2_5s@2x.jpg",@"guide3_5s@2x.jpg",@"guide4_5s@2x.jpg"];
         }else{
-            pageControl.frame = CGRectMake(0, XKAppHeight-90, XKAppWidth, 30);
+   
               imageArrays = @[@"guide1@3x.jpg",@"guide2@3x.jpg",@"guide3@3x.jpg",@"guide4@3x.jpg"];
         }
         
@@ -204,15 +205,7 @@
             if (i == imageArrays.count - 1) {
                 imageView.userInteractionEnabled = YES;
                 UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-                //之前是480为分界
-                if ([UIScreen mainScreen].bounds.size.height == 736){
-                    button.frame = CGRectMake((XKAppWidth - 150)/2, XKAppHeight- 72, 150, 42);
-                }else if ([UIScreen mainScreen].bounds.size.height == 667){
-                    button.frame = CGRectMake((XKAppWidth - 150)/2, XKAppHeight- 72, 150, 42);
-                }else{
-                    button.frame = CGRectMake((XKAppWidth - 150)/2, XKAppHeight- 72, 150, 42);
-                }
-                
+                button.frame = CGRectMake((XKAppWidth - 150)/2, XKAppHeight- 72, 150, 42);
                 button.layer.borderColor =  XKMainToneColor_29ccb1.CGColor;
                 button.layer.borderWidth = 1;
                 button.layer.masksToBounds = YES;

@@ -1292,6 +1292,12 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                   withParameterDictionary:param];
 }
 
+- (BOOL)deleteTodaysRecord_4_0FatReseans {
+    NSString *sql = [NSString stringWithFormat:@"UPDATE record_4_0 SET habit = '' WHERE uid = %ld AND date = '%@'",(long)[[XKRWUserService sharedService] getUserId],[NSDate stringFromDate:[NSDate today] withFormat:@"yyyy-MM-dd"]];
+    return [self executeSql:sql];
+    
+}
+
 - (BOOL)deleteUniversalRecordInDB:(XKRWUniversalRecordEntity *)entity {
     
     NSDictionary *param = @{@"rid": @(entity.rid)};
@@ -1351,7 +1357,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     NSString *dateStart= [[dateArray lastObject] stringWithFormat:@"yyyy-MM-dd"];
     NSString *dateEnd= [[dateArray firstObject] stringWithFormat:@"yyyy-MM-dd"];
     
-    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld AND date <= '%@' AND date >= '%@'AND sync != -1 order by date desc limit %lu", tableName, (long)uid, dateEnd, dateStart,(unsigned long)dateArray.count];
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE uid = %ld AND date <= '%@' AND date >= '%@'AND sync != -1 order by date asc limit %lu", tableName, (long)uid, dateEnd, dateStart,(unsigned long)dateArray.count];
     return [self query:sql];
 }
 
@@ -2042,30 +2048,26 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return returnValue;
 }
 
-- (NSDictionary *)getSchemeRecordWithDates:(NSArray *)dateArray {
+- (NSArray *)getSchemeRecordWithDates:(NSArray *)dateArray {
     
     NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
     
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
     NSString *dateStart = [[dateArray lastObject] stringWithFormat:@"yyyy-MM-dd"];
     NSString *dateEnd = [[dateArray firstObject] stringWithFormat:@"yyyy-MM-dd"];
     
-    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM record_scheme WHERE uid = %ld AND date >= '%@' AND date <= '%@' AND sync != -1 ORDER BY type desc LIMIT %lu", (long)uid, dateStart, dateEnd, (unsigned long)dateArray.count];
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM record_scheme WHERE uid = %ld AND date >= '%@' AND date <= '%@' AND sync != -1 ORDER BY date desc ", (long)uid, dateStart, dateEnd];
     
     NSArray *rst = [self query:sql];
-    if (rst.count > 4) {
-        [self reportBug];
-        // TODO: do something with wrong number
-    }
     for (NSDictionary *temp in rst) {
         XKRWRecordSchemeEntity *entity = [[XKRWRecordSchemeEntity alloc] init];
         
         [temp setPropertiesToObject:entity];
         entity.date = [NSDate dateFromString:temp[@"date"] withFormat:@"yyyy-MM-dd"];
         
-        [dic setObject:entity forKey:entity.date];
+        [arr addObject:entity];
     }
-    return dic;
+    return arr;
 }
 
 - (XKRWRecordSchemeEntity *)getSchemeRecordWithDate:(NSDate *)date type:(RecordType)type {
@@ -2741,18 +2743,22 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 - (NSDictionary *)getAllRecordOfDays:(NSArray *)dateArray
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    NSArray *arr = [self getOtherInfoOfDays:dateArray];
-    for (XKRWRecordEntity4_0 *entity in arr) {
-        if (!entity.habitArray) {
-            entity.habitArray = [NSMutableArray array];
-            [entity reloadHabitArray];
-        }
-        entity.FoodArray        = [NSMutableArray arrayWithArray:[self queryFoodRecord:entity.date]];
-        entity.SportArray       = [NSMutableArray arrayWithArray:[self querySportRecord:entity.date]];
-        entity.customFoodArray  = [NSMutableArray arrayWithArray:[self queryCustomRecord:entity.date withType:1]];
-        entity.customSportArray = [NSMutableArray arrayWithArray:[self queryCustomRecord:entity.date withType:0]];
+    for (NSDate *date in dateArray) {
+        XKRWRecordEntity4_0 *entity = [self getAllRecordOfDay:date];
         [dic setObject:entity forKey:entity.date];
     }
+//    NSArray *arr = [self getOtherInfoOfDays:dateArray];
+//    for (XKRWRecordEntity4_0 *entity in arr) {
+//        if (!entity.habitArray) {
+//            entity.habitArray = [NSMutableArray array];
+//            [entity reloadHabitArray];
+//        }
+//        entity.FoodArray        = [NSMutableArray arrayWithArray:[self queryFoodRecord:entity.date]];
+//        entity.SportArray       = [NSMutableArray arrayWithArray:[self querySportRecord:entity.date]];
+//        entity.customFoodArray  = [NSMutableArray arrayWithArray:[self queryCustomRecord:entity.date withType:1]];
+//        entity.customSportArray = [NSMutableArray arrayWithArray:[self queryCustomRecord:entity.date withType:0]];
+//        [dic setObject:entity forKey:entity.date];
+//    }
     return dic;
 }
 
@@ -3489,46 +3495,86 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 
 - (CGFloat) getTotalCaloriesWithType:(XKCaloriesType) type andDates:(XKRWStatiscEntity5_3 *)entity{
     NSDictionary *dicAll = [self getAllRecordOfDays:entity.arrDaysDate];
-    NSDictionary *dicScheme = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDates:entity.arrDaysDate];
+    NSArray *arrScheme = [[XKRWRecordService4_0 sharedService] getSchemeRecordWithDates:entity.arrDaysDate];
     
     float calorie = 0;
-    float kcal = 0;
-    
     if (type == efoodCalories) {
         NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
-        for (NSDate *date in [dicAll allKeys]) {
-            XKRWRecordEntity4_0 *entityRecord = [dicAll objectForKey:date];
-            XKRWRecordSchemeEntity *entityScheme = [dicScheme objectForKey:date];
-            
-            if (entityScheme.type != 0 && entityScheme.type != 5) {
-                kcal += entityScheme.calorie;
+        for (XKRWRecordSchemeEntity *entityScheme in arrScheme) {
+            if (entityScheme.type != 0 && entityScheme.type != 5){
+                NSNumber *numKcal = [NSNumber numberWithFloat:entityScheme.calorie];
+                if (numKcal != 0) {
+                    [dic1 setObject:numKcal forKey:[entityScheme.date beginningOfDay]];
+                }
+            }
+        }
+        for (XKRWRecordEntity4_0 *entityRecord in [dicAll allValues]) {
+       
+            if ([[dic1 allKeys]containsObject:[entityRecord.date beginningOfDay]]) {
+                NSNumber *num = [dic1 objectForKey:[entityRecord.date beginningOfDay]];
+                float kcal = num.floatValue;
                 for (XKRWRecordFoodEntity *foodEntity in entityRecord.FoodArray) {
                     kcal += foodEntity.calorie;
                 }
-            }
-            calorie += kcal;
-            [dic1 setObject:[NSNumber numberWithFloat:kcal] forKey:[entityRecord.date stringWithFormat:@"yyyy-MM-dd"]];
-            kcal = 0;
-        }
-        entity.dicActualIntake = dic1;
-    }else if (type == eSportCalories){
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
-        
-        for (NSDate *date in [dicAll allKeys]) {
-            XKRWRecordEntity4_0 *entityRecord = [dicAll objectForKey:date];
-            XKRWRecordSchemeEntity *entityScheme = [dicScheme objectForKey:date];
+                num = [NSNumber numberWithFloat:kcal];
+                if (num != 0) {
+                    [dic1 setObject:num forKey:[entityRecord.date beginningOfDay]];
+                }
+            }else{
             
-            if (entityScheme.type != 0 && entityScheme.type != 5) {
-                kcal += entityScheme.calorie;
-                for (XKRWRecordSportEntity *sportEntity in entityRecord.SportArray) {
-                    kcal += sportEntity.calorie;
+                
+                float kcal = 0;
+                for (XKRWRecordFoodEntity *foodEntity in entityRecord.FoodArray) {
+                    kcal += foodEntity.calorie;
+                }
+                if (kcal != 0) {
+                    [dic1 setObject:[NSNumber numberWithFloat:kcal] forKey:[entityRecord.date beginningOfDay]];
                 }
             }
-            calorie += kcal;
-            [dic2 setObject:[NSNumber numberWithFloat:kcal] forKey:[entityRecord.date stringWithFormat:@"yyyy-MM-dd"]];
-            kcal = 0;
         }
-        entity.dicSportActual = dic2;
+        NSMutableDictionary *resDic1 = [NSMutableDictionary dictionary];
+        for (NSDate *date in [dic1 allKeys]) {
+            NSNumber *res = [dic1 objectForKey:[date beginningOfDay]];
+            [resDic1 setObject:res forKey:[date stringWithFormat:@"yyyy-MM-dd"]];
+        }
+        entity.dicActualIntake = resDic1;
+    }else if (type == eSportCalories){
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        for (XKRWRecordSchemeEntity *entityScheme in arrScheme) {
+            if (entityScheme.type == 0 || entityScheme.type == 5){
+                NSNumber *numKcal = [NSNumber numberWithFloat:entityScheme.calorie];
+                if (numKcal != 0) {
+                    [dic2 setObject:numKcal forKey:[entityScheme.date beginningOfDay]];
+                }
+            }
+        }
+        for (XKRWRecordEntity4_0 *entityRecord in [dicAll allValues]) {
+            if ([[dic2 allKeys]containsObject:[entityRecord.date beginningOfDay]]) {
+                NSNumber *num = [dic2 objectForKey:[entityRecord.date beginningOfDay]];
+                float kcal = num.floatValue;
+                for (XKRWRecordFoodEntity *foodEntity in entityRecord.SportArray) {
+                    kcal += foodEntity.calorie;
+                }
+                num = [NSNumber numberWithFloat:kcal];
+//                if (num != 0) {
+                    [dic2 setObject:num forKey:[entityRecord.date beginningOfDay]];
+//                }
+            }else{
+                float kcal = 0;
+                for (XKRWRecordFoodEntity *foodEntity in entityRecord.SportArray) {
+                    kcal += foodEntity.calorie;
+                }
+//                if (kcal != 0){
+                    [dic2 setObject:[NSNumber numberWithFloat:kcal] forKey:[entityRecord.date beginningOfDay]];
+//                }
+            }
+        }
+        NSMutableDictionary *resDic2 = [NSMutableDictionary dictionary];
+        for (NSDate *date in [dic2 allKeys]) {
+            NSNumber *res = [dic2 objectForKey:[date beginningOfDay]];
+            [resDic2 setObject:res forKey:[date stringWithFormat:@"yyyy-MM-dd"]];
+        }
+        entity.dicSportActual = resDic2;
     }
     return calorie ;
 }

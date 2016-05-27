@@ -312,9 +312,10 @@
     __weak typeof(self) weakSelf = self;
     if (tableView.tag == 10001) {
         XKRWFoodRecordCell *recentRecordCell = [tableView dequeueReusableCellWithIdentifier:@"recentRecordCell" forIndexPath:indexPath];
+        recentRecordCell.selectionStyle = UITableViewCellSelectionStyleGray;
         if ([tableName isEqualToString:@"food_record"]) {
             XKRWCollectionEntity *recentRecordFoodEntity = recentRecordOrCollectArray[indexPath.row];
-            [recentRecordCell setTitle:recentRecordFoodEntity.collectName logoURL:recentRecordFoodEntity.imageUrl clickDetail:^(NSIndexPath * recordFoodIndexPath) {
+            [recentRecordCell setTitle:recentRecordFoodEntity.collectName logoURL:@"food_default" clickDetail:^(NSIndexPath * recordFoodIndexPath) {
                 XKRWFoodDetailVC *foodDetailVC = [[XKRWFoodDetailVC alloc] init];
                 foodDetailVC.foodId = recentRecordFoodEntity.originalId;
                 foodDetailVC.foodName = recentRecordFoodEntity.collectName;
@@ -334,7 +335,7 @@
         } else if ([tableName isEqualToString:@"sport_record"]) {
             XKRWCollectionEntity *entity = recentRecordOrCollectArray[indexPath.row];
 
-            [recentRecordCell setTitle:entity.collectName logoURL:entity.imageUrl clickDetail:^(NSIndexPath * sportIndexPath) {
+            [recentRecordCell setTitle:entity.collectName logoURL:@"sport_default" clickDetail:^(NSIndexPath * sportIndexPath) {
                 XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc] init];
                 vc.sportID = (int)entity.originalId;
                 vc.sportName = entity.collectName;
@@ -355,7 +356,7 @@
     }else if (tableView.tag == 201){
         XKRWFoodRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCell"];
         cell.indexPath = indexPath ;
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
         if(_schemeType == eSchemeSport){
             XKRWSportEntity *sportEntity = [searchResults objectAtIndex:indexPath.row];
             [cell setTitle:sportEntity.sportName logoURL:sportEntity.sportActionPic clickDetail:^(NSIndexPath * indexPath) {

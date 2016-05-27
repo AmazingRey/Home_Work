@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -54,7 +54,7 @@
                         <constraint firstAttribute="height" constant="44" id="Zkb-9S-M2H"/>
                         <constraint firstAttribute="width" constant="36" id="xEF-mn-BSR"/>
                     </constraints>
-                    <state key="normal" image="greenEnter">
+                    <state key="normal" image="arrow_right5_3">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -189,10 +189,10 @@
         </view>
     </objects>
     <resources>
+        <image name="arrow_right5_3" width="7" height="12"/>
         <image name="days_arrow" width="8" height="4"/>
-        <image name="greenEnter" width="36" height="44"/>
         <image name="lead_nor" width="80" height="80"/>
-        <image name="me_bg.png" width="36" height="44"/>
+        <image name="me_bg.png" width="64" height="11"/>
         <image name="me_ic_male_640.png" width="17" height="17"/>
         <image name="me_shadow_down_640.png" width="320" height="123"/>
         <image name="me_shadow_up_640.png" width="320" height="65"/>

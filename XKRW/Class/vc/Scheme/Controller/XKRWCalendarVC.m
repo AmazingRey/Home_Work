@@ -31,6 +31,22 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController  setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+
+    [self initView];
+    [self setData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setData) name:EnergyCircleDataNotificationName object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setData {
     [calendar removeFromSuperview];
     recordDates = [[XKRWRecordService4_0 sharedService] getUserAllRecordDateFromDB];
     calendar =[[XKRWCalendar alloc] initWithOrigin:CGPointMake(0, 135) recordDateArray:recordDates headerType:XKRWCalendarHeaderTypeCustom andResizeBlock:^{
@@ -40,13 +56,7 @@
     [calendar addBackToTodayButtonInFooterView];
     [calendar reloadCalendar];
     [calendarScrollView addSubview:calendar];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self initView];
-
-    // Do any additional setup after loading the view.
+  
 }
 
 - (void)initView {

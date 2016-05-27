@@ -12,11 +12,12 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p9N-YI-yj6">
-                    <rect key="frame" x="1" y="4" width="136" height="47"/>
+                    <rect key="frame" x="1" y="6" width="136" height="46"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Jv-8T-X7S">
-                            <rect key="frame" x="0.0" y="0.0" width="136" height="47"/>
+                            <rect key="frame" x="1" y="1" width="134" height="44"/>
                             <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title="设置运动提醒">
                                 <color key="titleColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
@@ -25,13 +26,13 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="5Jv-8T-X7S" secondAttribute="trailing" id="9GV-fM-VpH"/>
-                        <constraint firstAttribute="bottom" secondItem="5Jv-8T-X7S" secondAttribute="bottom" id="KXx-mS-Q2y"/>
-                        <constraint firstItem="5Jv-8T-X7S" firstAttribute="leading" secondItem="p9N-YI-yj6" secondAttribute="leading" id="Kkf-wa-6Qr"/>
-                        <constraint firstAttribute="height" constant="47" id="bXu-mW-ZHl"/>
-                        <constraint firstItem="5Jv-8T-X7S" firstAttribute="top" secondItem="p9N-YI-yj6" secondAttribute="top" id="nxV-ee-4uy"/>
+                        <constraint firstAttribute="trailing" secondItem="5Jv-8T-X7S" secondAttribute="trailing" constant="1" id="9GV-fM-VpH"/>
+                        <constraint firstAttribute="bottom" secondItem="5Jv-8T-X7S" secondAttribute="bottom" constant="1" id="KXx-mS-Q2y"/>
+                        <constraint firstItem="5Jv-8T-X7S" firstAttribute="leading" secondItem="p9N-YI-yj6" secondAttribute="leading" constant="1" id="Kkf-wa-6Qr"/>
+                        <constraint firstAttribute="height" constant="46" id="bXu-mW-ZHl"/>
+                        <constraint firstItem="5Jv-8T-X7S" firstAttribute="top" secondItem="p9N-YI-yj6" secondAttribute="top" constant="1" id="nxV-ee-4uy"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
@@ -43,7 +44,7 @@
                     </userDefinedRuntimeAttributes>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="triangle5_3" translatesAutoresizingMaskIntoConstraints="NO" id="rbD-0Q-YLT">
-                    <rect key="frame" x="108" y="0.0" width="10" height="5"/>
+                    <rect key="frame" x="117" y="0.0" width="13" height="7"/>
                 </imageView>
             </subviews>
             <constraints>
@@ -51,7 +52,7 @@
                 <constraint firstAttribute="trailing" secondItem="p9N-YI-yj6" secondAttribute="trailing" constant="1" id="Dbz-su-YIA"/>
                 <constraint firstItem="p9N-YI-yj6" firstAttribute="leading" secondItem="Peg-4m-qgg" secondAttribute="leading" constant="1" id="fvV-av-Ugf"/>
                 <constraint firstItem="p9N-YI-yj6" firstAttribute="top" secondItem="rbD-0Q-YLT" secondAttribute="bottom" constant="-1" id="nS3-m5-di0"/>
-                <constraint firstAttribute="trailing" secondItem="rbD-0Q-YLT" secondAttribute="trailing" constant="20" id="qfi-QL-Cl1"/>
+                <constraint firstAttribute="trailing" secondItem="rbD-0Q-YLT" secondAttribute="trailing" constant="8" id="qfi-QL-Cl1"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -67,6 +68,6 @@
         </view>
     </objects>
     <resources>
-        <image name="triangle5_3" width="10" height="5"/>
+        <image name="triangle5_3" width="13" height="7"/>
     </resources>
 </document>

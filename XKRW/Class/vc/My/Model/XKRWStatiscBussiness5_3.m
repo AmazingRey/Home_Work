@@ -115,7 +115,6 @@
         entity.weight = [self getCurrentWeight];
         entity.weightChange = [self getTotalWeightChange];
         
-        
         entity.normalIntake = [NSNumber numberWithFloat:[self getNormalIntake:entity]];
         entity.actualIntake = [NSNumber numberWithFloat:[self getActualRangeIntake:entity]];
         entity.recommondIntake = [NSNumber numberWithFloat:[self getRecommondIntake:entity]];
@@ -352,12 +351,11 @@
     if (_statiscEntity.arrDaysDate.count == 1) {
         return 0;
     }
-    CGFloat currentWeight = [self getCurrentWeight];
-    NSDate *earlyDate = [[NSDate date] dateByAddingTimeInterval:-DateInterval];
-    CGFloat earlyWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:earlyDate];
-    if (earlyWeight == 0) {
-        earlyWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:earlyDate];
-    }
+    CGFloat currentWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]];
+    NSDate *earlyDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+  
+    float earlyWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:earlyDate];
+    
     return (currentWeight - earlyWeight);
 }
 
@@ -373,16 +371,13 @@
         return 0;
     }
     NSDate *earlyDate = [arrDate lastObject];
-    CGFloat earlyWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:earlyDate];
-    if (earlyWeight == 0) {
-        earlyWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:earlyDate];
-    }
-    
+
+    float earlyWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:earlyDate];
+
     NSDate *laterDate = [arrDate firstObject];
-    CGFloat laterWeight = [[XKRWWeightService shareService] getWeightRecordWithDate:laterDate];
-    if (laterWeight == 0) {
-        laterWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:earlyDate];
-    }
+
+    float laterWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:laterDate];
+
     
     return (laterWeight - earlyWeight);
 }
@@ -396,43 +391,21 @@
  *  @return 这个区间记录过的天数
  */
 -(NSInteger)getHasRecordDays:(XKRWStatiscEntity5_3 *)entity{
-    NSInteger j = 0;    
     NSArray *arrIntake = [entity.dicActualIntake allKeys];
-    NSArray *arrSport = [entity.dicSportActual allKeys];
+    NSArray *arrSport = [entity.dicSportActual allValues];
     
-    if (arrIntake.count < arrSport.count) {
-        for (NSString *date in arrIntake) {
-            if ([arrSport containsObject:date]) {
-                j++;
-            }
-        }
-    }else{
-        for (NSString *date in arrSport) {
-            if ([arrIntake containsObject:date]) {
-                j++;
-            }
+    int validSportCount = 0;
+    for (NSInteger i =0 ; i< arrSport.count ;i++) {
+        if ([[arrSport objectAtIndex:i] floatValue] > 0) {
+            validSportCount ++;
         }
     }
-    return j;
-
-//    NSArray *arraySport = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:daysRecord withType:RecordTypeSport withCurrentDate:date];
-//    NSInteger nullSport = [self theNumberOfExecutionStatus:arraySport andState:0];
-//    
-//    NSArray *arrayEat = [[XKRWRecordService4_0 sharedService]getSchemeStateOfNumberOfDays:daysRecord withType:RecordTypeBreakfirst withCurrentDate:date];
-//    NSInteger nullEat = [self theNumberOfExecutionStatus:arrayEat andState:0];
-//    return MAX(arrayEat.count-nullEat, arraySport.count-nullSport);
+    if (arrIntake.count >0 || validSportCount >0) {
+        return arrIntake.count > validSportCount ? arrIntake.count: validSportCount ;
+    }
+    return 0;
 }
 
-//- (NSInteger)theNumberOfExecutionStatus:(NSArray *)array andState:(NSInteger) state
-//{
-//    NSInteger numWeek = 0;
-//    for (int i = 0; i < [array count]; i++) {
-//        if ([[array objectAtIndex:i]integerValue] == state) {
-//            numWeek ++;
-//        }
-//    }
-//    return numWeek;
-//}
 
 /**
  *  获取完成计划的天数
@@ -449,6 +422,7 @@
         NSNumber *actualIntake = [entity.dicActualIntake objectForKey:dateStr];
         NSNumber *recommondIntake = [entity.dicRecommondIntake objectForKey:dateStr];
         if (actualIntake.floatValue >= limit){
+            XKLog(@"%ld,%f",recommondIntake.integerValue,actualIntake.floatValue);
             if (recommondIntake.integerValue >= actualIntake.floatValue) {
                 [dicIntake setObject:actualIntake forKey:dateStr];
             }

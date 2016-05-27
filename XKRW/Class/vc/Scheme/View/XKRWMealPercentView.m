@@ -59,6 +59,7 @@
     [self addSubview:_btnLock];
     
     _imgHead = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    _imgHead.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_imgHead];
     
     _labTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];

@@ -16,7 +16,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    [_topicButton setBackgroundImage:[UIImage createImageWithColor:colorSecondary_000000_02] forState:UIControlStateHighlighted];
+    [_topicButton setBackgroundImage:[UIImage createImageWithColor:colorSecondary_f0f0f0] forState:UIControlStateHighlighted];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

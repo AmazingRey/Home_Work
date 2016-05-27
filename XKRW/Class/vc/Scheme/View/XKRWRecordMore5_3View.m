@@ -19,8 +19,8 @@
     if (self) {
         self = LOAD_VIEW_FROM_BUNDLE(@"XKRWRecordMore5_3View");
         backgroundView.layer.borderColor = [UIColor colorFromHexString:@"#c8c8c8"].CGColor;
-        [_btnChange setBackgroundImage:[UIImage createImageWithColor:colorSecondary_000000_02] forState:UIControlStateHighlighted];
-        [_btnSet setBackgroundImage:[UIImage createImageWithColor:colorSecondary_000000_02] forState:UIControlStateHighlighted];
+        [_btnChange setBackgroundImage:[UIImage createImageWithColor:colorSecondary_f0f0f0] forState:UIControlStateHighlighted];
+        [_btnSet setBackgroundImage:[UIImage createImageWithColor:colorSecondary_f0f0f0] forState:UIControlStateHighlighted];
         self.frame = frame;
     }
     return self;

@@ -135,7 +135,7 @@
 #define XKClearColor [UIColor clearColor]
 
 // 选中色
-#define colorSecondary_000000_02 [[UIColor colorFromHexString:@"#000000"] colorWithAlphaComponent:0.2]
+#define colorSecondary_f0f0f0 [UIColor colorFromHexString:@"#f0f0f0"]
 
 //主色调
 #define XKMainToneColor_00b4b4 [UIColor colorFromHexString:@"#00b4b4"]

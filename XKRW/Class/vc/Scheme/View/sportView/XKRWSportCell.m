@@ -20,7 +20,8 @@
         self.textLabel.textColor = [UIColor colorFromHexString:@"#333333"];
         //右边的图片
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setImage:[UIImage imageNamed:@"enter.png"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"arrow_right5_3"] forState:UIControlStateNormal];
+        btn.contentMode = UIViewContentModeScaleAspectFit;
         [btn setFrame:CGRectMake(XKAppWidth-44.f, 0.f, 44.f, 44.f)];
         [btn setUserInteractionEnabled:NO];
         [self.contentView addSubview:btn];

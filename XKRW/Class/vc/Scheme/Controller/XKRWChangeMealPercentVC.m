@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSMutableDictionary *dicMealPercents;
 //不同状态下的可滑动最大值
 @property (assign, nonatomic) NSInteger currentMax;
+@property (strong, nonatomic) NSArray *arrLockTags;
 @end
 
 @implementation XKRWChangeMealPercentVC
@@ -43,9 +44,12 @@
     [self addNaviBarBackButton];
     [self addNaviBarRightButtonWithText:@"保存" action:@selector(saveData)];
     self.title = @"调整四餐比例";
+    _arrLockTags = [self getTagOfLockStatusImage];
+    
     _currentMax = 100;
     _dicMealPercents = [NSMutableDictionary dictionary];
     _dicLockTags = [NSMutableDictionary dictionary];
+    
     dailyMax = [XKRWAlgolHelper dailyIntakeRecomEnergy];
     [self makeDicData];
 }
@@ -122,11 +126,15 @@
     if (_breakFastView == nil) {
         _breakFastView = [[XKRWMealPercentView alloc] initWithFrame:CGRectMake(SlideViewLeading, 0, SlideViewWidth, SlideViewHeight) currentValue:[_dicData objectForKey:[NSNumber numberWithInteger:3001]] totalKcal:dailyMax];
         _breakFastView.slider.tag = 3001;
+        
         _breakFastView.imgHead.image = [UIImage imageNamed:@"breakfast5_3"];
         _breakFastView.labTitle.text = @"早餐";
         _breakFastView.delegate = self;
         [self.scrollView addSubview:_breakFastView];
         [_dicMealPercents setObject:_breakFastView forKey:[NSNumber numberWithInteger:3001]];
+        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3001]]) {
+            [_breakFastView actBtnLock];
+        }
     }
     return _breakFastView;
 }
@@ -140,6 +148,9 @@
         _lunchView.delegate = self;
         [self.scrollView addSubview:_lunchView];
         [_dicMealPercents setObject:_lunchView forKey:[NSNumber numberWithInteger:3002]];
+        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3002]]) {
+            [_lunchView actBtnLock];
+        }
     }
     return _lunchView;
 }
@@ -153,6 +164,9 @@
         _dinnerView.delegate = self;
         [self.scrollView addSubview:_dinnerView];
         [_dicMealPercents setObject:_dinnerView forKey:[NSNumber numberWithInteger:3003]];
+        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3003]]) {
+            [_dinnerView actBtnLock];
+        }
     }
     
     return _dinnerView;
@@ -167,6 +181,9 @@
         _addmealView.delegate = self;
         [self.scrollView addSubview:_addmealView];
         [_dicMealPercents setObject:_addmealView forKey:[NSNumber numberWithInteger:3004]];
+        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3003]]) {
+            [_addmealView actBtnLock];
+        }
     }
     
     return _addmealView;
@@ -481,6 +498,18 @@
     if (res) {
         [self.navigationController popViewControllerAnimated:YES];
     }
+    [self setTagOfLockImageStatus:[_dicLockTags allKeys]];
+}
+
+- (void)setTagOfLockImageStatus:(NSArray *)dic{
+    [[NSUserDefaults standardUserDefaults] setObject:dic
+                                              forKey:[NSString stringWithFormat:@"tagOfLockImageStatus_%ld",(long)UID]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSArray *)getTagOfLockStatusImage {
+    NSArray *dicLock = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"tagOfLockImageStatus_%ld",(long)UID]];
+    return dicLock;
 }
 
 #pragma mark BackDefault Method

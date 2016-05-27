@@ -292,9 +292,10 @@
     
     [self.moreView addSubview:self.moduleLabel];
     
-    UIImageView *enter = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"enter"]];
+    UIImageView *enter = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
+    enter.contentMode = UIViewContentModeScaleAspectFit;
     enter.right = XKAppWidth;
-    
+    enter.top = (self.frame.size.height - enter.frame.size.height)/2;
     [self.moreView addSubview:enter];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];

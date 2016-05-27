@@ -46,8 +46,10 @@
         self.upLineView =[[UIView alloc]initWithFrame:CGRectMake(0.f, 0, XKAppWidth, 0.5)];
         [_upLineView setBackgroundColor:XK_ASSIST_LINE_COLOR];
         
-        self.rightImg = [[UIImageView alloc]initWithFrame:CGRectMake(XKAppWidth - 36, (84-44)/2, 36, 44)];
-        self.rightImg.image = [UIImage imageNamed:@"enter"];
+        self.rightImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
+        self.rightImg.contentMode = UIViewContentModeScaleAspectFit;
+        self.rightImg.right = XKAppWidth - 15;
+        self.rightImg.top = (self.frame.size.height - self.rightImg.frame.size.height)/2;
         
         [self.contentView addSubview:_headerButton];
         [self.contentView addSubview: self.nickNameLabel];
@@ -104,12 +106,14 @@
         self.downLineView = [[UIView alloc]initWithFrame:CGRectMake(0.f, 43.5, XKAppWidth, 0.5)];
         [_downLineView setBackgroundColor:XK_ASSIST_LINE_COLOR];
         
-        self.rightImg = [[UIImageView alloc]initWithFrame:CGRectMake(XKAppWidth - 36, 0, 36, 44)];
-        _rightImg.image = [UIImage imageNamed:@"enter"];
-       
+        self.rightImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
+        self.rightImg.contentMode = UIViewContentModeScaleAspectFit;
+        self.rightImg.right = XKAppWidth - 15;
+        self.rightImg.top = (self.frame.size.height - self.rightImg.frame.size.height)/2;
+        
         self.leftImg = [[UIImageView alloc]initWithFrame:CGRectMake(15, (44-29)/2, 29, 29)];
       
-        self.descriptionLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.titleLabel.right, self.titleLabel.top, self.rightImg.left-self.titleLabel.right, self.titleLabel.height)];
+        self.descriptionLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.titleLabel.right, self.titleLabel.top, self.rightImg.left-self.titleLabel.right - 10, self.titleLabel.height)];
         self.descriptionLabel.font = XKDefaultFontWithSize(13.f);
         self.descriptionLabel.textAlignment = NSTextAlignmentRight;
         self.descriptionLabel.textColor = XK_ASSIST_TEXT_COLOR;
@@ -159,12 +163,14 @@
         self.downLineView = [[UIView alloc]initWithFrame:CGRectMake(0.f, 43.5, XKAppWidth, 0.5)];
         [_downLineView setBackgroundColor:XK_ASSIST_LINE_COLOR];
         
-        self.rightImg = [[UIImageView alloc]initWithFrame:CGRectMake(XKAppWidth - 36, 0, 36, 44)];
-        _rightImg.image = [UIImage imageNamed:@"enter"];
+        self.rightImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
+        self.rightImg.contentMode = UIViewContentModeScaleAspectFit;
+        self.rightImg.right = XKAppWidth - 15;
+        self.rightImg.top = (self.frame.size.height - self.rightImg.frame.size.height)/2;
         
         self.leftImg = [[UIImageView alloc]initWithFrame:CGRectMake(15, (44-29)/2, 29, 29)];
         
-        self.descriptionLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.titleLabel.right, self.titleLabel.top, self.rightImg.left-self.titleLabel.right, self.titleLabel.height)];
+        self.descriptionLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.titleLabel.right, self.titleLabel.top, self.rightImg.left-self.titleLabel.right - 10, self.titleLabel.height)];
         self.descriptionLabel.font = XKDefaultFontWithSize(13.f);
         self.descriptionLabel.textAlignment = NSTextAlignmentRight;
         self.descriptionLabel.textColor = XK_ASSIST_TEXT_COLOR;
@@ -214,8 +220,11 @@
         [self.contentView addSubview:_upLineView];
         
         if (!isHidden) {
-            UIImageView *rightImg = [[UIImageView alloc]initWithFrame:CGRectMake(XKAppWidth - 36, 0, 36, 44)];
-            rightImg.image = [UIImage imageNamed:@"enter"];
+            UIImageView *rightImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
+            rightImg.contentMode = UIViewContentModeScaleAspectFit;
+            rightImg.right = XKAppWidth - 15;
+            rightImg.top = (self.frame.size.height - rightImg.frame.size.height)/2;
+       
             [self.contentView addSubview: rightImg];
         }
     }
@@ -332,9 +341,11 @@
         [self.contentView addSubview:label];
         [self.contentView addSubview:_downLineView];
         
-        UIImageView*    rightImg = [[UIImageView alloc]initWithFrame:CGRectMake(XKAppWidth - 36, 0, 36, 44)];
-        rightImg.image = [UIImage imageNamed:@"enter"];
-        [self.contentView addSubview: rightImg];
+        UIImageView *rightImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
+        rightImg.contentMode = UIViewContentModeScaleAspectFit;
+        rightImg.right = XKAppWidth - 15;
+        rightImg.top = (self.frame.size.height - rightImg.frame.size.height)/2;
+         [self.contentView addSubview: rightImg];
         
         _descriptionLabel = [[UILabel alloc]initWithFrame:CGRectMake(label.right, label.top, rightImg.left-label.right,label.height)];
         _descriptionLabel.font = XKDefaultFontWithSize(13.f);

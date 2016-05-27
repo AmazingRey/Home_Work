@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Roboto-Regular.ttf">
@@ -19,23 +20,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="战胜的不良习惯" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="722-7d-Uw2">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="战胜的不良习惯" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="722-7d-Uw2">
                         <rect key="frame" x="46" y="10" width="119" height="21"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_ic_habit.png" translatesAutoresizingMaskIntoConstraints="NO" id="udJ-Rj-MQu">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="progress_ic_habit.png" translatesAutoresizingMaskIntoConstraints="NO" id="udJ-Rj-MQu">
                         <rect key="frame" x="10" y="5" width="31" height="31"/>
-                        <animations/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tgk-AI-6iy">
                         <rect key="frame" x="0.0" y="155" width="320" height="44"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LeU-aI-3Qk" userLabel="line">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
-                                <animations/>
                                 <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="0.5" id="RSA-2S-DCx"/>
@@ -43,18 +41,15 @@
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="修改" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XWY-9g-hUd">
                                 <rect key="frame" x="15" y="15" width="28" height="17"/>
-                                <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="4ah-Q4-AQj">
-                                <rect key="frame" x="284" y="0.0" width="36" height="44"/>
-                                <animations/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="4ah-Q4-AQj">
+                                <rect key="frame" x="290" y="18" width="7" height="12"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p46-QK-dqd">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <animations/>
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -63,57 +58,52 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="p46-QK-dqd" firstAttribute="top" secondItem="tgk-AI-6iy" secondAttribute="top" id="0OM-mL-sRN"/>
-                            <constraint firstItem="4ah-Q4-AQj" firstAttribute="top" secondItem="tgk-AI-6iy" secondAttribute="top" id="3HP-xN-qUH"/>
                             <constraint firstItem="p46-QK-dqd" firstAttribute="leading" secondItem="tgk-AI-6iy" secondAttribute="leading" id="5OM-1u-w0R"/>
                             <constraint firstItem="LeU-aI-3Qk" firstAttribute="leading" secondItem="tgk-AI-6iy" secondAttribute="leading" id="7D2-v2-nUG"/>
                             <constraint firstItem="XWY-9g-hUd" firstAttribute="top" secondItem="tgk-AI-6iy" secondAttribute="top" constant="15" id="Iq9-dp-eeS"/>
                             <constraint firstAttribute="trailing" secondItem="LeU-aI-3Qk" secondAttribute="trailing" id="N2Z-fG-O9B"/>
-                            <constraint firstAttribute="trailing" secondItem="4ah-Q4-AQj" secondAttribute="trailing" id="UTK-ko-eKO"/>
                             <constraint firstItem="LeU-aI-3Qk" firstAttribute="top" secondItem="tgk-AI-6iy" secondAttribute="top" id="XCQ-xY-n8s"/>
                             <constraint firstAttribute="trailing" secondItem="p46-QK-dqd" secondAttribute="trailing" id="de9-iq-CBg"/>
                             <constraint firstAttribute="bottom" secondItem="p46-QK-dqd" secondAttribute="bottom" id="efC-hk-yFv"/>
+                            <constraint firstItem="4ah-Q4-AQj" firstAttribute="centerY" secondItem="XWY-9g-hUd" secondAttribute="centerY" id="wXz-px-g7y"/>
                             <constraint firstItem="XWY-9g-hUd" firstAttribute="leading" secondItem="tgk-AI-6iy" secondAttribute="leading" constant="15" id="xyx-xb-n4Q"/>
                             <constraint firstAttribute="height" constant="44" id="yx4-Ru-OZJ"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12个" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1O-Cl-teP">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="12个" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1O-Cl-teP">
                         <rect key="frame" x="86" y="51" width="149" height="83"/>
-                        <animations/>
                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="70"/>
                         <color key="textColor" red="0.1843137255" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="progress_emblem_ownway.png" translatesAutoresizingMaskIntoConstraints="NO" id="ncG-f0-TI1">
                         <rect key="frame" x="254" y="6" width="58" height="58"/>
-                        <animations/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehM-6s-w9F" userLabel="line">
                         <rect key="frame" x="0.0" y="198" width="320" height="1"/>
-                        <animations/>
                         <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.5" id="mHf-xq-kh6"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2m-8O-saN">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y2m-8O-saN">
                         <rect key="frame" x="160" y="93" width="0.0" height="0.0"/>
-                        <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.1843137255" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="722-7d-Uw2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="6ym-ja-3Ta"/>
                     <constraint firstItem="tgk-AI-6iy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="7Cb-Oy-035"/>
                     <constraint firstItem="y2m-8O-saN" firstAttribute="centerY" secondItem="Y1O-Cl-teP" secondAttribute="centerY" id="8hc-2Z-zNo"/>
                     <constraint firstItem="722-7d-Uw2" firstAttribute="centerY" secondItem="udJ-Rj-MQu" secondAttribute="centerY" id="92B-Wy-onQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="4ah-Q4-AQj" secondAttribute="trailing" constant="15" id="AIy-6h-MrO"/>
                     <constraint firstAttribute="bottom" secondItem="tgk-AI-6iy" secondAttribute="bottom" id="B1J-k6-d9H"/>
+                    <constraint firstItem="4ah-Q4-AQj" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="HI9-td-bbq"/>
                     <constraint firstItem="722-7d-Uw2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="45" id="I2j-6m-bxW"/>
                     <constraint firstItem="udJ-Rj-MQu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="JXQ-Ha-qtE"/>
                     <constraint firstAttribute="trailing" secondItem="ehM-6s-w9F" secondAttribute="trailing" id="Qwn-M7-kNh"/>
@@ -137,10 +127,10 @@
                         <exclude reference="I2j-6m-bxW"/>
                         <exclude reference="Udh-ve-jCW"/>
                         <exclude reference="a4X-f7-qsE"/>
+                        <exclude reference="HI9-td-bbq"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="habitNumLabel" destination="Y1O-Cl-teP" id="6D5-98-zct"/>
                 <outlet property="noBadHabitLabel" destination="y2m-8O-saN" id="lz7-bo-EFm"/>
@@ -152,8 +142,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="enter.png" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
         <image name="progress_emblem_ownway.png" width="58" height="58"/>
-        <image name="progress_ic_habit.png" width="31" height="31"/>
+        <image name="progress_ic_habit.png" width="6" height="8"/>
     </resources>
 </document>

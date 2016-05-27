@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -49,12 +50,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="KJX-EA-B65">
-                        <rect key="frame" x="284" y="0.0" width="36" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="36" id="1D2-uJ-Ifw"/>
-                            <constraint firstAttribute="height" constant="44" id="EaZ-6u-h9r"/>
-                        </constraints>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="KJX-EA-B65">
+                        <rect key="frame" x="289" y="16" width="7" height="12"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjP-1N-MOH">
                         <rect key="frame" x="114" y="64" width="75" height="20"/>
@@ -77,7 +74,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="查看详情" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbe-6j-9Zf">
-                        <rect key="frame" x="215" y="5" width="61" height="34"/>
+                        <rect key="frame" x="218" y="5" width="61" height="34"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="61" id="VmZ-5b-qsY"/>
                             <constraint firstAttribute="height" constant="34" id="qsF-0N-9dG"/>
@@ -93,19 +90,19 @@
                     <constraint firstItem="YG7-XB-xLD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="7Zc-74-MLs"/>
                     <constraint firstItem="cQZ-1v-hb5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="44" id="AoL-rC-3DQ"/>
                     <constraint firstItem="v7Z-mn-4V6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="68" id="GgZ-be-wag"/>
+                    <constraint firstItem="KJX-EA-B65" firstAttribute="centerY" secondItem="YG7-XB-xLD" secondAttribute="centerY" id="bVt-VD-KeU"/>
                     <constraint firstItem="UKV-Hl-3H3" firstAttribute="leading" secondItem="v7Z-mn-4V6" secondAttribute="trailing" constant="8" id="bw2-yI-B1G"/>
                     <constraint firstItem="aJs-gf-UxQ" firstAttribute="top" secondItem="YG7-XB-xLD" secondAttribute="bottom" constant="-34" id="c4v-9L-Hxt"/>
-                    <constraint firstAttribute="trailing" secondItem="KJX-EA-B65" secondAttribute="trailing" constant="-1" id="d0W-A7-Erq"/>
                     <constraint firstItem="aJs-gf-UxQ" firstAttribute="leading" secondItem="YG7-XB-xLD" secondAttribute="trailing" constant="8" id="dFk-2a-shn"/>
                     <constraint firstItem="v7Z-mn-4V6" firstAttribute="top" secondItem="hjP-1N-MOH" secondAttribute="bottom" constant="-16" id="gYr-Qb-zht"/>
                     <constraint firstItem="YG7-XB-xLD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="iBd-tq-wBx"/>
-                    <constraint firstItem="KJX-EA-B65" firstAttribute="leading" secondItem="Qbe-6j-9Zf" secondAttribute="trailing" constant="8" id="lka-fa-uOt"/>
+                    <constraint firstItem="Qbe-6j-9Zf" firstAttribute="top" secondItem="aJs-gf-UxQ" secondAttribute="top" id="j2H-pe-nog"/>
                     <constraint firstItem="v7Z-mn-4V6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="nXq-Sn-7RV"/>
                     <constraint firstItem="cQZ-1v-hb5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ngc-gh-w15"/>
-                    <constraint firstItem="KJX-EA-B65" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="oEa-K8-16E"/>
+                    <constraint firstItem="KJX-EA-B65" firstAttribute="leading" secondItem="Qbe-6j-9Zf" secondAttribute="trailing" constant="10" id="spe-zR-QwX"/>
                     <constraint firstItem="UKV-Hl-3H3" firstAttribute="top" secondItem="v7Z-mn-4V6" secondAttribute="bottom" constant="-64" id="t7p-Sq-ych"/>
-                    <constraint firstItem="KJX-EA-B65" firstAttribute="top" secondItem="Qbe-6j-9Zf" secondAttribute="bottom" constant="-39" id="v5j-Mv-S2K"/>
                     <constraint firstAttribute="trailing" secondItem="UKV-Hl-3H3" secondAttribute="trailing" constant="15" id="wCv-Hb-ZgR"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="KJX-EA-B65" secondAttribute="trailing" constant="15" id="yBV-fr-6Yr"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -119,6 +116,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="enter.png" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
     </resources>
 </document>

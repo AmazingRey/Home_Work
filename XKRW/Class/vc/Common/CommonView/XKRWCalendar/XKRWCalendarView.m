@@ -236,7 +236,7 @@
                                           record:NO
                                       isSelected:NO
                                       outOfMonth:NO
-                                         isToday:NO
+                                         isToday:isToday
                                calendarMonthType:_monthType
                                     onClickBlock:^(XKRWCalendarItem *item) {
                                         if (item.isSelected == NO) {

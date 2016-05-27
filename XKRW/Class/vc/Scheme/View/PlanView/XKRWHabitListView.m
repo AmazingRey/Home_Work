@@ -33,7 +33,7 @@
     } else {
         CGFloat buttonWidth = XKAppWidth / 4.0;
         CGFloat xPoint = 0.0;
-        CGFloat yPoint = 0.0;
+        CGFloat yPoint = 10.0;
         
         NSInteger tag = 1;
         NSInteger numberOfHabits = entity.habitArray.count;
@@ -44,7 +44,7 @@
             button.tag = tag++;
             xPoint += buttonWidth;
             if (xPoint == XKAppWidth) {
-                yPoint += 63;
+                yPoint += 70;
                 xPoint = 0;
             }
             

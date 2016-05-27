@@ -7,7 +7,7 @@
 //
 @protocol XKRWRecordSingleMore5_3ViewDelegate <NSObject>
 @optional
--(void)pressSetSportNotify;
+-(void)pressSetSportNotifyWithType:(energyType)type;
 @end
 
 #import <UIKit/UIKit.h>

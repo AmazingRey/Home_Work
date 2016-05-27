@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -74,11 +74,11 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YJU-qp-bL4">
-                            <rect key="frame" x="187" y="10" width="1" height="29"/>
+                            <rect key="frame" x="187" y="15" width="1" height="19"/>
                             <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="1" id="QsM-bA-JEm"/>
-                                <constraint firstAttribute="height" constant="29" id="kEz-VT-pil"/>
+                                <constraint firstAttribute="height" constant="19" id="kEz-VT-pil"/>
+                                <constraint firstAttribute="width" constant="0.5" id="sHr-Mq-j7k"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -108,7 +108,7 @@
                         <constraint firstItem="xOJ-3E-NT4" firstAttribute="leading" secondItem="dLj-61-zzZ" secondAttribute="trailing" id="TMI-bT-ajT"/>
                         <constraint firstAttribute="bottom" secondItem="vve-JI-KGx" secondAttribute="bottom" id="TUc-kl-QAt"/>
                         <constraint firstAttribute="bottom" secondItem="dLj-61-zzZ" secondAttribute="bottom" id="YSd-ly-ns7"/>
-                        <constraint firstAttribute="bottom" secondItem="YJU-qp-bL4" secondAttribute="bottom" constant="10" id="YfM-dl-ZMh"/>
+                        <constraint firstAttribute="bottom" secondItem="YJU-qp-bL4" secondAttribute="bottom" constant="15" id="YfM-dl-ZMh"/>
                         <constraint firstItem="luM-MC-hck" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="a5Z-x8-Bkg"/>
                         <constraint firstAttribute="bottom" secondItem="luM-MC-hck" secondAttribute="bottom" id="aX7-3p-yQ7"/>
                         <constraint firstAttribute="bottom" secondItem="xOJ-3E-NT4" secondAttribute="bottom" id="dVN-fL-1Bv"/>
@@ -120,19 +120,20 @@
                         <constraint firstAttribute="height" constant="49" id="t33-Df-WpN"/>
                         <constraint firstItem="vve-JI-KGx" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" id="vth-lE-mpx"/>
                         <constraint firstAttribute="trailing" secondItem="xOJ-3E-NT4" secondAttribute="trailing" id="xC0-zb-DCm"/>
-                        <constraint firstItem="YJU-qp-bL4" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" constant="10" id="yRe-8d-rGs"/>
+                        <constraint firstItem="YJU-qp-bL4" firstAttribute="top" secondItem="fpV-2j-Yb7" secondAttribute="top" constant="15" id="yRe-8d-rGs"/>
                         <constraint firstItem="1Tg-tV-OQC" firstAttribute="leading" secondItem="fpV-2j-Yb7" secondAttribute="leading" id="zbo-vp-HAF"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eTd-3I-sWi">
                     <rect key="frame" x="0.0" y="243" width="375" height="59"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQK-ga-FUD">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQK-ga-FUD">
                             <rect key="frame" x="222" y="13" width="116" height="33"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="116" id="M68-9m-6KA"/>
                                 <constraint firstAttribute="height" constant="33" id="jly-PP-Qx1"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title="记录食物">
                                 <color key="titleColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
@@ -140,12 +141,13 @@
                                 <action selector="rightButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="agI-Z3-rcp"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5id-Ej-dY7">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5id-Ej-dY7">
                             <rect key="frame" x="129" y="13" width="116" height="33"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="33" id="FWO-i3-D5w"/>
                                 <constraint firstAttribute="width" constant="116" id="lfR-pg-oPE"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title="记录运动">
                                 <color key="titleColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
@@ -153,12 +155,14 @@
                                 <action selector="centerButtonAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="T3u-qm-y7E"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oC2-cv-vlm">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oC2-cv-vlm">
                             <rect key="frame" x="36" y="13" width="116" height="33"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="33" id="E3n-gF-4lz"/>
                                 <constraint firstAttribute="width" constant="116" id="lO9-6W-z3i"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title="营养分析">
                                 <color key="titleColor" red="0.16078431369999999" green="0.80000000000000004" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
                             </state>

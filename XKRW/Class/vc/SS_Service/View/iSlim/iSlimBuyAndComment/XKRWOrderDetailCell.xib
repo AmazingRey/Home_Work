@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQB-Ha-L8b">
-                        <rect key="frame" x="203" y="144" width="79" height="44"/>
+                        <rect key="frame" x="201" y="144" width="79" height="44"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="A4b-5t-GIM"/>
                             <constraint firstAttribute="width" constant="79" id="tE7-k4-p2e"/>
@@ -24,12 +25,8 @@
                         <color key="textColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter.png" translatesAutoresizingMaskIntoConstraints="NO" id="YGb-Ct-Lz7">
-                        <rect key="frame" x="284" y="144" width="36" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="44" id="74U-LE-0S5"/>
-                            <constraint firstAttribute="width" constant="36" id="tQD-b2-vhM"/>
-                        </constraints>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="YGb-Ct-Lz7">
+                        <rect key="frame" x="290" y="160" width="7" height="12"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="瘦瘦iSlim专业瘦身评估" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PF6-kv-Fdg">
                         <rect key="frame" x="90" y="64" width="209" height="20"/>
@@ -130,9 +127,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="AI4-8t-U4P" firstAttribute="leading" secondItem="EhW-MA-Kpj" secondAttribute="trailing" constant="-4" id="3dG-Bo-fKQ"/>
-                    <constraint firstItem="MQB-Ha-L8b" firstAttribute="top" secondItem="YGb-Ct-Lz7" secondAttribute="bottom" constant="-44" id="3jZ-7U-wmA"/>
                     <constraint firstItem="EhW-MA-Kpj" firstAttribute="top" secondItem="KSv-eM-x78" secondAttribute="bottom" constant="-10" id="5ka-Zu-aFQ"/>
-                    <constraint firstItem="YGb-Ct-Lz7" firstAttribute="leading" secondItem="MQB-Ha-L8b" secondAttribute="trailing" constant="2" id="6wu-R1-Sqh"/>
                     <constraint firstItem="eJz-rm-6EN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="143" id="Dpc-ai-iUd"/>
                     <constraint firstItem="e4j-AR-k1b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="L27-5q-KJn"/>
                     <constraint firstItem="eJz-rm-6EN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="M5h-xj-PC5"/>
@@ -143,13 +138,15 @@
                     <constraint firstItem="KSv-eM-x78" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="64" id="TjC-1Z-QA9"/>
                     <constraint firstItem="AFE-IA-IwA" firstAttribute="top" secondItem="KSv-eM-x78" secondAttribute="bottom" constant="-34" id="VQK-Sv-C4h"/>
                     <constraint firstAttribute="bottom" secondItem="Hjo-wz-wVx" secondAttribute="bottom" constant="-1" id="ZAy-X1-MCN"/>
-                    <constraint firstAttribute="trailing" secondItem="YGb-Ct-Lz7" secondAttribute="trailing" id="bY4-aJ-AHf"/>
-                    <constraint firstAttribute="bottom" secondItem="YGb-Ct-Lz7" secondAttribute="bottom" constant="-1" id="dkR-Z8-oR2"/>
+                    <constraint firstItem="YGb-Ct-Lz7" firstAttribute="centerY" secondItem="Hjo-wz-wVx" secondAttribute="centerY" id="e3l-MH-IQT"/>
                     <constraint firstItem="KSv-eM-x78" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="gic-uV-lLf"/>
+                    <constraint firstItem="YGb-Ct-Lz7" firstAttribute="leading" secondItem="MQB-Ha-L8b" secondAttribute="trailing" constant="10" id="iGB-pO-4ao"/>
                     <constraint firstItem="KSv-eM-x78" firstAttribute="top" secondItem="PF6-kv-Fdg" secondAttribute="bottom" constant="-20" id="j0q-gd-BQa"/>
                     <constraint firstItem="myC-xw-8nx" firstAttribute="top" secondItem="AFE-IA-IwA" secondAttribute="bottom" constant="-20" id="m2h-XG-BjA"/>
+                    <constraint firstItem="MQB-Ha-L8b" firstAttribute="baseline" secondItem="Hjo-wz-wVx" secondAttribute="baseline" id="old-zR-unn"/>
                     <constraint firstItem="Hjo-wz-wVx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="qrQ-2V-tGf"/>
                     <constraint firstItem="myC-xw-8nx" firstAttribute="leading" secondItem="AFE-IA-IwA" secondAttribute="trailing" constant="-4" id="sYU-zx-jDu"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="YGb-Ct-Lz7" secondAttribute="trailing" constant="15" id="suT-Op-a9w"/>
                     <constraint firstAttribute="trailing" secondItem="Cq8-0s-uaj" secondAttribute="trailing" id="veb-DG-vxj"/>
                     <constraint firstAttribute="trailing" secondItem="eJz-rm-6EN" secondAttribute="trailing" id="vlF-4I-25b"/>
                     <constraint firstItem="PF6-kv-Fdg" firstAttribute="leading" secondItem="KSv-eM-x78" secondAttribute="trailing" constant="15" id="w6j-G7-d4W"/>
@@ -172,7 +169,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="enter.png" width="12" height="12"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
         <image name="serviceIcon_01" width="60" height="60"/>
     </resources>
 </document>

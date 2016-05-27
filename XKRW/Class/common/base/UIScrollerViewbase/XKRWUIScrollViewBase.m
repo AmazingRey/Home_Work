@@ -19,6 +19,15 @@
     return self;
 }
 
+
+- (instancetype) initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame] ;
+    if (self) {
+        self.delaysContentTouches = NO;// default is YES. if NO, we immediately call -touchesShouldBegin:withEvent:inContentView:. this has no effect on presses
+    }
+    return self;
+}
+
 - (BOOL)touchesShouldCancelInContentView:(UIView *)view
 {
     if ([view isKindOfClass:[UIControl class]]) {

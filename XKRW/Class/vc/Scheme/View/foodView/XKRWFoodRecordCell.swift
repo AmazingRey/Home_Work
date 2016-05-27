@@ -8,7 +8,7 @@
 
 import UIKit
 
-class XKRWFoodRecordCell: UITableViewCell {
+class XKRWFoodRecordCell: XKRWUITableViewCellbase {
 
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var logo: UIImageView!
@@ -31,7 +31,14 @@ class XKRWFoodRecordCell: UITableViewCell {
     
     func setTitle(title: String, logoURL: String, clickDetail: (indexPath: NSIndexPath?)->(), clickRecord:(indexPath: NSIndexPath?)->()) -> Void {
         self.title.text = title
-        self.logo.setImageWithURL(NSURL(string: logoURL), placeholderImage: UIImage(named:"food_default"),options:.RetryFailed)
+        if logoURL == "food_default" {
+            self.logo.image = UIImage.init(named: "food_default01")
+        } else if logoURL == "sport_default" {
+            self.logo.image = UIImage.init(named: "sport_default")
+        } else {
+           self.logo.setImageWithURL(NSURL(string: logoURL), placeholderImage: UIImage(named:"food_default"),options:.RetryFailed)
+        }
+        
         self.clickDetail = clickDetail
         self.clickRecord = clickRecord
     }

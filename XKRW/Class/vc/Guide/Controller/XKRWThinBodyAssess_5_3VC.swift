@@ -47,7 +47,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
     func loadDataAndReload(){
         //判断是否在5.2重置过
         let date = NSUserDefaults.standardUserDefaults().objectForKey(String(format:"StartTime_%ld",XKRWUserService.sharedService().getUserId()))
-        if (date == nil)
+        if (date == nil || XKRWAlgolHelper .remainDayToAchieveTarget() == -1 )
         {
             //未重置过
             headLabel.text = ""
@@ -59,7 +59,7 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
         }
         
         self.initHabitData()
-        let viewHeight : Int = 500
+        let viewHeight : Int = 450
         let heavyHeight : Int = 200
         let numLines = ceilf(Float(dicData.count)/4)
         var nonHabitHeight : CGFloat = 30
@@ -102,9 +102,9 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
                 view.type = .Habit
                 view.delegate = self
                 if isHeavyType{
-                    frame = CGRectMake(0, CGFloat(viewHeight + heavyHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*100) + 70)
+                    frame = CGRectMake(0, CGFloat(viewHeight + heavyHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*100) + 150)
                 }else{
-                    frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*100) + 70)
+                    frame = CGRectMake(0, CGFloat(index*viewHeight)+headView.frame.size.height, UI_SCREEN_WIDTH, CGFloat(numLines*100) + 100)
                 }
                 break
             default:

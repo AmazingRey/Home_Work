@@ -23,8 +23,9 @@
         [self.detailTextLabel setFont:XKDefaultRegFontWithSize(16.f)];
         [self.textLabel setFont:XKDefaultRegFontWithSize(16.f)];
         
-        self.right_btn = [[UIButton alloc] initWithFrame:CGRectMake(XKAppWidth-36.f, 0, 36.f, 44.f)];
-        [self.right_btn setImage:[UIImage imageNamed:@"arrow"] forState:UIControlStateNormal];
+        self.right_btn = [[UIButton alloc] initWithFrame:CGRectMake(XKAppWidth-34.f, (self.frame.size.height - 19)/2, 12.f, 19.f)];
+        [self.right_btn setImage:[UIImage imageNamed:@"arrow_right5_3"] forState:UIControlStateNormal];
+        self.right_btn.contentMode = UIViewContentModeScaleAspectFit;
         
         self.degreeImageView = [[UIImageView alloc]initWithFrame:CGRectMake(XKAppWidth- 74 - 36, (44-20)/2, 73.8, 20)];
         [self.contentView setBackgroundColor:[UIColor whiteColor]];

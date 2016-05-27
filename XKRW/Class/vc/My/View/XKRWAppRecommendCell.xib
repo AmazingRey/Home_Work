@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -32,7 +32,7 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数十万款软件和游戏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Fu-AC-kQK">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="数十万款软件和游戏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Fu-AC-kQK">
                         <rect key="frame" x="65" y="30" width="216" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="MHd-if-ASU"/>
@@ -41,23 +41,15 @@
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enter" translatesAutoresizingMaskIntoConstraints="NO" id="myg-Bh-WhN">
-                        <rect key="frame" x="284" y="8" width="36" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="36" id="uVz-bM-mcQ"/>
-                            <constraint firstAttribute="height" constant="44" id="xNl-fO-YSx"/>
-                        </constraints>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="myg-Bh-WhN">
+                        <rect key="frame" x="298" y="24" width="7" height="12"/>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="myg-Bh-WhN" firstAttribute="leading" secondItem="0Fu-AC-kQK" secondAttribute="trailing" constant="3" id="5GX-pV-oPg"/>
                     <constraint firstAttribute="bottomMargin" secondItem="FdX-wD-4a5" secondAttribute="bottom" constant="1" id="6WI-Hc-jZ0"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="myg-Bh-WhN" secondAttribute="bottom" constant="-1" id="Eq3-FZ-IjR"/>
                     <constraint firstItem="0Fu-AC-kQK" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="K2Z-W7-pRt"/>
                     <constraint firstAttribute="bottomMargin" secondItem="4DX-cw-jrq" secondAttribute="bottom" constant="20" id="Mng-Xz-p09"/>
                     <constraint firstItem="FdX-wD-4a5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="NO4-oB-lxc"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="myg-Bh-WhN" secondAttribute="trailing" constant="-8" id="O6H-66-EAw"/>
-                    <constraint firstItem="myg-Bh-WhN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="aCe-1H-21r"/>
                     <constraint firstItem="0Fu-AC-kQK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="22" id="esq-7P-YvB"/>
                     <constraint firstItem="0Fu-AC-kQK" firstAttribute="leading" secondItem="FdX-wD-4a5" secondAttribute="trailing" constant="10" id="kCe-IG-vdx"/>
                     <constraint firstItem="4DX-cw-jrq" firstAttribute="leading" secondItem="FdX-wD-4a5" secondAttribute="trailing" constant="10" id="oyB-AS-tkF"/>
@@ -65,6 +57,10 @@
                     <constraint firstItem="FdX-wD-4a5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="uvP-Rd-YiB"/>
                 </constraints>
             </tableViewCellContentView>
+            <constraints>
+                <constraint firstItem="myg-Bh-WhN" firstAttribute="centerY" secondItem="KGk-i7-Jjw" secondAttribute="centerY" id="Or7-Rs-fVb"/>
+                <constraint firstAttribute="trailing" secondItem="myg-Bh-WhN" secondAttribute="trailing" constant="15" id="j4R-mI-WqT"/>
+            </constraints>
             <connections>
                 <outlet property="appDescribe" destination="0Fu-AC-kQK" id="ea2-Sh-WV7"/>
                 <outlet property="appName" destination="4DX-cw-jrq" id="gUh-ig-dwo"/>
@@ -73,6 +69,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="enter" width="36" height="44"/>
+        <image name="arrow_right5_3" width="7" height="12"/>
     </resources>
 </document>

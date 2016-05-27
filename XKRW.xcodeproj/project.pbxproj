@@ -451,10 +451,6 @@
 		BC31B9311C1ACA520045817B /* HPPredictCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC31B8FF1C1ACA520045817B /* HPPredictCell.xib */; };
 		BC31B9321C1ACA520045817B /* HPSportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31B9001C1ACA520045817B /* HPSportCell.swift */; };
 		BC31B9331C1ACA520045817B /* HPSportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC31B9011C1ACA520045817B /* HPSportCell.xib */; };
-		BC31B9341C1ACA520045817B /* HPSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31B9021C1ACA520045817B /* HPSummaryCell.swift */; };
-		BC31B9351C1ACA520045817B /* HPSummaryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC31B9031C1ACA520045817B /* HPSummaryCell.xib */; };
-		BC31B9361C1ACA520045817B /* XKRWCalendarTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31B9041C1ACA520045817B /* XKRWCalendarTitleCell.swift */; };
-		BC31B9371C1ACA520045817B /* XKRWCalendarTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC31B9051C1ACA520045817B /* XKRWCalendarTitleCell.xib */; };
 		BC31B9381C1ACA520045817B /* SDChangeSizeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC31B9071C1ACA520045817B /* SDChangeSizeCell.swift */; };
 		BC31B9391C1ACA520045817B /* SDChangeSizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC31B9081C1ACA520045817B /* SDChangeSizeCell.xib */; };
 		BC31B93A1C1ACA520045817B /* SDDescriptionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B90A1C1ACA520045817B /* SDDescriptionHeaderView.m */; };
@@ -1861,10 +1857,6 @@
 		BC31B8FF1C1ACA520045817B /* HPPredictCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HPPredictCell.xib; sourceTree = "<group>"; };
 		BC31B9001C1ACA520045817B /* HPSportCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HPSportCell.swift; sourceTree = "<group>"; };
 		BC31B9011C1ACA520045817B /* HPSportCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HPSportCell.xib; sourceTree = "<group>"; };
-		BC31B9021C1ACA520045817B /* HPSummaryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HPSummaryCell.swift; sourceTree = "<group>"; };
-		BC31B9031C1ACA520045817B /* HPSummaryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HPSummaryCell.xib; sourceTree = "<group>"; };
-		BC31B9041C1ACA520045817B /* XKRWCalendarTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWCalendarTitleCell.swift; sourceTree = "<group>"; };
-		BC31B9051C1ACA520045817B /* XKRWCalendarTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWCalendarTitleCell.xib; sourceTree = "<group>"; };
 		BC31B9071C1ACA520045817B /* SDChangeSizeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDChangeSizeCell.swift; sourceTree = "<group>"; };
 		BC31B9081C1ACA520045817B /* SDChangeSizeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDChangeSizeCell.xib; sourceTree = "<group>"; };
 		BC31B9091C1ACA520045817B /* SDDescriptionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDDescriptionHeaderView.h; sourceTree = "<group>"; };
@@ -4738,10 +4730,6 @@
 				BC31B8FF1C1ACA520045817B /* HPPredictCell.xib */,
 				BC31B9001C1ACA520045817B /* HPSportCell.swift */,
 				BC31B9011C1ACA520045817B /* HPSportCell.xib */,
-				BC31B9021C1ACA520045817B /* HPSummaryCell.swift */,
-				BC31B9031C1ACA520045817B /* HPSummaryCell.xib */,
-				BC31B9041C1ACA520045817B /* XKRWCalendarTitleCell.swift */,
-				BC31B9051C1ACA520045817B /* XKRWCalendarTitleCell.xib */,
 				CCE7BE1A1CE2CB67005DC322 /* XKRWNewHPSportView.swift */,
 			);
 			path = HistoryAndProcess;
@@ -6798,7 +6786,7 @@
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
 					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = 2H2WTQZ7Y8;
+						DevelopmentTeam = WT58P44WAK;
 					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = WT58P44WAK;
@@ -6870,7 +6858,6 @@
 				BC769E8E1C33D3DD00E96B1A /* discover_share@3x.png in Resources */,
 				044DA1CF18558DC100CA30F7 /* InfoPlist.strings in Resources */,
 				BCEF35A31C1E560A00740ACC /* XKRWSurroundCell.xib in Resources */,
-				BC31B9351C1ACA520045817B /* HPSummaryCell.xib in Resources */,
 				BCEF38081C1E901B00740ACC /* XKRWUserInfoVC.xib in Resources */,
 				BCEF37611C1E75D900740ACC /* XKRWOrderNumCell.xib in Resources */,
 				2E9687D41A04AEFD00CB5D77 /* readme.txt in Resources */,
@@ -6977,7 +6964,6 @@
 				BCEF376A1C1E75D900740ACC /* XKRWHabitStateCellTableViewCell.xib in Resources */,
 				BCEF377A1C1E75D900740ACC /* XKRWPersonCircumstancesCell.xib in Resources */,
 				BC51312B1A1205BE00947224 /* UMAnalytics_Sdk_ReleaseNotes.html in Resources */,
-				BC31B9371C1ACA520045817B /* XKRWCalendarTitleCell.xib in Resources */,
 				BC6F2EF41C198686005B54E8 /* XKRWFoundFatReasonVC.xib in Resources */,
 				BC9B95D01CD1BE650030EAD1 /* XKRWRecordCell_5_3.xib in Resources */,
 				BC81EABD1BF43A9900317D1A /* UMShareEditViewController.xib in Resources */,
@@ -7210,7 +7196,6 @@
 				2E9688101A04AEFE00CB5D77 /* SDWebImageManager.m in Sources */,
 				BC769DA11C33CC7200E96B1A /* XKRWFoodEntity.m in Sources */,
 				E39E8F9A1AAD4F3100B1E5DD /* payRequsestHandler.mm in Sources */,
-				BC31B9361C1ACA520045817B /* XKRWCalendarTitleCell.swift in Sources */,
 				A7E917351B5CA48A0017F5FD /* PNScatterChartData.m in Sources */,
 				BC9B95CA1CD099FD0030EAD1 /* XKRWHomePagePretreatmentManage.m in Sources */,
 				A7E917321B5CA48A0017F5FD /* PNPieChart.m in Sources */,
@@ -7483,7 +7468,6 @@
 				BCEF374B1C1E75D900740ACC /* PurchaseHeader.m in Sources */,
 				2E9687DB1A04AEFD00CB5D77 /* ASIInputStream.m in Sources */,
 				BC769DD31C33D19900E96B1A /* XKRWOrderRecordEntity.m in Sources */,
-				BC31B9341C1ACA520045817B /* HPSummaryCell.swift in Sources */,
 				A7E9172C1B5CA48A0017F5FD /* PNCircleChart.m in Sources */,
 				BCEF371B1C1E75D900740ACC /* XKRWComprehensiveAssResultVC.m in Sources */,
 				BC0BAF2C1C575F5A00BAD05C /* XKRWOperateArticleListVC.swift in Sources */,
@@ -8089,8 +8073,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8141,7 +8125,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -8160,8 +8144,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8212,7 +8196,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";

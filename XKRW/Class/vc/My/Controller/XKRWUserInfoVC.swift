@@ -22,9 +22,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
     var dataNumCell:XKRWUserInfoDataCell?
     var headView:XKRWHeaderView!
     var sportView = XKRWNewHPSportView()
-//    var viewModel:XKRWHistoryAndProcessModel?
-    
-    
+
     var entity:XKRWUserInfoShowEntity = XKRWUserInfoShowEntity()
     
     var schemeReocrds: [XKRWRecordSchemeEntity] = []
@@ -66,7 +64,6 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
         self.automaticallyAdjustsScrollViewInsets = false
         XKUtil.executeCodeWhenSystemVersionAbove(7.0, blow: 0) { () -> Void in
             self.edgesForExtendedLayout = .All
-//            self.navigationController?.navigationBar.translucent = true
             self.navigationController?.edgesForExtendedLayout = .All
         }
         infoTableView.delegate = self
@@ -83,7 +80,8 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
         headView.headerArcImageView!.layer.cornerRadius = 41
 
         headView.headerButton?.addTarget(self, action: #selector(XKRWUserInfoVC.showBigHeadImageView), forControlEvents: .TouchUpInside)
-
+        infoTableView.tableHeaderView = headView
+        
         infoTableView.registerNib(UINib(nibName: "HPPredictCell", bundle: nil), forCellReuseIdentifier: "predictCell")
         infoTableView.registerNib(UINib(nibName: "HPMealCell", bundle: nil), forCellReuseIdentifier: "mealCell")
         infoTableView.registerNib(UINib(nibName: "HPSportCell", bundle: nil), forCellReuseIdentifier: "sportCell")
@@ -122,8 +120,8 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
         headView.menifestoLabel?.text = entity.manifesto
         headView.insistLabel?.text = "已坚持了\((entity.daily))天"
         headView.insistLabel?.textColor = UIColor.whiteColor()
-        infoTableView.tableHeaderView = headView
-        infoTableView.tableHeaderView!.clipsToBounds = true
+        
+//        infoTableView.tableHeaderView!.clipsToBounds = true
     }
     
     override func popView() {

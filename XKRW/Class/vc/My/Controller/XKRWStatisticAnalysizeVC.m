@@ -9,7 +9,7 @@
 #define SegementLeading 13
 #define SegementHeight 30
 
-#define ScrollViewHeight XKAppHeight-56
+#define ScrollViewHeight XKAppHeight - 56 - 64
 
 #import "XKRWStatisticAnalysizeVC.h"
 #import "Masonry.h"
@@ -172,9 +172,9 @@
         _scrollView.scrollEnabled = NO;
         
         CGFloat height = _scrollView.frame.size.height;
-        if (XKAppHeight < 600){
+        if (XKAppHeight < 700){
             _scrollView.delegate = self;
-            height += (600 - XKAppHeight);
+            height += (700 - XKAppHeight);
             _scrollView.scrollEnabled = YES;
             _scrollView.showsVerticalScrollIndicator = NO;
             _scrollView.showsHorizontalScrollIndicator = NO;
@@ -187,7 +187,7 @@
 
 -(UIView *)emptyView{
     if (!_emptyView) {
-        _emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, ScrollViewHeight)];
+        _emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, XKAppWidth, ScrollViewHeight)];
         UIImageView *emptyImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 162, 156)];
         CGPoint point = _emptyView.center;
         point.y -= 156;

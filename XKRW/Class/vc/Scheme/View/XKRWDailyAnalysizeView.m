@@ -12,8 +12,11 @@
 #import "XKRWRecordService4_0.h"
 
 @implementation XKRWDailyAnalysizeView
+{
+    NSString *containerImageName;
+}
 
-- (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type
+- (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type andSportArray:(NSArray *)sportArray
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -25,7 +28,7 @@
         _dailyFoodDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:efoodCalories andDate:[NSDate date]];
         //运动消耗
         _dailySportDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:eSportCalories andDate:[NSDate date]];
-        _arrSport = [[XKRWRecordService4_0 sharedService] getSportRecordAndSportSchemeRecordWithDate:[NSDate date]];
+        _arrSport = sportArray;
         
         NSMutableDictionary *dicEat = [NSMutableDictionary dictionary];
         [dicEat setObject:[NSString stringWithFormat:@"%.0fkcal",_dailyNormal] forKey:@"正常所需热量"];
@@ -60,51 +63,42 @@
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(@32);
             make.width.mas_equalTo(XKAppWidth - 64);
-            make.height.mas_equalTo(80);
-            make.top.mas_equalTo(self.labCal.mas_bottom).offset(30);
+            make.height.mas_equalTo(66);
+            make.top.mas_equalTo(self.labCal.mas_bottom).offset(20);
         }];
         
         [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(@32);
             make.width.mas_equalTo(XKAppWidth - 64);
-            make.height.mas_equalTo(80);
+            make.height.mas_equalTo(66 + 10);
             make.top.mas_equalTo(self.labCal.mas_bottom).offset(10);
             make.bottom.mas_equalTo(_tableView.mas_bottom);
+            
+            UIImage *boxImage =  [UIImage imageNamed:containerImageName];
+            UIImage *stretchImage = [ boxImage resizableImageWithCapInsets:UIEdgeInsetsMake(20, 25, 25, 25)];
+            _imgView.image = stretchImage;
         }];
     }
     if (_dailySportDecrease != 0 && _type == 2){
-        if (_arrSport.count == 2) {
-            [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(@32);
-                make.width.mas_equalTo(XKAppWidth - 64);
-                make.height.mas_equalTo(80);
-                make.top.mas_equalTo(self.labCal.mas_bottom).offset(30);
-            }];
-            
-            [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(@32);
-                make.width.mas_equalTo(XKAppWidth - 64);
-                make.height.mas_equalTo(80);
-                make.top.mas_equalTo(self.labCal.mas_bottom).offset(10);
-                make.bottom.mas_equalTo(_tableView.mas_bottom);
-            }];
-        }else{
-            [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(@32);
-                make.width.mas_equalTo(XKAppWidth - 64);
-                make.height.mas_equalTo(40);
-                make.top.mas_equalTo(self.labCal.mas_bottom).offset(30);
-            }];
-            
-            [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(@32);
-                make.width.mas_equalTo(XKAppWidth - 64);
-                make.height.mas_equalTo(40);
-                make.top.mas_equalTo(self.labCal.mas_bottom).offset(10);
-                make.bottom.mas_equalTo(_tableView.mas_bottom);
-            }];
-        }
-    }
+    
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(@32);
+            make.width.mas_equalTo(XKAppWidth - 64);
+            make.height.mas_equalTo(_arrSport.count *33);
+            make.top.mas_equalTo(self.labCal.mas_bottom).offset(20);
+        }];
+        
+        [self.imgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(@32);
+            make.width.mas_equalTo(XKAppWidth - 64);
+            make.height.mas_equalTo(_arrSport.count *33 + 10);
+            make.top.mas_equalTo(self.labCal.mas_bottom).offset(10);
+            make.bottom.mas_equalTo(_tableView.mas_bottom);
+            UIImage *boxImage =  [UIImage imageNamed:containerImageName];
+            UIImage *stretchImage = [ boxImage resizableImageWithCapInsets:UIEdgeInsetsMake(20, 25, 25, 25)];
+            _imgView.image = stretchImage;
+        }];
+}
 }
 
 #pragma mark getter Method
@@ -149,23 +143,22 @@
 -(UIImageView *)imgView{
     if (!_imgView) {
         _imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200, 98)];
-//        _imgView.contentMode = UIViewContentModeScaleAspectFill;
-        NSString *imgName = @"";
+
+   
         if (_arrSport.count == 1) {
             if (XKAppWidth == 320) {
-                imgName = @"date_indicator320_Small";
+                containerImageName = @"date_indicator320_Small";// 532
             }else{
-                imgName = @"date_indicator_Small";
+                containerImageName = @"date_indicator_Small";// 622
             }
         }else{
             if (XKAppWidth == 320) {
-                imgName = @"date_indicator320_Big";
+                containerImageName = @"date_indicator320_Big";// 532
             }else{
-                imgName = @"date_indicator_Big";
+                containerImageName = @"date_indicator_Big"; //622
             }
         }
-         UIImage *img = [UIImage imageNamed:imgName];
-//        [img resizableImageWithCapInsets:UIEdgeInsetsMake(0, 100, 0, 100) resizingMode:UIImageResizingModeStretch];
+         UIImage *img = [UIImage imageNamed:containerImageName];
         _imgView.image = img;
         [self addSubview:_imgView];
     }

@@ -436,8 +436,8 @@
 
 + (float)dailyConsumeSportEnergyOfDates:(XKRWStatiscEntity5_3 *)entity {
     
-    XKPhysicalLabor physicalLevel = [[XKRWUserService sharedService] getUserLabor];
-    XKSex sex = [[XKRWUserService sharedService] getSex];
+//    XKPhysicalLabor physicalLevel = [[XKRWUserService sharedService] getUserLabor];
+//    XKSex sex = [[XKRWUserService sharedService] getSex];
     
     float res = 0;
     float kcal = 0;
@@ -445,10 +445,7 @@
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     
     for (NSDate *date in [bmDic allKeys]) {
-        kcal = [[self class] dailyConsumeSportEnergyWithPhysicalLabor:physicalLevel
-                                                                   BM:[[bmDic objectForKey:date] floatValue]
-                                                                  PAL:[[self class] PAL]
-                                                                  sex:sex];
+        kcal = [[self class] dailyConsumeSportEnergyV5_3OfDate:date];
         [dic setObject:[NSNumber numberWithFloat:kcal] forKey:[date stringWithFormat:@"yyyy-MM-dd"]];
         res += kcal;
     }

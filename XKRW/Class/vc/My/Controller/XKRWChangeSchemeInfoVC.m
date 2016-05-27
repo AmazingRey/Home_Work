@@ -1173,6 +1173,8 @@
         if (result != nil) {
             if ([[result objectForKey:@"success"] integerValue] == 1){
                 
+                NSDate *date = [NSDate dateFromString:[result objectForKey:@"data"] withFormat:@"yyyy-MM-dd hh:mm:ss"];
+                [[XKRWUserService sharedService] setResetTime:[NSNumber numberWithLong:[date timeIntervalSince1970]]];
                 
                 [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"DailyIntakeSize"];
                 [[NSUserDefaults standardUserDefaults] synchronize];

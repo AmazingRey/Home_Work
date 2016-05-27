@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "XKRWDailyAnalysizeCell.h"
 
-
 @interface XKRWDailyAnalysizeView : UIView <UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) UILabel *labTitle;
@@ -27,5 +26,5 @@
 //运动消耗
 @property (assign, nonatomic) CGFloat dailySportDecrease;
 
-- (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type;
+- (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type andSportArray:(NSArray *)sportArray;
 @end

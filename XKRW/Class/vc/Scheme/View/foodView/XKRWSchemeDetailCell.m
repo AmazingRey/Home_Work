@@ -24,9 +24,10 @@
         self.detailTextLabel.font = XKDefaultFontWithSize(13.f);
         self.detailTextLabel.textColor = colorSecondary_666666;
         
-        UIImageView *arrowImageView = [[UIImageView alloc]initWithFrame:CGRectMake(XKAppWidth-36, (64-44)/2, 36, 44)];
-        arrowImageView.image = [UIImage imageNamed:@"arrow"];
-        
+        UIImageView *arrowImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
+        arrowImageView.contentMode = UIViewContentModeScaleAspectFit;
+        arrowImageView.right = XKAppWidth - 15;
+        arrowImageView.top = (self.frame.size.height - arrowImageView.frame.size.height)/2;
         [self.contentView addSubview:arrowImageView];
         
         _sep_line = [[UIView alloc] initWithFrame:CGRectMake(15.f, 63.5f, XKAppWidth-15.f, .5f)];

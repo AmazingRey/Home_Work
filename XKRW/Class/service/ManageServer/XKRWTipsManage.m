@@ -64,7 +64,7 @@ static XKRWTipsManage *shareInstance;
         // 2.所有用户初次进入v5.3主页，依次显示下列Tips：
         if (isFirstOpenApp) {
             NSArray *tipsTextArray = @[@"点击右上角，可以记录体重、围度和查看体重曲线。PS.长按右上角，可以快捷记录体重哦！",@"遇到使用问题或者需要帮助，可长按左下角的“计划”按钮哦！"];
-            NSArray *tipsTypeArray = @[@0];
+            NSArray *tipsTypeArray = @[@0,@0];
             
             for (int i = 0; i < [tipsTypeArray count]; i++) {
                 XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
@@ -148,7 +148,7 @@ static XKRWTipsManage *shareInstance;
                 
             }
             
-            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] && [XKRWAlgolHelper dailyConsumeSportEnergyOfDate:date] > 0) {
+            if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] && [XKRWAlgolHelper dailyConsumeSportEnergyOfDate:date] > 0 && [XKRWAlgolHelper dailyConsumeSportEnergyV5_3OfDate:date]) {
                 XKRWPlanTipsEntity *entity =  [[ XKRWPlanTipsEntity alloc] init];
                 entity.showType = 0;
                 entity.tipsText = [NSString stringWithFormat:@"今日建议运动消耗%.0fKcal，记录运动或执行运动方案可以帮助你完成运动目标。",[XKRWAlgolHelper dailyConsumeSportEnergy]];

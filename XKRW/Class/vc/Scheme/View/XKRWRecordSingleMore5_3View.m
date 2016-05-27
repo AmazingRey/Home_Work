@@ -21,8 +21,20 @@
         self.frame = frame;
         backgroundView.layer.borderColor = [UIColor colorFromHexString:@"#c8c8c8"].CGColor;
         backgroundView.backgroundColor = [UIColor colorFromHexString:@"#e4e4e4"];
+        [_btnSet setBackgroundImage:[UIImage createImageWithColor:colorSecondary_f0f0f0] forState:UIControlStateHighlighted];
     }
     return self;
+}
+
+- (void)setType:(energyType)type {
+    
+    _type = type;
+    _btnSet.tag = type;
+    if (type == energyTypeSport) {
+        [_btnSet setTitle:@"设置运动提醒" forState:UIControlStateNormal];
+    } else if (type == energyTypeHabit){
+        [_btnSet setTitle:@"设置习惯提醒" forState:UIControlStateNormal];
+    }
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder
@@ -35,8 +47,8 @@
 }
 
 - (IBAction)actSet:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(pressSetSportNotify)]) {
-        [self.delegate pressSetSportNotify];
+    if ([self.delegate respondsToSelector:@selector(pressSetSportNotifyWithType:)]) {
+        [self.delegate pressSetSportNotifyWithType:[(UIButton *)sender tag]];
     }
 }
 @end
