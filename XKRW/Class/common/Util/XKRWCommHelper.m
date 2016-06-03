@@ -80,6 +80,9 @@ static XKRWBaseService *service;
         [defaults setObject:[NSString stringWithFormat:@"IOS Ver %@", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"]] forKey:kFirstOpenApp];
         [defaults synchronize];
         
+        //用来使用户重新登陆   5.3之后的版本需要删除
+        [XKRWUserDefaultService setLogin:NO];
+        
         return YES;
     }
 }
@@ -806,6 +809,7 @@ static XKRWBaseService *service;
         //记录页记录（饮食，运动，围度，体重等等）
         if (![[[XKRWRecordService4_0 sharedService] syncOfflineRecordToRemote] boolValue]) {
             NSLog(@"上传记录出错");
+            return NO;
         }
     }
     @catch (NSException *exception) {

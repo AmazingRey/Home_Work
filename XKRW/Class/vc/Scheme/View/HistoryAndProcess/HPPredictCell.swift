@@ -15,7 +15,11 @@ class HPPredictCell: UITableViewCell {
     @IBOutlet weak var nonDataLabel: UILabel!
     
     func setContent(entity: XKRWUserInfoShowEntity) -> Void {
-        self.loseWeightLabel.text = "\(entity.lossWeight)g"
+        if entity.lossWeight <= 0 {
+            self.loseWeightLabel.text = "0g"
+        }else{
+            self.loseWeightLabel.text = "\(entity.lossWeight)g"
+        }
         self.loseWeightLabel.hidden = false
         self.nonDataLabel.hidden = true
     }

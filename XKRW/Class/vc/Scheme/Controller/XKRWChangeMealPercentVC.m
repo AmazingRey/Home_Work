@@ -11,7 +11,7 @@
 #import "masonry.h"
 #import "XKRWUserService.h"
 #import "XKRWAlgolHelper.h"
-
+#import "MobClick.h"
 @interface XKRWChangeMealPercentVC () <XKRWMealPercentViewDelegate>
 @property (strong, nonatomic) XKRWMealPercentView *breakFastView;
 @property (strong, nonatomic) XKRWMealPercentView *lunchView;
@@ -27,7 +27,7 @@
 @property (strong, nonatomic) NSMutableDictionary *dicMealPercents;
 //不同状态下的可滑动最大值
 @property (assign, nonatomic) NSInteger currentMax;
-@property (strong, nonatomic) NSArray *arrLockTags;
+@property (strong, nonatomic) NSMutableArray *arrLockTags;
 @end
 
 @implementation XKRWChangeMealPercentVC
@@ -36,15 +36,19 @@
     XKRWMealPercentView *autoLockView;
     //自动解锁XKRWMealPercentView
     XKRWMealPercentView *autoUnLockView;
-    NSInteger dailyMax;
+    CGFloat dailyMax;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addNaviBarBackButton];
     [self addNaviBarRightButtonWithText:@"保存" action:@selector(saveData)];
+    [MobClick event:@"pg_mealshare"];
     self.title = @"调整四餐比例";
-    _arrLockTags = [self getTagOfLockStatusImage];
+    self.view.backgroundColor = [UIColor whiteColor];
+
+    _arrLockTags = [NSMutableArray array];
+    [_arrLockTags addObjectsFromArray:[self getTagOfLockStatusImage]];
     
     _currentMax = 100;
     _dicMealPercents = [NSMutableDictionary dictionary];
@@ -114,7 +118,7 @@
  */
 -(UIScrollView *)scrollView{
     if (_scrollView == nil) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+        _scrollView = [[XKRWUIScrollViewBase alloc] initWithFrame:self.view.bounds];
         _scrollView.scrollEnabled = NO;
         _scrollView.contentSize = CGSizeMake(XKAppWidth, XKAppHeight);
         [self.view addSubview:_scrollView];
@@ -132,7 +136,7 @@
         _breakFastView.delegate = self;
         [self.scrollView addSubview:_breakFastView];
         [_dicMealPercents setObject:_breakFastView forKey:[NSNumber numberWithInteger:3001]];
-        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3001]]) {
+        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3001]] || _arrLockTags.count == 3) {
             [_breakFastView actBtnLock];
         }
     }
@@ -148,7 +152,7 @@
         _lunchView.delegate = self;
         [self.scrollView addSubview:_lunchView];
         [_dicMealPercents setObject:_lunchView forKey:[NSNumber numberWithInteger:3002]];
-        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3002]]) {
+        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3002]] || _arrLockTags.count == 3) {
             [_lunchView actBtnLock];
         }
     }
@@ -164,7 +168,7 @@
         _dinnerView.delegate = self;
         [self.scrollView addSubview:_dinnerView];
         [_dicMealPercents setObject:_dinnerView forKey:[NSNumber numberWithInteger:3003]];
-        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3003]]) {
+        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3003]]|| _arrLockTags.count == 3) {
             [_dinnerView actBtnLock];
         }
     }
@@ -181,7 +185,7 @@
         _addmealView.delegate = self;
         [self.scrollView addSubview:_addmealView];
         [_dicMealPercents setObject:_addmealView forKey:[NSNumber numberWithInteger:3004]];
-        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3003]]) {
+        if ([_arrLockTags containsObject:[NSNumber numberWithInteger:3004]]|| _arrLockTags.count == 3) {
             [_addmealView actBtnLock];
         }
     }
@@ -208,11 +212,13 @@
         _btnDefault.frame = CGRectMake(0, 0, 116, 33);
         [_btnDefault setTitle:@"恢复默认" forState:UIControlStateNormal];
         [_btnDefault setTitleColor:XKMainToneColor_29ccb1 forState:UIControlStateNormal];
+        [_btnDefault setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         _btnDefault.titleLabel.textAlignment = NSTextAlignmentCenter;
         _btnDefault.layer.cornerRadius = 5;
         _btnDefault.layer.borderWidth = 1;
         _btnDefault.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-        
+        _btnDefault.clipsToBounds = YES;
+        [_btnDefault setBackgroundImage:[UIImage createImageWithColor:XKMainSchemeColor] forState:UIControlStateHighlighted];
         _btnDefault.titleLabel.font = [UIFont systemFontOfSize:15];
         [_btnDefault addTarget:self action:@selector(actDefault:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:_btnDefault];
@@ -494,11 +500,12 @@
  *  右上保存按钮点击方法
  */
 -(void)saveData{
-    BOOL res = [[XKRWUserService sharedService] saveMealRatioWithBreakfast:[[_dicData objectForKey:[NSNumber numberWithInteger:3001]] integerValue] andLunch:[[_dicData objectForKey:[NSNumber numberWithInteger:3002]] integerValue] andSnack:[[_dicData objectForKey:[NSNumber numberWithInteger:3004]] integerValue] andSupper:[[_dicData objectForKey:[NSNumber numberWithInteger:3003]] integerValue]];
-    if (res) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    [self setTagOfLockImageStatus:[_dicLockTags allKeys]];
+    [self downloadWithTaskID:@"saveMealRatio" outputTask:^id{
+        
+        BOOL res = [[XKRWUserService sharedService] saveMealRatioWithBreakfast:[[_dicData objectForKey:[NSNumber numberWithInteger:3001]] integerValue] andLunch:[[_dicData objectForKey:[NSNumber numberWithInteger:3002]] integerValue] andSnack:[[_dicData objectForKey:[NSNumber numberWithInteger:3004]] integerValue] andSupper:[[_dicData objectForKey:[NSNumber numberWithInteger:3003]] integerValue]];
+
+        return [NSNumber numberWithBool:res];
+    }];
 }
 
 - (void)setTagOfLockImageStatus:(NSArray *)dic{
@@ -510,6 +517,24 @@
 - (NSArray *)getTagOfLockStatusImage {
     NSArray *dicLock = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"tagOfLockImageStatus_%ld",(long)UID]];
     return dicLock;
+}
+
+
+#pragma --mark NetWorking
+
+- (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication{
+    return YES;
+}
+
+- (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
+    if ([taskID isEqualToString:@"saveMealRatio"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+        [self setTagOfLockImageStatus:[_dicLockTags allKeys]];
+    }
+}
+
+- (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID{
+    [super handleDownloadProblem:problem withTaskID:taskID];
 }
 
 #pragma mark BackDefault Method
@@ -530,6 +555,10 @@
     [self.addmealView removeFromSuperview];
     self.addmealView = nil;
     
+    [_arrLockTags removeAllObjects];
+    autoLockView = nil;
+    autoUnLockView = nil;
+    [_dicLockTags removeAllObjects];
     [self addChangeMealView];
 }
 

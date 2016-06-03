@@ -304,7 +304,7 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
                 cell = UITableViewCell(style: .Default, reuseIdentifier: "newSportCell")
             }
             cell?.selectionStyle = .None
-            sportView.frame = CGRectMake(0, 0, self.view.frame.size.width, 186)
+            sportView.frame = CGRectMake(0, 0, self.view.frame.size.width, 186.0 + CGFloat(self.entity.sportArray.count) * 33.0)
             cell?.contentView.addSubview(self.sportView)
             sportView.setSportView(self.entity)
             return cell!
@@ -342,6 +342,9 @@ class XKRWUserInfoVC: XKRWBaseVC,UINavigationControllerDelegate,UITableViewDataS
             } else {
                 return 44
             }
+        }
+        if indexPath.row == 0 && indexPath.section == 3 {
+            return 187 + CGFloat(self.entity.sportArray.count) * 33.0
         }
         return 187
     }

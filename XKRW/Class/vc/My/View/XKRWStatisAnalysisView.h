@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "XKRWStatiscHeadView.h"
 #import "XKRWStatisticDetailView.h"
+#import "XKRWWeekAnalysisView.h"
+
+//#define HeadViewHeight 123*XKAppWidth/375
+#define StatisticAnalysisViewHeight 194
 
 @interface XKRWStatisAnalysisView : UIView
 

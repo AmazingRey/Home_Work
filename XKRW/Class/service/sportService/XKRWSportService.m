@@ -87,7 +87,7 @@ static XKRWSportService *shareServiceInstance;
     XKRWSportEntity *sportEntity = [[XKRWSportEntity alloc] init];
     NSString *api_url = [NSString stringWithFormat:@"%@/content/detail/?type=sport", kNewServer];
     NSDictionary *param = @{@"id": @(sportId)};
-    @try {
+
         NSDictionary *rst = [self syncBatchDataWith:XKURL(api_url) andPostForm:param];
         if (rst ) {
             NSDictionary *value = [rst objectForKey:@"data"];
@@ -99,15 +99,11 @@ static XKRWSportService *shareServiceInstance;
             }
             return sportEntity;
         }
-    }
-    @catch (NSException *exception) {
-#ifdef XK_DEV
-        NSLog(@"获取运动详情失败:%@",[exception reason] );
-//        @throw exception;
-#endif
-    }
-    return sportEntity;
+        return sportEntity;
 }
+
+
+
 
 - (NSArray *)batchDownloadSportWithIDs:(NSString *)ids {
     

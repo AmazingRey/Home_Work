@@ -13,8 +13,8 @@
 #define SlideViewHeight 90
 
 //subviews size
-#define ImageHeadWidth 30
-#define ImageHeadHeight 30
+#define ImageHeadWidth [UIImage imageNamed:@"breakfast5_3"].size.width
+#define ImageHeadHeight [UIImage imageNamed:@"breakfast5_3"].size.height
 #define LabTitleWidth 50
 #define LabTitleHeight 30
 #define LabPercentWidth 50

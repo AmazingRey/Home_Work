@@ -20,6 +20,9 @@
     NSString *maxValue;     //最大值
     NSString *minValue;     //最小值
     UILabel *promptLabel;   //提示Label
+    
+    CGFloat showHeight ;
+    CGFloat showWidth;
 }
 
 @end
@@ -37,6 +40,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
+//    if (IOS_9_OR_LATER) {
+//        showHeight = XKAppHeight;
+//        showWidth = XKAppWidth;
+//    }else{
+        showHeight = XKAppWidth;
+        showWidth = XKAppHeight;
+//    }
     [self initData];
     [self initView];
     [self AdjustSurroundTableViewUI];
@@ -227,7 +238,11 @@
         
         [cell.contentView addSubview:dateLabel];
      
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, XKAppHeight - LABELHEIGHT, 64, LABELHEIGHT)];
+        UILabel * dataLabel ;
+     
+        dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, showHeight - LABELHEIGHT, 64, LABELHEIGHT)];
+        
+        
         dataLabel.tag = 101;
         dataLabel.textAlignment = NSTextAlignmentCenter;
         dataLabel.font = XKDefaultFontWithSize(14.f);
@@ -315,10 +330,12 @@
     
     imageView.image = [UIImage imageNamed:@"girth_btn_point_mark_640"];
     
+
+    
     if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
-        currentPoint = CGPointMake((CELLWIDTH)/2 ,LABELHEIGHT + 6 + (XKAppHeight - 2*LABELHEIGHT)/2 );
+        currentPoint = CGPointMake((CELLWIDTH)/2 ,LABELHEIGHT + 6 + (showHeight - 2*LABELHEIGHT)/2 );
     }else {
-        currentPoint = CGPointMake((CELLWIDTH)/2, (LABELHEIGHT +10) + ((XKAppHeight - 2*(LABELHEIGHT +10)) -((currentValue.floatValue - minValue.floatValue) *(XKAppHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
+        currentPoint = CGPointMake((CELLWIDTH)/2, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -((currentValue.floatValue - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
     }
     
     imageView.frame = CGRectMake(currentPoint.x-12/2, currentPoint.y-12/2, 12, 12);
@@ -327,9 +344,9 @@
         prevValue = [[tempArray objectAtIndex:indexPath.row -1] objectForKey:@"value"];
 
         if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
-            prevPoint = CGPointMake(0, LABELHEIGHT + 6 + (XKAppHeight - 2*LABELHEIGHT)/2  );
+            prevPoint = CGPointMake(0, LABELHEIGHT + 6 + (showHeight - 2*LABELHEIGHT)/2  );
         }else{
-            prevPoint = CGPointMake(0, (LABELHEIGHT +10) + ((XKAppHeight - 2*(LABELHEIGHT +10)) -( (prevValue.floatValue +(currentValue.floatValue -prevValue.floatValue)/2  - minValue.floatValue) *(XKAppHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue)) ));
+            prevPoint = CGPointMake(0, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -( (prevValue.floatValue +(currentValue.floatValue -prevValue.floatValue)/2  - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue)) ));
         }
         [self drawLineInView:cell.contentView fromPoint:prevPoint toTargetPoint:currentPoint];
     }
@@ -338,9 +355,9 @@
         nextValue = [[tempArray objectAtIndex:indexPath.row+1] objectForKey:@"value"];
 
         if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
-            nextPoint = CGPointMake(CELLWIDTH, LABELHEIGHT + 6 + (XKAppHeight - 2*LABELHEIGHT)/2 );
+            nextPoint = CGPointMake(CELLWIDTH, LABELHEIGHT + 6 + (showHeight - 2*LABELHEIGHT)/2 );
         }else{
-            nextPoint = CGPointMake(CELLWIDTH, (LABELHEIGHT +10) + ((XKAppHeight - 2*(LABELHEIGHT +10)) -( (nextValue.floatValue +(currentValue.floatValue -nextValue.floatValue)/2  - minValue.floatValue) *(XKAppHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
+            nextPoint = CGPointMake(CELLWIDTH, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -( (nextValue.floatValue +(currentValue.floatValue -nextValue.floatValue)/2  - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
         }
         [self drawLineInView:cell.contentView fromPoint:currentPoint toTargetPoint:nextPoint];
     }
@@ -360,7 +377,6 @@
     pathLayer.bounds = view.bounds;
     pathLayer.path = path.CGPath;
     pathLayer.strokeColor = XKMainToneColor_29ccb1.CGColor;//粗线的颜色
-    
     
     pathLayer.lineWidth = 1;
     

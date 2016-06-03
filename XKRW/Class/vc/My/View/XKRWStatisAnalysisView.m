@@ -6,8 +6,6 @@
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
-#define HeadViewHeight 123*XKAppWidth/375
-#define StatisticAnalysisViewHeight 194
 #import "XKRWStatisAnalysisView.h"
 #import "Masonry.h"
 #import "XKRWStatiscBussiness5_3.h"

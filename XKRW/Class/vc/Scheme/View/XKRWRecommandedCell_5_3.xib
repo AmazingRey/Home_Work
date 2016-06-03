@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -51,17 +51,33 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="addmeal5_3" translatesAutoresizingMaskIntoConstraints="NO" id="xA3-zK-I25">
                         <rect key="frame" x="15" y="21" width="20" height="20"/>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Do-tS-nXV">
+                        <rect key="frame" x="0.0" y="60" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" id="v4k-Jg-dHE"/>
+                            <constraint firstAttribute="height" constant="0.5" id="yv8-kT-roC"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="v4k-Jg-dHE"/>
+                            </mask>
+                        </variation>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="xA3-zK-I25" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0Rx-kH-KsW"/>
                     <constraint firstItem="xA3-zK-I25" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="6TQ-mf-cUq"/>
                     <constraint firstItem="Nlj-Mj-03D" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Am5-LE-w9g"/>
+                    <constraint firstItem="4Do-tS-nXV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Bv0-8U-uz6"/>
                     <constraint firstItem="56f-J2-oZz" firstAttribute="leading" secondItem="Nlj-Mj-03D" secondAttribute="trailing" constant="10" id="KGu-eQ-ei7"/>
                     <constraint firstItem="wsT-bn-9Nj" firstAttribute="top" secondItem="xcS-Vu-dFa" secondAttribute="bottom" constant="3" id="SoC-9d-MXm"/>
                     <constraint firstItem="xcS-Vu-dFa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="hg6-bK-1RJ"/>
+                    <constraint firstAttribute="trailing" secondItem="4Do-tS-nXV" secondAttribute="trailing" id="mbI-m0-4M1"/>
                     <constraint firstItem="Nlj-Mj-03D" firstAttribute="leading" secondItem="wsT-bn-9Nj" secondAttribute="trailing" constant="29" id="mtC-2o-tYt"/>
                     <constraint firstItem="wsT-bn-9Nj" firstAttribute="leading" secondItem="xA3-zK-I25" secondAttribute="trailing" constant="15" id="q6e-wK-wqx"/>
                     <constraint firstItem="xcS-Vu-dFa" firstAttribute="leading" secondItem="xA3-zK-I25" secondAttribute="trailing" constant="15" id="vk1-vr-4oi"/>
+                    <constraint firstAttribute="bottom" secondItem="4Do-tS-nXV" secondAttribute="bottom" id="z6b-9Y-rBg"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">

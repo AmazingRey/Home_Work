@@ -269,24 +269,21 @@
     greenDotLabel.origin = CGPointMake(greenDotImageView.right + 5 * XKRWScaleWidth, declareLabel.top);
     [grayBgView addSubview:greenDotLabel];
     
-    UIImage *grayDotImage = [UIImage imageNamed:@"circleGray"];
-    UIImageView *grayDotImageView = [[UIImageView alloc] initWithImage:grayDotImage];
-    grayDotImageView.size = CGSizeMake(10, 10);
-    grayDotImageView.center = CGPointMake(greenDotLabel.right + 20 * XKRWScaleWidth, grayBgView.height / 2.0);
-    [grayBgView addSubview:grayDotImageView];
+    UIView *grayCircleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    grayCircleView.layer.cornerRadius = 5.0;
+    grayCircleView.backgroundColor = colorSecondary_c7c7c7;
+    grayCircleView.center = CGPointMake(greenDotLabel.right + 20 * XKRWScaleWidth, grayBgView.height / 2.0);
+    [grayBgView addSubview:grayCircleView];
+    
     UILabel *grayDotLabel = [[UILabel alloc] init];
     grayDotLabel.font = XKDefaultFontWithSize(14 * XKRWScaleWidth);
     grayDotLabel.textAlignment = NSTextAlignmentLeft;
     grayDotLabel.textColor = colorSecondary_333333;
     grayDotLabel.text = @"尚未记录";
     [grayDotLabel sizeToFit];
-    grayDotLabel.origin = CGPointMake(grayDotImageView.right + 5 * XKRWScaleWidth, declareLabel.top);
+    grayDotLabel.origin = CGPointMake(grayCircleView.right + 5 * XKRWScaleWidth, declareLabel.top);
     [grayBgView addSubview:grayDotLabel];
     
-//    _footerLine = [[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, XKAppWidth, 0.5f)];
-//    [_footerLine setY:self.height - 0.5f];
-//    _footerLine.backgroundColor = XK_ASSIST_LINE_COLOR;
-//    [self addSubview:_footerLine];
 }
 
 - (void)setSelectedDate:(NSDate *)date

@@ -150,7 +150,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"commentCell";
-    XKRWUserCommentCell *commentCell = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
+    XKRWUserCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     if (commentCell == nil) {
         commentCell = LOAD_VIEW_FROM_BUNDLE(@"XKRWUserCommentCell");

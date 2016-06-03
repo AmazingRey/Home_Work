@@ -257,9 +257,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
     func exitTheAccount(){
         MobClick.event("clk_LogOut")
         if(XKRWUserService.sharedService().checkSyncData()) {
-            
             let actionSheet = UIActionSheet(title: "你还有数据未同步", delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: "取消同步并退出")
-            
             actionSheet.tag = actionSheet.addButtonWithTitle("同步")
             actionSheet.showInView(self.view)
         }else{

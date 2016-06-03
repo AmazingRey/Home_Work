@@ -132,7 +132,7 @@ class XKRWHabitRecordCell: UITableViewCell {
         
         if(NSUserDefaults.standardUserDefaults().boolForKey("needResetScheme_\(XKRWUserService.sharedService().getUserId())"))
         {
-            XKRWCui.showInformationHudWithText("当前方案已结束，请重置方案！")
+            XKRWCui.showInformationHudWithText("当前计划已结束，请重置计划！")
             return
         }
         

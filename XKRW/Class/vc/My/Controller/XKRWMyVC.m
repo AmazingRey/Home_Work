@@ -64,7 +64,6 @@
     [super viewDidLoad];
     [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
         self.edgesForExtendedLayout = UIRectEdgeAll;
-//        self.navigationController.navigationBar.translucent = YES;
         self.navigationController.edgesForExtendedLayout = UIRectEdgeNone;
     }];
     self.navigationController.delegate = self;

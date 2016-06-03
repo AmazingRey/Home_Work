@@ -33,7 +33,7 @@
 
 @implementation XKRWTabbarVC
 {
-    BOOL _isShowRedDot;
+    BOOL        _isShowRedDot;
     UIImageView *redDotView;
     UIImageView *moreRedDotView;
     UIImageView *numImageView;
@@ -54,7 +54,6 @@
 
 - (void)createCustomTabBar
 {
-   
     tabbarBG = [[UIImageView alloc] init];
     tabbarBG.backgroundColor = [UIColor whiteColor];
     tabbarBG.userInteractionEnabled = YES;

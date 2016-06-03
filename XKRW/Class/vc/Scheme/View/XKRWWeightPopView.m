@@ -165,9 +165,8 @@
     [self showCalendar:!_isCalendarShown];
 }
 
--(void)hideCalendar:(UIButton *)sender{
+-(void)removeCalendar{
     [self showCalendar:false];
-    [sender removeFromSuperview];
 }
 
 - (void)calendarSelectedDate:(UIDatePicker *)datePicker{
@@ -187,7 +186,7 @@
         }];
     }else{
          [_textField becomeFirstResponder];
-        [UIView animateWithDuration:.3 animations:^{
+        [UIView animateWithDuration:.1 animations:^{
             _datePicker.alpha = 0;
         }];
     }
@@ -495,7 +494,10 @@
     [self saveTheData];
     if ([self saveDataislegal]) {
         float target_weight = [[XKRWUserService sharedService] getUserDestiWeight]/1000.0;
-        if ([[[_dicAll objectForKey:_selectDateStr] objectForKey:@"体重"] floatValue] <= target_weight) {
+        float record_weight = [[[_dicAll objectForKey:_selectDateStr] objectForKey:@"体重"] floatValue];
+        BOOL weightIsLegal = [self judgeWeightisLegal:record_weight];
+        
+        if (record_weight <= target_weight && weightIsLegal) {
             [self userReachTargetWeight];
         }else{
             [_datePicker removeFromSuperview];
@@ -521,13 +523,20 @@
     [_dicIllegal removeAllObjects];
     NSDictionary *dic = [_dicAll objectForKey:_selectDateStr] ;
     
-    
     for (NSString *type in _arrLabels) {
         if (![self judgeTypeTopLegal:type withText:[dic objectForKey:type]] || ![self judgeTypeLowLegal:type withText:[dic objectForKey:type]]) {
             j++;
         }
     }
     return !(j > 0);
+}
+
+-(BOOL)judgeWeightisLegal:(CGFloat)weight{
+    BOOL res = true;
+    if (weight > 200 || weight < 20) {
+        res = false;
+    }
+    return res;
 }
 
 -(BOOL)judgeTypeTopLegal:(NSString *)type withText:(NSString *)text{

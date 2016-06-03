@@ -5,8 +5,7 @@
 //  Created by ss on 16/5/3.
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
-#define HeadViewHeight 123*XKAppWidth/375
-#define StatisticAnalysisViewHeight 194
+
 #import "XKRWWeekAnalysisView.h"
 #import "Masonry.h"
 
@@ -70,7 +69,7 @@
     [self.sportDecreaseView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(XKAppWidth);
         make.height.mas_equalTo(StatisticAnalysisViewHeight);
-        make.top.mas_equalTo(_eatDecreaseView.mas_bottom).offset(10);
+        make.top.mas_equalTo(self.eatDecreaseView.mas_bottom).offset(10);
         make.left.equalTo(@0);
         make.right.equalTo(@0);
     }];

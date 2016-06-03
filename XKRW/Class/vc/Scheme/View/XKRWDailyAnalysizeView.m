@@ -21,27 +21,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         _type = type;
-        _dicData = [NSMutableDictionary dictionary];
+        _arrSport = sportArray;
         //每日正常饮食摄入
         _dailyNormal = [XKRWAlgolHelper dailyIntakEnergy];
         //饮食消耗
         _dailyFoodDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:efoodCalories andDate:[NSDate date]];
         //运动消耗
         _dailySportDecrease = [[XKRWRecordService4_0 sharedService] getTotalCaloriesWithType:eSportCalories andDate:[NSDate date]];
-        _arrSport = sportArray;
-        
-        NSMutableDictionary *dicEat = [NSMutableDictionary dictionary];
-        [dicEat setObject:[NSString stringWithFormat:@"%.0fkcal",_dailyNormal] forKey:@"正常所需热量"];
-        [dicEat setObject:[NSString stringWithFormat:@"%.0fkcal",_dailyFoodDecrease] forKey:@"实际摄入"];
-        
-        NSMutableDictionary *dicSport = [NSMutableDictionary dictionary];
-        for (NSDictionary *dic in _arrSport) {
-            NSNumber *calorie = [dic objectForKey:@"calorie"];
-            [dicSport setObject:[NSString stringWithFormat:@"%dkcal",calorie.intValue] forKey:[NSString stringWithFormat:@"%@",[dic objectForKey:@"text"]]];
-        }
-        
-        [_dicData setObject:dicEat forKey:[NSNumber numberWithInteger:1]];
-        [_dicData setObject:dicSport forKey:[NSNumber numberWithInteger:2]];
         
         [self makeViewAutoLayout];
     }
@@ -84,7 +70,7 @@
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(@32);
             make.width.mas_equalTo(XKAppWidth - 64);
-            make.height.mas_equalTo(_arrSport.count *33);
+            make.height.mas_equalTo([[self.dicData objectForKey:[NSNumber numberWithInteger:_type]] count] *33);
             make.top.mas_equalTo(self.labCal.mas_bottom).offset(20);
         }];
         
@@ -102,6 +88,25 @@
 }
 
 #pragma mark getter Method
+-(NSMutableDictionary *)dicData{
+    if (!_dicData) {
+        NSMutableDictionary *dicEat = [NSMutableDictionary dictionary];
+        [dicEat setObject:[NSString stringWithFormat:@"%.0fkcal",_dailyNormal] forKey:@"正常所需热量"];
+        [dicEat setObject:[NSString stringWithFormat:@"%.0fkcal",_dailyFoodDecrease] forKey:@"实际摄入"];
+        
+        NSMutableDictionary *dicSport = [NSMutableDictionary dictionary];
+        for (NSDictionary *dic in _arrSport) {
+            NSNumber *calorie = [dic objectForKey:@"calorie"];
+            [dicSport setObject:[NSString stringWithFormat:@"%dkcal",calorie.intValue] forKey:[NSString stringWithFormat:@"%@",[dic objectForKey:@"text"]]];
+        }
+        
+        _dicData = [NSMutableDictionary dictionary];
+        [_dicData setObject:dicEat forKey:[NSNumber numberWithInteger:1]];
+        [_dicData setObject:dicSport forKey:[NSNumber numberWithInteger:2]];
+    }
+    return _dicData;
+}
+
 -(UILabel *)labTitle{
     if (!_labTitle) {
         _labTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
@@ -171,18 +176,11 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (_type == 2) {
-        return _arrSport.count;
-    }
-    return 2;
+    NSInteger count = [[self.dicData objectForKey:[NSNumber numberWithInteger:_type]] count];
+    return count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_type == 1) {
-        return 33;
-    }else if (_type == 2){
-        return 33;
-    }
     return 33;
 }
 
@@ -191,7 +189,7 @@
     if (!cell) {
         cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWDailyAnalysizeCell");
     }
-    NSDictionary *tmpDic = [_dicData objectForKey:[NSNumber numberWithInteger:_type]];
+    NSDictionary *tmpDic = [self.dicData objectForKey:[NSNumber numberWithInteger:_type]];
     NSArray *tmpArr = [[[tmpDic allKeys] reverseObjectEnumerator] allObjects];
     NSString *tmpStr = [tmpArr objectAtIndex:indexPath.row];
     cell.labLeft.text = tmpStr;

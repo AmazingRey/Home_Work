@@ -67,6 +67,7 @@ class XKRWNewHPSportView: UIView,UITableViewDelegate,UITableViewDataSource {
         tmpTable.registerNib(UINib(nibName:"XKRWDailyAnalysizeCell" ,bundle:nil), forCellReuseIdentifier: "dailyAnalysizeCell")
         tmpTable.scrollEnabled = false
         tmpTable.separatorStyle = .None
+        tmpTable.rowHeight = 33
         tmpTable.backgroundColor = UIColor.clearColor()
         self.addSubview(tmpTable)
         return tmpTable
@@ -130,15 +131,34 @@ class XKRWNewHPSportView: UIView,UITableViewDelegate,UITableViewDataSource {
             self.tableView.mas_makeConstraints{(make) in
                 make.left.mas_equalTo()(32)
                 make.width.mas_equalTo()(UI_SCREEN_WIDTH - 64)
-                make.height.mas_equalTo()(80)
+                make.height.mas_equalTo()(80.0 + CGFloat( self.model!.sportArray.count) * 33.0)
                 make.top.mas_equalTo()(self.labCal.mas_bottom).offset()(10)
             }
             self.imgView.mas_makeConstraints{(make) in
                 make.left.mas_equalTo()(32)
                 make.width.mas_equalTo()(UI_SCREEN_WIDTH - 64)
-                make.height.mas_equalTo()(CGFloat(self.model!.sportArray.count == 0 ? 1:self.model!.sportArray.count * 40))
+                make.height.mas_equalTo()(CGFloat(self.model!.sportArray.count == 0 ? 33:self.model!.sportArray.count * 33)+15)
                 make.top.mas_equalTo()(self.labCal.mas_bottom)
                 make.bottom.mas_equalTo()(self.tableView.mas_bottom);
+                
+                var imgName = ""
+                if self.model!.sportArray.count == 2{
+                    if (UI_SCREEN_WIDTH == 320) {
+                        imgName = "date_indicator320_Big"
+                    }else{
+                        imgName = "date_indicator_Big"
+                    }
+                }else {
+                    if (UI_SCREEN_WIDTH == 320) {
+                        imgName = "date_indicator320_Small"
+                    }else{
+                        imgName = "date_indicator_Small"
+                    }
+                }
+                let img = UIImage(named:imgName)
+                
+                let stretchImg = img!.resizableImageWithCapInsets(UIEdgeInsetsMake(20, 25, 25, 25))
+                self.imgView.image = stretchImg;
             }
         }
     }

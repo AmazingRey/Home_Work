@@ -18,49 +18,44 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FdX-wD-4a5">
                         <rect key="frame" x="15" y="10" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="Gjg-S0-l1m"/>
-                            <constraint firstAttribute="width" constant="40" id="H9b-kC-cmt"/>
+                            <constraint firstAttribute="width" constant="40" id="v2J-La-2Re"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="360手机助手" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4DX-cw-jrq">
-                        <rect key="frame" x="65" y="10" width="216" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="216" id="hfw-iw-gpc"/>
-                            <constraint firstAttribute="height" constant="21" id="nWZ-AT-dcE"/>
-                        </constraints>
+                        <rect key="frame" x="65" y="10" width="215" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="数十万款软件和游戏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Fu-AC-kQK">
-                        <rect key="frame" x="65" y="30" width="216" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="21" id="MHd-if-ASU"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数十万款软件和游戏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Fu-AC-kQK">
+                        <rect key="frame" x="65" y="30" width="215" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right5_3" translatesAutoresizingMaskIntoConstraints="NO" id="myg-Bh-WhN">
-                        <rect key="frame" x="298" y="24" width="7" height="12"/>
+                        <rect key="frame" x="290" y="24" width="7" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="7" id="A2v-e4-gwW"/>
+                        </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="FdX-wD-4a5" secondAttribute="bottom" constant="1" id="6WI-Hc-jZ0"/>
-                    <constraint firstItem="0Fu-AC-kQK" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="K2Z-W7-pRt"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="4DX-cw-jrq" secondAttribute="bottom" constant="20" id="Mng-Xz-p09"/>
-                    <constraint firstItem="FdX-wD-4a5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="NO4-oB-lxc"/>
-                    <constraint firstItem="0Fu-AC-kQK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="22" id="esq-7P-YvB"/>
-                    <constraint firstItem="0Fu-AC-kQK" firstAttribute="leading" secondItem="FdX-wD-4a5" secondAttribute="trailing" constant="10" id="kCe-IG-vdx"/>
-                    <constraint firstItem="4DX-cw-jrq" firstAttribute="leading" secondItem="FdX-wD-4a5" secondAttribute="trailing" constant="10" id="oyB-AS-tkF"/>
-                    <constraint firstItem="4DX-cw-jrq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="pd2-se-fQe"/>
-                    <constraint firstItem="FdX-wD-4a5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="uvP-Rd-YiB"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="4DX-cw-jrq" secondAttribute="bottom" constant="20" id="0Lw-Nl-k0z"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="myg-Bh-WhN" secondAttribute="trailing" constant="15" id="5fz-Mf-44N"/>
+                    <constraint firstItem="0Fu-AC-kQK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="22" id="BiH-1Y-k1H"/>
+                    <constraint firstItem="4DX-cw-jrq" firstAttribute="trailing" secondItem="0Fu-AC-kQK" secondAttribute="trailing" id="KZv-9X-4P8"/>
+                    <constraint firstItem="0Fu-AC-kQK" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Ljq-2d-kpj"/>
+                    <constraint firstItem="FdX-wD-4a5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="SpD-Br-BaT"/>
+                    <constraint firstItem="4DX-cw-jrq" firstAttribute="leading" secondItem="FdX-wD-4a5" secondAttribute="trailing" constant="10" id="TWx-u6-upd"/>
+                    <constraint firstItem="FdX-wD-4a5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="eJB-Aw-Bg7"/>
+                    <constraint firstItem="myg-Bh-WhN" firstAttribute="leading" secondItem="4DX-cw-jrq" secondAttribute="trailing" constant="10" id="eis-iu-Stc"/>
+                    <constraint firstItem="FdX-wD-4a5" firstAttribute="top" secondItem="4DX-cw-jrq" secondAttribute="top" id="keb-h9-jRr"/>
+                    <constraint firstItem="FdX-wD-4a5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nL9-2f-rlU"/>
+                    <constraint firstItem="4DX-cw-jrq" firstAttribute="leading" secondItem="0Fu-AC-kQK" secondAttribute="leading" id="vDC-Ua-aF4"/>
+                    <constraint firstItem="FdX-wD-4a5" firstAttribute="centerY" secondItem="myg-Bh-WhN" secondAttribute="centerY" id="zyg-1C-dUG"/>
                 </constraints>
             </tableViewCellContentView>
-            <constraints>
-                <constraint firstItem="myg-Bh-WhN" firstAttribute="centerY" secondItem="KGk-i7-Jjw" secondAttribute="centerY" id="Or7-Rs-fVb"/>
-                <constraint firstAttribute="trailing" secondItem="myg-Bh-WhN" secondAttribute="trailing" constant="15" id="j4R-mI-WqT"/>
-            </constraints>
             <connections>
                 <outlet property="appDescribe" destination="0Fu-AC-kQK" id="ea2-Sh-WV7"/>
                 <outlet property="appName" destination="4DX-cw-jrq" id="gUh-ig-dwo"/>

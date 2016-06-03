@@ -10,6 +10,9 @@
 #import "XKRWStatiscHeadView.h"
 #import "XKRWStatisticDetailView.h"
 
+#define HeadViewHeight 123*XKAppWidth/375
+#define StatisticAnalysisViewHeight 194
+
 @interface XKRWWeekAnalysisView : UIView
 
 @property (strong, nonatomic) XKRWStatiscHeadView *headView;

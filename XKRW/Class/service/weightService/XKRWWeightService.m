@@ -545,9 +545,6 @@ static XKRWWeightService *shareInstance;
 - (float)getNearestWeightRecordOfDate:(NSDate *)date
 {
     NSInteger uid = [[XKRWUserService sharedService] getUserId];
-//    NSDate *resetTime = [NSDate dateWithTimeIntervalSince1970:[[[XKRWUserService sharedService] getResetTime] integerValue]];
-//    int dateFormat = [[date stringWithFormat:@"yyyyMMdd"] intValue];
-    
     {
         NSString *dateStr = [NSDate stringFromDate:date withFormat:@"yyyyMMdd"];
         NSString *searchWeightRecordSql = [NSString stringWithFormat:@"SELECT date, weight FROM weightrecord WHERE userid = %ld AND date <= %@ ORDER BY date DESC LIMIT 1",(long)uid, dateStr];
@@ -558,7 +555,7 @@ static XKRWWeightService *shareInstance;
         
 
         
-        NSDate *origRecordDate = [NSDate dateWithTimeIntervalSince1970:[[[XKRWUserService sharedService] getResetTime] integerValue]];
+        NSDate *origRecordDate = [[NSDate dateWithTimeIntervalSince1970:[[[XKRWUserService sharedService] getResetTime] integerValue]] beginningOfDay];
         NSDate *weightRecordDate = [NSDate dateFromString:weightRecordRecord.firstObject[@"date"] withFormat:@"yyyyMMdd"];
         
         if ([origRecordDate isDayEqualToDate:date]) {

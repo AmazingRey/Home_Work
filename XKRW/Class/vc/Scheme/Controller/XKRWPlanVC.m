@@ -372,7 +372,6 @@
 
 - (UIView *)createPlanHeaderView
 {
-    
     planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 120 + energyViewHeight)];
     planHeaderView.backgroundColor = [UIColor whiteColor];
     foodAndSportSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
@@ -628,6 +627,7 @@
 }
 
 - (void)entryFeedBackVC {
+    [MobClick event:@"btn_feedback_sc"];
     XKRWUserFeedbackVC *feedBackVC = [[XKRWUserFeedbackVC alloc] initWithNibName:@"XKRWUserFeedbackVC" bundle:nil];
     feedBackVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:feedBackVC animated:YES];
@@ -664,19 +664,23 @@
         [XKRWCui showInformationHudWithText:@"计划已结束，请制定新计划"];
         return;
     }
+       [MobClick event:@"btn_circle" attributes:@{@"open":@"true",@"type":@"diet"}];
     [planHeaderView addSubview:tapView];
     if (index == 1) {
+       [MobClick event:@"btn_circle" attributes:@{@"open":@"true",@"type":@"fit"}];
         if (![[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType]) {
             [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eFoodType];}
         positionX = energyCircleView.eatEnergyCircle.center.x;
         
     } else if (index == 2) {
+        [MobClick event:@"btn_circle" attributes:@{@"open":@"true",@"type":@"habit"}];
         if (![[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType]) {
             [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eSportType];
         }
         positionX = energyCircleView.sportEnergyCircle.center.x;
         
     } else {
+         [MobClick event:@"btn_circle" attributes:@{@"open":@"habit"}];
         if (![[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType]) {
             [[XKRWPlanService shareService] saveEnergyCircleClickEvent:eHabitType];
         }
@@ -727,10 +731,10 @@
     if (index == 1) {
         _recordPopView.schemeArray = _mealSchemeArray;
     }else if(index == 2){
-        if([XKRWAlgolHelper dailyConsumeSportEnergyOfDate:_recordDate] > 0){
+        if([XKRWAlgolHelper dailyConsumeSportEnergyOfDate:_recordDate] > 0 && _sportSchemeEntity != nil){
             _recordPopView.schemeArray = [NSArray arrayWithObject:_sportSchemeEntity];
         }else{
-            _recordPopView.schemeArray = nil;
+            _recordPopView.notNeedSport = YES;
         }
     }
     
@@ -926,7 +930,7 @@
             [MobClick event:@"tips_mc_on_ok"];
         }
         else {
-            [MobClick event:@"tips_mc_on_reload"];
+            [MobClick event:@"btn_fit_mc_tips"];
             XKRWSchemeDetailVC *schemeDetailVC = [[XKRWSchemeDetailVC alloc] init];
             schemeDetailVC.schemeEntity = _sportSchemeEntity;
 //            schemeDetailVC.recordDate = _recordDate;
@@ -948,9 +952,10 @@
 }
 
 -(void)addMoreView{
+   
     if (!recordMoreView && !recordSingleMoreView) {
         CGRect frame = CGRectMake(recordBackView.frame.size.width - 150, _recordPopView.moreButton.frame.origin.y - 20 + _recordPopView.moreButton.frame.size.height+15, 138, 91);
-
+             [MobClick event:@"btn_ option" attributes:@{@"open":@"fit"}];
         if (_recordPopView.type == 2 || (!isTodaysPlan && _recordPopView.type == energyTypeHabit)) {
             frame.size.height = 59;
             
@@ -959,6 +964,11 @@
             recordSingleMoreView.type = _recordPopView.type;
             recordSingleMoreView.delegate = self;
         }else{
+            if (_recordPopView.type == 3) {
+                 [MobClick event:@"btn_ option" attributes:@{@"open":@"habit"}];
+            }else{
+                [MobClick event:@"btn_ option" attributes:@{@"open":@"diet"}];
+            }
             recordMoreView = [[XKRWRecordMore5_3View alloc] initWithFrame:frame];
             [_recordPopView addSubview:recordMoreView];
             recordMoreView.type = _recordPopView.type;
@@ -981,12 +991,14 @@
 -(void)pressTip_1WithIndex:(NSInteger)index {
     [self removeMoreView];
     if (index == 1) {
+        [MobClick event:@"btn_meal_detail"];
         XKRWChangeMealPercentVC *changeMealVC = [[XKRWChangeMealPercentVC alloc] init];
         changeMealVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changeMealVC animated:YES];
         [changeMealVC.navigationController setNavigationBarHidden:NO];
         
     } else {
+        [MobClick event:@"btn_habit_rescan"];
         XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc]initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
         fatReasonVC.hidesBottomBarWhenPushed = YES;
         [fatReasonVC setFromWhichVC:SchemeInfoChangeVC];
@@ -1116,6 +1128,7 @@
         _popView.alpha = 0;
         btnBackBounds.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0];
     } completion:^(BOOL finished) {
+        [_popView removeCalendar];
         [_popView removeFromSuperview];
         _popView = nil;
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
@@ -1287,9 +1300,6 @@
         return;
     }
 
-    
-    
-    
     
     if ([taskID isEqualToString:@"saveFoodScheme"]) {
         [XKRWCui showInformationHudWithText:@"保存成功"];
@@ -1601,6 +1611,7 @@
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [MobClick event:@"pg_search"];
     [searchDisplayCtrl showSearchResultView];
     [self removeMenuView];
     return YES;

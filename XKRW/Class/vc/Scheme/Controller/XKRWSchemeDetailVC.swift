@@ -11,7 +11,6 @@ import UIKit
 class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource, KMPopSelectionViewDelegate {
     
     // MARK: - Properties
-    
     var tableView: UITableView!
     var recordDate:NSDate  = NSDate()
     
@@ -25,8 +24,6 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
     
     var selectionView: KMPopSelectionView?
     
-   
-    
     // MARK: - System's function
     
     
@@ -39,9 +36,6 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
-        MobClick.event("clk_DietDetail")
-        
         self.addNaviBarBackButton()
         self.edgesForExtendedLayout = UIRectEdge.Top
         
@@ -55,6 +49,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         self.addNaviBarRightButtonWithText("换一组", action: #selector(XKRWBaseVC.doClickNaviBarRightButton(_:)))
     
         if self.schemeEntity?.schemeType == .Sport {
+               MobClick.event("pg_fit_sug_detail")
             // sport
             self.title = self.schemeEntity!.schemeName
             
@@ -73,7 +68,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
             
         } else {
             // meal
-            
+              MobClick.event("pg_meal_sug_detai")
             self.title = self.schemeEntity!.schemeType.getDescription() + "方案"
             
             self.mealDescriptionHeader.setContentWithEntity(self.schemeEntity!)

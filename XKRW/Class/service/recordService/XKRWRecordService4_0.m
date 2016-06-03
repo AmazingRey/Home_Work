@@ -577,7 +577,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
  *  @param type       request type
  *  @param date       request date
  */
-- (id)saveToRemote:(NSDictionary *)dictionary type:(NSString *)type date:(NSDate *)date
+- (BOOL)saveToRemote:(NSDictionary *)dictionary type:(NSString *)type date:(NSDate *)date
 {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kNewServer, kSaveUserRecord_5_0]];
     NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
@@ -610,7 +610,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     }
     @catch (NSException *exception) {
         
-        return @NO;
+        return NO;
     }
 }
 /**
@@ -635,7 +635,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [dic setObject:entity.unit_new forKey:@"new_unit"];
     }
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"record" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"record" date:entity.date];
     
     if (isSuccess) {
         entity.sync = 1;
@@ -659,7 +659,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     [dic setObject:[NSNumber numberWithInt:entity.unit] forKey:@"unit"];
     [dic setObject:[NSNumber numberWithInt:entity.serverid] forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"record" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"record" date:entity.date];
     
     if (isSuccess) {
         entity.sync = 1;
@@ -678,7 +678,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     [dic setObject:[NSNumber numberWithInt:entity.recordType] forKey:@"type"];
     [dic setObject:[NSNumber numberWithInt:entity.serverid] forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"custom" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"custom" date:entity.date];
     
     if (isSuccess) {
         entity.sync = 1;
@@ -696,9 +696,9 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     [dic setObject:@(entity.type) forKey:@"type"];
     [dic setObject:@(entity.calorie) forKey:@"calorie"];
     
-    BOOL isSuccess = [[self saveToRemote:dic
+    BOOL isSuccess = [self saveToRemote:dic
                                     type:@"scheme"
-                                    date:[NSDate dateWithTimeIntervalSince1970:entity.create_time]] boolValue];
+                                    date:[NSDate dateWithTimeIntervalSince1970:entity.create_time]];
     if (isSuccess) {
         entity.sync = 1;
     }
@@ -719,9 +719,9 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         // currently do nothing with type except scheme
         return NO;
     }
-    BOOL isSuccess = [[self saveToRemote:dic
+    BOOL isSuccess = [self saveToRemote:dic
                                     type:@"scheme"
-                                    date:[NSDate dateWithTimeIntervalSince1970:entity.create_time]] boolValue];
+                                    date:[NSDate dateWithTimeIntervalSince1970:entity.create_time]] ;
     if (isSuccess) {
         entity.sync = 1;
     }
@@ -742,7 +742,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     long timeStamp = (long)[entity.date originTimeOfADay] + 1;
     [dic setObject:@(timeStamp) forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"weight" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"weight" date:entity.date] ;
     
     if (isSuccess) {
         entity.sync = 1;
@@ -763,7 +763,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     long timeStamp = (long)[entity.date originTimeOfADay] + 2;
     [dic setObject:@(timeStamp) forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"circumference" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"circumference" date:entity.date];
     
     if (isSuccess) {
         entity.sync = 1;
@@ -781,7 +781,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     [dic setObject:@(timeStamp) forKey:@"create_time"];
     
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"habit" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"habit" date:entity.date] ;
     
     if (isSuccess) {
         entity.sync = 1;
@@ -798,7 +798,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     long timeStamp = (long)[entity.date originTimeOfADay] + 4;
     [dic setObject:@(timeStamp) forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"menstruation" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"menstruation" date:entity.date] ;
     
     if (isSuccess) {
         entity.sync = 1;
@@ -818,7 +818,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     long timeStamp = (long)[entity.date originTimeOfADay] + 5;
     [dic setObject:@(timeStamp) forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"sleep" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"sleep" date:entity.date] ;
     
     if (isSuccess) {
         entity.sync = 1;
@@ -840,7 +840,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     long timeStamp = (long)[entity.date originTimeOfADay] + 6;
     [dic setObject:@(timeStamp) forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"water" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"water" date:entity.date] ;
     
     if (isSuccess) {
         entity.sync = 1;
@@ -857,7 +857,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     long timeStamp = (long)[entity.date originTimeOfADay] + 7;
     [dic setObject:@(timeStamp) forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"mood" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"mood" date:entity.date];
     
     if (isSuccess) {
         entity.sync = 1;
@@ -874,7 +874,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     long timeStamp = (long)[entity.date originTimeOfADay] + 8;
     [dic setObject:@(timeStamp) forKey:@"create_time"];
     
-    BOOL isSuccess = [[self saveToRemote:dic type:@"remark" date:entity.date] boolValue];
+    BOOL isSuccess = [self saveToRemote:dic type:@"remark" date:entity.date];
     
     if (isSuccess) {
         entity.sync = 1;
@@ -3181,6 +3181,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             if ([self deleteFoodRecordFromRemote:entity]) {
                 
                 [self deleteFoodRecordInDB:entity];
+            }else{
+                return @NO;
             }
         } else {
             if ([self saveFoodRecordToRemote:entity]) {
@@ -3199,6 +3201,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             if ([self deleteSportRecordFromRemote:entity]) {
                 
                 [self deleteSportRecordInDB:entity];
+            }else{
+                return @NO;
             }
         } else {
             
@@ -3221,6 +3225,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 } else {
                     [self deleteCustomSportInDB:entity];
                 }
+            }else{
+                return @NO;
             }
         } else {
             

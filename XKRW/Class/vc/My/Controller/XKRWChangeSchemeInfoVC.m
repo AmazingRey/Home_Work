@@ -1142,7 +1142,7 @@
         
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [XKRWCui showProgressHud:@"重置方案中..."];
+        [XKRWCui showProgressHud:@"数据重置中，请稍后..."];
         [self downloadWithTaskID:@"restSchene" outputTask:^id{
             return  [[XKRWUserService sharedService] resetUserAllDataByToken];
         }];
@@ -1194,7 +1194,7 @@
             else
             {
                 [XKRWCui hideProgressHud];
-                [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
+                [XKRWCui showInformationHudWithText:@"重置计划失败，请稍后尝试"];
             }
         }
     }
@@ -1209,7 +1209,7 @@
 - (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID
 {
     [XKRWCui hideProgressHud];
-    [XKRWCui showInformationHudWithText:@"重置方案失败，请稍后尝试"];
+    [XKRWCui showInformationHudWithText:@"重置计划失败，请稍后尝试"];
 }
 
 

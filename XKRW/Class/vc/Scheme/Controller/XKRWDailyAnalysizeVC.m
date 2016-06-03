@@ -40,6 +40,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [MobClick event:@"pg_dailyana"];
+    
     sportArray = [[XKRWRecordService4_0 sharedService] getSportRecordAndSportSchemeRecordWithDate:[NSDate date]];
     hasRecord = [[XKRWRecordService4_0 sharedService] getUserRecordStateWithDate:_recordDate];
     //每日正常饮食摄入

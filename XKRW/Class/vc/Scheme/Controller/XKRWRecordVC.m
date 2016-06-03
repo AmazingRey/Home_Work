@@ -7,7 +7,7 @@
 //
 
 #import "XKRWRecordVC.h"
-#import "KMSearchBar.h" 
+#import "KMSearchBar.h"
 #import "XKRWRecordService4_0.h"
 #import "KMSearchDisplayController.h"
 #import "XKRWFoodCell.h"
@@ -17,7 +17,7 @@
 #import <iflyMSC/IFlyRecognizerViewDelegate.h>
 #import <iflyMSC/iflyMSC.h>
 #import "XKRWSportDetailVC.h"
-
+#import "MobClick.h"
 @interface XKRWRecordVC ()<UISearchControllerDelegate,KMSearchDisplayControllerDelegate,IFlyRecognizerViewDelegate,UISearchBarDelegate,UITableViewDelegate,UITableViewDataSource> {
     UISegmentedControl *segmentCtl;
     NSString *searchKey;
@@ -40,7 +40,7 @@
     NSArray *searchResults;
     
     NSString *recordSearchBarplaceText;
- 
+    
     NSInteger  selectSegmentIndex;
 }
 
@@ -89,6 +89,12 @@
     noRecentRecordLabel.font = XKDefaultFontWithSize(14);
     noRecentRecordLabel.textColor = XK_ASSIST_TEXT_COLOR;
     if(_schemeType == eSchemeFood){
+        if (_isToday) {
+            [MobClick event:@"pg_meal_add" attributes:@{@"from":@"today"}];
+        }else{
+            [MobClick event:@"pg_meal_add" attributes:@{@"from":@"ago"}];
+        }
+        
         self.title = @"记录食物";
         tableName = @"food_record";
         segementTitles = @[@"最近吃过",@"收藏的食物"];
@@ -96,10 +102,15 @@
         recordSearchBarplaceText = @"查询食物";
         noRecentRecordLabel.text = @"最近没有任何饮食记录哦~";
     }else{
+        if (_isToday) {
+            [MobClick event:@"pg_fit_add" attributes:@{@"from":@"today"}];
+        }else{
+            [MobClick event:@"pg_fit_add" attributes:@{@"from":@"ago"}];
+        }
         self.title = @"记录运动";
         tableName = @"sport_record";
         segementTitles = @[@"最近做过",@"收藏的运动"];
-         recordSearchBarplaceText = @"查询运动";
+        recordSearchBarplaceText = @"查询运动";
         collectionType = 2;
         noRecentRecordLabel.text = @"最近没有任何运动记录哦~";
     }
@@ -110,7 +121,7 @@
     
     recordSearchBar.delegate = self;
     recordSearchBar.barTintColor = XKBGDefaultColor;
-  
+    
     recordSearchBar.layer.borderWidth = 0.5;
     recordSearchBar.layer.borderColor = XK_ASSIST_LINE_COLOR.CGColor;
     recordSearchBar.showsBookmarkButton = true;
@@ -123,10 +134,10 @@
     searchDisplayCtrl.searchResultDelegate = self ;
     searchDisplayCtrl.searchResultDataSource = self ;
     searchDisplayCtrl.searchResultTableView.tag = 201 ;
-   
+    
     [searchDisplayCtrl.searchResultTableView registerNib:[UINib nibWithNibName:@"XKRWFoodRecordCell" bundle:nil] forCellReuseIdentifier:@"searchResultCell"];
     searchDisplayCtrl.searchResultTableView.separatorStyle = UITableViewCellSeparatorStyleNone ;
-   
+    
     [self.view addSubview:recordSearchBar];
     
     segmentCtl = [[UISegmentedControl alloc] initWithItems:segementTitles];
@@ -144,7 +155,7 @@
     recentRecordOrCollectTableView.tag = 10001;
     [recentRecordOrCollectTableView registerNib:[UINib nibWithNibName:@"XKRWFoodRecordCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"recentRecordCell"];
     [self.view addSubview:recentRecordOrCollectTableView];
-
+    
     
     nonRecentRecordView = [[UIView alloc] initWithFrame:recentRecordOrCollectTableView.frame];
     nonRecentRecordView.backgroundColor = [UIColor whiteColor];
@@ -159,7 +170,7 @@
     noRecentRecordLabel.top = noRecentRecordImageView.bottom + 20;
     [nonRecentRecordView addSubview:noRecentRecordLabel];
     [recentRecordOrCollectTableView addSubview:nonCollectionView];
-
+    
     
     iFlyControl = [[IFlyRecognizerView alloc]initWithCenter:CGPointMake(XKAppWidth/2, XKAppHeight/2)];
     [iFlyControl setParameter:@"iat" forKey:[IFlySpeechConstant IFLY_DOMAIN] ];
@@ -180,11 +191,11 @@
 
 - (void) initDataWithSegmentIndex:(NSInteger ) index {
     if (index == 0) {
-         recentRecordOrCollectArray = [[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName];
+        recentRecordOrCollectArray = [[XKRWRecordService4_0 sharedService] queryRecent_20_RecordTable:tableName];
     }else{
-         recentRecordOrCollectArray = [[XKRWCollectionService sharedService] queryCollectionWithType:collectionType];
+        recentRecordOrCollectArray = [[XKRWCollectionService sharedService] queryCollectionWithType:collectionType];
     }
-   
+    
     if (!recentRecordOrCollectArray || !recentRecordOrCollectArray.count) {
         nonRecentRecordView.hidden = NO;
     } else {
@@ -192,7 +203,7 @@
     }
     
     [recentRecordOrCollectTableView reloadData];
-
+    
 }
 
 
@@ -241,7 +252,7 @@
     CGRect frame = recordSearchBar.frame;
     frame.origin.y = 0;
     recordSearchBar.frame = frame;
-
+    
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     return YES;
 }
@@ -250,6 +261,11 @@
 {
     
     if (searchBar.text.length > 0){
+        
+        if(_schemeType == eSchemeFood){
+            [MobClick event:@"btn_meal_search_add"];
+        }
+        
         searchKey = searchBar.text;
         [self downloadWithTaskID:@"search" outputTask:^id{
             
@@ -297,18 +313,17 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     if(tableView.tag == 10001) {
         return 88.f;
     } else if (tableView.tag == 201){
         return 83;
     }
-    
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     __weak typeof(self) weakSelf = self;
     if (tableView.tag == 10001) {
         XKRWFoodRecordCell *recentRecordCell = [tableView dequeueReusableCellWithIdentifier:@"recentRecordCell" forIndexPath:indexPath];
@@ -323,19 +338,17 @@
                 [weakSelf.navigationController pushViewController:foodDetailVC animated:YES];
                 
             } clickRecord:^(NSIndexPath * recordFoodIndexPath) {
-                
-                
-                [weakSelf downloadWithTaskID:@"foodDetail" outputTask:^id{
-                    return [[XKRWFoodService shareService] syncQueryFoodWithId:recentRecordFoodEntity.originalId];
-                }];
-               
-                
+                XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
+                addFoodVC.originalId = recentRecordFoodEntity.originalId;
+                addFoodVC.recordDate = _recordDate;
+                [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:self];
             }];
-
+            
         } else if ([tableName isEqualToString:@"sport_record"]) {
             XKRWCollectionEntity *entity = recentRecordOrCollectArray[indexPath.row];
-
+            
             [recentRecordCell setTitle:entity.collectName logoURL:@"sport_default" clickDetail:^(NSIndexPath * sportIndexPath) {
+                [MobClick event:@"pg_sport_detail"];
                 XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc] init];
                 vc.sportID = (int)entity.originalId;
                 vc.sportName = entity.collectName;
@@ -344,6 +357,11 @@
                 [weakSelf.navigationController pushViewController:vc animated:YES];
                 
             } clickRecord:^(NSIndexPath * sportIndexPath) {
+                if (segmentCtl.selectedSegmentIndex) {
+                    [MobClick event:@"btn_fit_fav_add"];
+                } else {
+                    [MobClick event:@"btn_fit_rec_add"];
+                }
                 XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
                 addVC.sportID = (int)entity.originalId;
                 addVC.recordDate = _recordDate;
@@ -360,6 +378,7 @@
         if(_schemeType == eSchemeSport){
             XKRWSportEntity *sportEntity = [searchResults objectAtIndex:indexPath.row];
             [cell setTitle:sportEntity.sportName logoURL:sportEntity.sportActionPic clickDetail:^(NSIndexPath * indexPath) {
+                [MobClick event:@"pg_sport_detail"];
                 [recordSearchBar resignFirstResponder];
                 [recordSearchBar setCancelButtonEnable:YES];
                 
@@ -369,7 +388,9 @@
                 sportDetailVC.isPresent = YES;
                 XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:sportDetailVC];
                 [weakSelf presentViewController:nav animated:YES completion:nil];
+                
             } clickRecord:^(NSIndexPath * indexPath) {
+                [MobClick event:@"btn_fit_search_add"];
                 [recordSearchBar resignFirstResponder];
                 [recordSearchBar setCancelButtonEnable:YES];
                 
@@ -404,10 +425,12 @@
                 recordFoodEntity.foodUnit = foodEntity.foodUnit;
                 recordFoodEntity.recordType = foodRecordType;
                 XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
+                addFoodVC.recordDate = _recordDate;
+                addFoodVC.originalId = foodEntity.foodId;
                 addFoodVC.foodRecordEntity = recordFoodEntity;
                 [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:self];
             }];
-        
+            
         }
         return  cell;
     }
@@ -426,11 +449,17 @@
             foodDetailVC.date = [NSDate date];
             [self.navigationController pushViewController:foodDetailVC animated:YES];
             
+            if (selectSegmentIndex == 0) {
+                [MobClick event:@"btn_meal_rec_add"];
+            }else{
+                [MobClick event:@"btn_meal_fav_add"];
+            }
+            
         } else if ([tableName isEqualToString:@"sport_record"]) {
+            [MobClick event:@"pg_sport_detail"];
             XKRWCollectionEntity *entity = recentRecordOrCollectArray[indexPath.row];
             XKRWSportDetailVC *vc = [[XKRWSportDetailVC alloc] init];
-            XKRWSportEntity *detailSportEntity = [[XKRWSportService shareService] syncQuerySportWithId:(int)entity.originalId];
-            vc.sportEntity = detailSportEntity;
+            
             vc.sportID = (int)entity.originalId;
             vc.sportName = entity.collectName;
             vc.isPresent = NO;
@@ -440,6 +469,31 @@
         }
         return;
         
+    } else if (tableView.tag == 201) {
+        
+        if(_schemeType == eSchemeSport) {
+            [MobClick event:@"pg_sport_detail"];
+            [recordSearchBar resignFirstResponder];
+            [recordSearchBar setCancelButtonEnable:YES];
+            XKRWSportEntity *sportEntity = [searchResults objectAtIndex:indexPath.row];
+            XKRWSportDetailVC *sportDetailVC = [[XKRWSportDetailVC alloc] init];
+            sportDetailVC.sportEntity = sportEntity;
+            sportDetailVC.sportID = sportEntity.sportId;
+            sportDetailVC.isPresent = YES;
+            XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:sportDetailVC];
+            [self presentViewController:nav animated:YES completion:nil];
+            
+        } else {
+            XKRWFoodEntity *foodEntity = [searchResults objectAtIndex:indexPath.row];
+            [recordSearchBar resignFirstResponder];
+            [recordSearchBar setCancelButtonEnable:YES];
+            XKRWFoodDetailVC *foodDetailVC = [[XKRWFoodDetailVC alloc] init];
+            foodDetailVC.foodEntity = foodEntity;
+            foodDetailVC.isPresent = YES;
+            XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:foodDetailVC];
+            [self presentViewController:nav animated:YES completion:nil];
+            
+        }
     }
 }
 #pragma --mark IFlyDelegate
@@ -464,7 +518,7 @@
 #pragma --mark  NetWorkDeal
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
     if ([taskID isEqualToString:@"search"]){
-    
+        
         if (_schemeType == eSchemeSport) {
             searchResults = [result objectForKey:@"sport"];
         } else {
@@ -477,27 +531,27 @@
         return ;
     }
     
-    if ([taskID isEqualToString:@"foodDetail"]) {
-        XKRWFoodEntity *tempEntity = (XKRWFoodEntity*) result;
-        XKRWRecordFoodEntity *recordEntity = [XKRWRecordFoodEntity new];
-        recordEntity.date = _recordDate;
-        recordEntity.foodId = tempEntity.foodId;
-        recordEntity.foodLogo = tempEntity.foodLogo;
-        recordEntity.foodName = tempEntity.foodName;
-        recordEntity.foodNutri = tempEntity.foodNutri;
-        recordEntity.foodEnergy = tempEntity.foodEnergy;
-        recordEntity.foodUnit = tempEntity.foodUnit;
-        recordEntity.recordType = foodRecordType;
-        XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
-        addFoodVC.foodRecordEntity = recordEntity;
-        [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:self];
-    }
+//    if ([taskID isEqualToString:@"foodDetail"]) {
+//        XKRWFoodEntity *tempEntity = (XKRWFoodEntity*) result;
+//        XKRWRecordFoodEntity *recordEntity = [XKRWRecordFoodEntity new];
+//        recordEntity.date = _recordDate;
+//        recordEntity.foodId = tempEntity.foodId;
+//        recordEntity.foodLogo = tempEntity.foodLogo;
+//        recordEntity.foodName = tempEntity.foodName;
+//        recordEntity.foodNutri = tempEntity.foodNutri;
+//        recordEntity.foodEnergy = tempEntity.foodEnergy;
+//        recordEntity.foodUnit = tempEntity.foodUnit;
+//        recordEntity.recordType = foodRecordType;
+//        XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
+//        addFoodVC.foodRecordEntity = recordEntity;
+//        [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:self];
+//    }
 }
 
 - (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID {
     [super handleDownloadProblem:problem withTaskID:taskID];
     
- }
+}
 
 - (BOOL)shouldRespondForDefaultNotification:(XKDefaultNotification *)notication {
     return YES;
@@ -509,13 +563,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -67,7 +67,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(instancetype)initWithPlaceholder:(NSString *)placeholder style:(XKRWInputBoxViewStyle)style {
+- (instancetype)initWithPlaceholder:(NSString *)placeholder style:(XKRWInputBoxViewStyle)style {
     self = [self init];
     
     selfStyle = style;

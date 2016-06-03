@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -19,10 +19,6 @@
                         <rect key="frame" x="188" y="0.0" width="188" height="182"/>
                         <state key="normal" backgroundImage="discover_exercise_"/>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v82-ce-HuE">
-                        <rect key="frame" x="376" y="0.0" width="188" height="182"/>
-                        <state key="normal" backgroundImage="discover_date_"/>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ayy-kh-qfT">
                         <rect key="frame" x="0.0" y="0.0" width="188" height="182"/>
                         <state key="normal" backgroundImage="discover_lose-weight_"/>
@@ -31,24 +27,28 @@
                         <rect key="frame" x="564" y="0.0" width="188" height="182"/>
                         <state key="normal" backgroundImage="discover_pk_"/>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v82-ce-HuE">
+                        <rect key="frame" x="376" y="0.0" width="188" height="182"/>
+                        <state key="normal" backgroundImage="discover_date_"/>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="v82-ce-HuE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="6d5-dK-XTs"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Ayy-kh-qfT" secondAttribute="bottom" constant="-8" id="766-HF-qhK"/>
-                    <constraint firstItem="xzl-e5-Stq" firstAttribute="leading" secondItem="Ayy-kh-qfT" secondAttribute="trailing" id="A32-ei-PAF"/>
-                    <constraint firstItem="xzl-e5-Stq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="DXh-6B-Irf"/>
-                    <constraint firstItem="v82-ce-HuE" firstAttribute="width" secondItem="swf-Lh-5Ux" secondAttribute="width" id="Dip-CH-dI2"/>
-                    <constraint firstItem="Ayy-kh-qfT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="HWB-Zz-360"/>
-                    <constraint firstItem="v82-ce-HuE" firstAttribute="leading" secondItem="xzl-e5-Stq" secondAttribute="trailing" id="S4z-WO-PeS"/>
-                    <constraint firstItem="swf-Lh-5Ux" firstAttribute="leading" secondItem="v82-ce-HuE" secondAttribute="trailing" id="fyy-K9-K1Z"/>
-                    <constraint firstItem="xzl-e5-Stq" firstAttribute="width" secondItem="v82-ce-HuE" secondAttribute="width" id="jys-e4-KJv"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="xzl-e5-Stq" secondAttribute="bottom" constant="-8" id="lNK-jj-B62"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="swf-Lh-5Ux" secondAttribute="bottom" constant="-8" id="n2Z-08-lSL"/>
-                    <constraint firstItem="Ayy-kh-qfT" firstAttribute="width" secondItem="xzl-e5-Stq" secondAttribute="width" id="rl1-UZ-RBF"/>
-                    <constraint firstItem="Ayy-kh-qfT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="sa5-GG-ofC"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="swf-Lh-5Ux" secondAttribute="trailing" constant="-8" id="tgq-pM-0ih"/>
-                    <constraint firstItem="swf-Lh-5Ux" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="y4K-z0-RZE"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="v82-ce-HuE" secondAttribute="bottom" constant="-8" id="zeJ-QY-0fB"/>
+                    <constraint firstItem="Ayy-kh-qfT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="8Eu-HX-ksN"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="swf-Lh-5Ux" secondAttribute="trailing" constant="-8" id="8Jp-rJ-fMS"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="swf-Lh-5Ux" secondAttribute="bottom" constant="-8" id="Bwa-b8-tMK"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Ayy-kh-qfT" secondAttribute="bottom" constant="-8" id="IGg-MX-o2j"/>
+                    <constraint firstItem="v82-ce-HuE" firstAttribute="leading" secondItem="xzl-e5-Stq" secondAttribute="trailing" id="JHb-o2-cUu"/>
+                    <constraint firstItem="swf-Lh-5Ux" firstAttribute="leading" secondItem="v82-ce-HuE" secondAttribute="trailing" id="LvX-WF-XBQ"/>
+                    <constraint firstItem="xzl-e5-Stq" firstAttribute="width" secondItem="Ayy-kh-qfT" secondAttribute="width" id="Sal-py-JcD"/>
+                    <constraint firstItem="v82-ce-HuE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="Tw9-8M-1op"/>
+                    <constraint firstItem="xzl-e5-Stq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="VGm-LN-QQ7"/>
+                    <constraint firstItem="v82-ce-HuE" firstAttribute="width" secondItem="xzl-e5-Stq" secondAttribute="width" id="Vej-Il-YzT"/>
+                    <constraint firstItem="swf-Lh-5Ux" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="WNh-Zk-AUn"/>
+                    <constraint firstItem="xzl-e5-Stq" firstAttribute="leading" secondItem="Ayy-kh-qfT" secondAttribute="trailing" id="dfr-RM-7ny"/>
+                    <constraint firstItem="swf-Lh-5Ux" firstAttribute="width" secondItem="v82-ce-HuE" secondAttribute="width" id="f2z-UT-55n"/>
+                    <constraint firstItem="Ayy-kh-qfT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="mQZ-fV-ppe"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="xzl-e5-Stq" secondAttribute="bottom" constant="-8" id="ppG-Ow-erc"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="v82-ce-HuE" secondAttribute="bottom" constant="-8" id="q5B-R7-Tki"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

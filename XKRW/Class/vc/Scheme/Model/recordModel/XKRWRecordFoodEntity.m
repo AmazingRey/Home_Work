@@ -23,10 +23,7 @@
         self.unit       = [dict[@"unit"] integerValue];
         self.serverid   = [dict[@"server_id"] integerValue];
         self.date       = [NSDate dateFromString:dict[@"date"] withFormat:@"yyyy-MM-dd"];
-        
-//        XKLog(@"%@", [self.date stringWithFormat:@"yyyy-MM-dd"]);
-//        XKLog(@"%f", [self.date timeIntervalSince1970]);
-        
+       
         self.foodLogo   = dict[@"image_url"];
         self.foodEnergy = [dict[@"food_energy"] integerValue];
         self.sync       = [dict[@"sync"] integerValue];

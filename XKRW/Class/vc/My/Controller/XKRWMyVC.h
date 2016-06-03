@@ -22,6 +22,7 @@
     UIImageView  *adImgView;
 }
 @property (nonatomic,readwrite) NSMutableArray *data;
+
 @property (nonatomic,strong) XKRWUITableViewBase *tableView;
 @property (strong, nonatomic) NSArray *appArray;
 @property (nonatomic,assign) id <XKRWCheckMoreRedDotDelegate> delegate;

@@ -34,7 +34,7 @@
 - (IBAction)actBefore:(id)sender;
 - (IBAction)actLater:(id)sender;
 
-@property (weak, nonatomic) IBOutlet iCarousel *iCarouselView;
+@property (strong, nonatomic) IBOutlet iCarousel *iCarouselView;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *labInput;
 @property (weak, nonatomic) IBOutlet UIButton *btnCancle;
@@ -59,5 +59,5 @@
 - (instancetype)initWithFrame:(CGRect)frame withType:(NSInteger)type withDate:(NSDate *)date;
 - (IBAction)pressCancle:(id)sender;
 - (IBAction)pressSure:(id)sender;
-
+-(void)removeCalendar;
 @end

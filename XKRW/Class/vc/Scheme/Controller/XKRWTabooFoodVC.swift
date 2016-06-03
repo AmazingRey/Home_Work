@@ -29,7 +29,7 @@ class XKRWTabooFoodVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
         super.viewDidLoad()
         
         self.title = "禁忌食物"
-        
+        MobClick.event("pg_meal_sug_detai")
         self.addNaviBarBackButton()
         
         self.downloadWithTaskID("getTabooFood", outputTask: { () -> AnyObject! in

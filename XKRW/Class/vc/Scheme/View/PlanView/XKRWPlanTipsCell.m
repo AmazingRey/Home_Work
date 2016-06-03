@@ -106,7 +106,7 @@
         
         [self.actionButton mas_updateConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(@0);
-             make.top.equalTo(@0);
+            make.top.equalTo(@0);
             make.right.equalTo(@0);
             make.width.equalTo(@89);
         }];

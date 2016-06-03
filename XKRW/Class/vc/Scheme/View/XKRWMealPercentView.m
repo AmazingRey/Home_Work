@@ -12,7 +12,7 @@
 #import "XKRWAlgolHelper.h"
 
 @implementation XKRWMealPercentView
-- (instancetype)initWithFrame:(CGRect)frame currentValue:(NSNumber *)value totalKcal:(NSInteger)totalKcal
+- (instancetype)initWithFrame:(CGRect)frame currentValue:(NSNumber *)value totalKcal:(CGFloat)totalKcal
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -58,7 +58,8 @@
     [_btnLock setImage:[UIImage imageNamed:@"lock2"] forState:UIControlStateSelected];
     [self addSubview:_btnLock];
     
-    _imgHead = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    UIImage *image = [UIImage imageNamed:@"addmeal5_3"];
+    _imgHead = [[UIImageView alloc] initWithFrame:CGRectMake(15, (self.height - image.size.height) / 2.0, image.size.width, image.size.height)];
     _imgHead.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_imgHead];
     

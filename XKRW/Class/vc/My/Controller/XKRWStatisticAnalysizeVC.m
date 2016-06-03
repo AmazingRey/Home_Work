@@ -11,6 +11,9 @@
 
 #define ScrollViewHeight XKAppHeight - 56 - 64
 
+#define StatisticHeight StatisticAnalysisViewHeight *2 + HeadViewHeight +20
+#define WeekHeight StatisticAnalysisViewHeight *2 + HeadViewHeight + 20
+
 #import "XKRWStatisticAnalysizeVC.h"
 #import "Masonry.h"
 #import "XKRWStatiscHeadView.h"
@@ -76,17 +79,11 @@
         if (_bussiness.totalNum == 0) {
              dispatch_async(dispatch_get_main_queue(), ^{
                  notEnoughOneWeek = YES;
-                 _statisAnalysisView.isShowStatis = true;
                  [self addMasonryLayout];
                  [XKRWCui hideProgressHud];
                  [self showTip];
-                 
                  if (_fromVC == DailyAnalysisVC) {
-                     CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
-                     [self.scrollView scrollRectToVisible:scrollRect animated:NO];
-                     if (!_statisAnalysisView.isShowStatis) {
-                         _statisAnalysisView.isShowStatis = true;
-                     }
+                     [self segmentControlIndexChanged:self.segmentControl];
                  }
             });
         }else{
@@ -98,17 +95,12 @@
                         notEnoughOneWeek = YES;
                     }
                 }
-                _statisAnalysisView.isShowStatis = true;
                 [self addMasonryLayout];
                 [XKRWCui hideProgressHud];
                 [self showTip];
                 
                 if (_fromVC == DailyAnalysisVC) {
-                    CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
-                    [self.scrollView scrollRectToVisible:scrollRect animated:NO];
-                    if (!_statisAnalysisView.isShowStatis) {
-                        _statisAnalysisView.isShowStatis = true;
-                    }
+                    [self segmentControlIndexChanged:self.segmentControl];
                 }
             });
         }
@@ -160,7 +152,11 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [scrollView setContentOffset: CGPointMake(XKAppWidth * _segmentIndex,scrollView.contentOffset.y)];
+    if ((notEnoughOneWeek && _segmentIndex == 0) || !hasReset) {
+         [scrollView setContentOffset: CGPointMake(XKAppWidth * _segmentIndex,0)];
+    }else{
+        [scrollView setContentOffset: CGPointMake(XKAppWidth * _segmentIndex,scrollView.contentOffset.y)];
+    }
 }
 
 - (UIScrollView *)scrollView
@@ -169,17 +165,10 @@
         _scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, _segmentControl.bottom + 13, XKAppWidth , ScrollViewHeight)];
         _scrollView.backgroundColor = [UIColor colorFromHexString:@"f5f7f9"];
         _scrollView.pagingEnabled = YES;
-        _scrollView.scrollEnabled = NO;
-        
-        CGFloat height = _scrollView.frame.size.height;
-        if (XKAppHeight < 700){
-            _scrollView.delegate = self;
-            height += (700 - XKAppHeight);
-            _scrollView.scrollEnabled = YES;
-            _scrollView.showsVerticalScrollIndicator = NO;
-            _scrollView.showsHorizontalScrollIndicator = NO;
-        }
-        _scrollView.contentSize = CGSizeMake(XKAppWidth*2, height);
+        _scrollView.delegate = self;
+        _scrollView.scrollEnabled = YES;
+        _scrollView.showsVerticalScrollIndicator = NO;
+        _scrollView.showsHorizontalScrollIndicator = NO;
         [self.view addSubview:_scrollView];
     }
     return _scrollView;
@@ -187,7 +176,7 @@
 
 -(UIView *)emptyView{
     if (!_emptyView) {
-        _emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, XKAppWidth, ScrollViewHeight)];
+        _emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, XKAppWidth, WeekHeight)];
         UIImageView *emptyImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 162, 156)];
         CGPoint point = _emptyView.center;
         point.y -= 156;
@@ -210,7 +199,7 @@
 
 -(XKRWWeekAnalysisView *)weekAnalysisView{
     if (!_weekAnalysisView) {
-        _weekAnalysisView = [[XKRWWeekAnalysisView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, ScrollViewHeight) withBussiness:_bussiness];
+        _weekAnalysisView = [[XKRWWeekAnalysisView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, WeekHeight) withBussiness:_bussiness];
         _weekAnalysisView.headView.delegate = self;
         [self.scrollView addSubview:_weekAnalysisView];
     }
@@ -219,7 +208,7 @@
 
 -(XKRWStatisAnalysisView *)statisAnalysisView{
     if (!_statisAnalysisView) {
-        _statisAnalysisView = [[XKRWStatisAnalysisView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, ScrollViewHeight) withBussiness:_bussiness];
+        _statisAnalysisView = [[XKRWStatisAnalysisView alloc] initWithFrame:CGRectMake(XKAppWidth, 0, XKAppWidth, StatisticHeight) withBussiness:_bussiness];
 //        _statisAnalysisView.headView.delegate = self;
         [self.scrollView addSubview:_statisAnalysisView];
     }
@@ -263,32 +252,38 @@
         make.height.mas_equalTo(ScrollViewHeight);
         make.leading.and.right.mas_equalTo(0);
         make.top.mas_equalTo(self.segmentControl.mas_bottom).offset(SegementLeading);
+        make.bottom.mas_equalTo(self.view.mas_bottom);
     }];
     if (notEnoughOneWeek) {
         [self.emptyView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(self.scrollView.mas_width);
+            make.width.mas_equalTo(XKAppWidth);
             make.height.mas_equalTo(self.scrollView.mas_height);
             make.top.mas_equalTo(self.scrollView.mas_top);
             make.left.mas_equalTo(self.scrollView.mas_left);
         }];
         [self.statisAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(self.scrollView.mas_width);
-            make.height.mas_equalTo(self.scrollView.mas_height);
+            make.width.mas_equalTo(XKAppWidth);
+            make.height.mas_equalTo(StatisticHeight);
             make.top.mas_equalTo(self.scrollView.mas_top);
             make.left.mas_equalTo(self.emptyView.mas_right);
+            make.right.mas_equalTo(self.scrollView.mas_right);
+            make.bottom.mas_equalTo(self.scrollView.mas_bottom).offset(-100);
         }];
     }else{
         [self.weekAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(self.scrollView.mas_width);
-            make.height.mas_equalTo(self.scrollView.mas_height);
+            make.width.mas_equalTo(XKAppWidth);
+            make.height.mas_equalTo(WeekHeight);
             make.top.mas_equalTo(self.scrollView.mas_top);
             make.left.mas_equalTo(self.scrollView.mas_left);
+            make.bottom.mas_equalTo(self.scrollView.mas_bottom).offset(-100);
         }];
         [self.statisAnalysisView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(self.scrollView.mas_width);
-            make.height.mas_equalTo(self.scrollView.mas_height);
+            make.width.mas_equalTo(XKAppWidth);
+            make.height.mas_equalTo(StatisticHeight);
             make.top.mas_equalTo(self.scrollView.mas_top);
             make.left.mas_equalTo(self.weekAnalysisView.mas_right);
+            make.right.mas_equalTo(self.scrollView.mas_right);
+            make.bottom.mas_equalTo(self.scrollView.mas_bottom).offset(-100);
         }];
     }
 }
@@ -299,10 +294,13 @@
         return;
     }
     _segmentIndex = segement.selectedSegmentIndex;
-    CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
-    [self.scrollView scrollRectToVisible:scrollRect animated:YES];
+//    CGRect scrollRect = CGRectMake(XKAppWidth*_segmentIndex, 0, XKAppWidth, _scrollView.height);
+//    [self.scrollView scrollRectToVisible:scrollRect animated:YES];
+    self.scrollView.contentOffset = CGPointMake(XKAppWidth *_segmentIndex, 0);
     if (_segmentIndex == 1 && !_statisAnalysisView.isShowStatis) {
         _statisAnalysisView.isShowStatis = true;
+    }else if (_segmentIndex == 0){
+        _statisAnalysisView.isShowStatis = false;
     }
 }
 

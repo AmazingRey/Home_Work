@@ -122,7 +122,7 @@
     }
     self.title = @"运动详情";
     
-    sportScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 75, XKAppWidth, XKAppHeight-75-15) ];
+    sportScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 105, XKAppWidth, XKAppHeight-105-15) ];
     sportScrollView.backgroundColor =  XK_BACKGROUND_COLOR;
     self.view.backgroundColor = XK_BACKGROUND_COLOR;
     [self.view addSubview:sportScrollView];

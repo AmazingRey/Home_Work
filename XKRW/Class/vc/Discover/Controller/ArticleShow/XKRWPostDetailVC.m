@@ -1021,7 +1021,7 @@
 {
     if([taskID isEqualToString:@"getPostDetail"]){
         _entity = (XKRWUserPostEntity *)result;
-        
+        [XKRWCui hideProgressHud];
         if([_entity.textContent rangeOfString:@"href="].location != NSNotFound || [_entity.textContent rangeOfString:@"</p>"].location != NSNotFound){
             _userWebViewShowContent = YES;
         }else{

@@ -86,12 +86,12 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
     
     //interactivePopGestureRecognizer close in those vcs...
     
-    UIViewController * rootvc = self.navigationController.viewControllers[0];
-    if ([rootvc isEqual:self]||[self isKindOfClass:[XKRWLoginVC class]]||[self isKindOfClass:[XKRWRecordOthersVC class]]) { //||[self isKindOfClass:[XKRWRecordOthersVC class]]
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }else{
-        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-    }
+//    UIViewController * rootvc = self.navigationController.viewControllers[0];
+//    if ([rootvc isEqual:self]||[self isKindOfClass:[XKRWLoginVC class]]||[self isKindOfClass:[XKRWRecordOthersVC class]]) { //||[self isKindOfClass:[XKRWRecordOthersVC class]]
+//        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    }else{
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+//    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

@@ -32,12 +32,3 @@
 
 - (void)reloadData;
 @end
-
-
-@interface NSArray(safe)
-
--(id)safeObjectAtIndex:(NSUInteger)index;
--(id)firstObject;
--(id)lastbutone;
-
-@end

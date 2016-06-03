@@ -40,7 +40,6 @@
     [encoder encodeObject:_sportCareDesc forKey:@"sportCareDesc"];
     [encoder encodeObject:_sportActionPic forKey:@"sportActionPic"];
     [encoder encodeObject:_sportActionDesc forKey:@"sportActionDesc"];
-    
     [encoder encodeObject:_iFrame forKey:@"iframe"];
     
 }

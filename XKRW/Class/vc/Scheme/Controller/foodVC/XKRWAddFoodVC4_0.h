@@ -22,8 +22,11 @@
 @interface XKRWAddFoodVC4_0 : XKRWBaseVC<UITextFieldDelegate>
 
 //食物对象
+@property (nonatomic,assign) RecordType foodRecordType;
+@property (nonatomic,assign) NSInteger originalId;
+@property (nonatomic,strong) NSDate *recordDate;
 @property (nonatomic, strong) XKRWRecordFoodEntity *foodRecordEntity;
-@property (nonatomic,assign) id <XKRWAddFoodVC4_0Delegate>delegate;
+@property (nonatomic, weak) id <XKRWAddFoodVC4_0Delegate>delegate;
 @property BOOL isPresent;
 
 + (void)presentAddFoodVC:(XKRWAddFoodVC4_0 *)vc onViewController:(UIViewController *)onvc;

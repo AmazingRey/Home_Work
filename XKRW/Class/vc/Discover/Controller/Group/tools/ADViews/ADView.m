@@ -99,7 +99,7 @@
 
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
 {
-    ADModel* model = [_adlist safeObjectAtIndex:index];
+    ADModel* model = [_adlist objectAtIndex:index];
     if (self.noticeDelegate && [self.noticeDelegate respondsToSelector:@selector(adItemClick:)]) {
         [self.noticeDelegate adItemClick:model];
     }
@@ -178,25 +178,5 @@
 //        
 //    }];
 //}
-
-@end
-
-
-@implementation NSArray(safe)
-
--(id)safeObjectAtIndex:(NSUInteger)index
-{
-    return index >= self.count ? nil : [self objectAtIndex:index];
-}
-
--(id)firstObject
-{
-    return [self safeObjectAtIndex:0];
-}
-
--(id)lastbutone
-{
-    return [self safeObjectAtIndex:self.count-2];
-}
 
 @end

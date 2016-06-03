@@ -92,9 +92,9 @@
             habitCollectionView.arrText = [_dicCollection allKeys];
             habitCollectionView.arrImg = [_dicCollection allValues];
             
-            UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToFatReason:)];
-            ges.numberOfTapsRequired = 1;
-            [habitCollectionView addGestureRecognizer:ges];
+//            UITapGestureRecognizer *ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushToFatReason:)];
+//            ges.numberOfTapsRequired = 1;
+//            [habitCollectionView addGestureRecognizer:ges];
             [self addSubview:habitCollectionView];
             break;
 //        default:

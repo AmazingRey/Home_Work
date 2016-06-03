@@ -61,7 +61,7 @@
 -(void)initSubViews;
 
 -(void)setsubViewUI;
-
+@property (assign ,nonatomic) BOOL notNeedSport;
 @property (assign) NSInteger positionX;
 @property (assign ,nonatomic) NSInteger pageIndex;
 @property (strong ,nonatomic) NSArray *schemeArray;

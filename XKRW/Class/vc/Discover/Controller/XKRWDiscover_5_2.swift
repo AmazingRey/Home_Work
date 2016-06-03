@@ -259,6 +259,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
 
     func OperatingCellFormDequeueReusableCell(tableView:UITableView) ->XKRWDiscoverOperatingCell{
         OperatingCell = tableView.dequeueReusableCellWithIdentifier("OperatingCell") as? XKRWDiscoverOperatingCell
+        OperatingCell?.contentView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_WIDTH * 91 / 375)
         OperatingCell!.pkButton.addTarget(self, action: #selector(XKRWDiscover_5_2.entryPKList), forControlEvents: .TouchUpInside)
         OperatingCell!.motivationalButton.addTarget(self, action: #selector(XKRWDiscover_5_2.entryMotivationList), forControlEvents: .TouchUpInside)
         OperatingCell!.sportRecommendButton.addTarget(self, action: #selector(XKRWDiscover_5_2.entrySportRecommandList), forControlEvents: .TouchUpInside)
@@ -274,8 +275,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
     
     func teamCellFormDequeueReusableCell(tableView:UITableView)->XKRWDiscoverTeamCell{
         teamCell = tableView.dequeueReusableCellWithIdentifier("TeamCell") as? XKRWDiscoverTeamCell
-        
-        XKRWUtil.addViewUpLineAndDownLine(teamCell?.contentView, andUpLineXPoint: 15, andUpLineHidden: true, andDownLineXPoint: 15, downLineHidden: false)
+
         return teamCell!
     }
     

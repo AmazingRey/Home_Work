@@ -534,7 +534,7 @@
         return ;
     }
 
-    float reduce = [[self class] dailyIntakEnergy] - [[self class] dailyIntakeRecomEnergy] + [[self class] dailyConsumeSportEnergy];
+    float reduce = [[self class] dailyIntakEnergyOfOrigin] - [[self class] dailyIntakeRecomEnergyOfOrigin] + [[self class] dailyConsumeSportEnergyOfOrigin];
   
     int32_t days = ceil((cur_weight-target_weight) * 7.7 / reduce);
     XKLog(@"达成目标天数为%d,当前体重%ld,目标体重%f",days,(long)cur_weight,target_weight);
@@ -634,7 +634,7 @@
     }
     XKDifficulty difficult = [[XKRWUserService sharedService] getUserPlanDifficulty];
     NSArray *limit = XKDietLimitCalorie;
-    float bmpal = [[self class] BM] * [[self class] PAL];
+    float bmpal = [[self class] BM_of_origin] * [[self class] PAL];
     if (difficult > [limit count] ) {
         difficult = (int)[limit count];
     }

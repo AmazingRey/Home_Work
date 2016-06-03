@@ -75,23 +75,30 @@
     
     _unit_new = _foodRecordEntity.unit_new;
     
-    if(!_foodRecordEntity.foodEnergy || !_foodRecordEntity.foodNutri) {
+    if(_foodRecordEntity==nil ||  !_foodRecordEntity.foodEnergy || !_foodRecordEntity.foodNutri) {
+        if (_foodRecordEntity == nil) {
+                _foodRecordEntity =[[XKRWRecordFoodEntity alloc] init];
+        }
         
-        __block XKRWFoodEntity *foodEntity = [[XKRWFoodService shareService] getFoodDetailFromDBWithFoodId:_foodRecordEntity.foodId];
+        
+    
+        __block XKRWFoodEntity *foodEntity = [[XKRWFoodService shareService] getFoodDetailFromDBWithFoodId:_originalId];
         
         if (!foodEntity) {
             
             [XKRWCui showProgressHud:@""];
             [self downloadWithTaskID:@"downloadFoodDetail" outputTask:^id {
                 
-                foodEntity = [[XKRWFoodService shareService] getFoodDetailByFoodId:_foodRecordEntity.foodId];
+                foodEntity = [[XKRWFoodService shareService] getFoodDetailByFoodId:_originalId];
+                
                 [[NSDictionary dictionaryWithPropertiesFromObject:foodEntity] setPropertiesToObject:_foodRecordEntity];
+                _foodRecordEntity.date = _recordDate;
                 return @YES;
             }];
         } else {
             
             [[NSDictionary dictionaryWithPropertiesFromObject:foodEntity] setPropertiesToObject:_foodRecordEntity];
-            
+            _foodRecordEntity.date = _recordDate;
             [self initView];
             [self initData];
         }
@@ -176,7 +183,7 @@
             default:
                 break;
         }
- 
+        
     } else {
         isRecord = NO;
         NSInteger currentTime = [[NSDate date] hour];
@@ -322,6 +329,10 @@
 
 -(void)initData{
     
+    if (_foodRecordEntity.unit_new) {
+        _unit_new_to_gram = [[_foodRecordEntity.foodUnit objectForKey:_foodRecordEntity.unit_new] integerValue];
+
+    }
     
     if(!_foodRecordEntity.unit)
     {
@@ -335,11 +346,15 @@
                 unitType = 0;
             }
         }
-        if (_foodRecordEntity.number) {
+        
+        if (_foodRecordEntity.number_new) {
+            componentTextField.text = [NSString stringWithFormat:@"%ld",(long)_foodRecordEntity.number_new];
+        } else if (_foodRecordEntity.number && !_foodRecordEntity.number_new) {
             componentTextField.text = [NSString stringWithFormat:@"%ld",(long)_foodRecordEntity.number];
-        }else{
+        } else {
             componentTextField.placeholder =@"";
         }
+        
         if (_foodRecordEntity.unit_new && _foodRecordEntity.unit_new.length) {
             selectUnitLabel.text = _foodRecordEntity.unit_new;
         } else if (_foodRecordEntity.unit) {
@@ -522,7 +537,8 @@
         _foodRecordEntity.unit_new = @"";
         
     } else {//其它单位的 处理
-        
+        _foodRecordEntity.number = 0;
+        _foodRecordEntity.unit = 0;
         _foodRecordEntity.unit_new = selectUnitLabel.text;
         _foodRecordEntity.number_new = [componentTextField.text integerValue];
         

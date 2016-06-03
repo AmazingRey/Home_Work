@@ -83,9 +83,8 @@
     kcalLabel.text = [NSString stringWithFormat:@"0Kcal"];
     [topView addSubview:kcalLabel];
     
+    self.unit = 7;
 
- 
-    
     //logo背景
     logoIV = [[UIImageView alloc] initWithFrame:CGRectMake(15.f, 10.f, 55.f, 55.f)];
     CALayer *layer  = logoIV.layer;
@@ -186,7 +185,7 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
     [self.view addGestureRecognizer:tapGesture];
     
-    if (_sportEntity.sportMets != 0 || _recordSportEntity != nil) {
+    if (_sportEntity.sportMets != 0 || _recordSportEntity != nil ) {
         [self setDataToUI];
     }
 }
@@ -213,7 +212,11 @@
         _sportID = _sportEntity.sportId;
     }
     
-    if (_recordSportEntity == nil && _sportEntity.sportMets == 0) {
+    if (_recordSportEntity != nil && _recordSportEntity.sportId != 0) {
+        _sportID = _recordSportEntity.sportId;
+    }
+    
+    if (_recordSportEntity.sportMets == 0 || _sportEntity.sportMets == 0  ) {
         if([XKRWUtil isNetWorkAvailable]){
             [XKRWCui showProgressHud:@"加载中..."];
             [self downloadWithTaskID:@"getSportDetail" outputTask:^(){
@@ -240,19 +243,9 @@
             [XKRWCui showInformationHudWithText:@"超过记录值"];
             textField.text = @"2880";
         }
-        
-        if (_recordDate && [_recordDate compare:[[NSDate today] offsetDay:-2]] == NSOrderedDescending && [_recordDate compare:[NSDate date]] == NSOrderedAscending) {
-            _recordSportEntity.date = _recordDate;
-            
-        } else if (_recordSportEntity.date && [_recordSportEntity.date compare:[[NSDate today] offsetDay:-2]] == NSOrderedDescending && [_recordSportEntity.date compare:[NSDate date]] == NSOrderedAscending) {
-            _recordDate = _recordSportEntity.date;
-        } else {
-            _recordSportEntity.date = [NSDate date];
-            _recordDate = _recordSportEntity.date;
-        }
-        
+    
         float nearestWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate];
-        if (_recordSportEntity) {//修改
+        if (_recordSportEntity && _recordSportEntity.sportMets != 0) {//修改
             uint32_t cal = [_recordSportEntity consumeCaloriWithMinuts:[componentTextField.text intValue] weight:nearestWeight];
             kcalLabel.text = [NSString stringWithFormat:@"%iKcal",cal];
         }else{//记录
@@ -262,8 +255,6 @@
     }else{
         kcalLabel.text = [NSString stringWithFormat:@"%iKcal",0];
     }
-    
-    
 }
 
 - (void) tapAction:(UITapGestureRecognizer *)tap
@@ -318,13 +309,13 @@
         _recordSportEntity.sportName = _sportEntity.sportName;
         _recordSportEntity.unit = _sportEntity.sportUnit;
         _recordSportEntity.sportId = _sportEntity.sportId;
+        _recordSportEntity.date = _recordDate;
     }
     _recordSportEntity.recordType = 0;
     _recordSportEntity.uid = (int)[[XKRWUserService sharedService] getUserId];
     _recordSportEntity.calorie = [kcalLabel.text intValue];
     _recordSportEntity.number = [componentTextField.text integerValue];
     _recordSportEntity.unit = self.unit;
-    
     if (_recordSportEntity.serverid == 0) {
         _recordSportEntity.date = _recordDate ? _recordDate : (_recordSportEntity.date ? _recordSportEntity.date:[NSDate date]);
         NSInteger recordTimeStamp = [_recordSportEntity.date timeIntervalSince1970];
@@ -366,6 +357,11 @@
     [super handleDownloadProblem:problem withTaskID:taskID];
     if ([taskID isEqualToString:@"saveSportRecord"]) {
         XKLog(@"保存运动记录失败 exception at SportAddVC");
+        [XKRWCui showInformationHudWithText:@"保存运动记录失败，请稍后再试"];
+    }
+    
+    if ([taskID isEqualToString:@"getSportDetail"]) {
+        [XKRWCui showInformationHudWithText:@"获取运动详情失败，请稍后再试"];
     }
 }
 

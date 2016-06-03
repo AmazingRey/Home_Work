@@ -62,8 +62,8 @@
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [self addNaviBarBackButton];
-    [self addNaviBarRightButtonWithNormalImageName:@"more" highlightedImageName:@"more_p" selector:@selector(moreOperationClick)];
+    [self addNaviBarLeftButtonWithNormalImageName:@"back_white" highlightedImageName:@"back_p_trans" selector:@selector(popView)];
+    [self addNaviBarRightButtonWithNormalImageName:@"more_white" highlightedImageName:@"more_p_trans" selector:@selector(moreOperationClick)];
     _commentMutArr = [[NSMutableArray alloc] init];
     
     self.tableView = ({

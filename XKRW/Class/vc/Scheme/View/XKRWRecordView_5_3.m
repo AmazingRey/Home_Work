@@ -31,6 +31,8 @@
 #import "XKRWPlanService.h"
 #import "XKRW-Swift.h"
 #import "XKRWCui.h"
+#import "MobClick.h"
+
 @interface XKRWRecordView_5_3 () <UITableViewDelegate, UITableViewDataSource,UIScrollViewDelegate,XKRWSportAddVCDelegate,XKRWAddFoodVC4_0Delegate>
 {
     UITableView *recordTableView;
@@ -163,13 +165,28 @@
     _scrollView.scrollEnabled = NO;
     
     
-    if (_schemeArray == nil) {
+    if (_notNeedSport) {
         UILabel *notNeedSportLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth + (XKAppWidth - 200)/2 , (self.height - 118 - 30)/2, 200, 30)];
         notNeedSportLabel.font = XKDefaultFontWithSize(14);
         notNeedSportLabel.textColor = colorSecondary_666666;
         notNeedSportLabel.backgroundColor = [UIColor clearColor];
         notNeedSportLabel.textAlignment = NSTextAlignmentCenter;
         [notNeedSportLabel setText:@"无需额外运动"];
+        [_scrollView addSubview:notNeedSportLabel];
+    }
+    
+    
+    if (_schemeArray == nil &&!_notNeedSport) {
+        UILabel *notNeedSportLabel = [[UILabel alloc]initWithFrame:CGRectMake(XKAppWidth + (XKAppWidth - 200)/2 , (self.height - 118 - 30)/2, 200, 30)];
+        notNeedSportLabel.font = XKDefaultFontWithSize(14);
+        notNeedSportLabel.textColor = colorSecondary_666666;
+        notNeedSportLabel.backgroundColor = [UIColor clearColor];
+        notNeedSportLabel.textAlignment = NSTextAlignmentCenter;
+        if(_type == energyTypeEat){
+            [notNeedSportLabel setText:@"获取推荐食谱失败"];
+        }else if(_type == energyTypeSport){
+             [notNeedSportLabel setText:@"获取推荐运动失败"];
+        }
         [_scrollView addSubview:notNeedSportLabel];
     }
     
@@ -213,7 +230,6 @@
 }
 
 - (void) setDataToUI {
-  
     switch (_type) {
         case energyTypeEat:
             [self setFoodDataToUI];
@@ -556,8 +572,9 @@
     
     if (tableView.tag == 5031) {
         XKRWRecordCell_5_3 *cell = [tableView dequeueReusableCellWithIdentifier:@"recordCell"];
-        
+
         if (indexPath.section == showDetailSection){
+            cell.contentView.backgroundColor = colorSecondary_f0f0f0;
             id temp;
             if (_type == energyTypeSport) {
                 temp = [detailRecordArray objectAtIndex:indexPath.row];
@@ -590,6 +607,7 @@
             switchCell.backgroundColor = XK_BACKGROUND_COLOR;
             [XKRWUtil addViewUpLineAndDownLine:switchCell andUpLineHidden:YES DownLineHidden:NO];
             [switchCell setTitle:@"大姨妈" clickSwitchAction:^(BOOL on) {
+                [MobClick event:@"btn_fit_mc"];
                 if( [weakSelf.delegate respondsToSelector:@selector(menstruationIsOn:)]){
                     [weakSelf.delegate menstruationIsOn:on];
                 }
@@ -628,7 +646,6 @@
             }else{
                 cell.schemeTypeDescriptionLabel.text = @"查看运动";
             }
-            [XKRWUtil addViewUpLineAndDownLine:cell.contentView andUpLineHidden:YES DownLineHidden:NO];
             return  cell;
         }
     }
@@ -672,8 +689,10 @@
             return;
         }else if ([temp isKindOfClass:[XKRWRecordFoodEntity class]]){
             XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
-            addFoodVC.foodRecordEntity = temp;
+            addFoodVC.foodRecordEntity = temp ;
             addFoodVC.delegate = self;
+            addFoodVC.recordDate = _date;
+            addFoodVC.originalId = ((XKRWRecordFoodEntity *)temp).foodId;
             [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:_vc];
             
         }else{
@@ -681,8 +700,10 @@
             XKRWNavigationController *nav = [[XKRWNavigationController alloc] initWithRootViewController:addVC withNavigationBarType:NavigationBarTypeDefault];
             addVC.sportID = ((XKRWRecordSportEntity *)temp).sportId;
             addVC.recordSportEntity = ((XKRWRecordSportEntity *)temp);
+            addVC.recordDate = _date;
             addVC.isPresent = YES;
             addVC.delegate = self;
+           
             [_vc presentViewController:nav animated:YES completion:nil];
         }
         
@@ -734,7 +755,6 @@
         
         
         //推荐卡路里
-        //[XKRWAlgolHelper dailyConsumeSportEnergyV5_3OfDate:_recordDate]
         CGFloat recommendedCalorie = [[recordArray objectAtIndex:section] floatValue];
         //当前已经记录的卡路里
         CGFloat sumCalorie = [intakeArray[section] floatValue];
@@ -742,19 +762,18 @@
         CGFloat width =  [caloriesTitle boundingRectWithSize:CGSizeMake(XKAppWidth, CGFLOAT_MAX)
                                                      options:NSStringDrawingUsesLineFragmentOrigin
                                                   attributes:@{NSFontAttributeName: XKDefaultFontWithSize(15)}
-                                                     context:nil].size.width;
-        width =  width < 60 ?60 : width;
+                                                     context:nil].size.width + imageView.width + 15;
+        width =  width < 80 ?80 : width;
         UIButton *calorieButton = [UIButton buttonWithType:UIButtonTypeCustom];
         
         
         [calorieButton.titleLabel setFont:XKDefaultFontWithSize(15.f)];
         calorieButton.tag = 100 + section;
+//        calorieButton.backgroundColor = [UIColor redColor];
         [calorieButton setTitle:caloriesTitle forState:UIControlStateNormal];
-        calorieButton.frame = CGRectMake(0, 0, width, 44);
-        calorieButton.right = arrowImageView.left - 10;
-       
+        calorieButton.frame = CGRectMake(XKAppWidth - width, 0, width, 44);
         calorieButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight ;
-        
+        calorieButton.contentEdgeInsets = UIEdgeInsetsMake(0,0, 0, 35);
         [headerView addSubview:calorieButton];
         
         if (_type == energyTypeEat && recommendedCalorie < sumCalorie) {
@@ -764,9 +783,6 @@
              [calorieButton setTitleColor:colorSecondary_333333 forState:UIControlStateNormal];
         }
         [calorieButton addTarget:self action:@selector(showDetail:) forControlEvents:UIControlEventTouchUpInside];
-        
-        
-        
         [XKRWUtil addViewUpLineAndDownLine:headerView andUpLineHidden:YES DownLineHidden:NO];
         return headerView;
     }
@@ -870,7 +886,7 @@
             }
             else if (_type == energyTypeSport || _type == energyTypeEat  ){
                  [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
-                if (_schemeArray == nil) {
+                if (_notNeedSport) {
                     [_centerbutton setTitle:@"记录" forState:UIControlStateNormal];
                     _centerbutton.layer.borderColor = colorSecondary_666666.CGColor;
                     [_centerbutton setTitleColor:colorSecondary_666666 forState:UIControlStateNormal];
@@ -882,7 +898,7 @@
                 _centerbutton.hidden = YES;
             
             }else{
-                if (_schemeArray == nil && isRecommended == YES) {
+                if (_notNeedSport && isRecommended == YES) {
                     [_centerbutton setTitle:@"补记" forState:UIControlStateNormal];
                     _centerbutton.layer.borderColor = colorSecondary_666666.CGColor;
                     [_centerbutton setTitleColor:colorSecondary_666666 forState:UIControlStateNormal];
@@ -964,17 +980,18 @@
     _recordTypeLabel.textColor = XK_TEXT_COLOR;
     _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;
     
+    if (XKRWNotNeedRevision == _revisionType) {
+        [MobClick event:@"pg_fit_sug" attributes:@{@"from":@"today"}];
+    } else {
+        [MobClick event:@"pg_fit_sug" attributes:@{@"from":@"ago"}];
+    }
+    
     if (_type == energyTypeEat) {
         _leftButton.hidden = YES;
-
-        
-
         _rightButton.hidden = YES;
+        
     }else if (_type == energyTypeSport){
         _leftButton.hidden = YES;
-  
-        
-
         _rightButton.hidden = YES;
     }
     [UIView animateWithDuration:0.5 animations:^{
@@ -992,6 +1009,7 @@
 
 // 用来处理营养分析
 - (IBAction)leftButtonAction:(UIButton *)sender {
+    [MobClick event:@"pg_mealanalyse"];
     XKRWHPMealAnalysisVC * mealAnalysisVC = [[XKRWHPMealAnalysisVC alloc]initWithNibName:@"XKRWHPMealAnalysisVC" bundle:nil];
     mealAnalysisVC.recordDate = _date;
     mealAnalysisVC.hidesBottomBarWhenPushed = YES;

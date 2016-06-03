@@ -14,7 +14,7 @@
 @property (nonatomic,assign) SchemeType schemeType;
 
 @property (nonatomic,assign) MealType mealType;
-
+@property (nonatomic,assign) BOOL isToday;
 
 @property (nonatomic,strong) NSDate *recordDate;
 

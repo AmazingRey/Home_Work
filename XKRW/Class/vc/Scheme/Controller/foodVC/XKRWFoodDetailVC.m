@@ -69,7 +69,7 @@ const int FixedDisplayCount = 4;   //固定显示的个数
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [MobClick event:@"pg_fooddetail"];
     if (!self.foodId) {
         self.foodId = self.foodEntity.foodId;
     }

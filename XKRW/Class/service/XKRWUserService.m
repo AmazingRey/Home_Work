@@ -17,10 +17,7 @@
 #import "XKRWFoodService.h"
 #import "XKRWRecordService4_0.h"
 #import "XKRWFatReasonService.h"
-
-
 #import "XKRWCollectionService.h"
-
 #import "XKRW-Swift.h"
 
 static XKRWUserService *shareInstance;
@@ -1982,18 +1979,15 @@ static BOOL canUpdatePlan = YES;
     NSMutableArray *mutableArray = [NSMutableArray array];
     
     for (XKRWRecordSchemeEntity *schemeEntity  in array) {
-        if(schemeEntity.type == RecordTypeBreakfirst || schemeEntity.type == RecordTypeLanch || schemeEntity.type == RecordTypeLanch ||schemeEntity.type == RecordTypeSnack || schemeEntity.type == 6){
+        if(schemeEntity.type == 6){
             realIntakEnergy += schemeEntity.calorie;
         }
         
         if (schemeEntity.type == RecordTypeSport || schemeEntity.type  == 5) {
-            realSportEnergy += schemeEntity.calorie;
-            if (schemeEntity.type == RecordTypeSport) {
-                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                [dic setObject:@"完美执行" forKey:@"text"];
-                [dic setObject:[NSNumber numberWithFloat:schemeEntity.calorie] forKey:@"calorie"];
-                [mutableArray addObject:dic];
-            }else{
+            
+
+            if(RecordTypeSportScheme == schemeEntity.type ) {
+                realSportEnergy += schemeEntity.calorie;
                 NSMutableDictionary *dic = [NSMutableDictionary dictionary];
                 [dic setObject:@"完美执行45分钟" forKey:@"text"];
                 [dic setObject:[NSNumber numberWithFloat:schemeEntity.calorie] forKey:@"calorie"];
@@ -2020,24 +2014,11 @@ static BOOL canUpdatePlan = YES;
     }
     
     
-    
-    
-//    for (XKRWRecordFoodEntity *foodEntity in oldRecordEntity.FoodArray) {
-//        realIntakEnergy += foodEntity.calorie;
-//        isrecord = YES;
-//    }
-//    
-//    for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
-//        realSportEnergy += sportEntity.calorie;
-//         isrecord = YES;
-//    }
     entity.lossWeight = (dailyIntakEnergy -  realIntakEnergy + realSportEnergy) /7.7;
     entity.lessEatCalories = dailyIntakEnergy -  realIntakEnergy;
     entity.sportCalories = realSportEnergy;
     
-//    for (XKRWRecordSportEntity *sportEntity in oldRecordEntity.SportArray) {
-//       
-//    }
+
     entity.sportArray = mutableArray;
     
     if ( realIntakEnergy + realSportEnergy > 0) {

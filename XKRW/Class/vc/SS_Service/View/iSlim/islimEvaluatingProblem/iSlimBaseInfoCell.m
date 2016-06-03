@@ -140,13 +140,14 @@
     titleLabel.text = _titleArray[indexPath.row];
     [cell.contentView addSubview:titleLabel];
     
-        UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_right5_3"]];
-        arrow.topRight = CGPointMake(XKAppWidth, 0.f);
+        UIImage *arrowImage = [UIImage imageNamed:@"arrow_right5_3"];
+    
+        UIImageView *arrow = [[UIImageView alloc] initWithImage:arrowImage];
+        arrow.topRight = CGPointMake(XKAppWidth -15, (44 - arrowImage.size.height)/2 );
         
         [cell.contentView addSubview:arrow];
-        
         UILabel *detail = [[UILabel alloc] initWithFrame:CGRectMake(0.f, 0.f, 100.f, 44.f)];
-        detail.right = arrow.left;
+        detail.right = arrow.left - 10;
         [detail setFont:XKDefaultNumEnFontWithSize(16.f)];
         detail.textColor = XKMainSchemeColor;
         
