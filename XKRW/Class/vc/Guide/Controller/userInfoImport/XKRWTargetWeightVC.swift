@@ -78,7 +78,7 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         stateWightMin = statewight <= healthWeigth ? healthWeigth :statewight
         
         
-        if(XKRWUserService.sharedService().getUserOrigWeight() >= healthWeigth)
+        if(XKRWUserService.sharedService().getUserOrigWeight() >= stateWightMin)
         {
             MobClick.event("pg_goalwt")
             self.title = "目标体重"
@@ -88,6 +88,49 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
             {
                 pickerViewVerticalConstraint.constant = 35
             }
+            highestKilogram = XKRWUserService.sharedService().getUserOrigWeight()/1000
+            highestdecimals = XKRWUserService.sharedService().getUserOrigWeight()/100 - highestKilogram!*10
+            
+            
+            if (overWeight != nil){
+                highestWeightLabel.text = NSString(format: "%.1fkg", Double(overWeight!)/1000) as String
+                overKilogram = overWeight!/1000
+                overdecimals = overWeight!/100 - overKilogram!*10
+            }
+            
+            if (healthWeigth != nil){
+                lowestWeightLabel.text = NSString(format: "%.1fkg", Double(healthWeigth!)/1000) as String
+                healthKilogram = healthWeigth!/1000
+                healthdecimals = overWeight!/100 - healthKilogram!*10
+            }
+            
+            
+            if (stateWightMin != nil){
+                minStageKilogram = stateWightMin!/1000
+                minStagedecimals = stateWightMin!/100 - stateWightMin!*10
+            }
+            
+            if(highestKilogram != nil && minStageKilogram != nil){
+                
+                for i in 0 ... highestKilogram!-minStageKilogram! {
+                    kilogramArray.addObject(NSString(format: "%d",i+minStageKilogram!))
+                }
+            }
+            
+            for i in 0  ..< 10 {
+                decimalsArray.addObject(NSString(format: "%d", i))
+            }
+            
+            lowestLocationConstraint.constant = (UI_SCREEN_WIDTH-60)/4+30-25
+            highestLocationConstraint.constant = (UI_SCREEN_WIDTH-60)/4*2+30-25
+            
+           
+            
+            
+            let alert = UIAlertView(title: "设置阶段减重目标", message: "开启分阶段减重目标，请选择当前阶段的减重目标", delegate: nil, cancelButtonTitle: "知道了")
+            
+            alert .show()
+
         }else{
             MobClick.event("pg_thin")
             self.title = "偏瘦"
@@ -101,42 +144,6 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
         }
         
         
-        highestKilogram = XKRWUserService.sharedService().getUserOrigWeight()/1000
-        highestdecimals = XKRWUserService.sharedService().getUserOrigWeight()/100 - highestKilogram!*10
-        
-        
-        if (overWeight != nil){
-            highestWeightLabel.text = NSString(format: "%.1fkg", Double(overWeight!)/1000) as String
-            overKilogram = overWeight!/1000
-            overdecimals = overWeight!/100 - overKilogram!*10
-        }
-        
-        if (healthWeigth != nil){
-            lowestWeightLabel.text = NSString(format: "%.1fkg", Double(healthWeigth!)/1000) as String
-            healthKilogram = healthWeigth!/1000
-            healthdecimals = overWeight!/100 - healthKilogram!*10
-        }
-        
-        
-        if (stateWightMin != nil){
-            minStageKilogram = stateWightMin!/1000
-            minStagedecimals = stateWightMin!/100 - stateWightMin!*10
-        }
-        
-        if(highestKilogram != nil && minStageKilogram != nil){
-            
-            for i in 0 ... highestKilogram!-minStageKilogram! {
-                kilogramArray.addObject(NSString(format: "%d",i+minStageKilogram!))
-            }
-        }
-        
-        for i in 0  ..< 10 {
-            decimalsArray.addObject(NSString(format: "%d", i))
-        }
-        
-        lowestLocationConstraint.constant = (UI_SCREEN_WIDTH-60)/4+30-25
-        highestLocationConstraint.constant = (UI_SCREEN_WIDTH-60)/4*2+30-25
-        
         if(XKRWUserService.sharedService().getUserOrigWeight() > self.getWeightFromBMI(XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eStandard), userHeight: XKRWUserService.sharedService().getUserHeight())){
             self.setTargetWeightlocation(self.getWeightBMI(stateWightMin!))
             self.setDefaultLocationAndDefaultTargetweight()
@@ -146,10 +153,6 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
             targetWeightLabel.text = NSString(format: "%d.%d", XKRWUserService.sharedService().getUserOrigWeight()/1000,XKRWUserService.sharedService().getUserOrigWeight()/100-XKRWUserService.sharedService().getUserOrigWeight()/1000*10) as String
         }
         
-     
-       let alert = UIAlertView(title: "设置阶段减重目标", message: "开启分阶段减重目标，请选择当前阶段的减重目标", delegate: nil, cancelButtonTitle: "知道了")
-        
-        alert .show()
         
         // Do any additional setup after loading the view.
     }
@@ -246,9 +249,9 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
     //设置目标体重 图标位置
     func setTargetWeightlocation(bmi:CGFloat){
         if(bmi < 13){
-            weightLocationConstraint.constant = 30 + 37/2
+            weightLocationConstraint.constant =  37/2
         }else if(bmi > 35){
-            weightLocationConstraint.constant = UI_SCREEN_WIDTH-30 + 37/2
+            weightLocationConstraint.constant = UI_SCREEN_WIDTH-60 + 37/2
         }else{
             
             let lowestBMI =  XKRWUserService.sharedService().getBMIFromAge(age, andSex: sex, andBMItype: BMIType.eLowest)

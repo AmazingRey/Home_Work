@@ -81,7 +81,7 @@ static XKRWBaseService *service;
         [defaults synchronize];
         
         //用来使用户重新登陆   5.3之后的版本需要删除
-        [XKRWUserDefaultService setLogin:NO];
+//        [XKRWUserDefaultService setLogin:NO];
         
         return YES;
     }

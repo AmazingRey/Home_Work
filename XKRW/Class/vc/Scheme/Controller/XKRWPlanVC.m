@@ -13,7 +13,7 @@
 #import "KMSearchBar.h"
 #import "KMSearchDisplayController.h"
 #import "XKRWPlanEnergyView.h"
-#import "XKRWWeightRecordPullView.h"
+//#import "XKRWWeightRecordPullView.h"
 #import "XKRWWeightPopView.h"
 #import <iflyMSC/IFlyRecognizerView.h>
 #import <iflyMSC/IFlyRecognizerViewDelegate.h>
@@ -47,8 +47,9 @@
 #import "XKRWStatisticAnalysizeVC.h"
 #import "XKRWModifyNickNameVC.h"
 #import "XKRWNoticeService.h"
+#import "XKRWPullMenuView.h"
 
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightRecordPullViewDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate,UIAlertViewDelegate>
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate,UIAlertViewDelegate,XKRWPullMenuViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
     KMSearchBar *foodAndSportSearchBar;
@@ -74,8 +75,8 @@
     // 改正习惯
     NSInteger currentHabit;
     UIButton  *btnBackBounds;
-    XKRWRecordMore5_3View *recordMoreView;
-    XKRWRecordSingleMore5_3View *recordSingleMoreView;
+//    XKRWRecordMore5_3View *recordMoreView;
+//    XKRWRecordSingleMore5_3View *recordSingleMoreView;
     CGFloat energyViewHeight;
     // 是不是今天的方案
     BOOL isTodaysPlan;
@@ -86,9 +87,12 @@
 
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
-@property (nonatomic, strong) XKRWWeightRecordPullView *pullView;
-@property (nonatomic, strong) XKRWWeightPopView *popView;
+//@property (nonatomic, strong) XKRWWeightRecordPullView *pullView;
+@property (nonatomic, strong) XKRWPullMenuView *pullView;
+@property (nonatomic, strong) XKRWPullMenuView *recordMorePullView;
+@property (nonatomic, strong) XKRWPullMenuView *recordMoreSinglePullView;
 
+@property (nonatomic, strong) XKRWWeightPopView *popView;
 @property (strong , nonatomic) NSArray *mealSchemeArray;
 @property (strong , nonatomic) XKRWSchemeEntity_5_0 *sportSchemeEntity;
 @property (strong , nonatomic) XKRWRecordView_5_3 *recordPopView;
@@ -372,6 +376,7 @@
 
 - (UIView *)createPlanHeaderView
 {
+    
     planHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 120 + energyViewHeight)];
     planHeaderView.backgroundColor = [UIColor whiteColor];
     foodAndSportSearchBar = [[KMSearchBar alloc]initWithFrame:CGRectMake(0, 20, XKAppWidth, 44)];
@@ -491,7 +496,7 @@
 - (void)handleLongPressRecognizer:(UIButton *)sender {
     if (sender.state == UIGestureRecognizerStateBegan){
         NSLog(@"UIGestureRecognizerStateBegan.");
-        [self pressPullViewButtonWithType:0];
+        [self pressPullViewWithTitleString:@"记录体重"];
     }
     else if (sender.state == UIGestureRecognizerStateEnded) {
         NSLog(@"UIGestureRecognizerStateEnded");
@@ -511,7 +516,10 @@
         CGFloat pullWidth = 138*XKAppWidth/375;
         CGFloat pullHeight = 143*pullWidth/138;
         
-        _pullView = [[XKRWWeightRecordPullView alloc] initWithFrame:CGRectMake(0, 0, pullWidth, pullHeight)];
+        NSArray *itemArr = [NSArray arrayWithObjects:@"记录体重",@"记录围度",@"查看曲线", nil];
+        NSArray *imageArr = [NSArray arrayWithObjects:@"weight5_3",@"girth5_3",@"curve5_3", nil];
+        _pullView = [[XKRWPullMenuView alloc] initWithFrame:CGRectMake(0, 0, pullWidth, pullHeight) itemArray:itemArr imageArray:imageArr];
+        
         CGPoint center = button.center;
         center.x = XKAppWidth - _pullView.frame.size.width/2 - 15;
         center.y = button.center.y + button.frame.size.height + _pullView.frame.size.height/2+foodAndSportSearchBar.frame.size.height;
@@ -767,6 +775,7 @@
     if (_recordPopView) {
         XKRWRecordView_5_3 *popView = _recordPopView;
         _recordPopView = nil;
+        [self removeMoreView];
         
         [UIView animateWithDuration:.7 delay:0 usingSpringWithDamping:.6 initialSpringVelocity:1 options:0 animations:^{
             CGRect frame = popView.frame;
@@ -952,39 +961,52 @@
 }
 
 -(void)addMoreView{
-   
-    if (!recordMoreView && !recordSingleMoreView) {
-        CGRect frame = CGRectMake(recordBackView.frame.size.width - 150, _recordPopView.moreButton.frame.origin.y - 20 + _recordPopView.moreButton.frame.size.height+15, 138, 91);
-             [MobClick event:@"btn_ option" attributes:@{@"open":@"fit"}];
+    if (!_recordMorePullView && !_recordMoreSinglePullView) {
+        [MobClick event:@"btn_ option" attributes:@{@"open":@"fit"}];
+        CGRect frame = CGRectMake(0, 0, 138, 91);
+//        CGPoint point = CGPointMake(recordBackView.frame.size.width - 150, _recordPopView.moreButton.frame.origin.y - 20 + _recordPopView.moreButton.frame.size.height+15);
+        
+        NSArray *itemArr;
+        CGPoint center = _recordPopView.moreButton.center;
         if (_recordPopView.type == 2 || (!isTodaysPlan && _recordPopView.type == energyTypeHabit)) {
             frame.size.height = 59;
             
-            recordSingleMoreView = [[XKRWRecordSingleMore5_3View alloc] initWithFrame:frame];
-            [_recordPopView addSubview:recordSingleMoreView];
-            recordSingleMoreView.type = _recordPopView.type;
-            recordSingleMoreView.delegate = self;
+            itemArr = [NSArray arrayWithObjects:@"设置运动提醒", nil];
+            _recordMoreSinglePullView = [[XKRWPullMenuView alloc] initWithFrame:frame itemArray:itemArr imageArray:nil];
+            
+            _recordMoreSinglePullView.delegate = self;
+            [_recordPopView addSubview:_recordMoreSinglePullView];
+            center.x = XKAppWidth - _recordMoreSinglePullView.frame.size.width/2 - 10;
+            center.y += _recordPopView.moreButton.frame.size.height + 5;
+            _recordMoreSinglePullView.center = center;
         }else{
             if (_recordPopView.type == 3) {
+                itemArr = [NSArray arrayWithObjects:@"重新测评习惯",@"设置习惯提醒", nil];
                  [MobClick event:@"btn_ option" attributes:@{@"open":@"habit"}];
             }else{
+                itemArr = [NSArray arrayWithObjects:@"调整四餐比例",@"设置饮食提醒", nil];
                 [MobClick event:@"btn_ option" attributes:@{@"open":@"diet"}];
             }
-            recordMoreView = [[XKRWRecordMore5_3View alloc] initWithFrame:frame];
-            [_recordPopView addSubview:recordMoreView];
-            recordMoreView.type = _recordPopView.type;
-            recordMoreView.delegate = self;
+            
+            _recordMorePullView = [[XKRWPullMenuView alloc] initWithFrame:frame itemArray:itemArr imageArray:nil];
+            
+            _recordMorePullView.delegate = self;
+            [_recordPopView addSubview:_recordMorePullView];
+            center.x = XKAppWidth - _recordMorePullView.frame.size.width/2 - 10;
+            center.y += _recordPopView.moreButton.frame.size.height + 20;
+            _recordMorePullView.center = center;
         }
-    }else if (recordSingleMoreView || recordMoreView){
+    }else{
         [self removeMoreView];
     }
 }
 
 -(void)removeMoreView{
-    [recordMoreView removeFromSuperview];
-    recordMoreView = nil;
+    [_recordMorePullView removeFromSuperview];
+    _recordMorePullView = nil;
     
-    [recordSingleMoreView removeFromSuperview];
-    recordSingleMoreView = nil;
+    [_recordMoreSinglePullView removeFromSuperview];
+    _recordMoreSinglePullView = nil;
 }
 
 //调整四餐比例
@@ -1048,28 +1070,34 @@
  *  @param type 0:记录体重
  *              1:记录围度
  *              2:查看曲线
+ @"设置运动提醒"
+ @"重新测评习惯"
+ @"设置习惯提醒"
+ @"调整四餐比例"
+ @"设置饮食提醒"
  */
--(void)pressPullViewButtonWithType:(PullViewBtnType)type{
-    if (type == 2) {
+-(void)pressPullViewWithTitleString:(NSString *)str{
+    
+    if ([str isEqualToString:@"查看曲线"]) {
         [MobClick event:@"btn_markdata"];
         [self removeBtnBackBounds];
         XKRWSurroundDegreeVC_5_3 *vc = [[XKRWSurroundDegreeVC_5_3 alloc]init];
         vc.dataType = 1;
         [self presentViewController:vc animated:YES completion:nil];
-    }else{
+    }
+    else if ([str isEqualToString:@"记录围度"] || [str isEqualToString:@"记录体重"]){
         [self removePullView];
         
-        if (type == recordWeight) {
+        NSInteger type;
+        if ([str isEqualToString:@"记录体重"]) {
+            type = 0;
             [MobClick event:@"btn_wtmark"];
         }else{
+            type = 1;
             [MobClick event:@"btn_girthmark"];
         }
-        
         _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - 100, 240) withType:type withDate:_recordDate];
         _popView.alpha = 0;
-        
-        
-        
         _popView.delegate = self;
         if (!btnBackBounds) {
             btnBackBounds = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1093,10 +1121,37 @@
             [btnBackBounds addSubview:_popView];
             btnBackBounds.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
             _popView.alpha = 1;
-//            self.view.userInteractionEnabled = NO;
-          //  self.tabBarController.tabBar.hidden = YES;
-
         } completion:nil];
+
+    }
+    else if ([str isEqualToString:@"调整四餐比例"]){
+        [MobClick event:@"btn_meal_detail"];
+        XKRWChangeMealPercentVC *changeMealVC = [[XKRWChangeMealPercentVC alloc] init];
+        changeMealVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:changeMealVC animated:YES];
+        [changeMealVC.navigationController setNavigationBarHidden:NO];
+    }
+    else if ([str isEqualToString:@"设置饮食提醒"] || [str isEqualToString:@"设置运动提醒"] || [str isEqualToString:@"设置习惯提醒"]){
+        [self removeMoreView];
+        XKRWAlarmVC *vc = [[XKRWAlarmVC alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        if ([str isEqualToString:@"设置饮食提醒"]) {
+            vc.type = eAlarmBreakfast;
+        }else if ([str isEqualToString:@"设置运动提醒"]){
+            vc.type = eAlarmExercise;
+        }else if ([str isEqualToString:@"设置习惯提醒"]){
+            vc.type = eAlarmHabit;
+        }
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc.navigationController setNavigationBarHidden:NO];
+    }
+    else if ([str isEqualToString:@"重新测评习惯"]){
+        [MobClick event:@"btn_habit_rescan"];
+        XKRWFoundFatReasonVC *fatReasonVC = [[XKRWFoundFatReasonVC alloc]initWithNibName:@"XKRWFoundFatReasonVC" bundle:nil];
+        fatReasonVC.hidesBottomBarWhenPushed = YES;
+        [fatReasonVC setFromWhichVC:SchemeInfoChangeVC];
+        [self.navigationController pushViewController:fatReasonVC animated:YES];
+        [fatReasonVC.navigationController setNavigationBarHidden:NO];
     }
 }
 

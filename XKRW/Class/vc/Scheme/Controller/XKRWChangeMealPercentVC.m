@@ -530,6 +530,7 @@
     if ([taskID isEqualToString:@"saveMealRatio"]) {
         [self.navigationController popViewControllerAnimated:YES];
         [self setTagOfLockImageStatus:[_dicLockTags allKeys]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodCircle];
     }
 }
 

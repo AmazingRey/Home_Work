@@ -19,7 +19,6 @@
     UITextView *inputBox;
     UIButton *senderButton;
     UILabel *placeholderLabel;
-    XKRWInputBoxViewStyle selfStyle;
 }
 
 - (instancetype)init {
@@ -59,6 +58,15 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     }
+    [self setStyle:original];
+    
+    return self;
+}
+- (instancetype)initWithPlaceholder:(NSString *)placeholder style:(XKRWInputBoxViewStyle)style {
+    self = [self init];
+    
+    [self setStyle:style];
+    placeholderLabel.text = placeholder;
     
     return self;
 }
@@ -67,10 +75,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (instancetype)initWithPlaceholder:(NSString *)placeholder style:(XKRWInputBoxViewStyle)style {
-    self = [self init];
+- (void)setStyle:(XKRWInputBoxViewStyle)style {
     
-    selfStyle = style;
+    _style = style;
     if (style == footer) {
         inputBox.size = CGSizeMake(XKAppWidth - 100, 30);
         senderButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -89,12 +96,11 @@
     } else {
         [inputBox setReturnKeyType:UIReturnKeySend];
     }
-    placeholderLabel.text = placeholder;
-    return self;
 }
 
+
 - (void)showIn:(UIView *)view {
-    if (selfStyle == footer) {
+    if (_style == footer) {
         self.origin = CGPointMake(0, XKAppHeight - 40 - 64);
     } else {
         self.origin = CGPointMake(0, view.height);
@@ -131,7 +137,7 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
-    if (selfStyle == footer) {
+    if (_style == footer) {
         return YES;
     } else {
         if ([text isEqualToString:@"\n"]) {
@@ -206,7 +212,7 @@
     float animationDuration = [[[notification userInfo] valueForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     CGFloat height = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
-    if (selfStyle == footer) {
+    if (_style == footer) {
     
         [UIView animateWithDuration:animationDuration animations:^{
             _inputBgView.bottom = XKAppHeight - 64;

@@ -134,6 +134,7 @@
         [imageView removeFromSuperview];
         imageView = nil;
     }
+      [self.navigationBar  setShadowImage:[XKRWUtil createImageWithColor:[UIColor colorFromHexString:@"#AAAAAA"]]];
     [self.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigationBar"] forBarMetrics:UIBarMetricsDefault];
     self.navigationBar.layer.masksToBounds = NO;
 }

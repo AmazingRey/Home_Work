@@ -48,7 +48,7 @@
 #import "XKRW-Swift.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import <SMS_SDK/SMSSDK.h>
-
+#import "XTSafeCollection.h"
 @implementation XKRWAppDelegate
 #pragma mark - 推送
 #pragma mark -
@@ -154,6 +154,7 @@
     // 用来打印数据库路径
     XKLog(@"+++++%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]);
     
+    [XTSafeCollection setLogEnabled:NO];
 #pragma --mark 处理APP关闭状态下远程通知
     dicInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if (dicInfo) {

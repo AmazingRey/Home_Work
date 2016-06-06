@@ -28,6 +28,11 @@
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
+		<key>XTSafeCollection.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 		<key>YYImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -60,6 +65,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>31553CA6A313BB4D5C10A162E42187D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3BB7C5DFE77AA3D1D851B8A0ED0B5F39</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3BCE6B1779F1FCE63018A0A77E8FE2F6</key>
 		<dict>
 			<key>primary</key>
@@ -71,6 +86,16 @@
 			<true/>
 		</dict>
 		<key>53480ED0BE09FF49E34B1702D485CAAB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5ADC4287DFF004BDDCC350ED608C9A65</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>60FB9B733781A8F5B0441F73982FF105</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -101,6 +126,11 @@
 			<true/>
 		</dict>
 		<key>F3E6AE45D987C2FC45E849AAD15725E1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F9AA03293B0D91FA513FE3424916B4EC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

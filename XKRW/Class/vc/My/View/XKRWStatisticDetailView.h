@@ -38,5 +38,5 @@
 
 - (instancetype)initWithFrame:(CGRect)frame type:(AnalysizeType)type statisType:(StatisticType)statisType withBussiness:(XKRWStatiscBussiness5_3 *)bussiness;
 
--(void)refreshControls;
+//-(void)refreshControls;
 @end

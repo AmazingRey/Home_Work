@@ -341,8 +341,6 @@ const int FixedDisplayCount = 4;   //固定显示的个数
             NSMutableArray *array = [NSMutableArray array];
             // 剔除热量元素
             for (NSDictionary * key in foodEntity.foodNutri) {
-//                NSString *str = [NSString stringWithFormat:@"%@",key[@"nutr"]];
-//                BOOL abool = [str containsString:@"热量"];
                 if ([[NSString stringWithFormat:@"%@",key[@"nutr"]] rangeOfString:@"热量"].location == NSNotFound) {
                     [array addObject:key];
                 }

@@ -104,7 +104,7 @@
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.calendar = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    formatter.dateFormat = @"YYYY年MM月";
+    formatter.dateFormat = @"yyyy年MM月";
     return [formatter stringFromDate:self];
 }
 

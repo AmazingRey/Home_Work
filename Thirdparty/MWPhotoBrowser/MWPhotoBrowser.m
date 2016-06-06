@@ -135,6 +135,9 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     
+    // Super
+    [super viewDidLoad];
+    
     // Validate grid settings
     if (_startOnGrid) _enableGrid = YES;
     if (_enableGrid) {
@@ -195,14 +198,15 @@
         [self.view addGestureRecognizer:swipeGesture];
     }
     
-	// Super
-    [super viewDidLoad];
+	
     
-//    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top88.png"] forBarMetrics:UIBarMetricsDefault];
     UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftItemButton setImage:[UIImage imageNamed:@"return1.png"] forState:UIControlStateNormal];
-    [leftItemButton setImage:[UIImage imageNamed:@"return1_p.png"] forState:UIControlStateHighlighted];
-    leftItemButton.frame = CGRectMake(0, 0, 32, 44);
+    UIImage *back = [UIImage imageNamed:@"navigationBarback"];
+    [leftItemButton setImage:back forState:UIControlStateNormal];
+    [leftItemButton setImage:[UIImage imageNamed:@"navigationBarback_p"] forState:UIControlStateHighlighted];
+    leftItemButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    leftItemButton.frame = CGRectMake(0, 0, back.size.width, back.size.height);
+    
     [leftItemButton setTitleColor:[UIColor colorWithRed:247/255.f green:106/255.f blue:8/255.f alpha:1.0] forState:UIControlStateNormal];
     [leftItemButton addTarget:self action:@selector(popSelf) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftItemButton];

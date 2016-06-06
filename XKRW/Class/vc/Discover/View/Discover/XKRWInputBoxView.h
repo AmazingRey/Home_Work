@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger,XKRWInputBoxViewStyle){
 @interface XKRWInputBoxView : UIView
 @property (nonatomic, strong) UIView *inputBgView;
 @property (nonatomic, weak) id<XKRWInputBoxViewDelegate> delegate;
+@property (nonatomic, assign) XKRWInputBoxViewStyle style;
+
 - (instancetype)initWithPlaceholder:(NSString *)placeholder style:(XKRWInputBoxViewStyle)style;
 - (void)showIn:(UIView *)view;
 - (void)setPlaceholder:(NSString *)placeholder;

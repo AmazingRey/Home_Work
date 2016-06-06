@@ -160,7 +160,7 @@
         _labTitle.font = [UIFont systemFontOfSize:12];
         [self addSubview:_labTitle];
     }
-    _labTitle.text = _type == 1? @"饮食减少摄入总计" : @"运动消耗总计";
+    _labTitle.text = _type == 1? @"少吃了" : @"运动消耗";
     return _labTitle;
 }
 
