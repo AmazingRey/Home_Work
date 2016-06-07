@@ -153,22 +153,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/sportVC/XKRWSportAddVC.m"
-            timestampString = "486378199.919209"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "320"
-            endingLineNumber = "320"
-            landmarkName = "-rightNaviItemClicked:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "XKRW/Class/service/recordService/XKRWRecordService4_0.m"
             timestampString = "486439364.999581"
             startingColumnNumber = "9223372036854775807"
@@ -176,22 +160,6 @@
             startingLineNumber = "662"
             endingLineNumber = "662"
             landmarkName = "-saveSportRecordToRemote:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/foodVC/XKRWAddFoodVC4_0.m"
-            timestampString = "486446130.635005"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "732"
-            endingLineNumber = "732"
-            landmarkName = "-unitThirdSegmentAction:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -256,38 +224,6 @@
             startingLineNumber = "134"
             endingLineNumber = "134"
             landmarkName = "-tn_replaceObjectAtIndex:withObject:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
-            timestampString = "486887676.507728"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1340"
-            endingLineNumber = "1340"
-            landmarkName = "-didDownloadWithResult:taskID:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
-            timestampString = "486887677.555602"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1334"
-            endingLineNumber = "1334"
-            landmarkName = "-didDownloadWithResult:taskID:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

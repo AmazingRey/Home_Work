@@ -15,6 +15,9 @@
 {
     CGFloat tableHeight;
     NSString *cellidenty;
+    CGFloat arrowImageWidth;
+    CGFloat arrowImageHeight;
+    BOOL isNotPureText;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame itemArray:(NSArray *)itemArray imageArray:(NSArray *)imageArray
@@ -23,12 +26,16 @@
     if (self) {
         self.itemArray = itemArray;
         self.imageArray = imageArray;
-        cellidenty = self.imageArray.count == self.itemArray.count?@"pullMenuNormalCell":@"pullMenuTextCell";
-        
-//        tableHeight = 44 * self.itemArray.count;
-//        CGRect tmpframe = frame;
-//        tmpframe.size.height = tableHeight + 4;
-//        self.frame = tmpframe;
+        isNotPureText = self.imageArray.count == self.itemArray.count;
+        if (isNotPureText) {
+            arrowImageWidth = 10;
+            arrowImageHeight = 5;
+            cellidenty = @"pullMenuNormalCell";
+        }else{
+            arrowImageWidth = 13;
+            arrowImageHeight = 7;
+            cellidenty = @"pullMenuTextCell";
+        }
         
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
@@ -41,19 +48,16 @@
 -(UITableView *)tableView{
     if (!_tableView) {
         CGRect frame = self.frame;
-        frame.origin.y = 4;
-        frame.size.height -= 4;
+        frame.origin.y = arrowImageHeight - 1;
+        frame.size.height -= arrowImageHeight - 1;
         _tableView = [[UITableView alloc] initWithFrame:frame];
         _tableView.scrollEnabled = false;
-        
         _tableView.separatorColor = XKSepDefaultColor;
         _tableView.layer.borderWidth = 0.5;
         _tableView.layer.borderColor = [UIColor colorFromHexString:@"#c8c8c8"].CGColor;
         _tableView.layer.cornerRadius = 5;
         _tableView.backgroundColor = [UIColor colorFromHexString:@"f0f0f0"];
         _tableView.clipsToBounds = YES;
-        
-        [self addSubview:_tableView];
     }
     return _tableView;
 }
@@ -61,35 +65,18 @@
 -(UIImageView *)arrowImageView{
     if (!_arrowImageView) {
         CGRect frame = self.frame;
-        frame.origin.x = frame.size.width - 30;
-        frame.size.width = 10;
-        frame.size.height = 5;
+        if (isNotPureText) {
+            frame.origin.x = frame.size.width - 30;
+        }else{
+            frame.origin.x = frame.size.width - 23;
+        }
+        frame.size.width = arrowImageWidth;
+        frame.size.height = arrowImageHeight;
         _arrowImageView = [[UIImageView alloc] initWithFrame:frame];
-        
         _arrowImageView.image = [UIImage imageNamed:@"triangle5_3"];
-        [self addSubview:_arrowImageView];
     }
     return _arrowImageView;
 }
-
-//#pragma mark Masonry
-//+(BOOL)requiresConstraintBasedLayout{
-//    return YES;
-//}
-//
-//-(void)updateConstraints{
-//    [self.arrowImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.right.mas_equalTo(30);
-//        make.width.mas_equalTo(10);
-//        make.height.mas_equalTo(5);
-//    }];
-//    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.mas_equalTo(self.mas_centerX);
-//        make.top.mas_equalTo(4);
-//        make.height.mas_equalTo(tableHeight);
-////        make.bottom.mas_equalTo(self.mas_bottom);
-//    }];
-//}
 
 #pragma mark UITableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -97,11 +84,11 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return self.itemArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGFloat height = (self.frame.size.height - 4)/self.itemArray.count;
+    CGFloat height = (self.frame.size.height - self.arrowImageView.frame.size.height + 1)/self.itemArray.count;
     return height;
 }
 
@@ -121,7 +108,6 @@
     if ([cellidenty isEqualToString:@"pullMenuNormalCell"]) {
         XKRWPullMenuNormalCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidenty];
         if (!cell) {
-//            cell = [[XKRWPullMenuNormalCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellidenty];
             cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWPullMenuNormalCell");
         }
         NSString *str = [self.itemArray objectAtIndex:indexPath.row];
@@ -134,7 +120,6 @@
         XKRWPullMenuTextCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidenty];
         if (!cell) {
             cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWPullMenuTextCell");
-//            cell = [[XKRWPullMenuTextCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellidenty];
         }
         NSString *str = [self.itemArray objectAtIndex:indexPath.row];
         cell.lab.text = str;

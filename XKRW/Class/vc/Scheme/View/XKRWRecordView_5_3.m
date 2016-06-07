@@ -12,7 +12,6 @@
 #import "XKRWRecordCell_5_3.h"
 #import "XKRWRecommandedCell_5_3.h"
 #import "XKRWAlgolHelper.h"
-#import "XKRWRecordMore5_3View.h"
 #import "XKRWPlan_5_3CollectionView.h"
 #import "XKRWFatReasonService.h"
 #import "XKRWRecordVC.h"
@@ -64,7 +63,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *testViewFrame;
 @property (strong ,nonatomic) UIView *bgBlackView;
-@property (strong ,nonatomic) XKRWRecordMore5_3View *moreView;
 @property (strong, nonatomic) IBOutlet UIButton *cancleBtn;
 
 @end
@@ -999,7 +997,6 @@
     }];
     
 }
-
 
 - (IBAction)actMore:(id)sender {
     if ([self.delegate respondsToSelector:@selector(addMoreView)]) {

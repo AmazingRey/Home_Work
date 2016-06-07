@@ -326,6 +326,7 @@
       
     }
 
+    [XKRWCui showProgressHud];
     [self downloadWithTaskID:@"saveSportRecord" outputTask:^id{
         return @([[XKRWRecordService4_0 sharedService] saveRecord:_recordSportEntity ofType:XKRWRecordTypeSport]);
     }];

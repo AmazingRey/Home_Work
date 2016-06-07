@@ -139,7 +139,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
     
     func initData(){
         self.getOperateArticleData(page, pageSize: 10)
-        page++
+        page += 1
     }
     
     
@@ -265,7 +265,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
 
             bigImageAndTitleCell?.imageButton!.setImageWithURL(NSURL(string: entity.bigImageUrl!),  forState: .Normal, placeholderImage:UIImage(named: "sport_detail_defalut"),options:.RetryFailed)
             bigImageAndTitleCell?.imageButton.tag = indexPath.section
-            bigImageAndTitleCell?.imageButton.addTarget(self, action: "entryArticleButtonAction:", forControlEvents: .TouchUpInside)
+            bigImageAndTitleCell?.imageButton.addTarget(self, action: #selector(XKRWOperateArticleListVC.entryArticleButtonAction(_:)), forControlEvents: .TouchUpInside)
             
             bigImageAndTitleCell?.timeLabel.text = entity.date!
             bigImageAndTitleCell?.titleLabel.text = entity.title!

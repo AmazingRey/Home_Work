@@ -86,7 +86,7 @@
         
         if (!foodEntity) {
             
-            [XKRWCui showProgressHud:@""];
+            [XKRWCui showProgressHud];
             [self downloadWithTaskID:@"downloadFoodDetail" outputTask:^id {
                 
                 foodEntity = [[XKRWFoodService shareService] getFoodDetailByFoodId:_originalId];

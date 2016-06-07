@@ -20,7 +20,7 @@
 
 typedef void(^nickNameBK)(NSString *nickName);
 
-@interface XKRWReplyCell : UITableViewCell
+@interface XKRWReplyCell : UITableViewCell<TYAttributedLabelDelegate>
 
 @property (nonatomic, assign) id<XKRWReplyCellDelegate> delegate;
 

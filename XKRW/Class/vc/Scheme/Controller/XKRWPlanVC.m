@@ -37,8 +37,6 @@
 #import "XKRWPlanService.h"
 #import "XKRWTipsManage.h"
 #import "XKRWCalendarVC.h"
-#import "XKRWRecordMore5_3View.h"
-#import "XKRWRecordSingleMore5_3View.h"
 #import "XKRWChangeMealPercentVC.h"
 #import "XKRWHomePagePretreatmentManage.h"
 #import "XKRWDailyAnalysizeVC.h"
@@ -49,7 +47,7 @@
 #import "XKRWNoticeService.h"
 #import "XKRWPullMenuView.h"
 
-@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,XKRWRecordMore5_3ViewDelegate,XKRWRecordSingleMore5_3ViewDelegate,UIAlertViewDelegate,XKRWPullMenuViewDelegate>
+@interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,UIAlertViewDelegate,XKRWPullMenuViewDelegate>
 {
     XKRWUITableViewBase  *planTableView;
     KMSearchBar *foodAndSportSearchBar;
@@ -75,8 +73,6 @@
     // 改正习惯
     NSInteger currentHabit;
     UIButton  *btnBackBounds;
-//    XKRWRecordMore5_3View *recordMoreView;
-//    XKRWRecordSingleMore5_3View *recordSingleMoreView;
     CGFloat energyViewHeight;
     // 是不是今天的方案
     BOOL isTodaysPlan;
@@ -87,7 +83,6 @@
 
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
 @property (nonatomic, strong) XKRWRecordAndTargetView *recordAndTargetView;
-//@property (nonatomic, strong) XKRWWeightRecordPullView *pullView;
 @property (nonatomic, strong) XKRWPullMenuView *pullView;
 @property (nonatomic, strong) XKRWPullMenuView *recordMorePullView;
 @property (nonatomic, strong) XKRWPullMenuView *recordMoreSinglePullView;
@@ -112,7 +107,6 @@
             self.view.height += 49;
         });
     }
-
 }
 
 
@@ -228,7 +222,6 @@
         isflash = NO;
         title = [title stringByAppendingString:@" >"];
     }
-    
     [_planEnergyView setTitle:title isflashing:isflash];
 }
 
@@ -970,8 +963,12 @@
         CGPoint center = _recordPopView.moreButton.center;
         if (_recordPopView.type == 2 || (!isTodaysPlan && _recordPopView.type == energyTypeHabit)) {
             frame.size.height = 59;
+            if (_recordPopView.type == 2) {
+                itemArr = [NSArray arrayWithObjects:@"设置运动提醒", nil];
+            }else{
+                itemArr = [NSArray arrayWithObjects:@"设置习惯提醒", nil];
+            }
             
-            itemArr = [NSArray arrayWithObjects:@"设置运动提醒", nil];
             _recordMoreSinglePullView = [[XKRWPullMenuView alloc] initWithFrame:frame itemArray:itemArr imageArray:nil];
             
             _recordMoreSinglePullView.delegate = self;
@@ -1030,26 +1027,6 @@
    
 }
 
-//设置饮食提醒
--(void)pressSetNotifyWithIndex:(NSInteger)index{
-    
-    [self removeMoreView];
-    XKRWAlarmVC *vc = [[XKRWAlarmVC alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    switch (index) {
-        case 1:
-            vc.type = eAlarmBreakfast;
-            break;
-        case 3:
-            vc.type = eAlarmHabit;
-            break;
-        default:
-            break;
-    }
-    [self.navigationController pushViewController:vc animated:YES];
-    [vc.navigationController setNavigationBarHidden:NO];
-}
-
 -(void)pressSetSportNotifyWithType:(energyType)type {
     
     [self removeMoreView];
@@ -1077,7 +1054,7 @@
  @"设置饮食提醒"
  */
 -(void)pressPullViewWithTitleString:(NSString *)str{
-    
+    [self removeMoreView];
     if ([str isEqualToString:@"查看曲线"]) {
         [MobClick event:@"btn_markdata"];
         [self removeBtnBackBounds];
@@ -1096,8 +1073,10 @@
             type = 1;
             [MobClick event:@"btn_girthmark"];
         }
+
         _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - 100, 240) withType:type withDate:_recordDate];
         _popView.alpha = 0;
+
         _popView.delegate = self;
         if (!btnBackBounds) {
             btnBackBounds = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1132,7 +1111,6 @@
         [changeMealVC.navigationController setNavigationBarHidden:NO];
     }
     else if ([str isEqualToString:@"设置饮食提醒"] || [str isEqualToString:@"设置运动提醒"] || [str isEqualToString:@"设置习惯提醒"]){
-        [self removeMoreView];
         XKRWAlarmVC *vc = [[XKRWAlarmVC alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         if ([str isEqualToString:@"设置饮食提醒"]) {

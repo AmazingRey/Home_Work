@@ -4,9 +4,25 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
+            timestampString = "486976864.12702"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "980"
+            endingLineNumber = "980"
+            landmarkName = "-addMoreView"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -16,16 +32,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
-            timestampString = "486895882.809586"
+            filePath = "XKRW/Class/vc/Scheme/View/XKRWPullMenuNormalCell.m"
+            timestampString = "486981645.463016"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "520"
-            endingLineNumber = "520"
-            landmarkName = "-setUserDataAction:"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "-setSelected:animated:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -35,46 +51,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
-            timestampString = "486901358.780759"
+            filePath = "XKRW/Class/vc/Scheme/View/XKRWPullMenuNormalCell.m"
+            timestampString = "486981617.03313"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1036"
-            endingLineNumber = "1036"
-            landmarkName = "-pressSetNotifyWithIndex:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
-            timestampString = "486901358.780759"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1055"
-            endingLineNumber = "1055"
-            landmarkName = "-pressSetSportNotifyWithType:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/vc/Scheme/Controller/XKRWPlanVC.m"
-            timestampString = "486901358.780759"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "964"
-            endingLineNumber = "964"
-            landmarkName = "-addMoreView"
-            landmarkType = "5">
+            startingLineNumber = "30"
+            endingLineNumber = "30">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

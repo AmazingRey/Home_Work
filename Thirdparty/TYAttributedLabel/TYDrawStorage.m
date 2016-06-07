@@ -26,7 +26,7 @@
     _fixRange = [self fixRange:_range replaceStringNum:replacedStringNum];
 }
 
-- (void)setTextfontAscent:(CGFloat)ascent descent:(CGFloat)descent;
+- (void)setTextfontAscent:(CGFloat)ascent descent:(CGFloat)descent
 {
     _fontAscent = ascent;
     _fontDescent = -descent;

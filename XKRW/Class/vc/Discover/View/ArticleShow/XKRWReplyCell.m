@@ -8,11 +8,10 @@
 
 #import "XKRWReplyCell.h"
 
-@interface XKRWReplyCell ()<TYAttributedLabelDelegate>
-@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGuesture;
-@end
-
 @implementation XKRWReplyCell
+{
+    UILongPressGestureRecognizer *_longPressGuesture;
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -21,7 +20,7 @@
         self.backgroundColor = XKClearColor;
         
         _label = [[XKRWReplyLabel alloc] init];
-        _label.highlightedLinkBackgroundColor = [UIColor colorFromHexString:@"c7c7c7"];
+        _label.highlightedLinkBackgroundColor = colorSecondary_c7c7c7;
         _longPressGuesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed)];
         [self addGestureRecognizer:_longPressGuesture];
         _label.delegate = self;
@@ -47,7 +46,7 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
     
-    self.backgroundColor = [UIColor colorFromHexString:@"#c7c7c7"];
+    self.backgroundColor = colorSecondary_c7c7c7;
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

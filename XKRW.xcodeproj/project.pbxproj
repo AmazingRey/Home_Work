@@ -994,14 +994,10 @@
 		BCF8621E1C508B3800A64986 /* XKRWBelongTeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF8621C1C508B3800A64986 /* XKRWBelongTeamCell.m */; };
 		BCF8621F1C508B3800A64986 /* XKRWBelongTeamCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCF8621D1C508B3800A64986 /* XKRWBelongTeamCell.xib */; };
 		BCFE22261B74CC9F00535863 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCFE22251B74CC9F00535863 /* MediaPlayer.framework */; };
-		CC05E7621CC4B852007D872D /* XKRWRecordMore5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CC05E7611CC4B852007D872D /* XKRWRecordMore5_3View.m */; };
-		CC05E7641CC4B8B1007D872D /* XKRWRecordMore5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC05E7631CC4B8B1007D872D /* XKRWRecordMore5_3View.xib */; };
 		CC1F901B1CD1A6E000962484 /* XKRWDailyAnalysizeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1F901A1CD1A6E000962484 /* XKRWDailyAnalysizeVC.m */; };
 		CC1F901F1CD1B45000962484 /* XKRWDailyAnalysizeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1F901E1CD1B45000962484 /* XKRWDailyAnalysizeView.m */; };
 		CC1F90261CD1DDD000962484 /* XKRWDailyAnalysizeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1F90241CD1DDD000962484 /* XKRWDailyAnalysizeCell.m */; };
 		CC1F90271CD1DDD000962484 /* XKRWDailyAnalysizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1F90251CD1DDD000962484 /* XKRWDailyAnalysizeCell.xib */; };
-		CC24920A1CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2492091CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m */; };
-		CC24920C1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC24920B1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib */; };
 		CC25086A1CB5EE1D00FFF00C /* XKRWWeightPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */; };
 		CC25086C1CB5EE3700FFF00C /* XKRWWeightPopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */; };
 		CC315A711CD2F24B004D46DB /* XKRWStatisticAnalysizeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CC315A701CD2F24B004D46DB /* XKRWStatisticAnalysizeVC.m */; };
@@ -1032,8 +1028,6 @@
 		CCEBA7241CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA7231CD83FA800C3DFA8 /* XKRWWeekAnalysisView.m */; };
 		CCEBA7271CD84EA500C3DFA8 /* XKRWStatisticDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA7261CD84EA500C3DFA8 /* XKRWStatisticDetailView.m */; };
 		CCEBA72D1CD8973500C3DFA8 /* XKRWStatisAnalysisView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCEBA72C1CD8973500C3DFA8 /* XKRWStatisAnalysisView.m */; };
-		CCFA188D1CB518770025EC12 /* XKRWWeightRecordPullView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCFA188B1CB518770025EC12 /* XKRWWeightRecordPullView.m */; };
-		CCFA188E1CB518770025EC12 /* XKRWWeightRecordPullView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCFA188C1CB518770025EC12 /* XKRWWeightRecordPullView.xib */; };
 		E06172D01CCC6AEA006618A3 /* XKRWChangeMealPercentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E06172CF1CCC6AEA006618A3 /* XKRWChangeMealPercentVC.m */; };
 		E061C8891CCCF3650031A57E /* XKRWMealPercentSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = E061C8881CCCF3650031A57E /* XKRWMealPercentSlider.m */; };
 		E33DCA831B17FDA2006FE125 /* XKRWSchemeService_5_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33DCA821B17FDA2006FE125 /* XKRWSchemeService_5_0.swift */; };
@@ -2694,9 +2688,6 @@
 		BCF8621C1C508B3800A64986 /* XKRWBelongTeamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWBelongTeamCell.m; sourceTree = "<group>"; };
 		BCF8621D1C508B3800A64986 /* XKRWBelongTeamCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWBelongTeamCell.xib; sourceTree = "<group>"; };
 		BCFE22251B74CC9F00535863 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		CC05E7601CC4B852007D872D /* XKRWRecordMore5_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordMore5_3View.h; sourceTree = "<group>"; };
-		CC05E7611CC4B852007D872D /* XKRWRecordMore5_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordMore5_3View.m; sourceTree = "<group>"; };
-		CC05E7631CC4B8B1007D872D /* XKRWRecordMore5_3View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWRecordMore5_3View.xib; sourceTree = "<group>"; };
 		CC1F90191CD1A6E000962484 /* XKRWDailyAnalysizeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWDailyAnalysizeVC.h; sourceTree = "<group>"; };
 		CC1F901A1CD1A6E000962484 /* XKRWDailyAnalysizeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWDailyAnalysizeVC.m; sourceTree = "<group>"; };
 		CC1F901D1CD1B45000962484 /* XKRWDailyAnalysizeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWDailyAnalysizeView.h; sourceTree = "<group>"; };
@@ -2704,9 +2695,6 @@
 		CC1F90231CD1DDD000962484 /* XKRWDailyAnalysizeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWDailyAnalysizeCell.h; sourceTree = "<group>"; };
 		CC1F90241CD1DDD000962484 /* XKRWDailyAnalysizeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWDailyAnalysizeCell.m; sourceTree = "<group>"; };
 		CC1F90251CD1DDD000962484 /* XKRWDailyAnalysizeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWDailyAnalysizeCell.xib; sourceTree = "<group>"; };
-		CC2492081CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWRecordSingleMore5_3View.h; sourceTree = "<group>"; };
-		CC2492091CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWRecordSingleMore5_3View.m; sourceTree = "<group>"; };
-		CC24920B1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWRecordSingleMore5_3View.xib; sourceTree = "<group>"; };
 		CC2508681CB5EE1D00FFF00C /* XKRWWeightPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeightPopView.h; sourceTree = "<group>"; };
 		CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeightPopView.m; sourceTree = "<group>"; };
 		CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWWeightPopView.xib; sourceTree = "<group>"; };
@@ -2757,9 +2745,6 @@
 		CCEBA7261CD84EA500C3DFA8 /* XKRWStatisticDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWStatisticDetailView.m; sourceTree = "<group>"; };
 		CCEBA72B1CD8973500C3DFA8 /* XKRWStatisAnalysisView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWStatisAnalysisView.h; sourceTree = "<group>"; };
 		CCEBA72C1CD8973500C3DFA8 /* XKRWStatisAnalysisView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWStatisAnalysisView.m; sourceTree = "<group>"; };
-		CCFA188A1CB518770025EC12 /* XKRWWeightRecordPullView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeightRecordPullView.h; sourceTree = "<group>"; };
-		CCFA188B1CB518770025EC12 /* XKRWWeightRecordPullView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeightRecordPullView.m; sourceTree = "<group>"; };
-		CCFA188C1CB518770025EC12 /* XKRWWeightRecordPullView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWWeightRecordPullView.xib; sourceTree = "<group>"; };
 		DAB99B331D6C4CE3697BE5BA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E06172CE1CCC6AEA006618A3 /* XKRWChangeMealPercentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWChangeMealPercentVC.h; sourceTree = "<group>"; };
 		E06172CF1CCC6AEA006618A3 /* XKRWChangeMealPercentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWChangeMealPercentVC.m; sourceTree = "<group>"; };
@@ -6652,12 +6637,6 @@
 				BC9B95CC1CD1BE650030EAD1 /* XKRWRecordCell_5_3.h */,
 				BC9B95CD1CD1BE650030EAD1 /* XKRWRecordCell_5_3.m */,
 				BC9B95CE1CD1BE650030EAD1 /* XKRWRecordCell_5_3.xib */,
-				CC05E7601CC4B852007D872D /* XKRWRecordMore5_3View.h */,
-				CC05E7611CC4B852007D872D /* XKRWRecordMore5_3View.m */,
-				CC05E7631CC4B8B1007D872D /* XKRWRecordMore5_3View.xib */,
-				CC2492081CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.h */,
-				CC2492091CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m */,
-				CC24920B1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib */,
 				BC9B95D11CD1F74A0030EAD1 /* XKRWRecommandedCell_5_3.h */,
 				BC9B95D21CD1F74A0030EAD1 /* XKRWRecommandedCell_5_3.m */,
 				BC9B95D31CD1F74A0030EAD1 /* XKRWRecommandedCell_5_3.xib */,
@@ -6696,9 +6675,6 @@
 		CCFA188F1CB5188D0025EC12 /* WeightRecoderView */ = {
 			isa = PBXGroup;
 			children = (
-				CCFA188A1CB518770025EC12 /* XKRWWeightRecordPullView.h */,
-				CCFA188B1CB518770025EC12 /* XKRWWeightRecordPullView.m */,
-				CCFA188C1CB518770025EC12 /* XKRWWeightRecordPullView.xib */,
 				CC2508681CB5EE1D00FFF00C /* XKRWWeightPopView.h */,
 				CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */,
 				CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */,
@@ -6808,6 +6784,9 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
+					044DA1C018558DC100CA30F7 = {
+						DevelopmentTeam = 2H2WTQZ7Y8;
+					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = WT58P44WAK;
 						TestTargetID = 044DA1C018558DC100CA30F7;
@@ -6972,7 +6951,6 @@
 				BCBAF8B31C477F2B008FBFE6 /* XKRWDiscoverTeamCell.xib in Resources */,
 				BCEF38101C1E901B00740ACC /* XKRWGradeRuleDetailCell.xib in Resources */,
 				2FE6C3E318E13AE00060FD6F /* alarmMsg.plist in Resources */,
-				CC05E7641CC4B8B1007D872D /* XKRWRecordMore5_3View.xib in Resources */,
 				2E9686F01A04AEE500CB5D77 /* auth.thrift in Resources */,
 				BC9B95D51CD1F74A0030EAD1 /* XKRWRecommandedCell_5_3.xib in Resources */,
 				2F3B565F1CBE3511007831E0 /* red.gif in Resources */,
@@ -6997,7 +6975,6 @@
 				BCEF37651C1E75D900740ACC /* XKRWIslimDietHeaderCell.xib in Resources */,
 				BC31B9541C1ACDF70045817B /* XKRWAlarmCell.xib in Resources */,
 				BC81EAB81BF43A9900317D1A /* UMSocialLocalizable.strings in Resources */,
-				CC24920C1CC8A236002DF306 /* XKRWRecordSingleMore5_3View.xib in Resources */,
 				2F8FB47118FBB24A00AB8400 /* weightHint.plist in Resources */,
 				BC31B92F1C1ACA520045817B /* HPMealCell.xib in Resources */,
 				CC8EA3B61CB369980084E059 /* XKRWPlan_5_3CollectionView.xib in Resources */,
@@ -7062,7 +7039,6 @@
 				BC318E881C2B8AA9008C6366 /* XKRWAppRecommendCell.xib in Resources */,
 				BCEF374A1C1E75D900740ACC /* iSlimAssessmentCell.xib in Resources */,
 				BCEF38021C1E901B00740ACC /* XKRWThumpUpVC.xib in Resources */,
-				CCFA188E1CB518770025EC12 /* XKRWWeightRecordPullView.xib in Resources */,
 				BC6F2F751C1A70D3005B54E8 /* XKRWPKVC.xib in Resources */,
 				BCEF381C1C1E901B00740ACC /* XKRWCourseWeightCell.xib in Resources */,
 				BCEF372F1C1E75D900740ACC /* XKRWHabitStatusVC.xib in Resources */,
@@ -7331,7 +7307,6 @@
 				BC6F2F9A1C1A70D3005B54E8 /* XKRWDiscoveryCoordinator.m in Sources */,
 				BCEF37E91C1E901B00740ACC /* CustomDisplayerController.m in Sources */,
 				CC8EA3B51CB369980084E059 /* XKRWPlan_5_3CollectionView.m in Sources */,
-				CCFA188D1CB518770025EC12 /* XKRWWeightRecordPullView.m in Sources */,
 				2E9686DB1A04AEE500CB5D77 /* XKRuntimeError.m in Sources */,
 				2F653D9A1C44F201007BB03B /* XKRWIntelligentListCell.m in Sources */,
 				5DD8D98B1C50710500B8B38C /* XKRWGroupService.m in Sources */,
@@ -7599,7 +7574,6 @@
 				BC31B94B1C1ACA520045817B /* XKRWSurfaceView.m in Sources */,
 				2E9686E81A04AEE500CB5D77 /* XKSinaWeiBoService.m in Sources */,
 				2E9686B81A04AEE500CB5D77 /* XKHudHelper.m in Sources */,
-				CC05E7621CC4B852007D872D /* XKRWRecordMore5_3View.m in Sources */,
 				CCEBA7271CD84EA500C3DFA8 /* XKRWStatisticDetailView.m in Sources */,
 				2F1842331CBB7A1D0007A913 /* XKRWPlanService.m in Sources */,
 				E3DEAD891A64F552008A5F05 /* XKRWServerPageService.m in Sources */,
@@ -7840,7 +7814,6 @@
 				BCEF382E1C1E90ED00740ACC /* XKRWCollectVC.m in Sources */,
 				2E9686C01A04AEE500CB5D77 /* XKDefaultNotification.m in Sources */,
 				BC6F2F991C1A70D3005B54E8 /* XKRWDiscoverCell.m in Sources */,
-				CC24920A1CC8A21F002DF306 /* XKRWRecordSingleMore5_3View.m in Sources */,
 				BC31B92E1C1ACA520045817B /* HPMealCell.swift in Sources */,
 				BC769D981C33CA3500E96B1A /* XKRWUserInfoShowEntity.swift in Sources */,
 				BC6F2F7A1C1A70D3005B54E8 /* XKRWStarGatherNumVC.m in Sources */,
@@ -8096,8 +8069,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8145,10 +8118,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWlrp;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -8167,8 +8140,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8216,10 +8189,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWlrp;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "00a9c646-6889-472d-ad3c-9e47a3b8903e";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
