@@ -46,6 +46,7 @@
 #import "XKRWModifyNickNameVC.h"
 #import "XKRWNoticeService.h"
 #import "XKRWPullMenuView.h"
+#import "XKRWAppCommentUtil.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,UIAlertViewDelegate,XKRWPullMenuViewDelegate>
 {
@@ -113,6 +114,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [[XKRWAppCommentUtil shareAppComment] showAlertViewInVC];
+    
     [[XKRWLocalNotificationService shareInstance] defaultAlarmSetting];
      [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
 }
@@ -128,6 +131,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // judge for is today's record or history,is the history record can be changed.
+    
+    [[XKRWAppCommentUtil shareAppComment] setEntryPageTimeWithPage:SCHEMEPAGE];
     energyViewHeight = XKAppHeight == 480 ? 170 : (210 * XKRWScaleHeight);
     [self initData];
     [self initView];

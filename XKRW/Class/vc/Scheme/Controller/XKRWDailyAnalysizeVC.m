@@ -13,6 +13,7 @@
 #import "XKRWDailyAnalysizeView.h"
 #import "XKRWRecordService4_0.h"
 #import "XKRWStatisticAnalysizeVC.h"
+#import "XKRWAppCommentUtil.h"
 
 @interface XKRWDailyAnalysizeVC ()
 @property (strong, nonatomic) UIScrollView *scrollView;
@@ -63,6 +64,9 @@
     [self addNaviBarRightButtonWithText:@"统计分析" action:@selector(pressedRightAction)];
     [self addNaviBarBackButton];
     [self addMasonryView];
+    
+    [[XKRWAppCommentUtil shareAppComment] setEntryPageTimeWithPage:ANALYZEPAGE];
+
 }
 
 -(void)pressedRightAction{

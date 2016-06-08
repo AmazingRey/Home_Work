@@ -115,6 +115,10 @@
         cell.label.text = str;
         cell.imgView.image = image;
         
+        float leading = (self.frame.size.width - cell.imgView.frame.size.width - cell.label.frame.size.width)/4;
+        cell.imageLeadingConstraint.constant = 2*leading;
+        cell.labelLeadingConstraint.constant = leading;
+        cell.labelTrailingConstraint.constant = leading;
         return cell;
     }else if ([cellidenty isEqualToString:@"pullMenuTextCell"]){
         XKRWPullMenuTextCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidenty];

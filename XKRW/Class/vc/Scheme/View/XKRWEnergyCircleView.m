@@ -28,12 +28,12 @@
     YYImage *_stateImage;
 }
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 
 - (instancetype)initCircleWithFrame:(CGRect)frame Style:(XKRWEnergyCircleStyle)style {
@@ -96,8 +96,8 @@
         [_stateImageView addObserver:self forKeyPath:@"currentAnimatedImageIndex" options:NSKeyValueObservingOptionNew context:nil];
         _stateImageView.autoPlayAnimatedImage = NO;
         [self addSubview:_stateImageView];
-
-       
+        
+        
         _perfectImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"perfect"]];
         [_perfectImageView sizeToFit];
         _perfectImageView.center = CGPointMake(self.width/2.0, self.height/2.0);
@@ -117,6 +117,10 @@
     if ([keyPath isEqualToString:@"currentAnimatedImageIndex"]) {
         if ([[change objectForKey:NSKeyValueChangeNewKey] integerValue] == 6) {
             [_stateImageView stopAnimating];
+        }
+        
+        if ([[change objectForKey:NSKeyValueChangeNewKey] integerValue] == 1 && _style == XKRWEnergyCircleStyleSelected ) {
+            _stateImageView.hidden = NO;
         }
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -151,7 +155,6 @@
         _shadowView.image = _shadowImage;
     } else if (style == XKRWEnergyCircleStyleSelected) {
         _perfectImageView.hidden = YES;
-        _stateImageView.hidden = NO;
         _startButton.hidden = YES;
         _backgroundCircle.hidden = NO;
         _progressCircle.hidden = NO;
@@ -233,7 +236,7 @@
 - (void)runProgressCircleWithColor:(UIColor *)progressColor
                         percentage:(CGFloat)percentage
                           duration:(CGFloat)duration {
-//    _progressCircle.percentage = 0;
+    //    _progressCircle.percentage = 0;
     _currentNumLabel.textColor = progressColor;
     _progressCircle.circleProgressColor = progressColor;
     [_progressCircle drawCirclePercentage:percentage animation:YES duration:duration];
@@ -251,11 +254,9 @@
     
     if (_style == XKRWEnergyCircleStyleSelected) {
         _stateImageView.image = _stateImage;
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [_stateImageView startAnimating];
-            
-//        });
-
+        
+        [_stateImageView startAnimating];
+        
     } else {
         _stateImageView.hidden = YES;
     }
@@ -279,7 +280,7 @@
         _shadowView.image = _shadowImage;
     }
     _stateImageView.image = _stateImage;
-
+    
 }
 
 - (void)runToNextNumber:(NSInteger)nextNumber
