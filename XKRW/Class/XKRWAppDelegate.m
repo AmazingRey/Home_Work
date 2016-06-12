@@ -43,6 +43,7 @@
 
 
 #pragma --mark 5.0  添加的头文件    （废弃使用storyboard）
+#import "XKRWPrivacyPassWordVC.h"
 #import "XKRWRootVC.h"
 #import "XKRWNavigationController.h"
 #import "XKRW-Swift.h"
@@ -270,7 +271,6 @@
     
     
 //    XKRWShareCourseVC *rootvc = [[XKRWShareCourseVC alloc]initWithNibName:@"XKRWShareCourseVC" bundle:nil];
-
     XKRWRootVC *rootVC = [[XKRWRootVC alloc]init];
     rootVC.fromWhich = Appdelegate;
     XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:rootVC withNavigationBarType:NavigationBarTypeDefault];
@@ -293,8 +293,13 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [XKRWUserDefaultService setAppGroundStatusChanged:YES];
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//    NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
+//    if (passWord && ![passWord isEqualToString:@""]) {
+        XKRWPrivacyPassWordVC *privacyPasswordVC = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:[NSBundle mainBundle]];
+//        privacyPasswordVC.passWord = passWord;
+        [self.window makeKeyAndVisible];
+        [self.window.rootViewController presentViewController:privacyPasswordVC animated:YES completion:NULL];
+//    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

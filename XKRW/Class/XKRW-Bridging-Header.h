@@ -173,3 +173,4 @@
 #import "XKRWShowEnergy_5_3View.h"
 #import "XKRWDailyAnalysizeCell.h"
 #import "XKRWTipsManage.h"
+#import "XKRWPrivacyPassWordVC.h"

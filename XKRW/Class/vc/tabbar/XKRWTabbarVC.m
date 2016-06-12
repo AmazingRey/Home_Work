@@ -25,6 +25,7 @@
 #import "XKRWDBControlService.h"
 #import "Reachability.h"
 #import "XKRWPlanVC.h"
+#import "XKRWPrivacyPassWordVC.h"
 
 @interface XKRWTabbarVC () <XKRWShareVCDelegate, UIAlertViewDelegate,XKRWCheckMoreRedDotDelegate>
 @property (nonatomic, strong) Reachability *internetReachability;
@@ -270,6 +271,16 @@
         [[XKRWRecordService4_0 sharedService] getEatALotText];
     }];
     [self dealWithSystemTabbarShow];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
+    if (passWord && ![passWord isEqualToString:@""]) {
+        XKRWPrivacyPassWordVC *privacyPasswordVC = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:[NSBundle mainBundle]];
+        privacyPasswordVC.passWord = passWord;
+        [self presentViewController:privacyPasswordVC animated:false completion:nil];
+    }
 }
 
 ///  自动联网时，同步数据。

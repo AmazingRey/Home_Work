@@ -1,21 +1,31 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2f5bb470-bb43-4d48-85ef-6d71598e3735++6580",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2f5bb470-bb43-4d48-85ef-6d71598e3735++4774",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "2f5bb470-bb43-4d48-85ef-6d71598e3735++4774" : {
+
+    },
     "2f5bb470-bb43-4d48-85ef-6d71598e3735++6580" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2f5bb470-bb43-4d48-85ef-6d71598e3735++4774" : 0,
     "2f5bb470-bb43-4d48-85ef-6d71598e3735++6580" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0B5D30F9-E8A6-48E6-A5B7-5E6BFF39723F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2f5bb470-bb43-4d48-85ef-6d71598e3735++4774" : "5_3_2(0612)\/",
     "2f5bb470-bb43-4d48-85ef-6d71598e3735++6580" : "5_3_0\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "XKRW",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "XKRW\/XKRW.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/10.24.3.136\/svn\/ios",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2f5bb470-bb43-4d48-85ef-6d71598e3735++4774"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/10.24.3.136\/svn\/iOS",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",

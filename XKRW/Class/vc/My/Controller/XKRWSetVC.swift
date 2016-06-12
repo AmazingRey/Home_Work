@@ -24,7 +24,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
    
     
     func initData(){
-        dataArray = [["提醒开关"],["缓存","帮助与反馈"],["一分钟了解减肥","投票支持","关于"],["退出登录"]];
+        dataArray = [["提醒开关"],["隐私密码"],["缓存","帮助与反馈"],["一分钟了解减肥","投票支持","关于"],["退出登录"]];
         cache = SDImageCache.sharedImageCache().getSize()
     }
     
@@ -74,9 +74,9 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
             if(switchCell == nil){
                 switchCell = XKRWSwitchCell.init(style:.Default, reuseIdentifier: "switchCell")
             }
-
+            
             switchCell?.selectionStyle = .None
-            switchCell!.label.text = dataArray[indexPath.section][0] as? String
+            switchCell!.label.text = dataArray[indexPath.section][indexPath.row] as? String
             switchCell!.passwordSwithBtn.addTarget(self, action: #selector(XKRWSetVC.closeAllAlertValueChanged(_:)), forControlEvents: .TouchUpInside)
             if(XKRWLocalNotificationService.shareInstance().haveEnabledNotice()){
                 switchCell!.passwordSwithBtn.setOn(true, animated: true)
@@ -86,7 +86,27 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
             switchCell!.upLineView.hidden = false
             switchCell!.downLineView.hidden = false
             return switchCell!
-        }else if(indexPath.section == 1){
+        }
+        else if(indexPath.section == 1){
+            var privacyPasswordCell:XKRWSwitchCell? = tableView.dequeueReusableCellWithIdentifier("privacyPasswordCell") as? XKRWSwitchCell
+            if(privacyPasswordCell == nil){
+                privacyPasswordCell = XKRWSwitchCell.init(style:.Default, reuseIdentifier: "privacyPasswordCell")
+            }
+            
+            privacyPasswordCell?.selectionStyle = .None
+            privacyPasswordCell!.label.text = dataArray[indexPath.section][indexPath.row] as? String
+            privacyPasswordCell!.passwordSwithBtn.addTarget(self, action: #selector(XKRWSetVC.swichPrivacyPassword(_:)), forControlEvents: .ValueChanged)
+            
+            if XKRWUserDefaultService.getPrivacyPassword() == nil{
+                privacyPasswordCell!.passwordSwithBtn.setOn(false, animated: true)
+            }else{
+                privacyPasswordCell!.passwordSwithBtn.setOn(true, animated: true)
+            }
+            privacyPasswordCell!.upLineView.hidden = false
+            privacyPasswordCell!.downLineView.hidden = false
+            return privacyPasswordCell!
+        }
+        else if(indexPath.section == 2){
             if(indexPath.row == 0){
                 var cacheCell:XKRWCacheCell? = tableView.dequeueReusableCellWithIdentifier("catchCell") as? XKRWCacheCell
                 if(cacheCell == nil){
@@ -128,7 +148,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
                 }
                 return feedbackCell!
             }
-        }else if(indexPath.section == 3){
+        }else if(indexPath.section == 4){
             var feedbackCell:XKRWNoImageCommonCell? = tableView.dequeueReusableCellWithIdentifier("commonCell") as?  XKRWNoImageCommonCell
             let loginOut:UILabel = UILabel.init()
             
@@ -144,7 +164,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
             loginOut.text = "退出登录";
             loginOut.font = XKDefaultFontWithSize(16);
             feedbackCell!.addSubview(loginOut)
-            return feedbackCell!;
+            return feedbackCell!
             
         }else {
             var commonCell:XKRWNoImageCommonCell? = tableView.dequeueReusableCellWithIdentifier("commonCell") as? XKRWNoImageCommonCell
@@ -161,8 +181,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
             }
             commonCell!.downLineView.hidden = false
             
-            return commonCell!;
-           
+            return commonCell!
         }
     }
     
@@ -223,6 +242,16 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
         setTableView .reloadData()
     }
     
+    func swichPrivacyPassword(swtch:UISwitch) -> () {
+        if swtch.on {
+            let privacyPasswordVC : XKRWPrivacyPassWordVC = XKRWPrivacyPassWordVC(nibName: "XKRWPrivacyPassWordVC" , bundle: nil)
+            self.navigationController?.pushViewController(privacyPasswordVC, animated: true)
+            
+        }else{
+            
+        }
+    }
+
     func closeAllAlertValueChanged(_switch:UISwitch)->(){
         let alartArray:NSMutableArray =  XKRWLocalNotificationService.shareInstance().getAllNotice()
         

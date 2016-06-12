@@ -955,9 +955,6 @@
 
 //点击记录按钮
 - (IBAction)recordSeclctAction:(UIButton *)sender {
-    if (_type == energyTypeHabit) {
-        return;
-    }
     isRecommended = NO;
     _recordTypeLabel.textColor = XKMainToneColor_29ccb1;
     _recommendedTypeLabel.textColor = XK_TEXT_COLOR;
@@ -976,9 +973,7 @@
 
 //点击推荐按钮
 - (IBAction)recommendedSelectAction:(UIButton *)sender {
-    if (_type == energyTypeHabit) {
-        return;
-    }
+    
     isRecommended = YES;
     _recordTypeLabel.textColor = XK_TEXT_COLOR;
     _recommendedTypeLabel.textColor = XKMainToneColor_29ccb1;

@@ -12,8 +12,5 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *imgView;
 @property (strong, nonatomic) IBOutlet UILabel *label;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imageLeadingConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *labelLeadingConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *labelTrailingConstraint;
 
 @end
