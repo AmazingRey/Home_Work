@@ -330,7 +330,8 @@ typedef  NS_ENUM(NSInteger,FromWhichVC) {
     Appdelegate,
     ThinBodyAssesssVC,
     PlanVC,
-    DailyAnalysisVC
+    DailyAnalysisVC,
+    SetVC
 };
 
 typedef NS_ENUM(NSInteger, NavigationBarType) {
@@ -481,5 +482,11 @@ typedef NS_ENUM(NSInteger,PullViewBtnType) {
      *  查看曲线
      */
     recordGraph
+};
+
+typedef NS_ENUM(NSInteger, PrivacyPasswordType) {
+    verify = 0,
+    configue,
+    terminate
 };
 #endif

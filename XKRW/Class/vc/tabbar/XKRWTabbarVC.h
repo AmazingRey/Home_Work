@@ -20,7 +20,7 @@
     UIImageView *tabbarBG;
 }
 - (void)createCustomTabBar;
-
+- (void)exitTheAccount;
 
 
 @end

@@ -6,10 +6,18 @@
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
+
+@protocol XKRWPrivacyPassWordVCDelegate <NSObject>
+@optional
+- (void)verifySucceed;
+
+@end
 #import "XKRWBaseVC.h"
 
-@interface XKRWPrivacyPassWordVC : XKRWBaseVC <UITextFieldDelegate>
+@interface XKRWPrivacyPassWordVC : XKRWBaseVC <UITextFieldDelegate,UIActionSheetDelegate>
 
-@property (nonatomic ,copy) NSString *passWord;
-
+@property (nonatomic, assign) id<XKRWPrivacyPassWordVCDelegate> delegate;
+@property (nonatomic, copy) NSString *passWord;
+@property (nonatomic, assign) PrivacyPasswordType privacyType;
+@property (nonatomic, assign) BOOL isVerified;
 @end

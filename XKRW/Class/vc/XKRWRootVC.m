@@ -27,6 +27,7 @@
 #pragma --mark  5.0版本 
 #import "XKRW-Swift.h"
 #import "XKRWTabbarVC.h"
+#import "XKRWPrivacyPassWordVC.h"
 
 @interface XKRWRootVC ()<UIScrollViewDelegate>
 {
@@ -228,7 +229,6 @@
     }
     else if([XKRWUserDefaultService isLogin]) {
         if ([[XKRWUserService sharedService] checkUserInfoIsComplete]) {
-            
             if (![[XKRWUserService sharedService] getUserNickNameIsEnable]) {
                 XKRWModifyNickNameVC *nickVC = [[XKRWModifyNickNameVC alloc] init];
                 nickVC.notShowBackButton = YES;
@@ -312,6 +312,12 @@
         _fromWhich = 0;
     }else{
         [self normalFlow];
+        BOOL isForgetPrivacyPassword = [XKRWUserDefaultService isForgetPrivacyPassword];
+        if (isForgetPrivacyPassword) {
+            XKRWPrivacyPassWordVC *privacyPassWordvc = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:nil];
+            privacyPassWordvc.privacyType = configue;
+            [self presentViewController:privacyPassWordvc animated:true completion:nil];
+        }
     }
 }
 

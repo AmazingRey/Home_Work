@@ -273,13 +273,17 @@
     [self dealWithSystemTabbarShow];
 }
 
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
-    if (passWord && ![passWord isEqualToString:@""]) {
-        XKRWPrivacyPassWordVC *privacyPasswordVC = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:[NSBundle mainBundle]];
-        privacyPasswordVC.passWord = passWord;
-        [self presentViewController:privacyPasswordVC animated:false completion:nil];
+    XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
+    BOOL isForgetPrivacyPassword = [XKRWUserDefaultService isForgetPrivacyPassword];
+    if (isForgetPrivacyPassword) {
+        [XKRWUserDefaultService setForgetPrivacyPassword:false];
+        
+    }else{
+        if (!appdelegate.privacyPasswordVC.isVerified) {
+            [appdelegate privacyPasswordVC];
+        }
     }
 }
 
@@ -368,7 +372,7 @@
         } else {
             [self.navigationController pushViewController:rootVC animated:NO];
         }
-    } else {
+    }else {
         [self dismissViewControllerAnimated:NO completion:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"backToRootVC" object:nil];
         }];

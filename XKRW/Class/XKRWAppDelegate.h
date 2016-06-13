@@ -11,8 +11,9 @@
 #import "XKAppDelegate.h"
 #import "UMFeedback.h"
 #import "WXApi.h"
+#import "XKRWPrivacyPassWordVC.h"
 
-@interface XKRWAppDelegate : XKAppDelegate <UIApplicationDelegate, UMFeedbackDataDelegate, WXApiDelegate>
+@interface XKRWAppDelegate : XKAppDelegate <UIApplicationDelegate, UMFeedbackDataDelegate, WXApiDelegate,XKRWPrivacyPassWordVCDelegate>
 {
     UMFeedback *feedbackClient;
     NSDictionary *dicInfo;
@@ -31,4 +32,5 @@
 
 @property (strong, nonatomic) NSDateFormatter *timeFormatterOne;
 @property (strong, nonatomic) NSDateFormatter *timeFormatterTwo;
+@property (strong, nonatomic) XKRWPrivacyPassWordVC *privacyPasswordVC;
 @end

@@ -21,7 +21,10 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
         self.initView()
         // Do any additional setup after loading the view.
     }
-   
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        setTableView.reloadData()
+    }
     
     func initData(){
         dataArray = [["提醒开关"],["隐私密码"],["缓存","帮助与反馈"],["一分钟了解减肥","投票支持","关于"],["退出登录"]];
@@ -243,13 +246,9 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
     }
     
     func swichPrivacyPassword(swtch:UISwitch) -> () {
-        if swtch.on {
-            let privacyPasswordVC : XKRWPrivacyPassWordVC = XKRWPrivacyPassWordVC(nibName: "XKRWPrivacyPassWordVC" , bundle: nil)
-            self.navigationController?.pushViewController(privacyPasswordVC, animated: true)
-            
-        }else{
-            
-        }
+        let privacyPasswordVC : XKRWPrivacyPassWordVC = XKRWPrivacyPassWordVC(nibName: "XKRWPrivacyPassWordVC" , bundle: nil)
+        privacyPasswordVC.privacyType = swtch.on ? .configue : .terminate
+        self.navigationController?.pushViewController(privacyPasswordVC, animated: true)
     }
 
     func closeAllAlertValueChanged(_switch:UISwitch)->(){

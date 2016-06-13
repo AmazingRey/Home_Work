@@ -34,6 +34,9 @@
 //获取隐私密码
 +(NSString *)getPrivacyPassword;
 
+//移除隐私密码
++ (void)removePrivacyPassword;
+
 //设置是否忘记隐私密码
 +(void)setForgetPrivacyPassword:(BOOL)isForget;
 

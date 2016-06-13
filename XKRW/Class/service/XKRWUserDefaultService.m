@@ -84,11 +84,19 @@
 }
 
 //获取隐私密码
-+(NSString *)getPrivacyPassword
++ (NSString *)getPrivacyPassword
 {
     NSString * key = [NSString stringWithFormat:@"PRIVACYPASSWORD%ld",(long)[[XKRWUserService sharedService] getUserId]];
    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 
+}
+
+//移除隐私密码
++ (void)removePrivacyPassword
+{
+    NSString * key = [NSString stringWithFormat:@"PRIVACYPASSWORD%ld",(long)[[XKRWUserService sharedService] getUserId]];
+    return [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+    
 }
 
 +(void)setForgetPrivacyPassword:(BOOL)isForget
