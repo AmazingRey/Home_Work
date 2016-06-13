@@ -279,7 +279,9 @@
     BOOL isForgetPrivacyPassword = [XKRWUserDefaultService isForgetPrivacyPassword];
     if (isForgetPrivacyPassword) {
         [XKRWUserDefaultService setForgetPrivacyPassword:false];
-        
+        XKRWPrivacyPassWordVC *privacyPassWordvc = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:nil];
+        privacyPassWordvc.privacyType = configue;
+        [self presentViewController:privacyPassWordvc animated:true completion:nil];
     }else{
         if (!appdelegate.privacyPasswordVC.isVerified) {
             [appdelegate privacyPasswordVC];

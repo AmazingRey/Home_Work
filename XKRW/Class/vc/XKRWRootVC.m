@@ -312,12 +312,6 @@
         _fromWhich = 0;
     }else{
         [self normalFlow];
-        BOOL isForgetPrivacyPassword = [XKRWUserDefaultService isForgetPrivacyPassword];
-        if (isForgetPrivacyPassword) {
-            XKRWPrivacyPassWordVC *privacyPassWordvc = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:nil];
-            privacyPassWordvc.privacyType = configue;
-            [self presentViewController:privacyPassWordvc animated:true completion:nil];
-        }
     }
 }
 
