@@ -1,4 +1,4 @@
-//
+ //
 //  XKRWTabbarVC.m
 //  XKRWTabbarVC
 //
@@ -278,10 +278,10 @@
     XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
     BOOL isForgetPrivacyPassword = [XKRWUserDefaultService isForgetPrivacyPassword];
     if (isForgetPrivacyPassword) {
-        [XKRWUserDefaultService setForgetPrivacyPassword:false];
-        XKRWPrivacyPassWordVC *privacyPassWordvc = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:nil];
+        //点击忘记密码后重新设置
+        appdelegate.privacyPasswordVC = nil;
+        XKRWPrivacyPassWordVC *privacyPassWordvc = [appdelegate privacyPasswordVC];
         privacyPassWordvc.privacyType = configue;
-        [self presentViewController:privacyPassWordvc animated:true completion:nil];
     }else{
         if (!appdelegate.privacyPasswordVC.isVerified) {
             [appdelegate privacyPasswordVC];
@@ -365,8 +365,8 @@
 }
 
 - (void)exitTheAccount {
-    NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
-    if (passWord == nil || [passWord isEqualToString:@""]) {
+//    NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
+//    if (passWord == nil || [passWord isEqualToString:@""]) {
         XKRWRootVC *rootVC = [[XKRWRootVC alloc]init];
         if ([UIDevice currentDevice].systemVersion.floatValue < 8) {
             XKRWNavigationController *nav = [[XKRWNavigationController alloc] initWithRootViewController:rootVC withNavigationBarType:NavigationBarTypeDefault];
@@ -374,11 +374,11 @@
         } else {
             [self.navigationController pushViewController:rootVC animated:NO];
         }
-    }else {
-        [self dismissViewControllerAnimated:NO completion:^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToRootVC" object:nil];
-        }];
-    }
+//    }else {
+//        [self dismissViewControllerAnimated:NO completion:^{
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"backToRootVC" object:nil];
+//        }];
+//    }
     [[XKRWUserService sharedService] logout];
 }
 

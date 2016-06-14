@@ -39,16 +39,17 @@
 
 @implementation XKRWArticleCommentVC
 {
-  __weak UIView *clickView;
+    __weak UIView *clickView;
     XKRWReplyEntity *replyEntity;
     NSArray <NSIndexPath *> *selectArray;
+    BOOL isReply;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"评论";
-  
+    [self addNaviBarRightButtonWithText:@"写评论" action:@selector(writeComment)];
     _dataSource = [NSMutableArray array];
     replyEntity = [XKRWReplyEntity new];
     [self addNaviBarBackButton];
@@ -197,13 +198,20 @@
             }
             
         } else if ([result[@"success"] boolValue] && _dataSource.count > selectArray.firstObject.row) {
-            XKRWCommentEtity *entity = _dataSource[selectArray.firstObject.row];
-            if (entity.sub_Array == nil) {
-                entity.sub_Array = [NSMutableArray arrayWithObject:result[@"comment"]];
+            
+            if (isReply) {
+                XKRWCommentEtity *entity = _dataSource[selectArray.firstObject.row];
+                if (entity.sub_Array == nil) {
+                    entity.sub_Array = [NSMutableArray arrayWithObject:result[@"comment"]];
+                } else {
+                    [entity.sub_Array addObject:result[@"comment"]];
+                }
+                [self.tableView reloadRowsAtIndexPaths:@[selectArray.firstObject] withRowAnimation:UITableViewRowAnimationNone];
+                
             } else {
-                [entity.sub_Array addObject:result[@"comment"]];
+                [_dataSource insertObject:result[@"comment"] atIndex:0];
+                [self.tableView reloadData];
             }
-            [self.tableView reloadRowsAtIndexPaths:@[selectArray.firstObject] withRowAnimation:UITableViewRowAnimationNone];
         } else return;
     }
 }
@@ -334,6 +342,16 @@
 
 
 #pragma mark -Action
+
+- (void)writeComment {
+    isReply = NO;
+    clickView = nil;
+    replyEntity.fid = 0;
+    replyEntity.sid = 0;
+    selectArray = nil;
+    [self.inputBoxView beginEditWithPlaceholder:@"评论"];
+}
+
 - (void)readReviewerInfo:(UIButton *)iconButton {
     NSInteger tag = iconButton.tag - 1625;
     NSString *userNickName = [_dataSource[tag] nameStr];
@@ -380,6 +398,7 @@
 #pragma mark -XKRWFitCommentCellDelegate
 
 -(void)fitCommentCell:(XKRWFitCommentCell *)fitCommentCell didReplyComment:(XKRWCommentEtity *)comment {
+    isReply = YES;
     selectArray = @[fitCommentCell.selectIndexPath];
     clickView = fitCommentCell.commentLabel;
     replyEntity.fid = [comment.comment_id integerValue];
@@ -396,6 +415,7 @@
     if ([comment.nameStr isEqualToString:[[XKRWUserService sharedService] getUserNickName]]) {
         [self deleteComment:comment.comment_id];
     } else {
+        isReply = YES;
         [_inputBoxView beginEditWithPlaceholder:[NSString stringWithFormat:@"回复%@：",comment.nameStr]];
     }
 }
@@ -426,6 +446,7 @@
     } else {
         replyEntity.fid = [_dataSource[selfIndexPath.row].comment_id integerValue];
         replyEntity.sid = entity.mainId;
+        isReply = YES;
         [_inputBoxView beginEditWithPlaceholder:[NSString stringWithFormat:@"回复%@：",entity.nickName]];
     }
 }
@@ -449,7 +470,7 @@
         [self downloadWithTaskID:@"commitComment" outputTask:^id{
             return  [[XKRWManagementService5_0 sharedService] writeCommentWithMessage:message Blogid:self.blogId sid:replyEntity.sid fid:replyEntity.fid type:0];
         }];
-  
+        
     }
 }
 
@@ -470,7 +491,7 @@
             self.tableView.contentOffset = point;
         }];
     } else return;
-
+    
 }
 
 

@@ -6792,9 +6792,6 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
-					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = 2H2WTQZ7Y8;
-					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = WT58P44WAK;
 						TestTargetID = 044DA1C018558DC100CA30F7;

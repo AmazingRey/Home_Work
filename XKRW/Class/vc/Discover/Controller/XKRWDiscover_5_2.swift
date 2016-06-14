@@ -784,7 +784,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         if taskID == "getnotice"{
             let array = result.objectForKey("data")
 
-            for  var i = 0  ; i < array?.count ; i++ {
+            for  var i = 0  ; i < array?.count ; i += 1 {
                 let dic:[NSObject : AnyObject] = (array?.objectAtIndex(i)) as! [NSObject : AnyObject]
                 if dic["type"]?.integerValue == 2 || dic["type"]?.integerValue == 7 {
                     XKRWNoticeService.sharedService().insertNoticeListToDatabase(dic , andUserId: XKRWUserService.sharedService().getUserId(), andIsRead: 0, andIspush: false)

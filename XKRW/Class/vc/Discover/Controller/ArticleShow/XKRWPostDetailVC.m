@@ -1163,7 +1163,6 @@
             } else {
                 __commentsNumber ++;
                 [_commentArray insertObject:result[@"comment"] atIndex:0];
-                //                [self.postTableView reloadData];
                 [self.postTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
             }
         }

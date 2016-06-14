@@ -40,6 +40,14 @@
     [super viewDidLoad];
     if (_privacyType == configue) {
         self.title = @"设置隐私密码";
+        _forgetPasswordBtn.hidden = true;
+        _forgetPasswordBtn.userInteractionEnabled = false;
+        _labelVerify.text = @"请设置隐私密码";
+    }else if (_privacyType == terminate) {
+        self.title = @"关闭隐私密码";
+        _forgetPasswordBtn.hidden = true;
+        _forgetPasswordBtn.userInteractionEnabled = false;
+        _labelVerify.text = @"输入密码确认关闭";
     }
     imageViewArray = @[_imageOne, _imageTwo, _imageThree, _imageFour];
 }
@@ -62,6 +70,23 @@
     }else{
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SET_PRIVACYPASSWORD_FIRSTTIME object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SET_PRIVACYPASSWORD_SUCCESS object:nil];
+    }
+}
+
+- (void)setPrivacyType:(PrivacyPasswordType)privacyType{
+    if (_privacyType != privacyType) {
+        _privacyType = privacyType;
+    }
+    if (_privacyType == configue) {
+        self.title = @"设置隐私密码";
+        _forgetPasswordBtn.hidden = true;
+        _forgetPasswordBtn.userInteractionEnabled = false;
+        _labelVerify.text = @"请设置隐私密码";
+    }else if (_privacyType == terminate) {
+        self.title = @"关闭隐私密码";
+        _forgetPasswordBtn.hidden = true;
+        _forgetPasswordBtn.userInteractionEnabled = false;
+        _labelVerify.text = @"输入密码确认关闭";
     }
 }
 
@@ -136,7 +161,7 @@
     if ([string isEqualToString:@""]) {
         imageView.image = [UIImage new];
     }else{
-        imageView.image = [UIImage imageNamed:@"answer_check"];
+        imageView.image = [UIImage imageNamed:@"circleGreen"];
     }
 }
 
@@ -144,6 +169,8 @@
     if ([password isEqualToString:_passWord]) {
 //        [_textField resignFirstResponder];
         [XKRWUserDefaultService removePrivacyPassword];
+        XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
+        appdelegate.privacyPasswordVC = nil;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.navigationController popViewControllerAnimated:YES];
         });
@@ -166,6 +193,7 @@
         //两次一致，设置成功
         _labelVerify.text = @"设置成功";
         _labelVerify.textColor = XKMainSchemeColor;
+        [XKRWUserDefaultService setForgetPrivacyPassword:false];
         [[NSNotificationCenter defaultCenter] postNotificationName:SET_PRIVACYPASSWORD_SUCCESS object:password];
         return true;
     }else{
@@ -201,13 +229,16 @@
 
 - (void)setPrivacyPasswordSuccess:(NSNotification *)notify{
     NSString *pwd = (NSString *)notify.object;
+    [self.textField resignFirstResponder];
     [XKRWUserDefaultService setPrivacyPassword:pwd];
     if ([self.delegate respondsToSelector:@selector(verifySucceed)]) {
         [self.delegate verifySucceed];
     }
     if (_privacyType == configue) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
+            if (self.navigationController) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         });
     }
 }
@@ -215,6 +246,8 @@
 - (IBAction)forgetPasswordAction:(id)sender {
 //    XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[[UIApplication sharedApplication] delegate];
     [XKRWUserDefaultService setForgetPrivacyPassword:true];
+    [XKRWUserDefaultService removePrivacyPassword];
+    [self.textField resignFirstResponder];
     [self dismissViewControllerAnimated:true completion:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Exit" object:nil];
 //    XKRWNavigationController *nav = (XKRWNavigationController *)appdelegate.window.rootViewController;

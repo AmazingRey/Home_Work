@@ -27,7 +27,6 @@
 #pragma --mark  5.0版本 
 #import "XKRW-Swift.h"
 #import "XKRWTabbarVC.h"
-#import "XKRWPrivacyPassWordVC.h"
 
 @interface XKRWRootVC ()<UIScrollViewDelegate>
 {
@@ -229,12 +228,15 @@
     }
     else if([XKRWUserDefaultService isLogin]) {
         if ([[XKRWUserService sharedService] checkUserInfoIsComplete]) {
+            
             if (![[XKRWUserService sharedService] getUserNickNameIsEnable]) {
                 XKRWModifyNickNameVC *nickVC = [[XKRWModifyNickNameVC alloc] init];
                 nickVC.notShowBackButton = YES;
                 [self.navigationController pushViewController:nickVC animated:YES];
               
             }else{
+                XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
+                appdelegate.privacyPasswordVC.isVerified = true;
                 XKRWTabbarVC *tabbarVC = [[XKRWTabbarVC alloc] init];
                 if (IOS_8_OR_LATER) {
                     [self.navigationController pushViewController:tabbarVC animated:NO];

@@ -230,7 +230,7 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
     webView.webTitle = [[noticeInfo objectForKey:@"aps"]objectForKey:@"alert"];
     webView.contentUrl = [NSString stringWithFormat:@"%@?token=%@",[noticeInfo objectForKey:@"url"],[[XKRWUserService sharedService]getToken]];
     webView.showType = YES;
-    
+    webView.isHidenRightNavItem = NO;
     [vc  presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:webView withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
         
     }];

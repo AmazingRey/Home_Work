@@ -190,12 +190,12 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if(indexPath.section == 1){
+        if(indexPath.section == 2){
             if(indexPath.row == 1){
                 let feedbackVC:XKRWUserFeedbackVC = XKRWUserFeedbackVC(nibName:"XKRWUserFeedbackVC", bundle: nil)
                 self.navigationController?.pushViewController(feedbackVC, animated: true)
             }
-        }else if(indexPath.section == 2){
+        }else if(indexPath.section == 3){
             if(indexPath.row == 0){
                 MobClick.event("in_RptOneMin")
 
@@ -211,7 +211,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
                 let aboutVC:XKRWAboutVC = XKRWAboutVC()
                  self.navigationController?.pushViewController(aboutVC, animated: true)
             }
-        }else{
+        }else if(indexPath.section == 4){
         
             self.exitTheAccount();
         }

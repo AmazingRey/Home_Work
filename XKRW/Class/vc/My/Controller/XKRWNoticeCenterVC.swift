@@ -15,14 +15,16 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
     var selectedSegmentIndex = 0
     var noticeType:NSInteger = 0
     var isPresent:Bool = false
+    var isFirstLoad = true
     var dataArray = []
     var imageView:UIImageView = UIImageView(image: UIImage(named: "feast_pic_"))
     var noNoticeLabel:UILabel = UILabel()
     var chatNum = -1
     var noticeListData:NSMutableArray = NSMutableArray()
-    
+    var segment:UISegmentedControl = UISegmentedControl(items: ["通知","评论"])
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.initView()
         self.initData()
         self.systemNoticeSetHaveRead()
@@ -41,7 +43,6 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
         self.addNaviBarBackButton()
         self.title = "消息中心"
         self.navigationItem.rightBarButtonItem = nil
-        let segment = UISegmentedControl(items: ["通知","评论"])
         segment.frame = CGRectMake(15, 10, UI_SCREEN_WIDTH-30, 30)
         segment.tintColor = XKMainSchemeColor
         segment.selectedSegmentIndex = 0
@@ -68,15 +69,44 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
     }
     
     func initData(){
+        
+        var hasUnreadNotice = 0
         if(selectedSegmentIndex == 0){
             noticeListData  = XKRWNoticeService.sharedService().getNoticeListFromDatabaseAndUserId(XKRWUserService.sharedService().getUserId(), andNoticeType: "4,699,9,10")
-        }else{
+            if noticeListData.count != 0 && isFirstLoad {
+                for entity in noticeListData {
+                    hasUnreadNotice += entity.read == 0 ? 1 : 0
+                }
+                selectedSegmentIndex = hasUnreadNotice == 0 ? 1 : 0
+            } else {
+             selectedSegmentIndex = 1
+            }
+            
+        }
+        
+        if (selectedSegmentIndex == 1) {
             noticeListData  = XKRWNoticeService.sharedService().getNoticeListFromDatabaseAndUserId(XKRWUserService.sharedService().getUserId(), andNoticeType: "2,7")
+            
+            hasUnreadNotice = 0
+            if noticeListData.count != 0 && isFirstLoad {
+                for entity in noticeListData {
+                    hasUnreadNotice += entity.read == 0 ? 1 : 0
+                }
+                selectedSegmentIndex = hasUnreadNotice == 0 ? 0 : 1
+            } else {
+                selectedSegmentIndex = 0
+            }
+        }
+        
+        if segment.selectedSegmentIndex != selectedSegmentIndex {
+            segment.selectedSegmentIndex = selectedSegmentIndex
+            self.changeSegmentIndexAction(segment)
         }
         chatNum = XKRWNoticeService.sharedService().ShouShouServerChat(XKRWUserService.sharedService().getUserId())
         self.checkIsHaveMessage()
         
         noticeTableView.reloadData()
+        isFirstLoad = false
     }
     
     override func popView() {

@@ -32,7 +32,6 @@
 @property (nonatomic, strong) NSString *shareTitle;
 
 @property (nonatomic,assign) BOOL showType;  //弹出类型
-@property (nonatomic,assign) BOOL isPerson;
 
 @property (nonatomic,assign) BOOL isHidenRightNavItem;
 

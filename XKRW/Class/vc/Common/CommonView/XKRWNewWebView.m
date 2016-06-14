@@ -117,21 +117,9 @@
         [_progressBackView addSubview:_progressView];
         
     }
-
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more_option_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(clickRightNavigationBarItem:)];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    item.tintColor = [UIColor whiteColor];
     
     if (!self.isHidenRightNavItem) {
-        self.navigationItem.rightBarButtonItem = item;
-    }
-    
-    if (!_isPerson)
-    {
-        item.tag = 1;
-        
-    } else {//来自person页
-        item.tag = 2;
+        [self addNaviBarRightButtonWithNormalImageName:@"more" highlightedImageName:@"more_p" selector:@selector(clickRightNavigationBarItem:)];
     }
 
     [self initData];
@@ -186,17 +174,9 @@
     
     NSArray *images = nil;
     NSArray *titles = nil;
-    if(!_isPerson)
-    {
-        images = @[[UIImage imageNamed:@"share_icon"]];
-        titles = @[@"分享"];
-    }
-    else
-    {
-        images = @[[UIImage imageNamed:@"share_icon"],
-                   [UIImage imageNamed:@"discover_collect"]];
-        titles = @[@"分享",@"收藏"];
-    }
+    
+    images = @[[UIImage imageNamed:@"share_icon"]];
+    titles = @[@"分享"];
     
     KMPopoverView *view = [[KMPopoverView alloc] initWithFrame:CGRectMake(0, 0, 125, 88.f)
                                                 arrowDirection:KMDirectionUp
