@@ -107,10 +107,13 @@
         schemeBtn.frame = CGRectMake(XKAppWidth/4*1,0.0, image.size.width, image.size.height);
         XKLog(@"%f,%f",image.size.width,image.size.height);
     }
-
-    [schemeBtn addTarget:self action:@selector(schemeBtn_Click:) forControlEvents:UIControlEventTouchDown];
     
-
+    
+//    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapDiscorveryButton:)];
+//    doubleTap.numberOfTapsRequired = 2;
+//    [schemeBtn addGestureRecognizer:doubleTap];
+    [schemeBtn addTarget:self action:@selector(schemeBtn_Click:) forControlEvents:UIControlEventTouchUpInside];
+//    [schemeBtn addTarget:self action:@selector(multipleTap:withEvent:) forControlEvents:UIControlEventTouchDown];
     
     [tabbarBG addSubview:schemeBtn];
     
@@ -278,13 +281,15 @@
     XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
     BOOL isForgetPrivacyPassword = [XKRWUserDefaultService isForgetPrivacyPassword];
     if (isForgetPrivacyPassword) {
-        //点击忘记密码后重新设置
-        appdelegate.privacyPasswordVC = nil;
-        XKRWPrivacyPassWordVC *privacyPassWordvc = [appdelegate privacyPasswordVC];
-        privacyPassWordvc.privacyType = configue;
+        //点击忘记密码后重新设置       
+        appdelegate.privacyPasswordVC.privacyType = configue;
+        [appdelegate.window makeKeyAndVisible];
+        [appdelegate.window.rootViewController presentViewController:appdelegate.privacyPasswordVC animated:false completion:NULL];
     }else{
-        if (!appdelegate.privacyPasswordVC.isVerified) {
-            [appdelegate privacyPasswordVC];
+        if (appdelegate.privacyPasswordVC.passWord && !appdelegate.privacyPasswordVC.isVerified) {
+            appdelegate.privacyPasswordVC.privacyType = verify;
+            [appdelegate.window makeKeyAndVisible];
+            [appdelegate.window.rootViewController presentViewController:appdelegate.privacyPasswordVC animated:false completion:NULL];
         }
     }
 }
@@ -397,6 +402,31 @@
     if (longPress.state == UIGestureRecognizerStateBegan) {
         [[NSNotificationCenter defaultCenter] postNotificationName:ENTRYFEEDBACK object:nil];
     }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSSet *allTouches = [event allTouches];
+    switch ([allTouches count])
+    {
+        case 1:
+        {
+            UITouch *touch = [[allTouches allObjects] objectAtIndex:0];
+            switch([touch tapCount])
+            {
+                case 2://Double tap.
+                    if (self.selectedIndex == 1) {
+                        CGRect btnFrameInWindow = [schemeBtn convertRect:schemeBtn.bounds toView:self.view];
+                        CGPoint touchPoint = [touch locationInView:self.view];
+                        if (CGRectContainsPoint(btnFrameInWindow, touchPoint)) {
+                            XKLog(@"11111Double tap");
+                        }
+                    }
+                    break;
+            }
+        } 
+            break;
+    }
+    
 }
 
 #pragma mark 闹钟处理

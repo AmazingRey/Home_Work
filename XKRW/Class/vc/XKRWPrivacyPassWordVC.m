@@ -28,6 +28,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *forgetPasswordBtn;
 
 - (IBAction)forgetPasswordAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *configueLaterBtn;
+- (IBAction)configueLaterAction:(id)sender;
 
 @end
 
@@ -38,8 +40,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _configueLaterBtn.hidden = true;
     if (_privacyType == configue) {
         self.title = @"设置隐私密码";
+        if (!self.navigationController) {
+            _configueLaterBtn.hidden = false;
+        }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
         _labelVerify.text = @"请设置隐私密码";
@@ -79,6 +85,9 @@
     }
     if (_privacyType == configue) {
         self.title = @"设置隐私密码";
+        if (!self.navigationController) {
+            _configueLaterBtn.hidden = false;
+        }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
         _labelVerify.text = @"请设置隐私密码";
@@ -87,6 +96,16 @@
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
         _labelVerify.text = @"输入密码确认关闭";
+    }
+}
+
+- (void)setIsVerified:(BOOL)isVerified{
+    if (_isVerified != isVerified) {
+        _isVerified = isVerified;
+    }
+    self.textField.text = @"";
+    for (UIImageView  *imgView in imageViewArray) {
+        imgView.image = [UIImage new];
     }
 }
 
@@ -169,8 +188,6 @@
     if ([password isEqualToString:_passWord]) {
 //        [_textField resignFirstResponder];
         [XKRWUserDefaultService removePrivacyPassword];
-        XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
-        appdelegate.privacyPasswordVC = nil;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.navigationController popViewControllerAnimated:YES];
         });
@@ -268,5 +285,10 @@
 //
 //
 //    }
+}
+- (IBAction)configueLaterAction:(id)sender {
+    [XKRWUserDefaultService setForgetPrivacyPassword:false];
+    [self.textField resignFirstResponder];
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 @end

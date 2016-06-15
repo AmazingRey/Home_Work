@@ -175,15 +175,15 @@
         }
         [window addSubview:ADImageView];
         
-        [NSTimer scheduledTimerWithTimeInterval:5.f
-                                         target:self
-                                       selector:@selector(hideAdImage)
-                                       userInfo:nil
-                                        repeats:NO];
+//        [NSTimer scheduledTimerWithTimeInterval:5.f
+//                                         target:self
+//                                       selector:@selector(hideAdImage)
+//                                       userInfo:nil
+//                                        repeats:NO];
+
+       
     }
 }
-
-
 
 + (void)hideAdImage
 {

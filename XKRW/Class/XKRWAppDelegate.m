@@ -295,8 +295,10 @@
     [XKRWUserDefaultService setAppGroundStatusChanged:YES];
     NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
     if (passWord && ![passWord isEqualToString:@""]) {
-        self.privacyPasswordVC = nil;
-        [self privacyPasswordVC];
+        self.privacyPasswordVC.isVerified = false;
+        self.privacyPasswordVC.privacyType = verify;
+        [self.window makeKeyAndVisible];
+        [self.window.rootViewController presentViewController:_privacyPasswordVC animated:false completion:NULL];
     }
 }
 
@@ -575,8 +577,6 @@ void UncaughtExceptionHandler(NSException *exception) {
             _privacyPasswordVC.isVerified = false;
             _privacyPasswordVC.privacyType = verify;
             _privacyPasswordVC.delegate = self;
-            [self.window makeKeyAndVisible];
-            [self.window.rootViewController presentViewController:_privacyPasswordVC animated:false completion:NULL];
     }
     _privacyPasswordVC.passWord = passWord;
     return _privacyPasswordVC;

@@ -34,12 +34,17 @@
     UIPageControl *pageControl;
 }
 @property (nonatomic, strong) UIImageView *defaultImgView;
-@property (nonatomic, strong) UILabel * VersionLab;
-@property (nonatomic, assign) BOOL    adShowed;
+@property (nonatomic, strong) UILabel     * VersionLab;
+@property (nonatomic, strong) UIButton    *jumpButton;
+@property (nonatomic, assign) BOOL        adShowed;
 
 @end
 
 @implementation XKRWRootVC
+{
+    BOOL    isShowingADImage;
+    int64_t showADTime;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,6 +58,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    showADTime = 5;
     // 每次进入通过版本号等信息执行代码
     [[XKRWVersionService shareService] checkVersion:^BOOL(NSString *currentVersion, BOOL isNewUpdate, BOOL isNewSetUp) {
         // 是否是新安装或者新升级
@@ -235,8 +241,6 @@
                 [self.navigationController pushViewController:nickVC animated:YES];
               
             }else{
-                XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[UIApplication sharedApplication].delegate;
-                appdelegate.privacyPasswordVC.isVerified = true;
                 XKRWTabbarVC *tabbarVC = [[XKRWTabbarVC alloc] init];
                 if (IOS_8_OR_LATER) {
                     [self.navigationController pushViewController:tabbarVC animated:NO];
@@ -310,13 +314,67 @@
     [super viewDidAppear:animated];
     if (_fromWhich == Appdelegate) {
         [XKRWCui showAdImageOnWindow];
-        [self performSelector:@selector(normalFlow) withObject:nil afterDelay:5];
+        UIWindow *window = [[UIApplication sharedApplication].delegate window] ;
+        [window addSubview:self.jumpButton];
+        [self showingADImageView];
+        [self normalFlow];
         _fromWhich = 0;
     }else{
         [self normalFlow];
     }
 }
 
+- (void)showingADImageView{
+    isShowingADImage = true;
+    [NSThread detachNewThreadSelector:@selector(intervalTimerToHideADImageInNewthread) toTarget:self withObject:nil];
+    NSLog(@"runloop start");
+    while (isShowingADImage) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+    NSLog(@"runloop end.");
+    [self.jumpButton removeFromSuperview];
+    [XKRWCui hideAdImage];
+}
+
+- (void)intervalTimerToHideADImageInNewthread{
+    sleep((unsigned)showADTime);
+    [self performSelectorOnMainThread:@selector(setEnd) withObject:nil waitUntilDone:NO];
+}
+
+- (void)setEnd{
+    isShowingADImage = false;
+}
+
+- (UIButton *)jumpButton{
+    if (!_jumpButton) {
+        _jumpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_jumpButton addTarget:self action:@selector(tapJumpAction:) forControlEvents:UIControlEventTouchUpInside];
+        _jumpButton.frame = CGRectMake(XKAppWidth - 100, 30, 80, 30);
+        _jumpButton.backgroundColor = colorSecondary_cccccc;
+        _jumpButton.layer.cornerRadius = 8;
+        _jumpButton.titleLabel.font = [UIFont systemFontOfSize:15];
+        _jumpButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        _jumpButton.titleLabel.textColor = colorSecondary_333333;
+        NSString *jumpText = [NSString stringWithFormat:@"跳过 | %llds",showADTime];
+        [_jumpButton setTitle:jumpText forState:UIControlStateNormal];
+        [NSTimer scheduledTimerWithTimeInterval:1.f
+                                         target:self
+                                       selector:@selector(decreaseADTime)
+                                       userInfo:nil
+                                        repeats:true];
+    }
+    return _jumpButton;
+}
+
+- (void)tapJumpAction:(UIButton *)button{
+    [self setEnd];
+}
+
+- (void)decreaseADTime{
+    showADTime--;
+    NSString *jumpText = [NSString stringWithFormat:@"跳过 | %llds",showADTime];
+    [_jumpButton setTitle:jumpText forState:UIControlStateNormal];
+}
 
 - (NSString *) stringFromMD5:(NSString *)string{
     
@@ -382,8 +440,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
-
 
 @end

@@ -106,7 +106,10 @@ class XKRWLoginVC: XKRWBaseVC {
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        if XKRWUserDefaultService.isLogin() {
+            let appdelegate : XKRWAppDelegate = UIApplication.sharedApplication().delegate as! XKRWAppDelegate
+            appdelegate.privacyPasswordVC.isVerified = true
+        }
         XKRWLoginVC.isShowLoginVC = false
     }
 
