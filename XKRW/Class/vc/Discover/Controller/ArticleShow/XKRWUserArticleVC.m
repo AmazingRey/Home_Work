@@ -24,7 +24,7 @@
 #import "XKRWTopicVC.h"
 #import "XKRWInputBoxView.h"
 
-@interface XKRWUserArticleVC () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate,XKRWActionSheetDelegate, XKRWInputBoxViewDelegate, UIScrollViewDelegate>
+@interface XKRWUserArticleVC () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate,XKRWActionSheetDelegate, XKRWInputBoxViewDelegate, UIScrollViewDelegate, XKRWNavigationControllerTapDelegate>
 
 @property (nonatomic, strong) XKRWUITableViewBase *tableView;
 
@@ -194,13 +194,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-     XKRWNavigationController *ctrl = (XKRWNavigationController *)self.navigationController;
+    XKRWNavigationController *ctrl = (XKRWNavigationController *)self.navigationController;
     if (!self.showNaviBar) {
         [ctrl navigationBarChangeFromBlackHalfTransNavigationBarToTransparencyNavigationBar];
     } else {
         [ctrl navigationBarChangeFromDefaultNavigationBarToBlackHarfTransNavigationBar];
     }
-    
+    ctrl.tapNavBarDelegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -213,6 +213,7 @@
         
     XKRWNavigationController *ctrl = (XKRWNavigationController *)self.navigationController;
     [ctrl navigationBarChangeFromTransparencyNavigationBarToDefaultNavigationBar];
+    ctrl.tapNavBarDelegate = nil;
 }
 
 
@@ -909,7 +910,12 @@
     }
 }
 
-
+#pragma mark XKRWNavigationControllerTapDelegate
+- (void)tapNavigationBar{
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                animated:true
+                          scrollPosition:UITableViewScrollPositionTop];
+}
 
 /*
  #pragma mark - Navigation

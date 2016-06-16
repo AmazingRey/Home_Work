@@ -12,6 +12,7 @@ class XKRWSmallImageAndTitleCell: UITableViewCell {
     @IBOutlet weak var smallImageView: UIImageView!
 
 
+    @IBOutlet var newImage: UIImageView!
     @IBOutlet weak var readNumLabel: UILabel!
     @IBOutlet weak var starImageView: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!

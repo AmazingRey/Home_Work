@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -23,7 +23,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今天是个好日子" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C34-0D-l3Y">
-                        <rect key="frame" x="98" y="10" width="207" height="22"/>
+                        <rect key="frame" x="98" y="10" width="112" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="z9y-e1-iJw"/>
                         </constraints>
@@ -65,12 +65,21 @@
                             <constraint firstAttribute="width" constant="10" id="IFI-UI-8vj"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discover_new" translatesAutoresizingMaskIntoConstraints="NO" id="ky7-Ti-uaM">
+                        <rect key="frame" x="220" y="15" width="19" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="8HE-bU-usI"/>
+                            <constraint firstAttribute="width" constant="19" id="s1l-f8-16j"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="1EH-7i-DrR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="0WI-ER-Qvm"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="C34-0D-l3Y" secondAttribute="trailing" constant="7" id="5I7-PW-tbm"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ky7-Ti-uaM" secondAttribute="trailing" constant="15" id="18d-jD-iDf"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="C34-0D-l3Y" secondAttribute="trailing" constant="30" id="5I7-PW-tbm"/>
                     <constraint firstItem="C34-0D-l3Y" firstAttribute="leading" secondItem="1EH-7i-DrR" secondAttribute="trailing" constant="11" id="B3U-zq-Cg9"/>
                     <constraint firstItem="C34-0D-l3Y" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="FZd-GY-wlU"/>
+                    <constraint firstItem="ky7-Ti-uaM" firstAttribute="leading" secondItem="C34-0D-l3Y" secondAttribute="trailing" constant="10" id="Jbh-uK-8fP"/>
                     <constraint firstItem="kjl-65-xpS" firstAttribute="leading" secondItem="VUp-mG-2tb" secondAttribute="trailing" constant="3" id="QFh-Zl-qGc"/>
                     <constraint firstItem="kjl-65-xpS" firstAttribute="top" secondItem="nML-fs-0CN" secondAttribute="bottom" constant="-15" id="QGS-fU-JMm"/>
                     <constraint firstItem="C34-0D-l3Y" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="R5H-Q9-yyq"/>
@@ -79,18 +88,25 @@
                     <constraint firstItem="nML-fs-0CN" firstAttribute="leading" secondItem="kjl-65-xpS" secondAttribute="trailing" constant="5" id="aHd-AN-Ye0"/>
                     <constraint firstItem="VUp-mG-2tb" firstAttribute="top" secondItem="1EH-7i-DrR" secondAttribute="bottom" constant="-17" id="b7a-Yw-4Vk"/>
                     <constraint firstItem="1EH-7i-DrR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="gcq-tO-7Om"/>
+                    <constraint firstItem="ky7-Ti-uaM" firstAttribute="centerY" secondItem="C34-0D-l3Y" secondAttribute="centerY" id="jAg-sS-Gd1"/>
                     <constraint firstItem="4FV-Nl-d0d" firstAttribute="top" secondItem="1EH-7i-DrR" secondAttribute="bottom" constant="-22" id="jJt-w6-DZ5"/>
+                    <constraint firstItem="ky7-Ti-uaM" firstAttribute="leading" secondItem="C34-0D-l3Y" secondAttribute="trailing" constant="10" id="kpQ-ZL-S10"/>
                     <constraint firstAttribute="bottomMargin" secondItem="1EH-7i-DrR" secondAttribute="bottom" constant="-1.5" id="nJ8-LA-IFL"/>
                     <constraint firstItem="VUp-mG-2tb" firstAttribute="top" secondItem="nML-fs-0CN" secondAttribute="bottom" constant="-15" id="qun-jo-v1e"/>
+                    <constraint firstItem="ky7-Ti-uaM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="7" id="wNn-Mu-NwH"/>
                     <constraint firstAttribute="trailingMargin" secondItem="nML-fs-0CN" secondAttribute="trailing" constant="7" id="xGf-Mp-YMb"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="5I7-PW-tbm"/>
                         <exclude reference="FZd-GY-wlU"/>
+                        <exclude reference="jAg-sS-Gd1"/>
+                        <exclude reference="kpQ-ZL-S10"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="newImage" destination="ky7-Ti-uaM" id="hti-sS-Bvj"/>
                 <outlet property="readNumLabel" destination="nML-fs-0CN" id="MGA-fb-jZN"/>
                 <outlet property="smallImageView" destination="1EH-7i-DrR" id="5dG-xV-PYc"/>
                 <outlet property="starImageView" destination="VUp-mG-2tb" id="H03-46-mWz"/>
@@ -102,6 +118,7 @@
     </objects>
     <resources>
         <image name="discover_eye.png" width="36" height="44"/>
+        <image name="discover_new" width="19" height="12"/>
         <image name="discover_star_hightlighted.png" width="36" height="44"/>
     </resources>
 </document>

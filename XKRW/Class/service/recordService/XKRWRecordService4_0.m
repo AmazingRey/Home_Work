@@ -3324,6 +3324,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 - (NSNumber *)syncTodayRecordData {
     NSDate *today = [NSDate today];
     if ([[self syncOfflineRecordToRemote] boolValue]) {
+        
+        
         NSDictionary *result = [self syncServerRecordFromDate:today];
         if ([result[@"isSuccess"] isEqualToString:SUCCESS]) {
             
@@ -3509,6 +3511,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         for (XKRWRecordSchemeEntity *entityScheme in arrScheme) {
             if (entityScheme.type != 0 && entityScheme.type != 5){
                 NSNumber *numKcal = [NSNumber numberWithFloat:entityScheme.calorie];
+                  calorie += entityScheme.calorie;
                 if (numKcal != 0) {
                     [dic1 setObject:numKcal forKey:[entityScheme.date beginningOfDay]];
                 }
@@ -3521,6 +3524,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 float kcal = num.floatValue;
                 for (XKRWRecordFoodEntity *foodEntity in entityRecord.FoodArray) {
                     kcal += foodEntity.calorie;
+                    calorie += foodEntity.calorie;
                 }
                 num = [NSNumber numberWithFloat:kcal];
                 if (num != 0) {
@@ -3531,6 +3535,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 
                 float kcal = 0;
                 for (XKRWRecordFoodEntity *foodEntity in entityRecord.FoodArray) {
+                    calorie += foodEntity.calorie;
                     kcal += foodEntity.calorie;
                 }
                 if (kcal != 0) {
@@ -3548,6 +3553,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         for (XKRWRecordSchemeEntity *entityScheme in arrScheme) {
             if (entityScheme.type == 0 || entityScheme.type == 5){
+                calorie += entityScheme.calorie;
                 NSNumber *numKcal = [NSNumber numberWithFloat:entityScheme.calorie];
                 if (numKcal != 0) {
                     [dic2 setObject:numKcal forKey:[entityScheme.date beginningOfDay]];
@@ -3560,6 +3566,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 float kcal = num.floatValue;
                 for (XKRWRecordFoodEntity *foodEntity in entityRecord.SportArray) {
                     kcal += foodEntity.calorie;
+                    calorie += foodEntity.calorie;
                 }
                 num = [NSNumber numberWithFloat:kcal];
 //                if (num != 0) {
@@ -3569,6 +3576,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 float kcal = 0;
                 for (XKRWRecordFoodEntity *foodEntity in entityRecord.SportArray) {
                     kcal += foodEntity.calorie;
+                    calorie += foodEntity.calorie;
                 }
 //                if (kcal != 0){
                     [dic2 setObject:[NSNumber numberWithFloat:kcal] forKey:[entityRecord.date beginningOfDay]];

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-01-25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AMQ-1h-nHz">
@@ -43,7 +43,10 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DeY-Nh-Ujx">
-                        <rect key="frame" x="15" y="10" width="290" height="20"/>
+                        <rect key="frame" x="15" y="10" width="40" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="yBZ-L1-u86"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -55,6 +58,13 @@
                             <constraint firstAttribute="width" constant="10" id="F0i-5y-J6v"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="discover_new" translatesAutoresizingMaskIntoConstraints="NO" id="ih9-hh-oOM">
+                        <rect key="frame" x="65" y="14" width="19" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="19" id="2vp-Ev-EFS"/>
+                            <constraint firstAttribute="height" constant="12" id="ZSo-bf-qcr"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="4xH-cX-pcJ" secondAttribute="trailing" constant="7" id="060-Mc-ygh"/>
@@ -64,22 +74,27 @@
                     <constraint firstAttribute="bottomMargin" secondItem="DeY-Nh-Ujx" secondAttribute="bottom" constant="21.5" id="92z-S0-ezK"/>
                     <constraint firstAttribute="bottomMargin" secondItem="4xH-cX-pcJ" secondAttribute="bottom" constant="-4" id="Dtv-jm-h8R"/>
                     <constraint firstAttribute="bottomMargin" secondItem="AMQ-1h-nHz" secondAttribute="bottom" constant="-4" id="EhK-HQ-N3e"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="DeY-Nh-Ujx" secondAttribute="trailing" constant="7" id="Klm-o3-UhR"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="DeY-Nh-Ujx" secondAttribute="trailing" constant="40" id="Klm-o3-UhR"/>
                     <constraint firstItem="oT2-rY-7gZ" firstAttribute="top" secondItem="4xH-cX-pcJ" secondAttribute="bottom" constant="-15" id="ToO-vu-fvd"/>
+                    <constraint firstItem="ih9-hh-oOM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="XJR-6c-EQb"/>
                     <constraint firstItem="AMQ-1h-nHz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="XPr-F3-LTe"/>
                     <constraint firstItem="4xH-cX-pcJ" firstAttribute="top" secondItem="AMQ-1h-nHz" secondAttribute="bottom" constant="-20" id="cTG-HW-sTe"/>
+                    <constraint firstItem="ih9-hh-oOM" firstAttribute="leading" secondItem="DeY-Nh-Ujx" secondAttribute="trailing" constant="10" id="js7-x7-uPI"/>
                     <constraint firstItem="AMQ-1h-nHz" firstAttribute="top" secondItem="DeY-Nh-Ujx" secondAttribute="bottom" constant="5" id="kfF-1t-wA9"/>
+                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ih9-hh-oOM" secondAttribute="trailing" constant="15" id="mMC-ux-Do5"/>
                     <constraint firstItem="4xH-cX-pcJ" firstAttribute="leading" secondItem="oT2-rY-7gZ" secondAttribute="trailing" constant="5" id="t7e-O7-Wa6"/>
                     <constraint firstItem="oT2-rY-7gZ" firstAttribute="leading" secondItem="JII-rX-hcP" secondAttribute="trailing" constant="3" id="tO3-U6-04v"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="Klm-o3-UhR"/>
                         <exclude reference="kfF-1t-wA9"/>
                         <exclude reference="Dtv-jm-h8R"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="newImage" destination="ih9-hh-oOM" id="WRX-BC-oec"/>
                 <outlet property="readNumLabel" destination="4xH-cX-pcJ" id="3fK-Hq-X1C"/>
                 <outlet property="starImageView" destination="JII-rX-hcP" id="5he-bc-yjO"/>
                 <outlet property="timeLabel" destination="AMQ-1h-nHz" id="2LC-Va-aQ5"/>
@@ -90,6 +105,7 @@
     </objects>
     <resources>
         <image name="discover_eye.png" width="36" height="44"/>
+        <image name="discover_new" width="19" height="12"/>
         <image name="discover_star_hightlighted.png" width="36" height="44"/>
     </resources>
 </document>

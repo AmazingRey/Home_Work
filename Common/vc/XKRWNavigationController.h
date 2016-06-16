@@ -6,6 +6,10 @@
 //  Copyright (c) 2015年 XiKang. All rights reserved.
 //
 
+@protocol XKRWNavigationControllerTapDelegate <NSObject>
+- (void)tapNavigationBar;
+
+@end
 #import <UIKit/UIKit.h>
 
 @interface XKRWNavigationController : UINavigationController
@@ -14,7 +18,7 @@
     UIImageView *imageView;
 }
 
-
+@property (nonatomic, assign) id <XKRWNavigationControllerTapDelegate> tapNavBarDelegate;
 
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController withNavigationBarType:(NavigationBarType) type;
 

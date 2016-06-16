@@ -44,6 +44,8 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
     var selectIndexPath:NSIndexPath?
     
     var nids:String = String()
+    var dateStr:String = String()
+    let appdelegate : XKRWAppDelegate = UIApplication.sharedApplication().delegate as! XKRWAppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -258,6 +260,17 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         
         let entity = operateArticle[indexPath.section]
         
+        let date = appdelegate.timeFormatterOne.dateFromString(entity.date)
+        if  date!.isDayEqualToDate(NSDate()) {
+            dateStr = "今天"
+        }else if date!.isDayEqualToDate(NSDate().offsetDay(-1)){
+            dateStr = "昨天"
+        }else if date!.isDayEqualToDate(NSDate().offsetDay(-2)){
+            dateStr = "前天"
+        }else{
+            dateStr = entity.date
+        }
+        
         let hadRead = XKRWManagementService5_0.sharedService().operationArticleHadReadWithOperationArticleID(entity.nid)
         
         if entity.showType == "1"{
@@ -267,7 +280,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             bigImageAndTitleCell?.imageButton.tag = indexPath.section
             bigImageAndTitleCell?.imageButton.addTarget(self, action: #selector(XKRWOperateArticleListVC.entryArticleButtonAction(_:)), forControlEvents: .TouchUpInside)
             
-            bigImageAndTitleCell?.timeLabel.text = entity.date!
+            bigImageAndTitleCell?.timeLabel.text = dateStr
             bigImageAndTitleCell?.titleLabel.text = entity.title!
             bigImageAndTitleCell?.readNumLabel.text = self.readNumToString(entity.pv)
             bigImageAndTitleCell?.starImageView.hidden = false
@@ -289,7 +302,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
 
             //  因为后台模板 只做了 1，3，5 故假如模板为2  默认显示3
             smallImageAndTitleCell = tableView.dequeueReusableCellWithIdentifier("smallImageAndTitleCell") as? XKRWSmallImageAndTitleCell
-            smallImageAndTitleCell?.timeLabel.text = entity.date!
+            smallImageAndTitleCell?.timeLabel.text = dateStr
             smallImageAndTitleCell?.titleLabel.text = entity.title!
             smallImageAndTitleCell?.readNumLabel.text = self.readNumToString(entity.pv)
             smallImageAndTitleCell?.smallImageView?.setImageWithURL(NSURL(string:entity.smallImageUrl! ), placeholderImage: nil ,options:.RetryFailed)
@@ -315,7 +328,8 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             
         }else if entity.showType == "3"{
             smallImageAndTitleCell = tableView.dequeueReusableCellWithIdentifier("smallImageAndTitleCell") as? XKRWSmallImageAndTitleCell
-            smallImageAndTitleCell?.timeLabel.text = entity.date!
+            
+            smallImageAndTitleCell?.timeLabel.text = dateStr
             smallImageAndTitleCell?.titleLabel.text = entity.title!
             smallImageAndTitleCell?.readNumLabel.text = self.readNumToString(entity.pv)
             smallImageAndTitleCell?.smallImageView?.setImageWithURL(NSURL(string:entity.smallImageUrl! ), placeholderImage: nil ,options:.RetryFailed)
@@ -343,7 +357,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
 
             titleCell = tableView.dequeueReusableCellWithIdentifier("titleCell") as? XKRWTitleCell
             
-            titleCell?.timeLabel.text = entity.date!
+            titleCell?.timeLabel.text = dateStr
             titleCell?.titleLabel.text = entity.title!
             titleCell?.readNumLabel.text = self.readNumToString(entity.pv)
             titleCell?.starImageView.hidden = false
@@ -369,7 +383,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         }else if entity.showType == "5"{
             titleCell = tableView.dequeueReusableCellWithIdentifier("titleCell") as? XKRWTitleCell
             
-            titleCell?.timeLabel.text = entity.date!
+            titleCell?.timeLabel.text = dateStr
             titleCell?.titleLabel.text = entity.title!
             titleCell?.readNumLabel.text = self.readNumToString(entity.pv)
             titleCell?.starImageView.hidden = false
@@ -402,6 +416,9 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         
         let entity = operateArticle[indexPath.section]
         
+        //insert to core data (nid/userid)
+        self.setArticleState(entity.nid!)
+        
         if(self.checkIsShouldOpenFakeWeb(entity).0){
             
             dispatch_async(dispatch_get_global_queue(0,0), { () -> Void in
@@ -412,7 +429,22 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         }
         self.entryArticle(entity)
     }
-    
+    func setArticleState(nid : String){
+        let request = NSFetchRequest.init(entityName: "ArticalListEntity")
+        let userid = XKRWUserService.sharedService().getUserId()
+        request.predicate = NSPredicate(format: "nidID = %@ and userID = %d",nid,userid)
+        let manageObjectContext = appdelegate.managedObjectContext
+//        var resArray : [NSManagedObject]
+//        do {
+//            resArray = try manageObjectContext!.executeFetchRequest(request)
+//        }
+//        catch let error as NSError{
+//            
+//        }
+       
+            
+         
+    }
     
     func entryArticleButtonAction(button :UIButton){
 

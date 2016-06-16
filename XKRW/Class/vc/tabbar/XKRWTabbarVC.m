@@ -107,15 +107,10 @@
         schemeBtn.frame = CGRectMake(XKAppWidth/4*1,0.0, image.size.width, image.size.height);
         XKLog(@"%f,%f",image.size.width,image.size.height);
     }
-    
-    
-//    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapDiscorveryButton:)];
-//    doubleTap.numberOfTapsRequired = 2;
-//    [schemeBtn addGestureRecognizer:doubleTap];
     [schemeBtn addTarget:self action:@selector(schemeBtn_Click:) forControlEvents:UIControlEventTouchUpInside];
-//    [schemeBtn addTarget:self action:@selector(multipleTap:withEvent:) forControlEvents:UIControlEventTouchDown];
     
     [tabbarBG addSubview:schemeBtn];
+    
     
     shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.tag = 2;
@@ -236,7 +231,8 @@
         if (i == 3) {
             nav = [[XKRWNavigationController alloc]initWithRootViewController:[vcArray objectAtIndex:i ] withNavigationBarType:NavigationBarTypeTransparency];
             
-        }else{
+        }
+        else{
             nav = [[XKRWNavigationController alloc]initWithRootViewController:[vcArray objectAtIndex:i ] withNavigationBarType:NavigationBarTypeDefault];
         }
         [navArray addObject:nav];
@@ -413,20 +409,19 @@
             UITouch *touch = [[allTouches allObjects] objectAtIndex:0];
             switch([touch tapCount])
             {
-                case 2://Double tap.
+                case 2:
                     if (self.selectedIndex == 1) {
                         CGRect btnFrameInWindow = [schemeBtn convertRect:schemeBtn.bounds toView:self.view];
                         CGPoint touchPoint = [touch locationInView:self.view];
                         if (CGRectContainsPoint(btnFrameInWindow, touchPoint)) {
-                            XKLog(@"11111Double tap");
+                            [self.discoverVC.discoverTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
                         }
                     }
-                    break;
+                break;
             }
         } 
-            break;
+        break;
     }
-    
 }
 
 #pragma mark 闹钟处理

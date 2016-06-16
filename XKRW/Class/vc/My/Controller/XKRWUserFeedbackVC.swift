@@ -14,6 +14,7 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
     
     @IBOutlet weak var feedbackButton: UIButton!
     @IBOutlet weak var redDotImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,8 +64,48 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
     
     func presentUMeng(){
         MobClick.event("in_feedback")
-        let feedbackVC:FeedbackViewController = FeedbackViewController(nibName:"FeedbackViewController", bundle: nil)
-        self.navigationController?.pushViewController(feedbackVC, animated: true)
+        let feedbackKit = YWFeedbackKit.init(appKey: "23386781")
+        feedbackKit.environment = YWEnvironmentRelease
+        feedbackKit.extInfo = ["loginTime":NSDate.description(),"visitPath":"登录->关于->反馈"]
+        feedbackKit.customUIPlist = ["bgColor":"#000000"];
+        weak var weakSelf = self
+        feedbackKit .makeFeedbackViewControllerWithCompletionBlock({ (viewController, error) in
+            if viewController != nil {
+                viewController.title = "意见反馈"
+               weakSelf?.navigationController?.pushViewController(viewController, animated: true)
+                weak var weakNav = self.navigationController
+                
+                viewController.openURLBlock = {(aURLString, feedbackController)->Void in
+                let webVC = UIViewController()
+                    let webView = UIWebView()
+                        webView.frame = webVC.view.bounds
+                    webView.autoresizingMask = UIViewAutoresizing.None
+                    weakNav?.pushViewController(webVC, animated: true)
+                }
+            } else {
+                
+            }
+        })
+        /*
+         [XKRWCui showProgressHudInView:self.view];
+         
+         NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+         
+         NSString *content = self.mTextField.text;
+         [dictionary setObject:content forKey:@"content"];
+         
+         //  添加用户反馈 的用户信息
+         NSString * userAccount =  [[XKRWUserService sharedService] getUserAccountName];
+         NSDictionary *userInfo = @{@"用户账号":userAccount,
+         @"用户token:":[[XKRWUserService sharedService] getToken]
+         };
+         
+         [feedbackClient updateUserInfo:@{@"contact":userInfo}];
+         [feedbackClient post:dictionary];
+
+         */
+//        let feedbackVC:FeedbackViewController = FeedbackViewController(nibName:"FeedbackViewController", bundle: nil)
+//        self.navigationController?.pushViewController(feedbackVC, animated: true)
     }
     
     /**

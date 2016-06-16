@@ -10,6 +10,7 @@ import UIKit
 
 class XKRWTitleCell: UITableViewCell {
 
+    @IBOutlet var newImage: UIImageView!
     @IBOutlet weak var starImageView: UIImageView!
     @IBOutlet weak var readNumLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!

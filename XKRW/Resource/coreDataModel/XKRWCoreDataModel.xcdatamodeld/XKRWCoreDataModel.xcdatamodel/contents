@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F27" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
+    <entity name="ArticalListEntity" representedClassName="ArticalListEntity" syncable="YES">
+        <attribute name="nidID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
     <entity name="OperationEntity" representedClassName=".OperationEntity" syncable="YES">
         <attribute name="operationID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="operationTitle" optional="YES" attributeType="String" syncable="YES"/>
@@ -17,8 +21,9 @@
         <relationship name="info" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UserHadReadPostEntity" inverseName="info" inverseEntity="UserHadReadPostEntity" syncable="YES"/>
     </entity>
     <elements>
+        <element name="OperationEntity" positionX="-45" positionY="110" width="128" height="88"/>
         <element name="TeamPostNumEntity" positionX="-54" positionY="-27" width="128" height="88"/>
         <element name="UserHadReadPostEntity" positionX="124" positionY="-0" width="128" height="103"/>
-        <element name="OperationEntity" positionX="-45" positionY="110" width="128" height="88"/>
+        <element name="ArticalListEntity" positionX="124" positionY="132" width="128" height="73"/>
     </elements>
 </model>

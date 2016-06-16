@@ -104,11 +104,11 @@ class XKRWMyNoticeDetailVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource
     override func didDownloadWithResult(result: AnyObject!, taskID: String!) {
         if(taskID == "getNoticeComment"){
             XKHudHelper.instance().hideProgressHudAnimationInView(self.view)
-            print(result)
+         
             let blogDic:NSDictionary = result.objectForKey("data")?.objectForKey("blog") as! NSDictionary
             let comment:NSDictionary = result.objectForKey("data")?.objectForKey("comment") as! NSDictionary
             
-            print(blogDic)
+     
             noticeTitle = blogDic.objectForKey("title") as! String
             if(self.headEntity?.type != 7){
                 readNum = (blogDic.objectForKey("view")?.integerValue)!
@@ -127,7 +127,7 @@ class XKRWMyNoticeDetailVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource
             commentEntity = XKRWManagementService5_0 .sharedService().getCommentEntityFromDic(comment as [NSObject : AnyObject]) as XKRWCommentEtity
         
         }else if(taskID == "deleteComment"){
-            print(result)
+         
             if((result.objectForKey("success")?.boolValue) == true){
             XKRWCui.showInformationHudWithText("成功删除")
                 if (commentIndexArray.count == 1) {
@@ -142,7 +142,7 @@ class XKRWMyNoticeDetailVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource
         }else if(taskID == "commitComment"){
             if (result.objectForKey("success")?.integerValue == 1){
                 XKRWCui.showInformationHudWithText("评论成功");
-                print(result)
+               
                 if (commentEntity!.sub_Array == nil) {
                     commentEntity!.sub_Array = NSMutableArray()
                     commentEntity!.sub_Array.addObject(result.objectForKey("comment") as! XKRWReplyEntity)

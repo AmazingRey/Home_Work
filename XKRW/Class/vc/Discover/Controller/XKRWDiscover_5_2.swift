@@ -8,7 +8,7 @@
 
 import UIKit
 
-class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XKRWSCPopSelectorDelegate,MJRefreshBaseViewDelegate{
+class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XKRWSCPopSelectorDelegate,MJRefreshBaseViewDelegate, XKRWNavigationControllerTapDelegate{
 
     @IBOutlet weak var discoverTable: XKRWUITableViewBase!
     
@@ -53,10 +53,15 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         self.getIslimShareNewestArticle()
         self.getDiscoverOperationState()
         self.getUserJoinTeam()
-        
-        
+        let nav = self.navigationController as! XKRWNavigationController
+        nav.tapNavBarDelegate = self;
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let nav = self.navigationController as! XKRWNavigationController
+        nav.tapNavBarDelegate = nil;
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -442,7 +447,6 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
     
     func getTeamPostNumbers(teamID:String)->[TeamPostNumEntity]?{
         
@@ -980,7 +984,10 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         refreshHeaderView?.free()
     }
   
-
+    func tapNavigationBar() {
+        self.discoverTable .scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

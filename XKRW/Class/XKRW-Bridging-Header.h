@@ -174,3 +174,5 @@
 #import "XKRWDailyAnalysizeCell.h"
 #import "XKRWTipsManage.h"
 #import "XKRWPrivacyPassWordVC.h"
+
+#import <YWFeedbackFMWK/YWFeedbackKit.h>

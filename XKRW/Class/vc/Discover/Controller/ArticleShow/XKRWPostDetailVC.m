@@ -19,7 +19,7 @@
 #import "XKRWNewWebView.h"
 
 #import "XKRW-Swift.h"
-@interface XKRWPostDetailVC ()<UITableViewDataSource,UITableViewDelegate,KMImageBroswerViewDelegate,XKRWFitCommentCellDelegate, XKRWInputBoxViewDelegate,MJRefreshBaseViewDelegate,XKRWActionSheetDelegate,XKRWTipViewDelegate,UIAlertViewDelegate,RTLabelDelegate,UIWebViewDelegate>
+@interface XKRWPostDetailVC ()<UITableViewDataSource,UITableViewDelegate,KMImageBroswerViewDelegate,XKRWFitCommentCellDelegate, XKRWInputBoxViewDelegate,MJRefreshBaseViewDelegate,XKRWActionSheetDelegate,XKRWTipViewDelegate,UIAlertViewDelegate,RTLabelDelegate,UIWebViewDelegate,XKRWNavigationControllerTapDelegate>
 @property (weak, nonatomic) IBOutlet XKRWUITableViewBase *postTableView;
 @property (strong,nonatomic) MJRefreshFooterView *refreshFooter;
 @property (strong,nonatomic) MJRefreshHeaderView *refreshHeader;
@@ -70,7 +70,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    XKRWNavigationController *nav = (XKRWNavigationController *)self.navigationController;
+    nav.tapNavBarDelegate = self;
     //    [self getLimitInfo];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    XKRWNavigationController *nav = (XKRWNavigationController *)self.navigationController;
+    nav.tapNavBarDelegate = nil;
 }
 
 - (void)dealloc {
@@ -117,6 +125,13 @@
         _tipView = [[XKRWTipView alloc] init];
         _tipView.delegate = self;
     }
+}
+
+#pragma mark XKRWNavigationControllerTapDelegate
+- (void)tapNavigationBar{
+    [self.postTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                animated:true
+                          scrollPosition:UITableViewScrollPositionTop];
 }
 
 - (UIView *)joinGroupView {

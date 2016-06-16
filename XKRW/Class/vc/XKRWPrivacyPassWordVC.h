@@ -17,7 +17,7 @@
 @interface XKRWPrivacyPassWordVC : XKRWBaseVC <UITextFieldDelegate,UIActionSheetDelegate>
 
 @property (nonatomic, assign) id<XKRWPrivacyPassWordVCDelegate> delegate;
-@property (nonatomic, copy) NSString *passWord;
+@property (nonatomic, copy)   NSString *passWord;
 @property (nonatomic, assign) PrivacyPasswordType privacyType;
 @property (nonatomic, assign) BOOL isVerified;
 @end

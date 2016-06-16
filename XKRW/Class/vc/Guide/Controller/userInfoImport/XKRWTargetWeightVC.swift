@@ -124,9 +124,6 @@ class XKRWTargetWeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource
             lowestLocationConstraint.constant = (UI_SCREEN_WIDTH-60)/4+30-25
             highestLocationConstraint.constant = (UI_SCREEN_WIDTH-60)/4*2+30-25
             
-           
-            
-            
             let alert = UIAlertView(title: "设置阶段减重目标", message: "开启分阶段减重目标，请选择当前阶段的减重目标", delegate: nil, cancelButtonTitle: "知道了")
             
             alert .show()

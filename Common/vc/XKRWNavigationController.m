@@ -20,7 +20,7 @@
     self = [super initWithRootViewController:rootViewController];
     if (self) {
         [self setCustomNavigationbarStyleWithType:type];
-  
+        
     }
     return self;
 }
@@ -55,8 +55,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)receiveTapNavigationBar:(UIGestureRecognizer *)ges{
+    if (self.tapNavBarDelegate &&[self.tapNavBarDelegate respondsToSelector:@selector(tapNavigationBar)]) {
+        [self.tapNavBarDelegate tapNavigationBar];
+    }
+}
 
 - (void)setCustomNavigationbarStyleWithType:(NavigationBarType) type {
+    
+    UITapGestureRecognizer * ges = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(receiveTapNavigationBar:)];
+    [ges setNumberOfTapsRequired:1];
+    [self.navigationBar addGestureRecognizer:ges];
     
     [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
         [self.navigationBar setBarTintColor:[UIColor lightGrayColor]];
