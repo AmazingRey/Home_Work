@@ -46,6 +46,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
     var nids:String = String()
     var dateStr:String = String()
     let appdelegate : XKRWAppDelegate = UIApplication.sharedApplication().delegate as! XKRWAppDelegate
+    let userid = XKRWUserService.sharedService().getUserId()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -185,7 +186,8 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
     func checkIsShouldOpenFakeWeb(entity:XKRWOperationArticleListEntity) ->(show:Bool , adentity:XKRWShareAdverEntity){
         if(adArray != nil){
             var open = false
-            for var i = 0 ;i < adArray?.count ;i++ {
+            let iCount = adArray!.count
+            for i in 0 ..< iCount{
                 if (entity.url != nil){
                     if((entity.url!.containsString("noss=\(adArray![i].adId)") )){
                         open = true
@@ -328,7 +330,8 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             
         }else if entity.showType == "3"{
             smallImageAndTitleCell = tableView.dequeueReusableCellWithIdentifier("smallImageAndTitleCell") as? XKRWSmallImageAndTitleCell
-            
+         
+            smallImageAndTitleCell?.newImage.hidden = !self.fetchArticleState(entity.nid!, moudle: self.operateString!)
             smallImageAndTitleCell?.timeLabel.text = dateStr
             smallImageAndTitleCell?.titleLabel.text = entity.title!
             smallImageAndTitleCell?.readNumLabel.text = self.readNumToString(entity.pv)
@@ -382,7 +385,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             
         }else if entity.showType == "5"{
             titleCell = tableView.dequeueReusableCellWithIdentifier("titleCell") as? XKRWTitleCell
-            
+            titleCell?.newImage.hidden = !self.fetchArticleState(entity.nid!, moudle: self.operateString!)
             titleCell?.timeLabel.text = dateStr
             titleCell?.titleLabel.text = entity.title!
             titleCell?.readNumLabel.text = self.readNumToString(entity.pv)
@@ -410,15 +413,9 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         selectIndexPath = indexPath
-        
         let entity = operateArticle[indexPath.section]
-        
-        //insert to core data (nid/userid)
-        self.setArticleState(entity.nid!)
-        
         if(self.checkIsShouldOpenFakeWeb(entity).0){
             
             dispatch_async(dispatch_get_global_queue(0,0), { () -> Void in
@@ -428,22 +425,10 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             })
         }
         self.entryArticle(entity)
-    }
-    func setArticleState(nid : String){
-        let request = NSFetchRequest.init(entityName: "ArticalListEntity")
-        let userid = XKRWUserService.sharedService().getUserId()
-        request.predicate = NSPredicate(format: "nidID = %@ and userID = %d",nid,userid)
-        let manageObjectContext = appdelegate.managedObjectContext
-//        var resArray : [NSManagedObject]
-//        do {
-//            resArray = try manageObjectContext!.executeFetchRequest(request)
-//        }
-//        catch let error as NSError{
-//            
-//        }
-       
-            
-         
+        
+        //insert to core data (nid/userid)
+        self.setArticleState(entity.nid!, moudle: self.operateString!)
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
     }
     
     func entryArticleButtonAction(button :UIButton){
@@ -515,11 +500,48 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         self.navigationController?.pushViewController(webViewVC, animated: true)
     }
     
+    //MARK: CoreData 存取文章是否为NEW
+    
+    func setArticleState(nid : String, moudle : String){
+        let manageObjectContext = appdelegate.managedObjectContext!
+        let entity = NSEntityDescription.entityForName("ArticleNewStateEntity", inManagedObjectContext: manageObjectContext)
+        let article = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: manageObjectContext)
+        article.setValue(moudle + nid, forKey: "nid")
+        article.setValue(userid, forKey: "userID")
+        do {
+            try manageObjectContext.save()
+        }
+        catch let error as NSError{
+            print("😂 Can't insert CoreData.😂 Error: \(error).")
+        }
+    }
+    
+    func fetchArticleState(nid : String, moudle : String) -> Bool{
+        
+        let manageObjectContext = appdelegate.managedObjectContext!
+        let fetchrequest = NSFetchRequest.init(entityName: "ArticleNewStateEntity")
+        
+        fetchrequest.predicate = NSPredicate(format: "nid = %@ and userID = %d",moudle + nid,userid)
+        var articleEntityArray:[ArticleNewStateEntity]
+        do{
+            try articleEntityArray = manageObjectContext.executeFetchRequest(fetchrequest) as! [ArticleNewStateEntity]
+            
+            if articleEntityArray.count > 0{
+                return false
+            }
+            return true
+        }catch{
+            Log.debug_println("从CoreData中获取TeamPostNumEntity失败")
+            return false
+        }
+    }
+
     //MARK:   ---MJRefreshBaseViewDelegate
+    
     func refreshViewBeginRefreshing(refreshView: MJRefreshBaseView!) {
         if(refreshView == refreshFooterView){
             self.getOperateArticleData(page, pageSize: 10)
-            page++
+            page += 1
         }
     }
     
@@ -530,9 +552,6 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
     func refreshView(refreshView: MJRefreshBaseView!, stateChange state: MJRefreshState) {
         
     }
-    
-
-    
 
     //MARK: Network
     

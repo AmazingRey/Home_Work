@@ -14,7 +14,7 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
     
     @IBOutlet weak var feedbackButton: UIButton!
     @IBOutlet weak var redDotImageView: UIImageView!
-    
+    var feedbackKit:YWFeedbackKit?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,19 +60,40 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
         self.presentUMeng()
         MobClick.event("in_UserFeed")
     }
+    
+    func backAction() {
+        self.navigationController!.popViewControllerAnimated(true)
+    }
 
     
     func presentUMeng(){
         MobClick.event("in_feedback")
-        let feedbackKit = YWFeedbackKit.init(appKey: "23386781")
-        feedbackKit.environment = YWEnvironmentRelease
-        feedbackKit.extInfo = ["loginTime":NSDate.description(),"visitPath":"登录->关于->反馈"]
-        feedbackKit.customUIPlist = ["bgColor":"#000000"];
+        feedbackKit = YWFeedbackKit.init(appKey: "23386781")
+        feedbackKit!.environment = YWEnvironmentRelease
+        feedbackKit!.extInfo = ["用户token":XKRWUserService.sharedService().getToken(),"账号":XKRWUserService.sharedService().getUserAccountName()]
+      //  feedbackKit!.customUIPlist = ["bgColor":"#292929","sendBtnBgColor":"#292929","themeColor":"#292929"];
         weak var weakSelf = self
-        feedbackKit .makeFeedbackViewControllerWithCompletionBlock({ (viewController, error) in
+        feedbackKit! .makeFeedbackViewControllerWithCompletionBlock({ (viewController, error) in
             if viewController != nil {
-                viewController.title = "意见反馈"
-               weakSelf?.navigationController?.pushViewController(viewController, animated: true)
+                
+                let label = UILabel.init(frame: CGRectZero)
+                label.font = XKDefaultFontWithSize(17)
+                label.textAlignment = .Center
+                label.textColor = UIColor.blackColor()
+                label.text = "意见反馈"
+                label.sizeToFit()
+                viewController.navigationItem.titleView = label
+                
+                let leftItemButton = UIButton.init(type:.Custom)
+                leftItemButton .setImage(UIImage.init(named: "navigationBarback"), forState: .Normal)
+                leftItemButton.setImage(UIImage.init(named: "navigationBarback_p"), forState: .Highlighted)
+                let backImage = UIImage.init(named: "navigationBarback")
+                leftItemButton.frame = CGRectMake(0, 0, (backImage?.size.width)!, (backImage?.size.height)!)
+                leftItemButton .addTarget(self, action: #selector(XKRWUserFeedbackVC.backAction), forControlEvents: .TouchUpInside)
+                
+                viewController.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftItemButton)
+            
+                weakSelf?.navigationController?.pushViewController(viewController, animated: true)
                 weak var weakNav = self.navigationController
                 
                 viewController.openURLBlock = {(aURLString, feedbackController)->Void in
@@ -83,29 +104,9 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
                     weakNav?.pushViewController(webVC, animated: true)
                 }
             } else {
-                
+                print(error.userInfo["msg"])
             }
         })
-        /*
-         [XKRWCui showProgressHudInView:self.view];
-         
-         NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-         
-         NSString *content = self.mTextField.text;
-         [dictionary setObject:content forKey:@"content"];
-         
-         //  添加用户反馈 的用户信息
-         NSString * userAccount =  [[XKRWUserService sharedService] getUserAccountName];
-         NSDictionary *userInfo = @{@"用户账号":userAccount,
-         @"用户token:":[[XKRWUserService sharedService] getToken]
-         };
-         
-         [feedbackClient updateUserInfo:@{@"contact":userInfo}];
-         [feedbackClient post:dictionary];
-
-         */
-//        let feedbackVC:FeedbackViewController = FeedbackViewController(nibName:"FeedbackViewController", bundle: nil)
-//        self.navigationController?.pushViewController(feedbackVC, animated: true)
     }
     
     /**

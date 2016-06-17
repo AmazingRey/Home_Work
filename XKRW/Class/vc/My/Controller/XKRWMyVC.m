@@ -625,7 +625,7 @@
         
         honorEntity.nowDegree = [data objectForKey:@"now"];
         honorEntity.nextDegree = [data objectForKey:@"next"];
-        honorEntity.nowDegreeProgress = [[data objectForKey:@"rank"] integerValue];
+        honorEntity.nowDegreeProgress = [[data objectForKey:@"rank"] floatValue];
         honorEntity.nowExperience = [[data objectForKey:@"score"] integerValue];
         honorEntity.nextDegreeExperience = [[data objectForKey:@"up"] integerValue];
         

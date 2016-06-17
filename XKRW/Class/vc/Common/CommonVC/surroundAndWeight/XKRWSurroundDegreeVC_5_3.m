@@ -216,7 +216,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return tempArray .count;
+    return tempArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -258,11 +258,11 @@
     dateLabel.text = [NSString stringWithFormat:@"%@",showDate];
     
     UILabel *dataLabel = (UILabel *)[cell viewWithTag:101];
-     if (_dataType == eWeightType) {
-         dataLabel.text = [NSString stringWithFormat:@"%@kg",[[tempArray objectAtIndex:indexPath.row] objectForKey:@"value"]];
-     }else {
-         dataLabel.text = [NSString stringWithFormat:@"%@cm",[[tempArray objectAtIndex:indexPath.row] objectForKey:@"value"]];
-     }
+    if (_dataType == eWeightType) {
+        dataLabel.text = [NSString stringWithFormat:@"%@kg",[[tempArray objectAtIndex:indexPath.row] objectForKey:@"value"]];
+    }else {
+        dataLabel.text = [NSString stringWithFormat:@"%@cm",[[tempArray objectAtIndex:indexPath.row] objectForKey:@"value"]];
+    }
     
     NSString *currentValue = [[tempArray objectAtIndex:indexPath.row] objectForKey:@"value"];
     
@@ -330,8 +330,6 @@
     
     imageView.image = [UIImage imageNamed:@"girth_btn_point_mark_640"];
     
-
-    
     if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
         currentPoint = CGPointMake((CELLWIDTH)/2 ,LABELHEIGHT + 6 + (showHeight - 2*LABELHEIGHT)/2 );
     }else {
@@ -360,6 +358,35 @@
             nextPoint = CGPointMake(CELLWIDTH, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -( (nextValue.floatValue +(currentValue.floatValue -nextValue.floatValue)/2  - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
         }
         [self drawLineInView:cell.contentView fromPoint:currentPoint toTargetPoint:nextPoint];
+    }else{
+        UIView *view = [[UIView alloc] init];
+        CGRect rectInTableView = [surroundTableView rectForRowAtIndexPath:indexPath];
+        CGRect frame = CGRectMake(0, 0, 80, 80);
+        frame.origin.x = XKAppHeight - imageView.frame.origin.x - imageView.frame.size.height - 100;
+        frame.origin.y = rectInTableView.origin.y - 80 + 64;
+//        if (frame.origin.y < 20) {
+//            frame.origin.y = imageView.frame.origin.y - 80;
+//        }
+        view.frame = frame;
+        view.layer.cornerRadius = 40;
+        view.backgroundColor = colorSecondary_999999;
+        
+        UILabel *label1 = [[UILabel alloc] init];
+        label1.frame = CGRectMake(0, 0, view.frame.size.width, 30);
+        label1.textAlignment = NSTextAlignmentCenter;
+        label1.text = @"BMI";
+        [view addSubview:label1];
+        
+        UILabel *label2 = [[UILabel alloc] init];
+        label2.frame = CGRectMake(0, 30, view.frame.size.width, 30);
+        label2.textAlignment = NSTextAlignmentCenter;
+        label2.text = @"26.5";
+        [view addSubview:label2];
+        
+        CGAffineTransform transform =CGAffineTransformMakeRotation(M_PI *.5);
+        [view setTransform:transform];
+        
+        [surroundTableView addSubview:view];
     }
     
     [cell.contentView addSubview:imageView];

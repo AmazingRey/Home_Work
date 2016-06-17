@@ -17,7 +17,7 @@ class XKRWUserHonorEnity: NSObject {
     var nowDegree:String = ""
 
     //当前等级已完成的进度
-    var nowDegreeProgress:NSInteger = 0
+    var nowDegreeProgress:Double = 0.0
     //  当前经验值
     var nowExperience:NSInteger = 0
     //  下一等级所必须达到的经验值

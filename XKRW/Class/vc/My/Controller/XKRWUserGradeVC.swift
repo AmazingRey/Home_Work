@@ -54,7 +54,7 @@ class XKRWUserGradeVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
             entity?.nowDegree = data.objectForKey("now") as! String
             entity?.nextDegree = data.objectForKey("next") as! String
             entity?.nextDegreeExperience =  data.objectForKey("up")!.integerValue
-            entity?.nowDegreeProgress = data.objectForKey("rank")!.integerValue
+            entity?.nowDegreeProgress = (data.objectForKey("rank")!.doubleValue)
             entity?.nowExperience = data.objectForKey("score")!.integerValue
             if(data.objectForKey("is_max")!.integerValue == 1){
                 entity?.isMax = true
@@ -100,7 +100,7 @@ class XKRWUserGradeVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
             gradeViewCell.nowDegreeImageView.setImageWithURL(NSURL(string: (entity?.nowDegree)!), placeholderImage: UIImage(named: "level_image") ,options:.RetryFailed)
             gradeViewCell.nextDegreeImageView.setImageWithURL(NSURL(string: (entity?.nextDegree)!), placeholderImage: UIImage(named: "level_image") ,options:.RetryFailed)
 
-            gradeViewCell.degreeDescribeLabel.text = NSString(format: "已有%d%%的用户拥有此称号", (entity?.nowDegreeProgress)!) as String
+            gradeViewCell.degreeDescribeLabel.text = NSString(format: "已有%.1f%%的用户拥有此称号", (entity?.nowDegreeProgress)!) as String
             gradeViewCell.degreeDescribeLabel.setFontColor(XKMainSchemeColor, string: NSString(format: "%d%%", (entity?.nowDegreeProgress)!) as String)
             
             if (entity?.isMax == true){

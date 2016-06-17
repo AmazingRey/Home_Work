@@ -94,6 +94,8 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
 //    }
 }
 
+
+
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
 
