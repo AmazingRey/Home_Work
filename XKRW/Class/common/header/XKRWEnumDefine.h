@@ -206,6 +206,7 @@ typedef enum _MetricUnit{
     eUnitBlock,                //块
     eUnitMilliliter,           //毫升
     eUnitMinutes,               //分钟
+    eUnitNumbers,               //次
     eUnitOne,                  //个
     eUnitHalf,                 //半个
     eUnitOnly                  //只
@@ -233,6 +234,18 @@ inline NSString* getMetricUnitDescription(MetricUnit unit) {
             break;
         case 7:
             return @"分钟";
+            break;
+        case 8:
+            return @"次";
+            break;
+        case 9:
+            return @"个";
+            break;
+        case 10:
+            return @"半个";
+            break;
+        case 11:
+            return @"只";
             break;
         default:
             return @"";
@@ -331,7 +344,9 @@ typedef  NS_ENUM(NSInteger,FromWhichVC) {
     ThinBodyAssesssVC,
     PlanVC,
     DailyAnalysisVC,
-    SetVC
+    SetVC,
+    recordVC,
+    recordView5_3
 };
 
 typedef NS_ENUM(NSInteger, NavigationBarType) {
@@ -414,6 +429,7 @@ typedef NS_ENUM(NSInteger, XKRWRecordType) {
     XKRWRecordTypeSport,
     XKRWRecordTypeCustom,
     XKRWRecordTypeWeight,
+    XKRWRecordTypefat,
     XKRWRecordTypeCircumference,
     XKRWRecordTypeWeightAndCircumference,
     XKRWRecordTypeHabit,

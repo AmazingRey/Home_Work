@@ -8,6 +8,8 @@
 
 #import "XKRWSurroundDegreeVC_5_3.h"
 #import "XKRWRecordService4_0.h"
+#import "XKRWAlgolHelper.h"
+
 #define kDaySeconds 86400
 #define LABELHEIGHT  30
 #define CELLWIDTH    64
@@ -36,6 +38,32 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    UIView *view = [[UIView alloc] init];;
+    CGRect frame = CGRectMake(XKAppWidth-100, XKAppHeight - 110, 50, 50);
+    view.frame = frame;
+    view.layer.cornerRadius = 25;
+    view.backgroundColor = [UIColor colorFromHexString:@"#c8c8c8"];
+    
+    UILabel *label1 = [[UILabel alloc] init];
+    label1.frame = CGRectMake(0, 10, view.frame.size.width, 15);
+    label1.font = [UIFont systemFontOfSize:12];
+    label1.textColor = [UIColor whiteColor];
+    label1.textAlignment = NSTextAlignmentCenter;
+    label1.text = @"BMI";
+    [view addSubview:label1];
+    
+    UILabel *label2 = [[UILabel alloc] init];
+    label2.frame = CGRectMake(0, label1.frame.origin.y + label1.frame.size.height, view.frame.size.width, 15);
+    label2.font = [UIFont systemFontOfSize:10];
+    label2.textColor = [UIColor whiteColor];
+    label2.textAlignment = NSTextAlignmentCenter;
+    float BMI = [XKRWAlgolHelper BMI];
+    label2.text = [NSString stringWithFormat:@"%.1f",BMI];
+    [view addSubview:label2];
+    
+//    CGAffineTransform transform =CGAffineTransformMakeRotation(M_PI *.5);
+//    [view setTransform:transform];
+    [self.view addSubview:view];
 }
 
 - (void)viewDidLoad {
@@ -100,8 +128,7 @@
     surroundTableView.showsVerticalScrollIndicator = NO;
     XKLog(@"%@",surroundTableView);
     [self.view addSubview:surroundTableView];
-    
-    
+
     promptLabel = [[UILabel alloc] initWithFrame:CGRectMake((surroundTableView.height -200)/2, (surroundTableView.width -20)/2, 200, 20)];
     promptLabel.transform = CGAffineTransformMakeRotation(M_PI_2);
     promptLabel.textAlignment = NSTextAlignmentCenter;
@@ -358,37 +385,7 @@
             nextPoint = CGPointMake(CELLWIDTH, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -( (nextValue.floatValue +(currentValue.floatValue -nextValue.floatValue)/2  - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
         }
         [self drawLineInView:cell.contentView fromPoint:currentPoint toTargetPoint:nextPoint];
-    }else{
-        UIView *view = [[UIView alloc] init];
-        CGRect rectInTableView = [surroundTableView rectForRowAtIndexPath:indexPath];
-        CGRect frame = CGRectMake(0, 0, 80, 80);
-        frame.origin.x = XKAppHeight - imageView.frame.origin.x - imageView.frame.size.height - 100;
-        frame.origin.y = rectInTableView.origin.y - 80 + 64;
-//        if (frame.origin.y < 20) {
-//            frame.origin.y = imageView.frame.origin.y - 80;
-//        }
-        view.frame = frame;
-        view.layer.cornerRadius = 40;
-        view.backgroundColor = colorSecondary_999999;
-        
-        UILabel *label1 = [[UILabel alloc] init];
-        label1.frame = CGRectMake(0, 0, view.frame.size.width, 30);
-        label1.textAlignment = NSTextAlignmentCenter;
-        label1.text = @"BMI";
-        [view addSubview:label1];
-        
-        UILabel *label2 = [[UILabel alloc] init];
-        label2.frame = CGRectMake(0, 30, view.frame.size.width, 30);
-        label2.textAlignment = NSTextAlignmentCenter;
-        label2.text = @"26.5";
-        [view addSubview:label2];
-        
-        CGAffineTransform transform =CGAffineTransformMakeRotation(M_PI *.5);
-        [view setTransform:transform];
-        
-        [surroundTableView addSubview:view];
     }
-    
     [cell.contentView addSubview:imageView];
 }
 

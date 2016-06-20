@@ -363,6 +363,7 @@
                     [MobClick event:@"btn_fit_rec_add"];
                 }
                 XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
+                addVC.fromWhich = recordVC;
                 addVC.sportID = (int)entity.originalId;
                 addVC.recordDate = _recordDate;
                 addVC.isPresent = YES;
@@ -395,6 +396,7 @@
                 [recordSearchBar setCancelButtonEnable:YES];
                 
                 XKRWSportAddVC *sportAddVC = [[XKRWSportAddVC alloc] init];
+                sportAddVC.fromWhich = recordVC;
                 sportAddVC.sportEntity = sportEntity;
                 sportAddVC.sportID = sportEntity.sportId;
                 sportAddVC.recordDate = _recordDate;

@@ -35,7 +35,7 @@
         self.frame = frame;
         self = LOAD_VIEW_FROM_BUNDLE(@"XKRWWeightPopView");
         _textField.keyboardType = UIKeyboardTypeDecimalPad;
-        _arrLabels = @[@"体重",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
+        _arrLabels = @[@"体重",@"体脂率",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
         _dicIllegal = [NSMutableDictionary dictionary];
         isInit = YES;
         
@@ -115,6 +115,8 @@
     }
     if (_currentIndex.integerValue == 0) {
         _recordType = XKRWRecordTypeWeight;
+    }else if (_currentIndex.integerValue == 1) {
+        _recordType = XKRWRecordTypefat;
     }else{
         _recordType = XKRWRecordTypeCircumference;
     }
@@ -292,6 +294,8 @@
     
     if (_currentIndex.integerValue == 0) {
         _recordType = XKRWRecordTypeWeight;
+    }else if (_currentIndex.integerValue == 1) {
+        _recordType = XKRWRecordTypefat;
     }else{
         _recordType = XKRWRecordTypeCircumference;
     }
@@ -335,8 +339,18 @@
             lab.layer.borderWidth = 1;
             lab.layer.cornerRadius = 5;
             lab.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-            NSString *str= [lab.text isEqualToString: _arrLabels[0]]?@"kg":@"cm";
-            _labInput.text = str;
+            
+            if ([lab.text isEqualToString:@"体重"])
+            {
+                 _labInput.text = @"kg";
+            }
+            else if ([lab.text isEqualToString:@"体脂率"])
+            {
+                _labInput.text = @"%";
+            }
+            else{
+                _labInput.text = @"cm";
+            }
         }
     }
 }
@@ -549,6 +563,12 @@
             res = false;
         }
     }
+    if ([type isEqualToString:@"体脂率"]) {
+        if (num > 100) {
+            limit = 100;
+            res = false;
+        }
+    }
     if ([type isEqualToString:@"胸围"] || [type isEqualToString:@"腰围"] || [type isEqualToString:@"臀围"] || [type isEqualToString:@"大腿围"]) {
         if (num > 150) {
             limit = 150;
@@ -576,6 +596,12 @@
     if ([type isEqualToString:@"体重"]) {
         if (num != 0 && num < 20) {
             limit = 20;
+            res = false;
+        }
+    }
+    if ([type isEqualToString:@"体脂率"]) {
+        if (num > 0 && num < 100) {
+            limit = 100;
             res = false;
         }
     }
@@ -614,6 +640,12 @@
     if ([type isEqualToString:@"体重"]) {
         if (num == 200) {
             limit = 200;
+            res = true;
+        }
+    }
+    if ([type isEqualToString:@"体脂率"]) {
+        if (num == 100) {
+            limit = 100;
             res = true;
         }
     }

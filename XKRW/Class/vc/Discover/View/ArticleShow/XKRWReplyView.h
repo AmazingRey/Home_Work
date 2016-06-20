@@ -21,7 +21,7 @@ typedef void(^replyBK)(NSString *nickName);
 @interface XKRWReplyView : UIView
 @property (nonatomic, copy) nickNameBK nickNameBlock1;
 @property (nonatomic, copy) replyBK replyBlock0;
-@property (nonatomic, assign) id<XKRWReplyViewDelegate> delegate;
+@property (nonatomic, weak) id<XKRWReplyViewDelegate> delegate;
 @property (nonatomic, strong) UITableView *tableView;
 
 - (instancetype)initWithDataArray:(NSArray *)dataArray;

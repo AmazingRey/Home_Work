@@ -514,8 +514,8 @@
         CGFloat pullWidth = 138*XKAppWidth/375;
         CGFloat pullHeight = 143*pullWidth/138;
         
-        NSArray *itemArr = [NSArray arrayWithObjects:@"记录体重",@"记录围度",@"查看曲线", nil];
-        NSArray *imageArr = [NSArray arrayWithObjects:@"weight5_3",@"girth5_3",@"curve5_3", nil];
+        NSArray *itemArr = [NSArray arrayWithObjects:@"记录体重",@"记录围度",@"记录体脂率",@"查看曲线", nil];
+        NSArray *imageArr = [NSArray arrayWithObjects:@"weight5_3",@"girth5_3",@"curve5_3",@"curve5_3", nil];
         _pullView = [[XKRWPullMenuView alloc] initWithFrame:CGRectMake(0, 0, pullWidth, pullHeight) itemArray:itemArr imageArray:imageArr];
         
         CGPoint center = button.center;
@@ -1067,16 +1067,19 @@
         vc.dataType = 1;
         [self presentViewController:vc animated:YES completion:nil];
     }
-    else if ([str isEqualToString:@"记录围度"] || [str isEqualToString:@"记录体重"]){
+    else if ([str isEqualToString:@"记录围度"] || [str isEqualToString:@"记录体重"] || [str isEqualToString:@"记录体脂率"]){
         [self removePullView];
         
         NSInteger type;
         if ([str isEqualToString:@"记录体重"]) {
             type = 0;
             [MobClick event:@"btn_wtmark"];
-        }else{
+        }else if ([str isEqualToString:@"记录体脂率"]){
             type = 1;
+        }else{
+            type = 2;
             [MobClick event:@"btn_girthmark"];
+            
         }
 
         _popView = [[XKRWWeightPopView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth - 100, 240) withType:type withDate:_recordDate];

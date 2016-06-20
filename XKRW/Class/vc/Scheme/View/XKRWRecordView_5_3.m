@@ -696,6 +696,7 @@
         }else{
             XKRWSportAddVC *addVC = [[XKRWSportAddVC alloc] init];
             XKRWNavigationController *nav = [[XKRWNavigationController alloc] initWithRootViewController:addVC withNavigationBarType:NavigationBarTypeDefault];
+            addVC.fromWhich = recordView5_3;
             addVC.sportID = ((XKRWRecordSportEntity *)temp).sportId;
             addVC.recordSportEntity = ((XKRWRecordSportEntity *)temp);
             addVC.recordDate = _date;

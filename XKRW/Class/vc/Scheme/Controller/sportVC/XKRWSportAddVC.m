@@ -17,7 +17,7 @@
 #import "UIImageView+WebCache.h"
 
 #define kSegmentWidth 214
-@interface XKRWSportAddVC ()<UITextFieldDelegate>
+@interface XKRWSportAddVC ()<UITextFieldDelegate,UIAlertViewDelegate>
 {
    
     UIView *topView;
@@ -29,6 +29,9 @@
     UITextField *componentTextField;
     //单位
     UILabel *selectUnitLabel;
+    //时间
+    UILabel *componentLable;
+    BOOL hasTimesUnit;
     //
     UILabel *sportName;
     
@@ -126,11 +129,20 @@
     [unitView addSubview:unitLine];
     [self.view addSubview:unitView];
     //添加选择器
+//    XKRWRecordEntity4_0 *recordEntity = [[XKRWPlanService shareService] getAllRecordOfDay:[NSDate date]];
+//    NSMutableArray *sportIdArray = [NSMutableArray array];
+//    for (XKRWRecordSportEntity *temp in recordEntity.SportArray) {
+//        [sportIdArray addObject:[NSNumber numberWithInt:temp.sportId]];
+//    }
     
-    NSArray *unitArrays = @[@"分钟"];
+    if (self.sportEntity.sportTime != 0 || self.fromWhich == recordVC) {
+        hasTimesUnit = true;
+    }
+    NSArray *unitArrays = hasTimesUnit ? @[@"分钟",@"次"] : @[@"分钟"];
     unitSegmentCtr = [[UISegmentedControl alloc]initWithItems:unitArrays];
-    unitSegmentCtr.frame = CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth/3, 30);
+    unitSegmentCtr.frame = hasTimesUnit? CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth/3 * 2, 30): CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth/3, 30);
     unitSegmentCtr.tintColor = XKMainToneColor_29ccb1;
+    [unitSegmentCtr addTarget:self action:@selector(unitSegementValueChanged:) forControlEvents:UIControlEventValueChanged];
     [unitView addSubview:unitSegmentCtr];
     unitSegmentCtr.selectedSegmentIndex = 0;
     
@@ -143,7 +155,7 @@
     componentLine.backgroundColor =  colorSecondary_e0e0e0;
     [componentView addSubview:componentLine];
     
-    UILabel *componentLable = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, 44)];
+    componentLable = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, 44)];
     componentLable.textColor = [UIColor blackColor];
     componentLable.font = XKDefaultFontWithSize(14.0f);
     componentLable.text = @"时间：";
@@ -286,8 +298,29 @@
         [super addNaviBarBackButton];
     }
 }
+- (void)unitSegementValueChanged:(UISegmentedControl *)segement{
+    if (segement.selectedSegmentIndex == 0) {
+        componentLable.text = @"时间";
+        selectUnitLabel.text = @"分钟";
+        self.unit = 7;
+    }else{
+        componentLable.text = @"次数";
+        selectUnitLabel.text = @"次";
+        self.unit = 8;
+        BOOL flag = [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"XKRWSportAddVC_Times_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+        if (!flag) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"按""次""记录运动" message:@"按\"次\"记录运动处于测试阶段，会转换成分钟来保存记录。若发现保存结果与实际时间相差很大，建议选择\"分钟\"进行记录" delegate:self cancelButtonTitle:nil otherButtonTitles:@"不再提示",@"好的", nil];
+            [alert show];
+        }
+    }
+}
 
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:[NSString stringWithFormat:@"XKRWSportAddVC_Times_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
 
 #pragma mark 记录运动
 /**
@@ -298,7 +331,7 @@
     [MobClick event:@"clk_mark"];
     
     if (componentTextField.text.length == 0 && componentTextField.text.floatValue == 0) {
-        [XKRWCui showInformationHudWithText:@"时间不能为空"];
+        [XKRWCui showInformationHudWithText:@"记录不能为空"];
         return ;
     }
     
@@ -310,11 +343,21 @@
         _recordSportEntity.unit = _sportEntity.sportUnit;
         _recordSportEntity.sportId = _sportEntity.sportId;
         _recordSportEntity.date = _recordDate;
+        _recordSportEntity.sportTime = _sportEntity.sportTime;
     }
     _recordSportEntity.recordType = 0;
     _recordSportEntity.uid = (int)[[XKRWUserService sharedService] getUserId];
     _recordSportEntity.calorie = [kcalLabel.text intValue];
-    _recordSportEntity.number = [componentTextField.text integerValue];
+    NSInteger num = [componentTextField.text integerValue];
+    if (self.unit == 8) {
+        NSInteger seconds = _recordSportEntity.sportTime *num;
+        if (seconds % 60 >29) {
+            num = roundf(seconds / 60.0);
+        }else{
+            num = floor(seconds / 60.0);
+        }
+    }
+    _recordSportEntity.number = num;
     _recordSportEntity.unit = self.unit;
     if (_recordSportEntity.serverid == 0) {
         _recordSportEntity.date = _recordDate ? _recordDate : (_recordSportEntity.date ? _recordSportEntity.date:[NSDate date]);

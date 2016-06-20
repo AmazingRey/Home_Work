@@ -9,7 +9,7 @@
 import UIKit
 
 class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
-
+    
     @IBOutlet weak var noticeTableView: UITableView!
     
     var selectedSegmentIndex = 0
@@ -37,7 +37,7 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
         self.hidesBottomBarWhenPushed = true
         
     }
-
+    
     //TODO:    Action
     func initView(){
         self.addNaviBarBackButton()
@@ -79,7 +79,7 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
                 }
                 selectedSegmentIndex = hasUnreadNotice == 0 ? 1 : 0
             } else {
-             selectedSegmentIndex = 1
+                selectedSegmentIndex = 1
             }
             
         }
@@ -98,10 +98,9 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
             }
         }
         
-        if segment.selectedSegmentIndex != selectedSegmentIndex {
-            segment.selectedSegmentIndex = selectedSegmentIndex
-            self.changeSegmentIndexAction(segment)
-        }
+        segment.selectedSegmentIndex = selectedSegmentIndex
+        self.changeSegmentIndexAction(segment)
+        
         chatNum = XKRWNoticeService.sharedService().ShouShouServerChat(XKRWUserService.sharedService().getUserId())
         self.checkIsHaveMessage()
         
@@ -118,7 +117,7 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
             super.popView()
         }
     }
-
+    
     func checkIsHaveMessage() -> Void{
         if(noticeListData.count > 0 ){
             imageView.hidden = true
@@ -150,7 +149,7 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
         }else{
             MobClick.event("clk_BoxComment")
             noticeListData  = XKRWNoticeService.sharedService().getNoticeListFromDatabaseAndUserId(XKRWUserService.sharedService().getUserId(), andNoticeType: "2,7")
-             self.setNavifationItemWithLeftItemTitle(nil, andRightItemTitle: "全部已读", andItemColor: UIColor.whiteColor(), andShowLeftRedDot: false, andShowRightRedDot: false, andLeftRedDotShowNum: false, andRightRedDotShowNum: false,andLeftItemIcon: nil,andRightItemIcon: nil)
+            self.setNavifationItemWithLeftItemTitle(nil, andRightItemTitle: "全部已读", andItemColor: UIColor.whiteColor(), andShowLeftRedDot: false, andShowRightRedDot: false, andLeftRedDotShowNum: false, andRightRedDotShowNum: false,andLeftItemIcon: nil,andRightItemIcon: nil)
         }
         self.checkIsHaveMessage()
         noticeTableView.reloadData()
@@ -160,15 +159,15 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let noticeCell:XKRWPraiseCell = tableView.dequeueReusableCellWithIdentifier("notice") as! XKRWPraiseCell
         noticeCell.selectionStyle = .None
-      
+        
         if(noticeListData.count > 0){
             let entity:XKRWPraiseAndCommitNoticeEntity = noticeListData.objectAtIndex(indexPath.row) as!  XKRWPraiseAndCommitNoticeEntity
-        
+            
             noticeCell.praiseContentLabel.attributedText = XKRWUtil.createAttributeStringWithString(entity.content, font:XKDefaultFontWithSize(14) , color: XK_ASSIST_TEXT_COLOR, lineSpacing:3.5 , alignment: NSTextAlignment.Left)
             print(entity.userDegreeUrl)
             noticeCell.degreeImageView.setImageWithURL(NSURL(string: entity.userDegreeUrl), placeholderImage: nil ,options:.RetryFailed)
             noticeCell.headButton.setImageWithURL(NSURL(string: entity.avater), forState: .Normal, placeholderImage: nil ,options:.RetryFailed)
-         
+            
             noticeCell.headButton.layer.masksToBounds = true
             noticeCell.headButton.layer.cornerRadius = 20
             noticeCell.userName.text = entity.nickName
@@ -250,7 +249,7 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
             }else{
                 XKRWCui.showInformationHudWithText("网络连接有问题,请稍后再试")
             }
- 
+            
         }
     }
     
@@ -258,9 +257,9 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
         
         if editingStyle == .Delete {
             
-             let entity:XKRWPraiseAndCommitNoticeEntity = noticeListData.objectAtIndex(indexPath.row) as!  XKRWPraiseAndCommitNoticeEntity
+            let entity:XKRWPraiseAndCommitNoticeEntity = noticeListData.objectAtIndex(indexPath.row) as!  XKRWPraiseAndCommitNoticeEntity
             
-             let success =   XKRWNoticeService.sharedService().deleteNoticeWithNid(entity.nid)
+            let success =   XKRWNoticeService.sharedService().deleteNoticeWithNid(entity.nid)
             
             if(success){
                 noticeListData.removeAllObjects()
@@ -274,15 +273,15 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

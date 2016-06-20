@@ -17,14 +17,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lbq-cD-3YC">
-                        <rect key="frame" x="274" y="15" width="16" height="16"/>
+                        <rect key="frame" x="20" y="15" width="16" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="lbq-cD-3YC" secondAttribute="height" multiplier="1:1" id="Cfj-yG-P7A"/>
                             <constraint firstAttribute="width" constant="16" id="Igz-vQ-cXs"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqf-eB-EFk">
-                        <rect key="frame" x="300" y="13" width="0.0" height="20"/>
+                        <rect key="frame" x="46" y="13" width="0.0" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="240" id="DBl-7i-iM0"/>
                             <constraint firstAttribute="height" constant="20" id="zzn-if-TUn"/>
@@ -36,7 +36,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="lbq-cD-3YC" firstAttribute="centerY" secondItem="wqf-eB-EFk" secondAttribute="centerY" id="7P1-75-LRf"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="wqf-eB-EFk" secondAttribute="trailing" constant="12" id="Pem-BK-Xet"/>
+                    <constraint firstItem="lbq-cD-3YC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="NeA-6U-ez5"/>
                     <constraint firstItem="wqf-eB-EFk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="lWz-CQ-dwy"/>
                     <constraint firstItem="wqf-eB-EFk" firstAttribute="leading" secondItem="lbq-cD-3YC" secondAttribute="trailing" constant="10" id="lhM-mx-XSu"/>
                     <constraint firstAttribute="bottomMargin" secondItem="wqf-eB-EFk" secondAttribute="bottom" constant="1" id="mpb-Zf-Pp6"/>

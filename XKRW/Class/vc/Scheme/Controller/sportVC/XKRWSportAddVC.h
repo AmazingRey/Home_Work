@@ -12,6 +12,7 @@
 #import "XKRWRecordSportEntity.h"
 
 #import "XKRWRecordService4_0.h"
+#import "XKRWPlanService.h"
 
 @protocol XKRWSportAddVCDelegate <NSObject>
 
@@ -35,4 +36,5 @@
 
 @property (nonatomic,assign) id <XKRWSportAddVCDelegate> delegate;
 
+@property (nonatomic,assign) FromWhichVC fromWhich;
 @end
