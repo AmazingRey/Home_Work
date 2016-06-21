@@ -1214,7 +1214,7 @@
     }
     [XKRWCui showProgressHud];
     
-    if (recordType == XKRWRecordTypeWeight) {
+    if (recordType == XKRWRecordTypeWeight || recordType == XKRWRecordTypefat) {
         [MobClick event:@"btn_wtmark_save" attributes:@{@"type":@"体重"}];
         [self downloadWithTaskID:@"recordWeight" outputTask:^id{
             

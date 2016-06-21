@@ -218,7 +218,7 @@
         self.uid = [dictionary[@"uid"] intValue];
         
         self.weight = [dictionary[@"weight"] floatValue];
-        self.fatPercent = [dictionary[@"fatPercent"]floatValue];
+        self.fatPercent = [dictionary[@"fatpercent"] floatValue];
         self.circumference.waistline = [dictionary[@"waistline"] floatValue];
         self.circumference.bust = [dictionary[@"bust"] floatValue];
         self.circumference.hipline = [dictionary[@"hipline"] floatValue];

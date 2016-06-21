@@ -43,8 +43,8 @@ static NSString *updateCustomSportSql = @"REPLACE INTO custom_sport_record (rid,
 static NSString *deleteCustomSportSql = @"DELETE FROM custom_sport_record WHERE rid = :rid";
 
 //记录其他详情SQL语句
-static NSString *insertRecordSql = @"REPLACE INTO record_4_0 (uid, weight, habit, menstruation, sleep_time, get_up_time, water, mood, remark, waistline, bust, hipline, arm, thigh, shank, date, sync) VALUES (:uid, :weight, :habit, :menstruation, :sleep_time, :get_up_time, :water, :mood, :remark, :waistline, :bust, :hipline, :arm, :thigh, :shank, :date, :sync)";
-static NSString *updateRecordSql = @"REPLACE INTO record_4_0 (rid, weight, uid, habit, menstruation, sleep_time, get_up_time, water, mood, remark, waistline, bust, hipline, arm, thigh, shank, date, sync) VALUES (:rid, :weight, :uid, :habit, :menstruation, :sleep_time, :get_up_time, :water, :mood, :remark, :waistline, :bust, :hipline, :arm, :thigh, :shank, :date, :sync)";
+static NSString *insertRecordSql = @"REPLACE INTO record_4_0 (uid, weight, habit, menstruation, sleep_time, get_up_time, water, mood, remark, waistline, bust, hipline, arm, thigh, shank, date, sync, fatpercent) VALUES (:uid, :weight, :habit, :menstruation, :sleep_time, :get_up_time, :water, :mood, :remark, :waistline, :bust, :hipline, :arm, :thigh, :shank, :date, :sync, :fatpercent)";
+static NSString *updateRecordSql = @"REPLACE INTO record_4_0 (rid, weight, uid, habit, menstruation, sleep_time, get_up_time, water, mood, remark, waistline, bust, hipline, arm, thigh, shank, date, sync, fatpercent) VALUES (:rid, :weight, :uid, :habit, :menstruation, :sleep_time, :get_up_time, :water, :mood, :remark, :waistline, :bust, :hipline, :arm, :thigh, :shank, :date, :sync, :fatpercent)";
 static NSString *deleteRecordSql = @"DELETE FROM record_4_0 WHERE rid = :rid";
 
 //==================================================================================================================
@@ -125,6 +125,28 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             }
             temp_entity.uid  = uid;
             temp_entity.weight = [weightDict[@"value"] floatValue];
+            temp_entity.sync = 1;
+            count ++;
+            if (![self recordInfomationToDB:temp_entity]) {
+                XKLog(@"同步所有数据时保存体重失败");
+                @throw [NSException exceptionWithName:@"保存体重失败" reason:@"保存体重失败,数据库写入失败" userInfo:nil];
+            }
+        }
+    }
+    
+    NSArray *fat = dictionary[@"fat"];
+    if ([fat isKindOfClass:[NSArray class]]) {
+        
+        for (NSDictionary *fatDict in fat) {
+            
+            NSDate *recordDate = [NSDate dateWithTimeIntervalSince1970:[fatDict[@"create_time"] intValue]];
+            XKRWRecordEntity4_0 *temp_entity = [self queryOtherRecord:recordDate][0];
+            if (!temp_entity) {
+                temp_entity = [[XKRWRecordEntity4_0 alloc] init];
+                temp_entity.date = recordDate;
+            }
+            temp_entity.uid  = uid;
+            temp_entity.fatPercent = [fatDict[@"value"] floatValue];
             temp_entity.sync = 1;
             count ++;
             if (![self recordInfomationToDB:temp_entity]) {
