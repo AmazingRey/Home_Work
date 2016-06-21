@@ -64,7 +64,7 @@ class XKRWEditPostVC: XKRWBaseVC,UITextViewDelegate,UIScrollViewDelegate,XKRWPho
             button.backgroundColor = UIColor.clearColor()
             button.setBackgroundImage(UIImage(named: "add_"), forState: .Normal)
             
-            button.addTarget(self, action: "addImageAction", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(XKRWEditPostVC.addImageAction), forControlEvents: .TouchUpInside)
             
             return button
             }()

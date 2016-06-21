@@ -59,6 +59,10 @@
  */
 - (BOOL)saveWeightToRemote:(XKRWRecordEntity4_0 *)entity;
 /**
+ *  保存体脂率到服务器
+ */
+- (BOOL)saveFatPercentToRemote:(XKRWRecordEntity4_0 *)entity;
+/**
  *  保存围度记录到服务器
  */
 - (BOOL)saveCircumferenceToRemote:(XKRWRecordEntity4_0 *)entity;

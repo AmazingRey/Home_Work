@@ -43,6 +43,10 @@
  */
 @property (nonatomic) float weight;
 /**
+ *  体脂率
+ */
+@property (nonatomic) float fatPercent;
+/**
  *  围度实例
  */
 @property (nonatomic, strong) XKRWRecordCircumferenceEntity *circumference;

@@ -140,7 +140,7 @@ class XKRWPhotoBrowserVC: XKRWBaseVC {
         super.viewWillAppear(animated)
         
         if self.clickForBack {
-            let tap = UITapGestureRecognizer(target: self, action: "popView")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(XKRWBaseVC.popView))
             self.scrollView?.addGestureRecognizer(tap)
         }
     }

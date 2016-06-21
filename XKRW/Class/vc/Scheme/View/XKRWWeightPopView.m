@@ -126,7 +126,7 @@
 -(void)setSelectedDate:(NSDate *)selectedDate{
     if (_selectedDate != selectedDate) {
         _selectedDate = selectedDate;
-        _selectDateStr =[selectedDate stringWithFormat:@"YYYY-MM-dd"];
+        _selectDateStr =[selectedDate stringWithFormat:@"yyyy-MM-dd"];
         _dateLabel.text = [selectedDate stringWithFormat:@"MM月dd日"];
     }
 }
@@ -152,13 +152,14 @@
     NSMutableDictionary *dayDiction = [NSMutableDictionary dictionary];
     
     [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.weight] forKey:_arrLabels[0]];
-    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.bust ] forKey:_arrLabels[1]];
-    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.arm ] forKey:_arrLabels[2]];
-    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.waistline ] forKey:_arrLabels[3]];
-    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.hipline ] forKey:_arrLabels[4]];
-    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.thigh ] forKey:_arrLabels[5]];
-    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.shank ] forKey:_arrLabels[6]];
-
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.fatPercent] forKey:_arrLabels[1]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.bust ] forKey:_arrLabels[2]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.arm ] forKey:_arrLabels[3]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.waistline ] forKey:_arrLabels[4]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.hipline ] forKey:_arrLabels[5]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.thigh ] forKey:_arrLabels[6]];
+    [dayDiction setObject:[NSNumber numberWithFloat: _oldRecord.circumference.shank ] forKey:_arrLabels[7]];
+    
     [_dicAll setObject:dayDiction forKey:_selectDateStr];
 }
 
@@ -282,12 +283,13 @@
     NSDictionary *dic = [_dicAll objectForKey:_selectDateStr];
     
     _oldRecord.weight =[dic[_arrLabels[0]] floatValue];
-    _oldRecord.circumference.bust = [dic[_arrLabels[1]] floatValue];
-    _oldRecord.circumference.arm = [dic[_arrLabels[2]] floatValue];
-    _oldRecord.circumference.waistline = [dic[_arrLabels[3]] floatValue];
-    _oldRecord.circumference.hipline = [dic[_arrLabels[4]] floatValue];
-    _oldRecord.circumference.thigh = [dic[_arrLabels[5]] floatValue];
-    _oldRecord.circumference.shank = [dic[_arrLabels[6]]floatValue];
+    _oldRecord.fatPercent =[dic[_arrLabels[1]] floatValue];
+    _oldRecord.circumference.bust = [dic[_arrLabels[2]] floatValue];
+    _oldRecord.circumference.arm = [dic[_arrLabels[3]] floatValue];
+    _oldRecord.circumference.waistline = [dic[_arrLabels[4]] floatValue];
+    _oldRecord.circumference.hipline = [dic[_arrLabels[5]] floatValue];
+    _oldRecord.circumference.thigh = [dic[_arrLabels[6]] floatValue];
+    _oldRecord.circumference.shank = [dic[_arrLabels[7]]floatValue];
     
     _oldRecord.circumference.date = _selectedDate;
     _oldRecord.date = _selectedDate;
@@ -600,8 +602,8 @@
         }
     }
     if ([type isEqualToString:@"体脂率"]) {
-        if (num > 0 && num < 100) {
-            limit = 100;
+        if (num != 0 && num < 0) {
+            limit = 0;
             res = false;
         }
     }

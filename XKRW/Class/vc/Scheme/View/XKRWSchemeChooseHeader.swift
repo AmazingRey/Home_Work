@@ -60,7 +60,7 @@ class XKRWSchemeChooseHeader: UIView {
         habitButton.setTitleColor(XKMainSchemeColor, forState: .Selected)
         habitButton.tag = 3
 
-        habitButton.addTarget(self, action: Selector("cilckButton:"), forControlEvents: .TouchUpInside)
+        habitButton.addTarget(self, action: #selector(XKRWSchemeChooseHeader.cilckButton(_:)), forControlEvents: .TouchUpInside)
         
         self.addSubview(sportButton)
         self.addSubview(mealButton)

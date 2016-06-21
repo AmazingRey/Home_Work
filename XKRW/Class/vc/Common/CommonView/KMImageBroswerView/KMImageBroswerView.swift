@@ -162,7 +162,7 @@ class KMImageBroswerView: UIView {
                     button.imageView?.contentMode = .Center
                     button.imageView?.clipsToBounds = true
                     
-                    button.addTarget(self, action: "clickImageButton:", forControlEvents: .TouchUpInside)
+                    button.addTarget(self, action: #selector(KMImageBroswerView.clickImageButton(_:)), forControlEvents: .TouchUpInside)
                     
                     self.addSubview(button)
                     
@@ -180,7 +180,7 @@ class KMImageBroswerView: UIView {
                 
                 let button = UIButton(frame: CGRectMake(0, 0, imageWidth, imageHeight))
                 button.imageView?.contentMode = .ScaleAspectFill
-                button.addTarget(self, action: "clickImageButton:", forControlEvents: .TouchUpInside)
+                button.addTarget(self, action: #selector(KMImageBroswerView.clickImageButton(_:)), forControlEvents: .TouchUpInside)
                 
                 self.addSubview(button)
                 

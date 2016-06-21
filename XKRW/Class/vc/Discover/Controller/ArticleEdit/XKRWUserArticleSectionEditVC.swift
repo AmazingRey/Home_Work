@@ -59,14 +59,14 @@ class XKRWUserArticleSectionEditVC: XKRWBaseVC {
         
         
         self.addNaviBarBackButton()
-        self.addNaviBarRightButtonWithText("完成", action: "rightItemAction:")
+        self.addNaviBarRightButtonWithText("完成", action: #selector(XKRWBaseVC.rightItemAction(_:)))
         
         self.addImageButton = {
             let button = UIButton(frame: CGRectMake(15, 15, self.imageWidth, self.imageWidth))
             button.backgroundColor = UIColor.clearColor()
             button.setBackgroundImage(UIImage(named: "add_"), forState: .Normal)
             
-            button.addTarget(self, action: "addImageAction", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(XKRWUserArticleSectionEditVC.addImageAction), forControlEvents: .TouchUpInside)
             
             return button
         }()

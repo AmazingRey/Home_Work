@@ -65,7 +65,8 @@
     }
     request.HTTPBody = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];     [operation start];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation start];
     [operation waitUntilFinished];
     
     NSData *result = operation.responseData;

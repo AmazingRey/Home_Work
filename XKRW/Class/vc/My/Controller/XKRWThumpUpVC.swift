@@ -98,7 +98,7 @@ class XKRWThumpUpVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate,MJRefr
     func dealDicToEntityAndAddToArray(dic:NSDictionary){
         let array:NSArray  = dic.objectForKey("data") as! NSArray
 
-        for var i = 0 ; i < array.count ; i++ {
+        for i in 0  ..< array.count  {
             let entity:XKRWArticleListEntity = XKRWArticleListEntity()
             let dic:NSDictionary = array.objectAtIndex(i) as! NSDictionary
           

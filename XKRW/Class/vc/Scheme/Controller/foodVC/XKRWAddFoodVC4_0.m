@@ -80,7 +80,7 @@
                 _foodRecordEntity =[[XKRWRecordFoodEntity alloc] init];
         }
         
-        
+    
     
         __block XKRWFoodEntity *foodEntity = [[XKRWFoodService shareService] getFoodDetailFromDBWithFoodId:_originalId];
         
@@ -166,8 +166,8 @@
     [mealView addSubview:mealSecondSegmentCtr];
     
     isRecord = YES;
-    if (_foodRecordEntity.recordType) {
-        switch (_foodRecordEntity.recordType) {
+    if (_foodRecordType ) {
+        switch (_foodRecordType) {
             case RecordTypeBreakfirst:
                 mealSegmentCtr.selectedSegmentIndex = 0;
                 break;
@@ -776,25 +776,6 @@
     
     if(!_unit_new || _unit_new.length == 0) {
         
-        if (unitType == eUnitGram) {
-            if(textNum > 1000){
-                [XKRWCui showInformationHudWithText:@"超出记录范围"];
-                textField.text = @"1000";
-            }
-            
-        }else if (unitType == eUnitKiloCalories)
-        {
-            if(textNum > 5000){
-                [XKRWCui showInformationHudWithText:@"超出记录范围"];
-                textField.text = @"5000";
-            }
-        }else if(unitType == eUnitKilojoules){
-            if(textNum >20000){
-                [XKRWCui showInformationHudWithText:@"超出记录范围"];
-                textField.text = @"20000";
-            }
-        }
-        
         
         int textNum = [textField.text intValue];
         if (unitType == eUnitGram){
@@ -817,11 +798,11 @@
         }
     } else {
         
-        if (textNum > 50) {
-            [XKRWCui showInformationHudWithText:@"超出记录范围"];
-            textField.text = @"50";
-            textNum = 50;
-        }
+//        if (textNum > 50) {
+//            [XKRWCui showInformationHudWithText:@"超出记录范围"];
+//            textField.text = @"50";
+//            textNum = 50;
+//        }
         NSInteger gram = _unit_new_to_gram * textNum;
         NSUInteger calorie = [XKRWUtil weightToCalorie:gram foodEntity:_foodRecordEntity];
         kcalLabel.text = [NSString stringWithFormat:@"%lukcal",(unsigned long)calorie];

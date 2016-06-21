@@ -28,7 +28,7 @@ class XKRWOneMinUndLoseFat: XKRWBaseVC,UIScrollViewDelegate {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.pagingEnabled = true        
         scrollView.delegate = self;
-        for var i = 0 ; i<7 ;i++ {
+        for i in 0  ..< 7  {
             let imageView: UIImageView = UIImageView(frame: CGRectMake( UI_SCREEN_WIDTH * CGFloat(i), 0, UI_SCREEN_WIDTH, UI_SCREEN_HEIGHT))
             if(UI_SCREEN_HEIGHT == 480)
             {

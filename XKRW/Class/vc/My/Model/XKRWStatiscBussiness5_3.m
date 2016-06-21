@@ -422,7 +422,7 @@
         NSNumber *actualIntake = [entity.dicActualIntake objectForKey:dateStr];
         NSNumber *recommondIntake = [entity.dicRecommondIntake objectForKey:dateStr];
         if (actualIntake.floatValue >= limit){
-            XKLog(@"%ld,%f",recommondIntake.integerValue,actualIntake.floatValue);
+            XKLog(@"%ld,%f",(long)recommondIntake.integerValue,actualIntake.floatValue);
             if (recommondIntake.integerValue >= actualIntake.floatValue) {
                 [dicIntake setObject:actualIntake forKey:dateStr];
             }

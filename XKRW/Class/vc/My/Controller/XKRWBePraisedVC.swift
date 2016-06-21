@@ -131,7 +131,7 @@ class XKRWBePraisedVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,MJRe
     
         print(dic)
         let array = dic.objectForKey("data") as! NSArray
-        for var i = 0 ;i < array.count ; i++ {
+        for i in 0  ..< array.count  {
             let dic:NSDictionary = array.objectAtIndex(i) as! NSDictionary
             let entity = XKRWBePraisedEntity()
             entity.headImageUrl = dic.objectForKey("avatar") as! String
@@ -235,7 +235,7 @@ class XKRWBePraisedVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,MJRe
         praiseCell!.selectionStyle = .None
         let entity = bePraisedArray.objectAtIndex(indexPath.row) as! XKRWBePraisedEntity
         praiseCell!.headButton.tag = 1000 + indexPath.row
-        praiseCell!.headButton.addTarget(self, action: "showUserInfo:", forControlEvents:.TouchUpInside)
+        praiseCell!.headButton.addTarget(self, action: #selector(XKRWBePraisedVC.showUserInfo(_:)), forControlEvents:.TouchUpInside)
         
         if(dataType == .FromDataBase){
             praiseCell!.praiseContentLabel.attributedText = XKRWUtil.createAttributeStringWithString( entity.content, font: XKDefaultFontWithSize(14), color: XK_TEXT_COLOR, lineSpacing: 3.5, alignment: .Left)

@@ -182,6 +182,7 @@
     [dict setObject:[NSNumber numberWithUnsignedInteger:_uid] forKey:@"uid"];
     
     [dict setObject:[NSNumber numberWithFloat:_weight] forKey:@"weight"];
+    [dict setObject:[NSNumber numberWithFloat:_fatPercent] forKey:@"fatpercent"];
     [dict setObject:[NSNumber numberWithFloat:_circumference.waistline] forKey:@"waistline"];
     [dict setObject:[NSNumber numberWithFloat:_circumference.bust] forKey:@"bust"];
     [dict setObject:[NSNumber numberWithFloat:_circumference.hipline] forKey:@"hipline"];
@@ -217,6 +218,7 @@
         self.uid = [dictionary[@"uid"] intValue];
         
         self.weight = [dictionary[@"weight"] floatValue];
+        self.fatPercent = [dictionary[@"fatPercent"]floatValue];
         self.circumference.waistline = [dictionary[@"waistline"] floatValue];
         self.circumference.bust = [dictionary[@"bust"] floatValue];
         self.circumference.hipline = [dictionary[@"hipline"] floatValue];

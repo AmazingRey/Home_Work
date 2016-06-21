@@ -750,6 +750,22 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return isSuccess;
 }
 
+- (BOOL)saveFatPercentToRemote:(XKRWRecordEntity4_0 *)entity
+{
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:[NSNumber numberWithFloat:entity.fatPercent] forKey:@"value"];
+    
+    long timeStamp = (long)[entity.date originTimeOfADay] + 1;
+    [dic setObject:@(timeStamp) forKey:@"create_time"];
+    
+    BOOL isSuccess = [self saveToRemote:dic type:@"fat" date:entity.date] ;
+    
+    if (isSuccess) {
+        entity.sync = 1;
+    }
+    return isSuccess;
+}
+
 - (BOOL)saveCircumferenceToRemote:(XKRWRecordEntity4_0 *)entity
 {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -1810,6 +1826,9 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         switch (type) {
             case XKRWRecordTypeWeight:
                 isRemoteSuccess = [self saveWeightToRemote:entity];
+                break;
+            case XKRWRecordTypefat:
+                isRemoteSuccess = [self saveFatPercentToRemote:entity];
                 break;
             case XKRWRecordTypeCircumference:
                 isRemoteSuccess = [self saveCircumferenceToRemote:entity];

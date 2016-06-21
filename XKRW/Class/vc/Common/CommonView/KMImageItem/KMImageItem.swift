@@ -22,7 +22,7 @@ class KMImageItem: UIImageView {
         if self.actionButton == nil {
             self.actionButton = UIButton(frame: CGRectMake(width * 4, 0, width, width))
             self.actionButton.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
-            self.actionButton.addTarget(self, action: "clickActionButton:", forControlEvents: .TouchUpInside)
+            self.actionButton.addTarget(self, action: #selector(KMImageItem.clickActionButton(_:)), forControlEvents: .TouchUpInside)
             
             self.addSubview(self.actionButton)
         }

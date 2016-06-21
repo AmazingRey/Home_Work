@@ -93,6 +93,8 @@ static XKRWDBControlService *shareInstance;
     [self v5_1_2UpData];
     
     [self v5_2UpData];
+    
+    [self v5_3UpData];
 }
 
 //4.1新增
@@ -712,6 +714,10 @@ static XKRWDBControlService *shareInstance;
     [self accountTableAddFieldisAddGroup];
 }
 
+#pragma mark -5.3 Update
+- (void)v5_3UpData{
+    [self reocrd_4_0TableAddField];
+}
 
 //  用户信息表添加字段
 - (void)accountTableAddField
@@ -835,4 +841,15 @@ static XKRWDBControlService *shareInstance;
     }
 }
 
+// record4_0 新增体脂率栏位
+- (void)reocrd_4_0TableAddField
+{
+    NSString *addMD5IDUrlSql = @"ALTER TABLE record_4_0 ADD fatpercent Float DEFAULT 0";
+    @try {
+        [self executeSql:addMD5IDUrlSql];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"ALTER food_record error: %@", exception);
+    }
+}
 @end

@@ -66,7 +66,7 @@ class XKRWArticleSectionCell: UITableViewCell {
             button.setImage(UIImage(named: "point_of_more"), forState: UIControlState.Normal)
             button.imageView?.contentMode = UIViewContentMode.Center
             
-            button.addTarget(self, action: "clickMoreAction", forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(XKRWArticleSectionCell.clickMoreAction), forControlEvents: .TouchUpInside)
             
             self.contentView.addSubview(button)
             return button

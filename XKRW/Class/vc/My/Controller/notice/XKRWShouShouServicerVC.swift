@@ -37,7 +37,7 @@ class XKRWShouShouServicerVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSour
         toolBarView = XKRWInputBoxView(placeholder: "", style: .footer)
         toolBarView.delegate = self
         toolBarView.showIn(self.view)
-        self.performSelector("setTableViewContentOffset", withObject: nil, afterDelay: 0.25)
+        self.performSelector(#selector(XKRWShouShouServicerVC.setTableViewContentOffset), withObject: nil, afterDelay: 0.25)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard", name: "hideKeyboard", object: nil)
     }
