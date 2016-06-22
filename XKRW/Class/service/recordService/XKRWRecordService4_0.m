@@ -2617,6 +2617,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     
     NSMutableDictionary *weightDict = [NSMutableDictionary dictionary];
     [weightDict setObject:@"体重" forKey:@"name"];
+    NSMutableDictionary *fatDict = [NSMutableDictionary dictionary];
+    [fatDict setObject:@"体脂率" forKey:@"name"];
     NSMutableDictionary *waistlineDict = [NSMutableDictionary dictionary];
     [waistlineDict setObject:@"腰围" forKey:@"name"];
     NSMutableDictionary *bustDict = [NSMutableDictionary dictionary];
@@ -2629,14 +2631,15 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     [thighDict setObject:@"大腿围" forKey:@"name"];
     NSMutableDictionary *shankDict = [NSMutableDictionary dictionary];
     [shankDict setObject:@"小腿围" forKey:@"name"];
-    
-    NSMutableArray *weight      = [NSMutableArray array];
-    NSMutableArray *waistline   = [NSMutableArray array];
-    NSMutableArray *bust        = [NSMutableArray array];
-    NSMutableArray *hipline     = [NSMutableArray array];
-    NSMutableArray *arm         = [NSMutableArray array];
-    NSMutableArray *thigh       = [NSMutableArray array];
-    NSMutableArray *shank       = [NSMutableArray array];
+
+    NSMutableArray *weight    = [NSMutableArray array];
+    NSMutableArray *fat       = [NSMutableArray array];
+    NSMutableArray *waistline = [NSMutableArray array];
+    NSMutableArray *bust      = [NSMutableArray array];
+    NSMutableArray *hipline   = [NSMutableArray array];
+    NSMutableArray *arm       = [NSMutableArray array];
+    NSMutableArray *thigh     = [NSMutableArray array];
+    NSMutableArray *shank     = [NSMutableArray array];
     
     
     for (NSDictionary *dict in fmst) {
@@ -2648,6 +2651,13 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                         entity.date, @"date",
                         nil];
             [weight addObject:tempDict];
+        }
+        if (entity.fatPercent > 0) {
+            tempDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                        [NSNumber numberWithFloat:entity.fatPercent], @"value",
+                        entity.date, @"date",
+                        nil];
+            [fat addObject:tempDict];
         }
         
         if (entity.circumference.waistline > 0) {
@@ -2698,6 +2708,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         }
     }
     [weightDict setObject:weight forKey:@"content"];
+    [fatDict setObject:fat forKey:@"content"];
     [waistlineDict setObject:waistline forKey:@"content"];
     [bustDict setObject:bust forKey:@"content"];
     [hiplineDict setObject:hipline forKey:@"content"];
@@ -2706,6 +2717,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     [shankDict setObject:shank forKey:@"content"];
     
     [resultDictionary setObject:weightDict forKey:@"weight"];
+    [resultDictionary setObject:fatDict forKey:@"fat"];
     [resultDictionary setObject:waistlineDict forKey:@"waistline"];
     [resultDictionary setObject:bustDict forKey:@"bust"];
     [resultDictionary setObject:hiplineDict forKey:@"hipline"];

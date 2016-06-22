@@ -146,6 +146,7 @@ typedef enum _searchType{
 /*曲线类型*/
 typedef enum _DataType{
     eWeightType = 1,    //体重
+    efatType,           //体脂率
     eBustType,          //胸围
     eArmType,           //臂围
     eWaistType,         //腰围

@@ -98,7 +98,7 @@
     [popButton setBackgroundImage:[UIImage imageNamed:@"back_p"] forState:UIControlStateHighlighted];
     [customView addSubview:popButton];
     
-    NSArray *array = @[@"体重",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
+    NSArray *array = @[@"体重",@"体脂率",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
     
     for (NSInteger i = 0; i <[array count] ; i++) {
         UIButton *typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -110,7 +110,7 @@
         [typeButton setTitleColor:XKMainSchemeColor forState:UIControlStateSelected];
         [typeButton addTarget:self action:@selector(changeType:) forControlEvents:UIControlEventTouchUpInside];
         
-        typeButton.frame = CGRectMake(0, 50 + i*(XKAppWidth - 50*2)/6, 64, (XKAppWidth - 50*2)/6 );
+        typeButton.frame = CGRectMake(0, 50 + i*(XKAppWidth - 50*2)/([array count]-1), 64, (XKAppWidth - 50*2)/([array count]-1) );
         [customView addSubview:typeButton];
         if(i == 0) {
             typeButton.selected = YES;
@@ -160,6 +160,8 @@
     NSDictionary *dic = [[XKRWRecordService4_0 sharedService] getAllCircumferenceAndWeightRecord];
     if (_dataType == eWeightType) {
         tempArray = [[dic objectForKey:@"weight"] objectForKey:@"content"];
+    }else if(_dataType == efatType ){
+        tempArray = [[dic objectForKey:@"fat"] objectForKey:@"content"];
     }else if(_dataType == eBustType ){
         tempArray = [[dic objectForKey:@"bust"] objectForKey:@"content"];
     }else if (_dataType == eArmType){
@@ -203,21 +205,24 @@
             _dataType = eWeightType;
             break;
         case 1001:
-            _dataType = eBustType;
+            _dataType = efatType;
             break;
         case 1002:
-            _dataType = eArmType;
+            _dataType = eBustType;
             break;
         case 1003:
-            _dataType = eWaistType;
+            _dataType = eArmType;
             break;
         case 1004:
-            _dataType = eHipType;
+            _dataType = eWaistType;
             break;
         case 1005:
-            _dataType = eThighType;
+            _dataType = eHipType;
             break;
         case 1006:
+            _dataType = eThighType;
+            break;
+        case 1007:
             _dataType = ecalfType;
             break;
         default:
@@ -287,6 +292,8 @@
     UILabel *dataLabel = (UILabel *)[cell viewWithTag:101];
     if (_dataType == eWeightType) {
         dataLabel.text = [NSString stringWithFormat:@"%@kg",[[tempArray objectAtIndex:indexPath.row] objectForKey:@"value"]];
+    }else if (_dataType == efatType) {
+        dataLabel.text = [NSString stringWithFormat:@"%@%%",[[tempArray objectAtIndex:indexPath.row] objectForKey:@"value"]];
     }else {
         dataLabel.text = [NSString stringWithFormat:@"%@cm",[[tempArray objectAtIndex:indexPath.row] objectForKey:@"value"]];
     }

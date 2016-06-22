@@ -114,7 +114,7 @@ class XKRWWeightGoalView: UIView {
 //        
 //        self.addSubview(self.predictLabel)
 //        
-        self.height = self.destinationWeight.bottom + 10
+        self.height = self.destinationWeight.bottom + 50
         
         let downLine = UIView(frame: CGRectMake(0, self.height - 0.5, UI_SCREEN_WIDTH, 0.5))
         downLine.backgroundColor = XK_ASSIST_LINE_COLOR

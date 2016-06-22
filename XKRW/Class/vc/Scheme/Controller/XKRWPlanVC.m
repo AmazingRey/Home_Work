@@ -47,6 +47,7 @@
 #import "XKRWNoticeService.h"
 #import "XKRWPullMenuView.h"
 #import "XKRWAppCommentUtil.h"
+#import "XKRWRecordWeightFeedBackVC.h"
 
 @interface XKRWPlanVC ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate, UISearchDisplayDelegate, UISearchControllerDelegate,KMSearchDisplayControllerDelegate,XKRWWeightPopViewDelegate,IFlyRecognizerViewDelegate,XKRWPlanEnergyViewDelegate,XKRWRecordFood5_3ViewDelegate,UIAlertViewDelegate,XKRWPullMenuViewDelegate>
 {
@@ -95,6 +96,9 @@
 @end
 
 @implementation XKRWPlanVC
+{
+    CGFloat lastRecordWeight;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -1180,7 +1184,8 @@
 }
 
 #pragma mark XKRWWeightPopViewDelegate
--(void)pressPopViewSure:(NSDictionary *)dic{
+-(void)pressPopViewSure:(CGFloat)lastWeight{
+    lastRecordWeight = lastWeight;
     [self removeBtnBackBounds];
 }
 
@@ -1214,9 +1219,14 @@
     }
     [XKRWCui showProgressHud];
     
-    if (recordType == XKRWRecordTypeWeight || recordType == XKRWRecordTypefat) {
+    if (recordType == XKRWRecordTypeWeight) {
         [MobClick event:@"btn_wtmark_save" attributes:@{@"type":@"体重"}];
         [self downloadWithTaskID:@"recordWeight" outputTask:^id{
+            
+            return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
+        }];
+    }else if (recordType == XKRWRecordTypefat){
+        [self downloadWithTaskID:@"recordfat" outputTask:^id{
             
             return @([[XKRWRecordService4_0 sharedService] saveRecord:entity ofType:recordType]);
         }];
@@ -1382,12 +1392,15 @@
         return;
     }
     
-    //保存体重围度成功
+    //保存体重体脂率围度成功
     if ([taskID isEqualToString:@"recordDegree"]) {
         [XKRWCui hideProgressHud];
         return;
     }
-    
+    if ([taskID isEqualToString:@"recordfat"]) {
+        [XKRWCui hideProgressHud];
+        return;
+    }
     if ([taskID isEqualToString:@"recordWeight"]) {
         [XKRWCui hideProgressHud];
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
@@ -1397,7 +1410,13 @@
         [_recordAndTargetView updateConstraints];
         [_recordAndTargetView.currentWeightLabel setNeedsDisplay];
         [[XKRWLocalNotificationService shareInstance] setRecordWeightNotification];
-
+        
+        XKRWRecordWeightFeedBackVC *recordFeedbackVC = [[XKRWRecordWeightFeedBackVC alloc] init];
+        recordFeedbackVC.curWeight = weight;
+        recordFeedbackVC.lastReocrdWeight = lastRecordWeight;
+        recordFeedbackVC.moreThanLastRecord = lastRecordWeight < weight ? true : false;
+        
+        [self presentViewController:recordFeedbackVC animated:true completion:nil];
     }
     
 }

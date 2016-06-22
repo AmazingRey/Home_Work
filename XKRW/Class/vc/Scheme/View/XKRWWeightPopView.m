@@ -516,13 +516,14 @@
         if (record_weight <= target_weight && weightIsLegal) {
             [self userReachTargetWeight];
         }else{
+            CGFloat weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:_selectedDate];
             [_datePicker removeFromSuperview];
             _datePicker = nil;
             [_textField resignFirstResponder];
             [self saveRemote];
             
             if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]){
-                [self.delegate pressPopViewSure:_dicAll];
+                [self.delegate pressPopViewSure:weight];
             }
         }
     }else{

@@ -15,23 +15,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "739"
             endingLineNumber = "739"
-            landmarkName = "-saveWeightToRemote:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/recordService/XKRWRecordService4_0.m"
-            timestampString = "488193765.878536"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "771"
-            endingLineNumber = "771"
-            landmarkName = "-saveCircumferenceToRemote:"
+            landmarkName = "-saveUniversalRecordToRemote:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -47,23 +31,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "582"
             endingLineNumber = "582"
-            landmarkName = "-saveToRemote:type:date:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/recordService/XKRWRecordService4_0.m"
-            timestampString = "488193485.518875"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "755"
-            endingLineNumber = "755"
-            landmarkName = "-saveFatPercentToRemote:"
+            landmarkName = "-batchSaveRecordToRemoteWithEntities:type:isImport:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -79,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1108"
             endingLineNumber = "1108"
-            landmarkName = "-recordInfomationToDB:"
+            landmarkName = "-recordCustomSportToDB:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -89,30 +57,24 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/XKRWBaseService.m"
-            timestampString = "488195296.599224"
+            filePath = "XKRW/Class/vc/Common/CommonVC/surroundAndWeight/XKRWSurroundDegreeVC_5_3.m"
+            timestampString = "488252625.962531"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "-syncBatchDataUrl:andForm:andOutTime:"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "-AdjustSurroundTableViewUI"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "XKRW/Class/service/XKRWBaseService.m"
-            timestampString = "488196207.818216"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "-syncBatchDataUrl:andForm:andOutTime:"
-            landmarkType = "5">
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
