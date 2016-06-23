@@ -519,7 +519,7 @@
         CGFloat pullHeight = 143*pullWidth/138;
         
         NSArray *itemArr = [NSArray arrayWithObjects:@"记录体重",@"记录围度",@"记录体脂率",@"查看曲线", nil];
-        NSArray *imageArr = [NSArray arrayWithObjects:@"weight5_3",@"girth5_3",@"curve5_3",@"curve5_3", nil];
+        NSArray *imageArr = [NSArray arrayWithObjects:@"weight5_3",@"girth5_3",@"fat5_3",@"curve5_3", nil];
         _pullView = [[XKRWPullMenuView alloc] initWithFrame:CGRectMake(0, 0, pullWidth, pullHeight) itemArray:itemArr imageArray:imageArr];
         
         CGPoint center = button.center;
@@ -1402,21 +1402,21 @@
         return;
     }
     if ([taskID isEqualToString:@"recordWeight"]) {
-        [XKRWCui hideProgressHud];
-        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
-        [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
         CGFloat weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate];
-        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",weight];
-        [_recordAndTargetView updateConstraints];
-        [_recordAndTargetView.currentWeightLabel setNeedsDisplay];
-        [[XKRWLocalNotificationService shareInstance] setRecordWeightNotification];
         
+        [XKRWCui hideProgressHud];
         XKRWRecordWeightFeedBackVC *recordFeedbackVC = [[XKRWRecordWeightFeedBackVC alloc] init];
         recordFeedbackVC.curWeight = weight;
         recordFeedbackVC.lastReocrdWeight = lastRecordWeight;
         recordFeedbackVC.moreThanLastRecord = lastRecordWeight < weight ? true : false;
-        
         [self presentViewController:recordFeedbackVC animated:true completion:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
+        [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];
+        _recordAndTargetView.currentWeightLabel.text = [NSString stringWithFormat:@"%.1f",weight];
+        [_recordAndTargetView updateConstraints];
+        [_recordAndTargetView.currentWeightLabel setNeedsDisplay];
+        [[XKRWLocalNotificationService shareInstance] setRecordWeightNotification];
     }
     
 }

@@ -11,15 +11,15 @@
 #import "XKRWRecordFeedbackShareView.h"
 #import "Masonry.h"
 
-@interface XKRWRecordWeightFeedBackVC ()
-@property (nonatomic, strong) XKRWWeightGoalView *weightGoalView;
-@property (nonatomic, strong) UILabel            *toplabel;
-@property (nonatomic, strong) UILabel            *totalChangelabel;
-@property (nonatomic, strong) UIImageView        *inspireView;
-@property (nonatomic, strong) UILabel            *resultlabel1;
-@property (nonatomic, strong) UILabel            *resultlabel2;
-@property (nonatomic, strong) UIButton           *firstBtn;
-@property (nonatomic, strong) UIButton           *closeBtn;
+@interface XKRWRecordWeightFeedBackVC ()<XKRWRecordFeedbackShareViewDelegate>
+@property (nonatomic, strong) XKRWWeightGoalView          *weightGoalView;
+@property (nonatomic, strong) UILabel                     *toplabel;
+@property (nonatomic, strong) UIImageView                 *inspireView;
+@property (nonatomic, strong) UILabel                     *resultlabel1;
+@property (nonatomic, strong) UILabel                     *resultlabel2;
+@property (nonatomic, strong) UIButton                    *firstBtn;
+@property (nonatomic, strong) UIButton                    *closeBtn;
+@property (nonatomic, strong) XKRWRecordFeedbackShareView *shareView;
 
 @end
 
@@ -57,25 +57,6 @@
         [self.view addSubview:_weightGoalView];
     }
     return _weightGoalView;
-}
-
-- (UILabel *)totalChangelabel{
-    if (!_totalChangelabel) {
-        _totalChangelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, 50)];
-        CGFloat change = _curWeight - oriWeight;
-        
-        if (change <= 0) {
-            _totalChangelabel.text =[NSString stringWithFormat:@"比初始体重减重%.1fkg",fabsf(change)];
-        }else{
-            _totalChangelabel.text =[NSString stringWithFormat:@"比初始体重增重%.1fkg",change];
-        }
-        
-        _totalChangelabel.textAlignment = NSTextAlignmentCenter;
-        _totalChangelabel.textColor = XKMainToneColor_29ccb1;
-        _totalChangelabel.font = [UIFont systemFontOfSize:15];
-        [self.view addSubview:_totalChangelabel];
-    }
-    return _totalChangelabel;
 }
 
 - (UIImageView *)inspireView{
@@ -155,12 +136,6 @@
         make.width.mas_equalTo(XKAppWidth);
         make.height.equalTo(@116.5);
     }];
-    [self.totalChangelabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.weightGoalView.mas_bottom).offset(-30);
-        make.left.right.equalTo(@0);
-        make.width.mas_equalTo(XKAppWidth);
-        make.height.equalTo(@50);
-    }];
     [self.inspireView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.weightGoalView.mas_bottom).offset(75);
         make.centerX.mas_equalTo(self.view.mas_centerX);
@@ -199,13 +174,31 @@
     if (_moreThanLastRecord) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
-        XKRWRecordFeedbackShareView *shareView = [[XKRWRecordFeedbackShareView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight)];
-        [self.view addSubview:shareView];
+        if (!_shareView) {
+            _shareView = [[XKRWRecordFeedbackShareView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight) changeWeight:( _lastReocrdWeight-_curWeight) totalChangeWeight:(oriWeight - _curWeight)];
+            _shareView.alpha = 0;
+            _shareView.delegate = self;
+        }
+        [UIView animateWithDuration:.35 animations:^{
+            [self.view addSubview:_shareView];
+            _shareView.alpha = 1;
+        }completion:^(BOOL finished) {
+             [_shareView addShareActionsheet];
+        }];
     }
 }
 
 - (void)closeButtonPress:(UIButton *)button{
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark XKRWRecordFeedbackShareView *shareView
+- (void)tapFeedbackShareView{
+    [UIView animateWithDuration:.35 animations:^{
+        _shareView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [_shareView removeFromSuperview];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

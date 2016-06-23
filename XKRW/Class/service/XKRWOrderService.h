@@ -44,6 +44,20 @@
  *  @param orderEntity 订单实体对象
  */
 - (void)payOrder:(XKRWOrderEntity *)orderEntity;
+/**
+ *  获取支付凭证
+ *
+ *  @param type       wx/ali
+ *  @param outTradeNo 订单号
+ *  @param title      标题
+ *  @param price      金额
+ *
+ *  @return 支付签名等
+ */
+- (XKRWOrderEntity *)getSSBuyOrderInfoByType:(NSString *)type
+                                  outTradeNo:(NSString *)outTradeNo
+                                       title:(NSString *)title
+                                       price:(CGFloat)price;
 
 /**
  *  获取支付宝支付订单详情

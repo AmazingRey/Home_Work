@@ -15,8 +15,6 @@
 
 @interface XKRWPayOrderVC () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) XKRWProductEntity *product;
-
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
@@ -33,7 +31,7 @@
 }
 #pragma mark - System's functions
 
-- (id)initWithPID:(NSInteger)pid {
+- (id)initWithPID:(NSString *)pid {
     
     self = [super init];
     if (self) {
@@ -113,11 +111,22 @@
     _headImageArray = [NSMutableArray array];
     
     [XKRWCui showProgressHud:@"获取产品信息"];
-    
-    [self downloadWithTaskID:@"getProduct" outputTask:^id{
+    if (_product.pid) {
+        _pid = _product.pid;
+        [_titleArray addObjectsFromArray:@[@"支付宝支付", @"微信支付"]];
+        [_subtitleArray addObjectsFromArray:@[@"推荐安装支付宝的用户使用", @"推荐安装微信的用户使用"]];
+        [_headImageArray addObjectsFromArray:@[@"icon_AliPay", @"icon_WXPay"]];
         
-        return [[XKRWOrderService sharedService] getProductList];
-    }];
+        [_tableView reloadData];
+        [XKRWCui hideProgressHud];
+        return;
+    } else {
+        [self downloadWithTaskID:@"getProduct" outputTask:^id{
+            
+            return [[XKRWOrderService sharedService] getProductList];
+        }];
+    }
+    
 }
 
 #pragma mark - Networking
@@ -135,7 +144,7 @@
         
         for (XKRWProductEntity *product in result) {
             
-            if (product.pid == _pid) {
+            if ([product.pid isEqualToString:_pid]) {
                 _product = product;
                 break;
             }
@@ -300,17 +309,34 @@
     }
     
     [XKRWCui showProgressHud:@"获取订单中"];
-    
-    [self downloadWithTaskID:@"getOrder" outputTask:^id{
-        
+    if ([_product.pid isEqualToString:@"10000"]) {
+        [self downloadWithTaskID:@"getOrder" outputTask:^id{
+            
+            if (_selecteIndex == 0) {
+                
+                return [[XKRWOrderService sharedService] getAliPayOrderInfoByProductId:_product.pid.integerValue];
+            } else {
+                
+                return [[XKRWOrderService sharedService] getWXPayOrderInfoByProductId:_product.pid.integerValue];
+            }
+        }];
+
+    } else {
+        NSString *type;
         if (_selecteIndex == 0) {
-            
-            return [[XKRWOrderService sharedService] getAliPayOrderInfoByProductId:_product.pid];
+            type = @"ali";
         } else {
-            
-            return [[XKRWOrderService sharedService] getWXPayOrderInfoByProductId:_product.pid];
+            type = @"wx";
         }
-    }];
+        _order = [[XKRWOrderService sharedService] getSSBuyOrderInfoByType:type outTradeNo:_product.pid title:_product.title price:_product.price.floatValue];
+
+        if (!_order) {
+            [XKRWCui hideProgressHud];
+            [XKRWCui showInformationHudWithText:@"订单信息错误，请重试~"];
+        }
+        [[XKRWOrderService sharedService] payOrder:_order];
+        [XKRWCui hideProgressHud];
+    }
 }
 /**
  *  支付结果通知回调

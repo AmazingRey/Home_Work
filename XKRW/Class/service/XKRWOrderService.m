@@ -55,11 +55,51 @@ static XKRWOrderEntity *orderInstance = nil;
         entity.title = dic[@"title"];
         entity.price = dic[@"price"];
         entity.desc = dic[@"description"];
-        entity.pid = [dic[@"pid"] integerValue];
+        entity.pid = [NSString stringWithFormat:@"%@",dic[@"pid"]];
         
         [list addObject:entity];
     }
     return list;
+}
+
+- (XKRWOrderEntity *)getSSBuyOrderInfoByType:(NSString *)type outTradeNo:(NSString *)outTradeNo title:(NSString *)title price:(CGFloat)price {
+    NSURL *url = [NSURL URLWithString:@"http://119.29.81.84:9118/order.php"];
+    NSDictionary *param = @{@"type":type,
+                            @"out_trade_no":outTradeNo,
+                            @"title":title,
+                            @"description":@"ssbuy.xikang.com",
+                            @"price":[NSNumber numberWithFloat:price]
+                            };
+    NSDictionary *result = [self syncBatchDataWith:url andPostForm:param];
+    
+    if (!result[@"success"]) {
+        return nil;
+    }
+    
+    NSDictionary *data = result[@"data"];
+    XKRWOrderEntity *entity = [[XKRWOrderEntity alloc] init];
+    if ([type isEqualToString:@"ali"]) {
+        entity.identity = type;
+        entity.aliOrder = data[@"order"];
+        entity.orderTitle = data[@"title"];
+        entity.orderNO = data[@"out_trade_no"];
+        
+        return entity;
+    } else {
+        entity.identity = type;
+        entity.orderTitle = data[@"title"];
+        entity.orderDescription = data[@"description"];
+        entity.price = data[@"price"];
+        entity.appId = data[@"appid"];
+        entity.nonceStr = data[@"noncestr"];
+        entity.package = data[@"package"];
+        entity.prepayId = data[@"prepayid"];
+        entity.timeStamp = [data[@"timestamp"] unsignedIntValue];
+        entity.sign = data[@"sign"];
+        entity.orderNO = data[@"out_trade_no"];
+        return entity;
+    }
+    
 }
 
 - (NSDictionary *)getOrderInfoByType:(NSString *)type mode:(NSString *)mode productId:(NSInteger)pid {

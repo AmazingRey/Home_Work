@@ -160,46 +160,6 @@ static BOOL canUpdatePlan = YES;
     return result;
 }
 
-//获取签到日志
-//-(void)getIntitleLogsFromRemote{
-//    
-//    if (![self getToken]) {
-//        return;
-//    }
-//    
-//    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kServer,kGetIntitle]];
-//    
-//    @try {
-//        
-//        NSDictionary * response = [self syncBatchDataWith:url andPostForm:nil];
-//        NSDictionary *temp =  [response objectForKey:@"data"];
-//        
-//        NSString * create = [temp objectForKey:@"userCreateDate"];
-//        [self setREG:create];
-//        NSString * planDate =[temp objectForKey:@"userPlanDate"];
-//        [self setPlanDate:planDate];
-//        
-//        NSString * logs = [temp objectForKey:@"userLogDate"];
-//        NSArray * array = [logs componentsSeparatedByString:@","];
-//        /*
-//         date   TEXT        DEFAULT NULL,
-//         year   TEXT        DEFAULT NULL,
-//         month  TEXT        DEFAULT NULL,
-//         day    TEXT        DEFAULT NULL,
-//         uid    integer     DEFAULT NULL
-//         */
-//        for (int index = 0; index < array.count;  index ++) {
-//            
-//            [self addLogs:  [array objectAtIndex:index]];
-//        }
-//    }
-//    @catch (NSException *exception) {
-//        
-//        XKLog(@"签到日志获取出错，%@ ",exception);
-//    }
-//    
-//}
-
 //注册日期的 时间
 -(void)setREG:(NSString *)date{
     [[NSUserDefaults standardUserDefaults] setValue:date forKeyPath:[NSString stringWithFormat:@"userCreateDate%ld",(long)[self getUserId]]];
@@ -1169,11 +1129,6 @@ static BOOL canUpdatePlan = YES;
 
 }
 
-///*提交本地用户资料到远程服务器*/
-//-(void)uploadUserInfoToRemoteServerByToken:(NSString *)token {
-//    [self uploadUserInfoToRemoteServerNeedLong:NO ByToken:token];
-//}
-
 
 - (UIImage *)makeImageWithImage:(UIImage *)imageOld scaledToSize:(CGSize)newSize
 {
@@ -2002,7 +1957,7 @@ static BOOL canUpdatePlan = YES;
             realSportEnergy += [[recordDic objectForKey:@"calorie"] floatValue];
             
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-            [dic setObject:[NSString stringWithFormat:@"%@%ld分钟",[recordDic objectForKey:@"itemName"],[[recordDic objectForKey:@"number"] integerValue]] forKey:@"text"];
+            [dic setObject:[NSString stringWithFormat:@"%@%d分钟",[recordDic objectForKey:@"itemName"],[[recordDic objectForKey:@"number"] integerValue]] forKey:@"text"];
             [dic setObject:[NSNumber numberWithFloat:[[recordDic objectForKey:@"calorie"] floatValue]] forKey:@"calorie"];
             [mutableArray addObject:dic];
             

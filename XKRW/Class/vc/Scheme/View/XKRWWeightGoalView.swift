@@ -26,7 +26,7 @@ class XKRWWeightGoalView: UIView {
     let currentWeight = UIButton(type: UIButtonType.Custom)
     let destinationWeight = UIButton(type: UIButtonType.Custom)
     
-//    let predictLabel = UILabel(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 25))
+    let predictLabel = UILabel(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 25))
     let monkeyRunning = FLAnimatedImageView()
     
     //MARK: - initialization
@@ -108,13 +108,13 @@ class XKRWWeightGoalView: UIView {
         
 //        self.addSubview(pointLine)
         
-//        self.predictLabel.top = pointLine.bottom
-//        self.predictLabel.textAlignment = NSTextAlignment.Center
-//        self.setPredictDays(10)
-//        
-//        self.addSubview(self.predictLabel)
-//        
-        self.height = self.destinationWeight.bottom + 50
+        self.predictLabel.top = self.destinationWeight.bottom + 10
+        self.predictLabel.textAlignment = NSTextAlignment.Center
+        self.predictLabel.textColor = XKMainSchemeColor
+        self.predictLabel.font = UIFont(name: "Roboto-Regular", size:15)
+        self.addSubview(self.predictLabel)
+        
+        self.height = self.predictLabel.bottom + 10
         
         let downLine = UIView(frame: CGRectMake(0, self.height - 0.5, UI_SCREEN_WIDTH, 0.5))
         downLine.backgroundColor = XK_ASSIST_LINE_COLOR
@@ -149,6 +149,9 @@ class XKRWWeightGoalView: UIView {
     }
     
     func setOriginWeight(oriWeight: CGFloat, curWeight: CGFloat, destWeight: CGFloat) -> Void {
+        let change = (Float(curWeight) - Float(oriWeight))
+        let str = change <= 0 ? (String(format:"比初始体重减重%.1fkg",fabsf(change))):(String(format:"比初始体重增重%.1fkg",change))
+        self.predictLabel.text = str
         
         originWeight.setTitle(String(format: "%0.1f", oriWeight), forState: UIControlState.Normal)
         destinationWeight.setTitle(String(format: "%0.1f", destWeight), forState: UIControlState.Normal)

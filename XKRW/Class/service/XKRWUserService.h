@@ -93,8 +93,6 @@ typedef NS_ENUM(NSInteger, XKRWExpType) {
 -(void) setInsisted:(NSInteger)days;
 -(NSInteger) getInsisted;
 
-//签到表远程获取
--(void) getIntitleLogsFromRemote;
 //本地
 - (NSArray  *) getIntitleLocal;
 //用户注册时间

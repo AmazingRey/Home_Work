@@ -26,7 +26,7 @@
 /**
  *  product id 商品号
  */
-@property (nonatomic, assign) NSInteger pid;
+@property (nonatomic, strong) NSString *pid;
 /**
  *  支付平台
  */

@@ -491,7 +491,7 @@
         
         if (buttonIndex) {
 
-            XKRWPayOrderVC *vc = [[XKRWPayOrderVC alloc] initWithPID:10000];
+            XKRWPayOrderVC *vc = [[XKRWPayOrderVC alloc] initWithPID:@"10000"];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }

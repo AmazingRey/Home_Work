@@ -16,6 +16,8 @@
 #import "XKRWCollectionEntity.h"
 #import "XKRWUserService.h"
 #import "XKRWCollectionService.h"
+#import "XKRWPayOrderVC.h"
+#import "XKRWProductEntity.h"
 #import <YouMeng/umeng_ios_social_sdk_4.2.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/QQApiInterface.h>
 @interface XKRWNewWebView () <UIWebViewDelegate, KMPopoverViewDelegate, UMSocialUIDelegate, NJKWebViewProgressDelegate>
 {
@@ -222,14 +224,37 @@
     
     if ([request.URL.absoluteString rangeOfString:@"tel"].location != NSNotFound && request.URL.absoluteString != nil) {
 
-        // NSString *num = [[NSString alloc] initWithFormat:@"tel://%@",number]; //number为号码字符串 如果使用这个方法 结束电话之后会进入联系人列表
         NSMutableString * str = [[NSMutableString alloc] initWithFormat:@"telprompt://%@",[request.URL.absoluteString stringByReplacingOccurrencesOfString:@"tel:" withString:@""]];//而这个方法则打电话前先弹框  是否打电话 然后打完电话之后回到程序中
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
         
         return NO;
     }
+    
+    if ([request.URL.absoluteString rangeOfString:@"pay://"].location != NSNotFound && request.URL.absoluteString != nil) {
+        NSString *string = [request.URL.absoluteString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *subString = [string substringFromIndex:6];
+        
+        XKRWPayOrderVC *payVC = [[XKRWPayOrderVC alloc] initWithPID: @"10000"];
+        payVC.product = [self dealWithProductString:subString];
+        [self.navigationController pushViewController:payVC animated:YES];
+        
+        return NO;
+    }
 
     return YES;
+}
+
+- (XKRWProductEntity *)dealWithProductString:(NSString *)string {
+    
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    XKRWProductEntity *entity = [[XKRWProductEntity alloc] init];
+    entity.title = [NSString stringWithFormat:@"%@",dic[@"title"]];
+    entity.price = [NSString stringWithFormat:@"%@",dic[@"price"]];
+    entity.desc = [NSString stringWithFormat:@"%@",dic[@"description"]];
+    entity.pid = [NSString stringWithFormat:@"%@",dic[@"out_trade_no"]];
+
+    return entity;
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -243,8 +268,6 @@
     }
     
     self.noNetWorkView.hidden = YES;
-    
-//    [[XKHudHelper instance] hideProgressHudAnimationInView:self.view];
     
     NSString * key =[NSString stringWithFormat:@"yunying%@%@%ld",self.date,[self.content objectForKey:@"title"],(long)[XKRWUserDefaultService getCurrentUserId]];
     
@@ -263,7 +286,6 @@
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     XKLog(@"%@",error.description);
-//    [[XKHudHelper instance]hideProgressHudAnimationInView:self.view];
     self.noNetWorkView.hidden = NO;
 }
 

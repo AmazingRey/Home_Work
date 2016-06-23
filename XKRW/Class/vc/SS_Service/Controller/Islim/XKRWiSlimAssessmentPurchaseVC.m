@@ -166,7 +166,7 @@
                                if (self.header.state == PurchaseStateNotYet) {
                                    //还未购买
                                    //pid = 10000 : iSlim瘦身评估
-                                   XKRWPayOrderVC *vc = [[XKRWPayOrderVC alloc] initWithPID:10000];
+                                   XKRWPayOrderVC *vc = [[XKRWPayOrderVC alloc] initWithPID:@"10000"];
                                    [weakSelf.navigationController pushViewController:vc animated:YES];
                                    
                                } else if (self.header.state == PurchaseStatePurchased) {
@@ -297,7 +297,7 @@
             
             for (XKRWProductEntity *product in result) {
                 
-                if (product.pid == 10000) {
+                if ([product.pid isEqualToString:@"10000"]) {
                     self.header.curretPriceLabel.text = XKSTR(@"%@",(XKRWProductEntity *)product.price);
                     break;
                 }
@@ -373,7 +373,7 @@
                                    if (self.header.state == PurchaseStateNotYet) {
                                        //还未购买
                                        //pid = 10000 : iSlim瘦身评估
-                                       XKRWPayOrderVC *vc = [[XKRWPayOrderVC alloc] initWithPID:10000];
+                                       XKRWPayOrderVC *vc = [[XKRWPayOrderVC alloc] initWithPID:@"10000"];
                                        [weakSelf.navigationController pushViewController:vc animated:YES];
                                        
                                    } else if (self.header.state == PurchaseStatePurchased) {

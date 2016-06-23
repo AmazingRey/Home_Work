@@ -31,8 +31,9 @@
 #import "XKRWUtil.h"
 #import "XKRWIslimModel.h"
 #import "XKRWNewWebView.h"
+#import "XKRWUserService.h"
 
-
+static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_token=";
 @interface XKRWShareVC ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSArray  *cellIconImageArrays;
@@ -41,9 +42,9 @@
     NSString *weChatNum;  // 关注微信的人数
     NSString *buyServerNum; //购买服务的人数
     NSMutableArray  *testArray;
-
-    NSMutableArray  * islimAddArray;    ///< islim 广告
     
+    NSMutableArray  * islimAddArray;    ///< islim 广告
+    NSInteger _shopNumber;
     BOOL _isShowiSlim;
 }
 @end
@@ -110,14 +111,14 @@
     
     if (_isShowiSlim) {
         
-        cellIconImageArrays = @[@"serviceIcon_01",@"icon_02_"];
-        titleArrays = @[@"iSlim专业瘦身评估",@"咨询私人顾问"];
-        describeArrays = @[@"让减肥从困难变容易",@"最专业的瘦身指导"];
+        cellIconImageArrays = @[@"serviceIcon_01",@"icon_02_",@"shop_icon"];
+        titleArrays = @[@"iSlim专业瘦身评估",@"咨询私人顾问",@"瘦瘦官方商城"];
+        describeArrays = @[@"让减肥从困难变容易",@"最专业的瘦身指导",@"用极少的费用，让减肥效果加倍吧"];
     }
     else {
-        cellIconImageArrays = @[@"icon_02_"];
-        titleArrays = @[@"咨询私人顾问"];
-        describeArrays = @[@"最专业的瘦身指导"];
+        cellIconImageArrays = @[@"icon_02_",@"shop_icon"];
+        titleArrays = @[@"咨询私人顾问",@"瘦瘦官方商城"];
+        describeArrays = @[@"最专业的瘦身指导",@"用极少的费用，让减肥效果加倍吧"];
     }
 }
 
@@ -165,8 +166,11 @@
             [_serviceTableView reloadData];
         }
     }else if ([taskID isEqualToString:@"islimDataForAdd"]){
-    
+        
         islimAddArray = [NSMutableArray arrayWithArray:(NSMutableArray *)result];
+        for (XKRWIslimAddModel * model in islimAddArray) {
+            _shopNumber += [model.name isEqualToString:@"瘦瘦商城"] ? 1 : 0;
+        }
         [_serviceTableView reloadData];
     }
 }
@@ -193,23 +197,6 @@
 
 
 
-//- (void)checkServiceRed
-//{
-//    if(_isShowiSlim)
-//    {
-//        if (![XKRWUserDefaultService isShowServiceRedDot] && ![XKRWUserDefaultService isShowAssessmentredDot]) {
-//            if ([self.delegate respondsToSelector:@selector(clearShareVCRedDot)]) {
-//                [self.delegate clearShareVCRedDot];
-//            }
-//        }
-//    }else{
-//        if (![XKRWUserDefaultService isShowAssessmentredDot]) {
-//            if ([self.delegate respondsToSelector:@selector(clearShareVCRedDot)]) {
-//                [self.delegate clearShareVCRedDot];
-//            }
-//        }
-//    }
-//}
 
 #pragma tabDelegate
 
@@ -217,9 +204,10 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (_isShowiSlim) {
-        return 2+islimAddArray.count;
+        return 3 + islimAddArray.count - _shopNumber;
     }
-    return 1+islimAddArray.count;
+    
+    return 2 + islimAddArray.count - _shopNumber;
 }
 
 
@@ -240,9 +228,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-//    if (section == 0) {
-//        return 0.f;
-//    }
     return 10;
 }
 
@@ -251,26 +236,14 @@
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, 10)];
     [view setBackgroundColor:XKClearColor];
     
-//    UIView * up=[[UIView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, 0.5)];
-//    up.backgroundColor=[UIColor colorFromHexString:@"#e0e0e0"];
-//    UIView * down=[[UIView alloc]initWithFrame:CGRectMake(0, 9.5, XKAppWidth, 0.5)];
-//    down.backgroundColor=[UIColor colorFromHexString:@"#e0e0e0"];
-    
-//    if (section==0) {
-//        [view addSubview:down];
-//    }else{
-//        [view addSubview:up];
-//        [view addSubview:down];
-//    }
     return view;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(_isShowiSlim)
-    {
+    
+    if(_isShowiSlim) {
         if (indexPath.section == 0 ) {
-//            [self checkServiceRed];
-//            BOOL  isShowAssessmentredDot = [XKRWUserDefaultService isShowAssessmentredDot];
+            
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
             
             if([[NSUserDefaults standardUserDefaults] objectForKey:BUYSERVERNUM]){
@@ -281,12 +254,12 @@
             
             return cell;
             
-        }else if (indexPath.section == 1)
+        }else if (indexPath.section <= 2)
         {
-//            [self checkServiceRed];
-//            BOOL isShowRedDot = [XKRWUserDefaultService isShowServiceRedDot];
+            
+            NSString *str = indexPath.section == 1 ? weChatNum : @"";
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
-            [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:weChatNum isShowHotImageView:NO isShowRedDot:NO];
+            [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:str isShowHotImageView:NO isShowRedDot:NO];
             
             return cell;
         }else{
@@ -296,47 +269,6 @@
             [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
             
             [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil options:SDWebImageRetryFailed];
-            
-  
-            
-            XKRWIslimAddModel __block * blockModel = model;
-            __weak __typeof(self)weakSelf = self;
-
-            cell.ButtonHanle = ^{
-                
-                [MobClick event:@"clk_FocusMap"];
-                
-                XKRWNewWebView * adVC = [XKRWNewWebView new];
-                adVC.hidesBottomBarWhenPushed = YES;
-                adVC.contentUrl = blockModel.addr;
-                adVC.webTitle = blockModel.name;
-                 adVC.showType = YES;
-                
-                [weakSelf presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:adVC withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
-                    
-                }];
-            };
-            return cell;
-            
-        }
-    }else{
-
-        if (indexPath.section == 0 ) {
-            //        [self checkServiceRed];
-            //        BOOL isShowRedDot = [XKRWUserDefaultService isShowServiceRedDot];
-            XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
-            [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:weChatNum isShowHotImageView:NO isShowRedDot:NO];
-            
-            return cell;
-            
-        }else{
-            
-            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 1];
-            
-            XKRWServiceIslimADDCell * cell = [tableView dequeueReusableCellWithIdentifier:@"islimADDCell" forIndexPath:indexPath];
-            [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
-            
-            [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil];
             
             XKRWIslimAddModel __block * blockModel = model;
             __weak __typeof(self)weakSelf = self;
@@ -350,7 +282,50 @@
                 adVC.contentUrl = blockModel.addr;
                 adVC.webTitle = blockModel.name;
                 adVC.showType = YES;
-//                [weakSelf.navigationController pushViewController:adVC animated:YES];
+                
+                [weakSelf presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:adVC withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
+                    
+                }];
+            };
+            return cell;
+            
+        }
+    }
+    else{
+        
+        if (indexPath.section <= 1 ) {
+            NSString *str = indexPath.section == 0 ? weChatNum : @"";
+            XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
+            [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:str isShowHotImageView:NO isShowRedDot:NO];
+            
+            return cell;
+            
+        }else{
+            
+            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 1];
+            
+            XKRWServiceIslimADDCell * cell = [tableView dequeueReusableCellWithIdentifier:@"islimADDCell" forIndexPath:indexPath];
+            [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
+            
+            [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil];
+            
+            if ([model.name isEqualToString:@"瘦瘦商城"]) {
+                model.addr = [NSString stringWithFormat:@"%@%@",ssbuyUrl,[[XKRWUserService sharedService] getToken]];
+            }
+            
+            XKRWIslimAddModel __block * blockModel = model;
+            __weak __typeof(self)weakSelf = self;
+            
+            
+            cell.ButtonHanle = ^{
+                
+                [MobClick event:@"clk_FocusMap"];
+                
+                XKRWNewWebView * adVC = [XKRWNewWebView new];
+                adVC.hidesBottomBarWhenPushed = YES;
+                adVC.contentUrl = blockModel.addr;
+                adVC.webTitle = blockModel.name;
+                adVC.showType = YES;
                 
                 [weakSelf presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:adVC withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
                     
@@ -371,20 +346,23 @@
     {
         if (indexPath.section == 0) {
             [MobClick event:@"in_iSlim"];
-//            [XKRWUserDefaultService setShowAssessmentredDot:NO];
             XKRWiSlimAssessmentPurchaseVC  *slimVC = [[XKRWiSlimAssessmentPurchaseVC alloc]init];
             slimVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:slimVC animated:YES];
             
-        }else if (indexPath.section == 1)
-        {
+        } else if (indexPath.section == 1) {
             [MobClick event:@"in_WcSvc"];
             XKRWAttentionWechatVC *attentionWechatVC = [[XKRWAttentionWechatVC alloc]init];
             attentionWechatVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:attentionWechatVC animated:YES];
             
         }else{
-        
+            XKRWNewWebView * adVC = [XKRWNewWebView new];
+            adVC.hidesBottomBarWhenPushed = YES;
+            adVC.contentUrl = [NSString stringWithFormat:@"%@%@",ssbuyUrl,[[XKRWUserService sharedService] getToken]];
+            adVC.webTitle = @"瘦瘦官方商城";
+            adVC.showType = YES;
+            [self.navigationController pushViewController:adVC animated:YES];
         }
         
     }else{
@@ -395,9 +373,16 @@
             attentionWechatVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:attentionWechatVC animated:YES];
             
-        }else{
-        
-        
+        }else if (indexPath.section == 1){
+            XKRWNewWebView * adVC = [XKRWNewWebView new];
+            adVC.hidesBottomBarWhenPushed = YES;
+            adVC.contentUrl = [NSString stringWithFormat:@"%@%@",ssbuyUrl,[[XKRWUserService sharedService] getToken]];
+            adVC.webTitle = @"瘦瘦官方商城";
+            adVC.showType = YES;
+            [self.navigationController pushViewController:adVC animated:YES];
+            
+        } else {
+            
         }
     }
 }

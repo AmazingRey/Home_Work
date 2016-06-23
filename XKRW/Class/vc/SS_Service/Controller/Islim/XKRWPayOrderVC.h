@@ -7,10 +7,10 @@
 //
 
 #import "XKRWBaseVC.h"
-
+@class XKRWProductEntity;
 @interface XKRWPayOrderVC : XKRWBaseVC
 
-@property (nonatomic, assign) NSInteger pid;
+@property (nonatomic, strong) NSString *pid;
 /**
  *  以产品id初始化界面，自动搜索相应pid的产品信息和支付信息
  *
@@ -18,6 +18,8 @@
  *
  *  @return XKRWPayOrderVC实例
  */
-- (id)initWithPID:(NSInteger)pid;
+@property (nonatomic, strong) XKRWProductEntity *product;
+
+- (id)initWithPID:(NSString *)pid;
 
 @end
