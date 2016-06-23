@@ -254,7 +254,7 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             
             return cell;
             
-        }else if (indexPath.section <= 2)
+        } else if (indexPath.section <= 2)
         {
             
             NSString *str = indexPath.section == 1 ? weChatNum : @"";
@@ -264,29 +264,10 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             return cell;
         }else{
             
-            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 2];
-            XKRWServiceIslimADDCell * cell = [tableView dequeueReusableCellWithIdentifier:@"islimADDCell" forIndexPath:indexPath];
-            [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
-            
-            [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil options:SDWebImageRetryFailed];
-            
-            XKRWIslimAddModel __block * blockModel = model;
-            __weak __typeof(self)weakSelf = self;
-            
-            cell.ButtonHanle = ^{
-                
-                [MobClick event:@"clk_FocusMap"];
-                
-                XKRWNewWebView * adVC = [XKRWNewWebView new];
-                adVC.hidesBottomBarWhenPushed = YES;
-                adVC.contentUrl = blockModel.addr;
-                adVC.webTitle = blockModel.name;
-                adVC.showType = YES;
-                
-                [weakSelf presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:adVC withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
-                    
-                }];
-            };
+            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 3];
+            XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
+            [cell initSubViewsWithIconImageName:model.image Title:model.name Describe:model.detail1 tip:model.detail2 isShowHotImageView:NO isShowRedDot:NO];
+
             return cell;
             
         }
@@ -302,36 +283,11 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             
         }else{
             
-            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 1];
+            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 2];
             
-            XKRWServiceIslimADDCell * cell = [tableView dequeueReusableCellWithIdentifier:@"islimADDCell" forIndexPath:indexPath];
-            [XKRWUtil addViewUpLineAndDownLine:cell andUpLineHidden:NO DownLineHidden:NO];
-            
-            [cell.IconButton setImageWithURL:[NSURL URLWithString:model.image] forState:UIControlStateNormal placeholderImage:nil];
-            
-            if ([model.name isEqualToString:@"瘦瘦商城"]) {
-                model.addr = [NSString stringWithFormat:@"%@%@",ssbuyUrl,[[XKRWUserService sharedService] getToken]];
-            }
-            
-            XKRWIslimAddModel __block * blockModel = model;
-            __weak __typeof(self)weakSelf = self;
-            
-            
-            cell.ButtonHanle = ^{
-                
-                [MobClick event:@"clk_FocusMap"];
-                
-                XKRWNewWebView * adVC = [XKRWNewWebView new];
-                adVC.hidesBottomBarWhenPushed = YES;
-                adVC.contentUrl = blockModel.addr;
-                adVC.webTitle = blockModel.name;
-                adVC.showType = YES;
-                
-                [weakSelf presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:adVC withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
-                    
-                }];
-                
-            };
+            XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
+            [cell initSubViewsWithIconImageName:model.image Title:model.name Describe:model.detail1 tip:model.detail2 isShowHotImageView:NO isShowRedDot:NO];
+
             return cell;
         }
     }
@@ -356,12 +312,20 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             attentionWechatVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:attentionWechatVC animated:YES];
             
-        }else{
+        }else if (indexPath.section == 2) {
             XKRWNewWebView * adVC = [XKRWNewWebView new];
             adVC.hidesBottomBarWhenPushed = YES;
             adVC.contentUrl = [NSString stringWithFormat:@"%@%@",ssbuyUrl,[[XKRWUserService sharedService] getToken]];
             adVC.webTitle = @"瘦瘦官方商城";
-            adVC.showType = YES;
+            adVC.showType = NO;
+            [self.navigationController pushViewController:adVC animated:YES];
+            
+        } else {
+            XKRWNewWebView * adVC = [XKRWNewWebView new];
+            adVC.hidesBottomBarWhenPushed = YES;
+            adVC.contentUrl = [islimAddArray[indexPath.section - 3] addr];
+            adVC.webTitle = [islimAddArray[indexPath.section - 3] name];
+            adVC.showType = NO;
             [self.navigationController pushViewController:adVC animated:YES];
         }
         
@@ -378,10 +342,16 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             adVC.hidesBottomBarWhenPushed = YES;
             adVC.contentUrl = [NSString stringWithFormat:@"%@%@",ssbuyUrl,[[XKRWUserService sharedService] getToken]];
             adVC.webTitle = @"瘦瘦官方商城";
-            adVC.showType = YES;
+            adVC.showType = NO;
             [self.navigationController pushViewController:adVC animated:YES];
             
         } else {
+            XKRWNewWebView * adVC = [XKRWNewWebView new];
+            adVC.hidesBottomBarWhenPushed = YES;
+            adVC.contentUrl = [islimAddArray[indexPath.section - 2] addr];
+            adVC.webTitle = [islimAddArray[indexPath.section - 2] name];
+            adVC.showType = NO;
+            [self.navigationController pushViewController:adVC animated:YES];
             
         }
     }

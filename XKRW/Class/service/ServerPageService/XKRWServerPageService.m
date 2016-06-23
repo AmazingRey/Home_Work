@@ -758,7 +758,8 @@ static NSMutableArray *answerArray =  nil;
     NSString *url = [NSString stringWithFormat:@"%@/%@", kNewServer, kISlimAdds];
     
     NSString *version = [NSString stringWithFormat:@"a%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-    NSDictionary *param = @{@"ver": version};
+    NSDictionary *param = @{@"native": @1,
+                            @"var":version};
     
     NSDictionary *result = [self syncBatchDataWith:[NSURL URLWithString:url] andPostForm:param withLongTime:YES];
     
@@ -777,6 +778,9 @@ static NSMutableArray *answerArray =  nil;
             model.day_off = dic[@"day_off"];
             model.type = dic[@"type"];
             model.addr = dic[@"addr"];
+            model.detail1 = dic[@"detail1"];
+            model.detail2 = dic[@"detail2"];
+            model.nid = dic[@"nid"];
             
             NSRange range = [model.addr rangeOfString:@"?"];
             if (range.location != NSNotFound) {

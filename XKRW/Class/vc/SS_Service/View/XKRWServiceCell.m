@@ -26,6 +26,9 @@
 - (void) initSubViewsWithIconImageName:(NSString *)iconImageName Title:(NSString *)title Describe:(NSString *)describe tip:(NSString *)tip isShowHotImageView:(BOOL ) isShow  isShowRedDot:(BOOL)isShowRedDot
 {
     _iconImageView.image = [UIImage imageNamed:iconImageName];
+    if (!_iconImageView.image) {
+        _iconImageView.image = [UIImage imageWithContentsOfURL:[NSURL URLWithString:iconImageName]];
+    }
     _titleLable.text = title;
     _describeLable.text = describe;
     _tipLable.text = tip;

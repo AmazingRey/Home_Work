@@ -39,5 +39,8 @@
 @property (nonatomic, copy) NSString *day_off;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *addr;
+@property (nonatomic, copy) NSString *detail1;
+@property (nonatomic, copy) NSString *detail2;
+@property (nonatomic, copy) NSString *nid;
 
 @end

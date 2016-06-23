@@ -79,6 +79,8 @@
         _shareURL = _contentUrl;
     }
     
+    [self addNaviBarBackButton];
+    
     if ([_contentUrl rangeOfString:@"ssbuy.xikang.com"].location == NSNotFound) {
         if ([_shareURL rangeOfString:[[XKRWUserService sharedService] getToken]].location != NSNotFound || _isHidenRightNavItem || [_shareURL rangeOfString:@"taobao.com"].location != NSNotFound) {
             self.isHidenRightNavItem = YES;
@@ -97,7 +99,6 @@
         }
     }
     
-    [self addNaviBarBackButton];
     
     {
         self.title = self.webTitle;
