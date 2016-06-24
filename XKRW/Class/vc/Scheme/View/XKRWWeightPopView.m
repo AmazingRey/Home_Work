@@ -522,8 +522,8 @@
             [_textField resignFirstResponder];
             [self saveRemote];
             
-            if ([self.delegate respondsToSelector:@selector(pressPopViewSure:)]){
-                [self.delegate pressPopViewSure:weight];
+            if ([self.delegate respondsToSelector:@selector(pressPopViewSure:date:)]){
+                [self.delegate pressPopViewSure:weight date:_selectedDate];
             }
         }
     }else{

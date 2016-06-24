@@ -81,6 +81,7 @@
     UIView *backgroundView ;
     RevisionType revisionType ;
     UIView *planTableViewLine;
+    NSDate *selectDate;
 }
 
 @property (nonatomic, strong) XKRWPlanEnergyView *planEnergyView;
@@ -1184,8 +1185,9 @@
 }
 
 #pragma mark XKRWWeightPopViewDelegate
--(void)pressPopViewSure:(CGFloat)lastWeight{
+-(void)pressPopViewSure:(CGFloat)lastWeight date:(NSDate *)date{
     lastRecordWeight = lastWeight;
+    selectDate = date;
     [self removeBtnBackBounds];
 }
 
@@ -1403,13 +1405,14 @@
     }
     if ([taskID isEqualToString:@"recordWeight"]) {
         CGFloat weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate];
-        
         [XKRWCui hideProgressHud];
-        XKRWRecordWeightFeedBackVC *recordFeedbackVC = [[XKRWRecordWeightFeedBackVC alloc] init];
-        recordFeedbackVC.curWeight = weight;
-        recordFeedbackVC.lastReocrdWeight = lastRecordWeight;
-        recordFeedbackVC.moreThanLastRecord = lastRecordWeight < weight ? true : false;
-        [self presentViewController:recordFeedbackVC animated:true completion:nil];
+        if ([selectDate isDayEqualToDate:[NSDate date]]) {
+            XKRWRecordWeightFeedBackVC *recordFeedbackVC = [[XKRWRecordWeightFeedBackVC alloc] init];
+            recordFeedbackVC.curWeight = weight;
+            recordFeedbackVC.lastReocrdWeight = lastRecordWeight;
+            recordFeedbackVC.moreThanLastRecord = lastRecordWeight < weight ? true : false;
+            [self presentViewController:recordFeedbackVC animated:true completion:nil];
+        }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:EnergyCircleDataNotificationName object:EffectFoodAndSportCircle];
         [[NSNotificationCenter defaultCenter] postNotificationName:ReLoadTipsData object:nil];

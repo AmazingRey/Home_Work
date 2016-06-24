@@ -35,15 +35,13 @@ static XKRWAccountService *shareInstance;
 }
 
 
-- (NSString *) getHomePagePic
+- (NSDictionary *) getHomePagePic
 {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kNewServer,kHomeAd]];
     NSDictionary * dicTemp = [self syncBatchDataWith:url andPostForm:[NSDictionary dictionaryWithObjectsAndKeys:ADV_PIC_SIZE,@"imgwh", nil]];
-    NSString * str = nil;
-
-    str = dicTemp[@"data"];
+    NSDictionary *dic = dicTemp[@"data"];
     
-    return str;
+    return dic;
 }
 
 

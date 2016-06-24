@@ -104,6 +104,7 @@
         self.title = self.webTitle;
         _progressProxy = [[NJKWebViewProgress alloc] init];
         self.xkWebView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight - 64 )];
+        self.xkWebView.scalesPageToFit = true;
         [self.view addSubview:_xkWebView];
         _progressProxy = [[NJKWebViewProgress alloc] init];
         _progressProxy.webViewProxyDelegate = (id)self;
@@ -259,7 +260,6 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView {
-    
     if(_isFromPostDetail){
         self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
         _shareImage = [UIImage imageNamed:@"icon"];

@@ -70,7 +70,8 @@ NSString *const kSignIn =  @"/calendar/daily/"; ///v2/userapi/signInUserDay
 NSString *const kLoginURL = @"/userapi/login/";
 
 //NSString *const kHomeAd = @"/otherapi/getIndexpic";
-NSString *const kHomeAd = @"/index/pic/";
+//NSString *const kHomeAd = @"/index/pic/";
+NSString *const kHomeAd = @"/index/pic/?startup=1";
 
 NSString *const kRegisterURL = @"/userapi/regist/";
 
@@ -164,10 +165,10 @@ NSString *const kSearchURL = @"/content/mixSearch/";
 
 #if DEBUG
 
-//NSString *const kNewServer = @"http://115.29.175.210:8009/"; //测试服务器地址
+NSString *const kNewServer = @"http://115.29.175.210:8009/"; //测试服务器地址
 
 //NSString *const kNewServer = @"http://112.124.53.222/";
-NSString *const kNewServer = @"http://115.29.205.235/";
+//NSString *const kNewServer = @"http://115.29.205.235/";
 
 #else
 

@@ -15,7 +15,7 @@
 
 @protocol XKRWWeightPopViewDelegate <NSObject>
 @optional
--(void)pressPopViewSure:(CGFloat)lastWeight;
+-(void)pressPopViewSure:(CGFloat)lastWeight date:(NSDate *)date;
 -(void)pressPopViewCancle;
 -(void)resetWeightPlan;
 

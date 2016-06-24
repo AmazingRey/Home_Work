@@ -28,14 +28,14 @@
 #import "XKRW-Swift.h"
 #import "XKRWTabbarVC.h"
 
-@interface XKRWRootVC ()<UIScrollViewDelegate>
+@interface XKRWRootVC ()<UIScrollViewDelegate,UIWebViewDelegate>
 {
     UIScrollView *guidanceScrollView ;
     UIPageControl *pageControl;
 }
 @property (nonatomic, strong) UIImageView *defaultImgView;
-@property (nonatomic, strong) UILabel     * VersionLab;
 @property (nonatomic, strong) UIButton    *jumpButton;
+@property (nonatomic, strong) UIButton    *backButton;
 @property (nonatomic, assign) BOOL        adShowed;
 
 @end
@@ -44,6 +44,9 @@
 {
     BOOL    isShowingADImage;
     int64_t showADTime;
+    NSString *pic_url;
+    NSString *pic_link;
+    UIImage *adImage;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -75,6 +78,37 @@
     }
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    self.navigationItem.hidesBackButton = YES;
+    
+    if (!_adShowed) {
+        NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
+        if ([self isFileExist:localFile]) {
+            UIImage *image = [UIImage imageWithContentsOfFile:[self fileFullPathWithName:localFile]];
+            [self.defaultImgView setImage:image];
+        }
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_fromWhich == Appdelegate) {
+        [XKRWCui showAdImageOnWindow];
+        UIWindow *window = [[UIApplication sharedApplication].delegate window];
+        [window addSubview:self.backButton];
+        [window addSubview:self.jumpButton];
+        
+        [self showingADImageView];
+        [self normalFlow];
+        _fromWhich = 0;
+    }else{
+        [self normalFlow];
+    }
+}
+
 - (void)downLoadAdInformation {
     [self downloadWithTaskID:@"downloadAD" task:^{
         [[XKRWAdService sharedService] downloadAdvertisementWithPosition:XKRWAdPostionMainPage];
@@ -88,67 +122,56 @@
 -(void) initADView{
     self.defaultImgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
     self.defaultImgView.height = XKAppHeight;
-    [self.view addSubview:_defaultImgView];
-    
-    self.VersionLab = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 30, XKAppWidth, 20)];
-    _VersionLab.text = [NSString stringWithFormat:@"IOS Ver %@", [[[NSBundle mainBundle] infoDictionary]objectForKey:@"CFBundleVersion"]];
-    _VersionLab.textAlignment = NSTextAlignmentCenter;
-    _VersionLab.backgroundColor = [UIColor clearColor];
-    _VersionLab.textColor = [UIColor colorFromHexString:@"#666666"];
-    _VersionLab.font = [UIFont systemFontOfSize:10];
-    _VersionLab.hidden  = YES;
-    [self.view addSubview:_VersionLab];
+    [self.view addSubview:self.defaultImgView];
     [self downLoadAdbPic];
 }
 
 //广告图下载
 - (void) downLoadAdbPic
 {
-    [XKSilentDispatcher asynExecuteTask:^{
-        //下载图片
-        @try {
-            NSString *pic_url  = [[XKRWAccountService shareService] getHomePagePic];
-            if ([pic_url length] == 0 || [pic_url isKindOfClass:[NSNull class]]) {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:ADV_PIC_NAME];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }else{
+    NSDictionary *pic_dic  = [[XKRWAccountService shareService] getHomePagePic];
+    showADTime = [[pic_dic objectForKey:@"delay"] intValue];
+    pic_url = [pic_dic objectForKey:@"image"];
+    pic_link = [pic_dic objectForKey:@"link"];
+    
+    if ([pic_url length] == 0 || [pic_url isKindOfClass:[NSNull class]]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:ADV_PIC_NAME];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }else{
+        [XKSilentDispatcher asynExecuteTask:^{
+            //下载图片
+            @try {
+                adImage = [UIImage imageWithContentsOfURL:[NSURL URLWithString:pic_url]];
                 NSString *ext = [pic_url pathExtension];
-                __block NSString *filename = [NSString stringWithFormat:@"%@.%@",[self stringFromMD5:pic_url],ext];
-                __block NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
-                if (![self isFileExist:localFile] || ![localFile isEqualToString:filename]) {
+                NSString *filename = [NSString stringWithFormat:@"%@.%@",[self stringFromMD5:pic_url],ext];
+                NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
+                if (![self isFileExist:localFile] || ![localFile isEqualToString:filename]){
                     //需要下载图片
-                    
-                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                        
-                        UIImage *image = [UIImage imageWithContentsOfURL:[NSURL URLWithString:pic_url]];
-                        if (image) {
-                            BOOL isOK = NO;
-                            if (!localFile) {
-                                localFile = filename;
-                            }
-                            if ([[ext uppercaseString] isEqualToString:@"PNG"]) {
-                                isOK = [UIImagePNGRepresentation(image) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
-                            }else if ([[ext uppercaseString] isEqualToString:@"JPEG"] || [[ext uppercaseString] isEqualToString:@"JPG"]){
-                                isOK = [UIImageJPEGRepresentation(image, 1.0) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
-                            }
-                            if (isOK) {
-                                [[NSUserDefaults standardUserDefaults] setObject:localFile forKey:ADV_PIC_NAME];
-                                [[NSUserDefaults standardUserDefaults] synchronize];
-                            }
+                    if (adImage){
+                        BOOL isOK = NO;
+                        if (!localFile) {
+                            localFile = filename;
                         }
-                    });
+                        if ([[ext uppercaseString] isEqualToString:@"PNG"]) {
+                            isOK = [UIImagePNGRepresentation(adImage) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
+                        }else if ([[ext uppercaseString] isEqualToString:@"JPEG"] || [[ext uppercaseString] isEqualToString:@"JPG"]){
+                            isOK = [UIImageJPEGRepresentation(adImage, 1.0) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
+                        }
+                        if (isOK) {
+                            [[NSUserDefaults standardUserDefaults] setObject:localFile forKey:ADV_PIC_NAME];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                        }
+                    }
                 }
             }
-        }
-        @catch (NSException *exception) {
-            //
-            XKLog(@"获取图片错误");
+            @catch (NSException *exception) {
+                XKLog(@"获取图片错误");
+            }
+            @finally {
             
-        }
-        @finally {
-            
-        }
-    }];
+            }
+        }];
+    }
 }
 
 
@@ -157,7 +180,6 @@
 -(void) normalFlow {
     _adShowed = YES;
     self.defaultImgView.hidden = YES;
-    self.VersionLab.hidden = YES;
     //隐私密码
     /*******
      if(第一次打开){
@@ -289,41 +311,6 @@
     }
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
-    
-    self.navigationItem.hidesBackButton = YES;
-
-    _VersionLab.frame =CGRectMake(0, self.view.bounds.size.height - 35, XKAppWidth, 10);
-    if (!_adShowed) {
-        NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
-        if ([self isFileExist:localFile]) {
-            UIImage *image = [UIImage imageWithContentsOfFile:[self fileFullPathWithName:localFile]];
-            [self.defaultImgView setImage:image];
-            self.VersionLab.hidden = YES;
-        } else {
-            
-        }
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    if (_fromWhich == Appdelegate) {
-        [XKRWCui showAdImageOnWindow];
-        UIWindow *window = [[UIApplication sharedApplication].delegate window] ;
-        [window addSubview:self.jumpButton];
-        [self showingADImageView];
-        [self normalFlow];
-        _fromWhich = 0;
-    }else{
-        [self normalFlow];
-    }
-}
-
 - (void)showingADImageView{
     isShowingADImage = true;
     [NSThread detachNewThreadSelector:@selector(intervalTimerToHideADImageInNewthread) toTarget:self withObject:nil];
@@ -333,6 +320,7 @@
     }
     NSLog(@"runloop end.");
     [self.jumpButton removeFromSuperview];
+    [self.backButton removeFromSuperview];
     [XKRWCui hideAdImage];
 }
 
@@ -345,17 +333,27 @@
     isShowingADImage = false;
 }
 
+- (UIButton *)backButton{
+    if (!_backButton) {
+        _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        _backButton.frame = CGRectMake(0, 0, XKAppWidth, XKAppHeight);
+        _backButton.backgroundColor = [UIColor clearColor];
+        [_backButton addTarget:self action:@selector(tapBackAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _backButton;
+}
+
 - (UIButton *)jumpButton{
     if (!_jumpButton) {
         _jumpButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_jumpButton addTarget:self action:@selector(tapJumpAction:) forControlEvents:UIControlEventTouchUpInside];
-        _jumpButton.frame = CGRectMake(XKAppWidth - 100, 30, 80, 30);
-        _jumpButton.backgroundColor = colorSecondary_cccccc;
+        _jumpButton.frame = CGRectMake(XKAppWidth - 100, 30, 65, 30);
+        _jumpButton.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.5];
         _jumpButton.layer.cornerRadius = 8;
         _jumpButton.titleLabel.font = [UIFont systemFontOfSize:15];
         _jumpButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        _jumpButton.titleLabel.textColor = colorSecondary_333333;
-        NSString *jumpText = [NSString stringWithFormat:@"跳过 | %llds",showADTime];
+        _jumpButton.titleLabel.textColor = [UIColor colorFromHexString:@"ffffff"];
+        NSString *jumpText = [NSString stringWithFormat:@"跳过 %lld",showADTime];
         [_jumpButton setTitle:jumpText forState:UIControlStateNormal];
         [NSTimer scheduledTimerWithTimeInterval:1.f
                                          target:self
@@ -370,9 +368,25 @@
     [self setEnd];
 }
 
+- (void)tapBackAction:(UIButton *)button{
+    if (pic_link.length == 0) {
+        return;
+    }
+    [self setEnd];
+    XKRWNewWebView *webView  = [[XKRWNewWebView alloc]init];
+    webView.contentUrl = [NSString stringWithFormat:@"%@?token=%@",pic_link,[[XKRWUserService sharedService]getToken]];
+    webView.showType = true;
+    webView.xkWebView.delegate = self;
+    webView.isHidenRightNavItem = NO;
+    [self presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:webView withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:nil];
+}
+
 - (void)decreaseADTime{
     showADTime--;
-    NSString *jumpText = [NSString stringWithFormat:@"跳过 | %llds",showADTime];
+    if (showADTime < 0) {
+        showADTime = 0;
+    }
+    NSString *jumpText = [NSString stringWithFormat:@"跳过 %lld",showADTime];
     [_jumpButton setTitle:jumpText forState:UIControlStateNormal];
 }
 

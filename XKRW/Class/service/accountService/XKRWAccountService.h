@@ -19,9 +19,9 @@
 /**
  *  获取应用打开时 首页广告图片
  *
- *  @return 返回广告图片地址
+ *  @return 返回广告图片dic
  */
-- (NSString *)getHomePagePic;
+- (NSDictionary *)getHomePagePic;
 
 
 ///**
