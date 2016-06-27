@@ -330,8 +330,11 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             
         }else if entity.showType == "3"{
             smallImageAndTitleCell = tableView.dequeueReusableCellWithIdentifier("smallImageAndTitleCell") as? XKRWSmallImageAndTitleCell
-         
-            smallImageAndTitleCell?.newImage.hidden = !self.fetchArticleState(entity.nid!, moudle: self.operateString!)
+            if indexPath.section == 0 {
+                smallImageAndTitleCell?.newImage.hidden = !self.fetchArticleState(entity.nid!, moudle: self.operateString!)
+            }else{
+                smallImageAndTitleCell?.newImage.hidden = true
+            }
             smallImageAndTitleCell?.timeLabel.text = dateStr
             smallImageAndTitleCell?.titleLabel.text = entity.title!
             smallImageAndTitleCell?.readNumLabel.text = self.readNumToString(entity.pv)
@@ -385,7 +388,12 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             
         }else if entity.showType == "5"{
             titleCell = tableView.dequeueReusableCellWithIdentifier("titleCell") as? XKRWTitleCell
-            titleCell?.newImage.hidden = !self.fetchArticleState(entity.nid!, moudle: self.operateString!)
+            if indexPath.section == 0 {
+                titleCell?.newImage.hidden = !self.fetchArticleState(entity.nid!, moudle: self.operateString!)
+            }else{
+                titleCell?.newImage.hidden = true
+            }
+            
             titleCell?.timeLabel.text = dateStr
             titleCell?.titleLabel.text = entity.title!
             titleCell?.readNumLabel.text = self.readNumToString(entity.pv)
@@ -427,7 +435,9 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         self.entryArticle(entity)
         
         //insert to core data (nid/userid)
-        self.setArticleState(entity.nid!, moudle: self.operateString!)
+        if indexPath.section == 0 {
+            self.setArticleState(entity.nid!, moudle: self.operateString!)
+        }
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
     }
     

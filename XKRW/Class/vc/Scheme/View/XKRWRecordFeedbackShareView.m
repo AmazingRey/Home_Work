@@ -20,6 +20,8 @@
 {
     CGFloat curDecreaseWeight;
     CGFloat totalDecreaseWeight;
+    CGRect resultImageFrame;
+    CGRect rqrcodeImageFrame;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame changeWeight:(CGFloat)changeWeight totalChangeWeight:(CGFloat)totalChangeWeight
@@ -48,10 +50,25 @@
         
         [self makeMasonryConstraints];
         self.screenShoot = [self pb_takeSnapshot];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self layoutIfNeeded];
+            [self.resultImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(resultImageFrame.size.width);
+                make.height.mas_equalTo(resultImageFrame.size.height);
+                make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(44);
+                make.centerX.mas_equalTo(self.mas_centerX);
+            }];
+            [UIView animateWithDuration:1
+                             animations:^{
+                                 [self layoutIfNeeded];
+                             }];
+        });
     }
     return self;
 }
 
+#pragma mark getter Method
 - (UIImage *)pb_takeSnapshot {
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
     [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
@@ -115,6 +132,11 @@
     if (!_resultImageView) {
         UIImage *img = [UIImage imageNamed:@"qualified"];
         _resultImageView = [[UIImageView alloc] initWithImage:img];
+        CGRect frame = _resultImageView.frame;
+        float perc = _resultImageView.frame.size.width/_resultImageView.frame.size.height;
+        frame.size.width = frame.size.width * XKRWScaleWidth;
+        frame.size.height = frame.size.width /perc;
+        resultImageFrame = frame;
         [self addSubview:_resultImageView];
     }
     return _resultImageView;
@@ -171,6 +193,11 @@
 - (UIImageView *)qrcodeImageView{
     if (!_qrcodeImageView) {
         _qrcodeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qrcode"]];
+        rqrcodeImageFrame = _qrcodeImageView.frame;
+        rqrcodeImageFrame.size.height = rqrcodeImageFrame.size.height *XKRWScaleHeight;
+        rqrcodeImageFrame.size.width = rqrcodeImageFrame.size.height;
+        _qrcodeImageView.frame = rqrcodeImageFrame;
+        
         [self addSubview:_qrcodeImageView];
     }
     return _qrcodeImageView;
@@ -312,70 +339,73 @@
         make.top.equalTo(@0);
         make.centerX.mas_equalTo(self.mas_centerX);
         make.width.mas_equalTo(XKAppWidth);
-        make.height.equalTo(@30);
+        make.height.mas_equalTo(30 * XKRWScaleHeight);
     }];
     [self.userHeadImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.topImageView.mas_bottom).offset(25);
-        make.left.equalTo(@15);
-        make.width.height.equalTo(@50);
+        make.top.mas_equalTo(self.topImageView.mas_bottom).offset(25*XKRWScaleHeight);
+        make.left.mas_equalTo(15 * XKRWScaleHeight);
+        make.width.height.mas_equalTo(50 * XKRWScaleHeight);
     }];
     [self.userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.userHeadImageView.mas_top).offset(5);
         make.left.mas_equalTo(self.userHeadImageView.mas_right).offset(15);
-        make.width.mas_greaterThanOrEqualTo(200);
+        make.width.mas_greaterThanOrEqualTo(200*XKRWScaleWidth);
         make.right.equalTo(@15);
     }];
     [self.shareTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.userNameLabel.mas_bottom).offset(5);
         make.left.mas_equalTo(self.userNameLabel.mas_left);
-        make.width.mas_greaterThanOrEqualTo(200);
+        make.width.mas_greaterThanOrEqualTo(200*XKRWScaleWidth);
         make.right.equalTo(@15);
     }];
     [self.resultImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(44);
+        make.width.mas_equalTo(resultImageFrame.size.width*2);
+        make.height.mas_equalTo(resultImageFrame.size.height*2);
+        make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset((44 - resultImageFrame.size.height/2) * XKRWScaleHeight);
         make.centerX.mas_equalTo(self.mas_centerX);
     }];
     
     if (totalDecreaseWeight > 0) {
         [self.resultLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@25);
-            make.top.mas_equalTo(self.resultImageView.mas_top).offset(35);
+            make.height.mas_equalTo(25 * XKRWScaleHeight);
+            make.top.mas_equalTo(self.resultImageView.mas_top).offset(35 * XKRWScaleHeight);
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
         [self.resultLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@30);
+            make.height.mas_equalTo(30 * XKRWScaleHeight);
             make.top.mas_equalTo(self.resultLabel1.mas_bottom);
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
         [self.resultLabel3 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@20);
-            make.top.mas_equalTo(self.resultLabel2.mas_bottom).offset(30);
+            make.height.mas_equalTo(20 * XKRWScaleHeight);
+            make.top.mas_equalTo(self.resultLabel2.mas_bottom).offset(30 * XKRWScaleHeight);
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
         [self.resultLabel4 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@20);
+            make.height.mas_equalTo(20 * XKRWScaleHeight);
             make.top.mas_equalTo(self.resultLabel3.mas_bottom);
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
     }else{
         [self.resultLabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@25);
-            make.top.mas_equalTo(self.resultImageView.mas_top).offset(60);
+            make.height.mas_equalTo(25 * XKRWScaleHeight);
+            make.top.mas_equalTo(self.resultImageView.mas_top).offset(60 * XKRWScaleHeight);
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
         [self.resultLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@30);
+            make.height.mas_equalTo(30 * XKRWScaleHeight);
             make.top.mas_equalTo(self.resultLabel1.mas_bottom);
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
     }
     [self.qrcodeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.resultImageView.mas_bottom).offset(44);
+        make.width.height.mas_equalTo(rqrcodeImageFrame.size.width);
+        make.top.mas_equalTo(self.resultImageView.mas_bottom).offset(44 *XKRWScaleHeight);
         make.centerX.mas_equalTo(self.mas_centerX);
     }];
     [self.qrcodeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(XKAppWidth);
-        make.height.equalTo(@30);
+        make.height.mas_equalTo(30 * XKRWScaleHeight);
         make.top.mas_equalTo(self.qrcodeImageView.mas_bottom).offset(5);
         make.centerX.mas_equalTo(self.mas_centerX);
     }];

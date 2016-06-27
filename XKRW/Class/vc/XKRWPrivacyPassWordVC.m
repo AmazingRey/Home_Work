@@ -224,13 +224,6 @@
 }
 
 - (void)cleanAllInputPassword{
-    [UIView animateWithDuration:2 animations:^{
-        self.labelVerify.alpha = 0;
-    } completion:^(BOOL finished) {
-        self.labelVerify.text = @"";
-        self.labelVerify.alpha = 1;
-    }];
-    
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     _textField.text = @"";
     for (UIImageView  *imgView in imageViewArray) {

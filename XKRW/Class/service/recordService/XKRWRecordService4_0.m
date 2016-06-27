@@ -2990,7 +2990,18 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     NSArray *foods = [self queryFoodRecord:date];
     for (XKRWRecordFoodEntity *entity in foods) {
         
-        XKRWFoodEntity *foodEntity = [[XKRWFoodService shareService] getFoodDetailByFoodId:entity.foodId];
+        XKRWFoodEntity *foodEntity;
+        @try {
+            foodEntity = [[XKRWFoodService shareService] getFoodDetailByFoodId:entity.foodId];
+        } @catch (NSException *exception) {
+            NSLog(@"获取食物详情出现异常");
+        } @finally {
+            if (foodEntity == nil) {
+                foodEntity = [[XKRWFoodService shareService] getFoodDetailByFoodId:entity.foodId];
+            }
+            
+        }
+        
         CGFloat num = 0.f;
         if (entity.unit == eUnitGram) {
             num = entity.number / 100.f;

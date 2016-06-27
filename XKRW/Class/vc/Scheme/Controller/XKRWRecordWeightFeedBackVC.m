@@ -125,47 +125,47 @@
 
 - (void)makeMasonryAulayout{
     [self.toplabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(@55);
+        make.top.mas_equalTo(55 * XKRWScaleHeight);
         make.left.right.equalTo(@0);
         make.width.mas_equalTo(XKAppWidth);
-        make.height.equalTo(@30);
+        make.height.mas_equalTo(30 * XKRWScaleHeight);
     }];
     [self.weightGoalView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.toplabel.mas_bottom).offset(27.5);
+        make.top.mas_equalTo(self.toplabel.mas_bottom).offset(27.5* XKRWScaleHeight);
         make.left.right.equalTo(@0);
         make.width.mas_equalTo(XKAppWidth);
-        make.height.equalTo(@116.5);
+        make.height.mas_equalTo(116.5* XKRWScaleHeight);
     }];
     [self.inspireView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.weightGoalView.mas_bottom).offset(75);
+        make.top.mas_equalTo(self.weightGoalView.mas_bottom).offset(75 * XKRWScaleHeight);
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.width.mas_equalTo(XKAppWidth/3*2);
-        make.height.mas_equalTo(XKAppWidth/3*2/456*103);
+        make.width.mas_equalTo(XKAppWidth/3*2* XKRWScaleWidth);
+        make.height.mas_equalTo(XKAppWidth/3*2/456*103* XKRWScaleHeight);
     }];
     [self.resultlabel1 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.inspireView.mas_bottom).offset(40);
         make.left.right.equalTo(@0);
         make.width.mas_equalTo(XKAppWidth);
-        make.height.equalTo(@30);
+        make.height.mas_equalTo(30 * XKRWScaleHeight);
     }];
     [self.resultlabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.resultlabel1.mas_bottom);
         make.left.right.equalTo(@0);
         make.width.mas_equalTo(XKAppWidth);
-        make.height.equalTo(@30);
+        make.height.mas_equalTo(30 * XKRWScaleHeight);
     }];
     [self.firstBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.resultlabel2.mas_bottom).offset(60);
+        make.top.mas_equalTo(self.resultlabel2.mas_bottom).offset(60 * XKRWScaleHeight);
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.width.mas_equalTo(150);
-        make.height.equalTo(@40);
+        make.width.mas_equalTo(150* XKRWScaleWidth);
+        make.height.mas_equalTo(40* XKRWScaleHeight);
     }];
     if (!_moreThanLastRecord) {
         [self.closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.firstBtn.mas_bottom).offset(10);
+            make.top.mas_equalTo(self.firstBtn.mas_bottom).offset(10 * XKRWScaleHeight);
             make.centerX.mas_equalTo(self.view.mas_centerX);
-            make.width.mas_equalTo(150);
-            make.height.equalTo(@40);
+            make.width.mas_equalTo(150 * XKRWScaleWidth);
+            make.height.mas_equalTo(40 * XKRWScaleHeight);
         }];
     }
 }

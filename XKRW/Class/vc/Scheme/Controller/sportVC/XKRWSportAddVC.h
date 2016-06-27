@@ -23,18 +23,18 @@
 
 @interface XKRWSportAddVC : XKRWBaseVC <UIScrollViewDelegate>
 //运动 ID
-@property (nonatomic, strong) NSDate *recordDate;
-@property (nonatomic, assign) int32_t           sportID;
+@property (nonatomic, strong) NSDate                 *recordDate;
+@property (nonatomic, assign) int32_t                sportID;
 
-@property (nonatomic,retain) XKRWRecordSportEntity *recordSportEntity;
+@property (nonatomic,retain ) XKRWRecordSportEntity  *recordSportEntity;
 
-@property (nonatomic,retain) XKRWSportEntity *sportEntity;
+@property (nonatomic,retain ) XKRWSportEntity        *sportEntity;
 
-@property (nonatomic, assign) MetricUnit        unit;
+@property (nonatomic, assign) MetricUnit             unit;
 
-@property (nonatomic,assign) BOOL isPresent;
+@property (nonatomic,assign ) BOOL                   isPresent;
 
-@property (nonatomic,assign) id <XKRWSportAddVCDelegate> delegate;
+@property (nonatomic,assign ) id <XKRWSportAddVCDelegate> delegate;
 
-@property (nonatomic,assign) FromWhichVC fromWhich;
+@property (nonatomic,assign ) FromWhichVC            fromWhich;
 @end

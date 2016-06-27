@@ -147,7 +147,9 @@ class XKRWMyNoticeDetailVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource
                     commentEntity!.sub_Array = NSMutableArray()
                     commentEntity!.sub_Array.addObject(result.objectForKey("comment") as! XKRWReplyEntity)
                 } else {
-                    commentEntity!.sub_Array.addObject(result.objectForKey("comment") as! XKRWReplyEntity)
+                    if((result.objectForKey("comment") != nil)){
+                        commentEntity!.sub_Array.addObject(result.objectForKey("comment") as! XKRWReplyEntity)
+                    }
                 }
               
             }else{

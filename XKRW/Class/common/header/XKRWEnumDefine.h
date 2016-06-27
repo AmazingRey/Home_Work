@@ -199,7 +199,7 @@ typedef enum  _FitLevel{
     eFitLevel5
 } FitLevel;
 
-typedef enum _MetricUnit{
+typedef NS_ENUM(NSInteger,MetricUnit){
     eUnitGram = 1,             //克
     eUnitKilojoules,           //千焦
     eUnitKiloCalories,         //千卡
@@ -211,7 +211,7 @@ typedef enum _MetricUnit{
     eUnitOne,                  //个
     eUnitHalf,                 //半个
     eUnitOnly                  //只
-} MetricUnit;
+};
 
 inline NSString* getMetricUnitDescription(MetricUnit unit) {
     switch (unit) {

@@ -271,11 +271,6 @@ NSString * const completeKey = @"THeAcountIsComplete";
             break;
     }
     
-    //        if (_entity.complete && _entity.category != eOperationFamous && _entity.category != eOperationTalentShow) {
-    //            _commitButton.enabled = NO;
-    //            [_commitButton setBackgroundColor:XK_LINEAR_ICON_COLOR];
-    //        }
-    
     //添加到contentView中
     [_buttonContainer addSubview:_commitButton];
     if (self.category == eOperationFamous) {

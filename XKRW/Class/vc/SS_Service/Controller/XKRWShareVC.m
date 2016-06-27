@@ -195,11 +195,7 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
     return YES;
 }
 
-
-
-
 #pragma tabDelegate
-
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -254,9 +250,7 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             
             return cell;
             
-        } else if (indexPath.section <= 2)
-        {
-            
+        } else if (indexPath.section <= 2) {
             NSString *str = indexPath.section == 1 ? weChatNum : @"";
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
             [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:str isShowHotImageView:NO isShowRedDot:NO];

@@ -40,11 +40,12 @@
 }
 
 
-@property (nonatomic, strong) UILabel           *lbTitle;   //标题s
-@property (nonatomic, strong) UIScrollView      *lbTitleBG;  //作为背景
-@property (nonatomic, strong) UILabel           *lbDesc;    //描述
-@property (nonatomic, strong) UIView            *datePart; //日期选择  View
-@property (nonatomic, strong) XKRWNaviRightBar   *rightBar;
+@property (nonatomic, strong) UILabel             *lbTitle;//标题s
+@property (nonatomic, strong) UIScrollView        *lbTitleBG;//作为背景
+@property (nonatomic, strong) UILabel             *lbDesc;//描述
+@property (nonatomic, strong) UIView              *datePart;//日期选择  View
+@property (nonatomic, strong) XKRWNaviRightBar    *rightBar;
+@property (nonatomic, strong) NSMutableDictionary *tmpRecordDic;
 @end
 
 @implementation XKRWSportAddVC
@@ -135,7 +136,7 @@
 //        [sportIdArray addObject:[NSNumber numberWithInt:temp.sportId]];
 //    }
     
-    if (self.sportEntity.sportTime != 0 || self.fromWhich == recordVC) {
+    if (self.sportEntity.sportTime != 0 && self.fromWhich == recordVC) {
         hasTimesUnit = true;
     }
     NSArray *unitArrays = hasTimesUnit ? @[@"分钟",@"次"] : @[@"分钟"];
@@ -219,7 +220,8 @@
 }
 
 -(void)initData{
-
+    _tmpRecordDic = [NSMutableDictionary dictionary];
+    
     if (_sportEntity != nil && _sportEntity.sportId != 0) {
         _sportID = _sportEntity.sportId;
     }
@@ -258,15 +260,27 @@
     
         float nearestWeight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:_recordDate];
         if (_recordSportEntity && _recordSportEntity.sportMets != 0) {//修改
-            uint32_t cal = [_recordSportEntity consumeCaloriWithMinuts:[componentTextField.text intValue] weight:nearestWeight];
+            uint32_t cal = 0;
+            if (self.unit == eUnitNumbers) {
+                cal = [_recordSportEntity consumeCaloriWithMinuts:[self changeTime] weight:nearestWeight];
+            }else{
+                cal = [_recordSportEntity consumeCaloriWithMinuts:[componentTextField.text intValue] weight:nearestWeight];
+            }
             kcalLabel.text = [NSString stringWithFormat:@"%iKcal",cal];
         }else{//记录
-            uint32_t cal = [_sportEntity consumeCaloriWithMinuts:[componentTextField.text intValue] weight:nearestWeight];
+            uint32_t cal = 0;
+            if (self.unit == eUnitNumbers) {
+                cal = [_sportEntity consumeCaloriWithMinuts:[self changeTime] weight:nearestWeight];
+            }else{
+                cal = [_sportEntity consumeCaloriWithMinuts:[componentTextField.text intValue] weight:nearestWeight];
+                
+            }
             kcalLabel.text = [NSString stringWithFormat:@"%iKcal",cal];
         }
     }else{
         kcalLabel.text = [NSString stringWithFormat:@"%iKcal",0];
     }
+    [_tmpRecordDic setObject:componentTextField.text forKey:[NSNumber numberWithInteger:self.unit]];
 }
 
 - (void) tapAction:(UITapGestureRecognizer *)tap
@@ -313,6 +327,8 @@
             [alert show];
         }
     }
+    componentTextField.text = [_tmpRecordDic objectForKey:[NSNumber numberWithInteger:self.unit]];
+    [self textFieldChange:componentTextField];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -348,16 +364,7 @@
     _recordSportEntity.recordType = 0;
     _recordSportEntity.uid = (int)[[XKRWUserService sharedService] getUserId];
     _recordSportEntity.calorie = [kcalLabel.text intValue];
-    NSInteger num = [componentTextField.text integerValue];
-    if (self.unit == 8) {
-        NSInteger seconds = _recordSportEntity.sportTime *num;
-        if (seconds % 60 >29) {
-            num = roundf(seconds / 60.0);
-        }else{
-            num = floor(seconds / 60.0);
-        }
-    }
-    _recordSportEntity.number = num;
+    _recordSportEntity.number = [self changeTime];
     _recordSportEntity.unit = self.unit;
     if (_recordSportEntity.serverid == 0) {
         _recordSportEntity.date = _recordDate ? _recordDate : (_recordSportEntity.date ? _recordSportEntity.date:[NSDate date]);
@@ -373,6 +380,24 @@
     [self downloadWithTaskID:@"saveSportRecord" outputTask:^id{
         return @([[XKRWRecordService4_0 sharedService] saveRecord:_recordSportEntity ofType:XKRWRecordTypeSport]);
     }];
+}
+
+- (NSInteger)changeTime{
+    NSInteger num = [componentTextField.text integerValue];
+    if (self.unit == 8) {
+        NSInteger seconds = 0;
+        if (_recordSportEntity) {
+            seconds = _recordSportEntity.sportTime *num;
+        }else{
+            seconds = _sportEntity.sportTime *num;
+        }
+        if (seconds % 60 >29) {
+            num = roundf(seconds / 60.0);
+        }else{
+            num = floor(seconds / 60.0);
+        }
+    }
+    return num;
 }
 
 #pragma --mark  网络处理
