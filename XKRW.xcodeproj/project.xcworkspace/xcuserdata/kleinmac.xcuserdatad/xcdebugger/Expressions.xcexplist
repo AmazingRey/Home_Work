@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "GLOBAL">
+         <PersistentStrings>
+            <PersistentString
+               value = "(@lvalue [XKRWRecordSchemeEntity])schemeRecords">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.XKRWHistoryAndProcessVC.(HPMealCellClickAction (XKRW.XKRWHistoryAndProcessVC) -&gt; (XKRW.HPMealCell, clickButtonTag : Swift.Int) -&gt; ()).(closure #1):XKRWHistoryAndProcessVC.swift">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.XKRWHistoryAndProcessModel.(dealWithSchemeRecords (XKRW.XKRWHistoryAndProcessModel) -&gt; (inout Swift.Array&lt;ObjectiveC.XKRWRecordSchemeEntity&gt;, oldRecord : inout ObjectiveC.XKRWRecordEntity4_0) -&gt; ()).(dealDetailInfoWithSchemeRecords #1) ((Swift.Array&lt;ObjectiveC.XKRWRecordSchemeEntity&gt;, ObjectiveC.XKRWRecordEntity4_0))():XKRWHistoryAndProcessModel.swift">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.XKRWHistoryAndProcessVC.SportCell (XKRW.XKRWHistoryAndProcessVC)(XKRW.HPSportCell, clickModifyButtonIndex : Swift.Int) -&gt; ():XKRWHistoryAndProcessVC.swift">
+      </ContextState>
+      <ContextState
+         contextName = "-[XKRWRecordFoodEntity dictionaryInRecordTable]:XKRWRecordFoodEntity.m">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.XKRWSchemeVC_5_0.tableView (XKRW.XKRWSchemeVC_5_0)(ObjectiveC.UITableView, didSelectRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ():XKRWSchemeVC_5_0.swift">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.XKRWHistoryAndProcessModel.(dealWithSchemeRecords (XKRW.XKRWHistoryAndProcessModel) -&gt; (Swift.Array&lt;ObjectiveC.XKRWRecordSchemeEntity&gt;, oldRecord : ObjectiveC.XKRWRecordEntity4_0) -&gt; ()).(dealDetailInfoWithSchemeRecords #1) ((Swift.Array&lt;ObjectiveC.XKRWRecordSchemeEntity&gt;, ObjectiveC.XKRWRecordEntity4_0))():XKRWHistoryAndProcessModel.swift">
+      </ContextState>
+      <ContextState
+         contextName = "-[XKRWRecordService4_0 saveRecord:ofType:]:XKRWRecordService4_0.m">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.XKRWHistoryAndProcessVC.HPMealCellClickAction (XKRW.XKRWHistoryAndProcessVC)(XKRW.HPMealCell, clickButtonTag : Swift.Int) -&gt; ():XKRWHistoryAndProcessVC.swift">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.HPSportCell.setCellContent (XKRW.HPSportCell)(XKRW.XKRWHistoryAndProcessModel) -&gt; ():HPSportCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.XKRWHistoryAndProcessModel.dealWithSchemeRecords (XKRW.XKRWHistoryAndProcessModel)(Swift.Array&lt;ObjectiveC.XKRWRecordSchemeEntity&gt;, oldRecord : ObjectiveC.XKRWRecordEntity4_0) -&gt; ():XKRWHistoryAndProcessModel.swift">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.HPMealCell.createPieChart (XKRW.HPMealCell)() -&gt; ObjectiveC.PNPieChart:HPMealCell.swift">
+      </ContextState>
+      <ContextState
+         contextName = "XKRW.XKRWHistoryAndProcessVC.tableView (XKRW.XKRWHistoryAndProcessVC)(ObjectiveC.UITableView, heightForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; CoreGraphics.CGFloat:XKRWHistoryAndProcessVC.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
