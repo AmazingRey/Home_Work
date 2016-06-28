@@ -10,6 +10,13 @@
 
 @implementation XKRWPullMenuNormalCell
 - (void)awakeFromNib {
+    if (XKAppHeight <= 480) {
+        _imageLeadingConstraint.constant = 10;
+        _labelLeadingCOnstraint.constant = 5;
+    }else if (XKAppHeight == 568){
+        _imageLeadingConstraint.constant = 10;
+        _labelLeadingCOnstraint.constant = 5;
+    }
     [super awakeFromNib];
 }
 

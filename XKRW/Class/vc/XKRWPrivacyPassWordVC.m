@@ -30,6 +30,8 @@
 - (IBAction)forgetPasswordAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *configueLaterBtn;
 - (IBAction)configueLaterAction:(id)sender;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topImageConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topButtonConstraint;
 
 @end
 
@@ -45,6 +47,7 @@
         self.title = @"设置隐私密码";
         if (!self.navigationController) {
             _configueLaterBtn.hidden = false;
+            _topButtonConstraint.constant += 20;
         }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
@@ -54,14 +57,20 @@
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
         _labelVerify.text = @"输入密码确认关闭";
+    }else if (_privacyType == verify){
+        _configueLaterBtn.hidden = true;
+        _topButtonConstraint.constant = 20;
+        _labelVerify.text = @"验证隐私密码";
+        _forgetPasswordBtn.hidden = false;
+        _forgetPasswordBtn.userInteractionEnabled = true;
     }
     imageViewArray = @[_imageOne, _imageTwo, _imageThree, _imageFour];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.textField becomeFirstResponder];
     [self registerNotification:true];
+    [self.textField becomeFirstResponder];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -87,6 +96,7 @@
         self.title = @"设置隐私密码";
         if (!self.navigationController) {
             _configueLaterBtn.hidden = false;
+            _topButtonConstraint.constant += 20;
         }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
@@ -96,6 +106,12 @@
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
         _labelVerify.text = @"输入密码确认关闭";
+    }else if (_privacyType == verify){
+        _configueLaterBtn.hidden = true;
+        _topButtonConstraint.constant = 20;
+        _labelVerify.text = @"验证隐私密码";
+        _forgetPasswordBtn.hidden = false;
+        _forgetPasswordBtn.userInteractionEnabled = true;
     }
 }
 
@@ -137,6 +153,7 @@
     }else{
         if (toBeString.length == self.passWord.length) {
             if ([toBeString isEqualToString:self.passWord]) {
+                _labelVerify.text = @"验证成功!";
                 if ([self.delegate respondsToSelector:@selector(verifySucceed)]) {
                     [self.delegate verifySucceed];
                 }
@@ -147,6 +164,7 @@
                 return true;
             }else{
                 [self cleanAllInputPassword];
+                _labelVerify.text = @"密码错误，请重新输入";
                 return false;
             }
         }
@@ -163,16 +181,38 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    [self.view layoutIfNeeded];
+    if (XKAppHeight <= 480) {
+        _topImageConstraint.constant -= 125;
+    }else if(XKAppHeight == 568){
+        _topImageConstraint.constant -= 30;
+    }else if (XKAppHeight == 667){
+        _topImageConstraint.constant += 40;
+    }
+    _topImageConstraint.constant = _topImageConstraint.constant*XKRWScaleHeight;
+    [UIView animateWithDuration:.5
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                     }];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
+    [textField resignFirstResponder];
     return true;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    [self.view layoutIfNeeded];
+    if (XKAppHeight <= 480) {
+        _topImageConstraint.constant += 125;
+    }else if(XKAppHeight == 568){
+        _topImageConstraint.constant += 30;
+    }
+    _topImageConstraint.constant = _topImageConstraint.constant*XKRWScaleHeight;
+    [UIView animateWithDuration:.5
+                     animations:^{
+                         [self.view layoutIfNeeded];
+                     }];
 }
 
 - (void)makeEachImageViewWhenTextInput:(NSRange)range string:(NSString *)string{
@@ -187,12 +227,14 @@
 - (BOOL)terminatePrivacyPassword:(NSString *)password{
     if ([password isEqualToString:_passWord]) {
 //        [_textField resignFirstResponder];
+        _labelVerify.text = @"验证成功!";
         [XKRWUserDefaultService removePrivacyPassword];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.navigationController popViewControllerAnimated:YES];
         });
         return true;
     }else{
+        _labelVerify.text = @"密码错误，请重新输入";
         [self cleanAllInputPassword];
         return false;
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -36,16 +36,18 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="lbq-cD-3YC" firstAttribute="centerY" secondItem="wqf-eB-EFk" secondAttribute="centerY" id="7P1-75-LRf"/>
-                    <constraint firstItem="lbq-cD-3YC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="12" id="NeA-6U-ez5"/>
+                    <constraint firstItem="lbq-cD-3YC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" priority="750" constant="12" id="NeA-6U-ez5"/>
                     <constraint firstItem="wqf-eB-EFk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="lWz-CQ-dwy"/>
-                    <constraint firstItem="wqf-eB-EFk" firstAttribute="leading" secondItem="lbq-cD-3YC" secondAttribute="trailing" constant="10" id="lhM-mx-XSu"/>
+                    <constraint firstItem="wqf-eB-EFk" firstAttribute="leading" secondItem="lbq-cD-3YC" secondAttribute="trailing" priority="750" constant="10" id="lhM-mx-XSu"/>
                     <constraint firstAttribute="bottomMargin" secondItem="wqf-eB-EFk" secondAttribute="bottom" constant="1" id="mpb-Zf-Pp6"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="imageLeadingConstraint" destination="NeA-6U-ez5" id="fpb-b8-S8C"/>
                 <outlet property="imgView" destination="lbq-cD-3YC" id="xkg-dK-d0U"/>
                 <outlet property="label" destination="wqf-eB-EFk" id="EoG-pF-5xq"/>
+                <outlet property="labelLeadingCOnstraint" destination="lhM-mx-XSu" id="2DA-s2-kl8"/>
             </connections>
             <point key="canvasLocation" x="216" y="243"/>
         </tableViewCell>

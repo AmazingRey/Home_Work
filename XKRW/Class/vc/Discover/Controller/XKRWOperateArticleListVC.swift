@@ -233,7 +233,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             //  因为后台模板 只做了 1，3，5 故假如模板为4  默认显示5
             titleCell = tableView.dequeueReusableCellWithIdentifier("titleCell") as? XKRWTitleCell
             titleCell!.titleLabel.text = entity.title!
-            titleCell!.titleLabel.preferredMaxLayoutWidth = UI_SCREEN_WIDTH - 30
+            titleCell!.titleLabel.preferredMaxLayoutWidth = UI_SCREEN_WIDTH - 50
             
             return  XKRWUtil.getViewSize(titleCell?.contentView).height + 1
             
@@ -241,7 +241,7 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
         }else if entity.showType == "5"{
             titleCell = tableView.dequeueReusableCellWithIdentifier("titleCell") as? XKRWTitleCell
             titleCell!.titleLabel.text = entity.title!
-            titleCell!.titleLabel.preferredMaxLayoutWidth = UI_SCREEN_WIDTH - 30
+            titleCell!.titleLabel.preferredMaxLayoutWidth = UI_SCREEN_WIDTH - 50
             return  XKRWUtil.getViewSize(titleCell?.contentView).height + 1
         }
         return 0

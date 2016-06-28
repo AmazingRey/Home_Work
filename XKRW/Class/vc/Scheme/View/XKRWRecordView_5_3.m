@@ -604,12 +604,17 @@
             KMSwitchCell *switchCell = [tableView dequeueReusableCellWithIdentifier:@"KMSwitchCell"];
             switchCell.backgroundColor = XK_BACKGROUND_COLOR;
             [XKRWUtil addViewUpLineAndDownLine:switchCell andUpLineHidden:YES DownLineHidden:NO];
+            
+            BOOL isOn =  [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"menstruation_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+            
             [switchCell setTitle:@"大姨妈" clickSwitchAction:^(BOOL on) {
                 [MobClick event:@"btn_fit_mc"];
                 if( [weakSelf.delegate respondsToSelector:@selector(menstruationIsOn:)]){
                     [weakSelf.delegate menstruationIsOn:on];
                 }
             }];
+            
+            switchCell.switchUnit.on =  isOn;
             
             return switchCell;
         }else{

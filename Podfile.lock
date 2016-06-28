@@ -20,13 +20,13 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Masonry (1.0.0)
+  - Masonry (1.0.1)
   - pop (1.0.9)
   - UITableView+FDTemplateLayoutCell (1.4)
   - XTSafeCollection (1.0.4)
-  - YYImage (1.0.1):
-    - YYImage/Core (= 1.0.1)
-  - YYImage/Core (1.0.1)
+  - YYImage (1.0.2):
+    - YYImage/Core (= 1.0.2)
+  - YYImage/Core (1.0.2)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.6.3)
@@ -38,10 +38,10 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
+  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   XTSafeCollection: d5eacdca3655547bf8ee413d709cf1772b780aa5
-  YYImage: b41b45bc5f32bfcdf67bdfb9c09da9e9832357c0
+  YYImage: 2cc79ed49b9549b71c6715cefe7b0f5ab3d33abf
 
 COCOAPODS: 0.39.0

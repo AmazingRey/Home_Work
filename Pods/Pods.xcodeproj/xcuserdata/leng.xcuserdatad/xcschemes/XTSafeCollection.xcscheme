@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'A054674F0341C0D92B5D6B8E'
+               BlueprintIdentifier = '8D1B5778D50540B9F2D0368A'
                BlueprintName = 'XTSafeCollection'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libXTSafeCollection.a'>

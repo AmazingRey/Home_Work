@@ -142,7 +142,11 @@
     [self initData];
     [self initView];
     [self setPlanEnergyViewTitle];
-    [self refreshEnergyCircleView:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self refreshEnergyCircleView:nil];
+    });
+    
     [[XKRWLocalNotificationService shareInstance] setOpenPlanNotification];
     
     if (![[XKRWLocalNotificationService shareInstance] isResetMetamorphosisTourAlarmsToday]) {
@@ -802,16 +806,19 @@
 
 - (void)fixHabitAt:(NSInteger)index isCurrect:(BOOL)abool {
     
-    [recordEntity.habitArray[index] setSituation:abool];
     
     if (![XKRWUtil isNetWorkAvailable]) {
         [XKRWCui showInformationHudWithText:@"请检查网络后尝试"];
         return;
         
     } else {
-        [self downloadWithTaskID:@"saveHabit" task:^{
-            [[XKRWPlanService shareService] saveRecord:recordEntity ofType:XKRWRecordTypeHabit];
+        [recordEntity.habitArray[index] setSituation:abool];
+        [self downloadWithTaskID:@"saveHabit" outputTask:^id{
+            return @([[XKRWPlanService shareService] saveRecord:recordEntity ofType:XKRWRecordTypeHabit]);
         }];
+//        [self downloadWithTaskID:@"saveHabit" task:^{
+//            [[XKRWPlanService shareService] saveRecord:recordEntity ofType:XKRWRecordTypeHabit];
+//        }];
         return;
     }
     
@@ -916,8 +923,10 @@
 }
 
 - (void)menstruationIsOn:(BOOL)on {
+    [[NSUserDefaults standardUserDefaults] setBool:on forKey:[NSString stringWithFormat:@"menstruation_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+    [[NSUserDefaults standardUserDefaults ] synchronize];
     if (on) {
-        
+      
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"大姨妈来了" message:@"适量运动有助调节情绪，缓解生理期不适，瘦瘦为你准备了适合姨妈期的运动方案，快去看看吧！" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:@"去换方案", nil];
         alertView.tag = 10010;
         

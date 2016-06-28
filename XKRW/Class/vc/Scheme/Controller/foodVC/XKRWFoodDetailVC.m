@@ -253,7 +253,7 @@ const int FixedDisplayCount = 4;   //固定显示的个数
     }
 }
 
-- (void) addNaviBarRightButton{
+- (void) addNaviBarRightButton {
     self.rightBar = [[XKRWNaviRightBar alloc] initWithFrameAndTitle:CGRectMake(0.f, 0.f, 44.f, 44.f) title:@"记录"];
     [_rightBar addTarget:self action:@selector(rightNaviItemClicked:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBar];
@@ -261,7 +261,7 @@ const int FixedDisplayCount = 4;   //固定显示的个数
 }
 
 
--(void)rightNaviItemClicked:(UIButton *)btn{
+-(void)rightNaviItemClicked:(UIButton *)btn {
     XKRWAddFoodVC4_0 *addVC = [[XKRWAddFoodVC4_0 alloc] init];
     XKRWRecordFoodEntity *foodEntity = [[XKRWRecordFoodEntity alloc]init];
     foodEntity.foodId = _foodEntity.foodId;
@@ -330,10 +330,8 @@ const int FixedDisplayCount = 4;   //固定显示的个数
     
 }
 
-
 #pragma mark - 网络处理
-
-- (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID{
+- (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
     [XKRWCui hideProgressHud];
     if ([taskID isEqualToString:@"getFoodDetail"]) {
         if (result) {
@@ -376,7 +374,6 @@ const int FixedDisplayCount = 4;   //固定显示的个数
             [XKRWCui showInformationHudWithText:@"删除收藏"];
         }
     }
-    
     _collectBtn.selected = _isSelected;
 }
 

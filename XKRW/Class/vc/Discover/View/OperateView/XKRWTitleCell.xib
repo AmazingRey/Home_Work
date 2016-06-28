@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -74,21 +74,17 @@
                     <constraint firstAttribute="bottomMargin" secondItem="DeY-Nh-Ujx" secondAttribute="bottom" constant="21.5" id="92z-S0-ezK"/>
                     <constraint firstAttribute="bottomMargin" secondItem="4xH-cX-pcJ" secondAttribute="bottom" constant="-4" id="Dtv-jm-h8R"/>
                     <constraint firstAttribute="bottomMargin" secondItem="AMQ-1h-nHz" secondAttribute="bottom" constant="-4" id="EhK-HQ-N3e"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="DeY-Nh-Ujx" secondAttribute="trailing" constant="40" id="Klm-o3-UhR"/>
                     <constraint firstItem="oT2-rY-7gZ" firstAttribute="top" secondItem="4xH-cX-pcJ" secondAttribute="bottom" constant="-15" id="ToO-vu-fvd"/>
                     <constraint firstItem="ih9-hh-oOM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="XJR-6c-EQb"/>
                     <constraint firstItem="AMQ-1h-nHz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="XPr-F3-LTe"/>
                     <constraint firstItem="4xH-cX-pcJ" firstAttribute="top" secondItem="AMQ-1h-nHz" secondAttribute="bottom" constant="-20" id="cTG-HW-sTe"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ih9-hh-oOM" secondAttribute="trailing" constant="15" id="gaa-UH-Pj6"/>
                     <constraint firstItem="ih9-hh-oOM" firstAttribute="leading" secondItem="DeY-Nh-Ujx" secondAttribute="trailing" constant="10" id="js7-x7-uPI"/>
-                    <constraint firstItem="AMQ-1h-nHz" firstAttribute="top" secondItem="DeY-Nh-Ujx" secondAttribute="bottom" constant="5" id="kfF-1t-wA9"/>
-                    <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ih9-hh-oOM" secondAttribute="trailing" constant="15" id="mMC-ux-Do5"/>
                     <constraint firstItem="4xH-cX-pcJ" firstAttribute="leading" secondItem="oT2-rY-7gZ" secondAttribute="trailing" constant="5" id="t7e-O7-Wa6"/>
                     <constraint firstItem="oT2-rY-7gZ" firstAttribute="leading" secondItem="JII-rX-hcP" secondAttribute="trailing" constant="3" id="tO3-U6-04v"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
-                        <exclude reference="Klm-o3-UhR"/>
-                        <exclude reference="kfF-1t-wA9"/>
                         <exclude reference="Dtv-jm-h8R"/>
                     </mask>
                 </variation>
