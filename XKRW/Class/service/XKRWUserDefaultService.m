@@ -387,7 +387,7 @@
     loginNaviVC.loginSuccess = sucess;
     loginNaviVC.loginFailed = fail;
     loginNaviVC.hidesBottomBarWhenPushed = YES;
-//    XKRWNavigationController *navi = [[XKRWNavigationController alloc] initWithRootViewController:loginNaviVC withNavigationBarType:NavigationBarTypeDefault];
+
     [target.navigationController pushViewController:loginNaviVC animated:NO];
 }
 

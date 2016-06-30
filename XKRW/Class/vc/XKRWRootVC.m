@@ -61,7 +61,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    showADTime = 5;
+//    showADTime = 5;
     // 每次进入通过版本号等信息执行代码
     [[XKRWVersionService shareService] checkVersion:^BOOL(NSString *currentVersion, BOOL isNewUpdate, BOOL isNewSetUp) {
         // 是否是新安装或者新升级
@@ -83,7 +83,7 @@
     self.navigationController.navigationBarHidden = YES;
     self.navigationItem.hidesBackButton = YES;
     
-    if (!_adShowed) {
+    if (!_adShowed && [pic_url length] == 0 && ![pic_url isKindOfClass:[NSNull class]]) {
         NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
         if ([self isFileExist:localFile]) {
             UIImage *image = [UIImage imageWithContentsOfFile:[self fileFullPathWithName:localFile]];
@@ -96,12 +96,13 @@
 {
     [super viewDidAppear:animated];
     if (_fromWhich == Appdelegate) {
-        [XKRWCui showAdImageOnWindow];
-        UIWindow *window = [[UIApplication sharedApplication].delegate window];
-        [window addSubview:self.backButton];
-        [window addSubview:self.jumpButton];
-        
-        [self showingADImageView];
+        if ([pic_url length] != 0 && ![pic_url isKindOfClass:[NSNull class]]) {
+            [XKRWCui showAdImageOnWindow];
+            UIWindow *window = [[UIApplication sharedApplication].delegate window];
+            [window addSubview:self.backButton];
+            [window addSubview:self.jumpButton];
+            [self showingADImageView];
+        }
         [self normalFlow];
         _fromWhich = 0;
     }else{
@@ -126,16 +127,48 @@
     [self downLoadAdbPic];
 }
 
-
-
-
 //广告图下载
 - (void) downLoadAdbPic
 {
-    
-    [self downloadWithTaskID:@"downLoadHomeAD" outputTask:^id{
-        return [[XKRWAccountService shareService] getHomePagePic];
-    }];
+    @try {
+            NSDictionary *pic_dic = [[XKRWAccountService shareService] getHomePagePic];
+            showADTime = [[pic_dic objectForKey:@"delay"] intValue];
+            pic_url = [pic_dic objectForKey:@"image"];
+            pic_link = [pic_dic objectForKey:@"link"];
+            if ([pic_url length] == 0 || [pic_url isKindOfClass:[NSNull class]]) {
+                showADTime = 0;
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:ADV_PIC_NAME];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }else{
+                adImage = [UIImage imageWithContentsOfURL:[NSURL URLWithString:pic_url]];
+                NSString *ext = [pic_url pathExtension];
+                NSString *filename = [NSString stringWithFormat:@"%@.%@",[self stringFromMD5:pic_url],ext];
+                NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
+                if (![self isFileExist:localFile] || ![localFile isEqualToString:filename]){
+                    //需要下载图片
+                    if (adImage){
+                        BOOL isOK = NO;
+                        if (!localFile) {
+                            localFile = filename;
+                        }
+                        if ([[ext uppercaseString] isEqualToString:@"PNG"]) {
+                            isOK = [UIImagePNGRepresentation(adImage) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
+                        }else if ([[ext uppercaseString] isEqualToString:@"JPEG"] || [[ext uppercaseString] isEqualToString:@"JPG"]){
+                            isOK = [UIImageJPEGRepresentation(adImage, 1.0) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
+                        }
+                        if (isOK) {
+                            [[NSUserDefaults standardUserDefaults] setObject:localFile forKey:ADV_PIC_NAME];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                        }
+                    }
+                }
+            }
+        }
+        @catch (NSException *exception) {
+            XKLog(@"获取图片错误");
+        }
+        @finally {
+        }
 }
 
 
@@ -143,6 +176,9 @@
     if ([taskID isEqualToString:@"downLoadHomeAD"]) {
         NSDictionary *pic_dic  = result;
         showADTime = [[pic_dic objectForKey:@"delay"] intValue];
+        if (showADTime == 0) {
+            showADTime = 5;
+        }
         pic_url = [pic_dic objectForKey:@"image"];
         pic_link = [pic_dic objectForKey:@"link"];
         

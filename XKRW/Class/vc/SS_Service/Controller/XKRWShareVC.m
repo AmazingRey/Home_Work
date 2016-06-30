@@ -210,10 +210,8 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section==0 || indexPath.section==1) {
-        return 80;
-    }
-    return XKAppWidth/5;
+    return 80;
+    
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -251,7 +249,7 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             return cell;
             
         } else if (indexPath.section <= 2) {
-            NSString *str = indexPath.section == 1 ? weChatNum : @"";
+            NSString *str = indexPath.section == 1 ? weChatNum : @"已帮助 6万+ 人成功瘦下来的神奇商城";
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
             [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:str isShowHotImageView:NO isShowRedDot:NO];
             
@@ -261,7 +259,7 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             XKRWIslimAddModel * model = islimAddArray[indexPath.section - 3];
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
             [cell initSubViewsWithIconImageName:model.image Title:model.name Describe:model.detail1 tip:model.detail2 isShowHotImageView:NO isShowRedDot:NO];
-
+            
             return cell;
             
         }
@@ -269,7 +267,7 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
     else{
         
         if (indexPath.section <= 1 ) {
-            NSString *str = indexPath.section == 0 ? weChatNum : @"";
+            NSString *str = indexPath.section == 0 ? weChatNum : @"已帮助 6万+ 人成功瘦下来的神奇商城";
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
             [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:str isShowHotImageView:NO isShowRedDot:NO];
             
@@ -281,7 +279,7 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
             [cell initSubViewsWithIconImageName:model.image Title:model.name Describe:model.detail1 tip:model.detail2 isShowHotImageView:NO isShowRedDot:NO];
-
+            
             return cell;
         }
     }

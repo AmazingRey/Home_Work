@@ -22,10 +22,10 @@
 }
 */
 
-- (instancetype)initWithButtonImages:(NSArray *)images clickButtonAtIndex:(void (^)(NSInteger index))clickHandler {
+- (instancetype)initWithButtonImages:(NSArray *)images fromWhichVC:(FromWhichVC)fromWhich clickButtonAtIndex:(void (^)(NSInteger index))clickHandler {
     if (self = [super init]) {
-        
         _images = images;
+        _fromWhichVC = fromWhich;
         
         CGFloat _xPoint, _yPoint;
         _xPoint = -XKAppWidth / 4;
@@ -88,27 +88,33 @@
     }];
 }
 
-- (void)addTransparentButton {
-    
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:keyWindow.bounds];
-    button.backgroundColor = [UIColor blackColor];
-    [button addTarget:self action:@selector(hideButton:) forControlEvents:UIControlEventTouchUpInside];
-    button.tag = 1010204;
+- (void)hide{
+    [self closeShareMoudle:nil];
+}
 
-    button.alpha = 0.f;
+- (void)addTransparentButton {
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIButton *button = [[UIButton alloc] initWithFrame:keyWindow.bounds];
+    button.tag = 1010204;
     [keyWindow addSubview:button];
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        button.alpha = 0.2;
-    } completion:^(BOOL finished) {
-        
-    }];
+    if (_fromWhichVC == FeedBackShareVC) {
+        button.backgroundColor = [UIColor clearColor];
+        UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        closeBtn.frame = CGRectMake(button.frame.size.width - 15 -30, 30, 30, 30);
+        [closeBtn setImage:[UIImage imageNamed:@"closeShare"] forState:UIControlStateNormal];
+        [closeBtn addTarget:self action:@selector(closeShareMoudle:) forControlEvents:UIControlEventTouchUpInside];
+        [button addSubview:closeBtn];
+    }else{
+        button.backgroundColor = [UIColor blackColor];
+        button.alpha = 0.f;
+        [button addTarget:self action:@selector(hideButton:) forControlEvents:UIControlEventTouchUpInside];
+        [UIView animateWithDuration:0.2 animations:^{
+            button.alpha = 0.2;
+        }];
+    }
 }
 
 - (void)hideButton:(id)sender {
-    
     if ([sender isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)sender;
         
@@ -131,6 +137,13 @@
             [button removeFromSuperview];
             [self removeFromSuperview];
         }];
+    }
+}
+
+- (void)closeShareMoudle:(id)sender{
+    [self hideButton:nil];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tapHideShareActionSheetAction)]) {
+        [self.delegate tapHideShareActionSheetAction];
     }
 }
 @end

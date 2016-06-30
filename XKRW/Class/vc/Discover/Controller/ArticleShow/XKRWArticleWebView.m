@@ -800,7 +800,7 @@ NSString * const completeKey = @"THeAcountIsComplete";
             [images addObject:[UIImage imageNamed:name]];
         }
         
-        XKRWShareActionSheet *sheet = [[XKRWShareActionSheet alloc] initWithButtonImages:images clickButtonAtIndex:^(NSInteger index) {
+        XKRWShareActionSheet *sheet = [[XKRWShareActionSheet alloc] initWithButtonImages:images fromWhichVC:ArticleWebView  clickButtonAtIndex:^(NSInteger index) {
             
             NSString *name = imageNames[index];
             

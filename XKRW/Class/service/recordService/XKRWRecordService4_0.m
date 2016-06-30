@@ -3394,7 +3394,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         if ([result[@"isSuccess"] isEqualToString:SUCCESS]) {
             
             if ([result[@"isNeedUpdate"] boolValue]) {
-                [[self class] setRecordSyncDate:[NSDate date]];
+            //    [[self class] setRecordSyncDate:[NSDate date]];
             }
             return @YES;
         }

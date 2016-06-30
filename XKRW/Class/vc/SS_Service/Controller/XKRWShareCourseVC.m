@@ -124,10 +124,8 @@
     for (NSString *name in imageNames) {
         [images addObject:[UIImage imageNamed:name]];
     }
-
     
-    
-    XKRWShareActionSheet *actionSheetView = [[XKRWShareActionSheet alloc]initWithButtonImages:images clickButtonAtIndex:^(NSInteger index) {
+    XKRWShareActionSheet *actionSheetView = [[XKRWShareActionSheet alloc]initWithButtonImages:images fromWhichVC:ShareCourseVC clickButtonAtIndex:^(NSInteger index) {
          NSData *imageData = [self imageFromView:self.view atFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
         NSString *name = imageNames[index];
         

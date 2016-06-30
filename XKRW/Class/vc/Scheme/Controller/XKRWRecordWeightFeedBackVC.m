@@ -11,7 +11,7 @@
 #import "XKRWRecordFeedbackShareView.h"
 #import "Masonry.h"
 
-@interface XKRWRecordWeightFeedBackVC ()<XKRWRecordFeedbackShareViewDelegate>
+@interface XKRWRecordWeightFeedBackVC ()<XKRWShareActionSheetDelegate>
 @property (nonatomic, strong) XKRWWeightGoalView          *weightGoalView;
 @property (nonatomic, strong) UILabel                     *toplabel;
 @property (nonatomic, strong) UIImageView                 *inspireView;
@@ -177,13 +177,12 @@
         if (!_shareView) {
             _shareView = [[XKRWRecordFeedbackShareView alloc] initWithFrame:CGRectMake(0, 0, XKAppWidth, XKAppHeight) changeWeight:( _lastReocrdWeight-_curWeight) totalChangeWeight:(oriWeight - _curWeight)];
             _shareView.alpha = 0;
-            _shareView.delegate = self;
+            _shareView.sheet.fromWhichVC = FeedBackShareVC;
+            _shareView.sheet.delegate = self;
         }
         [UIView animateWithDuration:.35 animations:^{
             [self.view addSubview:_shareView];
             _shareView.alpha = 1;
-        }completion:^(BOOL finished) {
-             [_shareView addShareActionsheet];
         }];
     }
 }
@@ -192,12 +191,13 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark XKRWRecordFeedbackShareView *shareView
-- (void)tapFeedbackShareView{
+#pragma mark XKRWShareActionSheetDelegate
+- (void)tapHideShareActionSheetAction{
     [UIView animateWithDuration:.35 animations:^{
         _shareView.alpha = 0;
     } completion:^(BOOL finished) {
         [_shareView removeFromSuperview];
+        _shareView = nil;
     }];
 }
 

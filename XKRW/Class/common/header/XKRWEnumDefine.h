@@ -347,7 +347,11 @@ typedef  NS_ENUM(NSInteger,FromWhichVC) {
     DailyAnalysisVC,
     SetVC,
     recordVC,
-    recordView5_3
+    recordView5_3,
+    FeedBackShareVC,
+    ShareCourseVC,
+    ArticleWebView,
+    NewWebView
 };
 
 typedef NS_ENUM(NSInteger, NavigationBarType) {

@@ -639,6 +639,8 @@ static XKRWDBControlService *shareInstance;
 
 - (void)updateRecord_4_0TableOnV5_0_1 {
     
+
+    
     NSString *sql = @"alter table record_4_0 rename to record_4_0_temp";
     // 如果有旧版本升级，则重命名record_4_0表
     if ([self executeSql:sql]) {
@@ -661,7 +663,8 @@ static XKRWDBControlService *shareInstance;
         thigh           Float DEFAULT NULL,\
         shank           Float DEFAULT NULL,\
         date            TEXT DEFAULT NULL,\
-        sync            integer DEFAULT 0)";
+        sync            integer DEFAULT 0,\
+        fatpercent      Float DEFAULT 0)";
         // 创建新表
         if ([self executeSql:sql]) {
             // 加索引

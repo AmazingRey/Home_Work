@@ -246,6 +246,7 @@
     return YES;
 }
 
+// 我也不想写这样的转换，然而数据 =_=
 - (XKRWProductEntity *)dealWithProductString:(NSString *)string {
     
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
@@ -325,7 +326,7 @@
                             [UIImage imageNamed:@"weixinpengypou"],
                             [UIImage imageNamed:@"qqzone"],
                             [UIImage imageNamed:@"weibo"]];
-        XKRWShareActionSheet *sheet = [[XKRWShareActionSheet alloc] initWithButtonImages:images clickButtonAtIndex:^(NSInteger index) {
+        XKRWShareActionSheet *sheet = [[XKRWShareActionSheet alloc] initWithButtonImages:images fromWhichVC:NewWebView clickButtonAtIndex:^(NSInteger index) {
             
             XKLog(@"Click at index: %d", (int)index);
             

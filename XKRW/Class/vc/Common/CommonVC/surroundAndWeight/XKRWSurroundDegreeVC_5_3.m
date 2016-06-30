@@ -13,6 +13,7 @@
 #define kDaySeconds 86400
 #define LABELHEIGHT  30
 #define CELLWIDTH    64
+#define FatStandardValue 18
 
 @interface XKRWSurroundDegreeVC_5_3 () <UITableViewDelegate ,UITableViewDataSource>{
     UIView *customView;
@@ -358,6 +359,9 @@
     CGPoint prevPoint;
     CGPoint currentPoint;
     CGPoint nextPoint;
+    CGFloat fatValue = 18;
+    CGPoint fatStartPoint;
+    CGPoint fatEndPoint;
     NSString *nextValue;
     NSString *prevValue;
     UIImageView *imageView = [[UIImageView alloc]init];
@@ -366,8 +370,10 @@
     
     if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
         currentPoint = CGPointMake((CELLWIDTH)/2 ,LABELHEIGHT + 6 + (showHeight - 2*LABELHEIGHT)/2 );
+        fatStartPoint = CGPointMake(0, currentPoint.y);
     }else {
         currentPoint = CGPointMake((CELLWIDTH)/2, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -((currentValue.floatValue - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
+        fatStartPoint = CGPointMake(0, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -((fatValue - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
     }
     
     imageView.frame = CGRectMake(currentPoint.x-12/2, currentPoint.y-12/2, 12, 12);
@@ -377,8 +383,10 @@
 
         if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
             prevPoint = CGPointMake(0, LABELHEIGHT + 6 + (showHeight - 2*LABELHEIGHT)/2  );
+            fatStartPoint = prevPoint;
         }else{
             prevPoint = CGPointMake(0, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -( (prevValue.floatValue +(currentValue.floatValue -prevValue.floatValue)/2  - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue)) ));
+            fatStartPoint = CGPointMake(0, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -((fatValue - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue)) ));
         }
         [self drawLineInView:cell.contentView fromPoint:prevPoint toTargetPoint:currentPoint];
     }
@@ -392,6 +400,10 @@
             nextPoint = CGPointMake(CELLWIDTH, (LABELHEIGHT +10) + ((showHeight - 2*(LABELHEIGHT +10)) -( (nextValue.floatValue +(currentValue.floatValue -nextValue.floatValue)/2  - minValue.floatValue) *(showHeight - 2*(LABELHEIGHT +10) ) /(maxValue.floatValue - minValue.floatValue))));
         }
         [self drawLineInView:cell.contentView fromPoint:currentPoint toTargetPoint:nextPoint];
+    }
+    if (_dataType == efatType) {
+        fatEndPoint = CGPointMake(CELLWIDTH , fatStartPoint.y);
+        [self drawDottedLineInView:cell.contentView fromPoint:fatStartPoint toTargetPoint:fatEndPoint];
     }
     [cell.contentView addSubview:imageView];
 }
@@ -416,9 +428,25 @@
     
 }
 
+- (void)drawDottedLineInView:(UIView *)view fromPoint:(CGPoint) currentPoint toTargetPoint:(CGPoint) targetPoint
+{
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    [shapeLayer setBounds:view.bounds];
+    [shapeLayer setPosition:view.center];
+    [shapeLayer setFillColor:[[UIColor whiteColor] CGColor]];
+    [shapeLayer setStrokeColor:[XKMainToneColor_29ccb1 CGColor]];
+    [shapeLayer setLineWidth:3.0f];
+    [shapeLayer setLineJoin:kCALineJoinRound];
+    [shapeLayer setLineDashPattern:
+    [NSArray arrayWithObjects:[NSNumber numberWithInt:11],
+    [NSNumber numberWithInt:5],nil]];
 
-
-
+    CGMutablePathRef path    = CGPathCreateMutable();
+    CGPathMoveToPoint(path, NULL, currentPoint.x, currentPoint.y);
+    CGPathAddLineToPoint(path, NULL, targetPoint.x, targetPoint.y);
+    [shapeLayer setPath:path];
+    [[view layer] addSublayer:shapeLayer];
+}
 
 /*
 #pragma mark - Navigation

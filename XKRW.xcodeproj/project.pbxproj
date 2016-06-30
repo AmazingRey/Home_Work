@@ -476,7 +476,6 @@
 		BC31B9811C1AD0BE0045817B /* XKRWBaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B9801C1AD0BE0045817B /* XKRWBaseVC.m */; };
 		BC31B9A31C1AD3B40045817B /* XKRWConsultantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B9991C1AD3B40045817B /* XKRWConsultantVC.m */; };
 		BC31B9A41C1AD3B40045817B /* XKRWCustomSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B99B1C1AD3B40045817B /* XKRWCustomSegue.m */; };
-		BC31B9A51C1AD3B40045817B /* XKRWWebViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B99D1C1AD3B40045817B /* XKRWWebViewVC.m */; };
 		BC31B9A61C1AD3B40045817B /* UITableView+XKRWDiscoverCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B9A01C1AD3B40045817B /* UITableView+XKRWDiscoverCell.m */; };
 		BC31B9A71C1AD3B40045817B /* XKRWSepLine.m in Sources */ = {isa = PBXBuildFile; fileRef = BC31B9A21C1AD3B40045817B /* XKRWSepLine.m */; };
 		BC3D36A61A160ED20096A937 /* XKRWAdService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC3D36A51A160ED20096A937 /* XKRWAdService.m */; };
@@ -1909,8 +1908,6 @@
 		BC31B9991C1AD3B40045817B /* XKRWConsultantVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWConsultantVC.m; sourceTree = "<group>"; };
 		BC31B99A1C1AD3B40045817B /* XKRWCustomSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWCustomSegue.h; sourceTree = "<group>"; };
 		BC31B99B1C1AD3B40045817B /* XKRWCustomSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWCustomSegue.m; sourceTree = "<group>"; };
-		BC31B99C1C1AD3B40045817B /* XKRWWebViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWebViewVC.h; sourceTree = "<group>"; };
-		BC31B99D1C1AD3B40045817B /* XKRWWebViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWebViewVC.m; sourceTree = "<group>"; };
 		BC31B99F1C1AD3B40045817B /* UITableView+XKRWDiscoverCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+XKRWDiscoverCell.h"; sourceTree = "<group>"; };
 		BC31B9A01C1AD3B40045817B /* UITableView+XKRWDiscoverCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+XKRWDiscoverCell.m"; sourceTree = "<group>"; };
 		BC31B9A11C1AD3B40045817B /* XKRWSepLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWSepLine.h; sourceTree = "<group>"; };
@@ -4863,8 +4860,6 @@
 				BC31B9991C1AD3B40045817B /* XKRWConsultantVC.m */,
 				BC31B99A1C1AD3B40045817B /* XKRWCustomSegue.h */,
 				BC31B99B1C1AD3B40045817B /* XKRWCustomSegue.m */,
-				BC31B99C1C1AD3B40045817B /* XKRWWebViewVC.h */,
-				BC31B99D1C1AD3B40045817B /* XKRWWebViewVC.m */,
 				BCEF35B01C1E592600740ACC /* CircleView.m */,
 				BCEF35B11C1E592600740ACC /* CircleView.h */,
 				BCEF35B31C1E593500740ACC /* singleLineView.h */,
@@ -7420,7 +7415,6 @@
 				BC769ED71C34CACB00E96B1A /* UIColor+Helper.m in Sources */,
 				BC769E991C33D3DD00E96B1A /* XKRWADView.m in Sources */,
 				BCEF38011C1E901B00740ACC /* XKRWThumpUpVC.swift in Sources */,
-				BC31B9A51C1AD3B40045817B /* XKRWWebViewVC.m in Sources */,
 				2FC1F69D1C1EB16C00E55B88 /* TYTextStorage.m in Sources */,
 				BC6F2F9B1C1A70D3005B54E8 /* XKRWFocusCell.m in Sources */,
 				BCC7E96A1C5A08B3008B560F /* TeamPostNumEntity+CoreDataProperties.swift in Sources */,
@@ -8230,7 +8224,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWlrp;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -8301,7 +8295,7 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWlrp;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
 				PROVISIONING_PROFILE = "";

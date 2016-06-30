@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -15,11 +15,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CcK-Y8-xvt">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shop_icon" translatesAutoresizingMaskIntoConstraints="NO" id="CcK-Y8-xvt">
                         <rect key="frame" x="15" y="10" width="60" height="60"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="Cse-o8-upf"/>
-                            <constraint firstAttribute="height" constant="60" id="FEW-cB-qvJ"/>
+                            <constraint firstAttribute="height" constant="60" id="cvA-g8-Gfc"/>
+                            <constraint firstAttribute="width" constant="60" id="sLa-1j-WvJ"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ead-fj-LAE">
@@ -31,8 +31,8 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZq-Fa-Thi">
-                        <rect key="frame" x="85" y="53" width="162" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="110万粉丝关注" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZq-Fa-Thi">
+                        <rect key="frame" x="85" y="53" width="86" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="ldw-bu-aBx"/>
                         </constraints>
@@ -49,8 +49,8 @@
                             <constraint firstAttribute="width" constant="6" id="HOh-N0-wQw"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQV-96-NQK">
-                        <rect key="frame" x="85" y="31" width="162" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最专业的瘦身指导" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQV-96-NQK">
+                        <rect key="frame" x="85" y="31" width="112" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="xQU-5l-E9O"/>
                         </constraints>
@@ -79,7 +79,6 @@
                     <constraint firstItem="1kD-Ff-uWT" firstAttribute="centerY" secondItem="HgX-ps-OPo" secondAttribute="centerY" id="AyB-Ip-8az"/>
                     <constraint firstAttribute="trailing" secondItem="1kD-Ff-uWT" secondAttribute="trailing" constant="109" id="BM3-Ob-l1Y"/>
                     <constraint firstAttribute="trailing" secondItem="LYk-rM-9xP" secondAttribute="trailing" id="Fjm-eu-UIQ"/>
-                    <constraint firstAttribute="trailing" secondItem="lQV-96-NQK" secondAttribute="trailing" constant="73" id="HH3-oL-ipz"/>
                     <constraint firstItem="lQV-96-NQK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="85" id="Iwd-0t-oXT"/>
                     <constraint firstItem="mZq-Fa-Thi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="85" id="JYS-IZ-MZS"/>
                     <constraint firstItem="gSd-nU-vVQ" firstAttribute="leading" secondItem="1kD-Ff-uWT" secondAttribute="trailing" constant="33" id="KQv-Gv-Ax5"/>
@@ -89,13 +88,13 @@
                     <constraint firstItem="LYk-rM-9xP" firstAttribute="top" secondItem="mZq-Fa-Thi" secondAttribute="bottom" constant="6" id="bXf-Jz-wt8"/>
                     <constraint firstItem="mZq-Fa-Thi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="53" id="eBz-tM-Lik"/>
                     <constraint firstItem="LYk-rM-9xP" firstAttribute="trailing" secondItem="AMu-ck-kLR" secondAttribute="trailing" id="eZY-RY-bKP"/>
+                    <constraint firstItem="LYk-rM-9xP" firstAttribute="top" secondItem="CcK-Y8-xvt" secondAttribute="bottom" constant="9" id="et6-zb-Kqp"/>
                     <constraint firstItem="lQV-96-NQK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="31" id="hFO-JK-CQh"/>
                     <constraint firstItem="1kD-Ff-uWT" firstAttribute="top" secondItem="ead-fj-LAE" secondAttribute="bottom" constant="7" id="n3e-uL-xbp"/>
                     <constraint firstItem="ead-fj-LAE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="nMq-kS-aPH"/>
                     <constraint firstItem="CcK-Y8-xvt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="qF9-cz-RaX"/>
                     <constraint firstItem="CcK-Y8-xvt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="sYz-QX-zWL"/>
                     <constraint firstItem="gSd-nU-vVQ" firstAttribute="top" secondItem="lQV-96-NQK" secondAttribute="top" id="uXF-Y9-iDA"/>
-                    <constraint firstAttribute="trailing" secondItem="mZq-Fa-Thi" secondAttribute="trailing" constant="73" id="vfq-Re-0EM"/>
                     <constraint firstAttribute="trailing" secondItem="ead-fj-LAE" secondAttribute="trailing" constant="73" id="z0J-nl-aaa"/>
                     <constraint firstItem="ead-fj-LAE" firstAttribute="top" secondItem="AMu-ck-kLR" secondAttribute="bottom" constant="9" id="zKp-kB-wVo"/>
                     <constraint firstAttribute="bottomMargin" secondItem="LYk-rM-9xP" secondAttribute="bottom" constant="-8" id="ziw-wM-Tjq"/>
@@ -113,10 +112,11 @@
                 <outlet property="tipLable" destination="mZq-Fa-Thi" id="tHM-34-q2E"/>
                 <outlet property="titleLable" destination="ead-fj-LAE" id="TCR-N6-U52"/>
             </connections>
-            <point key="canvasLocation" x="262" y="184"/>
+            <point key="canvasLocation" x="243" y="183"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="arrow_right5_3" width="7" height="12"/>
+        <image name="shop_icon" width="203" height="203"/>
     </resources>
 </document>

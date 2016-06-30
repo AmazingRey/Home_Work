@@ -11,8 +11,6 @@
 #import "XKRWUserService.h"
 #import "UIImageView+WebCache.h"
 #import "XKRWRecordWeightFeedBackVC.h"
-
-#import "XKRWShareActionSheet.h"
 #import "WXApi.h"
 #import <YouMeng/umeng_ios_social_sdk_4.2.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/TencentOpenAPI.framework/Headers/QQApiInterface.h>
 
@@ -28,6 +26,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         curDecreaseWeight = changeWeight;
         totalDecreaseWeight = totalChangeWeight;
         NSString *launchImage = nil;
@@ -43,15 +42,14 @@
         }
         
         UIImage *backImage = [UIImage imageNamed:launchImage];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:backImage];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        imageView.frame = self.frame;
-        [self addSubview:imageView];
-        
+        _launchImageView = [[UIImageView alloc] initWithImage:backImage];
+        _launchImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _launchImageView.frame = self.frame;
+        _launchImageView.alpha = 0;
+        [self addSubview:_launchImageView];
         [self makeMasonryConstraints];
-        self.screenShoot = [self pb_takeSnapshot];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self layoutIfNeeded];
             [self.resultImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.width.mas_equalTo(resultImageFrame.size.width);
@@ -62,22 +60,28 @@
                 }
                 make.centerX.mas_equalTo(self.mas_centerX);
             }];
-            [UIView animateWithDuration:1
+            [UIView animateWithDuration:.3
                              animations:^{
                                  [self layoutIfNeeded];
                              }];
         });
+        [self addShareActionsheet];
     }
     return self;
 }
 
 #pragma mark getter Method
-- (UIImage *)pb_takeSnapshot {
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
-    [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
+
+- (UIImage *)screenShoot{
+//    if (!_screenShoot) {
+        _launchImageView.alpha = 1;
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
+        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+        self.screenShoot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    _launchImageView.alpha = 0;
+//    }
+    return _screenShoot;
 }
 
 - (UIImageView *)topImageView{
@@ -119,7 +123,7 @@
         NSDate *date = [NSDate date];
         NSString *amOrpm = [date stringWithFormat:@"a"];
         NSString *dateformat;
-        if ([amOrpm isEqualToString:@"AM"]) {
+        if ([amOrpm isEqualToString:@"上午"] || [amOrpm isEqualToString:@"AM"]) {
             dateformat = @"yyyy年MM月dd日  上午kk:mm";
         }else{
             dateformat = @"yyyy年MM月dd日  下午kk:mm";
@@ -218,14 +222,7 @@
     return _qrcodeLabel;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tapFeedbackShareView)]) {
-        [self.delegate tapFeedbackShareView];
-    }
-}
-
 - (void)addShareActionsheet{
-    
     [MobClick event:@"clk_share1"];
     
     NSMutableArray *imageNames = [[NSMutableArray alloc] init];
@@ -245,8 +242,8 @@
         [images addObject:[UIImage imageNamed:name]];
     }
     
-    XKRWShareActionSheet *sheet = [[XKRWShareActionSheet alloc] initWithButtonImages:images clickButtonAtIndex:^(NSInteger index) {
-        
+    _sheet = [[XKRWShareActionSheet alloc] initWithButtonImages:images fromWhichVC:FeedBackShareVC clickButtonAtIndex:^(NSInteger index) {
+        [_sheet hide];
         NSString *name = imageNames[index];
         
         if ([name isEqualToString:@"weixin"]) {
@@ -260,18 +257,21 @@
             
             //微信分享
             [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
+            
             [UMSocialData defaultData].extConfig.wechatSessionData.shareImage = self.screenShoot;
             [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatSession]
                                                                content:nil
                                                                  image:nil
                                                               location:nil
                                                            urlResource:nil
-                                                   presentedController:(XKRWRecordWeightFeedBackVC *)self.delegate
+                                                   presentedController:(XKRWRecordWeightFeedBackVC *)self.sheet.delegate
                                                             completion:^(UMSocialResponseEntity *response){
                                                                 if (response.responseCode == UMSResponseCodeSuccess) {
                                                                     XKLog(@"分享成功！");
+                                                                    _launchImageView.alpha = 1;
                                                                 } else {
                                                                     XKLog(@"分享微信好友失败");
+                                                                    _launchImageView.alpha = 0;
                                                                 }
                                                             }];
         }
@@ -292,12 +292,14 @@
                                                                  image:nil
                                                               location:nil
                                                            urlResource:nil
-                                                   presentedController:(XKRWRecordWeightFeedBackVC *)self.delegate
+                                                   presentedController:(XKRWRecordWeightFeedBackVC *)self.sheet.delegate
                                                             completion:^(UMSocialResponseEntity *response){
                                                                 if (response.responseCode == UMSResponseCodeSuccess) {
                                                                     XKLog(@"分享成功！");
+                                                                    _launchImageView.alpha = 1;
                                                                 } else {
                                                                     XKLog(@"分享朋友圈失败");
+                                                                    _launchImageView.alpha = 0;
                                                                 }
                                                             }];
         }
@@ -316,10 +318,11 @@
                                                                  image:nil
                                                               location:nil
                                                            urlResource:nil
-                                                   presentedController:(XKRWRecordWeightFeedBackVC *)self.delegate
+                                                   presentedController:(XKRWRecordWeightFeedBackVC *)self.sheet.delegate
                                                             completion:^(UMSocialResponseEntity *response){
                                                                 if (response.responseCode == UMSResponseCodeSuccess) {
                                                                     XKLog(@"分享成功！");
+                                                                    _launchImageView.alpha = 1;
                                                                 }
                                                             }];
         }
@@ -329,12 +332,12 @@
                                                                     shareImage:self.screenShoot
                                                               socialUIDelegate:(id)self];
             //设置分享内容和回调对象
-            [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler((XKRWRecordWeightFeedBackVC *)self.delegate,[UMSocialControllerService defaultControllerService],YES);
+            [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler((XKRWRecordWeightFeedBackVC *)self.sheet.delegate,[UMSocialControllerService defaultControllerService],YES);
         }
     }];
-    [sheet show];
-    
+    [_sheet show];
 }
+
 
 #pragma mark masonry
 - (void)makeMasonryConstraints{

@@ -18,7 +18,7 @@
 #define SET_PRIVACYPASSWORD_SUCCESS   @"setPrivacyPasswordSuccess"
 #define DeleayTime                    .5
 
-@interface XKRWPrivacyPassWordVC ()
+@interface XKRWPrivacyPassWordVC ()<UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *imageOne;
 @property (strong, nonatomic) IBOutlet UIImageView *imageTwo;
 @property (strong, nonatomic) IBOutlet UIImageView *imageThree;
@@ -30,8 +30,7 @@
 - (IBAction)forgetPasswordAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *configueLaterBtn;
 - (IBAction)configueLaterAction:(id)sender;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topImageConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topButtonConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topImageTopConstraint;
 
 @end
 
@@ -47,7 +46,6 @@
         self.title = @"设置隐私密码";
         if (!self.navigationController) {
             _configueLaterBtn.hidden = false;
-            _topButtonConstraint.constant += 20;
         }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
@@ -59,7 +57,6 @@
         _labelVerify.text = @"输入密码确认关闭";
     }else if (_privacyType == verify){
         _configueLaterBtn.hidden = true;
-        _topButtonConstraint.constant = 20;
         _labelVerify.text = @"验证隐私密码";
         _forgetPasswordBtn.hidden = false;
         _forgetPasswordBtn.userInteractionEnabled = true;
@@ -96,7 +93,6 @@
         self.title = @"设置隐私密码";
         if (!self.navigationController) {
             _configueLaterBtn.hidden = false;
-            _topButtonConstraint.constant += 20;
         }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
@@ -108,7 +104,6 @@
         _labelVerify.text = @"输入密码确认关闭";
     }else if (_privacyType == verify){
         _configueLaterBtn.hidden = true;
-        _topButtonConstraint.constant = 20;
         _labelVerify.text = @"验证隐私密码";
         _forgetPasswordBtn.hidden = false;
         _forgetPasswordBtn.userInteractionEnabled = true;
@@ -183,13 +178,17 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     [self.view layoutIfNeeded];
     if (XKAppHeight <= 480) {
-        _topImageConstraint.constant -= 125;
+        if (!self.navigationController) {
+            _topImageTopConstraint.constant = -20;
+        }else{
+            _topImageTopConstraint.constant = -45;
+        }
     }else if(XKAppHeight == 568){
-        _topImageConstraint.constant -= 30;
+        _topImageTopConstraint.constant = 50;
     }else if (XKAppHeight == 667){
-        _topImageConstraint.constant += 40;
+        _topImageTopConstraint.constant = 120;
     }
-    _topImageConstraint.constant = _topImageConstraint.constant*XKRWScaleHeight;
+    _topImageTopConstraint.constant = _topImageTopConstraint.constant*XKRWScaleHeight;
     [UIView animateWithDuration:.5
                      animations:^{
                          [self.view layoutIfNeeded];
@@ -204,11 +203,11 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     [self.view layoutIfNeeded];
     if (XKAppHeight <= 480) {
-        _topImageConstraint.constant += 125;
+        _topImageTopConstraint.constant = 225;
     }else if(XKAppHeight == 568){
-        _topImageConstraint.constant += 30;
+        _topImageTopConstraint.constant = 110;
     }
-    _topImageConstraint.constant = _topImageConstraint.constant*XKRWScaleHeight;
+    _topImageTopConstraint.constant = _topImageTopConstraint.constant*XKRWScaleHeight;
     [UIView animateWithDuration:.5
                      animations:^{
                          [self.view layoutIfNeeded];
@@ -296,31 +295,20 @@
 }
 
 - (IBAction)forgetPasswordAction:(id)sender {
-//    XKRWAppDelegate *appdelegate = (XKRWAppDelegate *)[[UIApplication sharedApplication] delegate];
-    [XKRWUserDefaultService setForgetPrivacyPassword:true];
-    [XKRWUserDefaultService removePrivacyPassword];
-    [self.textField resignFirstResponder];
-    [self dismissViewControllerAnimated:true completion:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"Exit" object:nil];
-//    XKRWNavigationController *nav = (XKRWNavigationController *)appdelegate.window.rootViewController;
-//    NSArray *arr = nav.viewControllers;
-//    for (UIViewController *vc in arr) {
-//        if ([vc isKindOfClass:[XKRWTabbarVC class]]) {
-//            XKRWTabbarVC *tabbarVC = (XKRWTabbarVC *)vc;
-//            [tabbarVC exitTheAccount];
-//        }
-//    }
-//    appdelegate.window.rootViewController.tabBarController.selectedViewController
-//    if ([[XKRWUserService sharedService] checkSyncData]) {
-//        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"你还有数据未同步" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"取消同步并退出" otherButtonTitles:@"同步", nil];
-//        [actionSheet showInView:self.view];
-//    }else{
-//        [[NSUserDefaults standardUserDefaults] setObject:nil forKey: @"DailyIntakeSize"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//
-//
-//    }
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"忘记隐私密码，需重新登录" delegate:self cancelButtonTitle:nil otherButtonTitles:@"取消",@"重新登录", nil];
+    [alertView show];
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [XKRWUserDefaultService setForgetPrivacyPassword:true];
+        [XKRWUserDefaultService removePrivacyPassword];
+        [self.textField resignFirstResponder];
+        [self dismissViewControllerAnimated:true completion:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Exit" object:nil];
+    }
+}
+
 - (IBAction)configueLaterAction:(id)sender {
     [XKRWUserDefaultService setForgetPrivacyPassword:false];
     [self.textField resignFirstResponder];

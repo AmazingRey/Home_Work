@@ -139,13 +139,14 @@
     
     [[XKRWAppCommentUtil shareAppComment] setEntryPageTimeWithPage:SCHEMEPAGE];
     energyViewHeight = XKAppHeight == 480 ? 170 : (210 * XKRWScaleHeight);
+
     [self initData];
     [self initView];
     [self setPlanEnergyViewTitle];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self refreshEnergyCircleView:nil];
-    });
+    [self refreshEnergyCircleView:nil];
+    [self downloadWithTaskID:@"syncTodayRemoteData" outputTask:^id{
+        return @([XKRWCommHelper syncTodayRemoteData]);
+    }];
     
     [[XKRWLocalNotificationService shareInstance] setOpenPlanNotification];
     
@@ -1278,10 +1279,16 @@
         [self.view addSubview:tipView];
         [tipView startAnimationWithStartOrigin:CGPointMake(0, -tipView.height + 64) endOrigin:CGPointMake(0, 120)];
     }
+    
 }
 
 
 - (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
+    if ([taskID isEqualToString:@"syncTodayRemoteData"]) {
+        [self refreshEnergyCircleView:nil];
+        return;
+    }
+    
     if ([taskID isEqualToString:@"search"]){
         [XKRWCui hideProgressHud];
         foodsArray = [result objectForKey:@"food"];
