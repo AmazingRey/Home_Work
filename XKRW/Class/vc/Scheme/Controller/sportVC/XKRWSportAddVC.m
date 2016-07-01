@@ -31,12 +31,8 @@
     UILabel *selectUnitLabel;
     //时间
     UILabel *componentLable;
-    BOOL hasTimesUnit;
     //
     UILabel *sportName;
-    
-    UISegmentedControl  *unitSegmentCtr;
-    
 }
 
 
@@ -136,17 +132,7 @@
 //        [sportIdArray addObject:[NSNumber numberWithInt:temp.sportId]];
 //    }
     
-    if (self.sportEntity.sportTime != 0 && self.fromWhich == recordVC) {
-        hasTimesUnit = true;
-    }
-    NSArray *unitArrays = hasTimesUnit ? @[@"分钟",@"次"] : @[@"分钟"];
-    unitSegmentCtr = [[UISegmentedControl alloc]initWithItems:unitArrays];
-    unitSegmentCtr.frame = hasTimesUnit? CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth/3 * 2, 30): CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth/3, 30);
-    unitSegmentCtr.tintColor = XKMainToneColor_29ccb1;
-    [unitSegmentCtr addTarget:self action:@selector(unitSegementValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [unitView addSubview:unitSegmentCtr];
-    unitSegmentCtr.selectedSegmentIndex = 0;
-    
+    [unitView addSubview:self.unitSegmentCtr];
     //份量
     UIView  *componentView = [[UIView alloc]initWithFrame:CGRectMake(0, unitView.bottom, XKAppWidth, 44)];
     componentView.backgroundColor = [UIColor whiteColor];
@@ -203,6 +189,26 @@
     }
 }
 
+- (void)setHasTimesUnit:(BOOL)hasTimesUnit{
+    if (_hasTimesUnit != hasTimesUnit) {
+        _hasTimesUnit = hasTimesUnit;
+        [self.unitSegmentCtr removeFromSuperview];
+        self.unitSegmentCtr = nil;
+        [unitView addSubview:self.unitSegmentCtr];
+    }
+}
+
+- (UISegmentedControl *)unitSegmentCtr{
+    if (!_unitSegmentCtr) {
+        NSArray *unitArrays = self.hasTimesUnit ? @[@"分钟",@"次"] : @[@"分钟"];
+        _unitSegmentCtr = [[UISegmentedControl alloc]initWithItems:unitArrays];
+        _unitSegmentCtr.frame = self.hasTimesUnit? CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth/3 * 2, 30): CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth/3, 30);
+        _unitSegmentCtr.tintColor = XKMainToneColor_29ccb1;
+        [_unitSegmentCtr addTarget:self action:@selector(unitSegementValueChanged:) forControlEvents:UIControlEventValueChanged];
+        _unitSegmentCtr.selectedSegmentIndex = 0;
+    }
+    return _unitSegmentCtr;
+}
 
 - (void) setDataToUI {
     if (_recordSportEntity != nil) {
@@ -216,6 +222,15 @@
     }else{
         [logoIV setImageWithURL:[NSURL URLWithString:_sportEntity.sportActionPic] placeholderImage:[UIImage imageNamed:@"default_pic"]];
         sportName.text = _sportEntity.sportName;
+        if (self.fromWhich == recordView5_3) {
+            self.hasTimesUnit = false;
+        }else{
+            if (!self.sportEntity || self.sportEntity.sportTime == 0){
+                self.hasTimesUnit = false;
+            }else{
+                self.hasTimesUnit = true;
+            }
+        }
     }
 }
 
@@ -312,6 +327,7 @@
         [super addNaviBarBackButton];
     }
 }
+
 - (void)unitSegementValueChanged:(UISegmentedControl *)segement{
     if (segement.selectedSegmentIndex == 0) {
         componentLable.text = @"时间";
@@ -391,10 +407,14 @@
         }else{
             seconds = _sportEntity.sportTime *num;
         }
-        if (seconds % 60 >29) {
-            num = roundf(seconds / 60.0);
+        if (seconds <= 60) {
+            num = 1;
         }else{
-            num = floor(seconds / 60.0);
+            if (seconds % 60 >29) {
+                num = roundf(seconds / 60.0);
+            }else{
+                num = floor(seconds / 60.0);
+            }
         }
     }
     return num;

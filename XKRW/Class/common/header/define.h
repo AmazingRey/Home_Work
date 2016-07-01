@@ -27,7 +27,7 @@
 /*
  广告
  */
-#define ADV_PIC_NAME    @"ADV_PIC_NAME"
+#define ADV_PIC_DIC    @"ADV_PIC_DIC"
 #define ADV_PIC_SIZE  [NSString stringWithFormat:@"%dx%d", (int)(XKAppWidth * XKScreenScale), (int)(XKAppHeight * XKScreenScale)]
 //[NSString stringWithFormat:@"%@x%@", XKAppWidth, XKAppHeight] IS_IPHONE_5 ? @"640x1136": @"640x960"
 

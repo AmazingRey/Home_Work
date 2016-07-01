@@ -155,10 +155,11 @@
         UIWindow *window = [[UIApplication sharedApplication].delegate window] ;
         UIImageView *ADImageView = [[UIImageView alloc] initWithFrame:window.bounds];
         ADImageView.tag = 90990999;
-        NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
+        NSDictionary *localFileDic = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_DIC];
+        NSString *localFileName = [localFileDic objectForKey:@"image"];
         
-        if ([XKRWFileManager isFileExist:localFile]) {
-            UIImage *image = [UIImage imageWithContentsOfFile:[XKRWFileManager fileFullPathWithName:localFile]];
+        if ([XKRWFileManager isFileExist:localFileName]) {
+            UIImage *image = [UIImage imageWithContentsOfFile:[XKRWFileManager fileFullPathWithName:localFileName]];
             ADImageView.image = image;
         } else {
             NSString *image = nil;

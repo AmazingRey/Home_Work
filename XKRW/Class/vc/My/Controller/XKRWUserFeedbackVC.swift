@@ -68,11 +68,15 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
     
     func presentUMeng(){
         MobClick.event("in_feedback")
-        feedbackKit = YWFeedbackKit.init(appKey: "23386781")
+        feedbackKit = YWFeedbackKit.init(appKey: "23398538")
+        feedbackKit!.contactInfo = XKRWUserService.sharedService().getToken()
         feedbackKit!.hideContactInfoView = true
         feedbackKit!.environment = YWEnvironmentRelease
         feedbackKit!.extInfo = ["用户token":XKRWUserService.sharedService().getToken(),"账号":XKRWUserService.sharedService().getUserAccountName()]
-        let avatarUrl = XKRWUserService.sharedService().getUserAvatar()
+        var avatarUrl = XKRWUserService.sharedService().getUserAvatar()
+        if (avatarUrl == "") {
+            avatarUrl = "http://slimup.oss.aliyuncs.com/indexpic/2016-06-24/b7cccd8c6899843ae0f4fe8c3540edef.png"
+        }
         
         feedbackKit!.customUIPlist = ["sendBtnText":"发送",
                                       "sendBtnTextColor":"#ffffff",
@@ -80,6 +84,8 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
                                       "hideLoginSuccess":true,
                                       "chatInputPlaceholder":"",
                                       "avatar":avatarUrl,
+                                      "toAvatar":"http://slimup.oss.aliyuncs.com/indexpic/2016-06-24/33d9b6dc38c19fdbe45d1142a9ef1147.png"
+            
         ];
         weak var weakSelf = self
         feedbackKit! .makeFeedbackViewControllerWithCompletionBlock({ (viewController, error) in

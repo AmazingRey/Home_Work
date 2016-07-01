@@ -83,11 +83,16 @@
     self.navigationController.navigationBarHidden = YES;
     self.navigationItem.hidesBackButton = YES;
     
-    if (!_adShowed && [pic_url length] == 0 && ![pic_url isKindOfClass:[NSNull class]]) {
-        NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
-        if ([self isFileExist:localFile]) {
-            UIImage *image = [UIImage imageWithContentsOfFile:[self fileFullPathWithName:localFile]];
-            [self.defaultImgView setImage:image];
+    if (!_adShowed && [pic_url length] != 0 && ![pic_url isKindOfClass:[NSNull class]]) {
+        NSDictionary *localFileDic = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_DIC];
+        NSString *localFileName = [localFileDic objectForKey:@"image"];
+        
+        if ([self isFileExist:localFileName]) {
+            UIImage *image = [UIImage imageWithContentsOfFile:[self fileFullPathWithName:localFileName]];
+            self.defaultImgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+            self.defaultImgView.height = XKAppHeight;
+            self.defaultImgView.image = image;
+            [self.view addSubview:self.defaultImgView];
         }
     }
 }
@@ -121,9 +126,6 @@
 }
 
 -(void) initADView{
-    self.defaultImgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    self.defaultImgView.height = XKAppHeight;
-    [self.view addSubview:self.defaultImgView];
     [self downLoadAdbPic];
 }
 
@@ -132,32 +134,34 @@
 {
     @try {
             NSDictionary *pic_dic = [[XKRWAccountService shareService] getHomePagePic];
-            showADTime = [[pic_dic objectForKey:@"delay"] intValue];
             pic_url = [pic_dic objectForKey:@"image"];
             pic_link = [pic_dic objectForKey:@"link"];
+            NSString *localImageName;
             if ([pic_url length] == 0 || [pic_url isKindOfClass:[NSNull class]]) {
-                showADTime = 0;
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:ADV_PIC_NAME];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+                NSDictionary *localFileDic = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_DIC];
+                localImageName = [localFileDic objectForKey:@"image"];
+                showADTime = [[localFileDic objectForKey:@"delay"] intValue];
+                pic_link = [localFileDic objectForKey:@"link"];
             }else{
                 adImage = [UIImage imageWithContentsOfURL:[NSURL URLWithString:pic_url]];
+                showADTime = [[pic_dic objectForKey:@"delay"] intValue];
                 NSString *ext = [pic_url pathExtension];
                 NSString *filename = [NSString stringWithFormat:@"%@.%@",[self stringFromMD5:pic_url],ext];
-                NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
-                if (![self isFileExist:localFile] || ![localFile isEqualToString:filename]){
+                if (![self isFileExist:localImageName] || ![localImageName isEqualToString:filename]){
                     //需要下载图片
                     if (adImage){
                         BOOL isOK = NO;
-                        if (!localFile) {
-                            localFile = filename;
+                        if (!localImageName) {
+                            localImageName = filename;
                         }
                         if ([[ext uppercaseString] isEqualToString:@"PNG"]) {
-                            isOK = [UIImagePNGRepresentation(adImage) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
+                            isOK = [UIImagePNGRepresentation(adImage) writeToFile:[self fileFullPathWithName:localImageName] atomically:NO];
                         }else if ([[ext uppercaseString] isEqualToString:@"JPEG"] || [[ext uppercaseString] isEqualToString:@"JPG"]){
-                            isOK = [UIImageJPEGRepresentation(adImage, 1.0) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
+                            isOK = [UIImageJPEGRepresentation(adImage, 1.0) writeToFile:[self fileFullPathWithName:localImageName] atomically:NO];
                         }
                         if (isOK) {
-                            [[NSUserDefaults standardUserDefaults] setObject:localFile forKey:ADV_PIC_NAME];
+                            [pic_dic setValue:filename forKey:@"image"];
+                            [[NSUserDefaults standardUserDefaults] setObject:pic_dic forKey:ADV_PIC_DIC];
                             [[NSUserDefaults standardUserDefaults] synchronize];
                         }
                     }
@@ -166,69 +170,14 @@
         }
         @catch (NSException *exception) {
             XKLog(@"获取图片错误");
+            NSDictionary *localFileDic = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_DIC];
+            showADTime = [[localFileDic objectForKey:@"delay"] intValue];
+            pic_url = [localFileDic objectForKey:@"image"];
+            pic_link = [localFileDic objectForKey:@"link"];
         }
         @finally {
         }
 }
-
-
-- (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
-    if ([taskID isEqualToString:@"downLoadHomeAD"]) {
-        NSDictionary *pic_dic  = result;
-        showADTime = [[pic_dic objectForKey:@"delay"] intValue];
-        if (showADTime == 0) {
-            showADTime = 5;
-        }
-        pic_url = [pic_dic objectForKey:@"image"];
-        pic_link = [pic_dic objectForKey:@"link"];
-        
-        if ([pic_url length] == 0 || [pic_url isKindOfClass:[NSNull class]]) {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:ADV_PIC_NAME];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }else{
-            [XKSilentDispatcher asynExecuteTask:^{
-                //下载图片
-                @try {
-                    adImage = [UIImage imageWithContentsOfURL:[NSURL URLWithString:pic_url]];
-                    NSString *ext = [pic_url pathExtension];
-                    NSString *filename = [NSString stringWithFormat:@"%@.%@",[self stringFromMD5:pic_url],ext];
-                    NSString *localFile = [[NSUserDefaults standardUserDefaults] objectForKey:ADV_PIC_NAME];
-                    if (![self isFileExist:localFile] || ![localFile isEqualToString:filename]){
-                        //需要下载图片
-                        if (adImage){
-                            BOOL isOK = NO;
-                            if (!localFile) {
-                                localFile = filename;
-                            }
-                            if ([[ext uppercaseString] isEqualToString:@"PNG"]) {
-                                isOK = [UIImagePNGRepresentation(adImage) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
-                            }else if ([[ext uppercaseString] isEqualToString:@"JPEG"] || [[ext uppercaseString] isEqualToString:@"JPG"]){
-                                isOK = [UIImageJPEGRepresentation(adImage, 1.0) writeToFile:[self fileFullPathWithName:localFile] atomically:NO];
-                            }
-                            if (isOK) {
-                                [[NSUserDefaults standardUserDefaults] setObject:localFile forKey:ADV_PIC_NAME];
-                                [[NSUserDefaults standardUserDefaults] synchronize];
-                            }
-                        }
-                    }
-                }
-                @catch (NSException *exception) {
-                    XKLog(@"获取图片错误");
-                }
-                @finally {
-                    
-                }
-            }];
-        }
-    }
-}
-
-- (void)handleDownloadProblem:(id)problem withTaskID:(NSString *)taskID {
-    if ([taskID isEqualToString:@"downLoadHomeAD"]) {
-        NSLog(@"下载开屏广告失败");
-    }
-}
-
 
 -(void) normalFlow {
     _adShowed = YES;

@@ -37,4 +37,8 @@
 @property (nonatomic,assign ) id <XKRWSportAddVCDelegate> delegate;
 
 @property (nonatomic,assign ) FromWhichVC            fromWhich;
+
+@property (nonatomic, assign) BOOL                   hasTimesUnit;
+
+@property (nonatomic, strong) UISegmentedControl     *unitSegmentCtr;
 @end
