@@ -327,7 +327,7 @@
 }
 
 - (void)intervalTimerToHideADImageInNewthread{
-    sleep((unsigned)showADTime);
+    sleep((unsigned)showADTime-1);
     [self performSelectorOnMainThread:@selector(setEnd) withObject:nil waitUntilDone:NO];
 }
 

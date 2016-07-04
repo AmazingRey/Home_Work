@@ -786,6 +786,11 @@ static NSMutableArray *answerArray =  nil;
             if (range.location != NSNotFound) {
                 model.addr = [model.addr stringByReplacingOccurrencesOfString:@"{token}" withString:[[XKRWUserService sharedService] getToken]];
             }
+            
+            if ([model.addr isEqualToString:@"ssbuy"]) {
+                model.addr = [NSString stringWithFormat:@"%@%@",@"http://ssbuy.xikang.com/?third_party=xikang&third_token=",[[XKRWUserService sharedService] getToken]];
+            }
+            
             [mutArray addObject:model];
         }
     }

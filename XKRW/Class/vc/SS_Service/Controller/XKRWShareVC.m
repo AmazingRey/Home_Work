@@ -33,7 +33,6 @@
 #import "XKRWNewWebView.h"
 #import "XKRWUserService.h"
 
-static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_token=";
 @interface XKRWShareVC ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSArray  *cellIconImageArrays;
@@ -44,7 +43,6 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
     NSMutableArray  *testArray;
     
     NSMutableArray  * islimAddArray;    ///< islim 广告
-    NSInteger _shopNumber;
     BOOL _isShowiSlim;
 }
 @end
@@ -58,19 +56,10 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if ([[XKRWServerPageService sharedService] needRequestStateOfSwitch]) {
-        _isShowiSlim = NO;
-        [self downloadWithTaskID:@"requestState" outputTask:^{
-            return @([[XKRWServerPageService sharedService] isShowPurchaseEntry_uploadVersion]);
-        }];
-    } else {
-        _isShowiSlim = YES;
-    }
+
     [self reloadData];
     
     [MobClick event:@"in_Service"];
-    [_serviceTableView reloadData];
-    [self loadDataFromRemote];
 }
 
 - (void)viewDidLoad
@@ -80,11 +69,24 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
     self.title = @"服务";
     weChatNum = @"";
     buyServerNum =@"";
+
     [self initView];
+    
+    if ([[XKRWServerPageService sharedService] needRequestStateOfSwitch]) {
+        _isShowiSlim = NO;
+        [self downloadWithTaskID:@"requestState" outputTask:^{
+            return @([[XKRWServerPageService sharedService] isShowPurchaseEntry_uploadVersion]);
+        }];
+    } else {
+        _isShowiSlim = YES;
+    }
     
     [self downloadWithTaskID:@"islimDataForAdd" outputTask:^id{
         return [[XKRWServerPageService sharedService] requestIslimDataForAdd];
     }];
+    
+    [self loadDataFromRemote];
+
 }
 
 
@@ -111,14 +113,13 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
     
     if (_isShowiSlim) {
         
-        cellIconImageArrays = @[@"serviceIcon_01",@"icon_02_",@"shop_icon"];
-        titleArrays = @[@"iSlim专业瘦身评估",@"咨询私人顾问",@"瘦瘦官方商城"];
-        describeArrays = @[@"让减肥从困难变容易",@"最专业的瘦身指导",@"用极少的费用，让减肥效果加倍吧"];
-    }
-    else {
-        cellIconImageArrays = @[@"icon_02_",@"shop_icon"];
-        titleArrays = @[@"咨询私人顾问",@"瘦瘦官方商城"];
-        describeArrays = @[@"最专业的瘦身指导",@"用极少的费用，让减肥效果加倍吧"];
+        cellIconImageArrays = @[@"serviceIcon_01",@"icon_02_"];
+        titleArrays = @[@"iSlim专业瘦身评估",@"咨询私人顾问"];
+        describeArrays = @[@"让减肥从困难变容易",@"最专业的瘦身指导"];
+    } else {
+        cellIconImageArrays = @[@"icon_02_"];
+        titleArrays = @[@"咨询私人顾问"];
+        describeArrays = @[@"最专业的瘦身指导"];
     }
 }
 
@@ -138,10 +139,11 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
         [XKRWCui showInformationHudWithText:@"没有网络，请检查网络设置"];
         return;
     }
-    XKDispatcherOutputTask block = ^(){
+    
+    [self downloadWithTaskID:@"getServerData" outputTask:^id{
         return [[XKRWServerPageService sharedService] getServerDataFromNetwork];
-    };
-    [self downloadWithTaskID:@"getServerData" outputTask:block];
+    }];
+
 }
 
 #pragma mark - Net Data
@@ -159,19 +161,23 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
         }
         weChatNum =[result objectForKey:@"AttentionTotal"];
         [_serviceTableView reloadData];
-    } else if ([taskID isEqualToString:@"requestState"]) {
+        return;
+    }
+    
+    if ([taskID isEqualToString:@"requestState"]) {
         _isShowiSlim = [result boolValue];
-        if (_isShowiSlim) {
+//        if (_isShowiSlim) {
             [self reloadData];
             [_serviceTableView reloadData];
-        }
-    }else if ([taskID isEqualToString:@"islimDataForAdd"]){
+//        }
+        return;
+    }
+    
+    if ([taskID isEqualToString:@"islimDataForAdd"]){
         
         islimAddArray = [NSMutableArray arrayWithArray:(NSMutableArray *)result];
-        for (XKRWIslimAddModel * model in islimAddArray) {
-            _shopNumber += [model.name isEqualToString:@"瘦瘦商城"] ? 1 : 0;
-        }
         [_serviceTableView reloadData];
+        return;
     }
 }
 
@@ -200,10 +206,10 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (_isShowiSlim) {
-        return 3 + islimAddArray.count - _shopNumber;
+        return 2 + islimAddArray.count;
     }
     
-    return 2 + islimAddArray.count - _shopNumber;
+    return 1 + islimAddArray.count;
 }
 
 
@@ -248,15 +254,14 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             
             return cell;
             
-        } else if (indexPath.section <= 2) {
-            NSString *str = indexPath.section == 1 ? weChatNum : @"已帮助 6万+ 人成功瘦下来的神奇商城";
+        } else if (indexPath.section == 1) {
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
-            [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:str isShowHotImageView:NO isShowRedDot:NO];
+            [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:weChatNum isShowHotImageView:NO isShowRedDot:NO];
             
             return cell;
         }else{
             
-            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 3];
+            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 2];
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
             [cell initSubViewsWithIconImageName:model.image Title:model.name Describe:model.detail1 tip:model.detail2 isShowHotImageView:NO isShowRedDot:NO];
             
@@ -266,16 +271,16 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
     }
     else{
         
-        if (indexPath.section <= 1 ) {
-            NSString *str = indexPath.section == 0 ? weChatNum : @"已帮助 6万+ 人成功瘦下来的神奇商城";
+        if (indexPath.section == 0 ) {
+          
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
-            [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:str isShowHotImageView:NO isShowRedDot:NO];
+            [cell initSubViewsWithIconImageName:[cellIconImageArrays objectAtIndex:indexPath.section] Title:[titleArrays objectAtIndex:indexPath.section] Describe:[describeArrays objectAtIndex:indexPath.section] tip:weChatNum isShowHotImageView:NO isShowRedDot:NO];
             
             return cell;
             
         }else{
             
-            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 2];
+            XKRWIslimAddModel * model = islimAddArray[indexPath.section - 1];
             
             XKRWServiceCell *cell = LOAD_VIEW_FROM_BUNDLE(@"XKRWServiceCell");
             [cell initSubViewsWithIconImageName:model.image Title:model.name Describe:model.detail1 tip:model.detail2 isShowHotImageView:NO isShowRedDot:NO];
@@ -304,19 +309,11 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             attentionWechatVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:attentionWechatVC animated:YES];
             
-        }else if (indexPath.section == 2) {
-            XKRWNewWebView * adVC = [XKRWNewWebView new];
-            adVC.hidesBottomBarWhenPushed = YES;
-            adVC.contentUrl = [NSString stringWithFormat:@"%@%@",ssbuyUrl,[[XKRWUserService sharedService] getToken]];
-            adVC.webTitle = @"瘦瘦官方商城";
-            adVC.showType = NO;
-            [self.navigationController pushViewController:adVC animated:YES];
-            
         } else {
             XKRWNewWebView * adVC = [XKRWNewWebView new];
             adVC.hidesBottomBarWhenPushed = YES;
-            adVC.contentUrl = [islimAddArray[indexPath.section - 3] addr];
-            adVC.webTitle = [islimAddArray[indexPath.section - 3] name];
+            adVC.contentUrl = [islimAddArray[indexPath.section - 2] addr];
+            adVC.webTitle = [islimAddArray[indexPath.section - 2] name];
             adVC.showType = NO;
             [self.navigationController pushViewController:adVC animated:YES];
         }
@@ -329,19 +326,11 @@ static NSString *ssbuyUrl = @"http://ssbuy.xikang.com/?third_party=xikang&third_
             attentionWechatVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:attentionWechatVC animated:YES];
             
-        }else if (indexPath.section == 1){
-            XKRWNewWebView * adVC = [XKRWNewWebView new];
-            adVC.hidesBottomBarWhenPushed = YES;
-            adVC.contentUrl = [NSString stringWithFormat:@"%@%@",ssbuyUrl,[[XKRWUserService sharedService] getToken]];
-            adVC.webTitle = @"瘦瘦官方商城";
-            adVC.showType = NO;
-            [self.navigationController pushViewController:adVC animated:YES];
-            
         } else {
             XKRWNewWebView * adVC = [XKRWNewWebView new];
             adVC.hidesBottomBarWhenPushed = YES;
-            adVC.contentUrl = [islimAddArray[indexPath.section - 2] addr];
-            adVC.webTitle = [islimAddArray[indexPath.section - 2] name];
+            adVC.contentUrl = [islimAddArray[indexPath.section - 1] addr];
+            adVC.webTitle = [islimAddArray[indexPath.section - 1] name];
             adVC.showType = NO;
             [self.navigationController pushViewController:adVC animated:YES];
             

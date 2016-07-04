@@ -367,6 +367,9 @@
     UIImageView *imageView = [[UIImageView alloc]init];
     
     imageView.image = [UIImage imageNamed:@"girth_btn_point_mark_640"];
+    if (_dataType == efatType) {
+        minValue = @"0";
+    }
     
     if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
         currentPoint = CGPointMake((CELLWIDTH)/2 ,LABELHEIGHT + 6 + (showHeight - 2*LABELHEIGHT)/2 );

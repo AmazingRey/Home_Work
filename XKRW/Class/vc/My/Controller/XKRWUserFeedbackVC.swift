@@ -68,7 +68,7 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
     
     func presentUMeng(){
         MobClick.event("in_feedback")
-        feedbackKit = YWFeedbackKit.init(appKey: "23398538")
+        feedbackKit = YWFeedbackKit.init(appKey: baiChuanAppKey)
         feedbackKit!.contactInfo = XKRWUserService.sharedService().getToken()
         feedbackKit!.hideContactInfoView = true
         feedbackKit!.environment = YWEnvironmentRelease

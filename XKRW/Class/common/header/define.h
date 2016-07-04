@@ -78,7 +78,7 @@
 #define XKSinaName @"leng_1990_"
 #endif
 
-
+#define baiChuanAppKey @"23398538"
 #define msgAppKey   @"7a1f10938d60"
 #define msgAppSecret    @"b42e890fa5487379ca087c6673c26b1a"
 

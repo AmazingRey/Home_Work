@@ -13,24 +13,25 @@
 #import "XKRWAppDelegate.h"
 #import "XKRWNavigationController.h"
 #import "XKRWTabbarVC.h"
+#import "XKRWCui.h"
 
 #define SET_PRIVACYPASSWORD_FIRSTTIME @"setPrivacyPasswordFirstTime"
 #define SET_PRIVACYPASSWORD_SUCCESS   @"setPrivacyPasswordSuccess"
 #define DeleayTime                    .5
 
 @interface XKRWPrivacyPassWordVC ()<UIAlertViewDelegate>
-@property (strong, nonatomic) IBOutlet UIImageView *imageOne;
-@property (strong, nonatomic) IBOutlet UIImageView *imageTwo;
-@property (strong, nonatomic) IBOutlet UIImageView *imageThree;
-@property (strong, nonatomic) IBOutlet UIImageView *imageFour;
-@property (strong, nonatomic) IBOutlet UITextField *textField;
-@property (strong, nonatomic) IBOutlet UILabel     *labelVerify;
-@property (strong, nonatomic) IBOutlet UIButton *forgetPasswordBtn;
+@property (strong, nonatomic) IBOutlet UIImageView        *imageOne;
+@property (strong, nonatomic) IBOutlet UIImageView        *imageTwo;
+@property (strong, nonatomic) IBOutlet UIImageView        *imageThree;
+@property (strong, nonatomic) IBOutlet UIImageView        *imageFour;
+@property (strong, nonatomic) IBOutlet UITextField        *textField;
+@property (strong, nonatomic) IBOutlet UILabel            *labelVerify;
+@property (strong, nonatomic) IBOutlet UIButton           *forgetPasswordBtn;
+@property (strong, nonatomic) IBOutlet UIButton           *configueLaterBtn;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topImageTopConstraint;
 
 - (IBAction)forgetPasswordAction:(id)sender;
-@property (strong, nonatomic) IBOutlet UIButton *configueLaterBtn;
 - (IBAction)configueLaterAction:(id)sender;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topImageTopConstraint;
 
 @end
 
@@ -46,6 +47,7 @@
         self.title = @"设置隐私密码";
         if (!self.navigationController) {
             _configueLaterBtn.hidden = false;
+            tmpPwd = @"";
         }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
@@ -93,6 +95,7 @@
         self.title = @"设置隐私密码";
         if (!self.navigationController) {
             _configueLaterBtn.hidden = false;
+            tmpPwd = @"";
         }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
@@ -187,6 +190,8 @@
         _topImageTopConstraint.constant = 50;
     }else if (XKAppHeight == 667){
         _topImageTopConstraint.constant = 120;
+    }else{
+        _topImageTopConstraint.constant = 120;
     }
     _topImageTopConstraint.constant = _topImageTopConstraint.constant*XKRWScaleHeight;
     [UIView animateWithDuration:.5
@@ -195,17 +200,16 @@
                      }];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    return true;
-}
-
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     [self.view layoutIfNeeded];
     if (XKAppHeight <= 480) {
         _topImageTopConstraint.constant = 225;
     }else if(XKAppHeight == 568){
         _topImageTopConstraint.constant = 110;
+    }else if (XKAppHeight == 667){
+        _topImageTopConstraint.constant = 120;
+    }else{
+        _topImageTopConstraint.constant = 120;
     }
     _topImageTopConstraint.constant = _topImageTopConstraint.constant*XKRWScaleHeight;
     [UIView animateWithDuration:.5
@@ -225,7 +229,6 @@
 
 - (BOOL)terminatePrivacyPassword:(NSString *)password{
     if ([password isEqualToString:_passWord]) {
-//        [_textField resignFirstResponder];
         _labelVerify.text = @"验证成功!";
         [XKRWUserDefaultService removePrivacyPassword];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -295,17 +298,26 @@
 }
 
 - (IBAction)forgetPasswordAction:(id)sender {
+    [self.textField resignFirstResponder];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"忘记隐私密码，需重新登录" delegate:self cancelButtonTitle:nil otherButtonTitles:@"取消",@"重新登录", nil];
     [alertView show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [XKRWCui showProgressHud];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         [XKRWUserDefaultService setForgetPrivacyPassword:true];
         [XKRWUserDefaultService removePrivacyPassword];
-        [self.textField resignFirstResponder];
         [self dismissViewControllerAnimated:true completion:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Exit" object:nil];
+        [XKRWCui hideProgressHud];
+    }else{
+        [self.textField becomeFirstResponder];
     }
 }
 
