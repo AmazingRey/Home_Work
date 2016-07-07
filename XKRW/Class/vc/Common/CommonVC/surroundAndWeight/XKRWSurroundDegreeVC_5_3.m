@@ -185,6 +185,19 @@
         minValue = [[orderlyArray firstObject] objectForKey:@"value"];
     }
     
+    if (_dataType == efatType) {
+        float min = 0;
+        float max = 10 * ceilf(maxValue.floatValue/10);
+        if (min > FatStandardValue) {
+            min = 10 * floorf(minValue.floatValue/10) - 10;
+        }
+        if (max < FatStandardValue) {
+            max = 10 * ceilf(maxValue.floatValue/10) + 10;
+        }
+        minValue = [NSString stringWithFormat:@"%.0f",min];
+        maxValue = [NSString stringWithFormat:@"%.0f",max];
+    }
+    
     [surroundTableView reloadData];
     
    }
@@ -367,9 +380,6 @@
     UIImageView *imageView = [[UIImageView alloc]init];
     
     imageView.image = [UIImage imageNamed:@"girth_btn_point_mark_640"];
-    if (_dataType == efatType) {
-        minValue = @"0";
-    }
     
     if ((maxValue.floatValue - minValue.floatValue) < 0.000001) {
         currentPoint = CGPointMake((CELLWIDTH)/2 ,LABELHEIGHT + 6 + (showHeight - 2*LABELHEIGHT)/2 );

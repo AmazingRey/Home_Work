@@ -18,9 +18,16 @@ typedef NS_ENUM(NSInteger,XKRWInputBoxViewStyle){
 @protocol XKRWInputBoxViewDelegate <NSObject>
 
 @optional
-- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView sendMessage:(NSString *)message;
-- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView inHeight:(CGFloat)height willShowDuration:(CGFloat)duration;
-- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView WillHideDuration:(CGFloat)duration inHeigh:(CGFloat)height;
+- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView
+         sendMessage:(NSString *)message;
+
+- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView
+    willShowDuration:(CGFloat)duration
+            riseHeight:(CGFloat)height;
+
+- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView
+    willHideDuration:(CGFloat)duration
+             dropHeigh:(CGFloat)height;
 @end
 
 @interface XKRWInputBoxView : UIView

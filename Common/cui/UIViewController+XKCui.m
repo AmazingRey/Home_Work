@@ -20,7 +20,7 @@
 }
 
 - (void)doCui:(UIView *)currentView {
-    [currentView tryCui];
+//    [currentView tryCui];
 
     for (UIView  *subview in currentView.subviews) {
         [self doCui:subview];

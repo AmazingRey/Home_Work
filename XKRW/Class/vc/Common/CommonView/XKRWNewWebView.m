@@ -81,6 +81,7 @@
     
     [self addNaviBarBackButton];
     
+    
     if ([_contentUrl rangeOfString:@"ssbuy.xikang.com"].location == NSNotFound) {
         if ([_shareURL rangeOfString:[[XKRWUserService sharedService] getToken]].location != NSNotFound || _isHidenRightNavItem || [_shareURL rangeOfString:@"taobao.com"].location != NSNotFound) {
             self.isHidenRightNavItem = YES;
@@ -122,7 +123,7 @@
         
     }
     
-    if (!self.isHidenRightNavItem) {
+    if (!_isHidenRightNavItem) {
         [self addNaviBarRightButtonWithNormalImageName:@"more" highlightedImageName:@"more_p" selector:@selector(clickRightNavigationBarItem:)];
     }
 
@@ -220,7 +221,7 @@
 }
 
 #pragma mark - Web Delegate
-
+//
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     

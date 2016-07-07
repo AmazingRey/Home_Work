@@ -95,8 +95,9 @@
 
 - (UIImageView *)userHeadImageView{
     if (!_userHeadImageView) {
-        _userHeadImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        _userHeadImageView.layer.cornerRadius = 25;
+        _userHeadImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50*XKRWScaleHeight, 50 *XKRWScaleHeight)];
+        _userHeadImageView.layer.cornerRadius = _userHeadImageView.frame.size.width/2;
+        _userHeadImageView.clipsToBounds = true;
         NSString *urlString = [[XKRWUserService sharedService] getUserAvatar];
         [_userHeadImageView setImageWithURL:[NSURL URLWithString:urlString] placeholderImage:[UIImage imageNamed:@"lead_nor"] options:SDWebImageRetryFailed];
         [self addSubview:_userHeadImageView];
@@ -123,7 +124,7 @@
         NSDate *date = [NSDate date];
         NSString *amOrpm = [date stringWithFormat:@"a"];
         NSString *dateformat;
-        if ([amOrpm isEqualToString:@"上午"] || [amOrpm isEqualToString:@"AM"]) {
+        if ([amOrpm isEqualToString:@"上午"] || [[amOrpm uppercaseString] isEqualToString:@"AM"]) {
             dateformat = @"yyyy年MM月dd日  上午kk:mm";
         }else{
             dateformat = @"yyyy年MM月dd日  下午kk:mm";
@@ -382,13 +383,13 @@
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
         [self.resultLabel2 mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(30 * XKRWScaleHeight);
+            make.height.mas_equalTo(35 * XKRWScaleHeight);
             make.top.mas_equalTo(self.resultLabel1.mas_bottom);
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
         [self.resultLabel3 mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(20 * XKRWScaleHeight);
-            make.top.mas_equalTo(self.resultLabel2.mas_bottom).offset(30 * XKRWScaleHeight);
+            make.top.mas_equalTo(self.resultLabel2.mas_bottom).offset(25 * XKRWScaleHeight);
             make.centerX.mas_equalTo(self.resultImageView.mas_centerX);
         }];
         [self.resultLabel4 mas_makeConstraints:^(MASConstraintMaker *make) {

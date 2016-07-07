@@ -57,6 +57,11 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
 
     @IBAction func feedbackAction(sender: UIButton) {
         
+        if !XKUtil.isNetWorkAvailable() {
+            XKRWCui.showInformationHudWithText("网络链接不稳定，请稍后再试~")
+            return
+        }
+        
         self.presentUMeng()
         MobClick.event("in_UserFeed")
     }

@@ -489,8 +489,7 @@
     [self.inputBoxView setPlaceholder:@"写跟帖"];
 }
 
-- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView inHeight:(CGFloat)height willShowDuration:(CGFloat)duration {
-    
+- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView willShowDuration:(CGFloat)duration riseHeight:(CGFloat)height {
     CGFloat bottom = clickedCommentView.bottom;
     UIView *view = clickedCommentView;
     while (view != nil) {
@@ -511,7 +510,7 @@
     clickedCommentView = nil;
 }
 
-- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView WillHideDuration:(CGFloat)duration inHeigh:(CGFloat)height {
+- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView willHideDuration:(CGFloat)duration dropHeigh:(CGFloat)height {
     [self.inputBoxView setPlaceholder:@"写跟帖"];
     if (!_entity.groupUserJoin && [self isMineNickName:_entity.userName]) {
         self.joinGroupView.hidden = NO;
@@ -520,6 +519,7 @@
         
     }
 }
+
 
 #pragma --mark XKRWActionSheetDelegate
 

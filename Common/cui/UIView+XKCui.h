@@ -12,7 +12,7 @@
 
 @property(nonatomic,retain) NSString *cuiStyle UI_APPEARANCE_SELECTOR;
 
-- (void)tryCui;
+//- (void)tryCui;
 
 - (void)setRoundCornerBorderWithWidth:(CGFloat)width
                                radius:(CGFloat)radius

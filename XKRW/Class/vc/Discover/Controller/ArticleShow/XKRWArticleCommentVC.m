@@ -474,7 +474,7 @@
     }
 }
 
-- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView inHeight:(CGFloat)height willShowDuration:(CGFloat)duration {
+- (void)inputBoxView:(XKRWInputBoxView *)inputBoxView willShowDuration:(CGFloat)duration riseHeight:(CGFloat)height {
     CGFloat h = clickView.bottom;
     while (clickView != nil) {
         clickView = clickView.superview;
@@ -491,9 +491,7 @@
             self.tableView.contentOffset = point;
         }];
     } else return;
-    
 }
-
 
 #pragma mark -XKRWTipViewDelegate
 - (void)tipView:(XKRWTipView *)tipView delectCommentWithCommentId:(NSInteger)commentId {

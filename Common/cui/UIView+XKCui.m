@@ -27,11 +27,11 @@ static char assoObjKey;
     return objc_getAssociatedObject(self, &assoObjKey);
 }
 
-- (void)tryCui {
-    if ([self respondsToSelector:@selector(cuiOnStyle:)]) {
-        [self performSelector:@selector(cuiOnStyle:) withObject:self.cuiStyle];
-    }
-}
+//- (void)tryCui {
+//    if ([self respondsToSelector:@selector(cuiOnStyle:)]) {
+//        [self performSelector:@selector(cuiOnStyle:) withObject:self.cuiStyle];
+//    }
+//}
 
 - (void)setRoundCornerBorderWithWidth:(CGFloat)width
                                radius:(CGFloat)radius

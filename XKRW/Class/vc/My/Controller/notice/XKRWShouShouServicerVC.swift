@@ -134,21 +134,6 @@ class XKRWShouShouServicerVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSour
         }
     }
     
-//    func inputBoxView(inputBoxView: XKRWInputBoxView!, inHeight height: CGFloat, willShowDuration duration: CGFloat) {
-//        UIView.animateWithDuration(NSTimeInterval(duration)) { () -> Void in
-//            var frame = self.chatTableView.frame
-//            frame.origin.y += -height + 40
-//            self.chatTableView.frame = frame
-//        }
-//    }
-    
-//    func inputBoxView(inputBoxView: XKRWInputBoxView!, willHideDuration duration: CGFloat, inHeigh height: CGFloat) {
-//        UIView.animateWithDuration(NSTimeInterval(duration)) { () -> Void in
-//            var frame = self.chatTableView.frame
-//            frame.origin.y -= height - 40
-//            self.chatTableView.frame = frame
-//        }
-//    }
     
     //MARK : Network
     override func didDownloadWithResult(result: AnyObject!, taskID: String!) {
@@ -157,7 +142,7 @@ class XKRWShouShouServicerVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSour
                 XKRWNoticeService.sharedService().insertUserToShoushouServiceNoticeToDatabase(sendMessage, andUserId: XKRWUserService.sharedService().getUserId())
                 messageList = XKRWNoticeService.sharedService().getAllShouShouServerAndUserReplayFromDatabaseWithUserId(XKRWUserService.sharedService().getUserId()) as! [XKRWChatMessageModel]
                 chatTableView.reloadData()
-                self.performSelector("setTableViewContentOffset", withObject: nil, afterDelay: 0.25)
+                self.performSelector(#selector(XKRWShouShouServicerVC.setTableViewContentOffset), withObject: nil, afterDelay: 0.25)
             }
         }
     }

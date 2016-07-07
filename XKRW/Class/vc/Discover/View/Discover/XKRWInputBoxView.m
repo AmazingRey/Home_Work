@@ -203,8 +203,9 @@
     }];
     
     typeof(self) __weak weakSelf = self;
-    if (_delegate && [_delegate respondsToSelector:@selector(inputBoxView:inHeight:willShowDuration:)]) {
-        [_delegate inputBoxView:weakSelf inHeight:height + _inputBgView.height willShowDuration:animationDuration];
+    if ([_delegate respondsToSelector:@selector(inputBoxView:willShowDuration:riseHeight:)]) {
+        [_delegate inputBoxView:weakSelf willShowDuration:animationDuration riseHeight:(height + _inputBgView.height)];
+       
     }
 }
 
@@ -242,8 +243,8 @@
     
 
     typeof(self) __weak weakSelf = self;
-    if (_delegate && [_delegate respondsToSelector:@selector(inputBoxView:WillHideDuration:inHeigh:)]) {
-        [_delegate inputBoxView:weakSelf WillHideDuration:animationDuration inHeigh:height];
+    if ([_delegate respondsToSelector:@selector(inputBoxView:willHideDuration:dropHeigh:)]) {
+        [_delegate inputBoxView:weakSelf willHideDuration:animationDuration dropHeigh:height];
     }
 
     [self removeGestureRecognizer:dropGesture];
@@ -262,7 +263,7 @@
 
 - (void)sendMessage {
     typeof(self) __weak weakSelf = self;
-    if (_delegate && [_delegate respondsToSelector:@selector(inputBoxView:sendMessage:)]) {
+    if ([_delegate respondsToSelector:@selector(inputBoxView:sendMessage:)]) {
         [_delegate inputBoxView:weakSelf sendMessage:inputBox.text];
     }
     inputBox.text = nil;

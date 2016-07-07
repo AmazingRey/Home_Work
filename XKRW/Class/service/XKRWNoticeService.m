@@ -228,7 +228,8 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
     }
     XKRWNewWebView *webView  = [[XKRWNewWebView alloc]init];
     webView.webTitle = [[noticeInfo objectForKey:@"aps"]objectForKey:@"alert"];
-    webView.contentUrl = [NSString stringWithFormat:@"%@?token=%@",[noticeInfo objectForKey:@"url"],[[XKRWUserService sharedService]getToken]];
+//    webView.contentUrl = [NSString stringWithFormat:@"%@?token=%@",[noticeInfo objectForKey:@"url"],[[XKRWUserService sharedService]getToken]];
+    webView.contentUrl = [noticeInfo objectForKey:@"url"];
     webView.showType = YES;
     webView.isHidenRightNavItem = NO;
     [vc  presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:webView withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
@@ -248,7 +249,7 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
     webView.webTitle = [[dic objectForKey:@"aps"]objectForKey:@"alert"];
     webView.contentUrl = [dic objectForKey:@"url"];
     webView.showType = YES;
-    
+    webView.isHidenRightNavItem = NO;
     [vc  presentViewController:[[XKRWNavigationController alloc]initWithRootViewController:webView withNavigationBarType:NavigationBarTypeDefault] animated:YES completion:^{
         
     }];

@@ -1298,8 +1298,7 @@
         vc = [[XKRWNewWebView alloc] init];
         [(XKRWNewWebView *)vc setWebTitle:entity.title];
         [(XKRWNewWebView *)vc setContentUrl:entity.imgUrl];
-//        BOOL isMall = [entity.imgUrl containsString:@"ssbuy.xikang.com"];
-//        BOOL isShare = [entity.imgUrl containsString:@"share_url="];
+
         if ([entity.imgUrl rangeOfString:@"ssbuy.xikang.com"].location != NSNotFound) {
             if ([entity.imgUrl rangeOfString:@"share_url="].location != NSNotFound) {
                 NSRange range = [entity.imgUrl rangeOfString:@"share_url="];
