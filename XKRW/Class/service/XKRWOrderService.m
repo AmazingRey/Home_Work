@@ -71,12 +71,12 @@ static XKRWOrderEntity *orderInstance = nil;
                             @"price":[NSNumber numberWithFloat:price]
                             };
     NSDictionary *result = [self syncBatchDataWith:url andPostForm:param];
+    NSDictionary *data = result[@"data"];
     
-    if (!result[@"success"]) {
+    if (!result[@"success"] || !data) {
         return nil;
     }
     
-    NSDictionary *data = result[@"data"];
     XKRWOrderEntity *entity = [[XKRWOrderEntity alloc] init];
     if ([type isEqualToString:@"ali"]) {
         entity.identity = type;

@@ -765,7 +765,7 @@ static NSMutableArray *answerArray =  nil;
     
     NSArray *listArray = [result objectForKey:@"data"];
     
-    NSMutableArray *mutArray = [NSMutableArray arrayWithCapacity:0];
+    NSMutableArray *mutArray = [NSMutableArray array];
     
     for (NSDictionary * dic in listArray){
     

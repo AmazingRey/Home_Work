@@ -280,9 +280,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
     */
     func getMealSchemeFromRemoteByIDs(ids: [Int]) -> [XKRWSchemeEntity_5_0] {
         
-  
         //TODO: get meal scheme by ids
-        
         let url = NSURL(string: "\(kNewServer)\(kGetMealSchemeByIds)")
         
         var idsString = ""
@@ -309,9 +307,7 @@ class XKRWSchemeService_5_0: XKRWBaseService {
     }
     /**
     根据id数组批量获取食物详情
-    
     - parameter ids: 食物的id
-    
     - returns: 食物对象数组
     */
     func getBanFoodsFromRemote(ids: [Int]) -> [XKRWFoodEntity]? {
@@ -592,8 +588,6 @@ class XKRWSchemeService_5_0: XKRWBaseService {
     func getSportSchemeFromDB() -> XKRWSchemeEntity_5_0? {
         
         if let sid = self.sportIdentifier {
-            
-            
             let sql = "SELECT sid AS schemeID, name AS schemeName, type AS schemeType, size, total_calorie AS calorie, detail,  content, insert_date AS updateTime FROM \(SCHEME_TABLE) WHERE type = 0 AND sid = \(sid)"
             
             if let rst = self.query(sql) {

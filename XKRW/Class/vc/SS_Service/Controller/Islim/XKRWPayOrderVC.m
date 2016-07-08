@@ -10,7 +10,7 @@
 #import "XKRWOrderService.h"
 #import "XKRWPayOrderCell.h"
 #import "XKRWPaymentResultVC.h"
-
+#import "XKRWUtil.h"
 #import "WXApi.h"
 
 @interface XKRWPayOrderVC () <UITableViewDataSource, UITableViewDelegate>
@@ -54,6 +54,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(paymentCallback:) name:kPaymentResultNotification object:nil];
 }
 
+- (void)popView {
+    
+    if (_isPopToRoot) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"dealSystemTabbarShow" object:nil];
+        return;
+    }
+    
+    [super popView];
+}
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -308,6 +318,11 @@
         }
     }
     
+    if (![XKRWUtil isNetWorkAvailable]) {
+        [XKRWCui showInformationHudWithText:@"网络不给力，请稍后重试~"];
+        return;
+    }
+    
     [XKRWCui showProgressHud:@"获取订单中"];
     if ([_product.pid isEqualToString:@"10000"]) {
         [self downloadWithTaskID:@"getOrder" outputTask:^id{
@@ -334,8 +349,9 @@
             [XKRWCui hideProgressHud];
             [XKRWCui showInformationHudWithText:@"订单信息错误，请重试~"];
         }
-        [[XKRWOrderService sharedService] payOrder:_order];
+        
         [XKRWCui hideProgressHud];
+        [[XKRWOrderService sharedService] payOrder:_order];
     }
 }
 /**
@@ -350,7 +366,13 @@
     
     XKRWPaymentResultVC *vc = [[XKRWPaymentResultVC alloc] initWithFlag:[result[@"success"] boolValue]
                                                                  andObj:result];
+    if ([_product.pid isEqualToString:@"10000"]) {
+        vc.isHidenIslimResult = NO;
+    } else {
+        vc.isHidenIslimResult = YES;
+    }
     [self.navigationController pushViewController:vc animated:YES];
+    
 }
 /*
 #pragma mark - Navigation

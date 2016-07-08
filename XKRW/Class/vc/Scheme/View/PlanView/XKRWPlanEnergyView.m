@@ -121,7 +121,7 @@
         [weakSelf resetCirclesStyle:index];
         
         [weakSelf runEatEnergyCircleWithNewCurrentNumber:weakSelf.intakeNumber];
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+        if ([weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
             
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:1];
         }
@@ -154,7 +154,7 @@
         
         [weakSelf runSportEnergyCircleWithNewCurrentNumber:weakSelf.expendNumber];
         
-        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+        if ([weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
             
             [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:2];
         }
@@ -191,7 +191,7 @@
             
             [weakSelf runHabitEnergyCircleWithNewCurrentNumber:weakSelf.currectHabitNumber];
             
-            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
+            if ([weakSelf.delegate respondsToSelector:@selector(energyCircleView:clickedAtIndex:)]) {
                 
                 [weakSelf.delegate energyCircleView:weakSelf clickedAtIndex:3];
             }
@@ -217,7 +217,7 @@
 }
 
 - (void)titleButtonClicked {
-    if (self.delegate && [_delegate respondsToSelector:@selector(energyCircleViewTitleClicked:)]) {
+    if ([_delegate respondsToSelector:@selector(energyCircleViewTitleClicked:)]) {
         [_delegate energyCircleViewTitleClicked:_remindTextView.text];
     }
 }

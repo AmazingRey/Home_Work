@@ -37,6 +37,4 @@
 
 @property (nonatomic,assign ) BOOL                 isFromPostDetail;
 
-
-
 @end

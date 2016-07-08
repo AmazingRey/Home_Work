@@ -18,6 +18,8 @@
  *
  *  @return XKRWPayOrderVC实例
  */
+
+@property (nonatomic, assign) BOOL isPopToRoot;
 @property (nonatomic, strong) XKRWProductEntity *product;
 
 - (id)initWithPID:(NSString *)pid;

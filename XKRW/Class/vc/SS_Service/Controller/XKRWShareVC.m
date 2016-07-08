@@ -312,6 +312,11 @@
         } else {
             XKRWNewWebView * adVC = [XKRWNewWebView new];
             adVC.hidesBottomBarWhenPushed = YES;
+            if([[islimAddArray[indexPath.section - 1] addr] rangeOfString:@"ssbuy.xikang.com"].location != NSNotFound){
+                adVC.contentUrl = [NSString stringWithFormat:@"%@&ios=%d",[islimAddArray[indexPath.section - 1] addr],[[[UIDevice currentDevice] systemVersion] integerValue]];
+            }else{
+                adVC.contentUrl = [islimAddArray[indexPath.section - 1] addr];
+            }
             adVC.contentUrl = [islimAddArray[indexPath.section - 2] addr];
             adVC.webTitle = [islimAddArray[indexPath.section - 2] name];
             adVC.showType = NO;
@@ -329,7 +334,11 @@
         } else {
             XKRWNewWebView * adVC = [XKRWNewWebView new];
             adVC.hidesBottomBarWhenPushed = YES;
-            adVC.contentUrl = [islimAddArray[indexPath.section - 1] addr];
+            if([[islimAddArray[indexPath.section - 1] addr] rangeOfString:@"ssbuy.xikang.com"].location != NSNotFound){
+                adVC.contentUrl = [NSString stringWithFormat:@"%@&ios=%d",[islimAddArray[indexPath.section - 1] addr],[[[UIDevice currentDevice] systemVersion] integerValue]];
+            }else{
+                adVC.contentUrl = [islimAddArray[indexPath.section - 1] addr];
+            }
             adVC.webTitle = [islimAddArray[indexPath.section - 1] name];
             adVC.showType = NO;
             [self.navigationController pushViewController:adVC animated:YES];

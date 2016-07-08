@@ -9,6 +9,8 @@
 #import "XKRWBaseVC.h"
 
 @interface XKRWPaymentResultVC : XKRWBaseVC
+
+@property (nonatomic, assign) BOOL isHidenIslimResult;
 /**
  *  页面初始化方法
  *

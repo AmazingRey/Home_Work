@@ -104,6 +104,7 @@
         UIView *bottomline = [[UIView alloc]initWithFrame:CGRectMake(0, 50.5, XKAppWidth, 0.5)];
         topline.backgroundColor = XKSepDefaultColor;
         bottomline.backgroundColor = XKSepDefaultColor;
+    
         UIButton *begin = [[UIButton alloc] initWithFrame:CGRectMake(XKAppWidth / 2 - 125, 20.f, 250.f, 40.f)];
         [begin setTitle:@"开始评估" forState:UIControlStateNormal];
         [begin setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -115,9 +116,14 @@
         begin.layer.cornerRadius = 3.f;
         begin.layer.masksToBounds = YES;
         
-        [footerView addSubview:begin];
+        if (_isHidenIslimResult) {
+            [begin removeFromSuperview];
+    
+        } else {
+            [footerView addSubview:begin];
+            [begin addTarget:self action:@selector(clickBeginButton) forControlEvents:UIControlEventTouchUpInside];
+        }
         
-        [begin addTarget:self action:@selector(clickBeginButton) forControlEvents:UIControlEventTouchUpInside];
         
         _tableView.tableFooterView = footerView;
         
@@ -165,7 +171,10 @@
 }
 
 - (void)popView {
-    
+    if (_isHidenIslimResult) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        return;
+    }
     [self.navigationController popToViewController:self.navigationController.viewControllers[_popTofloor] animated:YES];
 }
 #pragma mark - UITableView's delegate & datasource

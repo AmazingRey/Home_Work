@@ -46,6 +46,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.xkWebView.delegate = _progressProxy;
     [self.navigationController.navigationBar addSubview:_progressBackView];
 }
 
@@ -60,7 +61,7 @@
             
         }];
     }else{
-        
+   
         if(self.xkWebView.canGoBack)
         {
             [self.xkWebView goBack];
@@ -110,7 +111,7 @@
         _progressProxy = [[NJKWebViewProgress alloc] init];
         _progressProxy.webViewProxyDelegate = (id)self;
         _progressProxy.progressDelegate = (id)self;
-        self.xkWebView.delegate = _progressProxy;
+        
         _progressBackView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.height, XKAppWidth, 4)];
         _progressBackView.backgroundColor = colorSecondary_e0e0e0;
         
@@ -239,6 +240,7 @@
         
         XKRWPayOrderVC *payVC = [[XKRWPayOrderVC alloc] initWithPID: @"10000"];
         payVC.product = [self dealWithProductString:subString];
+        payVC.isPopToRoot = YES;
         [self.navigationController pushViewController:payVC animated:YES];
         
         return NO;
@@ -295,7 +297,7 @@
 
 
 #pragma mark - 网络处理
-- (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID{
+- (void)didDownloadWithResult:(id)result taskID:(NSString *)taskID {
     if ([taskID isEqualToString:@"saveArticleCollection"])
     {
         BOOL isSuccess = [[XKRWCollectionService sharedService] collectToDB:_collectionEntity];
