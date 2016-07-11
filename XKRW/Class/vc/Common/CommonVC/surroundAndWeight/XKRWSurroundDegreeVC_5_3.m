@@ -26,6 +26,7 @@
     
     CGFloat showHeight ;
     CGFloat showWidth;
+    UILabel *standardFatLabel;
 }
 
 @end
@@ -214,6 +215,7 @@
     currentSelectBuuton.selected = NO;
     button.selected = YES;
     currentSelectBuuton = button;
+    standardFatLabel.hidden = true;
     switch (button.tag) {
         case 1000:
             _dataType = eWeightType;
@@ -417,6 +419,14 @@
     if (_dataType == efatType) {
         fatEndPoint = CGPointMake(CELLWIDTH , fatStartPoint.y);
         [self drawDottedLineInView:cell.contentView fromPoint:fatStartPoint toTargetPoint:fatEndPoint];
+        if (indexPath.row == tempArray.count - 1) {
+            CGRect frame = CGRectMake(XKAppWidth - 135, fatEndPoint.y - 30, 120, 20);
+            standardFatLabel = [[UILabel alloc] initWithFrame:frame];
+            standardFatLabel.text = [NSString stringWithFormat:@"标准体脂率为%.1f%%",fatValue];
+            standardFatLabel.textColor = colorSecondary_999999;
+            standardFatLabel.font = [UIFont systemFontOfSize:12];
+            [self.view addSubview:standardFatLabel];
+        }
     }
     [cell.contentView addSubview:imageView];
 }
@@ -447,8 +457,8 @@
     [shapeLayer setBounds:view.bounds];
     [shapeLayer setPosition:view.center];
     [shapeLayer setFillColor:[[UIColor whiteColor] CGColor]];
-    [shapeLayer setStrokeColor:[XKMainToneColor_29ccb1 CGColor]];
-    [shapeLayer setLineWidth:3.0f];
+    [shapeLayer setStrokeColor:[colorSecondary_999999 CGColor]];
+    [shapeLayer setLineWidth:1.0f];
     [shapeLayer setLineJoin:kCALineJoinRound];
     [shapeLayer setLineDashPattern:
     [NSArray arrayWithObjects:[NSNumber numberWithInt:11],

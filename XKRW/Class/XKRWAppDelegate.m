@@ -409,8 +409,13 @@ void UncaughtExceptionHandler(NSException *exception) {
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     if ([url.description hasPrefix:@"wx"]) {
-        return [WXApi handleOpenURL:url delegate:self];
-//        return [UMSocialSnsService handleOpenURL:url];
+        
+        if ([url.description rangeOfString:@"pay/?returnKey"].location != NSNotFound) {
+            return [WXApi handleOpenURL:url delegate:self];
+            
+        } else {
+            return [UMSocialSnsService handleOpenURL:url];
+        }
         
     } else if ([url.host isEqualToString:@"safepay"]) {
         
@@ -432,8 +437,13 @@ void UncaughtExceptionHandler(NSException *exception) {
          annotation:(id)annotation
 {
     if ([url.description hasPrefix:@"wx"]) {
-        return [WXApi handleOpenURL:url delegate:self];
-//        return [UMSocialSnsService handleOpenURL:url];
+    
+        if ([url.description rangeOfString:@"pay/?returnKey"].location != NSNotFound) {
+            return [WXApi handleOpenURL:url delegate:self];
+            
+        } else {
+            return [UMSocialSnsService handleOpenURL:url];
+        }
         
     } else if ([url.host isEqualToString:@"safepay"]) {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
