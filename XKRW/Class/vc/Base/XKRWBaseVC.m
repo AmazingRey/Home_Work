@@ -367,7 +367,7 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
             rightDotNumLabel.font = XKDefaultFontWithSize(11);
             [rightRedDotImageView addSubview:rightDotNumLabel];
         }else{
-            rightRedDotImageView = [[UIImageView alloc]initWithFrame:CGRectMake(titleWidth+4, (20-6)/2, 6, 6)];
+            rightRedDotImageView = [[UIImageView alloc]initWithFrame:CGRectMake(titleWidth+4, (20-6)/2 - 5, 6, 6)];
         }
         rightRedDotImageView.image = [UIImage imageNamed:@"notice_l"];
         rightRedDotImageView.tag = 2000;

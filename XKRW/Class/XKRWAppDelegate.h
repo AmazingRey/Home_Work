@@ -16,6 +16,7 @@
 @interface XKRWAppDelegate : XKAppDelegate <UIApplicationDelegate, UMFeedbackDataDelegate, WXApiDelegate,XKRWPrivacyPassWordVCDelegate>
 {
     UMFeedback *feedbackClient;
+    NSDictionary *closeAppDicInfo;
     NSDictionary *dicInfo;
     
 }

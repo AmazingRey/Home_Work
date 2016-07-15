@@ -123,10 +123,12 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
                     webView.autoresizingMask = UIViewAutoresizing.None
                     weakNav?.pushViewController(webVC, animated: true)
                 }
+                XKRWUserDefaultService.setShowMoreRedDot(false)
             } else {
                 print(error.userInfo["msg"])
             }
         })
+    
     }
     
     /**

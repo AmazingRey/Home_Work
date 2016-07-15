@@ -59,8 +59,7 @@
 
 #define BePraiseNoticeChanged               @"BePraiseNoticeChanged"             //被点赞消息数目改变
 #define CommentAndSystemNoticeChanged            @"CommentAndSystemNoticeChanged"             //评论消息数目改变
-//App 界面已经渲染完成
-#define AppInterfaceHadShow             @"AppInterfaceHadShow"
+
 //远程通知的内容
 #define RemoteNotificationContent       @"RemoteNotificationContent"
 //用来记录每次Http请求重要消息的消息ID

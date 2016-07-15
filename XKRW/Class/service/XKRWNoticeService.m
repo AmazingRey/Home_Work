@@ -85,7 +85,10 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
 {
     vc =viewController;
     keyWindow = window;
-    noticeInfomation = [[NSDictionary alloc]init];
+    if (!noticeInfomation) {
+        noticeInfomation = [[NSDictionary alloc]init];
+    }
+    
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
@@ -106,7 +109,6 @@ static NSString *deleteShouShouServerSqlWithSpecialType = @"Delete From user_not
 
 - (void)addAppCloseStateNotificationInViewController:(UIViewController *) viewController andKeyWindow:(UIWindow *)window
 {
-
     if ([[NSUserDefaults standardUserDefaults] objectForKey:RemoteNotificationContent]!= nil) {
         NSDictionary  *noticeInfo = [[NSUserDefaults standardUserDefaults] objectForKey:RemoteNotificationContent];
         

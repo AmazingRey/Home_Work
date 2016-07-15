@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -107,6 +107,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="newImage" destination="ky7-Ti-uaM" id="hti-sS-Bvj"/>
+                <outlet property="newImageWidthConstraint" destination="s1l-f8-16j" id="2Oc-bo-G8O"/>
                 <outlet property="readNumLabel" destination="nML-fs-0CN" id="MGA-fb-jZN"/>
                 <outlet property="smallImageView" destination="1EH-7i-DrR" id="5dG-xV-PYc"/>
                 <outlet property="starImageView" destination="VUp-mG-2tb" id="H03-46-mWz"/>
@@ -117,7 +118,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="discover_eye.png" width="36" height="44"/>
+        <image name="discover_eye.png" width="320" height="240"/>
         <image name="discover_new" width="19" height="12"/>
         <image name="discover_star_hightlighted.png" width="36" height="44"/>
     </resources>

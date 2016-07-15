@@ -429,6 +429,7 @@
                 recordFoodEntity.recordType = foodRecordType;
                 XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
                 addFoodVC.recordDate = _recordDate;
+                addFoodVC.foodRecordType = foodRecordType;
                 addFoodVC.originalId = foodEntity.foodId;
                 addFoodVC.foodRecordEntity = recordFoodEntity;
                 [XKRWAddFoodVC4_0 presentAddFoodVC:addFoodVC onViewController:self];

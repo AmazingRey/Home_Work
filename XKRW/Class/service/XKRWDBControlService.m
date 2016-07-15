@@ -638,9 +638,6 @@ static XKRWDBControlService *shareInstance;
 }
 
 - (void)updateRecord_4_0TableOnV5_0_1 {
-    
-
-    
     NSString *sql = @"alter table record_4_0 rename to record_4_0_temp";
     // 如果有旧版本升级，则重命名record_4_0表
     if ([self executeSql:sql]) {

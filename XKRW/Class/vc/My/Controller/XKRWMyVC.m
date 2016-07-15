@@ -36,6 +36,7 @@
     XKRWUserHonorEnity *honorEntity;
     
     BOOL  isShowAPPRecommend;
+    YWFeedbackKit *feedBack;
 }
 
 @end
@@ -62,6 +63,7 @@
 {
     self.forbidAutoAddCloseButton = YES;
     [super viewDidLoad];
+    feedBack = [[YWFeedbackKit alloc] initWithAppKey:baiChuanAppKey];
     [XKUtil executeCodeWhenSystemVersionAbove:7.0 blow:0 withBlock:^{
         self.edgesForExtendedLayout = UIRectEdgeAll;
         self.navigationController.edgesForExtendedLayout = UIRectEdgeNone;
@@ -96,7 +98,12 @@
     
     [self setNavifationItemWithLeftItemTitle:nil AndRightItemTitle:nil AndItemColor:[UIColor whiteColor] andShowLeftRedDot:NO AndShowRightRedDot:YES AndLeftRedDotShowNum:NO AndRightRedDotShowNum:NO AndLeftItemIcon:nil AndRightItemIcon:@"icon_setting"];
     
-   
+    //  意见反馈未读消息标志
+    [feedBack getUnreadCountWithCompletionBlock:^(NSNumber *unreadCount, NSError *error) {
+        if (unreadCount.integerValue) {
+            [XKRWUserDefaultService setShowMoreRedDot:YES];
+        }
+    }];
     
     //获取用户点赞与被赞数据
     [self getUserPraiseNum];
@@ -106,12 +113,13 @@
     [self checkMoreRed];
     
     [self hideNavigationLeftItemRedDot:YES andRightItemRedDotNeedHide:![XKRWUserDefaultService isShowMoreredDot]];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-   
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -405,10 +413,8 @@
 #pragma --mark Action
 - (void)checkMoreRed
 {
-    if ( ![XKRWUserDefaultService isShowMoreredDot] ) {
-        if ([self.delegate respondsToSelector:@selector(clearRedDotFromMore)]) {
-            [self.delegate clearRedDotFromMore];
-        }
+    if ([self.delegate respondsToSelector:@selector(clearRedDotFromMore)]) {
+        [self.delegate clearRedDotFromMore];
     }
 }
 

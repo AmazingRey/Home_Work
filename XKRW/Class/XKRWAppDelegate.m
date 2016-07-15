@@ -80,12 +80,7 @@
     if (keyValue == nil || keyValue.length == 0) {// type = 111 蜕变天数推送
         [XKCuiUtil showAlertWithTitle:[dicTemp objectForKey:@"label"] message:[dicTemp objectForKey:@"message"] okButtonTitle:@"OK" onOKBlock:^{
             AudioServicesDisposeSystemSoundID(soundID);
-//            if ( (type == eAlarmWalk) || (type == eAlarmHabit)) {
-//                return;
-//            }
-//            else{
-//               
-//            }
+
         }];
         
     } else {
@@ -121,7 +116,11 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     //发送远程通知 提醒重要通知
-    [[XKRWNoticeService sharedService]appOpenStateDealNotification:userInfo];
+    if ([XKRWUserDefaultService getPrivacyPassword] && _privacyPasswordVC.isVerified ==NO)  {
+        dicInfo = userInfo;
+    }else{
+        [[XKRWNoticeService sharedService]appOpenStateDealNotification:userInfo];
+    }
 }
 
 
@@ -154,13 +153,15 @@
     
     // 用来打印数据库路径
     XKLog(@"+++++%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0]);
-    
+
     [XTSafeCollection setLogEnabled:NO];
 #pragma --mark 处理APP关闭状态下远程通知
-    dicInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-    if (dicInfo) {
-        [[NSUserDefaults standardUserDefaults] setObject:dicInfo forKey:RemoteNotificationContent];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+    closeAppDicInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (closeAppDicInfo) {
+        if (![XKRWUserDefaultService getPrivacyPassword]) {
+            [[NSUserDefaults standardUserDefaults] setObject:closeAppDicInfo forKey:RemoteNotificationContent];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
     }
     [Fabric with:@[[Crashlytics class]]];
 
@@ -606,7 +607,21 @@ void UncaughtExceptionHandler(NSException *exception) {
 - (void)verifySucceed{
     self.privacyPasswordVC.isVerified = true;
     [self.privacyPasswordVC dismissViewControllerAnimated:true completion:^{
-//        self.privacyPasswordVC = nil;
+       
+        if (dicInfo) {
+            [[XKRWNoticeService sharedService]appOpenStateDealNotification:dicInfo];
+            dicInfo = nil;
+        }
+        
+        if (closeAppDicInfo) {
+
+            [[NSUserDefaults standardUserDefaults] setObject:closeAppDicInfo forKey:RemoteNotificationContent];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"privacyPasswordAndNotification" object:nil];
+            closeAppDicInfo = nil;
+        }
+
+        
     }];
 }
 @end

@@ -20,6 +20,7 @@
     CGFloat totalDecreaseWeight;
     CGRect resultImageFrame;
     CGRect rqrcodeImageFrame;
+    UIImage *screenShoot;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame changeWeight:(CGFloat)changeWeight totalChangeWeight:(CGFloat)totalChangeWeight
@@ -45,43 +46,39 @@
         _launchImageView = [[UIImageView alloc] initWithImage:backImage];
         _launchImageView.contentMode = UIViewContentModeScaleAspectFit;
         _launchImageView.frame = self.frame;
-        _launchImageView.alpha = 0;
         [self addSubview:_launchImageView];
         [self makeMasonryConstraints];
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self layoutIfNeeded];
-            [self.resultImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.width.mas_equalTo(resultImageFrame.size.width);
-                make.height.mas_equalTo(resultImageFrame.size.height);
-                make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(44);
-                if (XKAppHeight <= 480) {
-                    make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(5);
-                }
-                make.centerX.mas_equalTo(self.mas_centerX);
-            }];
-            [UIView animateWithDuration:.3
-                             animations:^{
-                                 [self layoutIfNeeded];
-                             }];
-        });
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [self layoutIfNeeded];
+//            [self.resultImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+//                make.width.mas_equalTo(resultImageFrame.size.width);
+//                make.height.mas_equalTo(resultImageFrame.size.height);
+//                make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(44);
+//                if (XKAppHeight <= 480) {
+//                    make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(5);
+//                }
+//                make.centerX.mas_equalTo(self.mas_centerX);
+//            }];
+//            [UIView animateWithDuration:.3
+//                             animations:^{
+//                                 [self layoutIfNeeded];
+//                             }];
+//        });
+        screenShoot = [self getscreenShoot];
+        _launchImageView.alpha = 0;
+        
         [self addShareActionsheet];
     }
     return self;
 }
 
-#pragma mark getter Method
-
-- (UIImage *)screenShoot{
-//    if (!_screenShoot) {
-        _launchImageView.alpha = 1;
-        UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
-        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
-        self.screenShoot = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    _launchImageView.alpha = 0;
-//    }
-    return _screenShoot;
+- (UIImage *)getscreenShoot{
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 0);
+    [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:true];
+    UIImage *screenImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return screenImg;
 }
 
 - (UIImageView *)topImageView{
@@ -245,6 +242,7 @@
     
     _sheet = [[XKRWShareActionSheet alloc] initWithButtonImages:images fromWhichVC:FeedBackShareVC clickButtonAtIndex:^(NSInteger index) {
         [_sheet hide];
+        _launchImageView.alpha = 1;
         NSString *name = imageNames[index];
         
         if ([name isEqualToString:@"weixin"]) {
@@ -259,7 +257,7 @@
             //微信分享
             [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
             
-            [UMSocialData defaultData].extConfig.wechatSessionData.shareImage = self.screenShoot;
+            [UMSocialData defaultData].extConfig.wechatSessionData.shareImage = screenShoot;
             [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatSession]
                                                                content:nil
                                                                  image:nil
@@ -286,8 +284,7 @@
             }
             //朋友圈
             [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeImage;
-            [UMSocialData defaultData].extConfig.wechatTimelineData.shareImage = self.screenShoot;
-            
+            [UMSocialData defaultData].extConfig.wechatTimelineData.shareImage = screenShoot;
             [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToWechatTimeline]
                                                                content:nil
                                                                  image:nil
@@ -312,8 +309,7 @@
                 return;
             }
             //QZone
-            [UMSocialData defaultData].extConfig.qzoneData.shareImage = self.screenShoot;
-            
+            [UMSocialData defaultData].extConfig.qzoneData.shareImage = screenShoot;
             [[UMSocialDataService defaultDataService] postSNSWithTypes:@[UMShareToQzone]
                                                                content:nil
                                                                  image:nil
@@ -330,7 +326,7 @@
         else if ([name isEqualToString:@"weibo"]) {
             //weibo
             [[UMSocialControllerService defaultControllerService] setShareText:nil
-                                                                    shareImage:self.screenShoot
+                                                                    shareImage:screenShoot
                                                               socialUIDelegate:(id)self];
             //设置分享内容和回调对象
             [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler((XKRWRecordWeightFeedBackVC *)self.sheet.delegate,[UMSocialControllerService defaultControllerService],YES);
@@ -365,13 +361,23 @@
         make.width.mas_greaterThanOrEqualTo(200*XKRWScaleWidth);
         make.right.equalTo(@15);
     }];
-    [self.resultImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(resultImageFrame.size.width*2);
-        make.height.mas_equalTo(resultImageFrame.size.height*2);
+//    [self.resultImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.width.mas_equalTo(resultImageFrame.size.width*2);
+//        make.height.mas_equalTo(resultImageFrame.size.height*2);
+//        if (XKAppHeight <= 480) {
+//             make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(-50);
+//        }else{
+//             make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset((44 - resultImageFrame.size.height/2) * XKRWScaleHeight);
+//        }
+//        make.centerX.mas_equalTo(self.mas_centerX);
+//    }];
+    
+    [self.resultImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(resultImageFrame.size.width);
+        make.height.mas_equalTo(resultImageFrame.size.height);
+        make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(44);
         if (XKAppHeight <= 480) {
-             make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(-50);
-        }else{
-             make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset((44 - resultImageFrame.size.height/2) * XKRWScaleHeight);
+            make.top.mas_equalTo(self.shareTimeLabel.mas_bottom).offset(5);
         }
         make.centerX.mas_equalTo(self.mas_centerX);
     }];

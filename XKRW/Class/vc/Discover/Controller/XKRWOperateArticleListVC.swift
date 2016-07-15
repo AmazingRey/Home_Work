@@ -332,8 +332,10 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             smallImageAndTitleCell = tableView.dequeueReusableCellWithIdentifier("smallImageAndTitleCell") as? XKRWSmallImageAndTitleCell
             if indexPath.section == 0 {
                 smallImageAndTitleCell?.newImage.hidden = !self.fetchArticleState(entity.nid!, moudle: self.operateString!)
+                smallImageAndTitleCell?.newImageWidthConstraint.constant = 19
             }else{
                 smallImageAndTitleCell?.newImage.hidden = true
+                smallImageAndTitleCell?.newImageWidthConstraint.constant = 0
             }
             smallImageAndTitleCell?.timeLabel.text = dateStr
             smallImageAndTitleCell?.titleLabel.text = entity.title!
@@ -390,8 +392,10 @@ class XKRWOperateArticleListVC: XKRWBaseVC,MJRefreshBaseViewDelegate,UITableView
             titleCell = tableView.dequeueReusableCellWithIdentifier("titleCell") as? XKRWTitleCell
             if indexPath.section == 0 {
                 titleCell?.newImage.hidden = !self.fetchArticleState(entity.nid!, moudle: self.operateString!)
+                titleCell?.newImageWidthConstraint.constant = 19
             }else{
                 titleCell?.newImage.hidden = true
+                titleCell?.newImageWidthConstraint.constant = 0
             }
             
             titleCell?.timeLabel.text = dateStr

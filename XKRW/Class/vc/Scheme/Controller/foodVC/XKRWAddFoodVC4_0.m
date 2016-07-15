@@ -167,6 +167,7 @@
     
     isRecord = YES;
     if (_foodRecordType ) {
+        _foodRecordEntity.recordType = _foodRecordType;
         switch (_foodRecordType) {
             case RecordTypeBreakfirst:
                 mealSegmentCtr.selectedSegmentIndex = 0;
@@ -327,19 +328,15 @@
 }
 
 
--(void)initData{
-    
+-(void)initData {
     if (_foodRecordEntity.unit_new) {
         _unit_new_to_gram = [[_foodRecordEntity.foodUnit objectForKey:_foodRecordEntity.unit_new] integerValue];
-
     }
-    
     if(!_foodRecordEntity.unit)
     {
         unitSegmentCtr.selectedSegmentIndex = 0;
         unitType = eUnitGram;
     } else {
-        
         for (int i=0; i<unitOthersArray.count; i++) {
             if([_foodRecordEntity.unit_new isEqualToString:unitOthersArray[i]]){
                 unitSecondSegmentCtr.selectedSegmentIndex = i;
@@ -352,7 +349,7 @@
         } else if (_foodRecordEntity.number && !_foodRecordEntity.number_new) {
             componentTextField.text = [NSString stringWithFormat:@"%ld",(long)_foodRecordEntity.number];
         } else {
-            componentTextField.placeholder =@"";
+            componentTextField.placeholder = @"";
         }
         
         if (_foodRecordEntity.unit_new && _foodRecordEntity.unit_new.length) {
@@ -362,14 +359,12 @@
         }
         
         NSUInteger unitWeight = [[_foodRecordEntity.foodUnit objectForKey:selectUnitLabel.text] integerValue];
-        
         NSUInteger totalWeight = [componentTextField.text integerValue]*unitWeight;
-        
         NSUInteger calorie = [XKRWUtil weightToCalorie:totalWeight foodEntity:_foodRecordEntity];
         
         kcalLabel.text = [NSString stringWithFormat:@"%lukcal",(unsigned long)calorie];
         
-        if(unitSecondSegmentCtr.selectedSegmentIndex > 2){
+        if(unitSecondSegmentCtr.selectedSegmentIndex > 2) {
             [XKRWCui showInformationHudWithText:@"超出范围"];
         }
         if (_foodRecordEntity.calorie) {
@@ -377,18 +372,12 @@
         }
         [componentTextField becomeFirstResponder];
     }
-    
-    
-    
 }
 
 - (void)loadUnitSegment {
-    
-    
     unitSegmentCtr = [[UISegmentedControl alloc]initWithItems:unitArrays];
     unitSegmentCtr.frame = CGRectMake(XKAppWidth-kSegmentWidth-15, 7, kSegmentWidth, 30);
     unitSegmentCtr.tintColor = XKMainToneColor_29ccb1;
-    
     if (_foodRecordEntity.unit && (!_foodRecordEntity.unit_new || _foodRecordEntity.unit_new.length == 0)) {
         if (_foodRecordEntity.unit == 1) {
             unitSegmentCtr.selectedSegmentIndex = 0;

@@ -87,14 +87,15 @@
             }
 
             if (value) {
-                [obj setValue:value forKey:key];
+                if ([key isEqualToString:@"isAddGroup"]) {
+                    [obj setValue:[NSNumber numberWithInteger:[value integerValue]] forKey:key];
+                }else{
+                    [obj setValue:value forKey:key];
+                }
             }
 
         } // else NOP
     }
 }
-
-
-
 
 @end

@@ -153,19 +153,22 @@
     [moreBtn addTarget: self action:@selector(moreBtn_Click:) forControlEvents:UIControlEventTouchDown];
     [tabbarBG addSubview:moreBtn];
     
-    if ([XKRWUserDefaultService isShowMoreredDot] ) {
-        UIImage *redDot = [UIImage imageNamed:@"unread_red_dot"];
-        moreRedDotView = [[UIImageView alloc] initWithImage:redDot];
-        CGRect rect = moreRedDotView.frame;
-        if (XKAppWidth == 320) {
-            rect.origin = CGPointMake(53.f, 6.f);
-        }else if (XKAppWidth == 375 ){
-            rect.origin = CGPointMake(60.f, 6.f);
-        }else{
-            rect.origin = CGPointMake(65.f, 6.f);
-        }
-        moreRedDotView.frame = rect;
+    UIImage *redDot = [UIImage imageNamed:@"unread_red_dot"];
+    moreRedDotView = [[UIImageView alloc] initWithImage:redDot];
+    CGRect redDotRect = moreRedDotView.frame;
+    if (XKAppWidth == 320) {
+        redDotRect.origin = CGPointMake(53.f, 6.f);
+    }else if (XKAppWidth == 375 ){
+        redDotRect.origin = CGPointMake(60.f, 6.f);
+    }else{
+        redDotRect.origin = CGPointMake(65.f, 6.f);
+    }
+    moreRedDotView.frame = redDotRect;
+    if ([XKRWUserDefaultService isShowMoreredDot]) {
+        
         [moreBtn addSubview:moreRedDotView];
+    } else {
+        [moreRedDotView removeFromSuperview];
     }
     
     UIImage *numImage = [UIImage imageNamed:@"notice_l"];
@@ -534,7 +537,13 @@
 
 - (void)clearRedDotFromMore
 {
-    [moreRedDotView removeFromSuperview];
+    if ([XKRWUserDefaultService isShowMoreredDot]) {
+        [moreBtn addSubview:moreRedDotView];
+
+    } else {
+        [moreRedDotView removeFromSuperview];
+
+    }
 }
 
 - (void)moreBtn_Click:(UIButton *)button

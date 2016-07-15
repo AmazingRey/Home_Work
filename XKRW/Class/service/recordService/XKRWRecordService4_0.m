@@ -3369,7 +3369,17 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 
 - (NSNumber *)syncRecordData
 {
-    NSDate *fromDate = [[self class] getRecordSyncDate];
+    NSDate *fromDate;
+    //为了修复5.3.1版本拉取进入数据会将今日的日期作为fromData这个bug 特添加如下代码进行修改
+    // 每一个用户第一次登陆的时候 全部重新拉取 ，然后再次登录的时候正常拉取 😢
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"ChangeFromDate_%ld",(long)[[XKRWUserService sharedService] getUserId]]]) {
+        fromDate = [NSDate dateWithTimeIntervalSince1970:1000000000];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[NSString stringWithFormat:@"ChangeFromDate_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
+    }else{
+        fromDate  = [[self class] getRecordSyncDate];
+        
+    }
     if ([[self syncOfflineRecordToRemote] boolValue]) {
         NSDictionary *result = [self syncServerRecordFromDate:fromDate];
         

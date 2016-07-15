@@ -123,10 +123,12 @@
     
     [[XKRWLocalNotificationService shareInstance] defaultAlarmSetting];
      [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(privacyPasswordAndNotification) name:@"privacyPasswordAndNotification" object:nil];
 }
 
 
--(void)viewWillDisappear:(BOOL)animated{
+-(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (recordBackView) {
         [[[UIApplication sharedApplication].delegate window] sendSubviewToBack:recordBackView];
@@ -165,6 +167,9 @@
 }
 
 
+- (void)privacyPasswordAndNotification {
+    [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
+}
 
 -(void)addTouchWindowEvent{
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelPopView)];

@@ -102,6 +102,10 @@
         NSString *title = _moreThanLastRecord ? @"我会继续努力" : @"炫耀一下";
         [_firstBtn setTitle:title forState:UIControlStateNormal];
         [_firstBtn setTitleColor:XKMainToneColor_29ccb1 forState:UIControlStateNormal];
+        [_firstBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        [_firstBtn setBackgroundImage: [UIImage imageWithColor:XKMainToneColor_29ccb1] forState:UIControlStateHighlighted];
+        _firstBtn.clipsToBounds = true;
+        
         _firstBtn.layer.borderWidth = .5;
         _firstBtn.layer.cornerRadius = 10;
         _firstBtn.layer.borderColor = XKMainToneColor_29ccb1.CGColor;

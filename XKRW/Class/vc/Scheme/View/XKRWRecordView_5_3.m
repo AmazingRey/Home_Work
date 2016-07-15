@@ -693,6 +693,7 @@
         }else if ([temp isKindOfClass:[XKRWRecordFoodEntity class]]){
             XKRWAddFoodVC4_0 *addFoodVC = [[XKRWAddFoodVC4_0 alloc] init];
             addFoodVC.foodRecordEntity = temp ;
+            addFoodVC.foodRecordType = ((XKRWRecordFoodEntity *)temp).recordType;
             addFoodVC.delegate = self;
             addFoodVC.recordDate = _date;
             addFoodVC.originalId = ((XKRWRecordFoodEntity *)temp).foodId;

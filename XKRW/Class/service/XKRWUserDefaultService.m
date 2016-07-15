@@ -77,7 +77,7 @@
 //设置隐私密码
 + (void)setPrivacyPassword:(NSString *)password
 {
-     NSString * key = [NSString stringWithFormat:@"PRIVACYPASSWORD%ld",(long)[[XKRWUserService sharedService] getUserId]];
+     NSString * key = [NSString stringWithFormat:@"PRIVACYPASSWORD"];
      NSUserDefaults *userDefult = [NSUserDefaults standardUserDefaults];
     [userDefult setObject:password forKey:key];
     [userDefult synchronize];
@@ -86,7 +86,7 @@
 //获取隐私密码
 + (NSString *)getPrivacyPassword
 {
-    NSString * key = [NSString stringWithFormat:@"PRIVACYPASSWORD%ld",(long)[[XKRWUserService sharedService] getUserId]];
+    NSString * key = [NSString stringWithFormat:@"PRIVACYPASSWORD"];
    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
 
 }
@@ -94,7 +94,7 @@
 //移除隐私密码
 + (void)removePrivacyPassword
 {
-    NSString * key = [NSString stringWithFormat:@"PRIVACYPASSWORD%ld",(long)[[XKRWUserService sharedService] getUserId]];
+    NSString * key = [NSString stringWithFormat:@"PRIVACYPASSWORD"];
     return [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
     
 }

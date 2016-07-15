@@ -88,7 +88,7 @@ static XKRWFoodService *shareNoticeInstance;
     return [self executeSql:sql];
 }
 
-- (XKRWFoodEntity*) syncQueryFoodWithId:(NSInteger)foodId
+- (XKRWFoodEntity *) syncQueryFoodWithId:(NSInteger)foodId
 {
     XKRWFoodEntity *foodEntity = [[XKRWFoodEntity alloc] init];
     if (![XKUtil isNetWorkAvailable]) {

@@ -173,6 +173,7 @@
 - (void)popView {
     if (_isHidenIslimResult) {
         [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"dealSystemTabbarShow" object:nil];
         return;
     }
     [self.navigationController popToViewController:self.navigationController.viewControllers[_popTofloor] animated:YES];

@@ -19,11 +19,6 @@
 +(id)shareService;
 #pragma mark 网络任务
 
-
-/*远程按分类获取食物列表*/
-- (NSArray *) syncQueryFoodsWithCategory:(NSInteger) cateid page:(NSInteger)page pageSize:(NSInteger) pageSize order:(SchemeType)schemeType;
-/*按关键词，远程获取食物列表*/
-- (NSArray *) syncQueryFoodsWithKey:(NSString *)key page:(NSInteger)page pageSize:(NSInteger)  pageSize order:(SchemeType)schemeType;
 /**
  *  根据id获取食物详情，4.0-5.0接口改变，需要更新方法。现接口已经合并运动和食物按id查询，以后如需改动，可整合接口
  *
