@@ -304,12 +304,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
                 }
             }
             
-            //            for (NSString *string in dateArray) {
-            //                NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND date = '%@' AND sync = 1", foodRecordTable, uid, string];
-            //                [self executeSql:sql];
-            //                sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND date = '%@' AND sync = 1", sportRecordTable, uid, string];
-            //                [self executeSql:sql];
-            //            }
             
             NSMutableString *deleteFood = [NSMutableString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND sync = 1 AND date in (", foodRecordTable, uid];
             NSMutableString *deleteSport = [NSMutableString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND sync = 1 AND date in (", sportRecordTable, uid];
@@ -330,12 +324,14 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             [deleteFood appendString:@")"];
             [deleteSport appendString:@")"];
             
-            [self executeSql:deleteFood];
-            [self executeSql:deleteSport];
+            BOOL delFoodRes = [self executeSql:deleteFood];
+            BOOL delsportRes =[self executeSql:deleteSport];
             
             //            NSMutableArray *undownloadFood = [[NSMutableArray alloc] init];
             //            NSMutableArray *undownloadSport = [[NSMutableArray alloc] init];
-            
+            if (!delFoodRes || !deleteSport) {
+                
+            }
             NSMutableArray *foodRecords = [[NSMutableArray alloc] init];
             NSMutableArray *sportRecords = [[NSMutableArray alloc] init];
             
@@ -612,12 +608,12 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     } else {
         XKLog(@"记录服务错误: 请求数据异常");
-        return nil;
+        return NO;
     }
     [param setObject:jsonString forKey:@"data"];
     if (!date) {
         XKLog(@"记录页错误: 记录内容时间戳为空");
-        return nil;
+        return NO;
     }
     //    [param setObject:[NSNumber numberWithInt:[date timeIntervalSince1970]] forKey:@"date"];
     

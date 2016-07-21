@@ -134,6 +134,7 @@
     } else {
         XKRWPlanVC *planVC = [[XKRWPlanVC alloc] init];
         planVC.recordDate = originOfDate;
+//        planVC.isFromCalendar = YES;
         [self.navigationController pushViewController:planVC animated:YES];
     }
 }

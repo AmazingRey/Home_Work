@@ -142,7 +142,10 @@
     [[XKRWAppCommentUtil shareAppComment] setEntryPageTimeWithPage:SCHEMEPAGE];
     energyViewHeight = XKAppHeight == 480 ? 170 : (210 * XKRWScaleHeight);
 
+   
     [self initData];
+    
+    
     [self initView];
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView:nil];

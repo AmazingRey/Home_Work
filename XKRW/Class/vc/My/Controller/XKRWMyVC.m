@@ -102,6 +102,7 @@
     [feedBack getUnreadCountWithCompletionBlock:^(NSNumber *unreadCount, NSError *error) {
         if (unreadCount.integerValue) {
             [XKRWUserDefaultService setShowMoreRedDot:YES];
+            [self checkMoreRed];
         }
     }];
     
@@ -110,7 +111,7 @@
     
     //获取用户荣誉数据
     [self getUserHonorData];
-    [self checkMoreRed];
+    
     
     [self hideNavigationLeftItemRedDot:YES andRightItemRedDotNeedHide:![XKRWUserDefaultService isShowMoreredDot]];
 

@@ -514,13 +514,7 @@
         }
         _foodRecordEntity.number = [componentTextField.text integerValue];
         
-        if (_foodRecordEntity.serverid == 0) {
-            NSInteger recordTimeStamp = [_foodRecordEntity.date timeIntervalSince1970];
-            NSInteger now = [[NSDate date] timeIntervalSince1970];
-            
-            NSInteger plus = (now - recordTimeStamp) % 86400;
-            _foodRecordEntity.serverid = recordTimeStamp + plus;
-        }
+ 
         
         _foodRecordEntity.unit = unitType;
         _foodRecordEntity.unit_new = @"";
@@ -532,6 +526,16 @@
         _foodRecordEntity.number_new = [componentTextField.text integerValue];
         
     }
+    
+    
+    if (_foodRecordEntity.serverid == 0) {
+        NSInteger recordTimeStamp = [_foodRecordEntity.date timeIntervalSince1970];
+        NSInteger now = [[NSDate date] timeIntervalSince1970];
+        
+        NSInteger plus = (now - recordTimeStamp) % 86400;
+        _foodRecordEntity.serverid = recordTimeStamp + plus;
+    }
+    
     [XKRWCui showProgressHud:@""];
     
     [MobClick event:@"clk_mark"];

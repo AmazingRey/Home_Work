@@ -50,7 +50,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    if (segmentCtl.hidden  == NO) {
+       [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+    
     [self initDataWithSegmentIndex:selectSegmentIndex];
 }
 
@@ -217,7 +220,11 @@
 
 #pragma --mark UISearchBar Delegate
 - (void)KMSearchDisplayHideSearchResult{
+    CGRect frame = recordSearchBar.frame;
+    frame.origin.y = 0;
+    recordSearchBar.frame = frame;
     segmentCtl.hidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     CGRect frame = recordSearchBar.frame;
@@ -235,9 +242,13 @@
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    CGRect frame = recordSearchBar.frame;
+    frame.origin.y = 0;
+    recordSearchBar.frame = frame;
     [searchDisplayCtrl hideSearchResultView];
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:NO];
+     [self.navigationController setNavigationBarHidden:NO animated:YES];
     segmentCtl.hidden = NO;
 }
 
@@ -249,17 +260,13 @@
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-    CGRect frame = recordSearchBar.frame;
-    frame.origin.y = 0;
-    recordSearchBar.frame = frame;
-    
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+
+
     return YES;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    
     if (searchBar.text.length > 0){
         
         if(_schemeType == eSchemeFood){
@@ -282,13 +289,17 @@
 
 
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)searchBar {
+    CGRect frame = recordSearchBar.frame;
+    frame.origin.y = 20;
+    recordSearchBar.frame = frame;
     [searchDisplayCtrl showSearchResultView];
     [searchBar setShowsCancelButton:YES animated:YES];
-    
+    segmentCtl.hidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     if (iFlyControl.hidden){
         iFlyControl.hidden = NO;
         [iFlyControl start];
-        segmentCtl.hidden = YES;
+        
     }else{
         iFlyControl.hidden = YES;
         [iFlyControl cancel];
