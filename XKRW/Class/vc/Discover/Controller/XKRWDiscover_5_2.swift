@@ -107,7 +107,6 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         discoverTable.registerNib(UINib(nibName: "XKRWBlogEnterCell", bundle: nil), forCellReuseIdentifier: "topicCell")
         
         self.hideNavigationLeftItemRedDot(true, andRightItemRedDotNeedHide: true)
-
     }
     
     func addHeaderView(){

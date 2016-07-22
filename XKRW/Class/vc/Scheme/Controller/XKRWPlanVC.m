@@ -149,6 +149,9 @@
     [self initView];
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView:nil];
+    
+    
+    
     [self downloadWithTaskID:@"syncTodayRemoteData" outputTask:^id{
         return @([XKRWCommHelper syncTodayRemoteData]);
     }];

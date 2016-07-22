@@ -1,73 +1,69 @@
 //
-//  XKRWPrivacyPassWordVC.m
+//  XKRWPrivacyPassWordView.m
 //  XKRW
 //
-//  Created by ss on 16/6/12.
+//  Created by ss on 16/7/22.
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
-#import "XKRWPrivacyPassWordVC.h"
+#import "XKRWPrivacyPassWordView.h"
 #import "XKRWCui.h"
 #import <AudioToolbox/AudioServices.h>
 #import "XKRWUserService.h"
 #import "XKRWAppDelegate.h"
 #import "XKRWNavigationController.h"
 #import "XKRWTabbarVC.h"
-#import "XKRWCui.h"
+#import "Masonry.h"
 
-#define SET_PRIVACYPASSWORD_FIRSTTIME @"setPrivacyPasswordFirstTime"
-#define SET_PRIVACYPASSWORD_SUCCESS   @"setPrivacyPasswordSuccess"
-#define DeleayTime                    .5
-
-@interface XKRWPrivacyPassWordVC ()<UIAlertViewDelegate>
-@property (strong, nonatomic) IBOutlet UIImageView        *imageOne;
-@property (strong, nonatomic) IBOutlet UIImageView        *imageTwo;
-@property (strong, nonatomic) IBOutlet UIImageView        *imageThree;
-@property (strong, nonatomic) IBOutlet UIImageView        *imageFour;
-@property (strong, nonatomic) IBOutlet UILabel            *labelVerify;
-@property (strong, nonatomic) IBOutlet UIButton           *forgetPasswordBtn;
-@property (strong, nonatomic) IBOutlet UIButton           *configueLaterBtn;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *topImageTopConstraint;
-
-- (IBAction)forgetPasswordAction:(id)sender;
-- (IBAction)configueLaterAction:(id)sender;
-
-@end
-
-@implementation XKRWPrivacyPassWordVC{
+@implementation XKRWPrivacyPassWordView{
     NSArray *imageViewArray;
     NSString *tmpPwd;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    _configueLaterBtn.hidden = true;
-    if (_privacyType == configue) {
-        self.title = @"设置隐私密码";
-        if (!self.navigationController) {
-            _configueLaterBtn.hidden = false;
-            tmpPwd = @"";
-        }else{
-            [self addNaviBarBackButton];
-        }
-        _forgetPasswordBtn.hidden = true;
-        _forgetPasswordBtn.userInteractionEnabled = false;
-        _labelVerify.text = @"请设置隐私密码";
-    }else if (_privacyType == terminate) {
-        [self addNaviBarBackButton];
-        self.title = @"关闭隐私密码";
-        _forgetPasswordBtn.hidden = true;
-        _forgetPasswordBtn.userInteractionEnabled = false;
-        _labelVerify.text = @"输入密码确认关闭";
-    }else if (_privacyType == verify){
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self = LOAD_VIEW_FROM_BUNDLE(@"XKRWPrivacyPassWordView");
         _configueLaterBtn.hidden = true;
-        _labelVerify.text = @"验证隐私密码";
-        _forgetPasswordBtn.hidden = false;
-        _forgetPasswordBtn.userInteractionEnabled = true;
+        if (_privacyType == configue) {
+            [self setTitle:@"设置隐私密码"];
+            if (!_showNavibar) {
+                _configueLaterBtn.hidden = false;
+                tmpPwd = @"";
+            }else{
+                [self addNaviBarBackButton];
+            }
+            _forgetPasswordBtn.hidden = true;
+            _forgetPasswordBtn.userInteractionEnabled = false;
+            _labelVerify.text = @"请设置隐私密码";
+        }else if (_privacyType == terminate) {
+            [self addNaviBarBackButton];
+            [self setTitle:@"关闭隐私密码"];
+            _forgetPasswordBtn.hidden = true;
+            _forgetPasswordBtn.userInteractionEnabled = false;
+            _labelVerify.text = @"输入密码确认关闭";
+        }else if (_privacyType == verify){
+            _configueLaterBtn.hidden = true;
+            _labelVerify.text = @"验证隐私密码";
+            _forgetPasswordBtn.hidden = false;
+            _forgetPasswordBtn.userInteractionEnabled = true;
+        }
+        imageViewArray = @[_imageOne, _imageTwo, _imageThree, _imageFour];
+        [self registerNotification:true];
+        [self.textField becomeFirstResponder];
     }
-    imageViewArray = @[_imageOne, _imageTwo, _imageThree, _imageFour];
+    return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.frame = CGRectMake(0, 0, XKAppWidth, XKAppHeight);
+    }
+    return self;
+}
 
 -(void)addNaviBarBackButton {
     UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -81,18 +77,11 @@
     
     [leftItemButton setTitleColor:[UIColor colorWithRed:247/255.f green:106/255.f blue:8/255.f alpha:1.0] forState:UIControlStateNormal];
     [leftItemButton addTarget:self action:@selector(popView) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftItemButton];
+    self.naviBar.topItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftItemButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self registerNotification:true];
-    [self.textField becomeFirstResponder];
-}
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    [self registerNotification:false];
+- (void)popView{
+    [self removeFromSuperview];
 }
 
 - (void)registerNotification:(BOOL)flag{
@@ -102,36 +91,6 @@
     }else{
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SET_PRIVACYPASSWORD_FIRSTTIME object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SET_PRIVACYPASSWORD_SUCCESS object:nil];
-    }
-}
-
-- (void)popView{
-    [self.navigationController popViewControllerAnimated:true];
-}
-
-- (void)setPrivacyType:(PrivacyPasswordType)privacyType{
-    if (_privacyType != privacyType) {
-        _privacyType = privacyType;
-    }
-    if (_privacyType == configue) {
-        self.title = @"设置隐私密码";
-        if (!self.navigationController) {
-            _configueLaterBtn.hidden = false;
-            tmpPwd = @"";
-        }
-        _forgetPasswordBtn.hidden = true;
-        _forgetPasswordBtn.userInteractionEnabled = false;
-        _labelVerify.text = @"请设置隐私密码";
-    }else if (_privacyType == terminate) {
-        self.title = @"关闭隐私密码";
-        _forgetPasswordBtn.hidden = true;
-        _forgetPasswordBtn.userInteractionEnabled = false;
-        _labelVerify.text = @"输入密码确认关闭";
-    }else if (_privacyType == verify){
-        _configueLaterBtn.hidden = true;
-        _labelVerify.text = @"验证隐私密码";
-        _forgetPasswordBtn.hidden = false;
-        _forgetPasswordBtn.userInteractionEnabled = true;
     }
 }
 
@@ -152,19 +111,13 @@
     return _passWord;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 - (void)setTitle:(NSString *)title {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
     label.font = XKDefaultFontWithSize(17);
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
-    self.navigationItem.titleView = label;
+    self.naviBar.topItem.titleView = label;
     label.text = title;
     [label sizeToFit];
 }
@@ -176,7 +129,7 @@
     [self makeEachImageViewWhenTextInput:range string:string];
     if (_privacyType == configue) {
         if (toBeString.length == imageViewArray.count) {
-           return [self savePrivacyPassword:toBeString];
+            return [self savePrivacyPassword:toBeString];
         }
     }else if (_privacyType == terminate ){
         if (toBeString.length == imageViewArray.count) {
@@ -191,7 +144,7 @@
                 }
                 [textField resignFirstResponder];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self dismissViewControllerAnimated:YES completion:nil];
+                    [self popView];
                 });
                 return true;
             }else{
@@ -213,9 +166,9 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    [self.view layoutIfNeeded];
+    [self layoutIfNeeded];
     if (XKAppHeight <= 480) {
-        if (!self.navigationController) {
+        if (!_showNavibar) {
             _topImageTopConstraint.constant = -20;
         }else{
             _topImageTopConstraint.constant = -45;
@@ -230,12 +183,12 @@
     _topImageTopConstraint.constant = _topImageTopConstraint.constant*XKRWScaleHeight;
     [UIView animateWithDuration:.5
                      animations:^{
-                         [self.view layoutIfNeeded];
+                         [self layoutIfNeeded];
                      }];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    [self.view layoutIfNeeded];
+    [self layoutIfNeeded];
     if (XKAppHeight <= 480) {
         _topImageTopConstraint.constant = 225;
     }else if(XKAppHeight == 568){
@@ -248,7 +201,7 @@
     _topImageTopConstraint.constant = _topImageTopConstraint.constant*XKRWScaleHeight;
     [UIView animateWithDuration:.5
                      animations:^{
-                         [self.view layoutIfNeeded];
+                         [self layoutIfNeeded];
                      }];
 }
 
@@ -266,7 +219,7 @@
         _labelVerify.text = @"验证成功!";
         [XKRWUserDefaultService removePrivacyPassword];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.navigationController popViewControllerAnimated:YES];
+            [self popView];
         });
         return true;
     }else{
@@ -324,9 +277,9 @@
     }
     if (_privacyType == configue) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (self.navigationController) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
+//            if (self.navigationController) {
+               [self popView];
+//            }
         });
     }
 }
@@ -347,7 +300,7 @@
     if (buttonIndex == 1) {
         [XKRWUserDefaultService setForgetPrivacyPassword:true];
         [XKRWUserDefaultService removePrivacyPassword];
-        [self dismissViewControllerAnimated:true completion:nil];
+        [self popView];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Exit" object:nil];
         [XKRWCui hideProgressHud];
     }else{
@@ -358,6 +311,12 @@
 - (IBAction)configueLaterAction:(id)sender {
     [XKRWUserDefaultService setForgetPrivacyPassword:false];
     [self.textField resignFirstResponder];
-    [self dismissViewControllerAnimated:true completion:nil];
+    [self popView];
 }
+
+- (void)dealloc
+{
+    [self registerNotification:false];
+}
+
 @end

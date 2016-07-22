@@ -281,14 +281,16 @@
     BOOL isForgetPrivacyPassword = [XKRWUserDefaultService isForgetPrivacyPassword];
     if (isForgetPrivacyPassword) {
         //点击忘记密码后重新设置       
-        appdelegate.privacyPasswordVC.privacyType = configue;
+        appdelegate.privacyPasswordView.privacyType = configue;
         [appdelegate.window makeKeyAndVisible];
-        [appdelegate.window.rootViewController presentViewController:appdelegate.privacyPasswordVC animated:false completion:NULL];
+        [appdelegate.window.rootViewController.view addSubview:appdelegate.privacyPasswordView];
+//        [appdelegate.window.rootViewController presentViewController:appdelegate.privacyPasswordVC animated:false completion:NULL];
     }else{
-        if (appdelegate.privacyPasswordVC.passWord && !appdelegate.privacyPasswordVC.isVerified) {
-            appdelegate.privacyPasswordVC.privacyType = verify;
+        if (appdelegate.privacyPasswordView.passWord && !appdelegate.privacyPasswordView.isVerified) {
+            appdelegate.privacyPasswordView.privacyType = verify;
             [appdelegate.window makeKeyAndVisible];
-            [appdelegate.window.rootViewController presentViewController:appdelegate.privacyPasswordVC animated:false completion:NULL];
+            [appdelegate.window.rootViewController.view addSubview:appdelegate.privacyPasswordView];
+//            [appdelegate.window.rootViewController presentViewController:appdelegate.privacyPasswordVC animated:false completion:NULL];
         }
     }
 }

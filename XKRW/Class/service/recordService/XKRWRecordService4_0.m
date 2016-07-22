@@ -324,14 +324,15 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             [deleteFood appendString:@")"];
             [deleteSport appendString:@")"];
             
-            BOOL delFoodRes = [self executeSql:deleteFood];
-            BOOL delsportRes =[self executeSql:deleteSport];
+            
+            
+            
+            [self executeSql:deleteFood];
+            [self executeSql:deleteSport];
             
             //            NSMutableArray *undownloadFood = [[NSMutableArray alloc] init];
             //            NSMutableArray *undownloadSport = [[NSMutableArray alloc] init];
-            if (!delFoodRes || !deleteSport) {
-                
-            }
+            
             NSMutableArray *foodRecords = [[NSMutableArray alloc] init];
             NSMutableArray *sportRecords = [[NSMutableArray alloc] init];
             

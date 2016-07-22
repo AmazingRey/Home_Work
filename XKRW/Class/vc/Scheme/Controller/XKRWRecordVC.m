@@ -412,7 +412,9 @@
                 sportAddVC.sportEntity = sportEntity;
                 sportAddVC.sportID = sportEntity.sportId;
                 sportAddVC.recordDate = _recordDate;
-                [weakSelf.navigationController pushViewController:sportAddVC animated:YES];
+                sportAddVC.isPresent = YES;
+                XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:sportAddVC];
+                [weakSelf.navigationController presentViewController:nav animated:YES completion:nil];
             }];
             
         }else {

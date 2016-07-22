@@ -364,7 +364,7 @@
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
 {
-    return 55;
+    return 60;
 }
 
 - (UIView *)carousel:(iCarousel *)carousel
@@ -372,9 +372,9 @@
          reusingView:(UIImageView *)view
 {
     if (view == nil) {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 55, 30)];
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
         view.contentMode = UIViewContentModeScaleToFill; //图片拉伸模式
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 55, 26)];
+        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, 56, 26)];
        
         lab.text = [NSString stringWithFormat:@"%@",_arrLabels[index]];
         lab.textAlignment = NSTextAlignmentCenter;
@@ -403,7 +403,7 @@
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            return value * 1.10f;
+            return value * .91f;
         }
         case iCarouselOptionFadeMax:
         {

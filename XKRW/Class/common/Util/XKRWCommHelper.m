@@ -696,10 +696,15 @@ static XKRWBaseService *service;
     
     @try {
         //获取记录值
-        NSNumber *result = [[XKRWRecordService4_0 sharedService] syncTodayRecordData];
-        if ([result boolValue]) {
-            [XKRWRecordService4_0 setNeedUpdate:YES];
-        }
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSNumber *result = [[XKRWRecordService4_0 sharedService] syncTodayRecordData];
+            if ([result boolValue]) {
+                [XKRWRecordService4_0 setNeedUpdate:YES];
+            }
+        });
+        
+       
     }
     @catch (NSException *exception) {
         NSLog(@"获记录出错了:%@",[exception description]);
