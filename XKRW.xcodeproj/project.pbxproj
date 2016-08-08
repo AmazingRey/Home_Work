@@ -1014,8 +1014,6 @@
 		CC1F90271CD1DDD000962484 /* XKRWDailyAnalysizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC1F90251CD1DDD000962484 /* XKRWDailyAnalysizeCell.xib */; };
 		CC25086A1CB5EE1D00FFF00C /* XKRWWeightPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */; };
 		CC25086C1CB5EE3700FFF00C /* XKRWWeightPopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */; };
-		CC2C84A71D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC2C84A51D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.m */; };
-		CC2C84A81D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC2C84A61D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.xib */; };
 		CC315A711CD2F24B004D46DB /* XKRWStatisticAnalysizeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = CC315A701CD2F24B004D46DB /* XKRWStatisticAnalysizeVC.m */; };
 		CC4969D31CCDB71B0072BB96 /* XKRWMealPercentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC4969D21CCDB71B0072BB96 /* XKRWMealPercentView.m */; };
 		CC4E04D01D226BF800699CC2 /* ArticleNewStateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4E04CE1D226BF800699CC2 /* ArticleNewStateEntity+CoreDataProperties.swift */; };
@@ -2735,9 +2733,6 @@
 		CC2508681CB5EE1D00FFF00C /* XKRWWeightPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWWeightPopView.h; sourceTree = "<group>"; };
 		CC2508691CB5EE1D00FFF00C /* XKRWWeightPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWWeightPopView.m; sourceTree = "<group>"; };
 		CC25086B1CB5EE3700FFF00C /* XKRWWeightPopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWWeightPopView.xib; sourceTree = "<group>"; };
-		CC2C84A41D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPrivacyPassWordView.h; sourceTree = "<group>"; };
-		CC2C84A51D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWPrivacyPassWordView.m; sourceTree = "<group>"; };
-		CC2C84A61D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPrivacyPassWordView.xib; sourceTree = "<group>"; };
 		CC315A6F1CD2F24B004D46DB /* XKRWStatisticAnalysizeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWStatisticAnalysizeVC.h; sourceTree = "<group>"; };
 		CC315A701CD2F24B004D46DB /* XKRWStatisticAnalysizeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWStatisticAnalysizeVC.m; sourceTree = "<group>"; };
 		CC315A731CD331B9004D46DB /* XKRWStatiscHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWStatiscHeadView.h; sourceTree = "<group>"; };
@@ -2927,9 +2922,6 @@
 				CCB4A8011D0CFA3000438825 /* XKRWPrivacyPassWordVC.h */,
 				CCB4A8021D0CFA3000438825 /* XKRWPrivacyPassWordVC.m */,
 				CCB4A8031D0CFA3000438825 /* XKRWPrivacyPassWordVC.xib */,
-				CC2C84A41D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.h */,
-				CC2C84A51D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.m */,
-				CC2C84A61D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.xib */,
 				047411D71856F05A002CC72D /* XKRWTabbarVC.h */,
 				047411D81856F05A002CC72D /* XKRWTabbarVC.m */,
 				BCEF37871C1E901B00740ACC /* My */,
@@ -6892,10 +6884,10 @@
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
 					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = 2H2WTQZ7Y8;
+						DevelopmentTeam = KFHY8Z75E6;
 					};
 					044DA1E118558DC100CA30F7 = {
-						DevelopmentTeam = WT58P44WAK;
+						DevelopmentTeam = KFHY8Z75E6;
 						TestTargetID = 044DA1C018558DC100CA30F7;
 					};
 				};
@@ -7150,7 +7142,6 @@
 				BC6F2F751C1A70D3005B54E8 /* XKRWPKVC.xib in Resources */,
 				BCEF381C1C1E901B00740ACC /* XKRWCourseWeightCell.xib in Resources */,
 				BCEF372F1C1E75D900740ACC /* XKRWHabitStatusVC.xib in Resources */,
-				CC2C84A81D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.xib in Resources */,
 				CC520B7F1CBE4426007FEDBA /* XKRWRecordView_5_3.xib in Resources */,
 				5DCD561E1C4731B8008A5AC2 /* GroupHeaderCell.xib in Resources */,
 				2F3C632B1C3CAA6F007D9E20 /* XKRWActionSheetCell.xib in Resources */,
@@ -7917,7 +7908,6 @@
 				BCEF38031C1E901B00740ACC /* XKRWUserFeedbackVC.swift in Sources */,
 				2E9686C21A04AEE500CB5D77 /* XKNotification.m in Sources */,
 				A7E917331B5CA48A0017F5FD /* PNPieChartDataItem.m in Sources */,
-				CC2C84A71D41ED0100FC0FC1 /* XKRWPrivacyPassWordView.m in Sources */,
 				CC4E04D01D226BF800699CC2 /* ArticleNewStateEntity+CoreDataProperties.swift in Sources */,
 				2E96880D1A04AEFE00CB5D77 /* SDWebImageDecoder.m in Sources */,
 				BCEF35C61C1E5AD500740ACC /* XKRWNewWebView.m in Sources */,
@@ -8097,8 +8087,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
@@ -8126,7 +8116,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
-				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
+				PROVISIONING_PROFILE = "9df23009-d3b0-463b-a844-5ef3d936a9d7";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s armv64";
 			};
@@ -8148,8 +8138,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				COPY_PHASE_STRIP = YES;
 				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -8169,7 +8159,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
-				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
+				PROVISIONING_PROFILE = "9df23009-d3b0-463b-a844-5ef3d936a9d7";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s armv64";
@@ -8185,8 +8175,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8231,10 +8221,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWlrp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -8254,8 +8244,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8300,10 +8290,10 @@
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "";
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-D RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRWlrp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
@@ -8317,8 +8307,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8334,7 +8324,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.ss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
+				PROVISIONING_PROFILE = "9df23009-d3b0-463b-a844-5ef3d936a9d7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -8344,8 +8334,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8357,7 +8347,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.ss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4cccec0f-3146-4c76-952d-50c3c632f3a5";
+				PROVISIONING_PROFILE = "9df23009-d3b0-463b-a844-5ef3d936a9d7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};

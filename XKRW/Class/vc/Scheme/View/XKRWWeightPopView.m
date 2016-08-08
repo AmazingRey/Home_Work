@@ -403,7 +403,7 @@
         case iCarouselOptionSpacing:
         {
             //add a bit of spacing between the item views
-            return value * .91f;
+            return value * .910f;
         }
         case iCarouselOptionFadeMax:
         {

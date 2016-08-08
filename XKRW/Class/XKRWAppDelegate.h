@@ -12,7 +12,6 @@
 #import "UMFeedback.h"
 #import "WXApi.h"
 #import "XKRWPrivacyPassWordVC.h"
-#import "XKRWPrivacyPassWordView.h"
 
 @interface XKRWAppDelegate : XKAppDelegate <UIApplicationDelegate, UMFeedbackDataDelegate, WXApiDelegate,XKRWPrivacyPassWordVCDelegate>
 {
@@ -35,5 +34,4 @@
 @property (strong, nonatomic) NSDateFormatter *timeFormatterOne;
 @property (strong, nonatomic) NSDateFormatter *timeFormatterTwo;
 @property (strong, nonatomic) XKRWPrivacyPassWordVC *privacyPasswordVC;
-@property (strong, nonatomic) XKRWPrivacyPassWordView *privacyPasswordView;
 @end

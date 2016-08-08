@@ -116,7 +116,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     //发送远程通知 提醒重要通知
-    if ([XKRWUserDefaultService getPrivacyPassword] && _privacyPasswordView.isVerified ==NO)  {
+    if ([XKRWUserDefaultService getPrivacyPassword] && _privacyPasswordVC.isVerified ==NO)  {
         dicInfo = userInfo;
     }else{
         [[XKRWNoticeService sharedService]appOpenStateDealNotification:userInfo];
@@ -296,11 +296,10 @@
     [XKRWUserDefaultService setAppGroundStatusChanged:YES];
     NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
     if (passWord && ![passWord isEqualToString:@""]) {
-        self.privacyPasswordView.isVerified = false;
-        self.privacyPasswordView.privacyType = verify;
+        self.privacyPasswordVC.isVerified = false;
+        self.privacyPasswordVC.privacyType = verify;
         [self.window makeKeyAndVisible];
-        [self.window addSubview:self.privacyPasswordView];
-//        [self.window.rootViewController presentViewController:_privacyPasswordVC animated:false completion:nil];
+        [self.window.rootViewController presentViewController:_privacyPasswordVC animated:false completion:nil];
     }
 }
 
@@ -593,56 +592,36 @@ void UncaughtExceptionHandler(NSException *exception) {
 }
 
 #pragma mark XKRWPrivacyPassWordVCDelegate
-//- (XKRWPrivacyPassWordVC *)privacyPasswordVC{
-//    NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
-//    if (!_privacyPasswordVC) {
-//            _privacyPasswordVC = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:[NSBundle mainBundle]];
-//            _privacyPasswordVC.isVerified = false;
-//            _privacyPasswordVC.privacyType = verify;
-//            _privacyPasswordVC.delegate = self;
-//    }
-//    _privacyPasswordVC.passWord = passWord;
-//    return _privacyPasswordVC;
-//}
-
-- (XKRWPrivacyPassWordView *)privacyPasswordView{
+- (XKRWPrivacyPassWordVC *)privacyPasswordVC{
     NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
-    if (!_privacyPasswordView) {
-        _privacyPasswordView = [[XKRWPrivacyPassWordView alloc] initWithFrame:self.window.frame];
-        _privacyPasswordView.isVerified = false;
-        _privacyPasswordView.privacyType = verify;
-        _privacyPasswordView.textField.delegate = _privacyPasswordView;
-        _privacyPasswordView.delegate = self;
-        [_privacyPasswordView.textField becomeFirstResponder];
+    if (!_privacyPasswordVC) {
+            _privacyPasswordVC = [[XKRWPrivacyPassWordVC alloc] initWithNibName:@"XKRWPrivacyPassWordVC" bundle:[NSBundle mainBundle]];
+            _privacyPasswordVC.isVerified = false;
+            _privacyPasswordVC.privacyType = verify;
+            _privacyPasswordVC.delegate = self;
     }
-    _privacyPasswordView.passWord = passWord;
-    return _privacyPasswordView;
+    _privacyPasswordVC.passWord = passWord;
+    return _privacyPasswordVC;
 }
 
 - (void)verifySucceed{
-    self.privacyPasswordView.isVerified = true;
-    [UIView animateWithDuration:.3 animations:^{
-        self.privacyPasswordView.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.privacyPasswordView removeFromSuperview];
+    self.privacyPasswordVC.isVerified = true;
+    [self.privacyPasswordVC dismissViewControllerAnimated:true completion:^{
+       
+        if (dicInfo) {
+            [[XKRWNoticeService sharedService]appOpenStateDealNotification:dicInfo];
+            dicInfo = nil;
+        }
+        
+        if (closeAppDicInfo) {
+
+            [[NSUserDefaults standardUserDefaults] setObject:closeAppDicInfo forKey:RemoteNotificationContent];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"privacyPasswordAndNotification" object:nil];
+            closeAppDicInfo = nil;
+        }
+
+        
     }];
-    
-//    [self.privacyPasswordVC dismissViewControllerAnimated:true completion:^{
-//       
-//        if (dicInfo) {
-//            [[XKRWNoticeService sharedService]appOpenStateDealNotification:dicInfo];
-//            dicInfo = nil;
-//        }
-//        
-//        if (closeAppDicInfo) {
-//
-//            [[NSUserDefaults standardUserDefaults] setObject:closeAppDicInfo forKey:RemoteNotificationContent];
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"privacyPasswordAndNotification" object:nil];
-//            closeAppDicInfo = nil;
-//        }
-//
-//        
-//    }];
 }
 @end

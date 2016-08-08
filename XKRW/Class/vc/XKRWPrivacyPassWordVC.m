@@ -24,6 +24,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView        *imageTwo;
 @property (strong, nonatomic) IBOutlet UIImageView        *imageThree;
 @property (strong, nonatomic) IBOutlet UIImageView        *imageFour;
+@property (strong, nonatomic) IBOutlet UITextField        *textField;
 @property (strong, nonatomic) IBOutlet UILabel            *labelVerify;
 @property (strong, nonatomic) IBOutlet UIButton           *forgetPasswordBtn;
 @property (strong, nonatomic) IBOutlet UIButton           *configueLaterBtn;
@@ -192,6 +193,9 @@
                 [textField resignFirstResponder];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self dismissViewControllerAnimated:YES completion:nil];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESHDATA object:nil];
+                    
                 });
                 return true;
             }else{
