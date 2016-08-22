@@ -696,7 +696,6 @@ static XKRWBaseService *service;
     
     @try {
         //获取记录值
-
         NSNumber *result = [[XKRWRecordService4_0 sharedService] syncTodayRecordData];
         if ([result boolValue]) {
             [XKRWRecordService4_0 setNeedUpdate:YES];

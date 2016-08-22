@@ -52,14 +52,6 @@
         self.searchResultTableView.backgroundColor = [UIColor clearColor];
         self.searchResultTableView.tableFooterView = [UIView new];
         
-        self.noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake((XKAppWidth-100)/2, (XKAppHeight - 64 -30)/2 - 50, 100, 30)];
-        self.noDataLabel.text = @"无结果";
-        self.noDataLabel.textAlignment = NSTextAlignmentCenter;
-        [self.searchResultTableView addSubview:self.noDataLabel];
-        self.noDataLabel.textColor = colorSecondary_666666;
-        self.noDataLabel.backgroundColor = [UIColor clearColor];
-        self.noDataLabel.font = XKDefaultFontWithSize(14);
-        
         UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideSearchResultView)];
         
         if (IOS_8_OR_LATER) {

@@ -141,12 +141,17 @@
     
     [[XKRWAppCommentUtil shareAppComment] setEntryPageTimeWithPage:SCHEMEPAGE];
     energyViewHeight = XKAppHeight == 480 ? 170 : (210 * XKRWScaleHeight);
+
    
     [self initData];
+    
     
     [self initView];
     [self setPlanEnergyViewTitle];
     [self refreshEnergyCircleView:nil];
+    [self downloadWithTaskID:@"syncTodayRemoteData" outputTask:^id{
+        return @([XKRWCommHelper syncTodayRemoteData]);
+    }];
     
     [[XKRWLocalNotificationService shareInstance] setOpenPlanNotification];
     
@@ -161,15 +166,9 @@
     [[XKRWNoticeService sharedService ] addNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(entryFeedBackVC) name:ENTRYFEEDBACK object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reFreshPlanvcData) name:REFRESHDATA object:nil];
    
 }
 
-
-- (void) reFreshPlanvcData {
-    [self initData];
-}
 
 - (void)privacyPasswordAndNotification {
     [[XKRWNoticeService sharedService] addAppCloseStateNotificationInViewController:self andKeyWindow:[[UIApplication sharedApplication].delegate window]];
@@ -207,14 +206,6 @@
     [self getRecordAndMenuScheme];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTodayDataToUI) name:@"loginAgainSuccess" object:nil];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self downloadWithTaskID:@"syncTodayRemoteData" outputTask:^id{
-            return @([XKRWCommHelper syncTodayRemoteData]);
-        }];
-    });
-    
-    
 }
 
 - (void)reloadSchemeData:(NSNotification *)notification
@@ -1310,20 +1301,12 @@
         [XKRWCui hideProgressHud];
         foodsArray = [result objectForKey:@"food"];
         sportsArray = [result objectForKey:@"sport"];
-        
-        if (foodsArray.count == 0 && sportsArray.count == 0) {
-            searchDisplayCtrl.noDataLabel.hidden = NO;
-        }else{
-            searchDisplayCtrl.noDataLabel.hidden = YES ;
-        }
-        
         foodsCount = foodsArray.count > 3 ? 3 : foodsArray.count;
         sportsCount = sportsArray.count > 3 ? 3 : sportsArray.count;
         if (!searchDisplayCtrl.isShowSearchResultTableView ){
             [searchDisplayCtrl showSearchResultTableView];
         }
         [searchDisplayCtrl reloadSearchResultTableView];
-        
         
         return ;
     }
@@ -1490,9 +1473,6 @@
         [tipCell.actionButton addTarget:self action:@selector(dealTipsAction:) forControlEvents:UIControlEventTouchUpInside];
         return tipCell;
     }else if (tableView.tag == 201){
-    
-        
-    
         
         if(indexPath.section == 0){
             

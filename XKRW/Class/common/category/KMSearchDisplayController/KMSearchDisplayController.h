@@ -29,8 +29,6 @@
 
 @property (nonatomic, strong) UIView *backgroundContentView;
 
-@property (nonnull,strong) UILabel *noDataLabel;
-
 - (instancetype)initWithSearchBar:(UISearchBar *)searchBar contentsController:(UIViewController *)viewController;
 
 - (void)showSearchResultView;

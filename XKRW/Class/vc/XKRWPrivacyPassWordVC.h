@@ -14,7 +14,7 @@
 @end
 #import "XKRWBaseVC.h"
 
-@interface XKRWPrivacyPassWordVC : UIViewController <UITextFieldDelegate,UIActionSheetDelegate>
+@interface XKRWPrivacyPassWordVC : XKRWBaseVC <UITextFieldDelegate,UIActionSheetDelegate>
 
 @property (nonatomic, assign) id<XKRWPrivacyPassWordVCDelegate> delegate;
 @property (nonatomic, copy)   NSString *passWord;

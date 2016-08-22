@@ -6,10 +6,12 @@
 //  Copyright © 2016年 XiKang. All rights reserved.
 //
 
+#define labelWidth 55.0
+#define labelHeight 30.0
+#define labelSpace 10.0
+
 #import "XKRWWeightPopView.h"
-@implementation XKRWWeightPopView{
-    BOOL isInit;
-}
+@implementation XKRWWeightPopView
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -37,34 +39,33 @@
         _textField.keyboardType = UIKeyboardTypeDecimalPad;
         _arrLabels = @[@"体重",@"体脂率",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
         _dicIllegal = [NSMutableDictionary dictionary];
-        isInit = YES;
         
-        _iCarouselView.type = 0;
-//        _iCarouselView.bounceDistance = 150;
-//        _iCarouselView.contentOffset = CGSizeMake(-110, 0);
-        _iCarouselView.perspective = -0.008;
-        _iCarouselView.delegate = self;
-        _iCarouselView.dataSource = self;
-        _iCarouselView.bounces = YES;
-        _iCarouselView.clipsToBounds = YES;
-        _iCarouselView.scrollEnabled = YES;
-        _iCarouselView.centerItemWhenSelected = YES;
-        _iCarouselView.scrollToItemBoundary = NO;
-        _iCarouselView.decelerationRate = 0.7;
-        _iCarouselView.scrollSpeed = .5;
-        _iCarouselView.currentItemIndex = type;
+        _typeScrollView.delegate = self;
+        _typeScrollView.bounces = true;
+        _typeScrollView.clipsToBounds = true;
+        _typeScrollView.showsHorizontalScrollIndicator = false;
+        _typeScrollView.contentSize = CGSizeMake(labelWidth *_arrLabels.count + labelSpace *(_arrLabels.count + 2), labelHeight*2);
+        _typeScrollView.contentOffset = CGPointMake(labelSpace*(type+1)+labelWidth*type, 0);
+        
+        for (int i = 0; i < _arrLabels.count; i++) {
+            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(labelSpace*(i+1)+labelWidth*i, labelHeight/2, labelWidth, labelHeight)];
+            [btn setTitle:[NSString stringWithFormat:@"%@",_arrLabels[i]] forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            btn.titleLabel.textAlignment = NSTextAlignmentCenter;
+            [btn addTarget:self action:@selector(tapTypeLabel:) forControlEvents:UIControlEventTouchUpInside];
+            if ((i == 0 && type == 0)||(i == 1 && type == 1)) {
+                [btn setTitleColor:XKMainToneColor_29ccb1 forState:UIControlStateNormal];
+                btn.layer.borderWidth = 1;
+                btn.layer.cornerRadius = 5;
+                btn.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+            }
+            btn.tag = 88888 + i;
+            [_typeScrollView addSubview:btn];
+        }
+        _typePageControl.numberOfPages = _arrLabels.count;
+        _typePageControl.currentPage = type;
         
         _recordDates = [[XKRWRecordService4_0 sharedService] getUserRecordDateFromDB];
-        
-//        _calendar = [[XKRWCalendar alloc] initWithOrigin:CGPointMake(-50, 44) recordDateArray:_recordDates headerType:XKRWCalendarHeaderTypeSimple andResizeBlock:^{
-//            
-//        }];
-//        CGRect frame = _calendar.frame;
-////        frame.size.width -= 100;
-//        _calendar.frame = frame;
-//        [_calendar addBackToTodayButtonInFooterView];
-//        _calendar.delegate = self;
-//        [_calendar reloadCalendar];
         
         _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, XKAppHeight-200, XKAppWidth, 200)];
         
@@ -95,7 +96,7 @@
         
         _textField.delegate = self;
         [self reloadReocrdOfDay:date];
-        _currentIndex = [NSNumber numberWithInteger:_iCarouselView.currentItemIndex];
+        _currentIndex = [NSNumber numberWithInteger:_typePageControl.currentPage];
     }
     return self;
 }
@@ -111,6 +112,10 @@
 
 -(void)setCurrentIndex:(NSNumber *)currentIndex{
     if (_currentIndex != currentIndex) {
+        UIButton *btn = [_typeScrollView viewWithTag:88888 + _currentIndex.integerValue];
+        btn.layer.borderWidth = 0;
+        btn.layer.borderColor = [UIColor clearColor].CGColor;
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _currentIndex = currentIndex;
     }
     if (_currentIndex.integerValue == 0) {
@@ -249,15 +254,27 @@
 }
 
 -(void)showCurrentText{
-    dispatch_queue_t TextQueue = dispatch_queue_create("TextQueue", NULL);
-    dispatch_async(TextQueue, ^{
-        CGFloat str = [_dicAll[_selectDateStr][[self getCurrentType:_currentIndex]] floatValue];
-        NSString *txt = str == 0 ? @"" : [NSString stringWithFormat:@"%.01f",str];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _textField.text = txt;
-        });
-    });
-    dispatch_release(TextQueue);
+    CGFloat str = [_dicAll[_selectDateStr][[self getCurrentType:_currentIndex]] floatValue];
+    NSString *txt = str == 0 ? @"" : [NSString stringWithFormat:@"%.01f",str];
+    _textField.text = txt;
+    UIButton *btn = [(UIButton *)_typeScrollView viewWithTag:88888 + self.currentIndex.integerValue];
+    [btn setTitleColor:XKMainToneColor_29ccb1 forState:UIControlStateNormal];
+    btn.layer.borderWidth = 1;
+    btn.layer.cornerRadius = 5;
+    btn.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+    [_typeScrollView setContentOffset:CGPointMake(btn.frame.size.width -_typeScrollView.frame.size.width/2, 0) animated:true];
+    
+    if ([btn.titleLabel.text isEqualToString:@"体重"])
+    {
+        _labInput.text = @"kg";
+    }
+    else if ([btn.titleLabel.text isEqualToString:@"体脂率"])
+    {
+        _labInput.text = @"%";
+    }
+    else{
+        _labInput.text = @"cm";
+    }
 }
 
 -(NSString *)getCurrentType:(NSNumber *)indexNum{
@@ -310,125 +327,128 @@
 //    [[XKRWRecordService4_0 sharedService] saveRecord:_oldRecord ofType:XKRWRecordTypeWeight];
 }
 
-- (void)carouselDidScroll:(iCarousel *)carousel{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self showCalendar:NO];
-    if (carousel.currentItemIndex != [_currentIndex integerValue]) {
+    if (_typePageControl.currentPage != [_currentIndex integerValue]) {
         [self saveTheData];
-        _currentIndex = [NSNumber numberWithInteger:carousel.currentItemIndex];
+        _currentIndex = [NSNumber numberWithInteger:_typePageControl.currentPage];
         [self showCurrentText];
     }
 }
 
-- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index
-{
-    carousel.currentItemIndex = index;
-    [carousel scrollToItemAtIndex:index animated:YES];
-}
-
-- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
-    for (UIView *item in carousel.visibleItemViews) {
-        for (UILabel *lab in item.subviews) {
-            lab.layer.borderWidth = 0;
-            lab.layer.borderColor = [UIColor clearColor].CGColor;
-            lab.textColor = [UIColor blackColor];
-        }
-    }
-    
-    for (UIView *view in carousel.currentItemView.subviews) {
-        if ([view isKindOfClass:[UILabel class]] ) {
-            UILabel *lab = (UILabel *)view;
-            lab.textColor = XKMainToneColor_29ccb1;
-            lab.layer.borderWidth = 1;
-            lab.layer.cornerRadius = 5;
-            lab.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-            
-            if ([lab.text isEqualToString:@"体重"])
-            {
-                 _labInput.text = @"kg";
-            }
-            else if ([lab.text isEqualToString:@"体脂率"])
-            {
-                _labInput.text = @"%";
-            }
-            else{
-                _labInput.text = @"cm";
-            }
-        }
+- (void)tapTypeLabel:(UIButton *)btn{
+    NSString *str = btn.titleLabel.text;
+    NSInteger index = [_arrLabels indexOfObject:str];
+    _typePageControl.currentPage = index;
+    if (_typePageControl.currentPage != [_currentIndex integerValue]) {
+        [self saveTheData];
+        self.currentIndex = [NSNumber numberWithInteger:_typePageControl.currentPage];
+        [self showCurrentText];
     }
 }
 
-- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
-{
-    return _arrLabels.count;
-}
+//- (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel{
+//    for (UIView *item in carousel.visibleItemViews) {
+//        for (UILabel *lab in item.subviews) {
 
-- (CGFloat)carouselItemWidth:(iCarousel *)carousel
-{
-    return 60;
-}
+//        }
+//    }
+//    
+//    for (UIView *view in carousel.currentItemView.subviews) {
+//        if ([view isKindOfClass:[UILabel class]] ) {
+//            UILabel *lab = (UILabel *)view;
+//            lab.textColor = XKMainToneColor_29ccb1;
+//            lab.layer.borderWidth = 1;
+//            lab.layer.cornerRadius = 5;
+//            lab.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+//            
+//            if ([lab.text isEqualToString:@"体重"])
+//            {
+//                 _labInput.text = @"kg";
+//            }
+//            else if ([lab.text isEqualToString:@"体脂率"])
+//            {
+//                _labInput.text = @"%";
+//            }
+//            else{
+//                _labInput.text = @"cm";
+//            }
+//        }
+//    }
+//}
 
-- (UIView *)carousel:(iCarousel *)carousel
-  viewForItemAtIndex:(NSUInteger)index
-         reusingView:(UIImageView *)view
-{
-    if (view == nil) {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        view.contentMode = UIViewContentModeScaleToFill; //图片拉伸模式
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(2, 0, 56, 26)];
-       
-        lab.text = [NSString stringWithFormat:@"%@",_arrLabels[index]];
-        lab.textAlignment = NSTextAlignmentCenter;
-        
-        if (isInit && index == 0) {
-            lab.textColor = XKMainToneColor_29ccb1;
-            lab.layer.borderWidth = 1;
-            lab.layer.cornerRadius = 5;
-            lab.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-            isInit = NO;
-        }
-        [view addSubview:lab];
-    }
-    return view;
-}
+//- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
+//{
+//    return _arrLabels.count;
+//}
+//
+//- (CGFloat)carouselItemWidth:(iCarousel *)carousel
+//{
+//    return 55;
+//}
 
-- (CGFloat)carousel:(iCarousel *)_carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
-{
-    //customize carousel display
-    switch (option)
-    {
-        case iCarouselOptionWrap:
-        {
-            return NO;
-        }
-        case iCarouselOptionSpacing:
-        {
-            //add a bit of spacing between the item views
-            return value * .910f;
-        }
-        case iCarouselOptionFadeMax:
-        {
-            if (_carousel.type == iCarouselTypeCustom)
-            {
-                //set opacity based on distance from camera
-                return 1.3f;
-            }
-            return value;
-        }
-        case iCarouselOptionFadeMin:
-        {
-            if (_carousel.type == iCarouselTypeCustom)
-            {
-                //set opacity based on distance from camera
-                return -1.3f;
-            }
-            return value;
-        }
-        default:
-        {
-            return value;
-        }
-    }
-}
+//- (UIView *)carousel:(iCarousel *)carousel
+//  viewForItemAtIndex:(NSUInteger)index
+//         reusingView:(UIImageView *)view
+//{
+//    if (view == nil) {
+//        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 55, 30)];
+//        view.contentMode = UIViewContentModeScaleToFill; //图片拉伸模式
+//        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 55, 26)];
+//       
+//        lab.text = [NSString stringWithFormat:@"%@",_arrLabels[index]];
+//        lab.textAlignment = NSTextAlignmentCenter;
+//        
+//        if (isInit && index == 0) {
+//            lab.textColor = XKMainToneColor_29ccb1;
+//            lab.layer.borderWidth = 1;
+//            lab.layer.cornerRadius = 5;
+//            lab.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
+//            isInit = NO;
+//        }
+//        [view addSubview:lab];
+//    }
+//    return view;
+//}
+
+//- (CGFloat)carousel:(iCarousel *)_carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
+//{
+//    //customize carousel display
+//    switch (option)
+//    {
+//        case iCarouselOptionWrap:
+//        {
+//            return NO;
+//        }
+//        case iCarouselOptionSpacing:
+//        {
+//            //add a bit of spacing between the item views
+//            return value * 1.10f;
+//        }
+//        case iCarouselOptionFadeMax:
+//        {
+//            if (_carousel.type == iCarouselTypeCustom)
+//            {
+//                //set opacity based on distance from camera
+//                return 1.3f;
+//            }
+//            return value;
+//        }
+//        case iCarouselOptionFadeMin:
+//        {
+//            if (_carousel.type == iCarouselTypeCustom)
+//            {
+//                //set opacity based on distance from camera
+//                return -1.3f;
+//            }
+//            return value;
+//        }
+//        default:
+//        {
+//            return value;
+//        }
+//    }
+//}
 
 #pragma -mark textfiled delegate
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
@@ -529,7 +549,7 @@
     }else{
         NSArray *keys = [_dicIllegal allKeys];
         NSNumber *index = [keys firstObject];
-        _iCarouselView.currentItemIndex = index.integerValue;
+        _typePageControl.currentPage = index.integerValue;
         _currentIndex = index;
         [self showInfoText:index.integerValue];
     }

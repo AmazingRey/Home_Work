@@ -388,11 +388,7 @@
         XKRWFoodRecordCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResultCell"];
         cell.indexPath = indexPath ;
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
-        
-    
-
         if(_schemeType == eSchemeSport){
-       
             XKRWSportEntity *sportEntity = [searchResults objectAtIndex:indexPath.row];
             [cell setTitle:sportEntity.sportName logoURL:sportEntity.sportActionPic clickDetail:^(NSIndexPath * indexPath) {
                 [MobClick event:@"pg_sport_detail"];
@@ -416,13 +412,10 @@
                 sportAddVC.sportEntity = sportEntity;
                 sportAddVC.sportID = sportEntity.sportId;
                 sportAddVC.recordDate = _recordDate;
-                sportAddVC.isPresent = YES;
-                XKRWNavigationController *nav = [[XKRWNavigationController alloc]initWithRootViewController:sportAddVC];
-                [weakSelf.navigationController presentViewController:nav animated:YES completion:nil];
+                [weakSelf.navigationController pushViewController:sportAddVC animated:YES];
             }];
             
         }else {
-    
             XKRWFoodEntity *foodEntity = [searchResults objectAtIndex:indexPath.row];
             [cell setTitle:foodEntity.foodName logoURL:foodEntity.foodLogo clickDetail:^(NSIndexPath * indexPath) {
                 [recordSearchBar resignFirstResponder];
@@ -546,13 +539,6 @@
         } else {
             searchResults = [result objectForKey:@"food"];
         }
-        
-        if (searchResults.count == 0) {
-            searchDisplayCtrl.noDataLabel.hidden = NO;
-        }else{
-            searchDisplayCtrl.noDataLabel.hidden = YES ;
-        }
-        
         if(!searchDisplayCtrl.isShowSearchResultTableView){
             [searchDisplayCtrl showSearchResultTableView];
         }

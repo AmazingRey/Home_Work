@@ -324,9 +324,6 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             [deleteFood appendString:@")"];
             [deleteSport appendString:@")"];
             
-            
-            
-            
             [self executeSql:deleteFood];
             [self executeSql:deleteSport];
             

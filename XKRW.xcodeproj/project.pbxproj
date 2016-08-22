@@ -6884,7 +6884,7 @@
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
 					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = KFHY8Z75E6;
+						DevelopmentTeam = 2H2WTQZ7Y8;
 					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = KFHY8Z75E6;
@@ -8087,8 +8087,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
@@ -8116,7 +8116,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
-				PROVISIONING_PROFILE = "9df23009-d3b0-463b-a844-5ef3d936a9d7";
+				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s armv64";
 			};
@@ -8138,8 +8138,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				COPY_PHASE_STRIP = YES;
 				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -8159,7 +8159,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
-				PROVISIONING_PROFILE = "9df23009-d3b0-463b-a844-5ef3d936a9d7";
+				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s armv64";
@@ -8175,7 +8175,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
@@ -8244,7 +8244,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
@@ -8307,8 +8307,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8324,7 +8324,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.ss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9df23009-d3b0-463b-a844-5ef3d936a9d7";
+				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -8334,8 +8334,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: yao qing (W3N55EESQV)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao qing (W3N55EESQV)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8347,7 +8347,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.ss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9df23009-d3b0-463b-a844-5ef3d936a9d7";
+				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};

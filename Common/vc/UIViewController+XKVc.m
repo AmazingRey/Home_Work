@@ -100,7 +100,6 @@ static NSMutableDictionary *_transferData = nil;
         [XKDispatcher syncExecuteTask:^ {
             if ([notice isDownloadTask]) {
                 if ([notice isSuccess]) {
-                    NSLog(@"%@",[notification detailName]);
                     [self didDownloadWithResult:[notice result] taskID:[notification detailName]];
                 } else {
                     [self handleDownloadProblem:[notice problem] withTaskID:[notification detailName]];

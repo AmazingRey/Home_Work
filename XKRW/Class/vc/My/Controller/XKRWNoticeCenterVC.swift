@@ -93,9 +93,8 @@ class XKRWNoticeCenterVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate {
                     hasUnreadNotice += entity.read == 0 ? 1 : 0
                 }
                 selectedSegmentIndex = hasUnreadNotice == 0 ? 0 : 1
-            }
-            else {
-                selectedSegmentIndex = segment.selectedSegmentIndex;
+            } else {
+                selectedSegmentIndex = 0
             }
         }
         

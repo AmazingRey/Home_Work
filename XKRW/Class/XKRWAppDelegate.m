@@ -294,12 +294,14 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     [XKRWUserDefaultService setAppGroundStatusChanged:YES];
-    NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
-    if (passWord && ![passWord isEqualToString:@""]) {
-        self.privacyPasswordVC.isVerified = false;
-        self.privacyPasswordVC.privacyType = verify;
-        [self.window makeKeyAndVisible];
-        [self.window.rootViewController presentViewController:_privacyPasswordVC animated:false completion:nil];
+    if (!(self.privacyPasswordVC.isViewLoaded && self.privacyPasswordVC.view.window)) {
+        NSString *passWord = [XKRWUserDefaultService getPrivacyPassword];
+        if (passWord && ![passWord isEqualToString:@""]) {
+            self.privacyPasswordVC.isVerified = false;
+            self.privacyPasswordVC.privacyType = verify;
+            [self.window makeKeyAndVisible];
+            [self.window.rootViewController presentViewController:_privacyPasswordVC animated:false completion:nil];
+        }
     }
 }
 
