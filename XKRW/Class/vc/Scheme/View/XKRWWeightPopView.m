@@ -262,7 +262,7 @@
     btn.layer.borderWidth = 1;
     btn.layer.cornerRadius = 5;
     btn.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
-    [_typeScrollView setContentOffset:CGPointMake(btn.frame.size.width -_typeScrollView.frame.size.width/2, 0) animated:true];
+    [_typeScrollView setContentOffset:CGPointMake(btn.center.x - _typeScrollView.frame.size.width/2, 0) animated:true];
     
     if ([btn.titleLabel.text isEqualToString:@"体重"])
     {
