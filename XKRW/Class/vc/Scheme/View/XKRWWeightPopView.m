@@ -39,16 +39,18 @@
         _textField.keyboardType = UIKeyboardTypeDecimalPad;
         _arrLabels = @[@"体重",@"体脂率",@"胸围",@"臂围",@"腰围",@"臀围",@"大腿围",@"小腿围"];
         _dicIllegal = [NSMutableDictionary dictionary];
-        
+        _typeButtonDic = [NSMutableDictionary dictionary];
         _typeScrollView.delegate = self;
         _typeScrollView.bounces = true;
         _typeScrollView.clipsToBounds = true;
         _typeScrollView.showsHorizontalScrollIndicator = false;
-        _typeScrollView.contentSize = CGSizeMake(labelWidth *_arrLabels.count + labelSpace *(_arrLabels.count + 2), labelHeight*2);
-        _typeScrollView.contentOffset = CGPointMake(labelSpace*(type+1)+labelWidth*type, 0);
+        _typeScrollView.contentSize = CGSizeMake(_typeScrollView.frame.size.width + (labelSpace + labelWidth) *(_arrLabels.count - 1), labelHeight*2);
+//        _typeScrollView.contentOffset = CGPointMake(labelSpace*(type+1)+labelWidth*type, 0);
         
         for (int i = 0; i < _arrLabels.count; i++) {
-            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(labelSpace*(i+1)+labelWidth*i, labelHeight/2, labelWidth, labelHeight)];
+            CGRect frame = CGRectMake((labelSpace + labelWidth)*i + _typeScrollView.frame.size.width/2 - labelWidth/2, labelHeight/2, labelWidth, labelHeight);
+            
+            UIButton *btn = [[UIButton alloc] initWithFrame:frame];
             [btn setTitle:[NSString stringWithFormat:@"%@",_arrLabels[i]] forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             btn.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -61,6 +63,7 @@
             }
             btn.tag = 88888 + i;
             [_typeScrollView addSubview:btn];
+            [_typeButtonDic setObject:btn forKey:[NSNumber numberWithInt:i]];
         }
         _typePageControl.numberOfPages = _arrLabels.count;
         _typePageControl.currentPage = type;
@@ -329,6 +332,21 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self showCalendar:NO];
+    
+    XKLog(@"_typeScrollView.contentSize = %@",NSStringFromCGSize(_typeScrollView.contentSize));
+    XKLog(@"_typeScrollView.contentOffset = %@",NSStringFromCGPoint(_typeScrollView.contentOffset));
+    UIButton *currentBtn = [_typeButtonDic objectForKey:_currentIndex];
+    CGPoint frame = [_typeScrollView convertPoint:currentBtn.bounds.origin toView:currentBtn];
+//    CGPoint frame = [currentBtn convertPoint:currentBtn.bounds.origin toView:_typeScrollView];
+//     XKLog(@"currentBtn。point = %@",NSStringFromCGPoint(frame));
+    
+//    for (UIButton *button in [_typeButtonDic allValues]) {
+//        CGPoint point = [_typeScrollView convertPoint:button.bounds.origin toView:nil];
+//        if (point) {
+//            
+//        }
+//    }
+    
     if (_typePageControl.currentPage != [_currentIndex integerValue]) {
         [self saveTheData];
         _currentIndex = [NSNumber numberWithInteger:_typePageControl.currentPage];

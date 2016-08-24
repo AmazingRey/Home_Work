@@ -56,6 +56,7 @@
 @property (strong, nonatomic) NSNumber *currentIndex;
 @property (assign, nonatomic) XKRWRecordType recordType;
 @property (strong, nonatomic) NSMutableDictionary *dicIllegal;
+@property (strong, nonatomic) NSMutableDictionary *typeButtonDic;
 
 - (instancetype)initWithFrame:(CGRect)frame withType:(NSInteger)type withDate:(NSDate *)date;
 - (IBAction)pressCancle:(id)sender;
