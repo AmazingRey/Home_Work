@@ -120,6 +120,9 @@
         btn.layer.borderColor = [UIColor clearColor].CGColor;
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _currentIndex = currentIndex;
+        UIButton *changeBtn;
+        changeBtn = [_typeButtonDic objectForKey:_currentIndex];
+         [self tapTypeLabel:changeBtn];
     }
     if (_currentIndex.integerValue == 0) {
         _recordType = XKRWRecordTypeWeight;
@@ -333,11 +336,24 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self showCalendar:NO];
     
-    XKLog(@"_typeScrollView.contentSize = %@",NSStringFromCGSize(_typeScrollView.contentSize));
-    XKLog(@"_typeScrollView.contentOffset = %@",NSStringFromCGPoint(_typeScrollView.contentOffset));
-    UIButton *currentBtn = [_typeButtonDic objectForKey:_currentIndex];
-    CGPoint frame = [_typeScrollView convertPoint:currentBtn.bounds.origin toView:currentBtn];
-//    CGPoint frame = [currentBtn convertPoint:currentBtn.bounds.origin toView:_typeScrollView];
+//    XKLog(@"_typeScrollView.contentSize = %@",NSStringFromCGSize(_typeScrollView.contentSize));
+//    XKLog(@"_typeScrollView.contentOffset = %@",NSStringFromCGPoint(_typeScrollView.contentOffset));
+//    UIButton *currentBtn = [_typeButtonDic objectForKey:[NSNumber numberWithInteger:_currentIndex.integerValue + 1]];
+//    CGPoint frame = [_typeScrollView convertPoint:currentBtn.bounds.origin toView:currentBtn];
+//    CGPoint poi = [currentBtn convertPoint:currentBtn.frame.origin toView:self];
+    CGPoint poi = _typeScrollView.contentOffset;
+    self.currentIndex = [NSNumber numberWithInteger:poi.x / (labelWidth + labelSpace)];
+//    float scrollDistance = currentBtn.frame.origin.x - poi.x;
+//    if (fabsf(scrollDistance) > labelWidth/2) {
+//        UIButton *changeBtn;
+//        if (scrollDistance > 0) {
+//            self.currentIndex = [NSNumber numberWithInteger:_currentIndex.integerValue + 1];
+//        }else if (scrollDistance < 0){
+//            self.currentIndex = [NSNumber numberWithInteger:_currentIndex.integerValue - 1];
+//        }
+//        changeBtn = [_typeButtonDic objectForKey:_currentIndex];
+//        [self tapTypeLabel:changeBtn];
+//    }
 //     XKLog(@"currentBtn。point = %@",NSStringFromCGPoint(frame));
     
 //    for (UIButton *button in [_typeButtonDic allValues]) {
