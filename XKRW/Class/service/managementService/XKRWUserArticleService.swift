@@ -135,7 +135,7 @@ class XKRWUserArticleService: XKRWBaseService {
         return returnValue
     }
     
-    func uploadPictureWithEntity(inout entity: XKRWUserPostEntity,var callback: ((isSuccess:Bool) -> Void)!) ->Void{
+    func uploadPictureWithEntity( inout entity: XKRWUserPostEntity,var callback: ((isSuccess:Bool) -> Void)!) ->Void{
         var success = true
     
         var starTime:NSTimeInterval!;
@@ -184,7 +184,7 @@ class XKRWUserArticleService: XKRWBaseService {
                 
                 let option = QNUploadOption(mime: nil, progressHandler: nil, params: ["x: position": ""], checkCrc: false, cancellationSignal: nil)
                 
-                let random = rand() % 1000000000
+                let random = arc4random() % 1000000000  
                 let stamp = Int64(NSDate().timeIntervalSince1970 * 1000)
                 let fileName = "\(random)_\(stamp).jpg"
                 
@@ -214,7 +214,7 @@ class XKRWUserArticleService: XKRWBaseService {
                     }
                     }, option: option)
                 //                        y++
-                numOfPic++
+                numOfPic += 1
             }
                 // if image is uploaded but failed to analyze
             else if image.info.count == 0 {
@@ -236,7 +236,7 @@ class XKRWUserArticleService: XKRWBaseService {
                         callback = nil
                     }
                 })
-                numOfPic++
+                numOfPic += 1
             }
         }
 
@@ -254,7 +254,7 @@ class XKRWUserArticleService: XKRWBaseService {
     
     - parameter entity: 文章实体
     */
-    func uploadPicturesWithEntity(inout entity: XKRWUserArticleEntity, var callback: ((isSuccess: Bool) -> Void)!) -> Void {
+    func uploadPicturesWithEntity( inout entity: XKRWUserArticleEntity, var callback: ((isSuccess: Bool) -> Void)!) -> Void {
         
 //        assert(entity.compressedImages.count > 0, "需要压缩图片数组不为空才能上传")
         
@@ -326,12 +326,12 @@ class XKRWUserArticleService: XKRWBaseService {
 
         if entity.mainPicture!.url == nil {
             
-            numOfPic++
+            numOfPic += 1
             
             let data = UIImageJPEGRepresentation(entity.mainPicture!.compressedImage!, 1)
             let stamp = Int64(NSDate().timeIntervalSince1970 * 1000)
             
-            let random = rand() % 1000000000
+            let random = arc4random() % 1000000000
             let fileName = "\(random)_\(stamp).jpg"
             
             manage.putData(data, key: fileName, token: token, complete: { (info: QNResponseInfo!, key: String!, resp: [NSObject : AnyObject]!) -> Void in
@@ -371,7 +371,7 @@ class XKRWUserArticleService: XKRWBaseService {
                         
                         let option = QNUploadOption(mime: nil, progressHandler: nil, params: ["x: position": ""], checkCrc: false, cancellationSignal: nil)
                         
-                        let random = rand() % 1000000000
+                        let random = arc4random() % 1000000000
                         let stamp = Int64(NSDate().timeIntervalSince1970 * 1000)
                         let fileName = "\(random)_\(stamp).jpg"
                         
@@ -401,7 +401,7 @@ class XKRWUserArticleService: XKRWBaseService {
                             }
                         }, option: option)
 //                        y++
-                        numOfPic++
+                        numOfPic += 1
                     }
                         // if image is uploaded but failed to analyze
                     else if image.info.count == 0 {
@@ -423,7 +423,7 @@ class XKRWUserArticleService: XKRWBaseService {
                                 callback = nil
                             }
                         })
-                        numOfPic++
+                        numOfPic += 1
                     }
                 }
 //                x++
@@ -516,7 +516,7 @@ class XKRWUserArticleService: XKRWBaseService {
         var body: NSString
         do {
             var content = [[String: AnyObject]]()
-            for var i = 0; i < entity.textContent.count; i++ {
+            for i in 0 ..< entity.textContent.count {
                 var pics = [[String: AnyObject]]()
                 
                 for image in entity.originalImages[i] {
@@ -754,7 +754,7 @@ class XKRWUserArticleService: XKRWBaseService {
         Log.debug_println(data)
         
         // if server response have "status", means it couldn't be read by user
-        if let status = data["status"] as? Int where status == 3 || status == 2 {
+        if let status = data["status"] as? Int  where status == 3 || status == 2 {
             let entity = XKRWUserArticleEntity()
             entity.status = XKRWUserArticleStatus(rawValue: status) ?? .DeleteByAdmin
             
@@ -852,7 +852,7 @@ class XKRWUserArticleService: XKRWBaseService {
    
         Log.debug_println(data)
         
-        if let status = data["status"] as? Int where status == 3 || status == 2 {
+        if let status = data["status"] as? Int  where status == 3 || status == 2 {
             let entity = XKRWUserPostEntity()
             entity.status = XKRWPostStatus(rawValue: status) ?? .DeleteByAdmin
             return entity

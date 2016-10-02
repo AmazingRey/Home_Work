@@ -11,9 +11,13 @@ import UIKit
 class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
  
 
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var headView: UIView!
-    @IBOutlet weak var headLabel: UILabel!
+    var scrollView: UIScrollView!
+    var headView: UIView!
+    var targetView: UIView!
+    var targetSeparateLabel: UILabel!
+    var targetLabel: UILabel!
+    var targetTimeLabel: UILabel!
+    var targetWeightLabel: UILabel!
     
     var fromWhichVC: FromWhichVC?
     var dicData = NSMutableDictionary()
@@ -22,9 +26,12 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
     override func viewDidLoad() {
         MobClick.event("pg_plan")
         super.viewDidLoad()
-        self.title = "我的瘦身计划"
         let labor : XKPhysicalLabor = XKRWUserService.sharedService().getUserLabor()
         isHeavyType = labor == eHeavy ? true : false;
+        self.title = "我的瘦身计划"
+        self.edgesForExtendedLayout = .All;
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.addNaviBarLeftButtonWithNormalImageName("back_white", highlightedImageName: "back_p_trans", selector: #selector(popView))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -32,30 +39,113 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
         
         self.loadDataAndReload()
         scrollView.contentOffset = CGPointZero
-        
-        self.navigationController!.setNavigationBarHidden(false, animated: animated)
+        let nav : XKRWNavigationController = self.navigationController as! XKRWNavigationController
+        nav.navigationBarChangeFromBlackHalfTransNavigationBarToTransparencyNavigationBar()
+//        self.navigationController!.setNavigationBarHidden(false, animated: animated)
     }
     
-    func makeHeadLabelData() -> String {
+    func targetTime() -> String {
+        let planFinishDate = NSDate.today().offsetDay(XKRWAlgolHelper.remainDayToAchieveTargetWithDate(nil))
+        let timeStr = String(format:"将于%d年%d月%d日达到",planFinishDate.year,planFinishDate.month,planFinishDate.day)
+        return timeStr
+    }
+    
+    func targetWeight() -> String {
         let weight : NSInteger = XKRWUserService.sharedService().getUserDestiWeight()
         let target_weight = CGFloat(weight)/1000.0
-        let planFinishDate = NSDate.today().offsetDay(XKRWAlgolHelper.remainDayToAchieveTarget())
-        let headStr = String(format:"预计将于%d年%d月%d日达到%.1fkg",planFinishDate.year,planFinishDate.month,planFinishDate.day,target_weight)
-        return headStr
+        let weightStr = String(format:"%.1fkg",target_weight)
+        return weightStr
+    }
+    
+    func initView(){
+        scrollView = UIScrollView()
+        scrollView.frame = self.view.bounds
+        scrollView.contentSize=CGSizeMake(
+            UI_SCREEN_WIDTH,2*UI_SCREEN_HEIGHT)
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        self.view.addSubview(scrollView)
+        
+        headView = UIImageView(frame: CGRectMake(0, 0, UI_SCREEN_WIDTH, 100))
+        let image : UIImage = UIImage(named:"plan_topImg")!
+        headView = UIImageView(image: image)
+        headView.layer.masksToBounds = false
+        scrollView.addSubview(headView)
+        
+        targetView = UIView()
+        targetView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH - 20, 100)
+        targetView.backgroundColor = UIColor.whiteColor()
+        targetView.layer.cornerRadius = 6
+        targetView.layer.shadowColor = UIColor.blackColor().CGColor
+        targetView.layer.shadowOpacity = 0.5
+        targetView.layer.shadowOffset = CGSize.zero
+        targetView.layer.shadowRadius = 3
+        targetView.center = CGPointMake(headView.center.x, headView.frame.size.height)
+        
+        targetSeparateLabel = UILabel()
+        targetSeparateLabel.backgroundColor = UIColor.blackColor()
+        
+        targetLabel = UILabel()
+        targetLabel.text = "按照以下计划执行预计"
+        targetLabel.textAlignment = .Right
+        targetLabel.textColor = UIColor.blackColor()
+        targetLabel.frame.size = CGSizeMake(50, 50)
+        
+        targetTimeLabel = UILabel()
+        targetTimeLabel.textAlignment = .Right
+        targetTimeLabel.textColor = UIColor.blackColor()
+        targetTimeLabel.frame.size = CGSizeMake(targetView.frame.size.width, 40)
+        
+        targetWeightLabel = UILabel()
+        targetWeightLabel.textColor = UIColor.blackColor()
+        targetWeightLabel.font = targetWeightLabel.font.fontWithSize(30)
+        targetWeightLabel.frame.size = CGSizeMake(50, 50)
+        
+    }
+    
+    func makeMasonryLayout(){
+        self.targetSeparateLabel.mas_makeConstraints { (make) in
+            make.centerX.mas_equalTo()(self.targetView.mas_centerX).offset()(self.targetView.frame.size.height/2.5)
+            make.centerY.mas_equalTo()(self.targetView.mas_centerY)
+            make.width.mas_equalTo()(0.5)
+            make.height.mas_equalTo()(self.targetView.frame.size.height/2)
+            self.targetView.addSubview(self.targetSeparateLabel)
+        }
+        self.targetLabel.mas_makeConstraints { (make) in
+            make.right.mas_equalTo()(self.targetSeparateLabel.mas_left).offset()(-20)
+            make.centerY.mas_equalTo()(self.targetView.mas_centerY).offset()(-15)
+            make.height.mas_equalTo()(30)
+            self.targetView.addSubview(self.targetLabel)
+        }
+        self.targetTimeLabel.mas_makeConstraints { (make) in
+            make.right.mas_equalTo()(self.targetSeparateLabel.mas_left).offset()(-20)
+            make.centerY.mas_equalTo()(self.targetView.mas_centerY).offset()(15)
+            make.height.mas_equalTo()(30)
+            self.targetView.addSubview(self.targetTimeLabel)
+        }
+        self.targetWeightLabel.mas_makeConstraints { (make) in
+            make.left.mas_equalTo()(self.targetSeparateLabel.mas_right).offset()(20)
+            make.centerY.mas_equalTo()(self.targetView.mas_centerY)
+            make.width.and().height().mas_equalTo()(100)
+            self.targetView.addSubview(self.targetWeightLabel)
+        }
     }
     
     func loadDataAndReload(){
         //判断是否在5.2重置过
         let date = NSUserDefaults.standardUserDefaults().objectForKey(String(format:"StartTime_%ld",XKRWUserService.sharedService().getUserId()))
-        if (date == nil || XKRWAlgolHelper .remainDayToAchieveTarget() == -1 )
+        self.initView()
+        
+        if (date == nil || XKRWAlgolHelper .remainDayToAchieveTargetWithDate(nil) == -1 )
         {
             //未重置过
-            headLabel.text = ""
+            targetTimeLabel.text = ""
             var frame = headView.frame
             frame.size.height -= 50
             headView.frame = frame
         }else{
-            headLabel.text = self.makeHeadLabelData()
+            targetTimeLabel.text = self.targetTime()
+            targetWeightLabel.text = self.targetWeight()
         }
         
         self.initHabitData()
@@ -112,13 +202,15 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
             }
             
             view.frame = frame
-            //            view.layoutIfNeeded()
-            scrollView.addSubview(view)
+//            scrollView.addSubview(view)
             scrollContentSize.height += frame.size.height
         }
+        
+        headView.addSubview(targetView)
+        
         if(fromWhichVC == FromWhichVC.MyVC || fromWhichVC == FromWhichVC.PlanVC)
         {
-            self.addNaviBarRightButtonWithText("修改计划", action: #selector(XKRWThinBodyAssess_5_3VC.doClickNaviBarRightButton as (XKRWThinBodyAssess_5_3VC) -> () -> ()))
+            self.addNaviBarRightButtonWithText("修改计划", action: #selector(XKRWThinBodyAssess_5_3VC.doClickNaviBarRightButton as (XKRWThinBodyAssess_5_3VC) -> () -> ()),withColor: UIColor.whiteColor())
         }else{
             let myFirstButton = UIButton(type:UIButtonType.Custom)
             myFirstButton.setTitle("开始瘦身", forState: .Normal)
@@ -130,7 +222,9 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
             scrollView.addSubview(myFirstButton)
         }
         scrollView.contentSize = scrollContentSize
+        self.makeMasonryLayout()
     }
+    
     func setFromWhichVC(type:FromWhichVC){
         fromWhichVC = type
     }
@@ -144,7 +238,8 @@ class XKRWThinBodyAssess_5_3VC: XKRWBaseVC,XKRWPlan_5_3ViewDelegate {
             XKRWCui.showInformationHudWithText("没有网络，请检查网络设置")
             return;
         }
-        
+        let nav : XKRWNavigationController = self.navigationController as! XKRWNavigationController
+        nav.navigationBarChangeFromTransparencyNavigationBarToDefaultNavigationBar()
         let schemeInfoVC:XKRWChangeSchemeInfoVC = XKRWChangeSchemeInfoVC()
         self.navigationController?.pushViewController(schemeInfoVC, animated: true);
     }

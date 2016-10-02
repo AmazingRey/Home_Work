@@ -50,7 +50,7 @@ class KMScreenTopMarginHint: UIView {
         UIView.animateWithDuration(0.3) { () -> Void in
             self.alpha = 1
         }
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "hide", userInfo: nil, repeats: false)
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(KMScreenTopMarginHint.hide), userInfo: nil, repeats: false)
     }
     
     func hide() -> Void {

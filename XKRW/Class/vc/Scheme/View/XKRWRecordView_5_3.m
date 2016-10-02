@@ -188,6 +188,13 @@
         [_scrollView addSubview:notNeedSportLabel];
     }
     
+    if([_date compare:[NSDate date]] == NSOrderedDescending){
+        if(_type == energyTypeEat){
+            [_rightButton setTitle:@"添加食物" forState:UIControlStateNormal];
+        }
+       
+    }
+    
 }
 
 -(void)setsubViewUI {
@@ -447,11 +454,11 @@
         currectHabitCount += habitEntity.situation;
     }
     
-    _habitLabel.text = [NSString stringWithFormat:@"改正了%ld个不良习惯",(long)currectHabitCount];
+//    _habitLabel.text = [NSString stringWithFormat:@"改正了%ld个不良习惯",(long)currectHabitCount];
     habitView.entity = recordEntity;
     habitView.changeHabit = ^(NSInteger habitIndex,BOOL abool) {
         
-        weakSelf.habitLabel.text = [NSString stringWithFormat:@"改正了%ld个不良习惯",(long)(abool ? ++currectHabitCount:--currectHabitCount)];
+//        weakSelf.habitLabel.text = [NSString stringWithFormat:@"改正了%ld个不良习惯",(long)(abool ? ++currectHabitCount:--currectHabitCount)];
         if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(fixHabitAt:isCurrect:)]) {
             [weakSelf.delegate fixHabitAt:habitIndex isCurrect:abool];
         }
@@ -862,7 +869,11 @@
             _centerbutton.hidden = YES;
         }else{
             if (isRecommended == NO) {
-                [_centerbutton setTitle:@"记录运动" forState:UIControlStateNormal];
+                if([_date compare:[NSDate date]] == NSOrderedDescending){
+                    [_centerbutton setTitle:@"添加运动" forState:UIControlStateNormal];
+                }else{
+                    [_centerbutton setTitle:@"记录运动" forState:UIControlStateNormal];
+                }
             }else{
                 [_centerbutton setTitle:@"已记录" forState:UIControlStateNormal];
             }
@@ -877,15 +888,16 @@
         }
         
     }else{
-        
         _centerbutton.layer.borderColor = XKMainToneColor_29ccb1.CGColor;
         [_centerbutton setTitleColor:XKMainToneColor_29ccb1 forState:UIControlStateNormal];
         _centerbutton.enabled = YES;
-
-        
         if (_revisionType == XKRWNotNeedRevision) {
             if( _type == energyTypeSport && isRecommended == NO){
-                [_centerbutton setTitle:@"记录运动" forState:UIControlStateNormal];
+                if([_date compare:[NSDate date]] == NSOrderedDescending){
+                     [_centerbutton setTitle:@"添加运动" forState:UIControlStateNormal];
+                }else{
+                    [_centerbutton setTitle:@"记录运动" forState:UIControlStateNormal];
+                }
             }else if (_type == energyTypeEat && isRecommended == NO){
                 _centerbutton.hidden = YES;
             }
@@ -896,6 +908,10 @@
                     _centerbutton.layer.borderColor = colorSecondary_666666.CGColor;
                     [_centerbutton setTitleColor:colorSecondary_666666 forState:UIControlStateNormal];
                     _centerbutton.enabled = NO;
+                }
+                
+                if([_date compare:[NSDate date]] == NSOrderedDescending){
+                    [_centerbutton setTitle:@"计划并记录" forState:UIControlStateNormal];
                 }
             }
         }else if (_revisionType == XKRWCanRevision){
@@ -971,6 +987,10 @@
     }else if (_type == energyTypeSport){
         _leftButton.hidden = YES;
         _rightButton.hidden = YES;
+        
+        if([_date compare:[NSDate date]] == NSOrderedDescending){
+            [_centerbutton setTitle:@"添加运动" forState:UIControlStateNormal];
+        }
     }
 
     [UIView animateWithDuration:0.5 animations:^{
@@ -998,7 +1018,12 @@
     }else if (_type == energyTypeSport){
         _leftButton.hidden = YES;
         _rightButton.hidden = YES;
+        
+       
+        
     }
+    
+    
     [UIView animateWithDuration:0.5 animations:^{
         _scrollView.contentOffset = CGPointMake(XKAppWidth, 0);
     }];

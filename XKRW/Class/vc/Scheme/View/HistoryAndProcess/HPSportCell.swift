@@ -102,7 +102,7 @@ class HPSportCell: XKRWUITableViewCellbase {
                 button.layer.borderWidth = 1
                 button.layer.borderColor = XKMainSchemeColor.CGColor
 
-                button.addTarget(self, action: "clickRecordButton", forControlEvents: UIControlEvents.TouchUpInside)
+                button.addTarget(self, action: #selector(HPSportCell.clickRecordButton), forControlEvents: UIControlEvents.TouchUpInside)
                 button.frame = CGRectMake(0, 0, 70, 26)
                 button.center = self.content.center
                 button.setY(label.bottom + 25)
@@ -172,7 +172,7 @@ class HPSportCell: XKRWUITableViewCellbase {
     
     func clickRecordButton() -> Void {
         if self.delegate != nil {
-            if self.delegate!.respondsToSelector("SportCellClickToRecordButton:") {
+            if self.delegate!.respondsToSelector(#selector(HPSportCellDelegate.SportCellClickToRecordButton(_:))) {
                 
                 self.delegate?.SportCellClickToRecordButton!(self)
             }

@@ -27,7 +27,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
     }
     
     func initData(){
-        dataArray = [["提醒开关"],["隐私密码"],["缓存","帮助与反馈"],["一分钟了解减肥","投票支持","关于"],["退出登录"]];
+        dataArray = [["提醒开关"],["隐私密码"],["体脂率自动填写"],["缓存","帮助与反馈"],["一分钟了解减肥","投票支持","关于"],["退出登录"]];
         cache = SDImageCache.sharedImageCache().getSize()
     }
     
@@ -108,8 +108,23 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
             privacyPasswordCell!.upLineView.hidden = false
             privacyPasswordCell!.downLineView.hidden = false
             return privacyPasswordCell!
-        }
-        else if(indexPath.section == 2){
+            
+        } else if(indexPath.section == 2){
+            var fatRateSettingcell:XKRWNoImageCommonCell? = tableView.dequeueReusableCellWithIdentifier("fatRateSettingcell") as? XKRWNoImageCommonCell
+            if(fatRateSettingcell == nil){
+                fatRateSettingcell = XKRWNoImageCommonCell.init(style: .Default, reuseIdentifier: "fatRateSettingcell")
+                fatRateSettingcell!.titleLabel.font = XKDefaultFontWithSize(16);
+                fatRateSettingcell!.titleLabel.textColor = XK_TEXT_COLOR;
+            }
+            
+            fatRateSettingcell!.titleLabel.text = dataArray[indexPath.section][0] as? String;
+            fatRateSettingcell!.upLineView.hidden = true
+            fatRateSettingcell!.downLineView.hidden = false
+            fatRateSettingcell?.descriptionLabel.text = XKRWAlgolHelper.isSetFatRateWriteAuto() ? "开启" : "关闭";
+
+            return fatRateSettingcell!
+            
+        } else if(indexPath.section == 3){
             if(indexPath.row == 0){
                 var cacheCell:XKRWCacheCell? = tableView.dequeueReusableCellWithIdentifier("catchCell") as? XKRWCacheCell
                 if(cacheCell == nil){
@@ -151,7 +166,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
                 }
                 return feedbackCell!
             }
-        }else if(indexPath.section == 4){
+        }else if(indexPath.section == 5){
             var feedbackCell:XKRWNoImageCommonCell? = tableView.dequeueReusableCellWithIdentifier("commonCell") as?  XKRWNoImageCommonCell
             let loginOut:UILabel = UILabel.init()
             
@@ -190,12 +205,16 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if(indexPath.section == 2){
+        if indexPath.section == 2 {
+            let fatRateSetVC:XKRWFatRateSetVC = XKRWFatRateSetVC()
+            self.navigationController?.pushViewController(fatRateSetVC, animated: true)
+            
+        } else if(indexPath.section == 3){
             if(indexPath.row == 1){
                 let feedbackVC:XKRWUserFeedbackVC = XKRWUserFeedbackVC(nibName:"XKRWUserFeedbackVC", bundle: nil)
                 self.navigationController?.pushViewController(feedbackVC, animated: true)
             }
-        }else if(indexPath.section == 3){
+        }else if(indexPath.section == 4){
             if(indexPath.row == 0){
                 MobClick.event("in_RptOneMin")
 
@@ -211,7 +230,7 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
                 let aboutVC:XKRWAboutVC = XKRWAboutVC()
                  self.navigationController?.pushViewController(aboutVC, animated: true)
             }
-        }else if(indexPath.section == 4){
+        }else if(indexPath.section == 5){
         
             self.exitTheAccount();
         }
@@ -263,12 +282,12 @@ class XKRWSetVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource,UIActionSh
         }
         
         if(_switch.on != true){
-            for (var i = 0 ;i < alartArray.count ; i++ ){
+            for i in 0..<alartArray.count {
                 let entity:XKRWAlarmEntity = alartArray[i] as! XKRWAlarmEntity
                 entity.enabled = 0
             }
         }else{
-            for (var i = 0 ;i < alartArray.count ; i++ ){
+            for i in 0..<alartArray.count {
                 let entity:XKRWAlarmEntity = alartArray[i] as! XKRWAlarmEntity
                 entity.enabled = 1
             }

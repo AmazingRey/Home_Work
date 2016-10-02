@@ -47,7 +47,7 @@ class HPChangeHabitView: UIView {
                 button.setImage(UIImage(named: entity.getButtonImages()[0] as! String), forState: .Normal)
                 button.setImage(UIImage(named: entity.getButtonImages()[1] as! String), forState: .Selected)
                 
-                button.addTarget(self, action: "clickButton:", forControlEvents: .TouchUpInside)
+                button.addTarget(self, action: #selector(HPChangeHabitView.clickButton(_:)), forControlEvents: .TouchUpInside)
                 button.tag = tag++
                 
                 self.addSubview(button)
@@ -75,7 +75,7 @@ class HPChangeHabitView: UIView {
         
         button.setTitle("确定", forState: .Normal)
         button.setTitleColor(XKMainSchemeColor, forState: .Normal)
-        button.addTarget(self, action: "clickConfirmButton", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(HPChangeHabitView.clickConfirmButton), forControlEvents: .TouchUpInside)
         button.titleLabel?.font = UIFont.systemFontOfSize(16)
         button.setBackgroundImage(UIImage.createImageWithColor(XK_ASSIST_LINE_COLOR), forState:.Highlighted )
         self.layer.masksToBounds = true

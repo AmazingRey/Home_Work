@@ -43,4 +43,11 @@
     return [string1 isEqualToString:string2];
 }
 
+
++ (NSDate *)getNextDate:(NSDate *)date{
+    NSDate *tomorrow = [NSDate dateWithTimeInterval:60 * 60 * 24 sinceDate:date];
+    return tomorrow;
+    
+}
+
 @end

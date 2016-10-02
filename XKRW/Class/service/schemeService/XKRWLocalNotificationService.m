@@ -131,7 +131,7 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
 // v5.3设置未开起计划的提醒
 - (void)setOpenPlanNotification {
     [XKRWLocalNotificationService cancelLocalNotification:@"alertName" value:@"openPlanNotification"];
-    NSInteger remainPlanDays = [XKRWAlgolHelper remainDayToAchieveTarget];
+    NSInteger remainPlanDays = [XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil];
     if (remainPlanDays <= 1) {
         return;
     }
@@ -178,7 +178,7 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
 - (void)setWeekAnalyzeNotification {
     [XKRWLocalNotificationService cancelLocalNotification:@"alertName" value:@"seeWeeklyAnalyze"];
     NSInteger offsetDay = 7 - [XKRWAlgolHelper newSchemeStartDayToAchieveTarget]%7;
-    NSInteger remainDays = [XKRWAlgolHelper remainDayToAchieveTarget];
+    NSInteger remainDays = [XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil];
     if (remainDays == -1 ||offsetDay > remainDays) {
         return;
     }
@@ -462,7 +462,7 @@ static XKRWLocalNotificationService *shareLocalNotificationService;
 - (void)registerMetamorphosisTourAlarms {
     
     [XKRWLocalNotificationService cancelLocalNotification:@"alertName" value:@"dayNotification"];
-    if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1) {
+    if ([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] == -1) {
         return;
     }
     NSInteger schemeStartDay = [XKRWAlgolHelper newSchemeStartDayToAchieveTarget];

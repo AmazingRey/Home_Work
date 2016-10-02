@@ -369,4 +369,6 @@
 
 #define ENTRYFEEDBACK @"entryFeedback"
 
+#define REFRESHDATA  @"redreshData"
+
 #endif

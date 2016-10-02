@@ -49,7 +49,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"评论";
-    [self addNaviBarRightButtonWithText:@"写评论" action:@selector(writeComment)];
+    [self addNaviBarRightButtonWithText:@"写评论" action:@selector(writeComment) withColor: XKMainToneColor_29ccb1];
     _dataSource = [NSMutableArray array];
     replyEntity = [XKRWReplyEntity new];
     [self addNaviBarBackButton];

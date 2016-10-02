@@ -48,11 +48,14 @@
         if (!self.navigationController) {
             _configueLaterBtn.hidden = false;
             tmpPwd = @"";
+        }else{
+            [self addNaviBarBackButton];
         }
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
         _labelVerify.text = @"请设置隐私密码";
     }else if (_privacyType == terminate) {
+        [self addNaviBarBackButton];
         self.title = @"关闭隐私密码";
         _forgetPasswordBtn.hidden = true;
         _forgetPasswordBtn.userInteractionEnabled = false;
@@ -64,6 +67,22 @@
         _forgetPasswordBtn.userInteractionEnabled = true;
     }
     imageViewArray = @[_imageOne, _imageTwo, _imageThree, _imageFour];
+}
+
+
+-(void)addNaviBarBackButton {
+    UIButton *leftItemButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    UIImage *back = [UIImage imageNamed:@"navigationBarback"];
+    
+    [leftItemButton setImage:back forState:UIControlStateNormal];
+    [leftItemButton setImage:[UIImage imageNamed:@"navigationBarback_p"] forState:UIControlStateHighlighted];
+    leftItemButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    leftItemButton.frame = CGRectMake(0, 0, back.size.width, back.size.height);
+    
+    [leftItemButton setTitleColor:[UIColor colorWithRed:247/255.f green:106/255.f blue:8/255.f alpha:1.0] forState:UIControlStateNormal];
+    [leftItemButton addTarget:self action:@selector(popView) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftItemButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -85,6 +104,10 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SET_PRIVACYPASSWORD_FIRSTTIME object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SET_PRIVACYPASSWORD_SUCCESS object:nil];
     }
+}
+
+- (void)popView{
+    [self.navigationController popViewControllerAnimated:true];
 }
 
 - (void)setPrivacyType:(PrivacyPasswordType)privacyType{
@@ -135,6 +158,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)setTitle:(NSString *)title {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = XKDefaultFontWithSize(17);
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    self.navigationItem.titleView = label;
+    label.text = title;
+    [label sizeToFit];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
@@ -158,6 +193,9 @@
                 [textField resignFirstResponder];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DeleayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self dismissViewControllerAnimated:YES completion:nil];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:REFRESHDATA object:nil];
+                    
                 });
                 return true;
             }else{

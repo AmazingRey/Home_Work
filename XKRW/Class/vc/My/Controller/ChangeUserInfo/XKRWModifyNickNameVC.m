@@ -65,7 +65,7 @@
     textField.font = [UIFont systemFontOfSize:15];
     textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     
-    [self addNaviBarRightButtonWithText:@"保存" action:@selector(saveNickName)];
+    [self addNaviBarRightButtonWithText:@"保存" action:@selector(saveNickName) withColor: XKMainToneColor_29ccb1];
     
     nickNameTemp =[[XKRWUserService sharedService] getUserNickName];
     if (!(nickNameTemp && nickNameTemp.length)) {

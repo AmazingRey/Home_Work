@@ -75,7 +75,6 @@
 #import "UMSocialSnsPlatformManager.h"
 #import "UMSocialQQHandler.h"
 
-//#import "XKRWAlarmService5_1.h"
 #import "XKRWLocalNotificationService.h"
 #import "XKRWAlarmVC.h"
 #import "XKRWShareCourseVC.h"
@@ -108,12 +107,12 @@
 #import <AVFoundation/AVFoundation.h>
 
 // 发现
-//#import "XKRWDiscoverVC_v5.h"
 #import "XKRWFitnessShareVC.h"
 #import "XKRWManagementEntity5_0.h"
 
 #import "XKRWServerPageService.h"
 #import "FeedbackViewController.h"
+#import "XKRWFatRateSetVC.h"
 // 相片选择器
 #import "MLSelectPhoto.h"
 #import "RSKImageCropViewController.h"

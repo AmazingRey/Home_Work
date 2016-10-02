@@ -104,7 +104,7 @@
     [self.view addSubview:_serviceTableView];
     self.navigationItem.leftBarButtonItem = nil;
     
-    [self addNaviBarRightButtonWithText:@"服务记录" action:@selector(servicerecordAction:)];
+    [self addNaviBarRightButtonWithText:@"服务记录" action:@selector(servicerecordAction:) withColor: XKMainToneColor_29ccb1];
 }
 /**
  *  初始化数据

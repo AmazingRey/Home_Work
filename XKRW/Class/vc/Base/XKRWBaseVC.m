@@ -160,7 +160,7 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftItemButton];
 }
 
-- (void)addNaviBarRightButtonWithText:(NSString *)text action:(SEL)action {
+- (void)addNaviBarRightButtonWithText:(NSString *)text action:(SEL)action withColor:(UIColor *)color{
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     
@@ -170,8 +170,8 @@ static NSString * const kNormalCharacterFormat = @"^[\x20-\x7e\u4e00-\u9fa5]*$";
                                              context:nil].size.width;
     button.frame = CGRectMake(0, 0, titleWidth, 20);
     [button setTitle:text forState:UIControlStateNormal];
-    [button setTitleColor:XKMainToneColor_29ccb1 forState:UIControlStateNormal];
-    [button setTitleColor:[XKMainToneColor_29ccb1 colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
+    [button setTitleColor:color forState:UIControlStateNormal];
+    [button setTitleColor:[color colorWithAlphaComponent:0.5] forState:UIControlStateHighlighted];
     button.titleLabel.font = XKDefaultFontWithSize(15.f);
     
     if (action != nil) {

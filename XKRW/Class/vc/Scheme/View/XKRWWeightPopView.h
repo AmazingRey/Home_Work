@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "iCarousel.h"
+#import "iCarousel.h"
 #import "XKHeader.h"
 #import "XKRW-Swift.h"
 #import "XKTaskDispatcher.h"
@@ -24,7 +24,7 @@
 @end
 
 
-@interface XKRWWeightPopView : UIView <UITextFieldDelegate,XKRWCalendarDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UIScrollViewDelegate>
+@interface XKRWWeightPopView : UIView <UITextFieldDelegate,iCarouselDataSource,iCarouselDelegate,XKRWCalendarDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (assign, nonatomic) id<XKRWWeightPopViewDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
@@ -34,8 +34,7 @@
 - (IBAction)actBefore:(id)sender;
 - (IBAction)actLater:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UIScrollView *typeScrollView;
-@property (strong, nonatomic) IBOutlet UIPageControl *typePageControl;
+@property (strong, nonatomic) IBOutlet iCarousel *iCarouselView;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *labInput;
 @property (weak, nonatomic) IBOutlet UIButton *btnCancle;
@@ -56,7 +55,6 @@
 @property (strong, nonatomic) NSNumber *currentIndex;
 @property (assign, nonatomic) XKRWRecordType recordType;
 @property (strong, nonatomic) NSMutableDictionary *dicIllegal;
-@property (strong, nonatomic) NSMutableDictionary *typeButtonDic;
 
 - (instancetype)initWithFrame:(CGRect)frame withType:(NSInteger)type withDate:(NSDate *)date;
 - (IBAction)pressCancle:(id)sender;

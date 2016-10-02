@@ -688,6 +688,8 @@ static XKRWBaseService *service;
     }
     return YES;
 }
+
+
 + (BOOL) syncTodayRemoteData
 {
     if (![XKRWUserDefaultService isLogin]) {
@@ -696,7 +698,8 @@ static XKRWBaseService *service;
     
     @try {
         //获取记录值
-        NSNumber *result = [[XKRWRecordService4_0 sharedService] syncTodayRecordData];
+
+        NSNumber *result = [[XKRWRecordService4_0 sharedService] synctwoDaysAgoRecordData];
         if ([result boolValue]) {
             [XKRWRecordService4_0 setNeedUpdate:YES];
         }

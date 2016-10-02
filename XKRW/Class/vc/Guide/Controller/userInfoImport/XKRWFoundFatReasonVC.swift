@@ -41,7 +41,7 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
         if(fromWhichVC == FromWhichVC.SchemeInfoChangeVC)
         {
             self.addNaviBarBackButton()
-            self.addNaviBarRightButtonWithText("保存", action: #selector(XKRWFoundFatReasonVC.rightNaviBarButtonClicked))
+            self.addNaviBarRightButtonWithText("保存", action: #selector(XKRWFoundFatReasonVC.rightNaviBarButtonClicked),withColor: XKMainSchemeColor)
             nextButton.hidden = true
         }else if(fromWhichVC == FromWhichVC.ThinBodyAssesssVC){
             self.addNaviBarBackButton()
@@ -177,7 +177,7 @@ class XKRWFoundFatReasonVC: XKRWBaseVC {
     func initFatReasonButtonSelectStyle(fatReasonString:NSString){
         let fatReasonArray:NSArray =  fatReasonString.componentsSeparatedByString(";") as NSArray
         
-        for  var i = 0 ; i < contentView.subviews.count ;i++  {
+        for  i in 0  ..< contentView.subviews.count  {
             let view: AnyObject = contentView.subviews[i]
             
             

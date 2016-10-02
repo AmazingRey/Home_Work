@@ -63,18 +63,18 @@
         _titleClickButton.hidden = YES;
         [self insertSubview:_titleClickButton aboveSubview:_remindTextView];
         
-        _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 0, circleWidth, circleWidth) Style: XKRWEnergyCircleStyleNotOpen];
+        _eatEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(separateWidth, 0, circleWidth, circleWidth) Style: XKRWEnergyCircleStyleOpened];
         _eatEnergyCircle.center = CGPointMake(separateWidth + circleWidth / 2.0, self.height / 2.0);
         _eatEnergyCircle.tag = 1;
         [self addSubview:_eatEnergyCircle];
         
         
-        _sportEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_eatEnergyCircle.right + separateWidth, _eatEnergyCircle.top, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleNotOpen];
+        _sportEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_eatEnergyCircle.right + separateWidth, _eatEnergyCircle.top, circleWidth, circleWidth) Style:XKRWEnergyCircleStyleOpened];
         _sportEnergyCircle.tag = 2;
         [self addSubview:_sportEnergyCircle];
         
         
-        _habitEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_sportEnergyCircle.right + separateWidth, _sportEnergyCircle.top, circleWidth, circleWidth) Style: XKRWEnergyCircleStyleNotOpen];
+        _habitEnergyCircle = [[XKRWEnergyCircleView alloc] initCircleWithFrame:CGRectMake(_sportEnergyCircle.right + separateWidth, _sportEnergyCircle.top, circleWidth, circleWidth) Style: XKRWEnergyCircleStyleOpened];
         _habitEnergyCircle.tag = 3;
         [self addSubview:_habitEnergyCircle];
         

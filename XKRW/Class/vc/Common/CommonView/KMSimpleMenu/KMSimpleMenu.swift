@@ -28,7 +28,7 @@ class KMSimpleMenu: UIView {
     var rowHeight: CGFloat = 35.0
     var rowWidth: CGFloat = 70.00
     
-    var clickAction: ((index: Int) -> Void)?
+    var clickAction: ((index:Int) -> Void)?
     private var showedDirection: KMDirection?
 
     init(titles: [String], type: KMSimpleMenuType, option: KMSimpleMenuOption) {
@@ -55,7 +55,7 @@ class KMSimpleMenu: UIView {
             
             button.titleLabel?.font = option.font
             button.tag = tag++
-            button.addTarget(self, action: "handleClickAction:", forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: #selector(KMSimpleMenu.handleClickAction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             
             self.addSubview(button)
             
@@ -73,7 +73,7 @@ class KMSimpleMenu: UIView {
         self.transparentButton = {
             let button = UIButton(frame: view.bounds)
             button.backgroundColor = UIColor.clearColor()
-            button.addTarget(self, action: "hide", forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: #selector(KMSimpleMenu.hide), forControlEvents: UIControlEvents.TouchUpInside)
             
             return button
         }()

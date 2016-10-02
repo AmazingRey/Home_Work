@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSDate *recordDate;
 
 
-//@property (assign) BOOL  isFromCalendar;
+@property (assign) BOOL  isFromCalendar;
 
 
 @end

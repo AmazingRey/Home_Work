@@ -102,7 +102,7 @@ class XKRWSegmentedControl: UIView {
         button.setTitleColor(XK_TITLE_COLOR, forState: .Normal)
         button.setTitleColor(XKMainSchemeColor, forState: .Selected)
         
-        button.addTarget(self, action: "clickButtonAtIndex:", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(XKRWSegmentedControl.clickButtonAtIndex(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.scrollView.addSubview(button)
     }

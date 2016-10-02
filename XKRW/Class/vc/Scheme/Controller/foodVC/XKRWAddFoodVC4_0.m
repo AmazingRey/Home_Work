@@ -123,7 +123,7 @@
     self.forbidAutoAddCloseButton = YES;
     [self addNaviBarBackButton];
     
-    [self addNaviBarRightButtonWithText:@"保存" action:@selector(rightNaviItemClicked:)];
+    [self addNaviBarRightButtonWithText:@"保存" action:@selector(rightNaviItemClicked:) withColor: XKMainToneColor_29ccb1];
     
     self.title = @"记录食物";
     
@@ -530,9 +530,10 @@
     
     if (_foodRecordEntity.serverid == 0) {
         NSInteger recordTimeStamp = [_foodRecordEntity.date timeIntervalSince1970];
+
         NSInteger now = [[NSDate date] timeIntervalSince1970];
         
-        NSInteger plus = (now - recordTimeStamp) % 86400;
+        NSInteger plus = abs((now - recordTimeStamp)) % 86400;
         _foodRecordEntity.serverid = recordTimeStamp + plus;
     }
     

@@ -22,7 +22,7 @@
 @property (nonatomic, strong) XKRWEnergyCircleView *sportEnergyCircle;
 @property (nonatomic, strong) XKRWEnergyCircleView *habitEnergyCircle;
 @property (nonatomic, assign, readonly) NSInteger selectedIndex;
-
+@property (nonatomic, strong) NSDate *recordDate;
 - (void)noneSelectedCircleStyle;
 - (void)setEatEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber;
 - (void)setSportEnergyCircleGoalNumber:(NSInteger)goalNumber currentNumber:(NSInteger)currentNumber;

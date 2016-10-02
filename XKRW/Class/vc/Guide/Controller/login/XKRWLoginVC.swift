@@ -148,6 +148,7 @@ class XKRWLoginVC: XKRWBaseVC {
         NSUserDefaults.standardUserDefaults().synchronize()
         XKRWTipsManage.shareInstance().isFirstOpenApp()
         XKRWUserDefaultService.setCurrentUserId(XKRWUserService.sharedService().getUserId());
+      
         XKRWCommHelper.syncTodayRemoteData()
         self.downloadWithTaskID("syncData", task: {
             XKRWCommHelper.syncRemoteData()

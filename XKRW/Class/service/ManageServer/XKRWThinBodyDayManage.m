@@ -37,16 +37,16 @@ static XKRWThinBodyDayManage * shareInstance;
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((XKAppWidth - 210) / 2, (XKAppHeight - 210) / 2, 210, 210)];
         imageView.image = [UIImage imageNamed:@"pop_daily"];
         [imageView addSubview:[self setShowImageViewLabel]];
-        if([XKRWAlgolHelper remainDayToAchieveTarget] > -1){
+        if([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] > -1){
             [viewController popUpTheTipViewOnWindowAsUserFirstTimeEntryVC:[[UIApplication sharedApplication] delegate].window andImageView:imageView andShowTipViewTime:3 andTimeEndBlock:^(UIView *backgroundView, UIImageView *imageView) {
                 [imageView removeFromSuperview];
                 [backgroundView removeFromSuperview];
             }];
         }
         
-        if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1 &&[XKRWAlgolHelper expectDayOfAchieveTarget] != nil) {
+        if ([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] == -1 &&[XKRWAlgolHelper expectDayOfAchieveTarget] != nil) {
             if (![[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"lateToResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]]){
-                [self ShowEndOfTheSchemeAlert:[XKRWAlgolHelper remainDayToAchieveTarget]];
+                [self ShowEndOfTheSchemeAlert:[XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil]];
             }
         }
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"ShowImageOnWindow"];
@@ -74,7 +74,7 @@ static XKRWThinBodyDayManage * shareInstance;
         attributed = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"蜕变之路\n第%ld天",(long)[[XKRWUserService sharedService] getInsisted]] attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15),NSForegroundColorAttributeName:XKMainToneColor_29ccb1}];
     
     }else {
-        if ([XKRWAlgolHelper remainDayToAchieveTarget] > 99){
+        if ([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] > 99){
             NSInteger day ;
             if ([XKRWAlgolHelper expectDayOfAchieveTarget] == nil) {
                 day = [[XKRWUserService sharedService ]getInsisted ];
@@ -82,8 +82,8 @@ static XKRWThinBodyDayManage * shareInstance;
                 day = [XKRWAlgolHelper newSchemeStartDayToAchieveTarget];
             }
             attributed = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"蜕变之路\n第%ld天",(long)[[XKRWUserService sharedService] getInsisted]] attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15),NSForegroundColorAttributeName:XKMainToneColor_29ccb1}];
-        }else if ([XKRWAlgolHelper remainDayToAchieveTarget] <= 99 && [XKRWAlgolHelper remainDayToAchieveTarget] != 0){
-            attributed = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"将在%ld天后\n完成蜕变",(long)[XKRWAlgolHelper remainDayToAchieveTarget]] attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15),NSForegroundColorAttributeName:XKMainToneColor_29ccb1}];
+        }else if ([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] <= 99 && [XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] != 0){
+            attributed = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"将在%ld天后\n完成蜕变",(long)[XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil]] attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15),NSForegroundColorAttributeName:XKMainToneColor_29ccb1}];
         }else{
             attributed = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"将在明天\n完成蜕变"] attributes:@{NSFontAttributeName:XKDefaultFontWithSize(15),NSForegroundColorAttributeName:XKMainToneColor_29ccb1}];
         }
@@ -222,14 +222,14 @@ static XKRWThinBodyDayManage * shareInstance;
     if ([XKRWAlgolHelper expectDayOfAchieveTarget] == nil) {
         return [NSString stringWithFormat:@"已坚持%ld天",(long)[[XKRWUserService sharedService] getInsisted]];
     }else{
-        if([XKRWAlgolHelper remainDayToAchieveTarget] > -1){
-            XKLog(@"%ld",[XKRWAlgolHelper remainDayToAchieveTarget]);
-            if ([XKRWAlgolHelper remainDayToAchieveTarget] == 0) {
+        if([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] > -1){
+            XKLog(@"%ld",(long)[XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil]);
+            if ([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] == 0) {
                  return [NSString stringWithFormat:@"第%ld天-最后一天",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]];
             }else{
-                return [NSString stringWithFormat:@"第%ld天-剩%ld天",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget],(long)[XKRWAlgolHelper remainDayToAchieveTarget]];
+                return [NSString stringWithFormat:@"第%ld天-剩%ld天",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget],(long)[XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil]];
             }
-        }else if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1){
+        }else if ([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] == -1){
             return @"当前计划已结束";
         }
     }
@@ -241,15 +241,15 @@ static XKRWThinBodyDayManage * shareInstance;
         
         return [XKRWUtil createAttributeStringWithString:[NSString stringWithFormat:@"已坚持%ld天",(long)[[XKRWUserService sharedService] getInsisted]] font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight];
     }else{
-        if([XKRWAlgolHelper remainDayToAchieveTarget] > -1){
+        if([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] > -1){
             NSAttributedString *start = [XKRWUtil createAttributeStringWithString:@"已进行" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight];
             NSAttributedString *startDay = [XKRWUtil createAttributeStringWithString:[NSString stringWithFormat:@"%ld",(long)[XKRWAlgolHelper newSchemeStartDayToAchieveTarget]] font:XKDefaultFontWithSize(15) color:XKMainSchemeColor lineSpacing:0 alignment:NSTextAlignmentRight];
             NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithAttributedString:start];
             [str appendAttributedString:startDay];
-            [str appendAttributedString:[XKRWUtil createAttributeStringWithString:[NSString stringWithFormat:@"天剩%ld天",(long)[XKRWAlgolHelper remainDayToAchieveTarget]] font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight]];
+            [str appendAttributedString:[XKRWUtil createAttributeStringWithString:[NSString stringWithFormat:@"天剩%ld天",(long)[XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil]] font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight]];
             return str;
             
-        }else if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1){
+        }else if ([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] == -1){
             return [XKRWUtil createAttributeStringWithString:@"当前计划已结束" font:XKDefaultFontWithSize(15) color:colorSecondary_666666 lineSpacing:0 alignment:NSTextAlignmentRight];
         }
     }
@@ -258,18 +258,18 @@ static XKRWThinBodyDayManage * shareInstance;
 
 - (NSString *)TipsTextWithDayAndWhetherOpen {
     
-    if(([XKRWAlgolHelper remainDayToAchieveTarget] == -1 ||
+    if(([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] == -1 ||
         [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"needResetScheme_%ld",(long)[[XKRWUserService sharedService] getUserId]]])&&
        ([[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]] != nil )){
         return @"当前计划已结束，点击制定新计划";
     }else{
-
-        if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] || [[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] || [[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType]) {
-            return @"查看今日分析";
-        }else {
-
-            return @"点击“开启”，来监督今天的行为";
-        }
+        
+        //        if ([[XKRWPlanService shareService] getEnergyCircleClickEvent:eFoodType] || [[XKRWPlanService shareService] getEnergyCircleClickEvent:eSportType] || [[XKRWPlanService shareService] getEnergyCircleClickEvent:eHabitType]) {
+        return @"查看今日分析";
+        //        }else {
+        //
+        //            return @"点击“开启”，来监督今天的行为";
+        //        }
     }
 }
 
@@ -315,7 +315,7 @@ static XKRWThinBodyDayManage * shareInstance;
 }
 
 - (BOOL) calendarDateIsEndDayWithDate:(NSDate *)date {
-    NSInteger targetRemainDay = [XKRWAlgolHelper remainDayToAchieveTarget];
+    NSInteger targetRemainDay = [XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil];
     if (targetRemainDay != -1) {
         NSDate *endDate = [[NSDate today] offsetDay:targetRemainDay];
         if(endDate.day == date.day && endDate.month == date.month && endDate.year == date.year) {

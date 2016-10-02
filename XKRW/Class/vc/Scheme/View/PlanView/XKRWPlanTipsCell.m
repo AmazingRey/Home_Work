@@ -124,6 +124,12 @@
         }else if (entity.showType == TipsShowSchemeFood){
             [self.actionButton setTitle:@"查看食谱" forState:UIControlStateNormal];
             self.actionButton.tag = 1004;
+        }else if (entity.showType == TipsShowBodyOfRate){
+            [self.actionButton setTitle:@"查看" forState:UIControlStateNormal];
+            self.actionButton.tag = 1005;
+        }else if (entity.showType == TipsShowTomorrow){
+            [self.actionButton setTitle:@"穿越" forState:UIControlStateNormal];
+            self.actionButton.tag = 1006;
         }
     }
 }

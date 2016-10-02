@@ -57,7 +57,7 @@
     self.inputBackgroundView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 30, 280, 45*3)];
     _inputBackgroundView.image = [UIImage imageNamed:@"input_register"];
 
-    [self addNaviBarRightButtonWithText:@"保存" action:@selector(savePersonalInfo)];
+    [self addNaviBarRightButtonWithText:@"保存" action:@selector(savePersonalInfo) withColor: XKMainToneColor_29ccb1];
     
     int xPox  = 70 + 25 + 15;
     

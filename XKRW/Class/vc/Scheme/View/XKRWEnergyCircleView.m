@@ -132,17 +132,18 @@
 - (void)setStyle:(XKRWEnergyCircleStyle)style {
     
     _style = style;
-    if (style == XKRWEnergyCircleStyleNotOpen) {
-        _shadowView.image = [UIImage imageNamed:@"circle_notOpen_shadow"];
-        _stateImageView.hidden = YES;
-        _startButton.hidden = NO;
-        _backgroundCircle.hidden = YES;
-        _progressCircle.hidden = YES;
-        _titleLabel.hidden = YES;
-        _currentNumLabel.hidden = YES;
-        _goalLabel.hidden = YES;
-        
-    } else if (style == XKRWEnergyCircleStyleOpened) {
+//    if (style == XKRWEnergyCircleStyleNotOpen) {
+//        _shadowView.image = [UIImage imageNamed:@"circle_notOpen_shadow"];
+//        _stateImageView.hidden = YES;
+//        _startButton.hidden = NO;
+//        _backgroundCircle.hidden = YES;
+//        _progressCircle.hidden = YES;
+//        _titleLabel.hidden = YES;
+//        _currentNumLabel.hidden = YES;
+//        _goalLabel.hidden = YES;
+//        
+//    } else
+        if (style == XKRWEnergyCircleStyleOpened) {
         _perfectImageView.hidden = YES;
         _stateImageView.hidden = YES;
         [_startButton setBackgroundImage:[UIImage createImageWithColor:[UIColor clearColor]] forState:UIControlStateNormal];
@@ -276,9 +277,9 @@
         _currentNumLabel.textColor = XKWarningColor;
         _stateImage = [YYImage imageWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"red" ofType:@"gif"]]];
     }
-    if (_style != XKRWEnergyCircleStyleNotOpen) {
-        _shadowView.image = _shadowImage;
-    }
+    //    if (_style != XKRWEnergyCircleStyleNotOpen) {
+    _shadowView.image = _shadowImage;
+    //    }
     _stateImageView.image = _stateImage;
     
 }

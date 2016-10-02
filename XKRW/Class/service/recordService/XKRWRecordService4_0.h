@@ -35,6 +35,8 @@
 
 //- (NSArray *)getUserRecordDate;
 
+- (void)deleteRecordDataWithDate:(NSDate *)date;
+
 #pragma mark - Save to remote
 //  保存数据接口:
 /**
@@ -121,6 +123,12 @@
  *  @return array
  */
 - (NSArray *)queryRecent_20_RecordTable:(NSString *)tableName;
+/**
+ *  查询最近的腰围记录
+ *
+ *  @return NSInteger
+ */
+- (CGFloat)queryRecentWaist;
 /**
  *  保存食物记录到数据库
  */
@@ -387,7 +395,7 @@
  *  同步本地离线数据到服务器，再拉取今天的数据
  *
  */
-- (NSNumber *)syncTodayRecordData;
+- (NSNumber *)synctwoDaysAgoRecordData;
 
 /// 下载所有记录，5.0方案数据处理用
 - (BOOL)downloadAllRecords;
@@ -470,6 +478,9 @@
 // *  设置数据中心小红点
 // */
 //- (void)setDataCenterRedDot:(BOOL) flag;
+
+
+
 
 
 #pragma mark - 其他处理

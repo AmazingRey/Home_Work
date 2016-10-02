@@ -35,4 +35,6 @@ typedef NS_ENUM(NSInteger, XKRWCalendarHeaderType) {
 
 + (BOOL)checkSameDay:(NSDate *)date1 another:(NSDate *)date2;
 
++ (NSDate *)getNextDate:(NSDate *)date;
+
 @end

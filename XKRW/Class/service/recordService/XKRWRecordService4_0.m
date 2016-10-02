@@ -107,8 +107,41 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return dic;
 }
 
-- (BOOL)saveDownloadDataToDB:(NSDictionary *)dictionary
+- (void)deleteRecordDataWithDate:(NSDate *)date {
+    uint32_t uid = (uint32_t)[XKRWUserDefaultService getCurrentUserId];
+
+    //删除从前天到明天到数据
+    NSArray *dateArray = [self getDateArrayFromDate:date andNum:4];
+    NSMutableString *deleteFood = [NSMutableString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND sync = 1 AND date in (", foodRecordTable, uid];
+    NSMutableString *deleteSport = [NSMutableString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND sync = 1 AND date in (", sportRecordTable, uid];
+    NSMutableString *deleteScheme = [NSMutableString stringWithFormat:@"DELETE FROM %@ WHERE uid = %d AND sync = 1 AND date in (", @"record_scheme", uid];
+    
+    BOOL isFirst = YES;
+    for (NSString *string in dateArray) {
+        
+        if (isFirst) {
+            [deleteFood appendFormat:@"'%@'", string];
+            [deleteSport appendFormat:@"'%@'", string];
+            [deleteScheme appendFormat:@"'%@'", string];
+            isFirst = NO;
+        } else {
+            [deleteFood appendFormat:@",'%@'", string];
+            [deleteSport appendFormat:@",'%@'", string];
+            [deleteScheme appendFormat:@",'%@'", string];
+        }
+    }
+    
+    [deleteFood appendString:@")"];
+    [deleteSport appendString:@")"];
+    [deleteScheme appendString:@")"];
+    [self executeSql:deleteFood];
+    [self executeSql:deleteSport];
+    [self executeSql:deleteScheme];
+}
+
+- (BOOL)saveDownloadDataToDB:(NSDictionary *)dictionary andDate:(NSDate *)date
 {
+    [self deleteRecordDataWithDate:date];
     __block int count = 0;
     uint32_t uid = (uint32_t)[XKRWUserDefaultService getCurrentUserId];
     
@@ -324,11 +357,9 @@ static XKRWRecordService4_0 *sharedInstance = nil;
             [deleteFood appendString:@")"];
             [deleteSport appendString:@")"];
             
+            
             [self executeSql:deleteFood];
             [self executeSql:deleteSport];
-            
-            //            NSMutableArray *undownloadFood = [[NSMutableArray alloc] init];
-            //            NSMutableArray *undownloadSport = [[NSMutableArray alloc] init];
             
             NSMutableArray *foodRecords = [[NSMutableArray alloc] init];
             NSMutableArray *sportRecords = [[NSMutableArray alloc] init];
@@ -1373,6 +1404,17 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     } else return [NSArray new];
     
     return array;
+}
+
+- (CGFloat)queryRecentWaist {
+    NSInteger uid = [XKRWUserDefaultService getCurrentUserId];
+    NSString *dateString = [[NSDate today] stringWithFormat:@"yyyy-MM-dd"];
+    NSString *sql = [NSString stringWithFormat:@"SELECT waistline FROM record_4_0 WHERE uid = %ld AND date <= '%@' AND waistline != 0 AND sync != -1 ORDER BY date DESC LIMIT 1", (long)uid, dateString];
+    NSArray *array = [self query:sql];
+    if (!array) {
+        return 0.f;
+    }
+    return [array[0][@"waistline"] floatValue];
 }
 
 - (NSArray *)queryRecordWithDate:(NSDate *)date table:(NSString *)tableName
@@ -3356,8 +3398,8 @@ static XKRWRecordService4_0 *sharedInstance = nil;
 
 - (NSDictionary *)syncServerRecordFromDate:(NSDate *)date
 {
-    NSDictionary *downloadData  = [self downloadFromRemoteFromdate:date toDate:[NSDate date]][@"data"];
-    NSNumber *isUpdate = [NSNumber numberWithBool:[self saveDownloadDataToDB:downloadData]];
+    NSDictionary *downloadData  = [self downloadFromRemoteFromdate:date toDate:[NSDate tomorrow]][@"data"];
+    NSNumber *isUpdate = [NSNumber numberWithBool:[self saveDownloadDataToDB:downloadData andDate:[NSDate tomorrow] ]];
     return [NSDictionary dictionaryWithObjectsAndKeys:isUpdate, @"isNeedUpdate", SUCCESS, @"isSuccess", nil];
 }
 
@@ -3389,12 +3431,12 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     return @NO;
 }
 
-- (NSNumber *)syncTodayRecordData {
-    NSDate *today = [NSDate today];
+- (NSNumber *)synctwoDaysAgoRecordData {
+    NSDate *twoDaysAgo = [NSDate twoDaysAgo];
     if ([[self syncOfflineRecordToRemote] boolValue]) {
         
         
-        NSDictionary *result = [self syncServerRecordFromDate:today];
+        NSDictionary *result = [self syncServerRecordFromDate:twoDaysAgo];
         if ([result[@"isSuccess"] isEqualToString:SUCCESS]) {
             
             if ([result[@"isNeedUpdate"] boolValue]) {
@@ -3476,7 +3518,7 @@ static XKRWRecordService4_0 *sharedInstance = nil;
     if (needSync) {
         return [needSync boolValue];
     }
-    return YES;;
+    return YES;
 }
 
 + (void)setNeedUpdate:(BOOL)need
@@ -3837,6 +3879,16 @@ static XKRWRecordService4_0 *sharedInstance = nil;
         [returnValue setObject:@(state) forKey:date];
     }
     return returnValue;
+}
+
+- (NSArray *)getDateArrayFromDate:(NSDate *)date andNum:(NSInteger) num {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:num];
+    for (int i = 0; i < num; i++) {
+        NSDate *newDate = [NSDate dateWithTimeInterval:-60 * 60 * 24*i  sinceDate:date];
+        NSString *dateString = [newDate stringWithFormat:@"yyyy-MM-dd"];
+        [array addObject:dateString];
+    }
+    return array;
 }
 
 @end

@@ -472,7 +472,7 @@ class XKRWMyNoticeDetailVC: XKRWBaseVC,UITableViewDelegate,UITableViewDataSource
             return
         }else{
             let   actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "取消", destructiveButtonTitle: nil)
-            for(var  i = 0 ; i < reportReason.count ; i++){
+            for i in 0..<reportReason.count {
                 actionSheet.addButtonWithTitle((reportReason.objectAtIndex(i) as! NSDictionary)["name"] as? String)
             }
             actionSheet.showInView(self.view)

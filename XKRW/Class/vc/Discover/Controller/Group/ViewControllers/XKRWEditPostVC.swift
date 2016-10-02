@@ -270,7 +270,7 @@ class XKRWEditPostVC: XKRWBaseVC,UITextViewDelegate,UIScrollViewDelegate,XKRWPho
             view.tag = tag++
             view.setImage(image, forState: .Normal)
             
-            view.addTarget(self, action: "handleClickAction:", forControlEvents: .TouchUpInside)
+            view.addTarget(self, action: #selector(XKRWEditPostVC.handleClickAction(_:)), forControlEvents: .TouchUpInside)
             self.imagesCollectionView.addSubview(view)
             
             xPoint += imageWidth + gapWidth

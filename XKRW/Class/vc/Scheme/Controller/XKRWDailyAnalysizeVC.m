@@ -61,7 +61,7 @@
         day = [XKRWAlgolHelper newSchemeStartDayToAchieveTarget];
     }
     self.title = [NSString stringWithFormat:@"计划第%ld天", (long)(day == 0 ? 1 : day)];
-    [self addNaviBarRightButtonWithText:@"统计分析" action:@selector(pressedRightAction)];
+    [self addNaviBarRightButtonWithText:@"统计分析" action:@selector(pressedRightAction) withColor: XKMainToneColor_29ccb1];
     [self addNaviBarBackButton];
     [self addMasonryView];
     

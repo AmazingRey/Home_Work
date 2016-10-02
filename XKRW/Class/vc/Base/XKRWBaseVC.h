@@ -50,7 +50,7 @@
  *  @param text   按钮标题
  *  @param action 点击事件
  */
-- (void)addNaviBarRightButtonWithText:(NSString *)text action:(SEL)action;
+- (void)addNaviBarRightButtonWithText:(NSString *)text action:(SEL)action withColor:(UIColor *)color;
 
 /// 添加右导航栏删除按钮
 - (void)addNaviBarRightDeleteButton;

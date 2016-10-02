@@ -188,7 +188,7 @@
    // 开启友盟统计,默认以BATCH方式发送log.
     [MobClick startWithAppkey:kYMAppKey
                  reportPolicy:BATCH
-                    channelId:@"Web"];
+                    channelId:nil];
    
 #pragma --mark 友盟用户反馈组件
     //友盟用户反馈
@@ -300,7 +300,7 @@
             self.privacyPasswordVC.isVerified = false;
             self.privacyPasswordVC.privacyType = verify;
             [self.window makeKeyAndVisible];
-            [self.window.rootViewController presentViewController:_privacyPasswordVC animated:false completion:nil];
+            [self.window.rootViewController presentViewController:self.privacyPasswordVC animated:false completion:nil];
         }
     }
 }

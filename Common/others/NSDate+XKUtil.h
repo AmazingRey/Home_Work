@@ -30,6 +30,13 @@
 
 + (NSDate*)today;
 
++ (NSDate *)tomorrow ;
+
++ (NSDate *)tomorrowEnding;
+
++ (NSDate *)twoDaysAgo;
+
+
 //把NSDate转换为字符串
 - (NSString *)convertToStringWithFormat:(NSString *)format;
 

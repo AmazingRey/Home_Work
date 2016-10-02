@@ -36,11 +36,11 @@ class XKRWSetCurrentWeightVC: XKRWBaseVC,UIPickerViewDataSource,UIPickerViewDele
         pickerView.delegate = self;
         pickerView.dataSource = self;
         
-        for  var i = 0; i<=180;i++ {
+        for  var i = 0; i<=180;i += 1 {
             kilogramArray.addObject(NSString(format: "%d",i+20))
         }
         
-        for var i=0 ;i<10;i++ {
+        for i in 0  ..< 10 {
             decimalsArray.addObject(NSString(format: "%d", i))
         }
         

@@ -80,11 +80,11 @@
     headView.progressLabel.attributedText = [[XKRWThinBodyDayManage shareInstance] calenderPlanDayText];
     headView.weightDescriptionLabel.text = [NSString stringWithFormat:@"从%.1fkg瘦到%.1fkg",[[XKRWUserService sharedService] getUserOrigWeight]/1000.0,[XKRWUserService sharedService].getUserDestiWeight/1000.0];
     
-    if ([XKRWAlgolHelper remainDayToAchieveTarget] == -1) {
+    if ([XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil] == -1) {
         headView.planFinishLabel.text = @"";
         
     } else {
-        NSDate *planFinishDate = [[NSDate today] offsetDay:[XKRWAlgolHelper remainDayToAchieveTarget]];
+        NSDate *planFinishDate = [[NSDate today] offsetDay:[XKRWAlgolHelper remainDayToAchieveTargetWithDate:nil]];
         headView.planFinishLabel.text = [NSString stringWithFormat:@"预计将于%d年%d月%d日 完成",(int)[planFinishDate year],(int)[planFinishDate month],(int)[planFinishDate day]];
     }
    
@@ -123,8 +123,8 @@
         [XKRWCui showInformationHudWithText:@"注册日以前不能查看"];
         return;
         
-    } else if ([[NSDate today] compare:originOfDate] == NSOrderedAscending) {
-        [XKRWCui showInformationHudWithText:@"明天还没来，别着急哦~"];
+    } else if ([[NSDate tomorrow] compare:originOfDate] == NSOrderedAscending) {
+        [XKRWCui showInformationHudWithText:@"计划不要太远哦"];
         return;
         
     } else if ([[NSDate today] compare:originOfDate] == NSOrderedSame ) {
@@ -134,7 +134,7 @@
     } else {
         XKRWPlanVC *planVC = [[XKRWPlanVC alloc] init];
         planVC.recordDate = originOfDate;
-//        planVC.isFromCalendar = YES;
+        planVC.isFromCalendar = YES;
         [self.navigationController pushViewController:planVC animated:YES];
     }
 }

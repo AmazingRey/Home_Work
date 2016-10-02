@@ -248,6 +248,7 @@
 		2F796DCF1C465DFB00E3571A /* XKRWExplainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F796DCE1C465DFB00E3571A /* XKRWExplainView.m */; };
 		2F796DD11C465E0B00E3571A /* XKRWExplainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F796DD01C465E0B00E3571A /* XKRWExplainView.xib */; };
 		2F7EADAA1C2002F10081DCC9 /* XKRWReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EADA91C2002F00081DCC9 /* XKRWReplyCell.m */; };
+		2F8767661D6EE16D0057452C /* XKRWFatRateSetVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8767651D6EE16D0057452C /* XKRWFatRateSetVC.m */; };
 		2F89527B1D2B90B30091DDFC /* ALBBFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F89526C1D2B90B30091DDFC /* ALBBFeedback.framework */; };
 		2F89527C1D2B90B30091DDFC /* ALBBFullSecurityGuard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F89526D1D2B90B30091DDFC /* ALBBFullSecurityGuard.framework */; };
 		2F89527D1D2B90B30091DDFC /* ALBBSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F89526E1D2B90B30091DDFC /* ALBBSDK.framework */; };
@@ -1034,7 +1035,6 @@
 		CC8EA3B91CB369980084E059 /* XKRWPlan_5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CC8EA3B21CB369980084E059 /* XKRWPlan_5_3View.m */; };
 		CC8EA3BA1CB369980084E059 /* XKRWPlan_5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC8EA3B31CB369980084E059 /* XKRWPlan_5_3View.xib */; };
 		CC8EA3BD1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8EA3BB1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.swift */; };
-		CC8EA3BE1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC8EA3BC1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.xib */; };
 		CCA3B8871CB78A9900D564DA /* XKRWShowEnergy_5_3View.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA3B8861CB78A9900D564DA /* XKRWShowEnergy_5_3View.m */; };
 		CCA3B8891CB78AB300D564DA /* XKRWShowEnergy_5_3View.xib in Resources */ = {isa = PBXBuildFile; fileRef = CCA3B8881CB78AB300D564DA /* XKRWShowEnergy_5_3View.xib */; };
 		CCA73FBF1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CCA73FBD1CB39C3300EA5165 /* XKRWPlan_5_3CollectionReusableView.m */; };
@@ -1522,6 +1522,8 @@
 		2F7E392F186D215400D792FD /* XKRWEnumDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XKRWEnumDefine.h; path = header/XKRWEnumDefine.h; sourceTree = "<group>"; };
 		2F7EADA81C2002F00081DCC9 /* XKRWReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWReplyCell.h; sourceTree = "<group>"; };
 		2F7EADA91C2002F00081DCC9 /* XKRWReplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWReplyCell.m; sourceTree = "<group>"; };
+		2F8767641D6EE16D0057452C /* XKRWFatRateSetVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWFatRateSetVC.h; sourceTree = "<group>"; };
+		2F8767651D6EE16D0057452C /* XKRWFatRateSetVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWFatRateSetVC.m; sourceTree = "<group>"; };
 		2F89526C1D2B90B30091DDFC /* ALBBFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ALBBFeedback.framework; sourceTree = "<group>"; };
 		2F89526D1D2B90B30091DDFC /* ALBBFullSecurityGuard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ALBBFullSecurityGuard.framework; sourceTree = "<group>"; };
 		2F89526E1D2B90B30091DDFC /* ALBBSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ALBBSDK.framework; sourceTree = "<group>"; };
@@ -2767,7 +2769,6 @@
 		CC8EA3B31CB369980084E059 /* XKRWPlan_5_3View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWPlan_5_3View.xib; sourceTree = "<group>"; };
 		CC8EA3B41CB369980084E059 /* XKRWPlan_5_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWPlan_5_3View.h; sourceTree = "<group>"; };
 		CC8EA3BB1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XKRWThinBodyAssess_5_3VC.swift; sourceTree = "<group>"; };
-		CC8EA3BC1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWThinBodyAssess_5_3VC.xib; sourceTree = "<group>"; };
 		CCA3B8851CB78A9900D564DA /* XKRWShowEnergy_5_3View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKRWShowEnergy_5_3View.h; sourceTree = "<group>"; };
 		CCA3B8861CB78A9900D564DA /* XKRWShowEnergy_5_3View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKRWShowEnergy_5_3View.m; sourceTree = "<group>"; };
 		CCA3B8881CB78AB300D564DA /* XKRWShowEnergy_5_3View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XKRWShowEnergy_5_3View.xib; sourceTree = "<group>"; };
@@ -5019,7 +5020,6 @@
 				BC6F2EE11C198686005B54E8 /* XKRWOneMinUndLoseFat.swift */,
 				BC6F2EE21C198686005B54E8 /* XKRWOneMinUndLoseFat.xib */,
 				CC8EA3BB1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.swift */,
-				CC8EA3BC1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -6528,6 +6528,8 @@
 				BCEF37AF1C1E901B00740ACC /* XKRWThumpUpVC.xib */,
 				2FEDDEB01C7027F200161C4A /* XKRWLikeVC.h */,
 				2FEDDEB11C7027F200161C4A /* XKRWLikeVC.m */,
+				2F8767641D6EE16D0057452C /* XKRWFatRateSetVC.h */,
+				2F8767651D6EE16D0057452C /* XKRWFatRateSetVC.m */,
 				BCEF37B01C1E901B00740ACC /* XKRWUserFeedbackVC.swift */,
 				BCEF37B11C1E901B00740ACC /* XKRWUserFeedbackVC.xib */,
 				BCEF37B21C1E901B00740ACC /* XKRWUserGradeVC.swift */,
@@ -6884,7 +6886,8 @@
 				ORGANIZATIONNAME = XiKang;
 				TargetAttributes = {
 					044DA1C018558DC100CA30F7 = {
-						DevelopmentTeam = 2H2WTQZ7Y8;
+						DevelopmentTeam = KFHY8Z75E6;
+						LastSwiftMigration = 0800;
 					};
 					044DA1E118558DC100CA30F7 = {
 						DevelopmentTeam = KFHY8Z75E6;
@@ -6960,7 +6963,6 @@
 				BCEF38081C1E901B00740ACC /* XKRWUserInfoVC.xib in Resources */,
 				BCEF37611C1E75D900740ACC /* XKRWOrderNumCell.xib in Resources */,
 				2E9687D41A04AEFD00CB5D77 /* readme.txt in Resources */,
-				CC8EA3BE1CB369B00084E059 /* XKRWThinBodyAssess_5_3VC.xib in Resources */,
 				BC4F89EA1BEB62FC0038B50B /* SMS_SDKLocalizable.strings in Resources */,
 				BCEF376E1C1E75D900740ACC /* XKRWStageOneTableViewCell.xib in Resources */,
 				5D236E121C72CA9C00D049C4 /* XKRWArticleWebViewTip.xib in Resources */,
@@ -7653,6 +7655,7 @@
 				2E9687E01A04AEFD00CB5D77 /* FMDatabase.m in Sources */,
 				2E9686F61A04AEE500CB5D77 /* TBinaryProtocol.m in Sources */,
 				A7C867A91BC8E503009A94B1 /* QNUserAgent.m in Sources */,
+				2F8767661D6EE16D0057452C /* XKRWFatRateSetVC.m in Sources */,
 				BC6F2F701C1A70D3005B54E8 /* XKRWUserArticleSectionEditVC.swift in Sources */,
 				A786D4D51BB5192200B6535D /* MLSelectPhotoPickerBrowserPhoto.m in Sources */,
 				BCEF37401C1E75D900740ACC /* XKRWSchemeStepsModel.m in Sources */,
@@ -8087,8 +8090,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
 				ENABLE_TESTABILITY = YES;
@@ -8116,7 +8119,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
-				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
+				PROVISIONING_PROFILE = "320584c8-a050-4e96-b4c7-16235d6b1a17";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s armv64";
 			};
@@ -8138,8 +8141,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 光耀 胡 (6XVGX563SS)";
 				COPY_PHASE_STRIP = YES;
 				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -8159,7 +8162,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_MODULE_NAME = XKRW;
-				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
+				PROVISIONING_PROFILE = "320584c8-a050-4e96-b4c7-16235d6b1a17";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s armv64";
@@ -8176,7 +8179,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8224,11 +8227,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
@@ -8245,7 +8249,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
@@ -8293,10 +8297,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.XKRW;
 				PRODUCT_MODULE_NAME = XKRW;
 				PRODUCT_NAME = "瘦瘦";
-				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XKRW/Class/XKRW-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				USER_HEADER_SEARCH_PATHS = "";
 				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;
@@ -8307,8 +8312,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8324,7 +8329,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.ss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -8334,8 +8339,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Neusoft Xikang Healthcare Technology Co., Ltd. (KFHY8Z75E6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8347,7 +8352,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xikang.ss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1d88b2e2-1e78-4987-af00-507d8c516958";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XKRW.app/XKRW";
 				WRAPPER_EXTENSION = xctest;
 			};

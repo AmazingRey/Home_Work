@@ -93,7 +93,7 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         self.addHeaderView()
         self.setNavifationItemWithLeftItemTitle(nil, andRightItemTitle: nil, andItemColor: UIColor.whiteColor(), andShowLeftRedDot: true, andShowRightRedDot: false, andLeftRedDotShowNum: true, andRightRedDotShowNum: false, andLeftItemIcon: "message", andRightItemIcon: nil)
         
-        focusView = NSBundle.mainBundle().loadNibNamed("XKRWFocusView", owner: nil, options: nil).first as! XKRWFocusView
+        focusView = NSBundle.mainBundle().loadNibNamed("XKRWFocusView", owner: nil, options: nil)!.first as! XKRWFocusView
         focusView.frame = CGRectMake(0, 0, UI_SCREEN_WIDTH, UI_SCREEN_WIDTH / 5)
         
         focusCell = UITableViewCell.init(style: .Default, reuseIdentifier: "focusCell")
@@ -107,7 +107,6 @@ class XKRWDiscover_5_2: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate, XK
         discoverTable.registerNib(UINib(nibName: "XKRWBlogEnterCell", bundle: nil), forCellReuseIdentifier: "topicCell")
         
         self.hideNavigationLeftItemRedDot(true, andRightItemRedDotNeedHide: true)
-
     }
     
     func addHeaderView(){

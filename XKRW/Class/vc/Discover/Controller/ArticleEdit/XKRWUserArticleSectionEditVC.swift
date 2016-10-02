@@ -59,7 +59,7 @@ class XKRWUserArticleSectionEditVC: XKRWBaseVC {
         
         
         self.addNaviBarBackButton()
-        self.addNaviBarRightButtonWithText("完成", action: #selector(XKRWBaseVC.rightItemAction(_:)))
+        self.addNaviBarRightButtonWithText("完成", action: #selector(XKRWBaseVC.rightItemAction(_:)),withColor: XKMainSchemeColor)
         
         self.addImageButton = {
             let button = UIButton(frame: CGRectMake(15, 15, self.imageWidth, self.imageWidth))
@@ -195,7 +195,7 @@ class XKRWUserArticleSectionEditVC: XKRWBaseVC {
             view.tag = tag++
             view.setImage(image, forState: .Normal)
             
-            view.addTarget(self, action: "handleClickAction:", forControlEvents: .TouchUpInside)
+            view.addTarget(self, action: #selector(XKRWUserArticleSectionEditVC.handleClickAction(_:)), forControlEvents: .TouchUpInside)
             self.imagesCollectionView.addSubview(view)
             
             xPoint += imageWidth + gapWidth

@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addNaviBarBackButton];
-    [self addNaviBarRightButtonWithText:@"保存" action:@selector(saveData)];
+    [self addNaviBarRightButtonWithText:@"保存" action:@selector(saveData) withColor: XKMainToneColor_29ccb1];
     [MobClick event:@"pg_mealshare"];
     self.title = @"调整四餐比例";
     self.view.backgroundColor = [UIColor whiteColor];

@@ -96,7 +96,9 @@
     
     [_tableView reloadData];
     
-    [self setNavifationItemWithLeftItemTitle:nil AndRightItemTitle:nil AndItemColor:[UIColor whiteColor] andShowLeftRedDot:NO AndShowRightRedDot:YES AndLeftRedDotShowNum:NO AndRightRedDotShowNum:NO AndLeftItemIcon:nil AndRightItemIcon:@"icon_setting"];
+//    [self setNavifationItemWithLeftItemTitle:nil AndRightItemTitle:nil AndItemColor:[UIColor whiteColor] andShowLeftRedDot:NO AndShowRightRedDot:YES AndLeftRedDotShowNum:NO AndRightRedDotShowNum:NO AndLeftItemIcon:nil AndRightItemIcon:@"icon_setting"];
+    
+     [self addNaviBarRightButtonWithNormalImageName:@"icon_setting" highlightedImageName:@"icon_setting" selector:@selector(rightItemClick)];
     
     //  意见反馈未读消息标志
     [feedBack getUnreadCountWithCompletionBlock:^(NSNumber *unreadCount, NSError *error) {
@@ -115,12 +117,6 @@
     
     [self hideNavigationLeftItemRedDot:YES andRightItemRedDotNeedHide:![XKRWUserDefaultService isShowMoreredDot]];
 
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -333,7 +329,9 @@
             case 0:
             {
                 [MobClick event:@"in_RptMyPlan"];
-                XKRWThinBodyAssess_5_3VC *bodyAssesssVC = [[XKRWThinBodyAssess_5_3VC alloc]initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
+//                XKRWThinBodyAssess_5_3VC *bodyAssesssVC = [[XKRWThinBodyAssess_5_3VC alloc]initWithNibName:@"XKRWThinBodyAssess_5_3VC" bundle:nil];
+                
+                XKRWThinBodyAssess_5_3VC *bodyAssesssVC = [[XKRWThinBodyAssess_5_3VC alloc] init];
                 bodyAssesssVC.hidesBottomBarWhenPushed = YES;
                 [bodyAssesssVC setFromWhichVC:MyVC];
                 [self.navigationController pushViewController:bodyAssesssVC animated:YES];
@@ -428,6 +426,12 @@
     [self.navigationController pushViewController:setVC animated:YES];
 }
 
+- (void)rightItemClick
+{
+    XKRWSetVC *setVC = [[XKRWSetVC alloc]initWithNibName:@"XKRWSetVC" bundle:nil];
+    setVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:setVC animated:YES];
+}
 
 #pragma --mark XKRWHeaderView
 

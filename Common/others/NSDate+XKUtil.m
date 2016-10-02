@@ -115,6 +115,39 @@
     return [calendar dateFromComponents:components];
 }
 
++ (NSDate *)twoDaysAgo {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit) fromDate:[NSDate date]];
+    
+    [components setHour:0];
+    [components setMinute:0];
+    [components setSecond:0];
+    [components setDay:components.day - 2];
+    return [calendar dateFromComponents:components];
+
+}
+
+
++ (NSDate *)tomorrow {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit) fromDate:[NSDate date]];
+    [components setDay:components.day + 1];
+    return [calendar dateFromComponents:components];
+}
+
++ (NSDate *)tomorrowEnding {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit) fromDate:[NSDate date]];
+    
+    [components setHour:23];
+    [components setMinute:59];
+    [components setSecond:59];
+    [components setDay:components.day + 1];
+    return [calendar dateFromComponents:components];
+}
+
 -(NSString *)convertToStringWithFormat:(NSString *)format
 {
     NSDateFormatter *formater = [[ NSDateFormatter alloc] init];

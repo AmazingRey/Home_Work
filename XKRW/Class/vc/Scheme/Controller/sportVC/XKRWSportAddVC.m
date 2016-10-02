@@ -62,6 +62,11 @@
     [self initData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
 -(void)initView{
     self.forbidAutoAddCloseButton = YES;
     [self addNaviBarBackButton];
@@ -387,7 +392,7 @@
         NSInteger recordTimeStamp = [_recordSportEntity.date timeIntervalSince1970];
         NSInteger now = [[NSDate date] timeIntervalSince1970];
         
-        NSInteger plus = (now - recordTimeStamp) % 86400;
+        NSInteger plus = abs((now - recordTimeStamp)) % 86400;
         _recordSportEntity.serverid = (uint32_t)(recordTimeStamp + plus);
       
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -36,12 +36,22 @@
                         <color key="textColor" red="0.20392156862745098" green="0.20392156862745098" blue="0.20392156862745098" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJo-E8-2fs">
+                        <rect key="frame" x="0.0" y="42" width="320" height="1"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="PaK-oq-uFU"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="nJo-E8-2fs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4p4-EP-R4g"/>
                     <constraint firstAttribute="trailing" secondItem="Ccm-5X-IQR" secondAttribute="trailing" constant="36" id="7ga-8E-TNK"/>
                     <constraint firstItem="Pqp-sv-WnF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AUp-Mu-WPE"/>
                     <constraint firstItem="8d7-Ro-WfY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="J4a-Hn-IBq"/>
+                    <constraint firstAttribute="bottom" secondItem="nJo-E8-2fs" secondAttribute="bottom" id="M4k-aH-EZ8"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Pqp-sv-WnF" secondAttribute="trailing" constant="15" id="QdL-mF-tsY"/>
+                    <constraint firstAttribute="trailing" secondItem="nJo-E8-2fs" secondAttribute="trailing" id="ST1-X9-HAA"/>
                     <constraint firstAttribute="bottom" secondItem="8d7-Ro-WfY" secondAttribute="bottom" id="dpD-Im-bBU"/>
                     <constraint firstAttribute="bottom" secondItem="Ccm-5X-IQR" secondAttribute="bottom" id="f0c-WE-cRS"/>
                     <constraint firstItem="Pqp-sv-WnF" firstAttribute="leading" secondItem="Ccm-5X-IQR" secondAttribute="trailing" constant="10" id="gYi-XB-zPV"/>

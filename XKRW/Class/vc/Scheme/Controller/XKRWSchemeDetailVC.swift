@@ -46,7 +46,7 @@ class XKRWSchemeDetailVC: XKRWBaseVC, UITableViewDelegate, UITableViewDataSource
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
         
-        self.addNaviBarRightButtonWithText("换一组", action: #selector(XKRWBaseVC.doClickNaviBarRightButton(_:)))
+        self.addNaviBarRightButtonWithText("换一组", action: #selector(XKRWBaseVC.doClickNaviBarRightButton(_:)),withColor: XKMainSchemeColor)
     
         if self.schemeEntity?.schemeType == .Sport {
                MobClick.event("pg_fit_sug_detail")

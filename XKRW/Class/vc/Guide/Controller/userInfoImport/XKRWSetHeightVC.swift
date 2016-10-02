@@ -55,7 +55,7 @@ class XKRWSetHeightVC: XKRWBaseVC,UIPickerViewDelegate,UIPickerViewDataSource {
     
     
     func initData(){
-        for var i = 0 ; i<=110 ;i++ {
+        for var i = 0 ; i<=110 ;i += 1 {
             heightTitleArray.addObject(NSString(format: "%d cm", i+110))
             heightArray.addObject(NSNumber(integer: i+110))
         }

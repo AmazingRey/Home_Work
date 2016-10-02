@@ -28,6 +28,7 @@
 /*BMI*/
 + (float)BMI;
 + (float)BMI_with_height:(float)height weight:(float)weight;
++ (float)autoWriteBMI;
 
 /*每日正常饮食摄入量*/
 + (float) dailyIntakEnergy;
@@ -80,7 +81,7 @@
 /*设置达成目标，预期天数*/
 + (void) setExpectDayOfAchieveTarget:(NSInteger )weight andStartTime:(id)time;
 /*达成目标体重的 剩余时间*/
-+ (NSInteger ) remainDayToAchieveTarget;
++ (NSInteger ) remainDayToAchieveTargetWithDate:(NSDate *)date;
 
 /*是否事方案最后一天*/
 + (BOOL) isSchemeLastDay;
@@ -154,4 +155,9 @@
 + (CGFloat)getSchemeRecomandDietScaleWithType:(RecordType)type;
 /// 根据餐次获取date当天的方案推荐calorie数
 + (NSInteger)getSchemeRecomandCalorieWithType:(RecordType)type date:(NSDate *)date;
+#pragma mark - 5.3.3 new
+//是否开启了体脂率自动填写
++ (BOOL)isSetFatRateWriteAuto;
+//设置体脂率自动填写
++ (void)setFatRateWriteAuto:(BOOL)abool;
 @end

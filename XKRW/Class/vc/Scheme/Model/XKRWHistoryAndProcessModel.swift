@@ -87,7 +87,7 @@ class XKRWHistoryAndProcessModel: NSObject {
     //运动详情 初始化
     var sportArray                  = []
     
-    func dealWithSchemeRecords(inout schemeRecords: [XKRWRecordSchemeEntity],inout oldRecord: XKRWRecordEntity4_0) -> Void {
+    func dealWithSchemeRecords( inout schemeRecords: [XKRWRecordSchemeEntity], inout oldRecord:  XKRWRecordEntity4_0) -> Void {
         
 //        assert(!isSelf && BM > 0 && PAL > 0 && age > 0, "view model assert failed")
         
@@ -397,7 +397,7 @@ class XKRWHistoryAndProcessModel: NSObject {
             if temp is XKRWHabbitEntity {
                 let entity = temp as! XKRWHabbitEntity
                 if entity.situation == 1 {
-                    amended++
+                    amended += 1
                 }
             }
         }

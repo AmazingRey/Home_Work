@@ -141,7 +141,7 @@ class XKRWUserFeedbackVC: XKRWBaseVC,UIWebViewDelegate {
         self.title = title
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
         XKHudHelper.instance().hideProgressHudAnimationInView(helpWebView)
     }
     

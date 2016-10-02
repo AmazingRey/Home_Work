@@ -151,7 +151,7 @@ class XKRWThumpUpVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate,MJRefr
             entity.articleViewNums = dic.objectForKey("views")!.integerValue
             
             
-            if let key = dic["topic_key"] as? NSString, name = dic["topic_name"] as? String {
+            if let key = dic["topic_key"] as? NSString, let name = dic["topic_name"] as? String {
                 
                 let topicEntity = XKRWTopicEntity(id: key.integerValue, name: name, enabled: true)
                 entity.topic = topicEntity;
@@ -306,7 +306,7 @@ class XKRWThumpUpVC: XKRWBaseVC,UITableViewDataSource,UITableViewDelegate,MJRefr
         
         topicCell?.setContentWithEntity(entity, style: .FitShare, andSuperVC: self)
         topicCell?.tag = indexPath.row
-        topicCell?.bgButton.addTarget(self, action: "didSelectArticle:", forControlEvents: UIControlEvents.TouchUpInside)
+        topicCell?.bgButton.addTarget(self, action: #selector(XKRWThumpUpVC.didSelectArticle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
 
         return topicCell!
     }

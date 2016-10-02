@@ -107,6 +107,7 @@
     float pal  = [[physicalPal objectAtIndex:labor -1] floatValue];
     return pal;
 }
+
 /*BMI*/
 + (float)BMI{
     float height = [[XKRWUserService sharedService] getUserHeight] / 100.f;
@@ -116,6 +117,17 @@
 
 + (float)BMI_with_height:(float)height weight:(float)weight {
     return weight / (height * height);
+}
+
+/*AUTOBMI*/
++ (float)autoWriteBMI{
+    float waist = [[XKRWRecordService4_0 sharedService] queryRecentWaist];
+    float sexRatio = [[XKRWUserService sharedService] getSex] == 1 ? 34.89 : 44.74;
+    float weight = [[XKRWWeightService shareService] getNearestWeightRecordOfDate:[NSDate date]];
+    float fatTotal = waist * .74 - weight * .082 - sexRatio;
+    fatTotal = fatTotal > 0 ? fatTotal : 0;
+    float fatPercent = fatTotal / weight * 100;
+    return fatPercent;
 }
 
 /*每日正常饮食摄入量*/
@@ -559,12 +571,17 @@
 }
 
 
-+ (NSInteger ) remainDayToAchieveTarget{
++ (NSInteger ) remainDayToAchieveTargetWithDate:(NSDate *)date{
     NSDate *startDate = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"StartTime_%ld",(long)[[XKRWUserService sharedService] getUserId]]];
-    NSDate *nowDate = [NSDate date];
+    NSDate *nowDate;
+    if (date) {
+        nowDate = date;
+    }else{
+        nowDate = [NSDate date];
+    }
     
     NSInteger passDay = (([nowDate timeIntervalSince1970] - [startDate timeIntervalSince1970]) / (24 * 60 * 60)) + 1 ;
-    XKLog(@"预期天数是多少%ld天 ,已经过了%ld天,达成目标还需要%ld天",(long)[self expectDayOfAchieveTarget].integerValue,(long)passDay, [self expectDayOfAchieveTarget].integerValue - passDay >=  -1 ? ([self expectDayOfAchieveTarget].integerValue - passDay) : -1);
+    XKLog(@"预期天数是多少%ld天 ,已经过了%ld天,达成目标还需要%d天",(long)[self expectDayOfAchieveTarget].integerValue,(long)passDay, [self expectDayOfAchieveTarget].integerValue - passDay >=  -1 ? ([self expectDayOfAchieveTarget].integerValue - passDay) : -1);
   
     
     return    [self expectDayOfAchieveTarget].integerValue - passDay >=  -1 ? ([self expectDayOfAchieveTarget].integerValue - passDay) : -1;
@@ -573,7 +590,7 @@
 }
 
 + (BOOL) isSchemeLastDay {
-    if ([self remainDayToAchieveTarget] == -1) {
+    if ([self remainDayToAchieveTargetWithDate:nil] == -1) {
         return YES;
     }
     return NO;
@@ -1017,6 +1034,24 @@
     int week = (int)(7700*(lossweight/1000.f)/(normal_cal-intake+sport_cal)/7);
     return [NSString stringWithFormat:@"%d",week];
     
+}
+
+//是否开启了体脂率自动填写
++ (BOOL)isSetFatRateWriteAuto {
+    NSUserDefaults *defualts = [NSUserDefaults standardUserDefaults];
+    
+    if ([defualts boolForKey:[NSString stringWithFormat:@"setFatRateWriteAuto_%d",[[XKRWUserService sharedService] getUserId]]]) {
+        return YES;
+    } else return NO;
+    
+}
+
+//设置体脂率自动填写
++ (void)setFatRateWriteAuto:(BOOL)abool {
+    NSUserDefaults *defualts = [NSUserDefaults standardUserDefaults];
+    [defualts setBool:abool forKey:[NSString stringWithFormat:@"setFatRateWriteAuto_%d",[[XKRWUserService sharedService] getUserId]]];
+    [defualts synchronize];
+    return;
 }
 
 @end
